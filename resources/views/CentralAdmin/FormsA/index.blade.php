@@ -1,11 +1,15 @@
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/joboy.css') }}">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="{{ asset('assets') }}/js/joboy.js"></script>
+ 
  @extends('layouts.BSapp', [
 'class' => 'sidebar-mini ',
-'namePage' => 'Form Management',
-'activePage' => 'forms2',
-'activeNav' => '',
+ 
 ])
 
 @section('content')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <div class="content" style="margin-top:50px;padding:2%">
     <div class="card" style="border-radius:10px;padding-left:2rem!important;padding-right:1rem!important">
         <div class="card-header">
@@ -50,7 +54,7 @@
                                 <td>{{$forms->created_at}}</td>
                                 <td>{{$forms->status}}</td>
                                 <td class="d-flex">
-                                    <a href="{{route('formsb.show', $forms->id)}}" style="margin-right: 10px;font-weight:bold" class="btn btn-primary">View Forms</a>
+                                    <a href="{{route('formsb.formList', $forms->id)}}" style="margin-right: 10px;font-weight:bold" class="btn btn-primary">View Forms</a>
 
                                     <a href="{{route('formsb.edit', $forms->id)}}" style="margin-right: 10px;font-weight:bold" class="btn btn-warning">Edit</a>
 

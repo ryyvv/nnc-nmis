@@ -27,6 +27,10 @@
 
    <!-- color -->
    <link href="{{ asset('assets') }}/css/colors.css" rel="stylesheet" />
+
+   <!-- Datatables -->
+   <link href="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.8/datatables.min.css" rel="stylesheet">
+ 
 </head>
 
 <body class="{{ $class ?? '' }}">

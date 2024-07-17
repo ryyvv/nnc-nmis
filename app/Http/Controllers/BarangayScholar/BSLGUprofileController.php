@@ -49,7 +49,7 @@ class BSLGUprofileController extends Controller
         return view('BarangayScholar.lguprofile.edit',compact('lguProfile','prov', 'mun', 'city', 'brgy', 'years', 'action'));
     }
 
- public function show(LguProfile $LguProfile, Request $request) { 
+ public function show(Request $request, $id ) { 
         
         $action = 'edit';
         $location = new LocationController;
@@ -61,7 +61,7 @@ class BSLGUprofileController extends Controller
         $years = range(date("Y"), 1900);
 
         //dd($request->id);
-        $lguProfile = DB::table('lguprofilebarangay')->where('id', $request->id)->first();
+        $lguProfile = DB::table('lguprofilebarangay')->where('id', $id)->first();
         //dd($lguProfile);
 
  
@@ -486,7 +486,7 @@ class BSLGUprofileController extends Controller
  
              ]);
  
-     barangaytracking::create([
+            barangaytracking::create([
                  'lguprofilebarangay_id' => $LGUProfileBarangay->id,
                  'status' => $request->status,
                  'barangay_id' => auth()->user()->barangay,
@@ -494,8 +494,6 @@ class BSLGUprofileController extends Controller
                  'user_id' => auth()->user()->id,
              ]);
 
-      
-         
 
      return redirect('BarangayScholar/lguprofile')->with('Success', 'Data created successfullySuccessfully!');
  }
@@ -675,6 +673,7 @@ class BSLGUprofileController extends Controller
             'region_id' => 'required|integer',
      
         ]; 
+
         $message = [
             'required' => 'The field is required.',
             'integer' => 'The field must be an integer.',

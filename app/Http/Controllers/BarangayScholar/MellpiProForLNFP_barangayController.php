@@ -9,23 +9,15 @@ use App\Models\lnfp_form5a;
 use App\Models\lnfp_form5a_rr;
 use App\Models\sampleUpdateForm5a;
 use Illuminate\Support\Facades\DB;
+use illuminate\Database\QueryException;
+use PhpParser\Node\Stmt\TryCatch;
+use App\Models\lnfp_lguprofile;
 
 class MellpiProForLNFP_barangayController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    //LGU Profile (LNFP)
-    public function index()
-    {
-        //
-        return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPIndex');
-    }
-    public function mellpiProLNFP_create()
-    {
-        //
-        return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPCreate');
-    }
 
 
     //form 5 Monitoring
@@ -36,7 +28,8 @@ class MellpiProForLNFP_barangayController extends Controller
 
         return view('BarangayScholar/MellpiProForLNFP/MellpiProMonitoring.MonitoringForm5Index', ['form5a_rr' => $form5a_rr]);
     }
-    public function monitoringForm5edit(Request $request){
+    public function monitoringForm5edit(Request $request)
+    {
         $form5a = lnfp_form5a::get();
 
         $lguLnfpForm5 = DB::table('lnfp_form5a_rr')->where('id', $request->id)->first();
@@ -354,47 +347,104 @@ class MellpiProForLNFP_barangayController extends Controller
 
             return redirect()->back()->with('alert', 'Updated Successfully!');
         } elseif ($action == 'updateResponse') {
-            # code...
-            $updateResponse = lnfp_form5a_rr::where('id', 19)
-            ->update([
-                'forThePeriod' => $forTheperiod,
-                'nameofPnao' => $nameOf,
-                'address' => $address,
-                'provDeploy' => $provDev,
-                'numYearPnao' => $numYear,
-                'fulltime' => $fulltime,
-                'profAct' => $profAct,
-                'bdate' => $bday,
-                'sex' => $sex,
-                'dateDesignation' => $dateDesig,
-                'secondedOffice' => $seconded,
-                'devActnum1' => $num1,
-                'devActnum2' => $num2,
-                'devActnum3' => $num3,
-                'ratingA' => $ratingA,
-                'ratingB' => $ratingB,
-                'ratingBB' => $ratingBB,
-                'ratingC' => $ratingC,
-                'ratingD' => $ratingD,
-                'ratingE' => $ratingE,
-                'ratingF' => $ratingF,
-                'ratingG' => $ratingG,
-                'ratingGG' => $ratingGG,
-                'ratingH' => $ratingH,
-                'remarksA' => $remarksA,
-                'remarksB' => $remarksB,
-                'remarksBB' => $remarksBB,
-                'remarksC' => $remarksC,
-                'remarksD' => $remarksD,
-                'remarksE' => $remarksE,
-                'remarksF' => $remarksF,
-                'remarksG' => $remarksG,
-                'remarksGG' => $remarksGG,
-                'remarksH' => $remarksH,
-                'status' => $statusSubmit
+            // $updatedResponse = lnfp_form5a_rr::where('id', $request->id)->first();
 
-            ]);
-            return redirect()->route('MellpiProMonitoringIndex.index')->with('alert', 'Responses Updated Successfully!');
+            // dd($updatedResponse);
+
+            try {
+                //code...
+                $updateResponse = lnfp_form5a_rr::where('id', $request->id)
+                    ->update([
+                        'forThePeriod' => $forTheperiod,
+                        'nameofPnao' => $nameOf,
+                        'address' => $address,
+                        'provDeploy' => $provDev,
+                        'numYearPnao' => $numYear,
+                        'fulltime' => $fulltime,
+                        'profAct' => $profAct,
+                        'bdate' => $bday,
+                        'sex' => $sex,
+                        'dateDesignation' => $dateDesig,
+                        'secondedOffice' => $seconded,
+                        'devActnum1' => $num1,
+                        'devActnum2' => $num2,
+                        'devActnum3' => $num3,
+                        'ratingA' => $ratingA,
+                        'ratingB' => $ratingB,
+                        'ratingBB' => $ratingBB,
+                        'ratingC' => $ratingC,
+                        'ratingD' => $ratingD,
+                        'ratingE' => $ratingE,
+                        'ratingF' => $ratingF,
+                        'ratingG' => $ratingG,
+                        'ratingGG' => $ratingGG,
+                        'ratingH' => $ratingH,
+                        'remarksA' => $remarksA,
+                        'remarksB' => $remarksB,
+                        'remarksBB' => $remarksBB,
+                        'remarksC' => $remarksC,
+                        'remarksD' => $remarksD,
+                        'remarksE' => $remarksE,
+                        'remarksF' => $remarksF,
+                        'remarksG' => $remarksG,
+                        'remarksGG' => $remarksGG,
+                        'remarksH' => $remarksH,
+                        'status' => $statusSubmit
+
+                    ]);
+                return redirect()->route('MellpiProMonitoringIndex.index')->with('alert', 'Responses Updated and Submitted Successfully!');
+            } catch (\Throwable $th) {
+                //throw $th;
+                return "An error occured: " . $th->getMessage();
+            }
+        } elseif ($action == 'saveDraft') {
+            # code...
+            try {
+                //code...
+                $updateResponse = lnfp_form5a_rr::where('id', $request->id)
+                    ->update([
+                        'forThePeriod' => $forTheperiod,
+                        'nameofPnao' => $nameOf,
+                        'address' => $address,
+                        'provDeploy' => $provDev,
+                        'numYearPnao' => $numYear,
+                        'fulltime' => $fulltime,
+                        'profAct' => $profAct,
+                        'bdate' => $bday,
+                        'sex' => $sex,
+                        'dateDesignation' => $dateDesig,
+                        'secondedOffice' => $seconded,
+                        'devActnum1' => $num1,
+                        'devActnum2' => $num2,
+                        'devActnum3' => $num3,
+                        'ratingA' => $ratingA,
+                        'ratingB' => $ratingB,
+                        'ratingBB' => $ratingBB,
+                        'ratingC' => $ratingC,
+                        'ratingD' => $ratingD,
+                        'ratingE' => $ratingE,
+                        'ratingF' => $ratingF,
+                        'ratingG' => $ratingG,
+                        'ratingGG' => $ratingGG,
+                        'ratingH' => $ratingH,
+                        'remarksA' => $remarksA,
+                        'remarksB' => $remarksB,
+                        'remarksBB' => $remarksBB,
+                        'remarksC' => $remarksC,
+                        'remarksD' => $remarksD,
+                        'remarksE' => $remarksE,
+                        'remarksF' => $remarksF,
+                        'remarksG' => $remarksG,
+                        'remarksGG' => $remarksGG,
+                        'remarksH' => $remarksH,
+                        'status' => $statusDraft
+
+                    ]);
+                return redirect()->route('MellpiProMonitoringIndex.index')->with('alert', 'Responses Updated Successfully!');
+            } catch (\Throwable $th) {
+                //throw $th;
+                return "An error occured: " . $th->getMessage();
+            }
         }
 
         return response()->json(['message' => 'Invalid Action!', 400]);
@@ -452,10 +502,13 @@ class MellpiProForLNFP_barangayController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function deleteForm5arr(Request $request)
+    public function deleteForm5arr(Request $request, $id )
     {
         //
-        $deleted = DB::table('lnfp_form5a_rr')->where('id', $request->id)->delete();
+        // $deleted = DB::table('lnfp_form5a_rr')->where('id', $request->id)->delete();
+        // $deleted = lnfp_form5a_rr::where('id', $request->id)->delete();
+        $deleted = lnfp_form5a_rr::find($id);
+        $deleted->delete();
 
         if ($deleted) {
             // Redirect back with success message if record was deleted

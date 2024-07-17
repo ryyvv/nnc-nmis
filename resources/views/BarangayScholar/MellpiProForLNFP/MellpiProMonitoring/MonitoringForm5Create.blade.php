@@ -28,7 +28,7 @@
                     @endif
 
                     <div>
-                        <form action="{{ route('lguLnfpUpdate') }}" method="POST">
+                        <form action="{{ route('lguLnfpUpdates') }}" method="POST">
                             @csrf
 
                             @foreach ($form5a as $form5a)
@@ -70,7 +70,7 @@
                                     <div class="form-group col-md-12">
                                         <label for="fulltime">Full time: </label>
                                         <select class="form-control" name="fulltime" id="fulltime">
-                                            <option Selected>Select</option>
+                                            <option value="">Select</option>
                                             <option value="Yes">Yes</option>
                                             <option value="No">No</option>
                                         </select>
@@ -78,7 +78,7 @@
                                     <div class="form-group col-md-12">
                                         <label for="profAct">With continuing professional Activities?: </label>
                                         <select class="form-control" name="profAct" id="profAct">
-                                            <option Selected>Select</option>
+                                            <option value="">Select</option>
                                             <option value="Yes">Yes</option>
                                             <option value="No">No</option>
                                         </select>
@@ -92,7 +92,7 @@
                                     <div class="form-group col-md-12">
                                         <label for="sex">Sex: </label>
                                         <select class="form-control" name="sex" id="sex">
-                                            <option selected>Select</option>
+                                            <option value="">Select</option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
                                         </select>

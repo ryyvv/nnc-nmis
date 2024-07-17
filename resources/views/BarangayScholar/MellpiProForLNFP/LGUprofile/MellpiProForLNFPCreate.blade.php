@@ -1,3 +1,7 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/form5a.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/common.css') }}">
+
 @extends('layouts.BSapp', [
 'class' => 'sidebar-mini ',
 'namePage' => 'LGU Profile LNFP',
@@ -12,14 +16,21 @@
         <div class="col flex">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="title">{{__("LGU Profile LNFP")}}</h5>
-                    <h4>MELLPI PRO FOR LNFP FORM :</h4>
+                    <div style="display: flex; align-items:center;">
+                        <a href="{{route('BSLGUprofileLNFPIndex.index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a>
+                        <!-- <h4>MELLPI PRO FOR LNFP FORM :</h4> -->
+                    </div>
                     @if(session('status'))
                     <div class="alert alert-success">{{session('status')}}</div>
                     @endif
 
                     <div>
                         <form action="#">
+                            @csrf
+                            <center><img src="https://nnc-nmis.moodlearners.com/assets/img/logo.png" alt="" class="imgLogo"></center><br>
+                            <center>
+                                <h5 class="title">{{__("Mellpi Pro PNAO Form: Provincial Profile Form")}}</h5>
+                            </center><br>
 
                             <input type="hidden" name="status" value="1">
                             <input type="hidden" name="dateCreated" value="05/19/2024">
@@ -807,7 +818,55 @@
 
 
                             <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalDraft">
+                                    Draft
+                                </button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalSubmit">
+                                    Submit
+                                </button>
+                                <!-- <button type="submit" name="action" value="submit" class="btn btn-primary">Submit</button> -->
+                            </div>
+                            <!-- Modal Submit -->
+                            <div class="modal fade" id="exampleModalSubmit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <!-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h5>Are you sure want to submit?</h5>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                            <button type="submit" id="lgu-draft" class="btn btn-primary" name="action" value="submit">Yes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal Draft -->
+                            <div class="modal fade" id="exampleModalDraft" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <!-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h5>Save as Draft?</h5>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                            <button type="submit" id="lgu-draft" class="btn btn-primary" name="action" value="draft">Yes</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </div>

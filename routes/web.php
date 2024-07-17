@@ -54,6 +54,7 @@ use App\Http\Controllers\BarangayScholar\BudgetAIPController;
 use App\Http\Controllers\BarangayScholar\LNCManagementBarangayController;
 
 use App\Http\Controllers\BarangayScholar\MellpiProForLNFP_barangayController;
+use App\Http\Controllers\BarangayScholar\MellpiProForLNFP_barangayLGUController;
 
 
 
@@ -341,6 +342,7 @@ Route::group(['middleware' => 'auth'], function () {
           //LGUProfileController
           Route::get('/lguprofile', [BSLGUprofileController::class, 'index'])->name('BSLGUprofile.index');
         //   Route::POST('/lguprofile', [BSLGUprofileController::class, 'storeDraft'])->name('BSLGUprofile.storeDraft');
+          Route::get('/lguprofile/{id}', [BSLGUprofileController::class, 'show'])->name('BSLGUprofile.show');
           Route::POST('/lguprofile', [BSLGUprofileController::class, 'storeSubmit'])->name('BSLGUprofilest.storeSubmit');
           Route::get('/lguprofile/create', [BSLGUprofileController::class, 'create'])->name('BSLGUprofile.create');
           Route::put('/lguprofile/{id}', [BSLGUprofileController::class, 'update'])->name('BSLGUprofile.update');
@@ -415,14 +417,15 @@ Route::group(['middleware' => 'auth'], function () {
 
           //Mellpi pro for LNFP
           //LGU Profile
-          Route::get('/lguprofilelnfp', [MellpiProForLNFP_barangayController::class, 'index'])->name('BSLGUprofileLNFPIndex.index');
-          Route::get('/lguprofilelnfpCreate', [MellpiProForLNFP_barangayController::class, 'mellpiProLNFP_create'])->name('MellpiProForLNFPCreate.create');
+          Route::get('/lguprofilelnfp', [MellpiProForLNFP_barangayLGUController::class, 'index'])->name('BSLGUprofileLNFPIndex.index');
+          Route::get('/lguprofilelnfpCreate', [MellpiProForLNFP_barangayLGUController::class, 'mellpiProLNFP_LGUcreate'])->name('MellpiProForLNFPCreate.create');
           //Form 5 Monitoring
           Route::get('/lguform5Index', [MellpiProForLNFP_barangayController::class, 'monitoringForm5'])->name('MellpiProMonitoringIndex.index');
           Route::get('/lguform5Create', [MellpiProForLNFP_barangayController::class, 'monitoringForm5create'])->name(('MellpiProMonitoringCreate.create'));
-          Route::post('/lguLnfpUpdate', [MellpiProForLNFP_barangayController::class, 'editForm5a'])->name('lguLnfpUpdate');
+          Route::post('/lguLnfpUpdate/{id}', [MellpiProForLNFP_barangayController::class, 'editForm5a'])->name('lguLnfpUpdate');
+          Route::post('/lguLnfpUpdate', [MellpiProForLNFP_barangayController::class, 'editForm5a'])->name('lguLnfpUpdates');
           Route::put('/lguLnfpUpdate', [MellpiProForLNFP_barangayController::class, 'editForm5a'])->name('lguLnfpUpdateRemarks');
-          Route::delete('/lguLnfpDelete/{id}', [MellpiProForLNFP_barangayController::class, 'deleteForm5arr'])->name('lguLnfpDeleteForm5a');
+          Route::get('/lguLnfpDelete/{id}', [MellpiProForLNFP_barangayController::class, 'deleteForm5arr'])->name('lguLnfpDeleteForm5a');
           Route::get('/lguLnfpEdit/{id}', [MellpiProForLNFP_barangayController::class, 'monitoringForm5edit'])->name('lguLnfpEdit');
           //Form 6 Radial Diagram
           Route::get('/lguform6Index', [MellpiProForLNFP_barangayController::class, 'radialForm6'])->name('MellpiProRadialIndex.index');

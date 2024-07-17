@@ -28,9 +28,9 @@
                     @endif
 
                     <div>
-                        <form action="{{ route('lguLnfpUpdate') }}" method="POST">
+                        <form action="{{ route('lguLnfpUpdate', $lguLnfpForm5->id) }}" method="POST">
                             @csrf
-                            @method('PUT')
+                           
 
                             @if($lguLnfpForm5)
                             <input type="hidden" value="{{ $lguLnfpForm5->status }}" name="statForm">
@@ -75,6 +75,7 @@
                                         <label for="fulltime">Full time: </label>
                                         <select class="form-control" name="fulltime" id="fulltime" value="{{ $lguLnfpForm5->fulltime }}">
                                             <!-- <option value="">{{ $lguLnfpForm5->fulltime }}</option> -->
+                                            <option {{ old('fulltime', $lguLnfpForm5->fulltime) == '' ? 'selected' : '' }}></option>
                                             <option value="Yes" {{ old('fulltime', $lguLnfpForm5->fulltime) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                             <option value="No" {{ old('fulltime', $lguLnfpForm5->fulltime) == 'No' ? 'selected' : '' }}>No</option>
                                         </select>
@@ -83,6 +84,7 @@
                                         <label for="profAct">With continuing professional Activities?: </label>
                                         <select class="form-control" name="profAct" id="profAct" value="{{ $lguLnfpForm5->profAct }}">
                                             <!-- <option Selected>Select</option> -->
+                                            <option {{ old('profAct', $lguLnfpForm5->profAct) == '' ? 'selected' : '' }}></option>
                                             <option value="Yes" {{ old('profAct', $lguLnfpForm5->profAct) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                             <option value="No" {{ old('profAct', $lguLnfpForm5->profAct) == 'No' ? 'selected' : '' }}>No</option>
                                         </select>
@@ -97,6 +99,7 @@
                                         <label for="sex">Sex: </label>
                                         <select class="form-control" name="sex" id="sex" value="{{ $lguLnfpForm5->sex }}">
                                             <!-- <option selected>Select</option> -->
+                                            <option {{ old('sex', $lguLnfpForm5->sex) == '' ? 'selected' : '' }}></option>
                                             <option value="Male" {{ old('sex', $lguLnfpForm5->sex) == 'Male' ? 'selected' : '' }}>Male</option>
                                             <option value="Female" {{ old('sex', $lguLnfpForm5->sex) == 'Female' ? 'selected' : '' }}>Female</option>
                                         </select>
@@ -792,7 +795,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                            <button type="submit" id="lgu-draft" class="btn btn-primary" name="action" value="SaveDraft">Yes</button>
+                                            <button type="submit" id="lgu-draft" class="btn btn-primary" name="action" value="saveDraft">Yes</button>
                                         </div>
                                     </div>
                                 </div>

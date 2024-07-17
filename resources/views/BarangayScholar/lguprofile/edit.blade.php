@@ -1384,7 +1384,7 @@
                         </div>
                     </div>
                 </div>
-<!-- 
+
                 <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
                     Draft
@@ -1392,7 +1392,7 @@
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
                     Submit
                     </button>
-                </div> -->
+                </div> 
             </form>
         </div>
     </div>

@@ -15,6 +15,7 @@
                     <h5 class="title" style="margin:0px">{{$formsA->formAname}}</h5>
                 </a>
             </div>
+            
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a style="font-family: Arial, sans-serif;font-style:italic" href="{{route('formsb.index')}}">{{$formsA->formAname}}</a></li>
