@@ -1,4 +1,4 @@
-@extends('layouts.BSapp', [
+@extends('layouts.app', [
 'namePage' => 'Dashboard',
 'class' => 'sidebar-mini ',
 'activePage' => 'dashboard',

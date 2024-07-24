@@ -26,7 +26,7 @@
 }
 </style>
 
-@extends('layouts.BSapp', [
+@extends('layouts.app', [
 'class' => 'sidebar-mini ',
 'namePage' => 'change Nutrition Status',
 'activePage' => 'changeNS',

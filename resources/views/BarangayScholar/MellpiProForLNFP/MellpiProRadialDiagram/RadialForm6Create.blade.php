@@ -2,7 +2,7 @@
 <!-- <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/form5a.css') }}"> -->
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/common.css') }}">
 
-@extends('layouts.BSapp', [
+@extends('layouts.app', [
 'class' => 'sidebar-mini ',
 'namePage' => 'Mellpi Pro Form 6 Monitoring',
 'activePage' => 'mellpi_pro_form6',

@@ -1,5 +1,5 @@
 
-let table = new DataTable('#myTable');
+new DataTable('#myTable');
 
 
 let profileId;

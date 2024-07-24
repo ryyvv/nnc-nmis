@@ -2,7 +2,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/form5a.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/common.css') }}">
 
-@extends('layouts.BSapp', [
+@extends('layouts.app', [
 'class' => 'sidebar-mini ',
 'namePage' => 'LGU Profile LNFP',
 'activePage' => 'LGUPROFILELNFP',
@@ -29,7 +29,7 @@
                             @csrf
                             <center><img src="https://nnc-nmis.moodlearners.com/assets/img/logo.png" alt="" class="imgLogo"></center><br>
                             <center>
-                                <h5 class="title">{{__("Mellpi Pro PNAO Form: Provincial Profile Form")}}</h5>
+                                <h5 class="title">{{__("Mellpi Pro PNAO Form: Provincial Profile Formsss")}}</h5>
                             </center><br>
 
                             <input type="hidden" name="status" value="1">

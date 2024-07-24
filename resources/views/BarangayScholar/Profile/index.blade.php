@@ -1,5 +1,5 @@
 
-@extends('layouts.BSapp', [
+@extends('layouts.app', [
 'class' => 'sidebar-mini ',
 'namePage' => 'User Profile',
 'activePage' => 'profile',

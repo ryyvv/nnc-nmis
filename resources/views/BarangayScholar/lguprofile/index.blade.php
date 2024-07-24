@@ -1,10 +1,7 @@
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/joboy.css') }}">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="{{ asset('assets') }}/js/joboy.js"></script>
+<!-- <link href="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.8/datatables.min.css" rel="stylesheet">
+<script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.8/datatables.min.js"></script> -->
 
-
-@extends('layouts.BSapp', [
+@extends('layouts.app', [
 'class' => 'sidebar-mini ',
 'namePage' => 'MELLPI PRO For LGU Profile',
 'activePage' => 'LGUPROFILE',

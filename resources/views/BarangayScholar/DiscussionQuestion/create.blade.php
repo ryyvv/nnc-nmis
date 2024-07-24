@@ -26,7 +26,7 @@
 }
 </style>
 
-@extends('layouts.BSapp', [
+@extends('layouts.app', [
 'class' => 'sidebar-mini ',
 'namePage' => 'Discussion Question',
 'activePage' => 'discussionquestion',

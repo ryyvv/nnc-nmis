@@ -27,7 +27,7 @@
 }
 </style>
 
-@extends('layouts.BSapp', [
+@extends('layouts.app', [
 'class' => 'sidebar-mini ',
 'namePage' => 'Mellpi Pro for LGU Profile',
 'activePage' => 'LGUPROFILE',

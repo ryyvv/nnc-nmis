@@ -1,4 +1,4 @@
-@extends('layouts.BSapp', [
+@extends('layouts.app', [
 'class' => 'sidebar-mini ',
 'namePage' => 'Mellpi Pro Form 6 Monitoring',
 'activePage' => 'mellpi_pro_form6',

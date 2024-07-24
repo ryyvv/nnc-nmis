@@ -27,7 +27,7 @@
 }
 </style>
 
-@extends('layouts.BSapp', [
+@extends('layouts.app', [
 'class' => 'sidebar-mini ',
 'namePage' => 'Vision Mission',
 'activePage' => 'VISION',
