@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets') }}/img/apple-icon.png">
   <link rel="icon" type="image/png" href="{{ asset('assets') }}/img/logo.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -17,7 +18,8 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/joboy.css') }}"> 
-<!-- CSS Files -->
+
+  <!-- CSS Files -->
   <link href="{{ asset('assets') }}/css/bootstrap.min.css" rel="stylesheet" />
   <link href="{{ asset('assets') }}/css/now-ui-dashboard.css?v=1.3.0" rel="stylesheet" />
 
@@ -58,7 +60,10 @@
   <!-- custom  js/Jquery/ajax -->
   <script src="{{ asset('assets') }}/js/csvReadfile.js"></script>
   <script src="{{ asset('assets') }}/js/autoGenerateInput.js"></script>
+  <script src="{{ asset('assets') }}/js/MellpiProLGUBarangay.js"></script>
   <script src="{{ asset('assets') }}/js/joboy.js"></script>
+  <script src="{{ asset('assets') }}/js/ryan.js"></script>
+  <script src="{{ asset('assets') }}/js/diether.js"></script>
   
   <!-- Stock -->
   <!-- Bootstrap v4.2.1 (https://getbootstrap.com/) -->
@@ -76,15 +81,15 @@
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.6/dist/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 
-   <!-- Datatable -->
-   <script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.8/datatables.min.js"></script>
-
   <!--  Notifications Plugin    -->
   <script src="{{ asset('assets') }}/js/plugins/bootstrap-notify.js"></script>
 
   <!-- checked -->
   <!-- Chart JS -->
   <script src="{{ asset('assets') }}/js/plugins/chartjs.min.js"></script>
+
+  <!-- Datatables -->
+  <!-- <script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.8/datatables.min.js"></script> -->
 
   <!-- Now Ui Dashboard DEMO methods, don't include it in your project! --> 
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->

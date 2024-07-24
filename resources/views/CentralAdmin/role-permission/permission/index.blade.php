@@ -1,4 +1,4 @@
-@extends('layouts.CAapp', [
+@extends('layouts.app', [
 'class' => 'sidebar-mini ',
 'namePage' => 'Permissions',
 'activePage' => 'Permissions',

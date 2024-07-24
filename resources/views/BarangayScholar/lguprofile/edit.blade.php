@@ -36,28 +36,26 @@
 
 
 @section('content')
-
-<!-- <div class="panel-header panel-header-sm"></div> -->
+ 
 <div class="content" style="margin-top:50px;padding:2%">
-    <div class="card">
+<div class="card" style="border-radius:10px;padding-left:2rem!important;padding-right:1rem!important">
         <div style="display:flex;align-items:center">
-        <a href="{{route('BSLGUprofile.index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a>
-            <p style="margin-bottom:0px;margin-left:25px; font-weight:900;font-size:25px">MELLPI PRO FORM B: BARANGAY
-                PROFILE SHEET</p>
+            <a href="{{route('visionmission.index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a>
+            <h4 style="margin-top:18px;font-weight:bold">MELLPI PRO FORM B 1a: BARANGAY NUTRITION MONITORING</h4>
         </div>
 
          <!-- alerts -->
          @include('layouts.page_template.crud_alert_message')
 
          <div style="padding:25px">
-            <form action="{{route('BSLGUprofile.update', $lguProfile->id)}}" id="lgu-profile-form" method="POST">
+            <form action="{{route('BSLGUprofile.update', $row->id)}}" id="lgu-profile-form" method="POST">
                 @csrf
                 @method('PUT')
 
-                <input type="hidden" name="status" id="status" value="{{$lguProfile->status}}">
-                <input type="hidden" name="user_id" id="user_id" value="{{ $lguProfile->user_id }}">
-                <input type="hidden" name="dateCreated" value="{{ old('dateCreated', $lguProfile->dateCreated) }}">
-                <input type="hidden" name="dateUpdates" value="{{ old('dateUpdates', $lguProfile->dateUpdates) }}">
+                <input type="hidden" name="status" id="status" value="{{$row->status}}">
+                <input type="hidden" name="user_id" id="user_id" value="{{ $row->user_id }}">
+                <input type="hidden" name="dateCreated" value="{{ old('dateCreated', $row->dateCreated) }}">
+                <input type="hidden" name="dateUpdates" value="{{ old('dateUpdates', $row->dateUpdates) }}">
                 
                 @include('layouts.page_template.location_header')
 
@@ -69,66 +67,66 @@
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Total Population:</label>
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="totalPopulation"
-                                value="{{$lguProfile->totalPopulation}}">
+                                value="{{$row->totalPopulation}}">
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput2">No. of household with access to safe
                                 water:</label>
                             <input type="text" class="form-control" id="exampleFormControlInput2" name="householdWater"
-                                value="{{$lguProfile->totalPopulation}}">
+                                value="{{$row->totalPopulation}}">
                         </div>
 
                         <div class="form-group">
                             <label for="exampleFormControlInput3">No. of household with sanitary toilets:</label>
                             <input type="text" class="form-control" id="exampleFormControlInput3"
-                                name="householdToilets" value="{{$lguProfile->householdToilets}}">
+                                name="householdToilets" value="{{$row->householdToilets}}">
                         </div>
 
                         <div class="form-group">
                             <label for="exampleFormControlInput1">No. of Day Care Centers</label>
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="dayCareCenter"
-                                value="{{$lguProfile->dayCareCenter}}">
+                                value="{{$row->dayCareCenter}}">
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput1">No. of public elementary schools:</label>
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="elementary"
-                                value="{{$lguProfile->elementary}}">
+                                value="{{$row->elementary}}">
                         </div>
 
                         <div class="form-group">
                             <label for="exampleFormControlInput1">No. of public secondary schools:</label>
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="secondarySchool"
-                                value="{{$lguProfile->secondarySchool}}">
+                                value="{{$row->secondarySchool}}">
                         </div>
 
                         <div class="form-group">
                             <label for="exampleFormControlInput1">No. of Barangay Health Stations:</label>
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="healthStations"
-                                value="{{$lguProfile->healthStations}}">
+                                value="{{$row->healthStations}}">
                         </div>
 
                         <div class="form-group">
                             <label for="exampleFormControlInput1">No. of retail outlets/sari-sari stores:</label>
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="retailOutlets"
-                                value="{{$lguProfile->retailOutlets}}">
+                                value="{{$row->retailOutlets}}">
                         </div>
 
                         <div class="form-group">
                             <label for="exampleFormControlInput1">No. of bakeries:</label>
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="bakeries"
-                                value="{{$lguProfile->bakeries}}">
+                                value="{{$row->bakeries}}">
                         </div>
 
                         <div class="form-group">
                             <label for="exampleFormControlInput1">No. of public markets:</label>
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="markets"
-                                value="{{$lguProfile->markets}}">
+                                value="{{$row->markets}}">
                         </div>
 
                         <div class="form-group">
                             <label for="exampleFormControlInput1">No. of transport terminals:</label>
                             <input type="text" class="form-control" id="exampleFormControlInput1"
-                                name="transportTerminals" value="{{$lguProfile->transportTerminals}}">
+                                name="transportTerminals" value="{{$row->transportTerminals}}">
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Percent of Lactating mothers exclusively
@@ -136,12 +134,39 @@
                                 until
                                 the 5th month:</label>
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="breastfeeding"
-                                value="{{$lguProfile->breastfeeding}}">
+                                value="{{$row->breastfeeding}}">
                         </div>
 
                         <div class="form-group">
+                            <label for="terrain">Terrain:<span style="color:red">*</span></label>
+                            <textarea class="form-control" id="terrain" height="800px" style="max-height:380px;height:300px;border: 1px solid lightgray;border-radius:5px" name="terrain"
+                            >{{$row->terrain}}</textarea>
+                            @error('terrain')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="hazards">Hazard:<span style="color:red">*</span></label>
+                            <textarea class="form-control" id="hazards" height="800px" style="max-height:380px;height:300px;border: 1px solid lightgray;border-radius:5px" name="hazards"
+                            >{{$row->hazards}}</textarea>
+                            @error('hazards')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group" style="max-height:800px">
+                            <label for="affectedLGU">LGU/Households affected:<span style="color:red">*</span></label>
+                            <textarea class="form-control" id="affectedLGU" style="max-height:380px;height:300px;border: 1px solid lightgray;border-radius:5px" name="affectedLGU"
+                            >{{$row->affectedLGU}} </textarea>
+                            @error('affectedLGU')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- <div class="form-group">
                             <label for="terrain">Terrain:</label>
-                            <input type="text" class="form-control" id="terrain" name="terrain" value="{{$lguProfile->terrain}}">  
+                            <input type="text" class="form-control" id="terrain" name="terrain" value="{{$row->terrain}}">  
                             @error('terrain')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -153,16 +178,16 @@
                                 <label for="exampleFormControlInput1">Hazard:</label>
                                 <input class="form-control" id="exampleFormControlInput1" name="hazards"
                                     style="height:100px; border: 1px solid lightgray;border-radius:5px"
-                                    value="{{$lguProfile->hazards}}">
+                                    value="{{$row->hazards}}">
                             </div>
                             <div class="form-group col">
                                 <label for="exampleFormControlInput1">LGU/Households affected:</label>
                                 <input class="form-control" id="exampleFormControlInput1" name="affectedLGU"
                                     style="height:100px; border: 1px solid lightgray;border-radius:5px"
-                                    value="{{$lguProfile->affectedLGU}}">
+                                    value="{{$row->affectedLGU}}">
 
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <!-- div2 -->
                     <div class="col col-8 col-4">
@@ -170,12 +195,12 @@
                             <div class="form-group col">
                                 <label for="exampleFormControlInput1">No. of households:</label>
                                 <input type="text" class="form-control" id="exampleFormControlInput1" name="noHousehold"
-                                    value="{{$lguProfile->healthStations}}">
+                                    value="{{$row->healthStations}}">
                             </div>
                             <div class="form-group col">
                                 <label for="exampleFormControlInput1">No.of SITIOS/PUROKS:</label>
                                 <input type="text" class="form-control" id="exampleFormControlInput1" name="noPuroks"
-                                    value="{{$lguProfile->noPuroks}}">
+                                    value="{{$row->noPuroks}}">
                             </div>
                         </div>
                         <br>
@@ -209,27 +234,27 @@
                                 </div>
                                 <div class="form-group" style="margin-left:10px">
                                     <input type="text" class="form-control" id="exampleFormControlInput1"
-                                        name="populationA" value="{{$lguProfile->populationA}}">
+                                        name="populationA" value="{{$row->populationA}}">
                                 </div>
                                 <div class="form-group" style="margin-left:10px">
                                     <input type="text" class="form-control" id="exampleFormControlInput1"
-                                        name="populationB" value="{{$lguProfile->populationB}}">
+                                        name="populationB" value="{{$row->populationB}}">
                                 </div>
                                 <div class="form-group" style="margin-left:10px">
                                     <input type="text" class="form-control" id="exampleFormControlInput1"
-                                        name="populationC" value="{{$lguProfile->populationC}}">
+                                        name="populationC" value="{{$row->populationC}}">
                                 </div>
                                 <div class="form-group" style="margin-left:10px">
                                     <input type="text" class="form-control" id="exampleFormControlInput1"
-                                        name="populationD" value="{{$lguProfile->populationD}}">
+                                        name="populationD" value="{{$row->populationD}}">
                                 </div>
                                 <div class="form-group" style="margin-left:10px">
                                     <input type="text" class="form-control" id="exampleFormControlInput1"
-                                        name="populationE" value="{{$lguProfile->populationE}}">
+                                        name="populationE" value="{{$row->populationE}}">
                                 </div>
                                 <div class="form-group" style="margin-left:10px">
                                     <input type="text" class="form-control" id="exampleFormControlInput1"
-                                        name="populationF" value="{{$lguProfile->populationF}}">
+                                        name="populationF" value="{{$row->populationF}}">
                                 </div>
                             </div>
                             <div style="display:flex;">
@@ -238,27 +263,27 @@
                                 </div>
                                 <div class="form-group" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="actualA" value="{{$lguProfile->actualA}}">
+                                        name="actualA" value="{{$row->actualA}}">
                                 </div>
                                 <div class="form-group" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="actualB" value="{{$lguProfile->actualB}}">
+                                        name="actualB" value="{{$row->actualB}}">
                                 </div>
                                 <div class="form-group" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="actualC" value="{{$lguProfile->actualC}}">
+                                        name="actualC" value="{{$row->actualC}}">
                                 </div>
                                 <div class="form-group" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="actualD" value="{{$lguProfile->actualD}}">
+                                        name="actualD" value="{{$row->actualD}}">
                                 </div>
                                 <div class="form-group" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="actualE" value="{{$lguProfile->actualE}}">
+                                        name="actualE" value="{{$row->actualE}}">
                                 </div>
                                 <div class="form-group" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="actualF" value="{{$lguProfile->actualF}}">
+                                        name="actualF" value="{{$row->actualF}}">
                                 </div>
                             </div>
                         </div>
@@ -285,15 +310,15 @@
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="psnormalAAA" value="{{$lguProfile->psnormalAAA}}">
+                                        name="psnormalAAA" value="{{$row->psnormalAAA}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="psnormalBAA" value="{{$lguProfile->psnormalBAA}}">
+                                        name="psnormalBAA" value="{{$row->psnormalBAA}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="psnormalCAA" value="{{$lguProfile->psnormalCAA}}">
+                                        name="psnormalCAA" value="{{$row->psnormalCAA}}">
                                 </div>
                             </div>
                             <div style="display:flex;">
@@ -302,15 +327,15 @@
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="psunderweightAAA" value="{{$lguProfile->psunderweightAAA}}">
+                                        name="psunderweightAAA" value="{{$row->psunderweightAAA}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="psunderweightBAA" value="{{$lguProfile->psunderweightBAA}}">
+                                        name="psunderweightBAA" value="{{$row->psunderweightBAA}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="psunderweightCAA" value="{{$lguProfile->psunderweightCAA}}">
+                                        name="psunderweightCAA" value="{{$row->psunderweightCAA}}">
                                 </div>
                             </div>
                             <div style="display:flex;">
@@ -319,15 +344,15 @@
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="pssevereUnderweightAAA" value="{{$lguProfile->pssevereUnderweightAAA}}">
+                                        name="pssevereUnderweightAAA" value="{{$row->pssevereUnderweightAAA}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="pssevereUnderweightBAA" value="{{$lguProfile->pssevereUnderweightBAA}}">
+                                        name="pssevereUnderweightBAA" value="{{$row->pssevereUnderweightBAA}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="pssevereUnderweightCAA" value="{{$lguProfile->pssevereUnderweightCAA}}">
+                                        name="pssevereUnderweightCAA" value="{{$row->pssevereUnderweightCAA}}">
                                 </div>
                             </div>
                             <div style="display:flex;">
@@ -336,15 +361,15 @@
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="psoverweightAAA" value="{{$lguProfile->psoverweightAAA}}">
+                                        name="psoverweightAAA" value="{{$row->psoverweightAAA}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="psoverweightBAA" value="{{$lguProfile->psoverweightBAA}}">
+                                        name="psoverweightBAA" value="{{$row->psoverweightBAA}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="psoverweightCAA" value="{{$lguProfile->psoverweightCAA}}">
+                                        name="psoverweightCAA" value="{{$row->psoverweightCAA}}">
                                 </div>
                             </div>
 
@@ -357,15 +382,15 @@
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="psnormalABA" value="{{$lguProfile->psnormalABA}}">
+                                        name="psnormalABA" value="{{$row->psnormalABA}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="psnormalBBA" value="{{$lguProfile->psnormalBBA}}">
+                                        name="psnormalBBA" value="{{$row->psnormalBBA}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="psnormalCCA" value="{{$lguProfile->psnormalCCA}}">
+                                        name="psnormalCCA" value="{{$row->psnormalCCA}}">
                                 </div>
                             </div>
                             <div style="display:flex;">
@@ -374,15 +399,15 @@
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="pswastedABA" value="{{$lguProfile->pswastedABA}}">
+                                        name="pswastedABA" value="{{$row->pswastedABA}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="pswastedBBA" value="{{$lguProfile->pswastedBBA}}">
+                                        name="pswastedBBA" value="{{$row->pswastedBBA}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="pswastedCCA" value="{{$lguProfile->pswastedCCA}}">
+                                        name="pswastedCCA" value="{{$row->pswastedCCA}}">
                                 </div>
                             </div>
 
@@ -392,15 +417,15 @@
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="psseverelyWastedABA" value="{{$lguProfile->psseverelyWastedABA}}">
+                                        name="psseverelyWastedABA" value="{{$row->psseverelyWastedABA}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="psseverelyWastedBBA" value="{{$lguProfile->psseverelyWastedBBA}}">
+                                        name="psseverelyWastedBBA" value="{{$row->psseverelyWastedBBA}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="psseverelyWastedCCA" value="{{$lguProfile->psseverelyWastedCCA}}">
+                                        name="psseverelyWastedCCA" value="{{$row->psseverelyWastedCCA}}">
                                 </div>
                             </div>
 
@@ -410,15 +435,15 @@
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="psoverweightABA" value="{{$lguProfile->psoverweightABA}}">
+                                        name="psoverweightABA" value="{{$row->psoverweightABA}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="psoverweightBBA" value="{{$lguProfile->psoverweightBBA}}">
+                                        name="psoverweightBBA" value="{{$row->psoverweightBBA}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="psoverweightCCA" value="{{$lguProfile->psoverweightCCA}}">
+                                        name="psoverweightCCA" value="{{$row->psoverweightCCA}}">
                                 </div>
                             </div>
                             <div style="display:flex;">
@@ -427,15 +452,15 @@
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="psobeseABA" value="{{$lguProfile->psobeseABA}}">
+                                        name="psobeseABA" value="{{$row->psobeseABA}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="psobeseBBA" value="{{$lguProfile->psobeseBBA}}">
+                                        name="psobeseBBA" value="{{$row->psobeseBBA}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="psobeseCCA" value="{{$lguProfile->psobeseCCA}}">
+                                        name="psobeseCCA" value="{{$row->psobeseCCA}}">
                                 </div>
                             </div>
                             <br>
@@ -448,15 +473,15 @@
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="psnormalAAB" value="{{$lguProfile->psnormalAAB}}">
+                                        name="psnormalAAB" value="{{$row->psnormalAAB}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="psnormalBBB" value="{{$lguProfile->psnormalBBB}}">
+                                        name="psnormalBBB" value="{{$row->psnormalBBB}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="psnormalCCC" value="{{$lguProfile->psnormalCCC}}">
+                                        name="psnormalCCC" value="{{$row->psnormalCCC}}">
                                 </div>
                             </div>
 
@@ -466,15 +491,15 @@
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="psstuntedAAB" value="{{$lguProfile->psstuntedAAB}}">
+                                        name="psstuntedAAB" value="{{$row->psstuntedAAB}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="psstuntedBBB" value="{{$lguProfile->psstuntedBBB}}">
+                                        name="psstuntedBBB" value="{{$row->psstuntedBBB}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="psstuntedCCC" value="{{$lguProfile->psstuntedCCC}}">
+                                        name="psstuntedCCC" value="{{$row->psstuntedCCC}}">
                                 </div>
                             </div>
                             <div style="display:flex;">
@@ -483,15 +508,15 @@
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="pssevereStuntedAAB" value="{{$lguProfile->pssevereStuntedAAB}}">
+                                        name="pssevereStuntedAAB" value="{{$row->pssevereStuntedAAB}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="pssevereStuntedBBB" value="{{$lguProfile->pssevereStuntedBBB}}">
+                                        name="pssevereStuntedBBB" value="{{$row->pssevereStuntedBBB}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="pssevereStuntedCCC" value="{{$lguProfile->pssevereStuntedCCC}}">
+                                        name="pssevereStuntedCCC" value="{{$row->pssevereStuntedCCC}}">
                                 </div>
                             </div>
                             <div style="display:flex;">
@@ -500,15 +525,15 @@
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="pstallAAB" value="{{$lguProfile->pstallAAB}}">
+                                        name="pstallAAB" value="{{$row->pstallAAB}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="pstallBBB" value="{{$lguProfile->pstallBBB}}">
+                                        name="pstallBBB" value="{{$row->pstallBBB}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="pstallCCC" value="{{$lguProfile->pstallCCC}}">
+                                        name="pstallCCC" value="{{$row->pstallCCC}}">
                                 </div>
                             </div>
                         </div>
@@ -524,15 +549,15 @@
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="scnormalABA" value="{{$lguProfile->scnormalABA}}">
+                                        name="scnormalABA" value="{{$row->scnormalABA}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="scnormalBBA" value="{{$lguProfile->scnormalBBA}}">
+                                        name="scnormalBBA" value="{{$row->scnormalBBA}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="scnormalCCA" value="{{$lguProfile->scnormalCCA}}">
+                                        name="scnormalCCA" value="{{$row->scnormalCCA}}">
                                 </div>
                             </div>
                             <div style="display:flex;">
@@ -541,15 +566,15 @@
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="scwastedABA" value="{{$lguProfile->scwastedABA}}">
+                                        name="scwastedABA" value="{{$row->scwastedABA}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="scwastedBBA" value="{{$lguProfile->scwastedBBA}}">
+                                        name="scwastedBBA" value="{{$row->scwastedBBA}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="scwastedCCA" value="{{$lguProfile->scwastedCCA}}">
+                                        name="scwastedCCA" value="{{$row->scwastedCCA}}">
                                 </div>
                             </div>
                             <div style="display:flex;">
@@ -558,15 +583,15 @@
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="scseverelyWastedABA" value="{{$lguProfile->scseverelyWastedABA}}">
+                                        name="scseverelyWastedABA" value="{{$row->scseverelyWastedABA}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="scseverelyWastedBBA" value="{{$lguProfile->scseverelyWastedBBA}}">
+                                        name="scseverelyWastedBBA" value="{{$row->scseverelyWastedBBA}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="scseverelyWastedCCA" value="{{$lguProfile->scseverelyWastedCCA}}">
+                                        name="scseverelyWastedCCA" value="{{$row->scseverelyWastedCCA}}">
                                 </div>
                             </div>
 
@@ -576,15 +601,15 @@
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="scoverweightABA" value="{{$lguProfile->scoverweightABA}}">
+                                        name="scoverweightABA" value="{{$row->scoverweightABA}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="scoverweightBBA" value="{{$lguProfile->scoverweightBBA}}">
+                                        name="scoverweightBBA" value="{{$row->scoverweightBBA}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="scoverweightCCA" value="{{$lguProfile->scoverweightCCA}}">
+                                        name="scoverweightCCA" value="{{$row->scoverweightCCA}}">
                                 </div>
                             </div>
                             <div style="display:flex;">
@@ -593,15 +618,15 @@
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="scobeseABA" value="{{$lguProfile->scobeseABA}}">
+                                        name="scobeseABA" value="{{$row->scobeseABA}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="scobeseBBA" value="{{$lguProfile->scobeseBBA}}">
+                                        name="scobeseBBA" value="{{$row->scobeseBBA}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="scobeseCCA" value="{{$lguProfile->scobeseCCA}}">
+                                        name="scobeseCCA" value="{{$row->scobeseCCA}}">
                                 </div>
                             </div>
 
@@ -616,15 +641,15 @@
                                     </div>
                                     <div class="form-group col" style="margin-left:10px">
                                         <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                            name="pwnormalAAA" value="{{$lguProfile->pwnormalAAA}}">
+                                            name="pwnormalAAA" value="{{$row->pwnormalAAA}}">
                                     </div>
                                     <div class="form-group col" style="margin-left:10px">
                                         <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                            name="pwnormalBAA" value="{{$lguProfile->pwnormalBAA}}">
+                                            name="pwnormalBAA" value="{{$row->pwnormalBAA}}">
                                     </div>
                                     <div class="form-group col" style="margin-left:10px">
                                         <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                            name="pwnormalCAA" value="{{$lguProfile->pwnormalCAA}}">
+                                            name="pwnormalCAA" value="{{$row->pwnormalCAA}}">
                                     </div>
                                 </div>
                                 <div style="display:flex;">
@@ -634,17 +659,17 @@
                                     <div class="form-group col" style="margin-left:10px">
                                         <input type="textarea" class="form-control" id="exampleFormControlInput1"
                                             name="pwnutritionllyatriskAAA"
-                                            value="{{$lguProfile->pwnutritionllyatriskAAA}}">
+                                            value="{{$row->pwnutritionllyatriskAAA}}">
                                     </div>
                                     <div class="form-group col" style="margin-left:10px">
                                         <input type="textarea" class="form-control" id="exampleFormControlInput1"
                                             name="pwnutritionllyatriskBAA"
-                                            value="{{$lguProfile->pwnutritionllyatriskBAA}}">
+                                            value="{{$row->pwnutritionllyatriskBAA}}">
                                     </div>
                                     <div class="form-group col" style="margin-left:10px">
                                         <input type="textarea" class="form-control" id="exampleFormControlInput1"
                                             name="pwnutritionllyatriskCAA"
-                                            value="{{$lguProfile->pwnutritionllyatriskCAA}}">
+                                            value="{{$row->pwnutritionllyatriskCAA}}">
                                     </div>
                                 </div>
                                 <div style="display:flex;">
@@ -653,15 +678,15 @@
                                     </div>
                                     <div class="form-group col" style="margin-left:10px">
                                         <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                            name="pwoverweightAAA" value="{{$lguProfile->pwoverweightAAA}}">
+                                            name="pwoverweightAAA" value="{{$row->pwoverweightAAA}}">
                                     </div>
                                     <div class="form-group col" style="margin-left:10px">
                                         <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                            name="pwoverweightBAA" value="{{$lguProfile->pwoverweightBAA}}">
+                                            name="pwoverweightBAA" value="{{$row->pwoverweightBAA}}">
                                     </div>
                                     <div class="form-group col" style="margin-left:10px">
                                         <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                            name="pwoverweightCAA" value="{{$lguProfile->pwoverweightCAA}}">
+                                            name="pwoverweightCAA" value="{{$row->pwoverweightCAA}}">
                                     </div>
                                 </div>
 
@@ -671,15 +696,15 @@
                                     </div>
                                     <div class="form-group col" style="margin-left:10px">
                                         <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                            name="pwobeseAAA" value="{{$lguProfile->pwobeseAAA}}">
+                                            name="pwobeseAAA" value="{{$row->pwobeseAAA}}">
                                     </div>
                                     <div class="form-group col" style="margin-left:10px">
                                         <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                            name="pwobeseBAA" value="{{$lguProfile->pwobeseBAA}}">
+                                            name="pwobeseBAA" value="{{$row->pwobeseBAA}}">
                                     </div>
                                     <div class="form-group col" style="margin-left:10px">
                                         <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                            name="pwobeseCAA" value="{{$lguProfile->pwobeseCAA}}">
+                                            name="pwobeseCAA" value="{{$row->pwobeseCAA}}">
                                     </div>
                                 </div>
 
@@ -705,11 +730,11 @@
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="landAreaResidential" value="{{$lguProfile->landAreaResidential}}">
+                                        name="landAreaResidential" value="{{$row->landAreaResidential}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="remarksResidential" value="{{$lguProfile->remarksResidential}}">
+                                        name="remarksResidential" value="{{$row->remarksResidential}}">
                                 </div>
                             </div>
                             <div style="display:flex;">
@@ -718,11 +743,11 @@
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="landAreaCommercial" value="{{$lguProfile->landAreaCommercial}}">
+                                        name="landAreaCommercial" value="{{$row->landAreaCommercial}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="remarksCommercial" value="{{$lguProfile->remarksCommercial}}">
+                                        name="remarksCommercial" value="{{$row->remarksCommercial}}">
                                 </div>
                             </div>
                             <div style="display:flex;">
@@ -731,11 +756,11 @@
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="landAreaIndustrial" value="{{$lguProfile->landAreaIndustrial}}">
+                                        name="landAreaIndustrial" value="{{$row->landAreaIndustrial}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="remarksIndustrial" value="{{$lguProfile->remarksIndustrial}}">
+                                        name="remarksIndustrial" value="{{$row->remarksIndustrial}}">
                                 </div>
                             </div>
                             <div style="display:flex;">
@@ -744,11 +769,11 @@
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="landAreaAgricultural" value="{{$lguProfile->landAreaAgricultural}}">
+                                        name="landAreaAgricultural" value="{{$row->landAreaAgricultural}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="remarksAgricultural" value="{{$lguProfile->remarksAgricultural}}">
+                                        name="remarksAgricultural" value="{{$row->remarksAgricultural}}">
                                 </div>
                             </div>
                             <div style="display:flex;">
@@ -758,11 +783,11 @@
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="landAreaFLMLNP" value="{{$lguProfile->landAreaFLMLNP}}">
+                                        name="landAreaFLMLNP" value="{{$row->landAreaFLMLNP}}">
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textArea" class="form-control" id="exampleFormControlInput1"
-                                        name="remarksFLMLNP" value="{{$lguProfile->remarksFLMLNP}}">
+                                        name="remarksFLMLNP" value="{{$row->remarksFLMLNP}}">
                                 </div>
                             </div>
                         </div>
@@ -809,36 +834,36 @@
                         </div>
                         <div class="col">
                             <select id="loadProvince1" class="form-control" name="Isource"
-                                value="{{$lguProfile->Isource}}">
+                                value="{{$row->Isource}}">
                                 <option value="NGA"
-                                    {{ old('Isource', $lguProfile->Isource) == 'NGA' ? 'selected' : '' }}>NGA</option>
+                                    {{ old('Isource', $row->Isource) == 'NGA' ? 'selected' : '' }}>NGA</option>
                                 <option value="LGU"
-                                    {{ old('Isource', $lguProfile->Isource) == 'LGU' ? 'selected' : '' }}>LGU</option>
+                                    {{ old('Isource', $row->Isource) == 'LGU' ? 'selected' : '' }}>LGU</option>
                                 <option value="NGO"
-                                    {{ old('Isource', $lguProfile->Isource) == 'NGO' ? 'selected' : '' }}>NGO</option>
+                                    {{ old('Isource', $row->Isource) == 'NGO' ? 'selected' : '' }}>NGO</option>
                                 <option value="Private"
-                                    {{ old('Isource', $lguProfile->Isource) == 'Private' ? 'selected' : '' }}>Private
+                                    {{ old('Isource', $row->Isource) == 'Private' ? 'selected' : '' }}>Private
                                 </option>
                             </select>
                         </div>
                         <div class="col">
                             <select id="loadProvince1" class="form-control" name="Iavailreceived"
-                                value="{{$lguProfile->Iavailreceived}}">
-                                <option value="Yes" {{ old('Iavailreceived', $lguProfile->Iavailreceived) == 'Yes' ? 'selected' : '' }}>Yes </option>
-                                <option value="No" {{ old('Iavailreceived', $lguProfile->Iavailreceived) == 'No' ? 'selected' : '' }}>No </option> 
+                                value="{{$row->Iavailreceived}}">
+                                <option value="Yes" {{ old('Iavailreceived', $row->Iavailreceived) == 'Yes' ? 'selected' : '' }}>Yes </option>
+                                <option value="No" {{ old('Iavailreceived', $row->Iavailreceived) == 'No' ? 'selected' : '' }}>No </option> 
                             </select>
                         </div>
                         <div class="col">
                             <input type="date" class="form-control" id="exampleFormControlInput1" name="Idatereceived"
-                                value="{{$lguProfile->Idatereceived}}">
+                                value="{{$row->Idatereceived}}">
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="Ivolumepax"
-                                value="{{$lguProfile->Ivolumepax}}">
+                                value="{{$row->Ivolumepax}}">
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="Iremarks"
-                                value="{{$lguProfile->Iremarks}}">
+                                value="{{$row->Iremarks}}">
                         </div>
                     </div>
                     <!-- II. -->
@@ -874,39 +899,39 @@
                         </div>
                         <div class="col">
                             <select id="loadProvince1" class="form-control" name="IIAsource"
-                                value="{{$lguProfile->IIAsource}}">
+                                value="{{$row->IIAsource}}">
                                 <option value="NGA"
-                                    {{ old('IIAsource', $lguProfile->IIAsource) == 'NGA' ? 'selected' : '' }}>NGA
+                                    {{ old('IIAsource', $row->IIAsource) == 'NGA' ? 'selected' : '' }}>NGA
                                 </option>
                                 <option value="LGU"
-                                    {{ old('IIAsource', $lguProfile->IIAsource) == 'LGU' ? 'selected' : '' }}>LGU
+                                    {{ old('IIAsource', $row->IIAsource) == 'LGU' ? 'selected' : '' }}>LGU
                                 </option>
                                 <option value="NGO"
-                                    {{ old('IIAsource', $lguProfile->IIAsource) == 'NGO' ? 'selected' : '' }}>NGO
+                                    {{ old('IIAsource', $row->IIAsource) == 'NGO' ? 'selected' : '' }}>NGO
                                 </option>
                                 <option value="Private"
-                                    {{ old('IIAsource', $lguProfile->IIAsource) == 'Private' ? 'selected' : '' }}>
+                                    {{ old('IIAsource', $row->IIAsource) == 'Private' ? 'selected' : '' }}>
                                     Private</option>
                             </select>
                         </div>
                         <div class="col">
                             <select id="loadProvince1" class="form-control" name="IIAavailreceived"
-                                value="{{$lguProfile->IIAavailreceived}}">
-                                <option value="Yes" {{ old('IIAavailreceived', $lguProfile->IIAavailreceived) == 'Yes' ? 'selected' : '' }}>Yes </option>
-                                <option value="No" {{ old('IIAavailreceived', $lguProfile->IIAavailreceived) == 'No' ? 'selected' : '' }}>No </option> 
+                                value="{{$row->IIAavailreceived}}">
+                                <option value="Yes" {{ old('IIAavailreceived', $row->IIAavailreceived) == 'Yes' ? 'selected' : '' }}>Yes </option>
+                                <option value="No" {{ old('IIAavailreceived', $row->IIAavailreceived) == 'No' ? 'selected' : '' }}>No </option> 
                             </select>
                         </div>
                         <div class="col">
                             <input type="date" class="form-control" id="exampleFormControlInput1" name="IIAdatereceived"
-                                value="{{$lguProfile->IIAdatereceived}}">
+                                value="{{$row->IIAdatereceived}}">
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="IIAvolumepax"
-                                value="{{$lguProfile->IIAvolumepax}}">
+                                value="{{$row->IIAvolumepax}}">
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="IIAremarks"
-                                value="{{$lguProfile->IIAremarks}}">
+                                value="{{$row->IIAremarks}}">
                         </div>
                     </div>
                     <br>
@@ -919,39 +944,39 @@
                         </div>
                         <div class="col">
                             <select id="loadProvince1" class="form-control" name="IIBsource"
-                                value="{{$lguProfile->IIBsource}}">
+                                value="{{$row->IIBsource}}">
                                 <option value="NGA"
-                                    {{ old('IIBsource', $lguProfile->IIBsource) == 'NGA' ? 'selected' : '' }}>NGA
+                                    {{ old('IIBsource', $row->IIBsource) == 'NGA' ? 'selected' : '' }}>NGA
                                 </option>
                                 <option value="LGU"
-                                    {{ old('IIBsource', $lguProfile->IIBsource) == 'LGU' ? 'selected' : '' }}>LGU
+                                    {{ old('IIBsource', $row->IIBsource) == 'LGU' ? 'selected' : '' }}>LGU
                                 </option>
                                 <option value="NGO"
-                                    {{ old('IIBsource', $lguProfile->IIBsource) == 'NGO' ? 'selected' : '' }}>NGO
+                                    {{ old('IIBsource', $row->IIBsource) == 'NGO' ? 'selected' : '' }}>NGO
                                 </option>
                                 <option value="Private"
-                                    {{ old('IIBsource', $lguProfile->IIBsource) == 'Private' ? 'selected' : '' }}>
+                                    {{ old('IIBsource', $row->IIBsource) == 'Private' ? 'selected' : '' }}>
                                     Private</option>
                             </select>
                         </div>
                         <div class="col">
                             <select id="loadProvince1" class="form-control" name="IIBavailreceived"
-                                value="{{$lguProfile->IIBavailreceived}}">
-                                <option value="Yes" {{ old('IIBavailreceived', $lguProfile->IIBavailreceived) == 'Yes' ? 'selected' : '' }}>Yes </option>
-                                <option value="No" {{ old('IIBavailreceived', $lguProfile->IIBavailreceived) == 'No' ? 'selected' : '' }}>No </option> 
+                                value="{{$row->IIBavailreceived}}">
+                                <option value="Yes" {{ old('IIBavailreceived', $row->IIBavailreceived) == 'Yes' ? 'selected' : '' }}>Yes </option>
+                                <option value="No" {{ old('IIBavailreceived', $row->IIBavailreceived) == 'No' ? 'selected' : '' }}>No </option> 
                             </select>
                         </div>
                         <div class="col">
                             <input type="date" class="form-control" id="exampleFormControlInput1" name="IIBdatereceived"
-                                value="{{$lguProfile->IIBdatereceived}}">
+                                value="{{$row->IIBdatereceived}}">
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="IIBvolumepax"
-                                value="{{$lguProfile->IIBvolumepax}}">
+                                value="{{$row->IIBvolumepax}}">
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="IIBremarks"
-                                value="{{$lguProfile->IIBremarks}}">
+                                value="{{$row->IIBremarks}}">
                         </div>
                     </div>
                     <!-- III. -->
@@ -987,40 +1012,40 @@
                         </div>
                         <div class="col">
                             <select id="loadProvince1" class="form-control" name="IIIAsource"
-                                value="{{$lguProfile->IIIAsource}}">
+                                value="{{$row->IIIAsource}}">
                                 <option value="NGA"
-                                    {{ old('IIIAsource', $lguProfile->IIIAsource) == 'NGA' ? 'selected' : '' }}>NGA
+                                    {{ old('IIIAsource', $row->IIIAsource) == 'NGA' ? 'selected' : '' }}>NGA
                                 </option>
                                 <option value="LGU"
-                                    {{ old('IIIAsource', $lguProfile->IIIAsource) == 'LGU' ? 'selected' : '' }}>LGU
+                                    {{ old('IIIAsource', $row->IIIAsource) == 'LGU' ? 'selected' : '' }}>LGU
                                 </option>
                                 <option value="NGO"
-                                    {{ old('IIIAsource', $lguProfile->IIIAsource) == 'NGO' ? 'selected' : '' }}>NGO
+                                    {{ old('IIIAsource', $row->IIIAsource) == 'NGO' ? 'selected' : '' }}>NGO
                                 </option>
                                 <option value="Private"
-                                    {{ old('IIIAsource', $lguProfile->IIIAsource) == 'Private' ? 'selected' : '' }}>
+                                    {{ old('IIIAsource', $row->IIIAsource) == 'Private' ? 'selected' : '' }}>
                                     Private</option>
 
                             </select>
                         </div>
                         <div class="col">
                             <select id="loadProvince1" class="form-control" name="IIIAavailreceived"
-                                value="{{$lguProfile->IIIAavailreceived}}">
-                                <option value="Yes" {{ old('IIIAavailreceived', $lguProfile->IIIAavailreceived) == 'Yes' ? 'selected' : '' }}>Yes </option>
-                                <option value="No" {{ old('IIIAavailreceived', $lguProfile->IIIAavailreceived) == 'No' ? 'selected' : '' }}>No </option> 
+                                value="{{$row->IIIAavailreceived}}">
+                                <option value="Yes" {{ old('IIIAavailreceived', $row->IIIAavailreceived) == 'Yes' ? 'selected' : '' }}>Yes </option>
+                                <option value="No" {{ old('IIIAavailreceived', $row->IIIAavailreceived) == 'No' ? 'selected' : '' }}>No </option> 
                             </select>
                         </div>
                         <div class="col">
                             <input type="date" class="form-control" id="exampleFormControlInput1"
-                                name="IIIAdatereceived" value="{{$lguProfile->IIIAdatereceived}}">
+                                name="IIIAdatereceived" value="{{$row->IIIAdatereceived}}">
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="IIIAvolumepax"
-                                value="{{$lguProfile->IIIAvolumepax}}">
+                                value="{{$row->IIIAvolumepax}}">
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="IIIAremarks"
-                                value="{{$lguProfile->IIIAremarks}}">
+                                value="{{$row->IIIAremarks}}">
                         </div>
                     </div>
                     <div style="display:flex;">
@@ -1033,39 +1058,39 @@
                         </div>
                         <div class="col">
                             <select id="loadProvince1" class="form-control" name="IIIBsource"
-                                value="{{$lguProfile->IIIBsource}}">
+                                value="{{$row->IIIBsource}}">
                                 <option value="NGA"
-                                    {{ old('IIIBsource', $lguProfile->IIIBsource) == 'NGA' ? 'selected' : '' }}>NGA
+                                    {{ old('IIIBsource', $row->IIIBsource) == 'NGA' ? 'selected' : '' }}>NGA
                                 </option>
                                 <option value="LGU"
-                                    {{ old('IIIBsource', $lguProfile->IIIBsource) == 'LGU' ? 'selected' : '' }}>LGU
+                                    {{ old('IIIBsource', $row->IIIBsource) == 'LGU' ? 'selected' : '' }}>LGU
                                 </option>
                                 <option value="NGO"
-                                    {{ old('IIIBsource', $lguProfile->IIIBsource) == 'NGO' ? 'selected' : '' }}>NGO
+                                    {{ old('IIIBsource', $row->IIIBsource) == 'NGO' ? 'selected' : '' }}>NGO
                                 </option>
                                 <option value="Private"
-                                    {{ old('IIIBsource', $lguProfile->IIIBsource) == 'Private' ? 'selected' : '' }}>
+                                    {{ old('IIIBsource', $row->IIIBsource) == 'Private' ? 'selected' : '' }}>
                                     Private</option>
                             </select>
                         </div>
                         <div class="col">
                             <select id="loadProvince1" class="form-control" name="IIIBavailreceived"
-                                value="{{$lguProfile->IIIBavailreceived}}">
-                                <option value="Yes" {{ old('IIIBavailreceived', $lguProfile->IIIBavailreceived) == 'Yes' ? 'selected' : '' }}>Yes </option>
-                                <option value="No" {{ old('IIIBavailreceived', $lguProfile->IIIBavailreceived) == 'No' ? 'selected' : '' }}>No </option> 
+                                value="{{$row->IIIBavailreceived}}">
+                                <option value="Yes" {{ old('IIIBavailreceived', $row->IIIBavailreceived) == 'Yes' ? 'selected' : '' }}>Yes </option>
+                                <option value="No" {{ old('IIIBavailreceived', $row->IIIBavailreceived) == 'No' ? 'selected' : '' }}>No </option> 
                             </select>
                         </div>
                         <div class="col">
                             <input type="date" class="form-control" id="exampleFormControlInput1"
-                                name="IIIBdatereceived" value="{{$lguProfile->IIIBdatereceived}}">
+                                name="IIIBdatereceived" value="{{$row->IIIBdatereceived}}">
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="IIIBvolumepax"
-                                value="{{$lguProfile->IIIBvolumepax}}">
+                                value="{{$row->IIIBvolumepax}}">
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="IIIBremarks"
-                                value="{{$lguProfile->IIIBremarks}}">
+                                value="{{$row->IIIBremarks}}">
                         </div>
                     </div>
                     <div style="display:flex;">
@@ -1078,39 +1103,39 @@
                         </div>
                         <div class="col">
                             <select id="loadProvince1" class="form-control" name="IIICsource"
-                                value="{{$lguProfile->IIICsource}}">
+                                value="{{$row->IIICsource}}">
                                 <option value="NGA"
-                                    {{ old('IIICsource', $lguProfile->IIICsource) == 'NGA' ? 'selected' : '' }}>NGA
+                                    {{ old('IIICsource', $row->IIICsource) == 'NGA' ? 'selected' : '' }}>NGA
                                 </option>
                                 <option value="LGU"
-                                    {{ old('IIICsource', $lguProfile->IIICsource) == 'LGU' ? 'selected' : '' }}>LGU
+                                    {{ old('IIICsource', $row->IIICsource) == 'LGU' ? 'selected' : '' }}>LGU
                                 </option>
                                 <option value="NGO"
-                                    {{ old('IIICsource', $lguProfile->IIICsource) == 'NGO' ? 'selected' : '' }}>NGO
+                                    {{ old('IIICsource', $row->IIICsource) == 'NGO' ? 'selected' : '' }}>NGO
                                 </option>
                                 <option value="Private"
-                                    {{ old('IIICsource', $lguProfile->IIICsource) == 'Private' ? 'selected' : '' }}>
+                                    {{ old('IIICsource', $row->IIICsource) == 'Private' ? 'selected' : '' }}>
                                     Private</option>
                             </select>
                         </div>
                         <div class="col">
                             <select id="loadProvince1" class="form-control" name="IIICavailreceived"
-                                value="{{$lguProfile->IIICavailreceived}}">
-                                <option value="Yes" {{ old('IIICavailreceived', $lguProfile->IIICavailreceived) == 'Yes' ? 'selected' : '' }}>Yes </option>
-                                <option value="No" {{ old('IIICavailreceived', $lguProfile->IIICavailreceived) == 'No' ? 'selected' : '' }}>No </option> 
+                                value="{{$row->IIICavailreceived}}">
+                                <option value="Yes" {{ old('IIICavailreceived', $row->IIICavailreceived) == 'Yes' ? 'selected' : '' }}>Yes </option>
+                                <option value="No" {{ old('IIICavailreceived', $row->IIICavailreceived) == 'No' ? 'selected' : '' }}>No </option> 
                             </select>
                         </div>
                         <div class="col">
                             <input type="date" class="form-control" id="exampleFormControlInput1"
-                                name="IIICdatereceived" value="{{$lguProfile->IIICdatereceived}}">
+                                name="IIICdatereceived" value="{{$row->IIICdatereceived}}">
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="IIICvolumepax"
-                                value="{{$lguProfile->IIICvolumepax}}">
+                                value="{{$row->IIICvolumepax}}">
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="IIICremarks"
-                                value="{{$lguProfile->IIICremarks}}">
+                                value="{{$row->IIICremarks}}">
                         </div>
                     </div>
                     <div style="display:flex;">
@@ -1123,39 +1148,39 @@
                         </div>
                         <div class="col">
                             <select id="loadProvince1" class="form-control" name="IIIDsource"
-                                value="{{$lguProfile->IIIDsource}}">
+                                value="{{$row->IIIDsource}}">
                                 <option value="NGA"
-                                    {{ old('IIIDsource', $lguProfile->IIIDsource) == 'NGA' ? 'selected' : '' }}>NGA
+                                    {{ old('IIIDsource', $row->IIIDsource) == 'NGA' ? 'selected' : '' }}>NGA
                                 </option>
                                 <option value="LGU"
-                                    {{ old('IIIDsource', $lguProfile->IIIDsource) == 'LGU' ? 'selected' : '' }}>LGU
+                                    {{ old('IIIDsource', $row->IIIDsource) == 'LGU' ? 'selected' : '' }}>LGU
                                 </option>
                                 <option value="NGO"
-                                    {{ old('IIIDsource', $lguProfile->IIIDsource) == 'NGO' ? 'selected' : '' }}>NGO
+                                    {{ old('IIIDsource', $row->IIIDsource) == 'NGO' ? 'selected' : '' }}>NGO
                                 </option>
                                 <option value="Private"
-                                    {{ old('IIIDsource', $lguProfile->IIIDsource) == 'Private' ? 'selected' : '' }}>
+                                    {{ old('IIIDsource', $row->IIIDsource) == 'Private' ? 'selected' : '' }}>
                                     Private</option>
                             </select>
                         </div>
                         <div class="col">
                             <select id="loadProvince1" class="form-control" name="IIIDavailreceived"
-                                value="{{$lguProfile->IIIDavailreceived}}">
-                                <option value="Yes" {{ old('IIIDavailreceived', $lguProfile->IIIDavailreceived) == 'Yes' ? 'selected' : '' }}>Yes </option>
-                                <option value="No" {{ old('IIIDavailreceived', $lguProfile->IIIDavailreceived) == 'No' ? 'selected' : '' }}>No </option> 
+                                value="{{$row->IIIDavailreceived}}">
+                                <option value="Yes" {{ old('IIIDavailreceived', $row->IIIDavailreceived) == 'Yes' ? 'selected' : '' }}>Yes </option>
+                                <option value="No" {{ old('IIIDavailreceived', $row->IIIDavailreceived) == 'No' ? 'selected' : '' }}>No </option> 
                             </select>
                         </div>
                         <div class="col">
                             <input type="date" class="form-control" id="exampleFormControlInput1"
-                                name="IIIDdatereceived" value="{{$lguProfile->IIIDdatereceived}}">
+                                name="IIIDdatereceived" value="{{$row->IIIDdatereceived}}">
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="IIIDvolumepax"
-                                value="{{$lguProfile->IIIDvolumepax}}">
+                                value="{{$row->IIIDvolumepax}}">
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="IIIDremarks"
-                                value="{{$lguProfile->IIIDremarks}}">
+                                value="{{$row->IIIDremarks}}">
                         </div>
                     </div>
                     <div style="display:flex;">
@@ -1168,39 +1193,39 @@
                         </div>
                         <div class="col">
                             <select id="loadProvince1" class="form-control" name="IIIEsource"
-                                value="{{$lguProfile->IIIEsource}}">
+                                value="{{$row->IIIEsource}}">
                                 <option value="NGA"
-                                    {{ old('IIIEsource', $lguProfile->IIIEsource) == 'NGA' ? 'selected' : '' }}>NGA
+                                    {{ old('IIIEsource', $row->IIIEsource) == 'NGA' ? 'selected' : '' }}>NGA
                                 </option>
                                 <option value="LGU"
-                                    {{ old('IIIEsource', $lguProfile->IIIEsource) == 'LGU' ? 'selected' : '' }}>LGU
+                                    {{ old('IIIEsource', $row->IIIEsource) == 'LGU' ? 'selected' : '' }}>LGU
                                 </option>
                                 <option value="NGO"
-                                    {{ old('IIIEsource', $lguProfile->IIIEsource) == 'NGO' ? 'selected' : '' }}>NGO
+                                    {{ old('IIIEsource', $row->IIIEsource) == 'NGO' ? 'selected' : '' }}>NGO
                                 </option>
                                 <option value="Private"
-                                    {{ old('IIIEsource', $lguProfile->IIIEsource) == 'Private' ? 'selected' : '' }}>
+                                    {{ old('IIIEsource', $row->IIIEsource) == 'Private' ? 'selected' : '' }}>
                                     Private</option>
                             </select>
                         </div>
                         <div class="col">
                             <select id="loadProvince1" class="form-control" name="IIIEavailreceived"
-                                value="{{$lguProfile->IIIEavailreceived}}">
-                                <option value="Yes" {{ old('IIIEavailreceived', $lguProfile->IIIEavailreceived) == 'Yes' ? 'selected' : '' }}>Yes </option>
-                                <option value="No" {{ old('IIIEavailreceived', $lguProfile->IIIEavailreceived) == 'No' ? 'selected' : '' }}>No </option> 
+                                value="{{$row->IIIEavailreceived}}">
+                                <option value="Yes" {{ old('IIIEavailreceived', $row->IIIEavailreceived) == 'Yes' ? 'selected' : '' }}>Yes </option>
+                                <option value="No" {{ old('IIIEavailreceived', $row->IIIEavailreceived) == 'No' ? 'selected' : '' }}>No </option> 
                             </select>
                         </div>
                         <div class="col">
                             <input type="date" class="form-control" id="exampleFormControlInput1"
-                                name="IIIEdatereceived" value="{{$lguProfile->IIIEdatereceived}}">
+                                name="IIIEdatereceived" value="{{$row->IIIEdatereceived}}">
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="IIIEvolumepax"
-                                value="{{$lguProfile->IIIEvolumepax}}">
+                                value="{{$row->IIIEvolumepax}}">
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="IIIEremarks"
-                                value="{{$lguProfile->IIIEremarks}}">
+                                value="{{$row->IIIEremarks}}">
                         </div>
                     </div>
                     <div style="display:flex;">
@@ -1213,39 +1238,39 @@
                         </div>
                         <div class="col">
                             <select id="loadProvince1" class="form-control" name="IIIFsource"
-                                value="{{$lguProfile->IIIFsource}}">
+                                value="{{$row->IIIFsource}}">
                                 <option value="NGA"
-                                    {{ old('IIIFsource', $lguProfile->IIIFsource) == 'NGA' ? 'selected' : '' }}>NGA
+                                    {{ old('IIIFsource', $row->IIIFsource) == 'NGA' ? 'selected' : '' }}>NGA
                                 </option>
                                 <option value="LGU"
-                                    {{ old('IIIFsource', $lguProfile->IIIFsource) == 'LGU' ? 'selected' : '' }}>LGU
+                                    {{ old('IIIFsource', $row->IIIFsource) == 'LGU' ? 'selected' : '' }}>LGU
                                 </option>
                                 <option value="NGO"
-                                    {{ old('IIIFsource', $lguProfile->IIIFsource) == 'NGO' ? 'selected' : '' }}>NGO
+                                    {{ old('IIIFsource', $row->IIIFsource) == 'NGO' ? 'selected' : '' }}>NGO
                                 </option>
                                 <option value="Private"
-                                    {{ old('IIIFsource', $lguProfile->IIIFsource) == 'Private' ? 'selected' : '' }}>
+                                    {{ old('IIIFsource', $row->IIIFsource) == 'Private' ? 'selected' : '' }}>
                                     Private</option>
                             </select>
                         </div>
                         <div class="col">
                             <select id="loadProvince1" class="form-control" name="IIIFavailreceived"
-                                value="{{$lguProfile->IIIFavailreceived}}">
-                                <option value="Yes" {{ old('IIIFavailreceived', $lguProfile->IIIFavailreceived) == 'Yes' ? 'selected' : '' }}>Yes </option>
-                                <option value="No" {{ old('IIIFavailreceived', $lguProfile->IIIFavailreceived) == 'No' ? 'selected' : '' }}>No </option> 
+                                value="{{$row->IIIFavailreceived}}">
+                                <option value="Yes" {{ old('IIIFavailreceived', $row->IIIFavailreceived) == 'Yes' ? 'selected' : '' }}>Yes </option>
+                                <option value="No" {{ old('IIIFavailreceived', $row->IIIFavailreceived) == 'No' ? 'selected' : '' }}>No </option> 
                             </select>
                         </div>
                         <div class="col">
                             <input type="date" class="form-control" id="exampleFormControlInput1"
-                                name="IIIFdatereceived" value="{{$lguProfile->IIIFdatereceived}}">
+                                name="IIIFdatereceived" value="{{$row->IIIFdatereceived}}">
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="IIIFvolumepax"
-                                value="{{$lguProfile->IIIFvolumepax}}">
+                                value="{{$row->IIIFvolumepax}}">
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="IIIFremarks"
-                                value="{{$lguProfile->IIIFremarks}}">
+                                value="{{$row->IIIFremarks}}">
                         </div>
                     </div>
 
@@ -1282,39 +1307,39 @@
                         </div>
                         <div class="col">
                             <select id="loadProvince1" class="form-control" name="IVAsource"
-                                value="{{$lguProfile->IVAsource}}">
+                                value="{{$row->IVAsource}}">
                                 <option value="NGA"
-                                    {{ old('IVAsource', $lguProfile->IVAsource) == 'NGA' ? 'selected' : '' }}>NGA
+                                    {{ old('IVAsource', $row->IVAsource) == 'NGA' ? 'selected' : '' }}>NGA
                                 </option>
                                 <option value="LGU"
-                                    {{ old('IVAsource', $lguProfile->IVAsource) == 'LGU' ? 'selected' : '' }}>LGU
+                                    {{ old('IVAsource', $row->IVAsource) == 'LGU' ? 'selected' : '' }}>LGU
                                 </option>
                                 <option value="NGO"
-                                    {{ old('IVAsource', $lguProfile->IVAsource) == 'NGO' ? 'selected' : '' }}>NGO
+                                    {{ old('IVAsource', $row->IVAsource) == 'NGO' ? 'selected' : '' }}>NGO
                                 </option>
                                 <option value="Private"
-                                    {{ old('IVAsource', $lguProfile->IVAsource) == 'Private' ? 'selected' : '' }}>
+                                    {{ old('IVAsource', $row->IVAsource) == 'Private' ? 'selected' : '' }}>
                                     Private</option>
                             </select>
                         </div>
                         <div class="col">
                             <select id="loadProvince1" class="form-control" name="IVAavailreceived"
-                                value="{{$lguProfile->IVAavailreceived}}">
-                                <option value="Yes" {{ old('IVAavailreceived', $lguProfile->IVAavailreceived) == 'Yes' ? 'selected' : '' }}>Yes </option>
-                                <option value="No" {{ old('IVAavailreceived', $lguProfile->IVAavailreceived) == 'No' ? 'selected' : '' }}>No </option> 
+                                value="{{$row->IVAavailreceived}}">
+                                <option value="Yes" {{ old('IVAavailreceived', $row->IVAavailreceived) == 'Yes' ? 'selected' : '' }}>Yes </option>
+                                <option value="No" {{ old('IVAavailreceived', $row->IVAavailreceived) == 'No' ? 'selected' : '' }}>No </option> 
                             </select>
                         </div>
                         <div class="col">
                             <input type="date" class="form-control" id="exampleFormControlInput1" name="IVAdatereceived"
-                                value="{{$lguProfile->IVAdatereceived}}">
+                                value="{{$row->IVAdatereceived}}">
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="IVAvolumepax"
-                                value="{{$lguProfile->IVAvolumepax}}">
+                                value="{{$row->IVAvolumepax}}">
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="IVAremarks"
-                                value="{{$lguProfile->IVAremarks}}">
+                                value="{{$row->IVAremarks}}">
                         </div>
                     </div>
 
@@ -1351,46 +1376,46 @@
                         </div>
                         <div class="col">
                             <select id="loadProvince1" class="form-control" name="VAsource"
-                                value="{{$lguProfile->VAsource}}">
+                                value="{{$row->VAsource}}">
                                 <option value="NGA"
-                                    {{ old('VAsource', $lguProfile->VAsource) == 'NGA' ? 'selected' : '' }}>NGA</option>
+                                    {{ old('VAsource', $row->VAsource) == 'NGA' ? 'selected' : '' }}>NGA</option>
                                 <option value="LGU"
-                                    {{ old('VAsource', $lguProfile->VAsource) == 'LGU' ? 'selected' : '' }}>LGU</option>
+                                    {{ old('VAsource', $row->VAsource) == 'LGU' ? 'selected' : '' }}>LGU</option>
                                 <option value="NGO"
-                                    {{ old('VAsource', $lguProfile->VAsource) == 'NGO' ? 'selected' : '' }}>NGO</option>
+                                    {{ old('VAsource', $row->VAsource) == 'NGO' ? 'selected' : '' }}>NGO</option>
                                 <option value="Private"
-                                    {{ old('VAsource', $lguProfile->VAsource) == 'Private' ? 'selected' : '' }}>Private
+                                    {{ old('VAsource', $row->VAsource) == 'Private' ? 'selected' : '' }}>Private
                                 </option>
                             </select>
                         </div>
                         <div class="col">
                             <select id="loadProvince1" class="form-control" name="VAavailreceived"
-                                value="{{$lguProfile->VAavailreceived}}">
-                                <option value="Yes" {{ old('VAavailreceived', $lguProfile->VAavailreceived) == 'Yes' ? 'selected' : '' }}>Yes </option>
-                                <option value="No" {{ old('VAavailreceived', $lguProfile->VAavailreceived) == 'No' ? 'selected' : '' }}>No </option> 
+                                value="{{$row->VAavailreceived}}">
+                                <option value="Yes" {{ old('VAavailreceived', $row->VAavailreceived) == 'Yes' ? 'selected' : '' }}>Yes </option>
+                                <option value="No" {{ old('VAavailreceived', $row->VAavailreceived) == 'No' ? 'selected' : '' }}>No </option> 
                             </select>
                         </div>
                         <div class="col">
                             <input type="date" class="form-control" id="exampleFormControlInput1" name="VAdatereceived"
-                                value="{{$lguProfile->VAdatereceived}}">
+                                value="{{$row->VAdatereceived}}">
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="VAvolumepax"
-                                value="{{$lguProfile->VAvolumepax}}">
+                                value="{{$row->VAvolumepax}}">
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="VAremarks"
-                                value="{{$lguProfile->VAremarks}}">
+                                value="{{$row->VAremarks}}">
                         </div>
                     </div>
                 </div>
 
                 <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
-                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
-                    Draft
+                    <button type="button" class="bold btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
+                    Save as Draft
                     </button>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                    Submit
+                    <button type="button" class="bold btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                    Save and Submit
                     </button>
                 </div> 
             </form>

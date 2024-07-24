@@ -18,3 +18,27 @@
 /* .navbar-nav .nav-link i.now-ui-icons {
     opacity: 1;
 } */
+
+.download {
+    color :gray!important;
+    font-style:italic;
+    cursor:pointer;
+    margin:0px!important; 
+}
+
+.centers {
+    align-items:center;
+    justify-content: center;
+}
+
+/* lgu visionMission */
+.tableheader {
+
+    font-size:16px!important;
+    color:white!important;
+    font-weight: bold!important;
+    text-align: center;
+}
+.text-center {
+    text-align: center; 
+}

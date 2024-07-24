@@ -34,8 +34,7 @@
 'activeNav' => '',
 ])
 
-@section('content')
-<!-- <div class="panel-header panel-header-sm"></div>  -->
+@section('content') 
 <div class="content" style="margin-top:50px;padding:2%">
     <div class="card" style="border-radius:10px;padding-left:2rem!important;padding-right:1rem!important">
         <div style="display:flex;align-items:center">
@@ -49,18 +48,9 @@
         <div style="padding:25px">
             <form action="{{ route('BSLGUprofilest.storeSubmit') }}" id="lgu-profile-form" method="POST">
                 @csrf
-
-                <input type="hidden" name="status" id="status">
-                <input type="hidden" name="dateCreated" value="05/19/2024">
-                <input type="hidden" name="dateUpdates" value="05/19/2024">
-
-                @include('layouts.page_template.location_header')
-
-                 <!-- Update create  -->
-                 <!-- -added error message  per variable -->
-                 <!-- -added value old for history data  -->
-                 <!-- -added placeholder sample -->
-
+                
+                <input type="hidden" name="status" id="status"> 
+                @include('layouts.page_template.location_header') 
 
                 <br>
                 <div style="display:flex">
@@ -1782,10 +1772,10 @@
                     <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
-                    Draft
+                    Save as Draft
                     </button>
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                    Submit
+                   Save and Submit
                     </button>
 
                 </div>

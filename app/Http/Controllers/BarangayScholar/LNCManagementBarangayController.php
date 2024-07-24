@@ -23,7 +23,7 @@ class LNCManagementBarangayController extends Controller
     public function index()
     {
         $barangay = auth()->user()->barangay; 
-        $lnclocation = DB::table('mplgubrgylncmanagement')->where('barangay_id', $barangay)->get();
+        $lnclocation = DB::table('mplgubrgylncmanagement')->where('user_id', auth()->user()->id)->get();
         return view('BarangayScholar.LNCManagement.index', ['lnclocation' => $lnclocation ]);
     }
 
@@ -32,7 +32,7 @@ class LNCManagementBarangayController extends Controller
      */
     public function create()
     {
-
+        $action = "create";
         $location = new LocationController;
         $prov = $location->getLocationDataProvince(auth()->user()->Region);
         $mun = $location->getLocationDataMuni(auth()->user()->Province);
@@ -41,7 +41,7 @@ class LNCManagementBarangayController extends Controller
         
         $years = range(date("Y"), 1900);
 
-        return view('BarangayScholar.LNCManagement.create', compact('prov', 'mun', 'city', 'brgy','years'));
+        return view('BarangayScholar.LNCManagement.create', compact('prov', 'mun', 'city', 'brgy','years', 'action'));
     }
 
     /**
@@ -57,7 +57,6 @@ class LNCManagementBarangayController extends Controller
             'region_id' => 'required|integer',
             'dateMonitoring' => 'required|date|max:255',
             'periodCovereda' => 'required|string |max:255',
-            'periodCoveredb' => 'required|string|max:255',
             'rating4a' => 'required|integer',
             'rating4b' => 'required|integer',
             'rating4c' => 'required|integer',
@@ -76,8 +75,6 @@ class LNCManagementBarangayController extends Controller
 
 
             'status' => 'required|string|max:255',
-            'dateCreated' => 'required|date ',
-            'dateUpdates' => 'required|date ',
             'user_id' => 'required|integer',
     
         ]; 
@@ -97,7 +94,6 @@ class LNCManagementBarangayController extends Controller
                 'region_id' =>  $request->region_id,
                 'dateMonitoring' =>  $request->dateMonitoring,
                 'periodCovereda' =>  $request->periodCovereda,
-                'periodCoveredb' =>  $request->periodCoveredb,
                 'rating4a' =>  $request->rating4a,
                 'rating4b' =>  $request->rating4b,
                 'rating4c' =>  $request->rating4c,
@@ -115,8 +111,6 @@ class LNCManagementBarangayController extends Controller
                 'remarks4g' =>  $request->remarks4g, 
                 'status' =>  $request->status,
                 'user_id' =>  $request->user_id,
-                'dateCreated' =>  $request->dateCreated,
-                'dateUpdates' =>  $request->dateUpdates,
             ]); 
 
             MellpiproLNCManagementTracking::create([
@@ -136,9 +130,18 @@ class LNCManagementBarangayController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, string $id)
     {
-        //
+        $action = "edit";
+        $location = new LocationController;
+        $prov = $location->getLocationDataProvince(auth()->user()->Region);
+        $mun = $location->getLocationDataMuni(auth()->user()->Province);
+        $city = $location->getLocationDataCity(auth()->user()->Region);
+        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        
+        $years = range(date("Y"), 1900);
+        $row = DB::table('mplgubrgylncmanagement')->where('id', $request->id)->first();
+        return view('BarangayScholar.LNCManagement.show', compact('row','prov', 'mun', 'city', 'brgy','years', 'action'));
     }
 
     /**
@@ -146,8 +149,16 @@ class LNCManagementBarangayController extends Controller
      */
     public function edit(Request $request ,string $id)
     {
-        $lncbarangay = DB::table('mplgubrgylncmanagement')->where('id', $request->id)->first();
-        return view('BarangayScholar.LNCManagement.edit', ['lncbarangay' => $lncbarangay ])->with('success', 'Created successfully!');
+        $action = "edit";
+        $location = new LocationController;
+        $prov = $location->getLocationDataProvince(auth()->user()->Region);
+        $mun = $location->getLocationDataMuni(auth()->user()->Province);
+        $city = $location->getLocationDataCity(auth()->user()->Region);
+        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        
+        $years = range(date("Y"), 1900);
+        $row = DB::table('mplgubrgylncmanagement')->where('id', $request->id)->first();
+        return view('BarangayScholar.LNCManagement.edit', compact('row','prov', 'mun', 'city', 'brgy','years', 'action'));
     }
 
     /**
@@ -163,7 +174,6 @@ class LNCManagementBarangayController extends Controller
                 'region_id' => 'required|integer',
                 'dateMonitoring' => 'required|date|max:255',
                 'periodCovereda' => 'required|string |max:255',
-                'periodCoveredb' => 'required|string|max:255',
                 'rating4a' => 'required|integer',
                 'rating4b' => 'required|integer',
                 'rating4c' => 'required|integer',
@@ -182,8 +192,6 @@ class LNCManagementBarangayController extends Controller
     
     
                 'status' => 'required|string|max:255',
-                'dateCreated' => 'required|date ',
-                'dateUpdates' => 'required|date ',
                 'user_id' => 'required|integer',
         
             ]; 
@@ -204,7 +212,6 @@ class LNCManagementBarangayController extends Controller
                     'region_id' =>  $request->region_id,
                     'dateMonitoring' =>  $request->dateMonitoring,
                     'periodCovereda' =>  $request->periodCovereda,
-                    'periodCoveredb' =>  $request->periodCoveredb,
                     'rating4a' =>  $request->rating4a,
                     'rating4b' =>  $request->rating4b,
                     'rating4c' =>  $request->rating4c,
@@ -222,8 +229,6 @@ class LNCManagementBarangayController extends Controller
                     'remarks4g' =>  $request->remarks4g, 
                     'status' =>  $request->status,
                     'user_id' =>  $request->user_id,
-                    'dateCreated' =>  $request->dateCreated,
-                    'dateUpdates' =>  $request->dateUpdates,
                 ]); 
     
             }
@@ -233,11 +238,11 @@ class LNCManagementBarangayController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
          //dd($id);
-         DB::table('mplgubrgylncmanagementtracking')->where('mplgubrgylncmanagement_id', $id)->delete();
-         $lncbarangay = MellpiproLNCManagement::find($id); 
+         DB::table('mplgubrgylncmanagementtracking')->where('mplgubrgylncmanagement_id', $request->id)->delete();
+         $lncbarangay = MellpiproLNCManagement::find($request->id); 
          $lncbarangay->delete();
          return redirect()->route('nutritionpolicies.index')->with('success', 'Deleted successfully!');
     }

@@ -1,5 +1,5 @@
 
-@extends('layouts.CAapp', [
+@extends('layouts.app', [
     'namePage' => 'Dashboard',
     'class' => 'login-page sidebar-mini ',
     'activePage' => 'home',

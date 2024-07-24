@@ -10,6 +10,7 @@
 ])
 
 @section('content')
+
 <!-- <div class="panel-header panel-header-sm"></div> -->
 <div class="content" style="margin-top:50px;padding:2%">
     <div class="row-12">
@@ -24,35 +25,44 @@
                     <div class="alert alert-success">{{session('status')}}</div>
                     @endif
 
+                    <!-- alert -->
+                    @include('layouts.page_template.crud_alert_message')
+
                     <div>
-                        <form action="#">
+                        <form action="{{ route('MellpiProForLNFPSubmit.storeSubmit') }}" id="lnfp-profile-form" method="POST">
                             @csrf
                             <center><img src="https://nnc-nmis.moodlearners.com/assets/img/logo.png" alt="" class="imgLogo"></center><br>
                             <center>
                                 <h5 class="title">{{__("Mellpi Pro PNAO Form: Provincial Profile Formsss")}}</h5>
                             </center><br>
 
-                            <input type="hidden" name="status" value="1">
-                            <input type="hidden" name="dateCreated" value="05/19/2024">
-                            <input type="hidden" name="dateUpdates" value="05/19/2024">
+                            <input type="hidden" name="submitStatus" value="1">
+                            <input type="hidden" name="DraftStatus" value="2">
+
+                            <input type="hidden" id="action" name="action" value=""> 
+
+
+                            <!-- <input type="hidden" name="dateCreated" value="05/19/2024">
+                            <input type="hidden" name="dateUpdates" value="05/19/2024"> -->
+
                             <!-- header -->
                             <div style="display:flex">
                                 <div class="form-group col">
                                     <label for="exampleFormControlInput1">Barangay:</label>
-                                    <input type="text" class="form-control" name="barangay_id"
-                                        value="{{Auth()->user()->barangay}}">
+                                    <input type="text" class="form-control" name="barangay_id" value="{{Auth()->user()->barangay}}">
                                 </div>
                                 <div class="form-group col">
                                     <label for="exampleFormControlInput1">Municipality/City:</label>
-                                    <input type="text" class="form-control" name="municipal_id"
-                                        value="{{auth()->user()->city_municipal }}">
+                                    <input type="text" class="form-control" name="municipal_id" value="{{auth()->user()->city_municipal }}">
                                 </div>
                                 <div class="form-group col">
                                     <label for="exampleFormControlInput1">Province:</label>
-                                    <input type="text" class="form-control" name="province_id"
-                                        value="{{auth()->user()->Province}}">
-                                    <input type="hidden" class="form-control" name="region_id"
-                                        value="{{auth()->user()->Region}}">
+                                    <input type="text" class="form-control" name="province_id" value="{{auth()->user()->Province}}">
+                                    <!-- <input type="test" class="form-control" name="region_id" value="{{auth()->user()->Region}}"> -->
+                                </div>
+                                <div class="form-group col">
+                                    <label for="exampleFormControlInput1">Region:</label>
+                                    <input type="test" class="form-control" name="region_id" value="{{auth()->user()->Region}}">
                                 </div>
 
                             </div>
@@ -61,23 +71,34 @@
 
                                 <div class="form-group col">
                                     <label for="exampleFormControlInput1">Date of Monitoring:</label>
-                                    <input type="date" class="form-control" id="exampleFormControlInput1"
-                                        name="dateMonitoring">
+                                    <input type="date" class="form-control" id="dateMonitoring" name="dateMonitoring">
                                 </div>
                                 <div class="form-group col">
-                                    <label for="exampleFormControlInput1">Period Covered From:</label>
+                                    <!-- <label for="exampleFormControlInput1">Period Covered From:</label>
                                     <input type="date" class="form-control" id="exampleFormControlInput1"
-                                        data-date-format="mm-yyyy" name="periodCovereda">
+                                        data-date-format="mm-yyyy" name="periodCovereda"> -->
+
+                                    <label for="exampleFormControlInput1">Period Covered: </label>
+                                    <select name="periodCovereda" id="exampleFormControlInput1" class="form-control">
+                                        <?php
+                                        $currentYear = date('Y');
+                                        $startYear = 1900;
+                                        $endYear = $currentYear;
+                                        for ($year = $startYear; $year <= $endYear; $year++) {
+                                            echo "<option value=\"$year\">$year</option>";
+                                        }
+                                        ?>
+                                        <option selected><?php echo $currentYear ?></option>
+                                    </select>
                                 </div>
-                                <div class="form-group col">
+                                <!-- <div class="form-group col">
                                     <label for="exampleFormControlInput1">Period Covered To:</label>
                                     <input type="date" class="form-control" id="exampleFormControlInput1"
                                         data-date-format="mm-yyyy" name="periodCoveredb">
-                                </div>
+                                </div> -->
                                 <div class="form-group col">
                                     <label for="exampleFormControlInput1">No. of Municipalities:</label>
-                                    <input type="number" class="form-control" id="exampleFormControlInput1"
-                                        name="numOfMun">
+                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="numOfMun">
                                 </div>
                             </div>
                             <!-- endheader -->
@@ -88,74 +109,63 @@
                                 <div class="col col-4 col-2">
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">Total Population:</label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput1"
-                                            name="totalPopulation">
+                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="totalPopulation" >
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleFormControlInput2">No. of household with access to
                                             safe
                                             water:</label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput2"
-                                            name="householdWater">
+                                        <input type="number" class="form-control" id="exampleFormControlInput2" name="householdWater" >
                                     </div>
 
                                     <div class="form-group">
                                         <label for="exampleFormControlInput3">No. of household with sanitary
                                             toilets:</label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput3"
-                                            name="householdToilets">
+                                        <input type="number" class="form-control" id="exampleFormControlInput3" name="householdToilets" >
                                     </div>
 
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">No. of Day Care Centers</label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput1"
-                                            name="dayCareCenter">
+                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="dayCareCenter" >
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">No. of public elementary
                                             schools:</label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput1"
-                                            name="elementary">
+                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="elementary" >
                                     </div>
 
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">No. of public secondary
                                             schools:</label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput1"
-                                            name="secondarySchool">
+                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="secondarySchool" >
                                     </div>
 
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">No. of Barangay Health
                                             Stations:</label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput1"
-                                            name="healthStations">
+                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="healthStations" >
                                     </div>
 
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">No. of retail outlets/sari-sari
                                             stores:</label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput1"
-                                            name="retailOutlets">
+                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="retailOutlets" >
                                     </div>
 
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">No. of bakeries:</label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput1"
-                                            name="bakeries">
+                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="bakeries" >
                                     </div>
 
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">No. of public markets:</label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput1"
-                                            name="markets">
+                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="markets" >
                                     </div>
 
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">No. of transport
                                             terminals:</label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput1"
-                                            name="transportTerminals">
+                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="transportTerminals" >
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">Percent of Lactating mothers
@@ -163,21 +173,18 @@
                                             breastfeeding
                                             until
                                             the 5th month:</label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput1"
-                                            name="breastfeeding">
+                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="breastfeeding" >
                                     </div>
 
                                     <div style="display:flex">
                                         <div class="form-group col">
                                             <label for="exampleFormControlInput1">Hazard:</label>
-                                            <input class="form-control" id="exampleFormControlInput1" name="hazards"
-                                                style="height:100px; border: 1px solid lightgray;border-radius:5px">
+                                            <input class="form-control" id="exampleFormControlInput1" name="hazards" style="height:100px; border: 1px solid lightgray;border-radius:5px" >
                                         </div>
                                         <div class="form-group col">
                                             <label for="exampleFormControlInput1">LGU/Households
                                                 affected:</label>
-                                            <input class="form-control" id="exampleFormControlInput1" name="affectedLGU"
-                                                style="height:100px; border: 1px solid lightgray;border-radius:5px">
+                                            <input class="form-control" id="exampleFormControlInput1" name="affectedLGU" style="height:100px; border: 1px solid lightgray;border-radius:5px" >
 
                                         </div>
                                     </div>
@@ -187,13 +194,11 @@
                                     <div style="display:flex" class="row">
                                         <div class="form-group col">
                                             <label for="exampleFormControlInput1">No. of households:</label>
-                                            <input type="number" class="form-control" id="exampleFormControlInput1"
-                                                name="noHousehold">
+                                            <input type="number" class="form-control" id="exampleFormControlInput1" name="noHousehold" >
                                         </div>
                                         <div class="form-group col">
                                             <label for="exampleFormControlInput1">No.of SITIOS/PUROKS:</label>
-                                            <input type="number" class="form-control" id="exampleFormControlInput1"
-                                                name="noPuroks">
+                                            <input type="number" class="form-control" id="exampleFormControlInput1" name="noPuroks" >
                                         </div>
                                     </div>
                                     <br>
@@ -226,28 +231,22 @@
                                                 <label for="exampleFormControlInput1">Estimated: </label>
                                             </div>
                                             <div class="form-group" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1"
-                                                    name="populationA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="populationA" >
                                             </div>
                                             <div class="form-group" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1"
-                                                    name="populationB">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="populationB" >
                                             </div>
                                             <div class="form-group" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1"
-                                                    name="populationC">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="populationC" >
                                             </div>
                                             <div class="form-group" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1"
-                                                    name="populationD">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="populationD" >
                                             </div>
                                             <div class="form-group" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1"
-                                                    name="populationE">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="populationE" >
                                             </div>
                                             <div class="form-group" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1"
-                                                    name="populationF">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="populationF" >
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -255,28 +254,22 @@
                                                 <label for="exampleFormControlInput1">Actual: </label>
                                             </div>
                                             <div class="form-group" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="actualA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="actualA" >
                                             </div>
                                             <div class="form-group" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="actualB">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="actualB" >
                                             </div>
                                             <div class="form-group" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="actualC">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="actualC" >
                                             </div>
                                             <div class="form-group" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="actualD">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="actualD" >
                                             </div>
                                             <div class="form-group" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="actualE">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="actualE" >
                                             </div>
                                             <div class="form-group" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="actualF">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="actualF" >
                                             </div>
                                         </div>
                                     </div>
@@ -288,13 +281,13 @@
                                                 <label for="exampleFormControlInput1"></label>
                                             </div>
                                             <div class=" col">
-                                                <label for="exampleFormControlInput1">Year: <?php echo date("Y",strtotime("-1 year")); ?> </label>
+                                                <label for="exampleFormControlInput1">Year: <?php echo date("Y", strtotime("-1 year")); ?> </label>
                                             </div>
                                             <div class=" col">
-                                                <label for="exampleFormControlInput1">Year: <?php echo date("Y",strtotime("-2 year")); ?></label>
+                                                <label for="exampleFormControlInput1">Year: <?php echo date("Y", strtotime("-2 year")); ?></label>
                                             </div>
                                             <div class=" col">
-                                                <label for="exampleFormControlInput1">Year: <?php echo date("Y",strtotime("-3 year")); ?></label>
+                                                <label for="exampleFormControlInput1">Year: <?php echo date("Y", strtotime("-3 year")); ?></label>
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -302,16 +295,13 @@
                                                 <label for="exampleFormControlInput1">Normal: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="psnormalAAA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psnormalAAA" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="psnormalBAA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psnormalBAA" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="psnormalCAA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psnormalCAA" >
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -319,16 +309,13 @@
                                                 <label for="exampleFormControlInput1">Underweight: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="psunderweightAAA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psunderweightAAA" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="psunderweightBAA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psunderweightBAA" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="psunderweightCAA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psunderweightCAA" >
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -337,16 +324,13 @@
                                                 </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="pssevereUnderweightAAA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pssevereUnderweightAAA" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="pssevereUnderweightBAA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pssevereUnderweightBAA" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="pssevereUnderweightCAA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pssevereUnderweightCAA" >
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -354,16 +338,13 @@
                                                 <label for="exampleFormControlInput1">Overweight: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="psoverweightAAA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psoverweightAAA" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="psoverweightBAA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psoverweightBAA" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="psoverweightCAA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psoverweightCAA" >
                                             </div>
                                         </div>
 
@@ -375,16 +356,13 @@
                                                 <label for="exampleFormControlInput1">Normal: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="psnormalABA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psnormalABA" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="psnormalBBA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psnormalBBA" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="psnormalCCA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psnormalCCA" >
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -392,16 +370,13 @@
                                                 <label for="exampleFormControlInput1">Wasted: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="pswastedABA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pswastedABA" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="pswastedBBA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pswastedBBA" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="pswastedCCA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pswastedCCA" >
                                             </div>
                                         </div>
 
@@ -410,16 +385,13 @@
                                                 <label for="exampleFormControlInput1">Severely Wasted: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="psseverelyWastedABA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psseverelyWastedABA" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="psseverelyWastedBBA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psseverelyWastedBBA" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="psseverelyWastedCCA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psseverelyWastedCCA" >
                                             </div>
                                         </div>
 
@@ -428,16 +400,13 @@
                                                 <label for="exampleFormControlInput1">Overweight: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="psoverweightABA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psoverweightABA" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="psoverweightBBA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psoverweightBBA" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="psoverweightCCA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psoverweightCCA" >
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -445,16 +414,13 @@
                                                 <label for="exampleFormControlInput1">Obese: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="psobeseABA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psobeseABA" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="psobeseBBA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psobeseBBA" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="psobeseCCA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psobeseCCA" >
                                             </div>
                                         </div>
                                         <br>
@@ -466,16 +432,13 @@
                                                 <label for="exampleFormControlInput1">Normal: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="psnormalAAB">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psnormalAAB" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="psnormalBBB">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psnormalBBB" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="psnormalCCC">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psnormalCCC" >
                                             </div>
                                         </div>
 
@@ -484,16 +447,13 @@
                                                 <label for="exampleFormControlInput1">Stunted: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="psstuntedAAB">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psstuntedAAB" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="psstuntedBBB">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psstuntedBBB" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="psstuntedCCC">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psstuntedCCC" >
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -501,16 +461,13 @@
                                                 <label for="exampleFormControlInput1">Severely Stunted: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="pssevereStuntedAAB">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pssevereStuntedAAB" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="pssevereStuntedBBB">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pssevereStuntedBBB" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="pssevereStuntedCCC">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pssevereStuntedCCC" >
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -518,16 +475,13 @@
                                                 <label for="exampleFormControlInput1">Tall: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="pstallAAB">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pstallAAB" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="pstallBBB">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pstallBBB" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="pstallCCC">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pstallCCC" >
                                             </div>
                                         </div>
                                     </div>
@@ -542,16 +496,13 @@
                                                 <label for="exampleFormControlInput1">Normal: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="scnormalABA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scnormalABA" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="scnormalBBA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scnormalBBA" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="scnormalCCA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scnormalCCA" >
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -559,16 +510,13 @@
                                                 <label for="exampleFormControlInput1">Wasted: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="scwastedABA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scwastedABA" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="scwastedBBA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scwastedBBA" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="scwastedCCA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scwastedCCA" >
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -576,16 +524,13 @@
                                                 <label for="exampleFormControlInput1">Severely Wasted: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="scseverelyWastedABA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scseverelyWastedABA" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="scseverelyWastedBBA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scseverelyWastedBBA" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="scseverelyWastedCCA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scseverelyWastedCCA" >
                                             </div>
                                         </div>
 
@@ -594,16 +539,13 @@
                                                 <label for="exampleFormControlInput1">Overweight: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="scoverweightABA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scoverweightABA" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="scoverweightBBA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scoverweightBBA" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="scoverweightCCA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scoverweightCCA" >
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -611,16 +553,13 @@
                                                 <label for="exampleFormControlInput1">Obese: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="scobeseABA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scobeseABA" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="scobeseBBA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scobeseBBA" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="scobeseCCA">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scobeseCCA" >
                                             </div>
                                         </div>
 
@@ -634,16 +573,13 @@
                                                     <label for="exampleFormControlInput1">Normal: </label>
                                                 </div>
                                                 <div class="form-group col" style="margin-left:10px">
-                                                    <input type="number" class="form-control"
-                                                        id="exampleFormControlInput1" name="pwnormalAAA">
+                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwnormalAAA" >
                                                 </div>
                                                 <div class="form-group col" style="margin-left:10px">
-                                                    <input type="number" class="form-control"
-                                                        id="exampleFormControlInput1" name="pwnormalBAA">
+                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwnormalBAA" >
                                                 </div>
                                                 <div class="form-group col" style="margin-left:10px">
-                                                    <input type="number" class="form-control"
-                                                        id="exampleFormControlInput1" name="pwnormalCAA">
+                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwnormalCAA" >
                                                 </div>
                                             </div>
                                             <div style="display:flex;">
@@ -652,16 +588,13 @@
                                                     </label>
                                                 </div>
                                                 <div class="form-group col" style="margin-left:10px">
-                                                    <input type="number" class="form-control"
-                                                        id="exampleFormControlInput1" name="pwnutritionllyatriskAAA">
+                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwnutritionllyatriskAAA" >
                                                 </div>
                                                 <div class="form-group col" style="margin-left:10px">
-                                                    <input type="number" class="form-control"
-                                                        id="exampleFormControlInput1" name="pwnutritionllyatriskBAA">
+                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwnutritionllyatriskBAA" >
                                                 </div>
                                                 <div class="form-group col" style="margin-left:10px">
-                                                    <input type="number" class="form-control"
-                                                        id="exampleFormControlInput1" name="pwnutritionllyatriskCAA">
+                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwnutritionllyatriskCAA" >
                                                 </div>
                                             </div>
                                             <div style="display:flex;">
@@ -669,16 +602,13 @@
                                                     <label for="exampleFormControlInput1">Overweight: </label>
                                                 </div>
                                                 <div class="form-group col" style="margin-left:10px">
-                                                    <input type="number" class="form-control"
-                                                        id="exampleFormControlInput1" name="pwoverweightAAA">
+                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwoverweightAAA" >
                                                 </div>
                                                 <div class="form-group col" style="margin-left:10px">
-                                                    <input type="number" class="form-control"
-                                                        id="exampleFormControlInput1" name="pwoverweightBAA">
+                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwoverweightBAA" >
                                                 </div>
                                                 <div class="form-group col" style="margin-left:10px">
-                                                    <input type="number" class="form-control"
-                                                        id="exampleFormControlInput1" name="pwoverweightCAA">
+                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwoverweightCAA" >
                                                 </div>
                                             </div>
 
@@ -687,16 +617,13 @@
                                                     <label for="exampleFormControlInput1">Obese: </label>
                                                 </div>
                                                 <div class="form-group col" style="margin-left:10px">
-                                                    <input type="number" class="form-control"
-                                                        id="exampleFormControlInput1" name="pwobeseAAA">
+                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwobeseAAA" >
+                                                </div>
+                                                <div class="form-group col" style="margin-left:10px"> 
+                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwobeseBAA" >
                                                 </div>
                                                 <div class="form-group col" style="margin-left:10px">
-                                                    <input type="number" class="form-control"
-                                                        id="exampleFormControlInput1" name="pwobeseBAA">
-                                                </div>
-                                                <div class="form-group col" style="margin-left:10px">
-                                                    <input type="number" class="form-control"
-                                                        id="exampleFormControlInput1" name="pwobeseCAA">
+                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwobeseCAA" >
                                                 </div>
                                             </div>
 
@@ -721,12 +648,10 @@
                                                 <label for="exampleFormControlInput1">Total No.: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="newNutritionScholar">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="newNutritionScholar" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="oldNutritionScholar">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="oldNutritionScholar" >
                                             </div>
                                         </div>
                                     </div>
@@ -749,12 +674,10 @@
                                                 <label for="exampleFormControlInput1">Residential: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="newNutritionScholar">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="landAreaResidential" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="textarea" class="form-control"
-                                                    id="exampleFormControlInput1" name="oldNutritionScholar">
+                                                <input type="textarea" class="form-control" id="exampleFormControlInput1" name="remarksResidential" >
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -762,12 +685,10 @@
                                                 <label for="exampleFormControlInput1">Commercial: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="landAreaCommercial">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="landAreaCommercial" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="textarea" class="form-control"
-                                                    id="exampleFormControlInput1" name="remarksCommercial">
+                                                <input type="textarea" class="form-control" id="exampleFormControlInput1" name="remarksCommercial" >
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -775,12 +696,10 @@
                                                 <label for="exampleFormControlInput1">Industrial: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="landAreaIndustrial">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="landAreaIndustrial" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="textarea" class="form-control"
-                                                    id="exampleFormControlInput1" name="remarksIndustrial">
+                                                <input type="textarea" class="form-control" id="exampleFormControlInput1" name="remarksIndustrial" >
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -788,12 +707,10 @@
                                                 <label for="exampleFormControlInput1">Agricultural: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="landAreaAgricultural">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="landAreaAgricultural" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="textarea" class="form-control"
-                                                    id="exampleFormControlInput1" name="remarksAgricultural">
+                                                <input type="textarea" class="form-control" id="exampleFormControlInput1" name="remarksAgricultural" >
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -803,12 +720,10 @@
                                                 </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control"
-                                                    id="exampleFormControlInput1" name="landAreaFLMLNP">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="landAreaFLMLNP" >
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="textArea" class="form-control"
-                                                    id="exampleFormControlInput1" name="remarksFLMLNP">
+                                                <input type="textArea" class="form-control" id="exampleFormControlInput1" name="remarksFLMLNP" >
                                             </div>
                                         </div>
                                     </div>
@@ -818,56 +733,18 @@
 
 
                             <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
+                                <!-- <button type="submit" class="btn btn-warning ">Save as draft</button> -->
                                 <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
-                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalDraft">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
                                     Draft
                                 </button>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalSubmit">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
                                     Submit
                                 </button>
-                                <!-- <button type="submit" name="action" value="submit" class="btn btn-primary">Submit</button> -->
-                            </div>
-                            <!-- Modal Submit -->
-                            <div class="modal fade" id="exampleModalSubmit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <!-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <h5>Are you sure want to submit?</h5>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                            <button type="submit" id="lgu-draft" class="btn btn-primary" name="action" value="submit">Yes</button>
-                                        </div>
-                                    </div>
-                                </div>
+
                             </div>
 
-                            <!-- Modal Draft -->
-                            <div class="modal fade" id="exampleModalDraft" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <!-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <h5>Save as Draft?</h5>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                            <button type="submit" id="lgu-draft" class="btn btn-primary" name="action" value="draft">Yes</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </form>
                     </div>
                 </div>
@@ -875,5 +752,46 @@
         </div>
     </div>
 </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5>Are you sure want to submit this form?</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="submit" id="lnfplgu-submit" class="btn btn-primary">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenterDraft" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5>Save as Draft?</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="submit" id="lnfplgu-draft" class="btn btn-primary">Yes</button>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection

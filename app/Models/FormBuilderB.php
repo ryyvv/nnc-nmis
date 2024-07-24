@@ -12,7 +12,15 @@ class FormBuilderB extends Model
     protected $guarded =  ['id'];
     protected $fillable = ['formbuilderA_id','formBname','status'];
 
-    public function FormBuilderB (){
+    public function FormBuilderA (){
         return $this->belongsTo(FormBuilderA::class);
     }
+
+    public function FormBuilderC(){
+        return $this->belongsTo(FormBuilderC::class);
+    }
+    public function FormField(){
+        return $this->belongsTo(FormField::class);
+    }
+
 }

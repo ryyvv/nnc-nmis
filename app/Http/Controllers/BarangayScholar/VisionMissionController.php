@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\MellpiproLGUBarangayVisionMission;
 use App\Models\MellpiproLGUBarangayVisionMissionTracker;
 use App\Http\Controllers\LocationController;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class VisionMissionController extends Controller
 {
@@ -18,9 +19,9 @@ class VisionMissionController extends Controller
     public function index()
     {
         $barangay = auth()->user()->barangay; 
-        $vmlocation = DB::table('mplgubrgyvisionmissions')->where('barangay_id', $barangay)->get();
+        $vmlocations = DB::table('mplgubrgyvisionmissions')->where('user_id', auth()->user()->id)->get();
         
-        return view('BarangayScholar.VisionMission.index', ['vmlocation' => $vmlocation]);
+        return view('BarangayScholar.VisionMission.index', ['vmlocations' => $vmlocations]);
     }
 
     /**
@@ -46,7 +47,7 @@ class VisionMissionController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
+        // dd($request);
         $rules = [
             'barangay_id' => 'required|integer',
             'municipal_id' => 'required|integer',
@@ -54,7 +55,6 @@ class VisionMissionController extends Controller
             'region_id' => 'required|integer',
             'dateMonitoring' => 'required|date|max:255',
             'periodCovereda' => 'required|string |max:255',
-            'periodCoveredb' => 'required|string|max:255',
             'rating1a' => 'required|string|max:255',
             'rating1b' => 'required|string|max:255',
             'rating1c' => 'required|string|max:255',
@@ -62,8 +62,6 @@ class VisionMissionController extends Controller
             'remarks1b' => 'required|string|max:255',
             'remarks1c' => 'required|string|max:255', 
             'status' => 'required|string|max:255',
-            'dateCreated' => 'required|date ',
-            'dateUpdates' => 'required|date ',
             'user_id' => 'required|integer',
     
         ]; 
@@ -83,7 +81,6 @@ class VisionMissionController extends Controller
                 'region_id' =>  $request->region_id,
                 'dateMonitoring' =>  $request->dateMonitoring,
                 'periodCovereda' =>  $request->periodCovereda,
-                'periodCoveredb' =>  $request->periodCoveredb,
                 'rating1a' =>  $request->rating1a,
                 'rating1b' =>  $request->rating1b,
                 'rating1c' =>  $request->rating1c,
@@ -92,9 +89,8 @@ class VisionMissionController extends Controller
                 'remarks1c' =>  $request->remarks1c,
                 'status' =>  $request->status,
                 'user_id' =>  $request->user_id,
-                'dateCreated' =>  $request->dateCreated,
-                'dateUpdates' =>  $request->dateUpdates,
-            ]); 
+            ]);
+
             MellpiproLGUBarangayVisionMissionTracker::create([
                 'mplgubrgyvisionmissions_id' => $vmBarangay->id,
                 'status' => $request->status,
@@ -110,9 +106,22 @@ class VisionMissionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request)
     {
-        //
+       
+        $action = 'edit';
+        $location = new LocationController;
+        $prov = $location->getLocationDataProvince(auth()->user()->Region);
+        $mun = $location->getLocationDataMuni(auth()->user()->Province);
+        $city = $location->getLocationDataCity(auth()->user()->Region);
+        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        
+        $years = range(date('Y'), 1900);
+
+
+        $row = DB::table('mplgubrgyvisionmissions')->where('id', $request->id)->first();
+        return view('BarangayScholar.VisionMission.show', compact('prov', 'mun', 'city', 'brgy', 'years', 'action', 'row'));
+
     }
 
     /**
@@ -121,8 +130,17 @@ class VisionMissionController extends Controller
     public function edit(Request $request)
     {
         $action = 'edit';
-        $vmbarangay = DB::table('mplgubrgyvisionmissions')->where('id', $request->id)->first();
-        return view('BarangayScholar.VisionMission.edit', ['vmbarangay' => $vmbarangay ])->with('success', 'Created successfully!');
+        $location = new LocationController;
+        $prov = $location->getLocationDataProvince(auth()->user()->Region);
+        $mun = $location->getLocationDataMuni(auth()->user()->Province);
+        $city = $location->getLocationDataCity(auth()->user()->Region);
+        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        
+        $years = range(date('Y'), 1900);
+
+
+        $row = DB::table('mplgubrgyvisionmissions')->where('id', $request->id)->first();
+        return view('BarangayScholar.VisionMission.edit', compact('prov', 'mun', 'city', 'brgy', 'years', 'action', 'row'));
  
     }
 
@@ -139,7 +157,6 @@ class VisionMissionController extends Controller
             'region_id' => 'required|integer',
             'dateMonitoring' => 'required|date|max:255',
             'periodCovereda' => 'required|string |max:255',
-            'periodCoveredb' => 'required|string|max:255',
             'rating1a' => 'required|string|max:255',
             'rating1b' => 'required|string|max:255',
             'rating1c' => 'required|string|max:255',
@@ -147,8 +164,6 @@ class VisionMissionController extends Controller
             'remarks1b' => 'required|string|max:255',
             'remarks1c' => 'required|string|max:255', 
             'status' => 'required|string|max:255',
-            'dateCreated' => 'required|date ',
-            'dateUpdates' => 'required|date ',
             'user_id' => 'required|integer',
     
         ]; 
@@ -170,7 +185,6 @@ class VisionMissionController extends Controller
                 'region_id' =>  $request->region_id,
                 'dateMonitoring' =>  $request->dateMonitoring,
                 'periodCovereda' =>  $request->periodCovereda,
-                'periodCoveredb' =>  $request->periodCoveredb,
                 'rating1a' =>  $request->rating1a,
                 'rating1b' =>  $request->rating1b,
                 'rating1c' =>  $request->rating1c,
@@ -178,21 +192,9 @@ class VisionMissionController extends Controller
                 'remarks1b' =>  $request->remarks1b,
                 'remarks1c' =>  $request->remarks1c,
                 'status' =>  $request->status,
-                'user_id' =>  $request->user_id,
-                'dateCreated' =>  $request->dateCreated,
-                'dateUpdates' =>  $request->dateUpdates,
+                // 'user_id' =>  $request->user_id,
             ]); 
         }
-
-
-
-        // mlplgubrgytracking::create([
-        //     'mplgubrgyvisionmissions_id' => $vmbarangay->id,
-        //     'status' => $request->status,
-        //     'barangay_id' => auth()->user()->barangay,
-        //     'municipal_id' => auth()->user()->city_municipal,
-        //     'user_id' => auth()->user()->id,
-        // ]);
 
         return redirect()->route('visionmission.index')->with('success', 'Updated successfully!');
     }
@@ -200,12 +202,29 @@ class VisionMissionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {   
         //dd($id);
-        DB::table('mplgubrgyvisionmissionstracking')->where('mplgubrgyvisionmissions_id', $id)->delete();
-        $lguprofile = MellpiproLGUBarangayVisionMission::find($id); 
+        DB::table('mplgubrgyvisionmissionstracking')->where('mplgubrgyvisionmissions_id', $request->id)->delete();
+        $lguprofile = MellpiproLGUBarangayVisionMission::find($request->id); 
         $lguprofile->delete();
         return redirect()->route('visionmission.index')->with('success', 'Deleted successfully!');
+    }
+
+    public function downloads(Request $request ) { 
+        
+        $htmlContent = $request->input('htmlContent');
+        //dd($htmlContent);
+        // Generate PDF from HTML content
+        $htmlheader = '<html><body>';
+            
+        $htmlfooter = '</body></html>';
+        $concat = $htmlheader . $htmlContent . $htmlfooter;
+    
+        $pdf = Pdf::loadHTML($concat);
+        $pdfContent = $pdf->output();
+        return response($pdfContent, 200)
+        ->header('Content-Type', 'application/pdf')
+        ->header('Content-Disposition', 'attachment; filename="document.pdf"');
     }
 }

@@ -34,21 +34,17 @@
 ])
 
 
-@section('content')
-
-<div class="panel-header panel-header-sm"></div>
-<div class="content" style="padding:2%">
-    <div class="card">
+@section('content') 
+<div class="content" style="margin-top:50px;padding:2%">
+<div class="card" style="border-radius:10px;padding-left:2rem!important;padding-right:1rem!important">  
         <div style="display:flex;align-items:center">
-            <a href="{{ route('discussionquestion.index') }}" class="btn btn-primary">Back</a>
-            <p style="margin-bottom:0px;margin-left:25px; font-weight:900;font-size:25px">MELLPI PRO FORM B: BARANGAY PROFILE SHEET</p>
+            <a href="{{route('discussionquestion.index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a>
+            <h4 style="margin-top:18px;font-weight:bold">MELLPI PRO FORM B 1a: BARANGAY NUTRITION MONITORING</h4>
         </div>
         
-        @if(session('status'))
-        <div class="alert alert-success">{{session('status')}}</div>
-        @endif
+        @include('layouts.page_template.crud_alert_message')
 
-        <div>
+      <div style="padding:25px">
             <form action="{{route('discussionquestion.update', $dqlocation->id)}}"  method="POST">
             @csrf
             @method('PUT')
@@ -332,8 +328,16 @@
                 </div>
     
 
-                <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
+                <!-- <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
                     <button type="submit" class="btn btn-primary">update</button>
+                </div> -->
+                <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
+                    <button type="button" class="bold btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
+                    Save as Draft
+                    </button>
+                    <button type="button" class="bold btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                    Save and Submit
+                    </button>
                 </div>
             </form>
         </div>
@@ -341,4 +345,46 @@
 </div>
 </div>
 
+
+<!-- Modal Submit -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5>Are you sure want to submit this form?</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <button type="submit" id="lgu-submit" class="btn btn-primary">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Draft -->
+<div class="modal fade" id="exampleModalCenterDraft" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5>Save as Draft?</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <button type="submit" id="lgu-draft" class="btn btn-primary">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection

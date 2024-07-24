@@ -1,11 +1,11 @@
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/joboy.css') }}">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="{{ asset('assets') }}/js/joboy.js"></script>
- 
- @extends('layouts.BSapp', [
+<script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.8/datatables.min.js"></script>
+
+@extends('layouts.app', [
 'class' => 'sidebar-mini ',
- 
+'namePage' => 'Form Management',
+'activePage' => 'forms2',
+'activeNav' => '',
+
 ])
 
 @section('content')
@@ -19,59 +19,89 @@
                     <h5 class="title" style="margin:0px">List of Categories</h5>
                 </a>
             </div>
-            
+
             <!-- <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item active" style="font-style:italic" aria-current="page">List of Forms </li>
                 </ol>
             </nav> -->
 
-                <!-- alerts -->
-                @include('layouts.page_template.crud_alert_message')
+            <!-- alerts -->
+            @include('layouts.page_template.crud_alert_message')
 
             <div class="content" style="margin:30px">
-                <div class="row " style="display:flex">
-                    <div style="display:flex;align-items:center">
-                        <a href="{{route('formsb.create')}}" style="font-weight:bold" class="btn btn-primary">Create Form Category</a>
-                    </div>
+                <div class="row-12">
+                    <a href="{{route('formsb.create')}}" style="font-weight:bold" class="btn btn-primary">Create Form Category</a>
+                </div>
 
-                    <table class="table table-striped" >
+                <div class="row-12">
+                    <table id="formbuilderA" class="display">
                         <thead style="background-color:#508D4E;">
                             <tr>
+                                <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">#</th>
                                 <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Form Name</th>
-                                <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Date Created</th>
-                                <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Status</th>
+                                <th scope="col" style="font-weight:bold ;font-size:16px!important;color:white">Date Created</th>
                                 <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Action</th>
                             </tr>
                         </thead>
                         <tbody>
 
 
-
+                            <?php $loops = 1; ?>
                             @foreach($forms as $forms)
-                            <tr> 
+                            <tr>
+                                <td>{{$loops}}</td>
                                 <td>{{$forms->formAname}}</td>
-                                <td>{{$forms->created_at}}</td>
-                                <td>{{$forms->status}}</td>
+                                <td><label>{{\Carbon\Carbon::parse($forms->created_at)->format('F j, Y');}}</label>
+                                    <span>{{\Carbon\Carbon::parse($forms->created_at)->format('g:i A');}}</span>
+                                </td>
+
                                 <td class="d-flex">
-                                    <a href="{{route('formsb.formList', $forms->id)}}" style="margin-right: 10px;font-weight:bold" class="btn btn-primary">View Forms</a>
+                                    @if( $forms->status == 0 )
+                                    <i onclick="formAfunction('formsb' , '{{ $forms->id }}', 'formslist')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                    <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
+                                    <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i>
+                                    @elseif( $forms->status == 1 )
+                                    <i onclick="formAfunction('formsb' , '{{ $forms->id }}', 'formslist')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                    <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
+                                    <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i>
+                                    @elseif( $forms->status == 2 )
+                                    <i onclick="formAfunction('formsb' , '{{ $forms->id }}', 'formslist')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                    <i onclick="formAfunction('formsb' , '{{ $forms->id }}', 'edit')" class="fa fa-edit fa-lg cursor" style="color:#FFB236;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Edit"></i>
+                                    <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i>
+                                    <!-- <i onclick="openModal('{{ $forms->id }}')" class="fa fa-trash fa-lg cursor" style="color:red;margin-right:10px" title="Delete "></i> -->
+                                    @endif
 
-                                    <a href="{{route('formsb.edit', $forms->id)}}" style="margin-right: 10px;font-weight:bold" class="btn btn-warning">Edit</a>
-
-                                    <!-- <form action="{{ route('formsb.destroy', $forms->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete data?');">
-
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"  style="font-weight:bold" class="btn btn-danger">Delete</button>
-                                    </form> -->
                                 </td>
 
 
                             </tr>
+                            <?php $loops++; ?>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this data?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" onclick="confirmDelete('formsb','delete' )">Sure</button>
             </div>
         </div>
     </div>

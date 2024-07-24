@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\MellpiproNutritionService;
 use App\Models\MellpiproNutritionServiceTracking;
 use App\Http\Controllers\LocationController;
+use Termwind\Components\Raw;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class NutritionServiceController extends Controller
 {
@@ -28,6 +30,7 @@ class NutritionServiceController extends Controller
      */
     public function create()
     {
+        $action = "create";
         $location = new LocationController;
         $prov = $location->getLocationDataProvince(auth()->user()->Region);
         $mun = $location->getLocationDataMuni(auth()->user()->Province);
@@ -36,7 +39,7 @@ class NutritionServiceController extends Controller
         
         $years = range(date("Y"), 1900);
 
-        return view('BarangayScholar.NutritionService.create', compact('prov', 'mun', 'city', 'brgy','years'));
+        return view('BarangayScholar.NutritionService.create', compact('prov', 'mun', 'city', 'brgy','years','action'));
     }
 
     /**

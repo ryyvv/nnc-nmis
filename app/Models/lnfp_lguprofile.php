@@ -146,10 +146,7 @@ class lnfp_lguprofile extends Model
         'landAreaFLMLNP',
         'remarksFLMLNP',
 
-
         'status',
-        'dateCreated',
-        'dateUpdates',
 
         'barangay_id',
         'municipal_id',

@@ -1,4 +1,4 @@
-@extends('layouts.BSapp', [
+@extends('layouts.app', [
 'class' => 'sidebar-mini ',
 'namePage' => 'Form Builder',
 'activePage' => 'forms2',

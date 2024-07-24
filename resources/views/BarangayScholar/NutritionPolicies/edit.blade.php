@@ -1,1051 +1,763 @@
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/joboy.css') }}">
-
 <style>
-.form-section {
-    display: none;
-}
+    .form-section {
+        display: none;
+    }
 
-.form-section.current {
-    display: inline;
-}
+    .form-section.current {
+        display: inline;
+    }
 
-.striped-rows .row:nth-child(odd) {
-    background-color: #f2f2f2;
-}
+    .striped-rows .row:nth-child(odd) {
+        background-color: #f2f2f2;
+    }
 
-.col-sm {
-    margin: auto;
-    padding: 1rem 1rem;
-}
+    .col-sm {
+        margin: auto;
+        padding: 1rem 1rem;
+    }
 
-.row .form-control {
-    border-color: #bebebe !important;
-    border: 1px solid;
-    border-radius: 5px;
-}
+    .row .form-control {
+        border-color: #bebebe !important;
+        border: 1px solid;
+        border-radius: 5px;
+    }
 </style>
 
 @extends('layouts.app', [
 'class' => 'sidebar-mini ',
-'namePage' => 'User Profile',
-'activePage' => 'profile',
+'namePage' => 'Nutrition Policies',
+'activePage' => 'NutritionPolicies',
 'activeNav' => '',
 ])
 
 
 @section('content')
+<div class="content" style="margin-top:50px;padding:2%">
+    <div class="card" style="border-radius:10px;padding-left:2rem!important;padding-right:1rem!important">
+        <div style="display:flex;align-items:center">
+            <a href="{{route('nutritionpolicies.index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a>
+            <h4 style="margin-top:18px;font-weight:bold">MELLPI PRO FORM B 1a: BARANGAY NUTRITION MONITORING</h4>
+        </div>
 
-<div class="panel-header panel-header-sm"></div>
-<div class="content" style="padding:2%">
-    <div class="card">
-        <h4>MMELLPI PRO FORM B 1a: BARANGAY NUTRITION MONITORING</h4>
-        @if(session('status'))
-        <div class="alert alert-success">{{session('status')}}</div>
-        @endif
+        @include('layouts.page_template.crud_alert_message')
 
-
-        <div>
-            <form action="{{ route('nutritionpolicies.update', $npbarangay->id) }}" method="POST">
+        <div style="padding:25px">
+            <form action="{{ route('nutritionpolicies.update', $row->id) }}" id="lgu-profile-form" method="POST">
                 @csrf
                 @method('PUT')
 
-                <input type="hidden" name="status" value="{{$npbarangay->status}}">
-                <input type="hidden" name="dateCreated" value="{{$npbarangay->dateCreated}}">
-                <input type="hidden" name="dateUpdates" value="{{$npbarangay->dateUpdates}}">
-                <input type="hidden" name="user_id" value="{{$npbarangay->user_id}}">
+                <input type="hidden" name="status" value="{{$row->status}}" id="status">
+                <input type="hidden" name="user_id" value="{{$row->user_id}}">
                 <!-- header -->
-                <div style="display:flex">
-                    <div class="form-group col">
-                        <label for="exampleFormControlInput1">Barangay:</label>
-                        <input type="text" class="form-control" name="barangay_id" value="{{$npbarangay->barangay_id}}">
-                    </div>
-                    <div class="form-group col">
-                        <label for="exampleFormControlInput1">Municipality/City:</label>
-                        <input type="text" class="form-control" name="municipal_id"
-                            value="{{$npbarangay->municipal_id}}">
-                    </div>
-                    <div class="form-group col">
-                        <label for="exampleFormControlInput1">Province:</label>
-                        <input type="text" class="form-control" name="province_id" value="{{$npbarangay->province_id}}">
-                        <input type="hidden" class="form-control" name="region_id" value="{{$npbarangay->region_id}}">
-                    </div>
-
-                </div>
-                <br>
-                <div style="display:flex">
-
-                    <div class="form-group col">
-                        <label for="exampleFormControlInput1">Date of Monitoring:</label>
-                        <input type="date" class="form-control" id="exampleFormControlInput1" name="dateMonitoring" value="{{$npbarangay->dateMonitoring}}">
-                    </div>
-                    <div class="form-group col">
-                        <label for="exampleFormControlInput1">Period Covered:</label>
-                        <input type="date" class="form-control" id="exampleFormControlInput1" data-date-format="mm-yyyy"
-                            name="periodCovereda" value="{{$npbarangay->periodCovereda}}">
-                    </div>
-                    <div class="form-group col">
-                        <label for="exampleFormControlInput1">Period Covered:</label>
-                        <input type="date" class="form-control" id="exampleFormControlInput1" data-date-format="mm-yyyy"
-                            name="periodCoveredb" value="{{$npbarangay->periodCoveredb}}">
-                    </div>
-                </div>
+                <!-- header -->
+                @include('layouts.page_template.location_header')
                 <!-- endheader -->
                 <br>
                 <br>
                 <div>
                     <!-- endtablehearder -->
-                    <div class="row"
-                        style="display:flex;background-color:#F5F5F5;padding:10px;border-radius:5px;justify-content:center; text-align: center;">
-                        <div class="col-2 justify-content-center">
-                            <label for="exampleFormControlInput1"><b>ELEMENTS</b></label>
-                        </div>
-                        <div class="col" style="padding:0px!important">
-                            <div>
-                                <label for="exampleFormControlInput1"><b>PERFORMANCE LEVEL</b></label>
-                            </div>
-                            <div style="display:flex" style="justify-content:center!important">
-                                <div class="col">
-                                    <label for="exampleFormControlInput1"><b>1</b></label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1"><b>2</b></label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1"><b>3</b></label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1"><b>4</b></label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1"><b>5</b></label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-1" style="padding:0px!important">
-                            <label for="exampleFormControlInput1"><b>DOCUMENT SOURCE</b></label>
-                        </div>
-                        <div class="col-1">
-                            <label for="exampleFormControlInput1"><b>RATING</b></label>
-                        </div>
-                        <div class="col-1">
-                            <label for="exampleFormControlInput1"><b>REMARKS/EVIDENCE</b></label>
-                        </div>
-                    </div>
-                    <br>
-                    <!-- endtablehearder -->
-
-                    <!-- 2a -->
-                    <div class="row" style="display:flex">
-                        <div style="display:flex" class="col-2 justify-content-center">
-                            <div>
-                                <label for="exampleFormControlInput1"><b>2a</b></label>
-                            </div>
-                            <div class="col">
-                                <label for="exampleFormControlInput1">Adoption, implementation and monitoring of
-                                    Barangay Nutrition Action Plan</label>
-                            </div>
-                        </div>
-                        <div class="col" style="padding:0px!important">
-                            <div style="display:flex" style="justify-content:center!important">
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">Barangay Nutrition Action Plan
-                                        formulated</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">The barangay passed a resolution adopting the
-                                        Barangay Nutrition Action Plan</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">The barangay passed a resolution adopting the
-                                        Barangay Nutrition Action Plans and allocating funds thereof</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">The PAPs in the Barangay Nutrition Action Plan
-                                        are implemented and accomplishments are reported during BNC meetings once a
-                                        year</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">The PAPs in the Barangay Nutrition Action Plan
-                                        are implemented and accomplishments are reported during BNC meetings at least
-                                        twice a year</b></label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-1" style="padding:0px!important">
-                            <label for="exampleFormControlInput1">Resolutions Barangay Nutrition Action Plan Approved
-                                Annual Budget PPAN Accomplishment Report Minutes of meeting</label>
-                        </div>
-                        <div class="col-1">
-                            <select id="loadProvince1" class="form-control" name="rating2a"> 
-                                <option value="1" {{ old('rating2a', $npbarangay->rating2a) == '1' ? 'selected' : '' }}>1</option>
-                                <option value="2" {{ old('rating2a', $npbarangay->rating2a) == '2' ? 'selected' : '' }}>2</option>
-                                <option value="3" {{ old('rating2a', $npbarangay->rating2a) == '3' ? 'selected' : '' }}>3</option>
-                                <option value="4" {{ old('rating2a', $npbarangay->rating2a) == '4' ? 'selected' : '' }}>4</option>
-                                <option value="5" {{ old('rating2a', $npbarangay->rating2a) == '5' ? 'selected' : '' }}>5</option>
-                            </select>
-                        </div>
-                        <div class="col-1">
-                            <textarea type="text" name="remarks2a" placeholder="Your remarks"  
-                                style="background-color:#F5F5F5;border:0px;font-size:12px;width:inherit;max-height:120px;height:120px">{{ old('remarks2a', $npbarangay->remarks2a) }}</textarea>
-                        </div>
-                    </div>
-
-                    <!-- 2b -->
-                    <br>
-                    <div class="row" style="display:flex">
-                        <div style="display:flex" class="col-2 justify-content-center">
-                            <div>
-                                <label for="exampleFormControlInput1"><b>2b</b></label>
-                            </div>
-                            <div class="col">
-                                <label for="exampleFormControlInput1">Republic Act 11037
-                                    Masustansyang
-                                    Pagkain Para sa
-                                    Batang Pilipino</label>
-                            </div>
-                        </div>
-                        <div class="col" style="padding:0px!important">
-                            <div style="display:flex" style="justify-content:center!important">
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
-                                        The barangay
+                    <div class="row table-responsive" style="display:flex;padding:10px;">
+                        <table class="table table-striped table-hover">
+                            <thead style="background-color:#508D4E;">
+                                <th>&nbsp;</th>
+                                <th class="tableheader text-center"><b>Elements</b></th>
+                                <th colspan="5" class="tableheader text-center"><b>Performance Level<b></th>
+                                <th class="tableheader text-center"><b>Document Source</b></th>
+                                <th class="tableheader text-center"><b>Rating</b></th>
+                                <th class="tableheader  text-center"><b>Remarks</b></th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td class="bold text-center">1</td>
+                                    <td class="bold text-center">2</td>
+                                    <td class="bold text-center">3</td>
+                                    <td class="bold text-center">4</td>
+                                    <td class="bold text-center">5</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                </tr>
+                                <tr>
+                                    <td>2a</td>
+                                    <td>Adoption, implementation and monitoring of Barangay Nutrition Action Plan</td>
+                                    <td>Barangay Nutrition Action Plan formulated</td>
+                                    <td>The barangay passed a resolution adopting the Barangay Nutrition Action Plan</td>
+                                    <td>The barangay passed a resolution adopting the Barangay Nutrition Action Plans and allocating funds thereof</td>
+                                    <td>The PAPs in the Barangay Nutrition Action Plan are implemented and accomplishments are reported during BNC meetings once a year</td>
+                                    <td>The PAPs in the Barangay Nutrition Action Plan are implemented and accomplishments are reported during BNC meetings at least twice a year</td>
+                                    <td>Resolutions Barangay Nutrition Action Plan Approved Annual Budget PPAN Accomplishment Report Minutes of meeting</td>
+                                    <td>
+                                        <select id="loadProvince1" class="form-control" name="rating2a">
+                                            <option>Select</option>
+                                            <option value="1" {{ old('rating2a', $row->rating2a) == '1' ? 'selected' : '' }}>1</option>
+                                            <option value="2" {{ old('rating2a', $row->rating2a) == '2' ? 'selected' : '' }}>2</option>
+                                            <option value="3" {{ old('rating2a', $row->rating2a) == '3' ? 'selected' : '' }}>3</option>
+                                            <option value="4" {{ old('rating2a', $row->rating2a) == '4' ? 'selected' : '' }}>4</option>
+                                            <option value="5" {{ old('rating2a', $row->rating2a) == '5' ? 'selected' : '' }}>5</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <textarea name="remarks2a" class="form-control">{{ old('remarks2a', $row->remarks2a) }}</textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2b</td>
+                                    <td>Republic Act 11037
+                                        Masustansyang
+                                        Pagkain Para sa
+                                        Batang Pilipino
+                                    </td>
+                                    <td>The barangay
                                         maintains a printed/
                                         electronic copy of RA 11037
-                                    </label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
-                                        The law was discussed in one of the Barangay
+                                    </td>
+                                    <td> The law was discussed in one of the Barangay
                                         Nutrition Committee
-                                        meetings within one year after it was enacted </label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
-                                        The barangay maintained a copy of the resolution in the barangay hall</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
+                                        meetings within one year after it was enacted
+                                    </td>
+                                    <td>The barangay maintained a copy of the resolution in the barangay hall</td>
+                                    <td>
                                         The barangay
                                         implemented activities to disseminate provisions of the law to the general
-                                        public</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
-                                        Copy of the law
+                                        public
+                                    </td>
+                                    <td> Copy of the law
                                         Minutes of meetings
                                         Resolution
                                         Documentation of
                                         posting and/or
                                         dissemination
-                                        activities</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-1" style="padding:0px!important">
-                            <label for="exampleFormControlInput1">Copy of the law Minutes of meetings Resolution
-                                Documentation of posting and/or dissemination activities</label>
-                        </div>
-                        <div class="col-1">
-                            <select id="loadProvince1" class="form-control" name="rating2b">
-                            <option value="1" {{ old('rating2b', $npbarangay->rating2b) == '1' ? 'selected' : '' }}>1</option>
-                                <option value="2" {{ old('rating2b', $npbarangay->rating2b) == '2' ? 'selected' : '' }}>2</option>
-                                <option value="3" {{ old('rating2b', $npbarangay->rating2b) == '3' ? 'selected' : '' }}>3</option>
-                                <option value="4" {{ old('rating2b', $npbarangay->rating2b) == '4' ? 'selected' : '' }}>4</option>
-                                <option value="5" {{ old('rating2b', $npbarangay->rating2b) == '5' ? 'selected' : '' }}>5</option>
-                            </select>
-                        </div>
-                        <div class="col-1">
-                            <textarea type="text" name="remarks2b" placeholder="Your remarks" 
-                                style="background-color:#F5F5F5;border:0px;font-size:12px;width:inherit;max-height:120px;height:120px">{{ old('remarks2b', $npbarangay->remarks2b) }}</textarea>
-                        </div>
-                    </div>
-
-                    <!-- 2c -->
-                    <br>
-                    <div class="row" style="display:flex">
-                        <div style="display:flex" class="col-2 justify-content-center">
-                            <div>
-                                <label for="exampleFormControlInput1"><b>2c</b></label>
-                            </div>
-                            <div class="col">
-                                <label for="exampleFormControlInput1">Presence of nutrition-related concerns in the
-                                    Annual Investment Program</label>
-                            </div>
-                        </div>
-                        <div class="col" style="padding:0px!important">
-                            <div style="display:flex" style="justify-content:center!important">
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">Republic Act 11037 Masustansyang Pagkain Para
-                                        sa Batang Pilipino</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">The barangay has a
+                                        activities
+                                    </td>
+                                    <td>Copy of the law Minutes of meetings Resolution
+                                        Documentation of posting and/or dissemination activities;</td>
+                                    <td>
+                                        <select id="loadProvince1" class="form-control" name="rating2b">
+                                            <option>Select</option>
+                                            <option value="1" {{ old('rating2b', $row->rating2b) == '1' ? 'selected' : '' }}>1</option>
+                                            <option value="2" {{ old('rating2b', $row->rating2b) == '2' ? 'selected' : '' }}>2</option>
+                                            <option value="3" {{ old('rating2b', $row->rating2b) == '3' ? 'selected' : '' }}>3</option>
+                                            <option value="4" {{ old('rating2b', $row->rating2b) == '4' ? 'selected' : '' }}>4</option>
+                                            <option value="5" {{ old('rating2b', $row->rating2b) == '5' ? 'selected' : '' }}>5</option>
+                                        </select>
+                                    </td>
+                                    <td><textarea name="remarks2b" class="form-control">{{ old('remarks2b', $row->remarks2b) }}</textarea></td>
+                                </tr>
+                                <tr>
+                                    <td>2c</td>
+                                    <td>Presence of nutrition-related concerns in the
+                                        Annual Investment Program
+                                    </td>
+                                    <td>
+                                        Republic Act 11037 Masustansyang Pagkain Para
+                                        sa Batang Pilipino
+                                    </td>
+                                    <td>
+                                        The barangay has a
                                         resolution/ordinance/Executive Order and/or a line item in the Approved Annual
-                                        Budget on EO 51 - related concerns</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">The barangay conducted activities to promote
-                                        compliance to EO 51</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">The barangay conducted activities to promote
+                                        Budget on EO 51 - related concerns
+                                    </td>
+                                    <td>The barangay conducted activities to promote
+                                        compliance to EO 51
+                                    </td>
+                                    <td>The barangay conducted activities to promote
                                         and monitor compliance to EO 51 and reporting of results during BNC
-                                        meetings</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">Copy of the law Resolution/ Ordinance Barangay
+                                        meetings
+                                    </td>
+                                    <td>Copy of the law Resolution/ Ordinance Barangay
                                         Nutrition Action Plan Approved Annual Budget Documentation of promotion and
-                                        monitoring</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-1" style="padding:0px!important">
-                            <label for="exampleFormControlInput1">Annual Investment Program</label>
-                        </div>
-                        <div class="col-1">
-                            <select id="loadProvince1" class="form-control" name="rating2c">
-                            <option value="1" {{ old('rating2c', $npbarangay->rating2c) == '1' ? 'selected' : '' }}>1</option>
-                                <option value="2" {{ old('rating2c', $npbarangay->rating2c) == '2' ? 'selected' : '' }}>2</option>
-                                <option value="3" {{ old('rating2c', $npbarangay->rating2c) == '3' ? 'selected' : '' }}>3</option>
-                                <option value="4" {{ old('rating2c', $npbarangay->rating2c) == '4' ? 'selected' : '' }}>4</option>
-                                <option value="5" {{ old('rating2c', $npbarangay->rating2c) == '5' ? 'selected' : '' }}>5</option>
-                            </select>
-                        </div>
-                        <div class="col-1">
-                            <textarea type="text" name="remarks2c" placeholder="Your remarks" 
-                                style="background-color:#F5F5F5;border:0px;font-size:12px;width:inherit;max-height:120px;height:120px">{{ old('remarks2c', $npbarangay->remarks2c) }}</textarea>
-                        </div>
-                    </div>
-
-                    <!-- 2d -->
-                    <br>
-                    <div class="row" style="display:flex">
-                        <div style="display:flex" class="col-2 justify-content-center">
-                            <div>
-                                <label for="exampleFormControlInput1"><b>2d</b></label>
-                            </div>
-                            <div class="col">
-                                <label for="exampleFormControlInput1">
-                                    Adoption,
-                                    implementation and monitoring of national/ sectoral
-                                    nutrition policies
-
-                                    Executive Order 51: National Code of Marketing Breastmilk Substitutes, Breastmilk
-                                    Supplements and Other Related Products</label>
-                            </div>
-                        </div>
-                        <div class="col" style="padding:0px!important">
-                            <div style="display:flex" style="justify-content:center!important">
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
+                                        monitoring
+                                    </td>
+                                    <td>Annual Investment Program</td>
+                                    <td>
+                                        <select id="loadProvince1" class="form-control" name="rating2c">
+                                            <option>Select</option>
+                                            <option value="1" {{ old('rating2c', $row->rating2c) == '1' ? 'selected' : '' }}>1</option>
+                                            <option value="2" {{ old('rating2c', $row->rating2c) == '2' ? 'selected' : '' }}>2</option>
+                                            <option value="3" {{ old('rating2c', $row->rating2c) == '3' ? 'selected' : '' }}>3</option>
+                                            <option value="4" {{ old('rating2c', $row->rating2c) == '4' ? 'selected' : '' }}>4</option>
+                                            <option value="5" {{ old('rating2c', $row->rating2c) == '5' ? 'selected' : '' }}>5</option>
+                                        </select>
+                                    </td>
+                                    <td><textarea name="remarks2c" class="form-control">{{ old('remarks2c', $row->remarks2c) }}</textarea></td>
+                                </tr>
+                                <tr>
+                                    <td>2d</td>
+                                    <td>Adoption,
+                                        implementation and monitoring of national/ sectoral
+                                        nutrition policies
+                                        <br><br>
+                                        Executive Order 51: National Code of Marketing Breastmilk Substitutes, Breastmilk
+                                        Supplements and Other Related Products
+                                    </td>
+                                    <td>
                                         The barangay
                                         maintains a printed/
-                                        electronic copy of EO 51</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
+                                        electronic copy of EO 51
+                                    </td>
+                                    <td>
                                         The barangay has a
                                         resolution/ ordinance/
                                         Executive Order and/or a line item in the Approved Annual Budget on EO 51 -
-                                        related concerns</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
-                                        The barangay
-                                        conducted activities to promote compliance to EO 51</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
-                                        The barangay
+                                        related concerns
+                                    </td>
+                                    <td>The barangay
+                                        conducted activities to promote compliance to EO 51
+                                    </td>
+                                    <td>The barangay
                                         conducted activities
                                         to monitor
-                                        compliance to EO 51</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
-                                        The barangay conducted activities to promote and monitor compliance to EO 51 and
-                                        reporting of results during BNC meetings</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-1" style="padding:0px!important">
-                            <label for="exampleFormControlInput1">
-                                Copy of the law
-                                Resolution/ Ordinance
-                                Barangay Nutrition
-                                Action Plan
-                                Approved Annual
-                                Budget
-                                Documentation of
-                                promotion and monitoring</label>
-                        </div>
-                        <div class="col-1">
-                            <select id="loadProvince1" class="form-control" name="rating2d">
-                            <option value="1" {{ old('rating2d', $npbarangay->rating2d) == '1' ? 'selected' : '' }}>1</option>
-                                <option value="2" {{ old('rating2d', $npbarangay->rating2d) == '2' ? 'selected' : '' }}>2</option>
-                                <option value="3" {{ old('rating2d', $npbarangay->rating2d) == '3' ? 'selected' : '' }}>3</option>
-                                <option value="4" {{ old('rating2d', $npbarangay->rating2d) == '4' ? 'selected' : '' }}>4</option>
-                                <option value="5" {{ old('rating2d', $npbarangay->rating2d) == '5' ? 'selected' : '' }}>5</option>
-                            </select>
-                        </div>
-                        <div class="col-1">
-                            <textarea type="text" name="remarks2d" placeholder="Your remarks" value="{{$npbarangay->status}}"
-                                style="background-color:#F5F5F5;border:0px;font-size:12px;width:inherit;max-height:120px;height:120px">{{ old('remarks2d', $npbarangay->remarks2d) }}</textarea>
-                        </div>
-                    </div>
-                    <!-- cons -->
-                    <!-- 2e -->
-                    <br>
-                    <div class="row" style="display:flex">
-                        <div style="display:flex" class="col-2 justify-content-center">
-                            <div>
-                                <label for="exampleFormControlInput1"><b>2e</b></label>
-                            </div>
-                            <div class="col">
-                                <label for="exampleFormControlInput1">
-                                    Republic Act 10028:
-                                    Expanded
-                                    Breastfeeding
-                                    Promotion Act of
-                                    2009
-
-                                    DILG Memorandum
-                                    Circular 2011-54
-                                    Implementation and
-                                    Monitoring of the
-                                    National
-                                    Breastfeeding Policy</label>
-                            </div>
-                        </div>
-                        <div class="col" style="padding:0px!important">
-                            <div style="display:flex" style="justify-content:center!important">
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
+                                        compliance to EO 51
+                                    </td>
+                                    <td>The barangay conducted activities to promote and monitor compliance to EO 51 and
+                                        reporting of results during BNC meetings
+                                    </td>
+                                    <td>
+                                        Copy of the law
+                                        Resolution/ Ordinance
+                                        Barangay Nutrition
+                                        Action Plan
+                                        Approved Annual
+                                        Budget
+                                        Documentation of
+                                        promotion and monitoring
+                                    </td>
+                                    <td>
+                                        <select id="loadProvince1" class="form-control" name="rating2d">
+                                            <option>Select</option>
+                                            <option value="1" {{ old('rating2d', $row->rating2d) == '1' ? 'selected' : '' }}>1</option>
+                                            <option value="2" {{ old('rating2d', $row->rating2d) == '2' ? 'selected' : '' }}>2</option>
+                                            <option value="3" {{ old('rating2d', $row->rating2d) == '3' ? 'selected' : '' }}>3</option>
+                                            <option value="4" {{ old('rating2d', $row->rating2d) == '4' ? 'selected' : '' }}>4</option>
+                                            <option value="5" {{ old('rating2d', $row->rating2d) == '5' ? 'selected' : '' }}>5</option>
+                                        </select>
+                                    </td>
+                                    <td><textarea name="remarks2d" class="form-control">{{ old('remarks2d', $row->remarks2d) }}</textarea></td>
+                                </tr>
+                                <tr>
+                                    <td>2e</td>
+                                    <td>Republic Act 10028:
+                                        Expanded
+                                        Breastfeeding
+                                        Promotion Act of
+                                        2009
+                                        <br><br>
+                                        DILG Memorandum
+                                        Circular 2011-54
+                                        Implementation and
+                                        Monitoring of the
+                                        National
+                                        Breastfeeding Policy
+                                    </td>
+                                    <td>
                                         The barangay
                                         maintains a printed/
-                                        electronic copy of RA 10028 and/or DILG MC 2011-54</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
-                                        The barangay has a resolution/ ordinance and/or budget in the Approved Annual
-                                        Budget on RA 10028 - related concerns</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
-                                        The barangay
+                                        electronic copy of RA 10028 and/or DILG MC 2011-54
+                                    </td>
+                                    <td>The barangay has a resolution/ ordinance and/or budget in the Approved Annual
+                                        Budget on RA 10028 - related concerns
+                                    </td>
+                                    <td>The barangay
                                         conducted activities to promote
-                                        compliance to the law</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
-                                        The barangay
-                                        conducted activities to monitor compliance to RA 10028</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
+                                        compliance to the law
+                                    </td>
+                                    <td>The barangay
+                                        conducted activities to monitor compliance to RA 10028
+                                    </td>
+                                    <td>
                                         The barangay conducted
                                         activities to monitor
                                         compliance to RA 10028 and maintains an updated masterlist of establishments/
-                                        offices with lactation stations</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-1" style="padding:0px!important">
-                            <label for="exampleFormControlInput1">
-                                Copy of the law
-                                Resolution/ Ordinance
-                                Barangay Nutrition
-                                Action Plan
-                                Approved Annual
-                                Budget
-                                Documentation of
-                                promotion and
-                                monitoring
-                                Masterlist of
-                                establishments/
-                                offices with
-                                lactation stations
-                            </label>
-                        </div>
-                        <div class="col-1">
-                            <select id="loadProvince1" class="form-control" name="rating2e">
-                            <option value="1" {{ old('rating2e', $npbarangay->rating2e) == '1' ? 'selected' : '' }}>1</option>
-                                <option value="2" {{ old('rating2e', $npbarangay->rating2e) == '2' ? 'selected' : '' }}>2</option>
-                                <option value="3" {{ old('rating2e', $npbarangay->rating2e) == '3' ? 'selected' : '' }}>3</option>
-                                <option value="4" {{ old('rating2e', $npbarangay->rating2e) == '4' ? 'selected' : '' }}>4</option>
-                                <option value="5" {{ old('rating2e', $npbarangay->rating2e) == '5' ? 'selected' : '' }}>5</option>
-                            </select>
-                        </div>
-                        <div class="col-1">
-                            <textarea type="text" name="remarks2e" placeholder="Your remarks"  
-                                style="background-color:#F5F5F5;border:0px;font-size:12px;width:inherit;max-height:120px;height:120px">{{ old('remarks2e', $npbarangay->remarks2e) }}</textarea>
-                        </div>
-                    </div>
-
-                    <!-- 2f -->
-                    <br>
-                    <div class="row" style="display:flex">
-                        <div style="display:flex" class="col-2 justify-content-center">
-                            <div>
-                                <label for="exampleFormControlInput1"><b>2f</b></label>
-                            </div>
-                            <div class="col">
-                                <label for="exampleFormControlInput1">
-                                    Republic Act 8172: An Act for Salt Iodization Nationwide (ASIN Law)</label>
-                            </div>
-                        </div>
-                        <div class="col" style="padding:0px!important">
-                            <div style="display:flex" style="justify-content:center!important">
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
-                                        The barangay
+                                        offices with lactation stations
+                                    </td>
+                                    <td>
+                                        Copy of the law
+                                        Resolution/ Ordinance
+                                        Barangay Nutrition
+                                        Action Plan
+                                        Approved Annual
+                                        Budget
+                                        Documentation of
+                                        promotion and
+                                        monitoring
+                                        Masterlist of
+                                        establishments/
+                                        offices with
+                                        lactation stations
+                                    </td>
+                                    <td>
+                                        <select id="loadProvince1" class="form-control" name="rating2e">
+                                            <option>Select</option>
+                                            <option value="1" {{ old('rating2e', $row->rating2e) == '1' ? 'selected' : '' }}>1</option>
+                                            <option value="2" {{ old('rating2e', $row->rating2e) == '2' ? 'selected' : '' }}>2</option>
+                                            <option value="3" {{ old('rating2e', $row->rating2e) == '3' ? 'selected' : '' }}>3</option>
+                                            <option value="4" {{ old('rating2e', $row->rating2e) == '4' ? 'selected' : '' }}>4</option>
+                                            <option value="5" {{ old('rating2e', $row->rating2e) == '5' ? 'selected' : '' }}>5</option>
+                                        </select>
+                                    </td>
+                                    <td> <textarea class="form-control" name="remarks2e">{{ old('remarks2e', $row->remarks2e) }}</textarea></td>
+                                </tr>
+                                <tr>
+                                    <td>2f</td>
+                                    <td>Republic Act 8172: An Act for Salt Iodization Nationwide (ASIN Law)</td>
+                                    <td>The barangay
                                         maintains a printed/
-                                        electronic copy of RA 8172</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
-                                        The barangay has a
+                                        electronic copy of RA 8172
+                                    </td>
+                                    <td>The barangay has a
                                         resolution/ ordinance
                                         and/or budget in the Approved Annual Budget on RA 8172 - related
-                                        concerns</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
+                                        concerns
+                                    </td>
+                                    <td>
                                         The barangay
-                                        conducted activities to promote compliance to the law</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
-                                        The barangay
-                                        conducted activities to monitor compliance to RA 8172</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
+                                        conducted activities to promote compliance to the law
+                                    </td>
+                                    <td> The barangay
+                                        conducted activities to monitor compliance to RA 8172
+                                    </td>
+                                    <td>
                                         The barangay conducted activities to monitor
                                         compliance to RA 8172 and maintains an updated masterlist of retail stores
-                                        selling iodized salt</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-1" style="padding:0px!important">
-                            <label for="exampleFormControlInput1">
-                                Copy of the law
-                                Resolution/ Ordinance
-                                Barangay Nutrition
-                                Action Plan
-                                Documentation of
-                                promotion and
-                                monitoring
-                                Masterlist of
-                                retail stores selling
-                                iodized salt</label>
-                        </div>
-                        <div class="col-1">
-                            <select id="loadProvince1" class="form-control" name="rating2f">
-                            <option value="1" {{ old('rating2f', $npbarangay->rating2f) == '1' ? 'selected' : '' }}>1</option>
-                                <option value="2" {{ old('rating2f', $npbarangay->rating2f) == '2' ? 'selected' : '' }}>2</option>
-                                <option value="3" {{ old('rating2f', $npbarangay->rating2f) == '3' ? 'selected' : '' }}>3</option>
-                                <option value="4" {{ old('rating2f', $npbarangay->rating2f) == '4' ? 'selected' : '' }}>4</option>
-                                <option value="5" {{ old('rating2f', $npbarangay->rating2f) == '5' ? 'selected' : '' }}>5</option>
-                            </select>
-                        </div>
-                        <div class="col-1">
-                            <textarea type="text" name="remarks2f" placeholder="Your remarks"  
-                                style="background-color:#F5F5F5;border:0px;font-size:12px;width:inherit;max-height:120px;height:120px">{{ old('remarks2f', $npbarangay->remarks2f) }}</textarea>
-                        </div>
-                    </div>
+                                        selling iodized salt
+                                    </td>
+                                    <td>
+                                        Copy of the law
+                                        Resolution/ Ordinance
+                                        Barangay Nutrition
+                                        Action Plan
+                                        Documentation of
+                                        promotion and
+                                        monitoring
+                                        Masterlist of
+                                        retail stores selling
+                                        iodized salt
+                                    </td>
+                                    <td>
+                                        <select id="loadProvince1" class="form-control" name="rating2f">
+                                            <option>Select</option>
+                                            <option value="1" {{ old('rating2f', $row->rating2f) == '1' ? 'selected' : '' }}>1</option>
+                                            <option value="2" {{ old('rating2f', $row->rating2f) == '2' ? 'selected' : '' }}>2</option>
+                                            <option value="3" {{ old('rating2f', $row->rating2f) == '3' ? 'selected' : '' }}>3</option>
+                                            <option value="4" {{ old('rating2f', $row->rating2f) == '4' ? 'selected' : '' }}>4</option>
+                                            <option value="5" {{ old('rating2f', $row->rating2f) == '5' ? 'selected' : '' }}>5</option>
+                                        </select>
+                                    </td>
+                                    <td><textarea class="form-control" name="remarks2f">{{ old('remarks2f', $row->remarks2f) }}</textarea></td>
 
-                    <!-- 2g -->
-                    <br>
-                    <div class="row" style="display:flex">
-                        <div style="display:flex" class="col-2 justify-content-center">
-                            <div>
-                                <label for="exampleFormControlInput1"><b>2g</b></label>
-                            </div>
-                            <div class="col">
-                                <label for="exampleFormControlInput1">
-                                    Republic Act 8976:
-                                    Philippine Food
-                                    Fortification Act </label>
-                            </div>
-                        </div>
-                        <div class="col" style="padding:0px!important">
-                            <div style="display:flex" style="justify-content:center!important">
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
-                                        The barangay
+                                </tr>
+                                <tr>
+                                    <td>2g</td>
+                                    <td>Republic Act 8976:
+                                        Philippine Food
+                                        Fortification Act</td>
+                                    <td>The barangay
                                         maintains a printed/
-                                        electronic copy of RA 8976</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
-                                        The barangay has a resolution/ ordinance and/or budget in the Approved Annual
-                                        Budget on RA 8976 - related concerns</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
+                                        electronic copy of RA 8976
+                                    </td>
+                                    <td>The barangay has a resolution/ ordinance and/or budget in the Approved Annual
+                                        Budget on RA 8976 - related concerns
+                                    </td>
+                                    <td>
                                         The barangay
-                                        conducted activities to promote compliance to the law</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
-                                        The barangay
-                                        conducted activities to monitor compliance to RA 8976</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
-                                        The barangay conducted
+                                        conducted activities to promote compliance to the law
+                                    </td>
+                                    <td>The barangay
+                                        conducted activities to monitor compliance to RA 8976</td>
+                                    <td> The barangay conducted
                                         activities to monitor
                                         compliance to RA 8976 and maintains an updated masterlist of retail stores
-                                        selling fortified foods</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-1" style="padding:0px!important">
-                            <label for="exampleFormControlInput1">
-                                Copy of the law
-                                Resolution/ Ordinance
-                                Barangay Nutrition
-                                Action Plan
-                                Approved Annual Budget
-                                Documentation of
-                                promotion and
-                                monitoring
-                                Masterlist of
-                                retail stores selling
-                                fortified foods</label>
-                        </div>
-                        <div class="col-1">
-                            <select id="loadProvince1" class="form-control" name="rating2g">
-                            <option value="1" {{ old('rating2g', $npbarangay->rating2g) == '1' ? 'selected' : '' }}>1</option>
-                                <option value="2" {{ old('rating2g', $npbarangay->rating2g) == '2' ? 'selected' : '' }}>2</option>
-                                <option value="3" {{ old('rating2g', $npbarangay->rating2g) == '3' ? 'selected' : '' }}>3</option>
-                                <option value="4" {{ old('rating2g', $npbarangay->rating2g) == '4' ? 'selected' : '' }}>4</option>
-                                <option value="5" {{ old('rating2g', $npbarangay->rating2g) == '5' ? 'selected' : '' }}>5</option>
-                            </select>
-                        </div>
-                        <div class="col-1">
-                            <textarea type="text" name="remarks2g" placeholder="Your remarks" 
-                                style="background-color:#F5F5F5;border:0px;font-size:12px;width:inherit;max-height:120px;height:120px">{{ old('remarks2g', $npbarangay->remarks2g) }}</textarea>
-                        </div>
-                    </div>
-
-                    <!-- 2h -->
-                    <br>
-                    <div class="row" style="display:flex">
-                        <div style="display:flex" class="col-2 justify-content-center">
-                            <div>
-                                <label for="exampleFormControlInput1"><b>2h</b></label>
-                            </div>
-                            <div class="col">
-                                <label for="exampleFormControlInput1">
-                                    NNC Governing
-                                    Board Resolution
-                                    No.1 series of 2017:
-                                    Approving and
-                                    Adopting the
-                                    Philippine Plan of
-                                    Action for Nutrition
-                                    2017-2022
-
-                                    DILG MC 2018-42
-                                    Adoption and
-                                    Implementation of
-                                    PPAN 2017-2022</label>
-                            </div>
-                        </div>
-                        <div class="col" style="padding:0px!important">
-                            <div style="display:flex" style="justify-content:center!important">
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
-                                        The barangay
+                                        selling fortified foods</td>
+                                    <td>Copy of the law
+                                        Resolution/ Ordinance
+                                        Barangay Nutrition
+                                        Action Plan
+                                        Approved Annual Budget
+                                        Documentation of
+                                        promotion and
+                                        monitoring
+                                        Masterlist of
+                                        retail stores selling
+                                        fortified foods
+                                    </td>
+                                    <td><select id="loadProvince1" class="form-control" name="rating2g">
+                                            <option>Select</option>
+                                            <option value="1" {{ old('rating2g', $row->rating2g) == '1' ? 'selected' : '' }}>1</option>
+                                            <option value="2" {{ old('rating2g', $row->rating2g) == '2' ? 'selected' : '' }}>2</option>
+                                            <option value="3" {{ old('rating2g', $row->rating2g) == '3' ? 'selected' : '' }}>3</option>
+                                            <option value="4" {{ old('rating2g', $row->rating2g) == '4' ? 'selected' : '' }}>4</option>
+                                            <option value="5" {{ old('rating2g', $row->rating2g) == '5' ? 'selected' : '' }}>5</option>
+                                        </select></td>
+                                    <td><textarea class="form-control" name="remarks2g">{{ old('remarks2g', $row->remarks2g) }}</textarea></td>
+                                </tr>
+                                <tr>
+                                    <td>2h</td>
+                                    <td>
+                                        NNC Governing
+                                        Board Resolution
+                                        No.1 series of 2017:
+                                        Approving and
+                                        Adopting the
+                                        Philippine Plan of
+                                        Action for Nutrition
+                                        2017-2022
+                                        <br><br>
+                                        DILG MC 2018-42
+                                        Adoption and
+                                        Implementation of
+                                        PPAN 2017-2022
+                                    </td>
+                                    <td>The barangay
                                         maintains a printed/
                                         electronic copy of NNC GB Resolution No. 1 S. 2017 and/or DILG MC 2018-42
-                                    </label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
-                                        The activities in the
+                                    </td>
+                                    <td>The activities in the
                                         Barangay Nutrition
                                         Action Plan are
                                         aligned with the
                                         priorities of the
-                                        PPAN 2017-2022</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
+                                        PPAN 2017-2022
+                                    </td>
+                                    <td>
                                         The activities in the Barangay Nutrition Action Plan are aligned with the
                                         priorities of the PPAN 2017-2022 are allocated with budget based on the approved
-                                        annual budget </label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
+                                        annual budget
+                                    </td>
+                                    <td>
                                         The BNC monitors implementation of the PPAN priorities in the Barangay Nutrition
-                                        Action Plan </label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
+                                        Action Plan
+                                    </td>
+                                    <td>
                                         The BNC discuss the result of monitoring and identify action lines to improve
-                                        implementation of the PPAN priorities </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-1" style="padding:0px!important">
-                            <label for="exampleFormControlInput1">
-                                Resolutions
-                                Ordinances
-                                Barangay Nutrition
-                                Action Plan
-                                Approved Annual
-                                Budget
-                                Minutes of meeting
-                                Minutes of meeting
-                                Accomplishment/
-                                Documentation
-                                reports</label>
-                        </div>
-                        <div class="col-1">
-                            <select id="loadProvince1" class="form-control" name="rating2h">
-                            <option value="1" {{ old('rating2h', $npbarangay->rating2h) == '1' ? 'selected' : '' }}>1</option>
-                                <option value="2" {{ old('rating2h', $npbarangay->rating2h) == '2' ? 'selected' : '' }}>2</option>
-                                <option value="3" {{ old('rating2h', $npbarangay->rating2h) == '3' ? 'selected' : '' }}>3</option>
-                                <option value="4" {{ old('rating2h', $npbarangay->rating2h) == '4' ? 'selected' : '' }}>4</option>
-                                <option value="5" {{ old('rating2h', $npbarangay->rating2h) == '5' ? 'selected' : '' }}>5</option>
-                            </select>
-                        </div>
-                        <div class="col-1">
-                            <textarea type="text" name="remarks2h" placeholder="Your remarks"  
-                                style="background-color:#F5F5F5;border:0px;font-size:12px;width:inherit;max-height:120px;height:120px">{{ old('remarks2h', $npbarangay->remarks2h) }}</textarea>
-                        </div>
-                    </div>
-
-                    <!-- 2i -->
-                    <br>
-                    <div class="row" style="display:flex">
-                        <div style="display:flex" class="col-2 justify-content-center">
-                            <div>
-                                <label for="exampleFormControlInput1"><b>2i</b></label>
-                            </div>
-                            <div class="col">
-                                <label for="exampleFormControlInput1">
-                                    NNC Governing
-                                    Board Resolutions
-                                    Nos. #1 3 S.2012:
-                                    Approving the
-                                    Guidelines on the
-                                    Fabrication,
-                                    Verification, and
-                                    Maintenance of
-                                    Wooden Height
-                                    Boards #2 3 S.2018:
-                                    Approving the
-                                    Guidelines on the
-                                    Selection of
-                                    Non-Wood Height
-                                    and Length
-                                    Measuring Tool</label>
-                            </div>
-                        </div>
-                        <div class="col" style="padding:0px!important">
-                            <div style="display:flex" style="justify-content:center!important">
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
+                                        implementation of the PPAN priorities
+                                    </td>
+                                    <td> Resolutions
+                                        Ordinances
+                                        Barangay Nutrition
+                                        Action Plan
+                                        Approved Annual
+                                        Budget
+                                        Minutes of meeting
+                                        Minutes of meeting
+                                        Accomplishment/
+                                        Documentation
+                                        reports
+                                    </td>
+                                    <td>
+                                        <select id="loadProvince1" class="form-control" name="rating2h">
+                                            <option>Select</option>
+                                            <option value="1" {{ old('rating2h', $row->rating2h) == '1' ? 'selected' : '' }}>1</option>
+                                            <option value="2" {{ old('rating2h', $row->rating2h) == '2' ? 'selected' : '' }}>2</option>
+                                            <option value="3" {{ old('rating2h', $row->rating2h) == '3' ? 'selected' : '' }}>3</option>
+                                            <option value="4" {{ old('rating2h', $row->rating2h) == '4' ? 'selected' : '' }}>4</option>
+                                            <option value="5" {{ old('rating2h', $row->rating2h) == '5' ? 'selected' : '' }}>5</option>
+                                        </select>
+                                    </td>
+                                    <td><textarea class="form-control" name="remarks2h">{{ old('remarks2h', $row->remarks2h) }}</textarea></td>
+                                </tr>
+                                <tr>
+                                    <td>2i</td>
+                                    <td>
+                                        NNC Governing
+                                        Board Resolutions
+                                        Nos. #1 3 S.2012:
+                                        Approving the
+                                        Guidelines on the
+                                        Fabrication,
+                                        Verification, and
+                                        Maintenance of
+                                        Wooden Height
+                                        Boards #2 3 S.2018:
+                                        Approving the
+                                        Guidelines on the
+                                        Selection of
+                                        Non-Wood Height
+                                        and Length
+                                        Measuring Tool
+                                    </td>
+                                    <td>
                                         The barangay
                                         maintains a printed/
                                         electronic copy of NNC GB Resolution
-                                        No. 3 S. 2012 and No. 3 S. 2018</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
+                                        No. 3 S. 2012 and No. 3 S. 2018
+                                    </td>
+                                    <td>
                                         The barangay has any type of height and length measuring tools available in the
-                                        barangay</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
+                                        barangay
+                                    </td>
+                                    <td>
                                         The barangay uses the type of height and length measuring tools of wooden/
-                                        non-wood material prescribed in the guidelines </label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
+                                        non-wood material prescribed in the guidelines
+                                    </td>
+                                    <td>
                                         The barangay uses verified height and length measuring tools of wooden/ non-wood
-                                        material prescribed in the guidelines </label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
+                                        material prescribed in the guidelines
+                                    </td>
+                                    <td>
                                         The barangay uses verified height and length measuring tools of wooden/ non-wood
                                         material as prescribed in the guidelines and allocates budget for maintenance/
-                                        replacement of height and length measuirng tools as necessary</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-1" style="padding:0px!important">
-                            <label for="exampleFormControlInput1">
-                                Approved Annual
-                                Budget
-                                Local Nutrition
-                                Action Plan
-                                OPT Plus Report</label>
-                        </div>
-                        <div class="col-1">
-                            <select id="loadProvince1" class="form-control" name="rating2i">
-                            <option value="1" {{ old('rating2i', $npbarangay->rating2i) == '1' ? 'selected' : '' }}>1</option>
-                                <option value="2" {{ old('rating2i', $npbarangay->rating2i) == '2' ? 'selected' : '' }}>2</option>
-                                <option value="3" {{ old('rating2i', $npbarangay->rating2i) == '3' ? 'selected' : '' }}>3</option>
-                                <option value="4" {{ old('rating2i', $npbarangay->rating2i) == '4' ? 'selected' : '' }}>4</option>
-                                <option value="5" {{ old('rating2i', $npbarangay->rating2i) == '5' ? 'selected' : '' }}>5</option>
-                            </select>
-                        </div>
-                        <div class="col-1">
-                            <textarea type="text" name="remarks2i" placeholder="Your remarks"  
-                                style="background-color:#F5F5F5;border:0px;font-size:12px;width:inherit;max-height:120px;height:120px">{{ old('remarks2i', $npbarangay->remarks2i) }}</textarea>
-                        </div>
-                    </div>
-
-
-                    <!-- 2j -->
-                    <br>
-                    <div class="row" style="display:flex">
-                        <div style="display:flex" class="col-2 justify-content-center">
-                            <div>
-                                <label for="exampleFormControlInput1"><b>2j</b></label>
-                            </div>
-                            <div class="col">
-                                <label for="exampleFormControlInput1">
-                                    NNC Governing
-                                    Board Resolution
-                                    No.2 S.2012:
-                                    Approving the
-                                    Revised
-                                    Implementing
-                                    Guidelines on
-                                    OPT Plus </label>
-                            </div>
-                        </div>
-                        <div class="col" style="padding:0px!important">
-                            <div style="display:flex" style="justify-content:center!important">
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
-                                        The LNC maintains a printed/ electronic copy of NNC GB Resolution No. 3
-                                        S.2012</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
-                                        The barangay conducts OPT Plus but not in accordance to the guidelines on the
+                                        replacement of height and length measuirng tools as necessary
+                                    </td>
+                                    <td>
+                                        Approved Annual
+                                        Budget
+                                        Local Nutrition
+                                        Action Plan
+                                        OPT Plus Report
+                                    </td>
+                                    <td>
+                                        <select id="loadProvince1" class="form-control" name="rating2i">
+                                            <option>Select</option>
+                                            <option value="1" {{ old('rating2i', $row->rating2i) == '1' ? 'selected' : '' }}>1</option>
+                                            <option value="2" {{ old('rating2i', $row->rating2i) == '2' ? 'selected' : '' }}>2</option>
+                                            <option value="3" {{ old('rating2i', $row->rating2i) == '3' ? 'selected' : '' }}>3</option>
+                                            <option value="4" {{ old('rating2i', $row->rating2i) == '4' ? 'selected' : '' }}>4</option>
+                                            <option value="5" {{ old('rating2i', $row->rating2i) == '5' ? 'selected' : '' }}>5</option>
+                                        </select>
+                                    </td>
+                                    <td><textarea class="form-control" name="remarks2i">{{ old('remarks2i', $row->remarks2i) }}</textarea></td>
+                                </tr>
+                                <tr>
+                                    <td>2j</td>
+                                    <td>
+                                        NNC Governing
+                                        Board Resolution
+                                        No.2 S.2012:
+                                        Approving the
+                                        Revised
+                                        Implementing
+                                        Guidelines on
+                                        OPT Plus
+                                    </td>
+                                    <td>The LNC maintains a printed/ electronic copy of NNC GB Resolution No. 3
+                                        S.2012</td>
+                                    <td>The barangay conducts OPT Plus but not in accordance to the guidelines on the
                                         ff:
+                                        <br><br>
                                         1. Use of proper
                                         measurement tools
+                                        <br>
                                         2. At least 80% coverage
-                                        3. Timely submission</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
-                                        The barangay conducts OPT Plus as provided in the guidelines:
+                                        <br>
+                                        3. Timely submission
+                                    </td>
+                                    <td>The barangay conducts OPT Plus as provided in the guidelines:
+                                        <br><br>
                                         1. Use of proper
                                         measurement tools
+                                        <br>
                                         2. At least 80%
                                         coverage
-                                        3. Timely submission</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
+                                        <br>
+                                        3. Timely submission
+                                    </td>
+                                    <td>
                                         The barangay
-                                        conducts OPT Plus as provided in the guidelines and uses E-OPT</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
+                                        conducts OPT Plus as provided in the guidelines and uses E-OPT
+                                    </td>
+                                    <td>
                                         The barangay conducts OPT Plus, utilizes the E-OPT tool and disseminates results
-                                        during the BNC meetings </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-1" style="padding:0px!important">
-                            <label for="exampleFormControlInput1">
-                                OPT Plus
-                                Implementing
-                                Guidelines
-                                Barangay Nutrition
-                                Action Plan
-                                Consolidated OPT
-                                Plus Report
-                                Masterlist of
-                                malnourished children
-                                Minutes of meeting</label>
-                        </div>
-                        <div class="col-1">
-                            <select id="loadProvince1" class="form-control" name="rating2j">
-                            <option value="1" {{ old('rating2j', $npbarangay->rating2j) == '1' ? 'selected' : '' }}>1</option>
-                                <option value="2" {{ old('rating2j', $npbarangay->rating2j) == '2' ? 'selected' : '' }}>2</option>
-                                <option value="3" {{ old('rating2j', $npbarangay->rating2j) == '3' ? 'selected' : '' }}>3</option>
-                                <option value="4" {{ old('rating2j', $npbarangay->rating2j) == '4' ? 'selected' : '' }}>4</option>
-                                <option value="5" {{ old('rating2j', $npbarangay->rating2j) == '5' ? 'selected' : '' }}>5</option>
-                            </select>
-                        </div>
-                        <div class="col-1">
-                            <textarea type="text" name="remarks2j" placeholder="Your remarks"  
-                                style="background-color:#F5F5F5;border:0px;font-size:12px;width:inherit;max-height:120px;height:120px">{{ old('remarks2j', $npbarangay->remarks2j) }}</textarea>
-                        </div>
-                    </div>
-
-                    <!-- 2k -->
-                    <br>
-                    <div class="row" style="display:flex">
-                        <div style="display:flex" class="col-2 justify-content-center">
-                            <div>
-                                <label for="exampleFormControlInput1"><b>2k</b></label>
-                            </div>
-                            <div class="col">
-                                <label for="exampleFormControlInput1">
-                                    NNC Governing
-                                    Board Resolution No. 6 series of 2012: Adoption of the 2012 Nutritional Guidelines
-                                    for Filipinos</label>
-                            </div>
-                        </div>
-                        <div class="col" style="padding:0px!important">
-                            <div style="display:flex" style="justify-content:center!important">
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
+                                        during the BNC meetings
+                                    </td>
+                                    <td>
+                                        OPT Plus
+                                        Implementing
+                                        Guidelines
+                                        Barangay Nutrition
+                                        Action Plan
+                                        Consolidated OPT
+                                        Plus Report
+                                        Masterlist of
+                                        malnourished children
+                                        Minutes of meeting
+                                    </td>
+                                    <td>
+                                        <select id="loadProvince1" class="form-control" name="rating2j">
+                                            <option>Select</option>
+                                            <option value="1" {{ old('rating2j', $row->rating2j) == '1' ? 'selected' : '' }}>1</option>
+                                            <option value="2" {{ old('rating2j', $row->rating2j) == '2' ? 'selected' : '' }}>2</option>
+                                            <option value="3" {{ old('rating2j', $row->rating2j) == '3' ? 'selected' : '' }}>3</option>
+                                            <option value="4" {{ old('rating2j', $row->rating2j) == '4' ? 'selected' : '' }}>4</option>
+                                            <option value="5" {{ old('rating2j', $row->rating2j) == '5' ? 'selected' : '' }}>5</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <textarea class="form-control" name="remarks2j">{{ old('remarks2j', $row->remarks2j) }}</textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2k</td>
+                                    <td>
+                                        NNC Governing
+                                        Board Resolution No. 6 series of 2012: Adoption of the 2012 Nutritional Guidelines
+                                        for Filipinos
+                                    </td>
+                                    <td>
                                         The barangay
                                         maintains a printed/
-                                        electronic copy of NNC GB Resolution No. 6 S. 2012 </label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
+                                        electronic copy of NNC GB Resolution No. 6 S. 2012
+                                    </td>
+                                    <td>
                                         The barangay has a
                                         resolution, ordinance,
                                         Executive Order
                                         in support to the
-                                        resolution</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
+                                        resolution
+                                    </td>
+                                    <td>
                                         The barangay
                                         implemented at least one activity with multi-stakeholder participation to
-                                        promote the NGF </label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
+                                        promote the NGF
+                                    </td>
+                                    <td>
                                         The barangay
-                                        conducted more than one activity to promote the NGF</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
+                                        conducted more than one activity to promote the NGF
+                                    </td>
+                                    <td>
                                         The barangay conducted more than one activity to promote the NGF using more than
-                                        one media/ platform </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-1" style="padding:0px!important">
-                            <label for="exampleFormControlInput1">
-                                Resolutions
-                                Ordinances
-                                Executive Order
-                                Approved Annual
-                                Budget
-                                Barangay Nutrition
-                                Action Plan
-                                Minutes of meeting
-                                Accomplishment/
-                                documentation
-                                report</label>
-                        </div>
-                        <div class="col-1">
-                            <select id="loadProvince1" class="form-control" name="rating2k">
-                            <option value="1" {{ old('rating2k', $npbarangay->rating2k) == '1' ? 'selected' : '' }}>1</option>
-                                <option value="2" {{ old('rating2k', $npbarangay->rating2k) == '2' ? 'selected' : '' }}>2</option>
-                                <option value="3" {{ old('rating2k', $npbarangay->rating2k) == '3' ? 'selected' : '' }}>3</option>
-                                <option value="4" {{ old('rating2k', $npbarangay->rating2k) == '4' ? 'selected' : '' }}>4</option>
-                                <option value="5" {{ old('rating2k', $npbarangay->rating2k) == '5' ? 'selected' : '' }}>5</option>
-                            </select>
-                        </div>
-                        <div class="col-1">
-                            <textarea type="text" name="remarks2k" placeholder="Your remarks"  
-                                style="background-color:#F5F5F5;border:0px;font-size:12px;width:inherit;max-height:120px;height:120px">{{ old('remarks2k', $npbarangay->remarks2k) }}</textarea>
-                        </div>
-                    </div>
-
-                    <!-- 2l -->
-                    <br>
-                    <div class="row" style="display:flex">
-                        <div style="display:flex" class="col-2 justify-content-center">
-                            <div>
-                                <label for="exampleFormControlInput1"><b>2l</b></label>
-                            </div>
-                            <div class="col">
-                                <label for="exampleFormControlInput1">
-                                    NNC Governing
-                                    Board Resolution No. 2 series of 2009: Adopting the National Policy on Nutrition
-                                    Management in Emergencies and Disasters</label>
-                            </div>
-                        </div>
-                        <div class="col" style="padding:0px!important">
-                            <div style="display:flex" style="justify-content:center!important">
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
+                                        one media/ platform
+                                    </td>
+                                    <td>
+                                        Resolutions
+                                        Ordinances
+                                        Executive Order
+                                        Approved Annual
+                                        Budget
+                                        Barangay Nutrition
+                                        Action Plan
+                                        Minutes of meeting
+                                        Accomplishment/
+                                        documentation
+                                        report
+                                    </td>
+                                    <td>
+                                        <select id="loadProvince1" class="form-control" name="rating2k">
+                                            <option>Select</option>
+                                            <option value="1" {{ old('rating2k', $row->rating2k) == '1' ? 'selected' : '' }}>1</option>
+                                            <option value="2" {{ old('rating2k', $row->rating2k) == '2' ? 'selected' : '' }}>2</option>
+                                            <option value="3" {{ old('rating2k', $row->rating2k) == '3' ? 'selected' : '' }}>3</option>
+                                            <option value="4" {{ old('rating2k', $row->rating2k) == '4' ? 'selected' : '' }}>4</option>
+                                            <option value="5" {{ old('rating2k', $row->rating2k) == '5' ? 'selected' : '' }}>5</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <textarea class="form-control" name="remarks2k">{{ old('remarks2k', $row->remarks2k) }}</textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2l</td>
+                                    <td>
+                                        NNC Governing
+                                        Board Resolution No. 2 series of 2009: Adopting the National Policy on Nutrition
+                                        Management in Emergencies and Disasters
+                                    </td>
+                                    <td>
                                         The barangay
                                         maintains a printed/
                                         electronic copy of NNC GB Resolution
-                                        No. 2 S. 2009</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
+                                        No. 2 S. 2009
+                                    </td>
+                                    <td>
                                         The barangay designated
-                                        the lead or focal point for Nutrition-in-Emergencies</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
+                                        the lead or focal point for Nutrition-in-Emergencies
+                                    </td>
+                                    <td>
                                         The barangay has issued a resolution organizing the nutrition cluster in the
-                                        area</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
+                                        area
+                                    </td>
+                                    <td>
                                         Barangay Nutrition Cluster has been formed and planning has been initiated/
-                                        completed</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">
+                                        completed
+                                    </td>
+                                    <td>
                                         Barangay Nutrition
                                         Cluster has been
                                         formed and integrated
-                                        with the BDRRMC with allocated budget</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-1" style="padding:0px!important">
-                            <label for="exampleFormControlInput1">
-                                Resolutions
-                                Ordinances
-                                Executive Order
-                                Barangay Nutrition
-                                Action Plan
-                                NIEM Plan
-                                Minutes of meeting</label>
-                        </div>
-                        <div class="col-1">
-                            <select id="loadProvince1" class="form-control" name="rating2l">
-                            <option value="1" {{ old('rating2l', $npbarangay->rating2l) == '1' ? 'selected' : '' }}>1</option>
-                                <option value="2" {{ old('rating2l', $npbarangay->rating2l) == '2' ? 'selected' : '' }}>2</option>
-                                <option value="3" {{ old('rating2l', $npbarangay->rating2l) == '3' ? 'selected' : '' }}>3</option>
-                                <option value="4" {{ old('rating2l', $npbarangay->rating2l) == '4' ? 'selected' : '' }}>4</option>
-                                <option value="5" {{ old('rating2l', $npbarangay->rating2l) == '5' ? 'selected' : '' }}>5</option>
-                            </select>
-                        </div>
-                        <div class="col-1">
-                            <textarea type="text" name="remarks2l" placeholder="Your remarks"  
-                                style="background-color:#F5F5F5;border:0px;font-size:12px;width:inherit;max-height:120px;height:120px">{{ old('remarks2l', $npbarangay->remarks2l) }}</textarea>
-                        </div>
+                                        with the BDRRMC with allocated budget
+                                    </td>
+                                    <td>
+                                        Resolutions
+                                        Ordinances
+                                        Executive Order
+                                        Barangay Nutrition
+                                        Action Plan
+                                        NIEM Plan
+                                        Minutes of meeting
+                                    </td>
+                                    <td>
+                                        <select id="loadProvince1" class="form-control" name="rating2l">
+                                            <option>Select</option>
+                                            <option value="1" {{ old('rating2l', $row->rating2l) == '1' ? 'selected' : '' }}>1</option>
+                                            <option value="2" {{ old('rating2l', $row->rating2l) == '2' ? 'selected' : '' }}>2</option>
+                                            <option value="3" {{ old('rating2l', $row->rating2l) == '3' ? 'selected' : '' }}>3</option>
+                                            <option value="4" {{ old('rating2l', $row->rating2l) == '4' ? 'selected' : '' }}>4</option>
+                                            <option value="5" {{ old('rating2l', $row->rating2l) == '5' ? 'selected' : '' }}>5</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <textarea class="form-control" name="remarks2l">{{ old('remarks2l', $row->remarks2l) }}</textarea>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
 
-                </div>
-
-
-                <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
+                    <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
+                        <button type="button" class="bold btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
+                            Save as Draft
+                        </button>
+                        <button type="button" class="bold btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                            Save and Submit
+                        </button>
             </form>
         </div>
     </div>
 </div>
+
+<!-- Modal Submit-->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5>Are you sure want to submit this form?</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="submit" id="lgu-submit" class="btn btn-primary">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Draft -->
+<div class="modal fade" id="exampleModalCenterDraft" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5>Save as Draft?</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="submit" id="lgu-draft" class="btn btn-primary">Yes</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 @endsection

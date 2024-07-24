@@ -150,9 +150,22 @@ class DiscussionQuestionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
+    public function show(Request $request, $id ) {  
+        $action = 'create'; 
+        $location = new LocationController;
+        $prov = $location->getLocationDataProvince(auth()->user()->Region);
+        $mun = $location->getLocationDataMuni(auth()->user()->Province);
+        $city = $location->getLocationDataCity(auth()->user()->Region);
+        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+
+        $years = range(date("Y"), 1900); 
+
+        //dd($request->id);
+        $dqlocation = DB::table('lguprofilebarangay')->where('id', $id)->first();
+        //dd($lguProfile);
+
+ 
+        return view('BarangayScholar.DiscussionQuestion.show',compact('dqlocation','prov', 'mun', 'city', 'brgy', 'years', 'action'));
     }
 
     /**

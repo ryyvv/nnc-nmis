@@ -3697,7 +3697,8 @@ Created using IcoMoon - icomoon.io
 .table>tbody>tr>td,
 .table>tfoot>tr>td {
     padding: 12px 7px;
-    vertical-align: middle;
+    /* vertical-align: middle; */
+    vertical-align: start;
 }
 
 .table .th-description {

@@ -36,12 +36,9 @@ class MellpiprobarangayNationalpolicies extends Model
     'remarks2i',
     'remarks2j',
     'remarks2k',
-    'remarks2l',
-    'dateCreated',
-    'dateUpdates',
+    'remarks2l', 
     'dateMonitoring', 
-    'periodCovereda',
-    'periodCoveredb',
+    'periodCovereda', 
     'status',
     'user_id'
  ];

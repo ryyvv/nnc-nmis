@@ -1,7 +1,5 @@
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/joboy.css') }}">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="{{ asset('assets') }}/js/joboy.js"></script>
+<script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.8/datatables.min.js"></script>
+<script src="{{ asset('js/diether.js') }}"></script>
 
 @extends('layouts.app', [
 'class' => 'sidebar-mini ',
@@ -18,77 +16,122 @@
             <div class="card">
                 <div class="card-header">
                     <h5 class="title">{{__("LGU Profile LNFP")}}</h5>
-                    <a href="{{route('MellpiProForLNFPCreate.create')}}" class="btn btn-primary">Create data</a>
+                    @if(session('alert'))
+                    <div class="alert alert-success" id="alert-message">
+                        {{ session('alert') }}
+                    </div>
+                    @endif
+                    <div class="content" style="margin:30px">
 
-                    <table style="overflow: scroll;" class="table table-striped">
-                                <thead class="table-light" style="background-color:#508D4E;">
+                        <!-- alerts -->
+                        @include('layouts.page_template.crud_alert_message')
 
-                                    <tr>
+                        <div class="alert alert-success d-none" id="successAlert" role="alert">
+                            Data deleted successfully!
+                        </div>
+                        <div class="row-12">
+                            <a href="{{route('MellpiProForLNFPCreate.create')}}" class="btn btn-primary bolder">Create data</a>
+                        </div>
+
+                        <table class="display" id="LNFP_Profile_myTable" width="100%">
+                            <thead class="table-light" style="background-color:#508D4E;">
+
+                                <tr>
                                     <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">#</th>
-                                        <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Date Monitoring</th>
-                                        <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Period Covered</th>
-                                        <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Status</th>
-                                        <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Action</th>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Officer</th>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Date Monitoring</th>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Period Covered</th>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Status</th>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;width:10%;">Action</th>
 
-                                    </tr>
-                                </thead>
-                                <tbody>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                                    <?php $num = 1; ?>
-                                    @foreach ($form5a_rr as $form5a_rr)
-                                    <tr>
-                                        <td>{{$num}}</td>
-                                        <td>DATE MONITORING</td>
-                                        <td>PERIOD COVERED</td>
-                                        <td><?php echo ($form5a_rr->status) == 2 ? '<span class="badge bg-warning" id="badge-pending">Pending..</span>' : '<span id="badge-draft" class="badge bg-secondary">Draft</span>' ?></td>
-                                        <!-- <td>{{$form5a_rr->status}}</td> -->
-                                        <td id="table-edit">
-                                            <ul class="list-inline m-0">
-                                                <li class="list-inline-item">
-                                                    @if( $form5a_rr->status == 2 )
-                                                    <a href="#" class="btn btn-info btn-sm rounded-0 btn-edit" type="button" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-eye"></i></a>
-                                                    @elseif( $form5a_rr->status == 1 )
-                                                    <a href="#" class="btn btn-warning btn-sm rounded-0 btn-edit" type="button" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
-                                                    @endif
-                                                </li>
-                                                <li class="list-inline-item">
-                                                    <form action="#" method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button style=" display:<?php echo ($form5a_rr->status == 2 ? "none" : "block") ?> " onclick="openModal('{{ $form5a_rr->id }}')" class="btn btn-danger btn-sm rounded-0 btn-delete" type="button" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
+                                <?php $num = 1; ?>
+                                @foreach ($lnfpProfile as $lnfpProfile)
+                                <tr>
+                                    <td>{{$num}}</td>
+                                    <td>Sample Name</td>
+                                    <!-- <td>{{$lnfpProfile->dateMonitoring}}</td> -->
+                                    <td>{{\Carbon\Carbon::parse($lnfpProfile->dateMonitoring)->format('F j, Y');}}</td>
+                                    <td>{{$lnfpProfile->periodCovereda}}</td>
+                                
+                                    <td>
+                                            @if( $lnfpProfile->status == 0 )
+                                            <span class="statusApproved">APPROVED</span>
+                                            @elseif( $lnfpProfile->status == 1 )
+                                            <span class="statusPending">PENDING</span>
+                                            @elseif( $lnfpProfile->status == 2 )
+                                            <span class="statusDraft">DRAFT</span>
+                                            @endif
+                                    </td>
 
-                                                        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        Are you sure you want to delete this data?
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                                        <button type="submit" class="btn btn-danger" onclick="confirmDelete()">Sure</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </li>
-
-
-                                            </ul>
-                                            
-                                        </td>
-                                    </tr>
-                                    <?php $num++; ?>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                    <td>
+                                        <ul class="list-inline m-0">
+                                            <li class="list-inline-item">
+                                            @if( $lnfpProfile->status == 0 )
+                                                <i onclick="LNFPmyFunction_lguprofile('{{ $lnfpProfile->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                                <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
+                                                <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i>
+                                                <!-- <i class="fa fa-file-pdf-o fa-lg cursor " style="color:red;margin-right:7px;" aria-hidden="true"></i>  -->
+                                                @elseif( $lnfpProfile->status == 1 )
+                                                <i onclick="myFunctionLNFP_lguprofile('{{ $lnfpProfile->id }}', 'lncmanagement', 'edit')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                                <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
+                                                <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i>
+                                                <!-- <i class="fa fa-file-pdf-o fa-lg cursor " style="color:red;margin-right:7px;" aria-hidden="true"></i> -->
+                                                @elseif( $lnfpProfile->status == 2 )
+                                                <i onclick="LNFPmyFunction_lguprofile('{{ $lnfpProfile->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                                <i onclick="myFunctionLNFP_lguprofile('{{ $lnfpProfile->id }}', 'lncmanagement', 'edit')" class="fa fa-edit fa-lg cursor" style="color:#FFB236;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Edit"></i>
+                                                <i onclick="LNFPopenModaLguProfilel('{{ $lnfpProfile->id }}')" class="fa fa-trash fa-lg cursor" style="color:red;margin-right:10px" title="Delete "></i>
+                                                <!-- <i class="fa fa-file-pdf-o fa-lg cursor " style="color:red;margin-right:7px;" aria-hidden="true"></i> -->
+                                                @endif
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <?php $num++; ?>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM fully loaded and parsed');
+        setTimeout(function() {
+            var alertMessage = document.getElementById('alert-message');
+            if (alertMessage) {
+                console.log('Alert message found, hiding now');
+                alertMessage.style.display = 'none';
+            } else {
+                console.log('Alert message not found');
+            }
+        }, 3000);
+    });
+</script>
+
+
+<!-- Delete -->
+<div class="modal fade" id="deleteModal_lguprofile" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this data?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" onclick="confirmDeleteLNFP_Lguprofile()">Sure</button>
             </div>
         </div>
     </div>

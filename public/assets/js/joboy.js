@@ -1,8 +1,6 @@
 
-new DataTable('#myTable');
-
-
 let profileId;
+let LNFP_form_id;
 
 // Function for LGU Profile Year field
 $(document).ready(function() {
@@ -37,52 +35,188 @@ $(function() {
     // });
 
     // // Draft LGU Profile
-    // $('#lgu-draft-edit').on('click', function(e) {
+    // $('#lgu-draft-edit').on('click', function(e) {LNFP_form_id
     //     document.getElementById('status').value = 2;
     //     $('#lgu-profile-form-edit').submit();
     // });
 
 });
 
+$(function() {
+    // Submit LNFP Profile
+    $('#lnfplgu-submit').on('click', function(e) {
+        document.getElementsByName('submitStatus').value = 1;
+        var actionSubmit = document.getElementById('action');
+        actionSubmit.value = "submit";
+        $('#lnfp-profile-form').submit();
+    });
+
+    // Draft LNFP Profile
+    $('#lnfplgu-draft').on('click', function(e) {
+        document.getElementsByName('DraftStatus').value = 2;
+        var actionDraft = document.getElementById('action');
+        actionDraft.value = "draft";
+        $('#lnfp-profile-form').submit();
+    });
+});
+$(function() {
+    // Submit LNFP Profile edit
+    $('#lnfplgu-submit-with-id').on('click', function(e) {
+        document.getElementsByName('submitStatus').value = 1;
+        var actionSubmit = document.getElementById('action');
+        actionSubmit.value = "submit";
+        $('#lnfp-profile-form-edit').submit();
+    });
+
+    // Draft LNFP Profile edit
+    $('#lnfplgu-draft-with-id').on('click', function(e) {
+        document.getElementsByName('DraftStatus').value = 2;
+        var actionDraft = document.getElementById('action');
+        actionDraft.value = "draft";
+        $('#lnfp-profile-form-edit').submit();
+    });
+});
+
 
 
 
 // Submit Edit function Mellpi Pro For LGU
-function myFunction(id){
-    window.location.href = "lguprofile/"+ id +"/edit";
-
+function myFunction(id, url, action){
+    window.location.href = url + '/' + id+ '/edit';
 }
 
 // Submit show function Mellpi Pro For LGU
 function LGUmyFunction(id){
-    window.location.href = "lguprofile/"+id;
+    window.location.href = "lguprofile/"+id+"/show";
 }
 
 /////////
 
 // Submit Edit function Mellpi Pro For LNFP
+function myFunctionLNFP_lguprofile(id){
+    window.location.href = "lguLnfpEditprofile/"+ id;
+
+}
+
 function myFunctionLNFP(id){
     window.location.href = "lguLnfpEdit/"+ id;
 
 }
 
-// Submit show function Mellpi Pro For LGU
+// Submit show function Mellpi Pro For LNFP
+function LNFPmyFunction_lguprofile(id){
+    window.location.href = "lguLnfpEditprofile/"+id;
+}
 function LNFPmyFunction(id){
     window.location.href = "lguLnfpEdit/"+id;
 }
-
-//Delete Entry
-function LNFPopenModal(id) {
-    LNFPid = id; // Store the ID
-    $('#deleteModal').modal('show'); // Show the modal
+// form 6
+function LNFPmyFunction_form6(id){
+    window.location.href = "lguform6Edit/"+id;
 }
-// function LNFPopenModal(element) {
-//     var id = element.getAttribute('data-id');
-//     var form = document.getElementById('deleteForm');
-//     var action = "{{ route('lguLnfpDeleteForm5a', ':id') }}";
-//     form.action = action.replace(':id', id); // Update the form action with the correct ID
+
+//Delete Entry for MellpiPro for LNFP
+function LNFPopenModaLguProfilel(id) {
+    LNFP_profile_id = id; // Store the ID
+    $('#deleteModal_lguprofile').modal('show'); // Show the modal
+}
+
+//Mellpi Pro for LNFP Delete
+function confirmDeleteLNFP_Lguprofile(){
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    // console.log(profileId);
+    if (LNFP_profile_id) { // Check if profileId has been set
+        $.ajax({
+            url: "lguLnfpDeleteProfile/" + LNFP_profile_id, // Ensure the URL is correct
+            type: 'GET',
+            success: function(result) {
+                setTimeout(function() {
+                    window.location.reload(); // Reload the page after a delay
+                }, 2000); // Delay before reload (2 seconds)
+                $('#successAlert').removeClass('d-none').fadeIn(); // Show success alert
+               
+            },
+            error: function(xhr) {
+                alert('Error deleting profile: ' + xhr.responseText);
+            }
+        });
+        $('#deleteModal_lguprofile').modal('hide'); // Hide the modal
+    }
+};
+
+// function LNFPopenModal(id) {
+//     LNFP_form_id = id; // Store the ID
 //     $('#deleteModal').modal('show'); // Show the modal
 // }
+
+// function confirmDeleteLNFP_form5() {
+//     if (LNFP_form_id) { // Ensure the ID is set
+//         $.ajaxSetup({
+//             headers: {
+//                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//             }
+//         });
+
+//         $.ajax({
+//             url: "{{ route('lguLnfpDelete') }}", // Ensure this route is correctly defined in your routes file
+//             data: { id: LNFP_form_id },
+//             type: 'POST',
+//             success: function(result) {
+//                 setTimeout(function() {
+//                     window.location.reload(); // Reload the page after a delay
+//                 }, 2000); // Delay before reload (2 seconds)
+//                 $('#successAlert').removeClass('d-none').fadeIn(); // Show success alert
+//             },
+//             error: function(xhr) {
+//                 alert('Error deleting data: ' + xhr.responseText);
+//             }
+//         });
+//         $('#deleteModal').modal('hide'); // Hide the modal
+//     }
+// };
+
+
+function LNFPopenModal(id) {
+    LNFP_form_id = id; // Store the ID
+    $('#deleteModal').modal('show'); // Show the modal
+}
+
+function confirmDeleteLNFP_form5(id){
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    // console.log(profileId);
+    // if (LNFP_form_id) { // Check if profileId has been set
+        $.ajax({
+            url: "lguLnfpDelete/", // Ensure the URL is correct
+            data: { id: id },
+            type: 'POST',
+            success: function(result) {
+                setTimeout(function() {
+                    window.location.reload(); // Reload the page after a delay
+                }, 2000); // Delay before reload (2 seconds)
+                $('#successAlert').removeClass('d-none').fadeIn(); // Show success alert
+               
+            },
+            error: function(xhr) {
+                alert('Error deleting data: ' + xhr.responseText);
+            }
+        });
+        $('#deleteModal').modal('hide'); // Hide the modal
+    // }
+};
+
+
  /////
 
 
@@ -95,7 +229,7 @@ function openModal(id) {
 
 
 // Mellpi Pro For LGU  delete
-function confirmDelete(){
+function confirmDelete(url, action){
 
     $.ajaxSetup({
         headers: {
@@ -106,12 +240,12 @@ function confirmDelete(){
     // console.log(profileId);
     if (profileId) { // Check if profileId has been set
         $.ajax({
-            url: "lguprofile/" + profileId + "/delete", // Ensure the URL is correct
+            url: url + "/" + profileId + "/" + action, // Ensure the URL is correct
             type: 'GET',
             success: function(result) {
                 setTimeout(function() {
                     window.location.reload(); // Reload the page after a delay
-                }, 2000); // Delay before reload (2 seconds)
+                }, 500); // Delay before reload (2 seconds)
                 $('#successAlert').removeClass('d-none').fadeIn(); // Show success alert
                
             },
@@ -123,8 +257,8 @@ function confirmDelete(){
     }
 };
 
-//Mellpi Pro for LNFP Delete
-function confirmDeleteLNFP(){
+// Mellpi Pro For Mission Vision
+function confirmDeleteMission(){
 
     $.ajaxSetup({
         headers: {
@@ -133,10 +267,100 @@ function confirmDeleteLNFP(){
     });
 
     // console.log(profileId);
-    if (LNFPid) { // Check if profileId has been set
+    if (profileId) { // Check if profileId has been set
         $.ajax({
-            url: "lguLnfpDelete/" + LNFPid, // Ensure the URL is correct
-            type: 'GET',
+            url: "visionmission/delete", // Ensure the URL is correct
+            data: { id: profileId },
+            type: 'POST',
+            success: function(result) {
+                setTimeout(function() {
+                    window.location.reload(); // Reload the page after a delay
+                }, 500); // Delay before reload (2 seconds)
+                $('#successAlert').removeClass('d-none').fadeIn(); // Show success alert
+               
+            },
+            error: function(xhr) {
+                alert('Error deleting profile: ' + xhr.responseText);
+            }
+        });
+        $('#deleteModal').modal('hide'); // Hide the modal
+    }
+};
+
+// Mellpi Pro For Governance
+function confirmDeleteGovern(){
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    // console.log(profileId);
+    if (profileId) { // Check if profileId has been set
+        $.ajax({
+            url: "governance/delete", // Ensure the URL is correct
+            data: { id: profileId },
+            type: 'POST',
+            success: function(result) {
+                setTimeout(function() {
+                    window.location.reload(); // Reload the page after a delay
+                }, 500); // Delay before reload (2 seconds)
+                $('#successAlert').removeClass('d-none').fadeIn(); // Show success alert
+               
+            },
+            error: function(xhr) {
+                alert('Error deleting profile: ' + xhr.responseText);
+            }
+        });
+        $('#deleteModal').modal('hide'); // Hide the modal
+    }
+};
+
+// Mellpi Pro For Governance
+function confirmDeleteLNC(){
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    // console.log(profileId);
+    if (profileId) { // Check if profileId has been set
+        $.ajax({
+            url: "lncmanagement/delete", // Ensure the URL is correct
+            data: { id: profileId },
+            type: 'POST',
+            success: function(result) {
+                setTimeout(function() {
+                    window.location.reload(); // Reload the page after a delay
+                }, 500); // Delay before reload (2 seconds)
+                $('#successAlert').removeClass('d-none').fadeIn(); // Show success alert
+               
+            },
+            error: function(xhr) {
+                alert('Error deleting profile: ' + xhr.responseText);
+            }
+        });
+        $('#deleteModal').modal('hide'); // Hide the modal
+    }
+};
+
+function confirmDeleteNP(){
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    // console.log(profileId);
+    if (profileId) { // Check if profileId has been set
+        $.ajax({
+            url: "nutritionpolicies/delete", // Ensure the URL is correct
+            data: { id: profileId },
+            type: 'POST',
             success: function(result) {
                 setTimeout(function() {
                     window.location.reload(); // Reload the page after a delay
@@ -153,3 +377,9 @@ function confirmDeleteLNFP(){
 };
 
 
+new DataTable('#myTable');
+
+//Mellpi Pro For LNFP
+new DataTable('#form5myTable');
+new DataTable('#LNFP_Profile_myTable');
+new DataTable('#form6Table');

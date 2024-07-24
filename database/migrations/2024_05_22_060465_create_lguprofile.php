@@ -238,6 +238,7 @@ return new class extends Migration
             $table->integer('barangay_id')->unsigned(); 
             $table->integer('municipal_id')->unsigned();
             $table->integer('user_id')->unsigned();
+            
             $table->integer('lguprofilebarangay_id')->unsigned(); 
             $table->foreign('lguprofilebarangay_id')->references('id')->on('lguprofilebarangay');
             $table->foreign('municipal_id')->references('id')->on('municipals');

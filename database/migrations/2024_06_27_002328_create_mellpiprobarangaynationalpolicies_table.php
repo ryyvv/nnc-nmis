@@ -38,12 +38,9 @@ return new class extends Migration
             $table->string('remarks2j', 255);
             $table->string('remarks2k', 255);
             $table->string('remarks2l', 255);
-            $table->string('remarks2m', 255);
-            $table->string('dateCreated', 255);
-            $table->date('dateUpdates', 255);
-            $table->date('dateMonitoring', 255); 
-            $table->date('periodCovereda', 255);
-            $table->date('periodCoveredb', 255);
+            $table->string('remarks2m', 255); 
+            $table->string('dateMonitoring', 255); 
+            $table->string('periodCovereda', 255); 
             $table->integer('status' ); 
 
             $table->integer('region_id')->unsigned(); 

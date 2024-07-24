@@ -1,4 +1,4 @@
-@extends('layouts.BSapp', [
+@extends('layouts.app', [
 'class' => 'sidebar-mini ',
 'namePage' => 'Form Builder',
 'activePage' => 'forms2',
@@ -20,7 +20,7 @@
                             <div class="form-group ">
                                 <label for="exampleFormControlInput1">Form name:</label>
                                 <input type="text" class="form-control" name="formAname" required>
-                                <input type="hidden" class="form-control" name="status" value="pending"> 
+                                <input type="hidden" class="form-control" name="status" value="2"> 
                             </div>
                         </div>
                         <div style="display:flex">

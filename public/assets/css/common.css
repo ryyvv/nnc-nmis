@@ -102,3 +102,11 @@ thead th {
     border: none;
     background-color: transparent;
 }
+.form7Input {
+    outline: none;
+    width: 100%;
+    text-align: center;
+    border: none;
+    background-color: transparent;
+    height: inherit;
+}

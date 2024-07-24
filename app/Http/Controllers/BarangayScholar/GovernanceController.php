@@ -25,7 +25,7 @@ class GovernanceController extends Controller
     {
         //dd('request');
         $barangay = auth()->user()->barangay; 
-        $govlocation = DB::table('mplgubrgygovernance')->where('barangay_id', $barangay)->get();
+        $govlocation = DB::table('mplgubrgygovernance')->where('user_id', auth()->user()->id)->get();
         return view('BarangayScholar.Governance.index', ['govlocation' => $govlocation]);
         //return view('BarangayScholar.Governance.index');
     }
@@ -35,6 +35,7 @@ class GovernanceController extends Controller
      */
     public function create()
     {
+        $action = 'create';
         $location = new LocationController;
         $prov = $location->getLocationDataProvince(auth()->user()->Region);
         $mun = $location->getLocationDataMuni(auth()->user()->Province);
@@ -44,7 +45,7 @@ class GovernanceController extends Controller
         $years = range(date("Y"), 1900);
 
    
-        return view('BarangayScholar.Governance.create', compact('prov', 'mun', 'city', 'brgy','years'));
+        return view('BarangayScholar.Governance.create', compact('prov', 'mun', 'city', 'brgy','years', 'action'));
     }
 
     /**
@@ -60,7 +61,6 @@ class GovernanceController extends Controller
             'region_id' => 'required|integer',
             'dateMonitoring' => 'required|date',
             'periodCovereda' => 'required|string ',
-            'periodCoveredb' => 'required|string',
             'rating3a' => 'required|integer',
             'rating3b' => 'required|integer',
             'rating3c' => 'required|integer',
@@ -68,8 +68,6 @@ class GovernanceController extends Controller
             'remarks3b' => 'required|string|max:255',
             'remarks3c' => 'required|string|max:255', 
             'status' => 'required|string|max:255',
-            'dateCreated' => 'required|date ',
-            'dateUpdates' => 'required|date ',
             'user_id' => 'required|integer',
     
         ]; 
@@ -90,7 +88,6 @@ class GovernanceController extends Controller
                 'region_id' =>  $request->region_id,
                 'dateMonitoring' =>  $request->dateMonitoring,
                 'periodCovereda' =>  $request->periodCovereda,
-                'periodCoveredb' =>  $request->periodCoveredb,
                 'rating3a' =>  $request->rating3a,
                 'rating3b' =>  $request->rating3b,
                 'rating3c' =>  $request->rating3c, 
@@ -99,8 +96,6 @@ class GovernanceController extends Controller
                 'remarks3c' =>  $request->remarks3c, 
                 'status' =>  $request->status,
                 'user_id' =>  $request->user_id,
-                'dateCreated' =>  $request->dateCreated,
-                'dateUpdates' =>  $request->dateUpdates,
             ]); 
 
             MellpiprobarangayGovernanceTracker::create([
@@ -118,9 +113,19 @@ class GovernanceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request ,string $id)
     {
-        //
+        $action = 'edit';
+        $location = new LocationController;
+        $prov = $location->getLocationDataProvince(auth()->user()->Region);
+        $mun = $location->getLocationDataMuni(auth()->user()->Province);
+        $city = $location->getLocationDataCity(auth()->user()->Region);
+        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        
+        $years = range(date("Y"), 1900);
+
+        $row = DB::table('mplgubrgygovernance')->where('id', $request->id)->first();
+        return view('BarangayScholar.Governance.show',compact('row','prov', 'mun', 'city', 'brgy','years', 'action'));
     }
 
     /**
@@ -128,8 +133,17 @@ class GovernanceController extends Controller
      */
     public function edit(Request $request ,string $id)
     {
-        $govbarangay = DB::table('mplgubrgygovernance')->where('id', $request->id)->first();
-        return view('BarangayScholar.Governance.edit', ['govbarangay' => $govbarangay ])->with('success', 'Created successfully!');
+        $action = 'edit';
+        $location = new LocationController;
+        $prov = $location->getLocationDataProvince(auth()->user()->Region);
+        $mun = $location->getLocationDataMuni(auth()->user()->Province);
+        $city = $location->getLocationDataCity(auth()->user()->Region);
+        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        
+        $years = range(date("Y"), 1900);
+
+        $row = DB::table('mplgubrgygovernance')->where('id', $request->id)->first();
+        return view('BarangayScholar.Governance.edit',compact('row','prov', 'mun', 'city', 'brgy','years', 'action'));
     }
 
     /**
@@ -145,7 +159,6 @@ class GovernanceController extends Controller
             'region_id' => 'required|integer',
             'dateMonitoring' => 'required|date',
             'periodCovereda' => 'required|string ',
-            'periodCoveredb' => 'required|string',
             'rating3a' => 'required|integer',
             'rating3b' => 'required|integer',
             'rating3c' => 'required|integer',
@@ -153,8 +166,6 @@ class GovernanceController extends Controller
             'remarks3b' => 'required|string|max:255',
             'remarks3c' => 'required|string|max:255', 
             'status' => 'required|string|max:255',
-            'dateCreated' => 'required|date ',
-            'dateUpdates' => 'required|date ',
             'user_id' => 'required|integer',
     
         ]; 
@@ -175,7 +186,6 @@ class GovernanceController extends Controller
                 'region_id' =>  $request->region_id,
                 'dateMonitoring' =>  $request->dateMonitoring,
                 'periodCovereda' =>  $request->periodCovereda,
-                'periodCoveredb' =>  $request->periodCoveredb,
                 'rating3a' =>  $request->rating3a,
                 'rating3b' =>  $request->rating3b,
                 'rating3c' =>  $request->rating3c, 
@@ -184,23 +194,21 @@ class GovernanceController extends Controller
                 'remarks3c' =>  $request->remarks3c, 
                 'status' =>  $request->status,
                 'user_id' =>  $request->user_id,
-                'dateCreated' =>  $request->dateCreated,
-                'dateUpdates' =>  $request->dateUpdates,
             ]); 
 
         }
 
-        return redirect()->route('nutritionpolicies.index')->with('success', 'Updated successfully!');
+        return redirect()->route('governance.index')->with('success', 'Updated successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
          //dd($id);
-         DB::table('mplgubrgygovernancetracking')->where('mplgubrgygovernance_id', $id)->delete();
-         $govbarangay = MellpiprobarangayGovernance::find($id); 
+         DB::table('mplgubrgygovernancetracking')->where('mplgubrgygovernance_id', $request->id)->delete();
+         $govbarangay = MellpiprobarangayGovernance::find($request->id); 
          $govbarangay->delete();
          return redirect()->route('nutritionpolicies.index')->with('success', 'Deleted successfully!');
     }

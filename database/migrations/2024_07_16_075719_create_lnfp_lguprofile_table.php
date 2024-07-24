@@ -155,8 +155,10 @@ return new class extends Migration
            $table->integer('status');
 
            // 
-           $table->integer('user_id')->unsigned(); 
-           $table->foreign('user_id')->references('id')->on('regions');
+        //    $table->integer('user_id')->unsigned(); 
+        //    $table->foreign('user_id')->references('id')->on('users');
+            $table->bigInteger('user_id')->unsigned()->change();
+            $table->foreign('user_id')->references('id')->on('users');
 
            $table->integer('barangay_id')->unsigned();
            $table->foreign('barangay_id')->references('id')->on('barangays'); 

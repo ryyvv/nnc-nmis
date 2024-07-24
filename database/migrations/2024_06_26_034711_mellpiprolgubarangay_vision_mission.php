@@ -20,12 +20,9 @@ return new class extends Migration
                 $table->string('remarks1a', 255);
                 $table->string('remarks1b', 255);
                 $table->string('remarks1c', 255);
-                $table->integer('status');
-                $table->date('dateCreated');
-                $table->date('dateUpdates');
-                $table->date('dateMonitoring');
-                $table->date('periodCovereda');
-                $table->date('periodCoveredb');
+                $table->integer('status'); 
+                $table->string('dateMonitoring',255);
+                $table->string('periodCovereda',255); 
                 $table->integer('region_id')->unsigned(); 
                 $table->integer('province_id')->unsigned(); 
                 $table->integer('municipal_id')->unsigned(); 

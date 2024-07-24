@@ -212,8 +212,6 @@ class LguProfile extends Model
         'VAremarks',
 
         'status',
-        'dateCreated',
-        'dateUpdates',
 
         'barangay_id',
         'municipal_id',

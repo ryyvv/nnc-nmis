@@ -1,4 +1,4 @@
-@extends('layouts.BSapp', [
+@extends('layouts.app', [
 'class' => 'sidebar-mini ',
 'namePage' => 'Form Builder',
 'activePage' => 'forms2',
@@ -15,13 +15,12 @@
                         <div class="row">
                             <form action="{{route('formsb.update',$forms->id )}}" method="POST">
                             @csrf
+                            @method('PUT')
                                 <div style="display:flex">
                                     <div class="form-group ">
                                         <label for="exampleFormControlInput1">Category Title:</label>
-                                        <input type="text" class="form-control" name="formname" required>
-                                        <input type="hidden" class="form-control" name="status" value="pending">
-                                        <input type="hidden" class="form-control" name="datecreated" value="01/01/2024">
-                                        <input type="hidden" class="form-control" name="lastupdate" value="01/01/2024">
+                                        <input type="text" class="form-control" name="formAname" value="{{$forms->formAname}}" required>
+                                        <input type="hidden" class="form-control" name="status" value="2"> 
                                     </div>
                                 </div>
                                 <div style="display:flex">

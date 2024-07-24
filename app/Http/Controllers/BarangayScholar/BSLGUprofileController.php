@@ -10,6 +10,7 @@ use App\Models\barangaytracking;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\LocationController;
 use Termwind\Components\Raw;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class BSLGUprofileController extends Controller
 {
@@ -42,23 +43,22 @@ class BSLGUprofileController extends Controller
         $years = range(date("Y"), 1900);
 
         //dd($request->id);
-        $lguProfile = DB::table('lguprofilebarangay')->where('id', $request->id)->first();
+        $row = DB::table('lguprofilebarangay')->where('user_id', auth()->user()->id)->first();
         //dd($lguProfile);
 
 
-        return view('BarangayScholar.lguprofile.edit',compact('lguProfile','prov', 'mun', 'city', 'brgy', 'years', 'action'));
+        return view('BarangayScholar.lguprofile.edit',compact('row','prov', 'mun', 'city', 'brgy', 'years', 'action'));
     }
 
- public function show(Request $request, $id ) { 
-        
-        $action = 'edit';
+    public function show(Request $request, $id ) {  
+        $action = 'create'; 
         $location = new LocationController;
         $prov = $location->getLocationDataProvince(auth()->user()->Region);
         $mun = $location->getLocationDataMuni(auth()->user()->Province);
         $city = $location->getLocationDataCity(auth()->user()->Region);
         $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
 
-        $years = range(date("Y"), 1900);
+        $years = range(date("Y"), 1900); 
 
         //dd($request->id);
         $lguProfile = DB::table('lguprofilebarangay')->where('id', $id)->first();
@@ -68,8 +68,9 @@ class BSLGUprofileController extends Controller
         return view('BarangayScholar.lguprofile.show',compact('lguProfile','prov', 'mun', 'city', 'brgy', 'years', 'action'));
     }
 
-    public function create() {
+    public function create(Request $request) {
         
+     
         $action = 'create';
         $location = new LocationController;
         $prov = $location->getLocationDataProvince(auth()->user()->Region);
@@ -248,8 +249,6 @@ class BSLGUprofileController extends Controller
              'VAvolumepax' => 'required',
              'VAremarks' => 'required|string|max:255',
              'status' => 'required|string|max:255',
-             'dateCreated' => 'required|date ',
-             'dateUpdates' => 'required|date ',
              'barangay_id' => 'required',
              'municipal_id' => 'required',
              'province_id' => 'required',
@@ -475,8 +474,6 @@ class BSLGUprofileController extends Controller
                  'VAremarks' => $request->VAremarks, 
  
                  'status' => $request->status, 
-                 'dateCreated' => $request->dateCreated, 
-                 'dateUpdates' => $request->dateUpdates, 
  
                  'barangay_id' =>$request->barangay_id,
                  'municipal_id' => $request->municipal_id, 
@@ -665,8 +662,6 @@ class BSLGUprofileController extends Controller
             'VAvolumepax' => 'required|integer ',
             'VAremarks' => 'required|string|max:255',
             'status' => 'required|string|max:255',
-            'dateCreated' => 'required|date ',
-            'dateUpdates' => 'required|date ',
             'barangay_id' => 'required|integer',
             'municipal_id' => 'required|integer',
             'province_id' => 'required|integer',
@@ -893,8 +888,6 @@ class BSLGUprofileController extends Controller
                 'VAremarks' => $request->VAremarks, 
 
                 'status' => $request->status, 
-                'dateCreated' => $request->dateCreated, 
-                'dateUpdates' => $request->dateUpdates, 
 
                 'barangay_id' =>$request->barangay_id,
                 'municipal_id' => $request->municipal_id, 
@@ -915,5 +908,24 @@ class BSLGUprofileController extends Controller
        
 
         return redirect()->route('BSLGUprofile.index');
+    }
+
+ 
+
+    public function downloads(Request $request ) { 
+        
+        $htmlContent = $request->input('htmlContent');
+        //dd($htmlContent);
+        // Generate PDF from HTML content
+        $htmlheader = '<html><body>';
+            
+        $htmlfooter = '</body></html>';
+        $concat = $htmlheader . $htmlContent . $htmlfooter;
+    
+        $pdf = Pdf::loadHTML($concat);
+        $pdfContent = $pdf->output();
+        return response($pdfContent, 200)
+        ->header('Content-Type', 'application/pdf')
+        ->header('Content-Disposition', 'attachment; filename="document.pdf"');
     }
 }

@@ -11,4 +11,19 @@ class FormBuilderA extends Model
     protected $table = 'formbuilderA';
     protected $guarded =  ['id'];
     protected $fillable = ['formAname','status']; 
+
+
+    public function fieldsB()
+    {
+        return $this->hasMany(FormBuilderA::class);
+    }
+    public function fieldsC()
+    {
+        return $this->hasMany(FormBuilderC::class);
+    }
+
+    public function submissions()
+    {
+        return $this->hasMany(FormField::class);
+    }
 }

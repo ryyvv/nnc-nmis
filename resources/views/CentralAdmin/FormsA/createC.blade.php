@@ -3,7 +3,7 @@
 <script src="{{ asset('assets') }}/js/joboy.js"></script>
 
 
-@extends('layouts.BSapp', [
+@extends('layouts.app', [
 'class' => 'sidebar-mini ',
 'namePage' => 'Form Management',
 'activePage' => 'forms2',
@@ -39,7 +39,7 @@
 
                         <input type="hidden" name="formbuilderA_id" value="{{$formsA->id}}">
                         <input type="hidden" name="formbuilderB_id" value="{{$formsB->id}}">
-                        <input type="hidden" name="status" value="1">
+                        <input type="hidden" name="status" value="2">
                         <div>
                             <div id="fields">
                                 <div class="d-flex formRow" >
@@ -103,7 +103,7 @@
                         </div>
                         <div class=" col-4 form-group">
                             <label for="exampleFormControlInput1">Field Type:</label>
-                            <select name="fields[0][type]"   class="form-control form-control-lg" type="text"  >
+                            <select name="fields[${fieldCount}][type]" class="form-control form-control-lg" type="text"  >
                                             <option value="">Choose...</option>
                                             <option value="label">Label</option>
                                             <option value="text">Text</option>

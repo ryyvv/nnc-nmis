@@ -55,6 +55,7 @@ use App\Http\Controllers\BarangayScholar\LNCManagementBarangayController;
 
 use App\Http\Controllers\BarangayScholar\MellpiProForLNFP_barangayController;
 use App\Http\Controllers\BarangayScholar\MellpiProForLNFP_barangayLGUController;
+use App\Http\Controllers\BarangayScholar\MellpiProForLNFP_form6Controller;
 
 
 
@@ -201,9 +202,9 @@ Route::group(['middleware' => 'auth'], function () {
        Route::get('/formsb', [FormsBuilderController::class, 'index'])->name('formsb.index');
        Route::POST('/formsb', [FormsBuilderController::class, 'store'])->name('formsb.store');
        Route::get('/formsb/create', [FormsBuilderController::class, 'create'])->name('formsb.create');
-       Route::get('/formsb/{id}', [FormsBuilderController::class, 'update'])->name('formsb.update');
+       Route::PUT('/formsb/{id}', [FormsBuilderController::class, 'updateA'])->name('formsb.update');
        Route::get('/formsb/{id}/edit', [FormsBuilderController::class, 'edit'])->name('formsb.edit');
-       Route::DELETE('/formsb/{id}', [FormsBuilderController::class, 'destroy'])->name('formsb.destroy');
+       Route::get('/formsb/{id}', [FormsBuilderController::class, 'destroy'])->name('formsb.destroy');
     
        // forms Creator B
        Route::get('/formsb/{id}/formslist', [FormsBuilderController::class, 'formIndex'])->name('formsb.formList');
@@ -314,6 +315,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/dashboard/{admin}', [PSDashboardController::class, 'update'])->name('PSdashboard.update');
             Route::get('/dashboard/{admin}/edit', [PSDashboardController::class, 'create'])->name('PSdashboard.edit');
             Route::DELETE('/dashboard/{admin}', [PSDashboardController::class, 'destroy'])->name('PSdashboard.destroy');
+        
         //AdminUserController
         // Route::get('/admin', [AdminUserController::class, 'index'])->name('admin.index');
         // Route::POST('/admin', [AdminUserController::class, 'store'])->name('admin.store');
@@ -341,21 +343,27 @@ Route::group(['middleware' => 'auth'], function () {
         
           //LGUProfileController
           Route::get('/lguprofile', [BSLGUprofileController::class, 'index'])->name('BSLGUprofile.index');
-        //   Route::POST('/lguprofile', [BSLGUprofileController::class, 'storeDraft'])->name('BSLGUprofile.storeDraft');
-          Route::get('/lguprofile/{id}', [BSLGUprofileController::class, 'show'])->name('BSLGUprofile.show');
+          //Route::POST('/lguprofile', [BSLGUprofileController::class, 'storeDraft'])->name('BSLGUprofile.storeDraft');
+          Route::get('/lguprofile/{id}/show', [BSLGUprofileController::class, 'show'])->name('BSLGUprofile.show');
           Route::POST('/lguprofile', [BSLGUprofileController::class, 'storeSubmit'])->name('BSLGUprofilest.storeSubmit');
           Route::get('/lguprofile/create', [BSLGUprofileController::class, 'create'])->name('BSLGUprofile.create');
           Route::put('/lguprofile/{id}', [BSLGUprofileController::class, 'update'])->name('BSLGUprofile.update');
           Route::get('/lguprofile/{id}/edit', [BSLGUprofileController::class, 'edit'])->name('BSLGUprofile.edit');
           Route::get('/lguprofile/{id}/delete', [BSLGUprofileController::class, 'destroy'])->name('BSLGUprofile.destroy');  
-         
+          //LGU Profile Downloadable
+          Route::POST('/lguprofile/{id}/download-pdf',[BSLGUprofileController::class , 'downloads'])->name('BSLGUprofile.download');
+
+
         //VisionMissionController
         Route::get('/visionmission', [VisionMissionController::class, 'index'])->name('visionmission.index');
         Route::POST('/visionmission', [VisionMissionController::class, 'store'])->name('visionmission.store');
         Route::get('/visionmission/create', [VisionMissionController::class, 'create'])->name('visionmission.create');
         Route::put('/visionmission/{id}', [VisionMissionController::class, 'update'])->name('visionmission.update');
         Route::get('/visionmission/{id}/edit', [VisionMissionController::class, 'edit'])->name('visionmission.edit');
-        Route::DELETE('/visionmission/{id}', [VisionMissionController::class, 'destroy'])->name('visionmission.destroy');  
+        Route::post('/visionmission/delete', [VisionMissionController::class, 'destroy'])->name('visionmission.destroy');  
+        Route::get('/visionmission/{id}/show', [VisionMissionController::class, 'show'])->name('visionmission.show');
+        Route::POST('/visionmission/{id}/download-pdf',[VisionMissionController::class , 'downloads'])->name('visionmission.download');
+
 
         //NutritionPoliciesController
         Route::get('/nutritionpolicies', [NutritionPoliciesController::class, 'index'])->name('nutritionpolicies.index');
@@ -363,7 +371,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/nutritionpolicies/create', [NutritionPoliciesController::class, 'create'])->name('nutritionpolicies.create');
         Route::put('/nutritionpolicies/{id}', [NutritionPoliciesController::class, 'update'])->name('nutritionpolicies.update');
         Route::get('/nutritionpolicies/{id}/edit', [NutritionPoliciesController::class, 'edit'])->name('nutritionpolicies.edit');
-        Route::DELETE('/nutritionpolicies/{id}', [NutritionPoliciesController::class, 'destroy'])->name('nutritionpolicies.destroy');  
+        Route::POST('/nutritionpolicies/delete', [NutritionPoliciesController::class, 'destroy'])->name('nutritionpolicies.destroy');  
+        Route::get('/nutritionpolicies/{id}/show', [NutritionPoliciesController::class, 'show'])->name('nutritionpolicies.show');
+        Route::POST('/nutritionpolicies/{id}/download-pdf',[NutritionPoliciesController::class , 'downloads'])->name('nutritionpolicies.download');
+
 
         //GovernanceController
         Route::get('/governance', [GovernanceController::class, 'index'])->name('governance.index');
@@ -371,15 +382,20 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/governance/create', [GovernanceController::class, 'create'])->name('governance.create');
         Route::put('/governance/{id}', [GovernanceController::class, 'update'])->name('governance.update');
         Route::get('/governance/{id}/edit', [GovernanceController::class, 'edit'])->name('governance.edit');
-        Route::DELETE('/governance/{id}', [GovernanceController::class, 'destroy'])->name('governance.destroy');  
-   
+        Route::POST('/governance/delete', [GovernanceController::class, 'destroy'])->name('governance.destroy');  
+        Route::get('/governance/{id}/show', [GovernanceController::class, 'show'])->name('governance.show');
+        Route::POST('/governance/{id}/download-pdf',[GovernanceController::class , 'downloads'])->name('governance.download');
+
         //NutritionServicesController
         Route::get('/lncmanagement', [LNCManagementBarangayController::class, 'index'])->name('lncmanagement.index');
         Route::POST('/lncmanagement', [LNCManagementBarangayController::class, 'store'])->name('lncmanagement.store');
         Route::get('/lncmanagement/create', [LNCManagementBarangayController::class, 'create'])->name('lncmanagement.create');
         Route::put('/lncmanagement/{id}', [LNCManagementBarangayController::class, 'update'])->name('lncmanagement.update');
         Route::get('/lncmanagement/{id}/edit', [LNCManagementBarangayController::class, 'edit'])->name('lncmanagement.edit');
-        Route::DELETE('/lncmanagement/{id}', [LNCManagementBarangayController::class, 'destroy'])->name('lncmanagement.destroy');  
+        Route::POST('/lncmanagement/delete', [LNCManagementBarangayController::class, 'destroy'])->name('lncmanagement.destroy');  
+        Route::get('/lncmanagement/{id}/show', [LNCManagementBarangayController::class, 'show'])->name('lncmanagement.show');
+        Route::POST('/lncmanagement/{id}/download-pdf',[LNCManagementBarangayController::class , 'downloads'])->name('lncmanagement.download');
+
 
         //NutritionServicesController
         Route::get('/nutritionservice', [NutritionServiceController::class, 'index'])->name('nutritionservice.index');
@@ -405,7 +421,9 @@ Route::group(['middleware' => 'auth'], function () {
            Route::put('/discussionquestion/{id}', [DiscussionQuestionController::class, 'update'])->name('discussionquestion.update');
            Route::get('/discussionquestion/{id}/edit', [DiscussionQuestionController::class, 'edit'])->name('discussionquestion.edit');
            Route::DELETE('/discussionquestion/{id}', [DiscussionQuestionController::class, 'destroy'])->name('discussionquestion.destroy');  
-   
+           Route::get('/discussionquestion/{id}/show', [DiscussionQuestionController::class, 'show'])->name('discussionquestion.show');
+
+
            //BudgetController
            Route::get('/budgetAIP', [BudgetAIPController::class, 'index'])->name('budgetAIP.index');
            Route::POST('/budgetAIP', [BudgetAIPController::class, 'store'])->name('budgetAIP.store');
@@ -419,18 +437,23 @@ Route::group(['middleware' => 'auth'], function () {
           //LGU Profile
           Route::get('/lguprofilelnfp', [MellpiProForLNFP_barangayLGUController::class, 'index'])->name('BSLGUprofileLNFPIndex.index');
           Route::get('/lguprofilelnfpCreate', [MellpiProForLNFP_barangayLGUController::class, 'mellpiProLNFP_LGUcreate'])->name('MellpiProForLNFPCreate.create');
+          Route::post('/lguprofileLnfpSubmit', [MellpiProForLNFP_barangayLGUController::class, 'storeSubmit'])->name('MellpiProForLNFPSubmit.storeSubmit');
+          Route::post('/lguprofileLnfpUpdate/{id}', [MellpiProForLNFP_barangayLGUController::class, 'storeUpdate'])->name('MellpiProForLNFPUpdate.storeUpdate');
+          Route::get('/lguLnfpDeleteProfile/{id}', [MellpiProForLNFP_barangayLGUController::class, 'deleteLNFP_lguprofile'])->name('lguLnfpDeleteProfile');
+          Route::get('/lguLnfpEditprofile/{id}', [MellpiProForLNFP_barangayLGUController::class, 'mellpiProLNFP_LGUedit'])->name('lguLnfpEditProfile');
+
           //Form 5 Monitoring
           Route::get('/lguform5Index', [MellpiProForLNFP_barangayController::class, 'monitoringForm5'])->name('MellpiProMonitoringIndex.index');
           Route::get('/lguform5Create', [MellpiProForLNFP_barangayController::class, 'monitoringForm5create'])->name(('MellpiProMonitoringCreate.create'));
           Route::post('/lguLnfpUpdate/{id}', [MellpiProForLNFP_barangayController::class, 'editForm5a'])->name('lguLnfpUpdate');
           Route::post('/lguLnfpUpdate', [MellpiProForLNFP_barangayController::class, 'editForm5a'])->name('lguLnfpUpdates');
           Route::put('/lguLnfpUpdate', [MellpiProForLNFP_barangayController::class, 'editForm5a'])->name('lguLnfpUpdateRemarks');
-          Route::get('/lguLnfpDelete/{id}', [MellpiProForLNFP_barangayController::class, 'deleteForm5arr'])->name('lguLnfpDeleteForm5a');
+          Route::POST('/lguLnfpDelete', [MellpiProForLNFP_barangayController::class, 'deleteForm5arr'])->name('lguLnfpDeleteForm5a');
           Route::get('/lguLnfpEdit/{id}', [MellpiProForLNFP_barangayController::class, 'monitoringForm5edit'])->name('lguLnfpEdit');
           //Form 6 Radial Diagram
-          Route::get('/lguform6Index', [MellpiProForLNFP_barangayController::class, 'radialForm6'])->name('MellpiProRadialIndex.index');
-          Route::get('lguform6Create', [MellpiProForLNFP_barangayController::class, 'radialForm6Create'])->name('MellpiProRadialCreate.create');
-
+          Route::get('/lguform6Index', [MellpiProForLNFP_form6Controller::class, 'radialForm6'])->name('MellpiProRadialIndex.index');
+          Route::get('lguform6Create', [MellpiProForLNFP_form6Controller::class, 'radialForm6Create'])->name('MellpiProRadialCreate.create');
+          Route::get('/lguform6Edit/{id}', [MellpiProForLNFP_form6Controller::class, 'radialForm6Create'])->name('lguLnfpEditForm6');
 
     });
 
@@ -481,7 +504,6 @@ Route::prefix('personneldnadirectory')->group(function () {
     Route::get('/cities/{provcode}', [PersonnelDnaDirectoryController::class, 'getCitiesByProvince'])->name('personneldnadirectory.cities.byProvince.get');
     Route::get('/regions', [PersonnelDnaDirectoryController::class, 'getRegions'])->name('personneldnadirectory.regions.get');
 });
-
 
 // Register
 Route::get('/provinces/{region}', [RegisterController::class, 'getProvincesByRegion'])->name('provinces.byRegion.get');

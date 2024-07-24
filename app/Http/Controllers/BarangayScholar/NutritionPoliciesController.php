@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\MellpiprobarangayNationalpolicies;
 use App\Models\mpbrgynationalPoliciestracking;
 use App\Http\Controllers\LocationController;
+use Termwind\Components\Raw;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class NutritionPoliciesController extends Controller
 {
@@ -18,7 +20,7 @@ class NutritionPoliciesController extends Controller
     public function index()
     {
         $barangay = auth()->user()->barangay; 
-        $nplocation = DB::table('mellpiprobarangaynationalpolicies')->where('barangay_id', $barangay)->get();
+        $nplocation = DB::table('mellpiprobarangaynationalpolicies')->where('user_id', auth()->user()->id)->get();
 
         return view('BarangayScholar.NutritionPolicies.index', ['nplocation' => $nplocation]);
     }
@@ -28,6 +30,7 @@ class NutritionPoliciesController extends Controller
      */
     public function create()
     {   
+        $action = 'create';
         $location = new LocationController;
         $prov = $location->getLocationDataProvince(auth()->user()->Region);
         $mun = $location->getLocationDataMuni(auth()->user()->Province);
@@ -35,7 +38,7 @@ class NutritionPoliciesController extends Controller
         $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
         
         $years = range(date("Y"), 1900);
-        return view('BarangayScholar.NutritionPolicies.create', compact('prov', 'mun', 'city', 'brgy','years'));
+        return view('BarangayScholar.NutritionPolicies.create', compact('prov', 'mun', 'city', 'brgy','years','action'));
     }
 
     /**
@@ -51,7 +54,6 @@ class NutritionPoliciesController extends Controller
             'region_id' => 'required|integer',
             'dateMonitoring' => 'required|date',
             'periodCovereda' => 'required|string ',
-            'periodCoveredb' => 'required|string',
             'rating2a' => 'required|integer',
             'rating2b' => 'required|integer',
             'rating2c' => 'required|integer',
@@ -77,8 +79,6 @@ class NutritionPoliciesController extends Controller
             'remarks2k' => 'required|string|max:255', 
             'remarks2l' => 'required|string|max:255', 
             'status' => 'required|string|max:255',
-            'dateCreated' => 'required|date ',
-            'dateUpdates' => 'required|date ',
             'user_id' => 'required|integer',
     
         ]; 
@@ -98,7 +98,6 @@ class NutritionPoliciesController extends Controller
             'region_id' =>  $request->region_id,
             'dateMonitoring' =>  $request->dateMonitoring,
             'periodCovereda' =>  $request->periodCovereda,
-            'periodCoveredb' =>  $request->periodCoveredb,
             'rating2a' =>  $request->rating2a,
             'rating2b' =>  $request->rating2b,
             'rating2c' =>  $request->rating2c,
@@ -125,8 +124,6 @@ class NutritionPoliciesController extends Controller
             'remarks2l' =>  $request->remarks2l,
             'status' =>  $request->status,
             'user_id' =>  $request->user_id,
-            'dateCreated' =>  $request->dateCreated,
-            'dateUpdates' =>  $request->dateUpdates,
         ]); 
 
         mpbrgynationalPoliciestracking::create([
@@ -143,9 +140,18 @@ class NutritionPoliciesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show(Request $request)
     {
-        //
+        $action = 'edit';
+        $location = new LocationController;
+        $prov = $location->getLocationDataProvince(auth()->user()->Region);
+        $mun = $location->getLocationDataMuni(auth()->user()->Province);
+        $city = $location->getLocationDataCity(auth()->user()->Region);
+        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        
+        $years = range(date("Y"), 1900);
+        $row = DB::table('mellpiprobarangaynationalpolicies')->where('id', $request->id)->first();
+        return view('BarangayScholar.NutritionPolicies.show', compact('row','prov', 'mun', 'city', 'brgy','years','action'));
     }
 
     /**
@@ -153,8 +159,16 @@ class NutritionPoliciesController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        $npbarangay = DB::table('mellpiprobarangaynationalpolicies')->where('id', $request->id)->first();
-        return view('BarangayScholar.NutritionPolicies.edit', ['npbarangay' => $npbarangay ])->with('success', 'Created successfully!');
+        $action = 'edit';
+        $location = new LocationController;
+        $prov = $location->getLocationDataProvince(auth()->user()->Region);
+        $mun = $location->getLocationDataMuni(auth()->user()->Province);
+        $city = $location->getLocationDataCity(auth()->user()->Region);
+        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        
+        $years = range(date("Y"), 1900);
+        $row = DB::table('mellpiprobarangaynationalpolicies')->where('id', $request->id)->first();
+        return view('BarangayScholar.NutritionPolicies.edit', compact('row','prov', 'mun', 'city', 'brgy','years','action'));
     }
 
     /**
@@ -170,7 +184,6 @@ class NutritionPoliciesController extends Controller
             'region_id' => 'required|integer',
             'dateMonitoring' => 'required|date',
             'periodCovereda' => 'required|string ',
-            'periodCoveredb' => 'required|string',
             'rating2a' => 'required|integer',
             'rating2b' => 'required|integer',
             'rating2c' => 'required|integer',
@@ -196,8 +209,6 @@ class NutritionPoliciesController extends Controller
             'remarks2k' => 'required|string|max:255', 
             'remarks2l' => 'required|string|max:255', 
             'status' => 'required|string|max:255',
-            'dateCreated' => 'required|date ',
-            'dateUpdates' => 'required|date ',
             'user_id' => 'required|integer',
     
         ]; 
@@ -218,7 +229,6 @@ class NutritionPoliciesController extends Controller
                 'region_id' =>  $request->region_id,
                 'dateMonitoring' =>  $request->dateMonitoring,
                 'periodCovereda' =>  $request->periodCovereda,
-                'periodCoveredb' =>  $request->periodCoveredb,
                 'rating2a' =>  $request->rating2a,
                 'rating2b' =>  $request->rating2b,
                 'rating2c' =>  $request->rating2c,
@@ -245,8 +255,6 @@ class NutritionPoliciesController extends Controller
                 'remarks2l' =>  $request->remarks2l,
                 'status' =>  $request->status,
                 'user_id' =>  $request->user_id,
-                'dateCreated' =>  $request->dateCreated,
-                'dateUpdates' =>  $request->dateUpdates,
             ]); 
         }
 
@@ -256,12 +264,29 @@ class NutritionPoliciesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
          //dd($id);
-         DB::table('mpbrgynationalPoliciestracking')->where('mellpiprobarangaynationalpolicies_id', $id)->delete();
-         $npbarangay = MellpiprobarangayNationalpolicies::find($id); 
+         DB::table('mpbrgynationalPoliciestracking')->where('mellpiprobarangaynationalpolicies_id', $request->id)->delete();
+         $npbarangay = MellpiprobarangayNationalpolicies::find($request->id); 
          $npbarangay->delete();
          return redirect()->route('nutritionpolicies.index')->with('success', 'Deleted successfully!');
+    }
+
+    public function downloads(Request $request ) { 
+        
+        $htmlContent = $request->input('htmlContent');
+        //dd($htmlContent);
+        // Generate PDF from HTML content
+        $htmlheader = '<html><body>';
+            
+        $htmlfooter = '</body></html>';
+        $concat = $htmlheader . $htmlContent . $htmlfooter;
+    
+        $pdf = Pdf::loadHTML($concat);
+        $pdfContent = $pdf->output();
+        return response($pdfContent, 200)
+        ->header('Content-Type', 'application/pdf')
+        ->header('Content-Disposition', 'attachment; filename="document.pdf"');
     }
 }

@@ -3,28 +3,28 @@
 <script src="{{ asset('assets') }}/js/joboy.js"></script>
 
 <style>
-.form-section {
+  .form-section {
     display: none;
-}
+  }
 
-.form-section.current {
+  .form-section.current {
     display: inline;
-}
+  }
 
-.striped-rows .row:nth-child(odd) {
+  .striped-rows .row:nth-child(odd) {
     background-color: #f2f2f2;
-}
+  }
 
-.col-sm {
+  .col-sm {
     margin: auto;
     padding: 1rem 1rem;
-}
+  }
 
-.row .form-control {
+  .row .form-control {
     border-color: #bebebe !important;
     border: 1px solid;
     border-radius: 5px;
-}
+  }
 </style>
 
 @extends('layouts.app', [
@@ -35,240 +35,132 @@
 
 
 @section('content')
-
-<div class="panel-header panel-header-sm"></div>
-<div class="content" style="padding:2%">
-    <div class="card">
-        <h4><b>MELLPI PRO FORM B 1a: BARANGAY NUTRITION MONITORING</b></h4>
-        <br>
-
-        @if(session('status'))
-        <div class="alert alert-success">{{session('status')}}</div>
-        @endif
-
-        <div>
-            <form action="{{ route('visionmission.store') }}" method="POST" id="lgu-profile-form">
-                @csrf
-
-                <input type="hidden" name="status" value="" id="status">
-                <input type="hidden" name="dateCreated" value="05/19/2024">
-                <input type="hidden" name="dateUpdates" value="05/19/2024">
-                <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
-                <!-- header -->
-                @include('layouts.page_template.location_header')
-                <br>
-                <br>
-                <div>
-                    <!-- endtablehearder -->
-                    <div class="row" style="display:flex;background-color:#F5F5F5;padding:10px;border-radius:5px;justify-content:center; text-align: center;" >
-                        <div class="col-2 justify-content-center">
-                            <label for="exampleFormControlInput1"><b>ELEMENTS</b></label>
-                        </div>
-                        <div class="col" style="padding:0px!important">
-                            <div>
-                                <label for="exampleFormControlInput1"><b>PERFORMANCE LEVEL</b></label>
-                            </div>
-                            <div style="display:flex" style="justify-content:center!important">
-                                <div class="col">
-                                    <label for="exampleFormControlInput1"><b>1</b></label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1"><b>2</b></label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1"><b>3</b></label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1"><b>4</b></label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1"><b>5</b></label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-1" style="padding:0px!important">
-                            <label for="exampleFormControlInput1"><b>DOCUMENT SOURCE</b></label>
-                        </div>
-                        <div class="col-1">
-                            <label for="exampleFormControlInput1"><b>RATING</b></label>
-                        </div>
-                        <div class="col-1">
-                            <label for="exampleFormControlInput1"><b>REMARKS/EVIDENCE</b></label>
-                        </div>
-                    </div>
-                    <br>
-                    <!-- endtablehearder -->
-
-
-                    <div class="row" style="display:flex">
-                        <div style="display:flex" class="col-2 justify-content-center">
-                            <div>
-                                <label for="exampleFormControlInput1"><b>1a</b></label>
-                            </div>
-                            <div class="col">
-                                <label for="exampleFormControlInput1">Presence and
-                                    knowledge of vision mission statement</label>
-                            </div>
-                        </div>
-                        <div class="col" style="padding:0px!important">
-                            <div style="display:flex" style="justify-content:center!important">
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">A vision mission statement for nutrition
-                                        was formulated but not reflected in the Barangay Nutrition Action
-                                        Plan</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">A vision mission statement for nutrition
-                                        was formulated and reflected in the Barangay Nutrition Action
-                                        Plan</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">The vision mission statement for nutrition
-                                        program exists and disseminated to BNC members</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">The vision mission statement for nutrition
-                                        program exists and disseminated to BNC members and other
-                                        stakeholders</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">The vision mission statement for nutrition
-                                        program exists and to BNC members, stakeholders and to the rest of the
-                                        community</b></label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-1" style="padding:0px!important">
-                            <label for="exampleFormControlInput1">Barangay Nutrition Action Plan Minutes of Meeting
-                                Documentation of dissemination</label>
-                        </div>
-                        <div class="col-1">
-                            <select id="loadProvince1" class="form-control" name="rating1a">
-                                <option>Select</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
-                        </div>
-                        <div class="col-1">
-                            <textarea type="text" name="remarks1a" placeholder="Your remarks"
-                                style="background-color:#F5F5F5;border:0px;font-size:12px;width:inherit;max-height:120px;height:120px"></textarea>
-                        </div>
-                    </div>
-
-                    <br>
-                    <div class="row" style="display:flex">
-                        <div style="display:flex" class="col-2 justify-content-center">
-                            <div>
-                                <label for="exampleFormControlInput1"><b>1b</b></label>
-                            </div>
-                            <div class="col">
-                                <label for="exampleFormControlInput1">Presence of nutrition-related concerns in the Barangay Development Plan</label>
-                            </div>
-                        </div>
-                        <div class="col" style="padding:0px!important">
-                            <div style="display:flex" style="justify-content:center!important">
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">Nutrition-related PAP is integrated in one of the sectoral plans in the Barangay Development Plan</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">Nutrition-related PAP are integrated in at least two of the sectoral plans in the Barangay Development Plan</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">PPAN-related PAP are integrated in at least three of the sectoral plans in the Barangay Development Plan</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">Nutrition-related objectives are included in at least three of the sectoral plans </label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1"> Nutrition outcomes included in the overall success indicators of the Barangay Development Plan</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-1" style="padding:0px!important">
-                            <label for="exampleFormControlInput1">Barangay Development Plan</label>
-                        </div>
-                        <div class="col-1">
-                            <select id="loadProvince1" class="form-control" name="rating1b">
-                                <option>Select</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
-                        </div>
-                        <div class="col-1">
-                            <textarea type="text" name="remarks1b"  placeholder="Your remarks"
-                                style="background-color:#F5F5F5;border:0px;font-size:12px;width:inherit;max-height:120px;height:120px"></textarea>
-                        </div>
-                    </div>
-
-                    <br>
-                    <div class="row" style="display:flex">
-                        <div style="display:flex" class="col-2 justify-content-center">
-                            <div>
-                                <label for="exampleFormControlInput1"><b>1c</b></label>
-                            </div>
-                            <div class="col">
-                                <label for="exampleFormControlInput1">Presence of nutrition-related concerns in the Annual Investment Program</label>
-                            </div>
-                        </div>
-                        <div class="col" style="padding:0px!important">
-                            <div style="display:flex" style="justify-content:center!important">
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">At least one nutrition-related PAP integrated in the Annual Investment Program</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">At least two nutrition-related PAP integrated in the Annual Investment Program</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">At least three PPAN-related PAP integrated in the Annual Investment Program</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">At least four PPAN-related PAP and/or PS for nutrition integrated in the Annual Investment Program</label>
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1">More than four PPAN-related PAP and/or PS for nutrition integrated in the Annual Investment Program</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-1" style="padding:0px!important">
-                            <label for="exampleFormControlInput1">Annual Investment Program</label>
-                        </div>
-                        <div class="col-1">
-                            <select id="loadProvince1" class="form-control" name="rating1c">
-                                <option>Select</option>
-                                <option>Select</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
-                        </div>
-                        <div class="col-1">
-                        <textarea type="text" name="remarks1c"  placeholder="Your remarks"
-                                style="background-color:#F5F5F5;border:0px;font-size:12px;width:inherit;max-height:120px;height:120px"></textarea>
-                        </div>
-                    </div>
-
-                </div>
-
-
-                <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
-                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
-                    Draft
-                    </button>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                    Submit
-                    </button>
-                </div>
-            </form>
-        </div>
+<div class="content" style="margin-top:50px;padding:2%">
+  <div class="card" style="border-radius:10px;padding-left:2rem!important;padding-right:1rem!important">
+    <div style="display:flex;align-items:center">
+      <a href="{{route('visionmission.index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a>
+      <h4 style="margin-top:18px;font-weight:bold">MELLPI PRO FORM B 1a: BARANGAY NUTRITION MONITORING</h4>
     </div>
+
+    @include('layouts.page_template.crud_alert_message')
+
+    <div style="padding:25px">
+      <form action="{{ route('visionmission.store') }}" method="POST" id="lgu-profile-form">
+        @csrf
+
+        <input type="hidden" name="status" value="" id="status">
+        <input type="hidden" name="dateCreated" value="05/19/2024">
+        <input type="hidden" name="dateUpdates" value="05/19/2024">
+        <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
+        <!-- header -->
+        @include('layouts.page_template.location_header')
+        <br>
+        <br>
+        <div>
+          <!-- endtablehearder -->
+          <div class="row table-responsive" style="display:flex;padding:10px;">
+            <table class="table table-striped table-hover">
+              <thead style="background-color:#508D4E;">
+                <th class="text-center">&nbsp;</th>
+                <th class="tableheader">Elements</th>
+                <th colspan="5" class="tableheader">Performance Level</th>
+                <th class="tableheader">Document Source</th>
+                <th class="tableheader">Rating</th>
+                <th class="tableheader">Remarks</th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td class="bold text-center">1</td>
+                  <td class="bold text-center">2</td>
+                  <td class="bold text-center">3</td>
+                  <td class="bold text-center">4</td>
+                  <td class="bold text-center">5</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td>1a</td>
+                  <td>Presence and knowledge of vision mission statement</td>
+                  <td>A vision mission statement for nutrition was formulated but not reflected in the Barangay Nutrition Action Plan</td>
+                  <td>A vision mission statement for nutrition was formulated and reflected in the Barangay Nutrition Action Plan</td>
+                  <td>The vision mission statement for nutrition program exists and disseminated to BNC members</td>
+                  <td>The vision mission statement for nutrition program exists and disseminated to BNC members and other stakeholders</td>
+                  <td>The vision mission statement for nutrition program exists and to BNC members, stakeholders and to the rest of the community</td>
+                  <td> Barangay Nutrition Action Plan Minutes of Meeting Documentation of dissemination</td>
+                  <td> <select id="loadProvince1" class="form-control" name="rating1a">
+                      <option>Select</option>
+                      <option value="1" {{ old('rating1a') == '1' ? 'selected' : '' }}>1</option>
+                      <option value="2" {{ old('rating1a') == '2' ? 'selected' : '' }}>2</option>
+                      <option value="3" {{ old('rating1a') == '3' ? 'selected' : '' }}>3</option>
+                      <option value="4" {{ old('rating1a') == '4' ? 'selected' : '' }}>4</option>
+                      <option value="5" {{ old('rating1a') == '5' ? 'selected' : '' }}>5</option>
+                    </select></td>
+                  <td><textarea class="form-control" name="remarks1a">{{ old('remarks1a') }}</textarea></td>
+                </tr>
+                <tr>
+                  <td>1b</td>
+                  <td>Presence of nutrition-related concerns in the Barangay Development Plan</td>
+                  <td>Nutrition-related PAP is integrated in one of the sectoral plans in the Barangay Development Plan</td>
+                  <td>Nutrition-related PAP are integrated in at least two of the sectoral plans in the Barangay Development Plan</td>
+                  <td>PPAN-related PAP are integrated in at least three of the sectoral plans in the Barangay Development Plan</td>
+                  <td>Nutrition-related objectives are included in at least three of the sectoral plans </td>
+                  <td>Nutrition outcomes included in the overall success indicators of the Barangay Development Plan</td>
+                  <td>Barangay Development Plan</td>
+                  <td><select id="loadProvince1" class="form-control" name="rating1b">
+                      <option>Select</option>
+                      <option value="1" {{ old('rating1b') == '1' ? 'selected' : '' }}>1</option>
+                      <option value="2" {{ old('rating1b') == '2' ? 'selected' : '' }}>2</option>
+                      <option value="3" {{ old('rating1b') == '3' ? 'selected' : '' }}>3</option>
+                      <option value="4" {{ old('rating1b') == '4' ? 'selected' : '' }}>4</option>
+                      <option value="5" {{ old('rating1b') == '5' ? 'selected' : '' }}>5</option>
+                    </select></td>
+                  <td>
+                    <textarea class="form-control" name="remarks1b"> {{ old('remarks1b') }}</textarea>
+                  </td>
+                </tr>
+                <tr>
+                  <td>1c</td>
+                  <td>Presence of nutrition-related concerns in the Annual Investment Program</td>
+                  <td>At least one nutrition-related PAP integrated in the Annual Investment Program</td>
+                  <td>At least two nutrition-related PAP integrated in the Annual Investment Program</td>
+                  <td>At least three PPAN-related PAP integrated in the Annual Investment Program</td>
+                  <td>At least four PPAN-related PAP and/or PS for nutrition integrated in the Annual Investment Program </td>
+                  <td>More than four PPAN-related PAP and/or PS for nutrition integrated in the Annual Investment Program</td>
+                  <td>Annual Investment Program</td>
+                  <td>
+                    <select id="loadProvince1" class="form-control" name="rating1c">
+                      <option>Select</option>
+                      <option value="1" {{ old('rating1c') == '1' ? 'selected' : '' }}>1</option>
+                      <option value="2" {{ old('rating1c') == '2' ? 'selected' : '' }}>2</option>
+                      <option value="3" {{ old('rating1c') == '3' ? 'selected' : '' }}>3</option>
+                      <option value="4" {{ old('rating1c') == '4' ? 'selected' : '' }}>4</option>
+                      <option value="5" {{ old('rating1c') == '5' ? 'selected' : '' }}>5</option>
+                    </select>
+                  </td>
+                  <td>
+                    <textarea class="form-control" name="remarks1c">{{ old('remarks1c') }}</textarea>
+                </tr>
+
+
+              </tbody>
+            </table>
+          </div>
+
+
+          <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
+            <button type="button" class="bold btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
+              Save as Draft
+            </button>
+            <button type="button" class="bold btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+              Save and Submit
+            </button>
+          </div>
+      </form>
+    </div>
+  </div>
 </div>
 </div>
 

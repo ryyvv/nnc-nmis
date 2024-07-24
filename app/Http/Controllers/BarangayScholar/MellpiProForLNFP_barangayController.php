@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use illuminate\Database\QueryException;
 use PhpParser\Node\Stmt\TryCatch;
 use App\Models\lnfp_lguprofile;
+use App\Models\lnfp_form7;
 
 class MellpiProForLNFP_barangayController extends Controller
 {
@@ -168,45 +169,88 @@ class MellpiProForLNFP_barangayController extends Controller
 
         if ($action == 'submit') {
             try {
-                $submitForm5a_rr = new lnfp_form5a_rr;
+                // $submitForm5a_rr = new lnfp_form5a_rr;
 
-                $submitForm5a_rr->forThePeriod = $request->input('forTheperiod');
-                $submitForm5a_rr->nameofPnao = $request->input('nameOf');
-                $submitForm5a_rr->address = $request->input('address');
-                $submitForm5a_rr->provDeploy = $request->input('provDev');
-                $submitForm5a_rr->numYearPnao = $request->input('numYr');
-                $submitForm5a_rr->fulltime = $request->input('fulltime');
-                $submitForm5a_rr->profAct = $request->input('profAct');
-                $submitForm5a_rr->bdate = $request->input('bday');
-                $submitForm5a_rr->sex = $request->input('sex');
-                $submitForm5a_rr->dateDesignation = $request->input('dateDesig');
-                $submitForm5a_rr->secondedOffice = $request->input('seconded');
-                $submitForm5a_rr->devActnum1 = $request->input('num1');
-                $submitForm5a_rr->devActnum2 = $request->input('num2');
-                $submitForm5a_rr->devActnum3 = $request->input('num3');
-                $submitForm5a_rr->ratingA = $request->input('ratingA');
-                $submitForm5a_rr->ratingB = $request->input('ratingB');
-                $submitForm5a_rr->ratingBB = $request->input('ratingBB');
-                $submitForm5a_rr->ratingC = $request->input('ratingC');
-                $submitForm5a_rr->ratingD = $request->input('ratingD');
-                $submitForm5a_rr->ratingE = $request->input('ratingE');
-                $submitForm5a_rr->ratingF = $request->input('ratingF');
-                $submitForm5a_rr->ratingG = $request->input('ratingG');
-                $submitForm5a_rr->ratingGG = $request->input('ratingGG');
-                $submitForm5a_rr->ratingH = $request->input('ratingH');
-                $submitForm5a_rr->remarksA = $request->input('remarksA');
-                $submitForm5a_rr->remarksB = $request->input('remarksB');
-                $submitForm5a_rr->remarksBB = $request->input('remarksBB');
-                $submitForm5a_rr->remarksC = $request->input('remarksC');
-                $submitForm5a_rr->remarksD = $request->input('remarksD');
-                $submitForm5a_rr->remarksE = $request->input('remarksE');
-                $submitForm5a_rr->remarksF = $request->input('remarksF');
-                $submitForm5a_rr->remarksG = $request->input('remarksG');
-                $submitForm5a_rr->remarksGG = $request->input('remarksGG');
-                $submitForm5a_rr->remarksH = $request->input('remarksH');
-                $submitForm5a_rr->status = 2;
+                // $submitForm5a_rr->forThePeriod = $request->input('forTheperiod');
+                // $submitForm5a_rr->nameofPnao = $request->input('nameOf');
+                // $submitForm5a_rr->address = $request->input('address');
+                // $submitForm5a_rr->provDeploy = $request->input('provDev');
+                // $submitForm5a_rr->numYearPnao = $request->input('numYr');
+                // $submitForm5a_rr->fulltime = $request->input('fulltime');
+                // $submitForm5a_rr->profAct = $request->input('profAct');
+                // $submitForm5a_rr->bdate = $request->input('bday');
+                // $submitForm5a_rr->sex = $request->input('sex');
+                // $submitForm5a_rr->dateDesignation = $request->input('dateDesig');
+                // $submitForm5a_rr->secondedOffice = $request->input('seconded');
+                // $submitForm5a_rr->devActnum1 = $request->input('num1');
+                // $submitForm5a_rr->devActnum2 = $request->input('num2');
+                // $submitForm5a_rr->devActnum3 = $request->input('num3');
+                // $submitForm5a_rr->ratingA = $request->input('ratingA');
+                // $submitForm5a_rr->ratingB = $request->input('ratingB');
+                // $submitForm5a_rr->ratingBB = $request->input('ratingBB');
+                // $submitForm5a_rr->ratingC = $request->input('ratingC');
+                // $submitForm5a_rr->ratingD = $request->input('ratingD');
+                // $submitForm5a_rr->ratingE = $request->input('ratingE');
+                // $submitForm5a_rr->ratingF = $request->input('ratingF');
+                // $submitForm5a_rr->ratingG = $request->input('ratingG');
+                // $submitForm5a_rr->ratingGG = $request->input('ratingGG');
+                // $submitForm5a_rr->ratingH = $request->input('ratingH');
+                // $submitForm5a_rr->remarksA = $request->input('remarksA');
+                // $submitForm5a_rr->remarksB = $request->input('remarksB');
+                // $submitForm5a_rr->remarksBB = $request->input('remarksBB');
+                // $submitForm5a_rr->remarksC = $request->input('remarksC');
+                // $submitForm5a_rr->remarksD = $request->input('remarksD');
+                // $submitForm5a_rr->remarksE = $request->input('remarksE');
+                // $submitForm5a_rr->remarksF = $request->input('remarksF');
+                // $submitForm5a_rr->remarksG = $request->input('remarksG');
+                // $submitForm5a_rr->remarksGG = $request->input('remarksGG');
+                // $submitForm5a_rr->remarksH = $request->input('remarksH');
+                // $submitForm5a_rr->status = 1;
 
-                $submitForm5a_rr->save();
+                // $submitForm5a_rr->save();
+                $submitForm5a_rr = lnfp_form5a_rr::create([
+                    'forThePeriod' => $request->input('forTheperiod'),
+                    'nameofPnao' => $request->input('nameOf'),
+                    'address' => $request->input('address'),
+                    'provDeploy' => $request->input('provDev'),
+                    'numYearPnao' => $request->input('numYr'),
+                    'fulltime' => $request->input('fulltime'),
+                    'profAct' => $request->input('profAct'),
+                    'bdate' => $request->input('bday'),
+                    'sex' => $request->input('sex'),
+                    'dateDesignation' => $request->input('dateDesig'),
+                    'secondedOffice' => $request->input('seconded'),
+                    'devActnum1' => $request->input('num1'),
+                    'devActnum2' => $request->input('num2'),
+                    'devActnum3' => $request->input('num3'),
+                    'ratingA' => $request->input('ratingA'),
+                    'ratingB' => $request->input('ratingB'),
+                    'ratingBB' => $request->input('ratingBB'),
+                    'ratingC' => $request->input('ratingC'),
+                    'ratingD' => $request->input('ratingD'),
+                    'ratingE' => $request->input('ratingE'),
+                    'ratingF' => $request->input('ratingF'),
+                    'ratingG' => $request->input('ratingG'),
+                    'ratingGG' => $request->input('ratingGG'),
+                    'ratingH' => $request->input('ratingH'),
+                    'remarksA' => $request->input('remarksA'),
+                    'remarksB' => $request->input('remarksB'),
+                    'remarksBB' => $request->input('remarksBB'),
+                    'remarksC' => $request->input('remarksC'),
+                    'remarksD' => $request->input('remarksD'),
+                    'remarksE' => $request->input('remarksE'),
+                    'remarksF' => $request->input('remarksF'),
+                    'remarksG' => $request->input('remarksG'),
+                    'remarksGG' => $request->input('remarksGG'),
+                    'remarksH' => $request->input('remarksH'),
+                    'status' => 1,
+                ]);
+                if ($submitForm5a_rr) {
+                    # code...
+                    lnfp_form7::create([
+                        'form5_id' => $submitForm5a_rr->id
+                    ]);
+                }
 
                 // return redirect()->back()->with('alert', 'Rate and Remarks Submitted Successfully!');
                 return redirect()->route('MellpiProMonitoringIndex.index')->with('alert', 'Rate and Remarks Submitted Successfully!');
@@ -215,45 +259,89 @@ class MellpiProForLNFP_barangayController extends Controller
             }
         } elseif ($action == 'draft') {
             try {
-                $submitForm5a_rr = new lnfp_form5a_rr;
+                // $submitForm5a_rr = new lnfp_form5a_rr;
 
-                $submitForm5a_rr->forThePeriod = $request->input('forTheperiod');
-                $submitForm5a_rr->nameofPnao = $request->input('nameOf');
-                $submitForm5a_rr->address = $request->input('address');
-                $submitForm5a_rr->provDeploy = $request->input('provDev');
-                $submitForm5a_rr->numYearPnao = $request->input('numYr');
-                $submitForm5a_rr->fulltime = $request->input('fulltime');
-                $submitForm5a_rr->profAct = $request->input('profAct');
-                $submitForm5a_rr->bdate = $request->input('bday');
-                $submitForm5a_rr->sex = $request->input('sex');
-                $submitForm5a_rr->dateDesignation = $request->input('dateDesig');
-                $submitForm5a_rr->secondedOffice = $request->input('seconded');
-                $submitForm5a_rr->devActnum1 = $request->input('num1');
-                $submitForm5a_rr->devActnum2 = $request->input('num2');
-                $submitForm5a_rr->devActnum3 = $request->input('num3');
-                $submitForm5a_rr->ratingA = $request->input('ratingA');
-                $submitForm5a_rr->ratingB = $request->input('ratingB');
-                $submitForm5a_rr->ratingBB = $request->input('ratingBB');
-                $submitForm5a_rr->ratingC = $request->input('ratingC');
-                $submitForm5a_rr->ratingD = $request->input('ratingD');
-                $submitForm5a_rr->ratingE = $request->input('ratingE');
-                $submitForm5a_rr->ratingF = $request->input('ratingF');
-                $submitForm5a_rr->ratingG = $request->input('ratingG');
-                $submitForm5a_rr->ratingGG = $request->input('ratingGG');
-                $submitForm5a_rr->ratingH = $request->input('ratingH');
-                $submitForm5a_rr->remarksA = $request->input('remarksA');
-                $submitForm5a_rr->remarksB = $request->input('remarksB');
-                $submitForm5a_rr->remarksBB = $request->input('remarksBB');
-                $submitForm5a_rr->remarksC = $request->input('remarksC');
-                $submitForm5a_rr->remarksD = $request->input('remarksD');
-                $submitForm5a_rr->remarksE = $request->input('remarksE');
-                $submitForm5a_rr->remarksF = $request->input('remarksF');
-                $submitForm5a_rr->remarksG = $request->input('remarksG');
-                $submitForm5a_rr->remarksGG = $request->input('remarksGG');
-                $submitForm5a_rr->remarksH = $request->input('remarksH');
-                $submitForm5a_rr->status = 1;
+                // $submitForm5a_rr->forThePeriod = $request->input('forTheperiod');
+                // $submitForm5a_rr->nameofPnao = $request->input('nameOf');
+                // $submitForm5a_rr->address = $request->input('address');
+                // $submitForm5a_rr->provDeploy = $request->input('provDev');
+                // $submitForm5a_rr->numYearPnao = $request->input('numYr');
+                // $submitForm5a_rr->fulltime = $request->input('fulltime');
+                // $submitForm5a_rr->profAct = $request->input('profAct');
+                // $submitForm5a_rr->bdate = $request->input('bday');
+                // $submitForm5a_rr->sex = $request->input('sex');
+                // $submitForm5a_rr->dateDesignation = $request->input('dateDesig');
+                // $submitForm5a_rr->secondedOffice = $request->input('seconded');
+                // $submitForm5a_rr->devActnum1 = $request->input('num1');
+                // $submitForm5a_rr->devActnum2 = $request->input('num2');
+                // $submitForm5a_rr->devActnum3 = $request->input('num3');
+                // $submitForm5a_rr->ratingA = $request->input('ratingA');
+                // $submitForm5a_rr->ratingB = $request->input('ratingB');
+                // $submitForm5a_rr->ratingBB = $request->input('ratingBB');
+                // $submitForm5a_rr->ratingC = $request->input('ratingC');
+                // $submitForm5a_rr->ratingD = $request->input('ratingD');
+                // $submitForm5a_rr->ratingE = $request->input('ratingE');
+                // $submitForm5a_rr->ratingF = $request->input('ratingF');
+                // $submitForm5a_rr->ratingG = $request->input('ratingG');
+                // $submitForm5a_rr->ratingGG = $request->input('ratingGG');
+                // $submitForm5a_rr->ratingH = $request->input('ratingH');
+                // $submitForm5a_rr->remarksA = $request->input('remarksA');
+                // $submitForm5a_rr->remarksB = $request->input('remarksB');
+                // $submitForm5a_rr->remarksBB = $request->input('remarksBB');
+                // $submitForm5a_rr->remarksC = $request->input('remarksC');
+                // $submitForm5a_rr->remarksD = $request->input('remarksD');
+                // $submitForm5a_rr->remarksE = $request->input('remarksE');
+                // $submitForm5a_rr->remarksF = $request->input('remarksF');
+                // $submitForm5a_rr->remarksG = $request->input('remarksG');
+                // $submitForm5a_rr->remarksGG = $request->input('remarksGG');
+                // $submitForm5a_rr->remarksH = $request->input('remarksH');
+                // $submitForm5a_rr->status = 2;
 
-                $submitForm5a_rr->save();
+                // $submitForm5a_rr->save();
+                $submitForm5a_rr = lnfp_form5a_rr::create([
+                    'forThePeriod' => $request->input('forTheperiod'),
+                    'nameofPnao' => $request->input('nameOf'),
+                    'address' => $request->input('address'),
+                    'provDeploy' => $request->input('provDev'),
+                    'numYearPnao' => $request->input('numYr'),
+                    'fulltime' => $request->input('fulltime'),
+                    'profAct' => $request->input('profAct'),
+                    'bdate' => $request->input('bday'),
+                    'sex' => $request->input('sex'),
+                    'dateDesignation' => $request->input('dateDesig'),
+                    'secondedOffice' => $request->input('seconded'),
+                    'devActnum1' => $request->input('num1'),
+                    'devActnum2' => $request->input('num2'),
+                    'devActnum3' => $request->input('num3'),
+                    'ratingA' => $request->input('ratingA'),
+                    'ratingB' => $request->input('ratingB'),
+                    'ratingBB' => $request->input('ratingBB'),
+                    'ratingC' => $request->input('ratingC'),
+                    'ratingD' => $request->input('ratingD'),
+                    'ratingE' => $request->input('ratingE'),
+                    'ratingF' => $request->input('ratingF'),
+                    'ratingG' => $request->input('ratingG'),
+                    'ratingGG' => $request->input('ratingGG'),
+                    'ratingH' => $request->input('ratingH'),
+                    'remarksA' => $request->input('remarksA'),
+                    'remarksB' => $request->input('remarksB'),
+                    'remarksBB' => $request->input('remarksBB'),
+                    'remarksC' => $request->input('remarksC'),
+                    'remarksD' => $request->input('remarksD'),
+                    'remarksE' => $request->input('remarksE'),
+                    'remarksF' => $request->input('remarksF'),
+                    'remarksG' => $request->input('remarksG'),
+                    'remarksGG' => $request->input('remarksGG'),
+                    'remarksH' => $request->input('remarksH'),
+                    'status' => 2,
+                ]);
+
+                if ($submitForm5a_rr) {
+                    # code...
+                    lnfp_form7::create([
+                        'form5_id' => $submitForm5a_rr->id
+                    ]);
+                }
 
                 // return redirect()->back()->with('alert', 'Rate and Remarks Submitted Successfully!');
                 return redirect()->route('MellpiProMonitoringIndex.index')->with('alert', 'Rate and Remarks Submitted Successfully!');
@@ -449,16 +537,6 @@ class MellpiProForLNFP_barangayController extends Controller
 
         return response()->json(['message' => 'Invalid Action!', 400]);
     }
-
-    //Form 6 Radial Diagram
-    public function radialForm6()
-    {
-        return view('BarangayScholar/MellpiProForLNFP/MellpiProRadialDiagram.RadialForm6Index');
-    }
-    public function radialForm6Create()
-    {
-        return view('BarangayScholar/MellpiProForLNFP/MellpiProRadialDiagram.RadialForm6Create');
-    }
     /**
      * Show the form for creating a new resource.
      */
@@ -502,22 +580,37 @@ class MellpiProForLNFP_barangayController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function deleteForm5arr(Request $request, $id )
-    {
-        //
-        // $deleted = DB::table('lnfp_form5a_rr')->where('id', $request->id)->delete();
-        // $deleted = lnfp_form5a_rr::where('id', $request->id)->delete();
-        $deleted = lnfp_form5a_rr::find($id);
-        $deleted->delete();
+    public function deleteForm5arr(Request $request)
+{
+    $request->validate([
+        'id' => 'required|integer'
+    ]);
 
-        if ($deleted) {
-            // Redirect back with success message if record was deleted
-            return redirect()->back()->with('alert', 'Deleted Successfully!');
-        } else {
-            // Redirect back with error message if record not found
-            return redirect()->back()->with('alert', 'Record not found!');
-        }
+    $record = lnfp_form5a_rr::find($request->id);
 
-        return redirect()->back()->with('alert', 'Deleted Successfully!');
+    if ($record) {
+        $record->delete();
+        return response()->json(['message' => 'Deleted Successfully!']);
+    } else {
+        return response()->json(['message' => 'Record not found!'], 404);
     }
+}
+
+    // public function deleteForm5arr($id)
+    // {
+    //     //
+    //     // $deleted = DB::table('lnfp_form5a_rr')->where('id', $request->id)->delete();
+    //     // $deleted = lnfp_form5a_rr::where('id', $request->id)->delete();
+    //     $deleted = lnfp_form5a_rr::find($id);
+    //     // dd($deleted);
+
+    //     if ($deleted) {
+    //         $deleted->delete();
+    //         // Redirect back with success message if record was deleted
+    //         return redirect()->back()->with('alert', 'Deleted Successfully!');
+    //     } else {
+    //         // Redirect back with error message if record not found
+    //         return redirect()->back()->with('alert', 'Record not found!');
+    //     }
+    // }
 }
