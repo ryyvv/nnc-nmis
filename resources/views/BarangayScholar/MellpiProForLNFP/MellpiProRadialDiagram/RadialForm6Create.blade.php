@@ -230,9 +230,9 @@
                                     });
                                 </script>
                             </div>
-                            @endif
                         </form>
-                        <form action="#" method="post">
+                        <form action="{{ route('lnfpUpdateform7', $form6->form5_id) }}" id="lnfp-form7-edit" method="post">
+                            @csrf
                             <div class="form-row">
                                 <div class="col-md-12">
                                     <center>
@@ -251,71 +251,91 @@
                                         <tbody>
                                             <tr>
                                                 <td>A. Coordination</td>
-                                                <td><textarea type="text" class="form7Input" name="AccomplishA" id="AccomplishA"></textarea></td>
-                                                <td><textarea type="text" class="form7Input" name="GoodPracA" id="GoodPracA"></textarea></td>
-                                                <td><textarea type="text" class="form7Input" name="IssuesA" id="IssuesA"></textarea></td>
-                                                <td><textarea type="text" class="form7Input" name="ActionsA" id="ActionsA"></textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="AccomplishA" id="AccomplishA">{{ $form6->accomplishmentA }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="GoodPracA" id="GoodPracA">{{ $form6->goodPracA }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="IssuesA" id="IssuesA">{{ $form6->issuesA }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="ActionsA" id="ActionsA">{{ $form6->actionsA }}</textarea></td>
                                             </tr>
                                             <tr>
                                                 <td>B. Orientation, Advocacy and Promotion</td>
-                                                <td><textarea type="text" class="form7Input" name="AccomplishB" id="AccomplishB"></textarea></td>
-                                                <td><textarea type="text" class="form7Input" name="GoodPracB" id="GoodPracB"></textarea></td>
-                                                <td><textarea type="text" class="form7Input" name="IssuesB" id="IssuesB"></textarea></td>
-                                                <td><textarea type="text" class="form7Input" name="ActionsB" id="ActionsB"></textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="AccomplishB" id="AccomplishB">{{ $form6->accomplishmentB }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="GoodPracB" id="GoodPracB">{{ $form6->goodPracB }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="IssuesB" id="IssuesB">{{ $form6->issuesB }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="ActionsB" id="ActionsB">{{ $form6->actionsB }}</textarea></td>
                                             </tr>
                                             <tr>
                                                 <td>C. Planning</td>
-                                                <td><textarea type="text" class="form7Input" name="AccomplishC" id="AccomplishC"></textarea></td>
-                                                <td><textarea type="text" class="form7Input" name="GoodPracC" id="GoodPracC"></textarea></td>
-                                                <td><textarea type="text" class="form7Input" name="IssuesC" id="IssuesC"></textarea></td>
-                                                <td><textarea type="text" class="form7Input" name="ActionsC" id="ActionsC"></textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="AccomplishC" id="AccomplishC">{{ $form6->accomplishmentC }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="GoodPracC" id="GoodPracC">{{ $form6->goodPracC }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="IssuesC" id="IssuesC">{{ $form6->issuesC }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="ActionsC" id="ActionsC">{{ $form6->actionsC }}</textarea></td>
                                             </tr>
                                             <tr>
                                                 <td>D. Implementation</td>
-                                                <td><textarea type="text" class="form7Input" name="AccomplishD" id="AccomplishD"></textarea></td>
-                                                <td><textarea type="text" class="form7Input" name="GoodPracD" id="GoodPracD"></textarea></td>
-                                                <td><textarea type="text" class="form7Input" name="IssuesD" id="IssuesD"></textarea></td>
-                                                <td><textarea type="text" class="form7Input" name="ActionsD" id="ActionsD"></textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="AccomplishD" id="AccomplishD">{{ $form6->accomplishmentD }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="GoodPracD" id="GoodPracD">{{ $form6->goodPracD }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="IssuesD" id="IssuesD">{{ $form6->issuesD }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="ActionsD" id="ActionsD">{{ $form6->actionsD }}</textarea></td>
                                             </tr>
                                             <tr>
                                                 <td>E. Monitoring and Evaluation</td>
-                                                <td><textarea type="text" class="form7Input" name="AccomplishE" id="AccomplishE"></textarea></td>
-                                                <td><textarea type="text" class="form7Input" name="GoodPracE" id="GoodPracE"></textarea></td>
-                                                <td><textarea type="text" class="form7Input" name="IssuesE" id="IssuesE"></textarea></td>
-                                                <td><textarea type="text" class="form7Input" name="ActionsE" id="ActionsE"></textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="AccomplishE" id="AccomplishE">{{ $form6->accomplishmentE }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="GoodPracE" id="GoodPracE">{{ $form6->goodPracE }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="IssuesE" id="IssuesE">{{ $form6->issuesE }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="ActionsE" id="ActionsE">{{ $form6->actionsE }}</textarea></td>
                                             </tr>
                                             <tr>
                                                 <td>F. Resource Generation</td>
-                                                <td><textarea type="text" class="form7Input" name="AccomplishF" id="AccomplishF"></textarea></td>
-                                                <td><textarea type="text" class="form7Input" name="GoodPracF" id="GoodPracF"></textarea></td>
-                                                <td><textarea type="text" class="form7Input" name="IssuesF" id="IssuesF"></textarea></td>
-                                                <td><textarea type="text" class="form7Input" name="ActionsF" id="ActionsF"></textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="AccomplishF" id="AccomplishF">{{ $form6->accomplishmentF }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="GoodPracF" id="GoodPracF">{{ $form6->goodPracF }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="IssuesF" id="IssuesF">{{ $form6->issuesF }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="ActionsF" id="ActionsF">{{ $form6->actionsF }}</textarea></td>
                                             </tr>
                                             <tr>
                                                 <td>G. Capacity Development</td>
-                                                <td><textarea type="text" class="form7Input" name="AccomplishG" id="AccomplishG"></textarea></td>
-                                                <td><textarea type="text" class="form7Input" name="GoodPracG" id="GoodPracG"></textarea></td>
-                                                <td><textarea type="text" class="form7Input" name="IssuesG" id="IssuesG"></textarea></td>
-                                                <td><textarea type="text" class="form7Input" name="ActionsG" id="ActionsG"></textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="AccomplishG" id="AccomplishG">{{ $form6->accomplishmentG }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="GoodPracG" id="GoodPracG">{{ $form6->goodPracG }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="IssuesG" id="IssuesG">{{ $form6->issuesG }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="ActionsG" id="ActionsG">{{ $form6->actionsG }}</textarea></td>
                                             </tr>
                                             <tr>
                                                 <td>H. Documentation and record-keeping</td>
-                                                <td><textarea type="text" class="form7Input" name="AccomplishH" id="AccomplishH"></textarea></td>
-                                                <td><textarea type="text" class="form7Input" name="GoodPracH" id="GoodPracH"></textarea></td>
-                                                <td><textarea type="text" class="form7Input" name="IssuesH" id="IssuesH"></textarea></td>
-                                                <td><textarea type="text" class="form7Input" name="ActionsH" id="ActionsH"></textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="AccomplishH" id="AccomplishH">{{ $form6->accomplishmentH }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="GoodPracH" id="GoodPracH">{{ $form6->goodPracH }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="IssuesH" id="IssuesH">{{ $form6->issuesH }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="ActionsH" id="ActionsH">{{ $form6->actionsH }}</textarea></td>
                                             </tr>
                                             <tr>
                                                 <td>I. Selection and Recruitment of BNS</td>
-                                                <td><textarea type="text" class="form7Input" name="AccomplishI" id="AccomplishI"></textarea></td>
-                                                <td><textarea type="text" class="form7Input" name="GoodPracI" id="GoodPracI"></textarea></td>
-                                                <td><textarea type="text" class="form7Input" name="IssuesI" id="IssuesI"></textarea></td>
-                                                <td><textarea type="text" class="form7Input" name="ActionsI" id="ActionsI"></textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="AccomplishI" id="AccomplishI">{{ $form6->accomplishmentI }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="GoodPracI" id="GoodPracI">{{ $form6->goodPracI }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="IssuesI" id="IssuesI">{{ $form6->issuesI }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="ActionsI" id="ActionsI">{{ $form6->actionsI }}</textarea></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                     <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalUpdate">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                            <div class="modal fade" id="exampleModalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <!-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h5>Are you sure you want to submit DISCUSSION QUESTION FOR LEARNING AND ACTION?</h5>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                            <button type="submit" id="lgu-draft" class="btn btn-primary" name="action" value="updateResponse">Yes</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

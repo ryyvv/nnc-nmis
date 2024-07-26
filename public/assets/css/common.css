@@ -108,5 +108,28 @@ thead th {
     text-align: center;
     border: none;
     background-color: transparent;
-    height: inherit;
+    height: 10vh;
+    resize: none;
+}
+.form8InputS {
+    outline: none;
+    width: 100%;
+    border: none;
+    background-color: transparent;
+}
+.form8Input {
+    outline: none;
+    width: 100%;
+    text-align: center;
+    border: none;
+    background-color: transparent;
+    height: 10vh;
+    resize: none;
+}
+.form8InputB {
+    outline: none;
+    width: 100%;
+    text-align: center;
+    border: none;
+    background-color: transparent;
 }

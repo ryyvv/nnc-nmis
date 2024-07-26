@@ -55,8 +55,37 @@
                                         <td>{{$cnlocation->dateMonitoring}}</td>
                                         <td>{{$cnlocation->periodCovereda}}</td>
                                         <td>{{$cnlocation->periodCoveredb}}</td>
-                                        <td>{{$cnlocation->status}}</td>
-                                        <td class="d-flex">
+                                        <td>  
+                                            @if( $vmlocation->status == 0 )
+                                            <span class="statusApproved">APPROVED</span>
+                                            @elseif( $vmlocation->status == 1 )
+                                            <span class="statusPending">PENDING</span>
+                                            @elseif( $vmlocation->status == 2 )
+                                            <span class="statusDraft">DRAFT</span>
+                                            @endif</td>
+                                        <td>
+                                        <ul class="list-inline m-0">
+                                            <li class="list-inline-item">
+                                                @if( $vmlocation->status == 0 )
+                                                <i onclick="view('changeNS','{{ $cnlocation->id }}','show')"  class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                                <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
+                                                <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i>
+                                               
+                                                @elseif( $cnlocation->status == 1 )
+                                                <i onclick="view('changeNS','{{ $cnlocation->id }}','show')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                                <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
+                                                <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i>
+                                              
+                                                @elseif( $cnlocation->status == 2 )
+                                                <i onclick="view('changeNS','{{ $cnlocation->id }}','show')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                                <i onclick="view('changeNS','{{ $cnlocation->id }}','edit')" class="fa fa-edit fa-lg cursor" style="color:#FFB236;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Edit"></i>
+                                                <i onclick="openModal('{{ $cnlocation->id }}')" class="fa fa-trash fa-lg cursor" style="color:red;margin-right:10px" title="Delete "></i>
+                                                
+                                                @endif
+                                            </li>
+                                        </ul>
+                                        </td>
+                                        <!-- <td class="d-flex">
                                             <a href="{{route('changeNS.edit', $cnlocation->id)}}"
                                                 class="btn btn-primary">edit</a>
                                             <form action="{{ route('changeNS.destroy', $cnlocation->id) }}"
@@ -66,7 +95,7 @@
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">Delete</button>
                                             </form>
-                                        </td>
+                                        </td> -->
 
 
                                     </tr>

@@ -1,5 +1,5 @@
 
-let profileId;
+// let profileId;
 
 // Function for LGU Profile Year field
 $(document).ready(function() {

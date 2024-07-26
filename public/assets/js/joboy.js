@@ -75,10 +75,12 @@ $(function() {
         actionDraft.value = "draft";
         $('#lnfp-profile-form-edit').submit();
     });
+
+    //Form7
+    $('#lnfp-form7-with-id').on('click', function(e) {
+        $('#lnfp-form7-edit').submit();
+    });
 });
-
-
-
 
 // Submit Edit function Mellpi Pro For LGU
 function myFunction(id, url, action){

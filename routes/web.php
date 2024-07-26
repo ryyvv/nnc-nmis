@@ -40,6 +40,10 @@ use App\Http\Controllers\ProvincialOfficer\PODashboardController;
 use App\Http\Controllers\ProvincialStaff\PSDashboardController;
 
 
+// City-Municipal Staff
+use App\Http\Controllers\CityMunicipalStaff\MellpiLGUProfileBarangay;
+
+
 // BarangayScholar
 use App\Http\Controllers\BarangayScholar\BSDashboardController;
 use App\Http\Controllers\BarangayScholar\BSProfileController;
@@ -56,10 +60,7 @@ use App\Http\Controllers\BarangayScholar\LNCManagementBarangayController;
 use App\Http\Controllers\BarangayScholar\MellpiProForLNFP_barangayController;
 use App\Http\Controllers\BarangayScholar\MellpiProForLNFP_barangayLGUController;
 use App\Http\Controllers\BarangayScholar\MellpiProForLNFP_form6Controller;
-
-
-
-
+use App\Http\Controllers\BarangayScholar\MellpiProForLNFP_form8Controller;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\FormSubmissionController;
 use Faker\Guesser\Name;
@@ -325,6 +326,11 @@ Route::group(['middleware' => 'auth'], function () {
         // Route::get('/admin/{admin}', [AdminUserController::class, 'destroy'])->name('admin.destroy');
 
     });
+    Route::prefix('City-MunicipalStaff')->middleware(['auth', 'City-MunicipalStaff'])->group(function () {
+        Route::get('/dashboard', [MellpiLGUProfileBarangay::class, 'index'])->name('CMSdashboard.index');
+
+
+    });
 
     Route::prefix('BarangayScholar')->middleware(['auth', 'BarangayScholar'])->group(function () {
           //DashboardController
@@ -454,6 +460,12 @@ Route::group(['middleware' => 'auth'], function () {
           Route::get('/lguform6Index', [MellpiProForLNFP_form6Controller::class, 'radialForm6'])->name('MellpiProRadialIndex.index');
           Route::get('lguform6Create', [MellpiProForLNFP_form6Controller::class, 'radialForm6Create'])->name('MellpiProRadialCreate.create');
           Route::get('/lguform6Edit/{id}', [MellpiProForLNFP_form6Controller::class, 'radialForm6Create'])->name('lguLnfpEditForm6');
+        //   Route::post('/lguform7Update/{id}', [MellpiProForLNFP_form6Controller::class, 'storeform7'])->name('lnfpUpdateform7');
+        Route::post('BarangayScholar/lguform7Update/{id}', [MellpiProForLNFP_form6Controller::class, 'storeform7'])->name('lnfpUpdateform7');
+        //Form 8 Action Sheet
+        Route::get('/lguform8Index', [MellpiProForLNFP_form8Controller::class, 'ActionSheetForm8'])->name('lnfpForm8Index');
+        Route::get('/lguform8Create', [MellpiProForLNFP_form8Controller::class, 'ActionSheetForm8Create'])->name('lnfpForm8Create');
+
 
     });
 

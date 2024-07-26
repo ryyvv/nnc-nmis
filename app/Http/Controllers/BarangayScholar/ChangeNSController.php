@@ -14,6 +14,7 @@ use App\Models\Barangay;
 use App\Models\Municipal;
 use App\Models\City;
 use App\Http\Controllers\LocationController;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ChangeNSController extends Controller
 {
@@ -32,6 +33,7 @@ class ChangeNSController extends Controller
      */
     public function create()
     {
+        $action = 'create';
         $location = new LocationController;
         $prov = $location->getLocationDataProvince(auth()->user()->Region);
         $mun = $location->getLocationDataMuni(auth()->user()->Province);
@@ -39,7 +41,7 @@ class ChangeNSController extends Controller
         $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
         
         $years = range(date("Y"), 1900);
-        return view('BarangayScholar.ChangeinNS.create', compact('prov', 'mun', 'city', 'brgy','years'));
+        return view('BarangayScholar.ChangeinNS.create', compact('prov', 'mun', 'city', 'brgy','years','action'));
     }
 
     /**
@@ -55,7 +57,6 @@ class ChangeNSController extends Controller
             'region_id' => 'required|integer',
             'dateMonitoring' => 'required|date|max:255',
             'periodCovereda' => 'required|string |max:255',
-            'periodCoveredb' => 'required|string|max:255',
 
             'rating6a' => 'required|integer',
             'rating6b' => 'required|integer',
@@ -66,7 +67,6 @@ class ChangeNSController extends Controller
             'rating6g' => 'required|integer',
             'rating6h' => 'required|integer', 
             
-
             'remarks6a' => 'required|string|max: 255',
             'remarks6b' => 'required|string|max: 255',
             'remarks6c' => 'required|string|max: 255',
@@ -77,8 +77,6 @@ class ChangeNSController extends Controller
             'remarks6h' => 'required|string|max: 255', 
 
             'status' => 'required|string|max:255',
-            'dateCreated' => 'required|date ',
-            'dateUpdates' => 'required|date ',
             'user_id' => 'required|integer',
 
         ];
@@ -98,7 +96,6 @@ class ChangeNSController extends Controller
                 'region_id' =>  $request->region_id,
                 'dateMonitoring' =>  $request->dateMonitoring,
                 'periodCovereda' =>  $request->periodCovereda,
-                'periodCoveredb' =>  $request->periodCoveredb,
 
                 'rating6a' => $request->rating6a,
                 'rating6b' => $request->rating6b,
@@ -121,8 +118,6 @@ class ChangeNSController extends Controller
 
                 'status' =>  $request->status,
                 'user_id' =>  $request->user_id,
-                'dateCreated' =>  $request->dateCreated,
-                'dateUpdates' =>  $request->dateUpdates,
             ]);
             MellpiproChangeNSTracking::create([
                 'mplgubrgychangeNS_id' => $changeNSBarangay->id,
@@ -138,9 +133,20 @@ class ChangeNSController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, string $id)
     {
-        //
+        $action = 'edit';
+        $location = new LocationController;
+        $prov = $location->getLocationDataProvince(auth()->user()->Region);
+        $mun = $location->getLocationDataMuni(auth()->user()->Province);
+        $city = $location->getLocationDataCity(auth()->user()->Region);
+        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        
+        $years = range(date('Y'), 1900);
+
+
+        $row = DB::table('mplgubrgychangeNS')->where('id', $request->id)->first();
+        return view('BarangayScholar.VisionMission.show', compact('prov', 'mun', 'city', 'brgy', 'years', 'action', 'row'));
     }
 
     /**
@@ -166,7 +172,6 @@ class ChangeNSController extends Controller
             'region_id' => 'required|integer',
             'dateMonitoring' => 'required|date|max:255',
             'periodCovereda' => 'required|string |max:255',
-            'periodCoveredb' => 'required|string|max:255',
 
             'rating6a' => 'required|integer',
             'rating6b' => 'required|integer',
@@ -188,8 +193,6 @@ class ChangeNSController extends Controller
             'remarks6h' => 'required|string|max: 255', 
 
             'status' => 'required|string|max:255',
-            'dateCreated' => 'required|date ',
-            'dateUpdates' => 'required|date ',
             'user_id' => 'required|integer',
 
         ];
@@ -210,7 +213,6 @@ class ChangeNSController extends Controller
                 'region_id' =>  $request->region_id,
                 'dateMonitoring' =>  $request->dateMonitoring,
                 'periodCovereda' =>  $request->periodCovereda,
-                'periodCoveredb' =>  $request->periodCoveredb,
 
                 'rating6a' => $request->rating6a,
                 'rating6b' => $request->rating6b,
@@ -233,8 +235,6 @@ class ChangeNSController extends Controller
 
                 'status' =>  $request->status,
                 'user_id' =>  $request->user_id,
-                'dateCreated' =>  $request->dateCreated,
-                'dateUpdates' =>  $request->dateUpdates,
             ]);
         
         }
@@ -250,5 +250,22 @@ class ChangeNSController extends Controller
         $lguprofile = MellpiproChangeNS::find($id); 
         $lguprofile->delete();
         return redirect()->route('changeNS.index')->with('success', 'Deleted successfully!');
+    }
+
+    public function downloads(Request $request ) { 
+        
+        $htmlContent = $request->input('htmlContent');
+        //dd($htmlContent);
+        // Generate PDF from HTML content
+        $htmlheader = '<html><body>';
+            
+        $htmlfooter = '</body></html>';
+        $concat = $htmlheader . $htmlContent . $htmlfooter;
+    
+        $pdf = Pdf::loadHTML($concat);
+        $pdfContent = $pdf->output();
+        return response($pdfContent, 200)
+        ->header('Content-Type', 'application/pdf')
+        ->header('Content-Disposition', 'attachment; filename="document.pdf"');
     }
 }

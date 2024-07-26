@@ -76,6 +76,8 @@ class Kernel extends HttpKernel
         'RegionalStaff' =>\App\Http\Middleware\RegionalStaff::class,
         'ProvincialOfficer' => \App\Http\Middleware\ProvincialOfficer::class,
         'ProvincialStaff' => \App\Http\Middleware\ProvincialStaff::class,
+        'CityMucinipalOfficer' => \App\Http\Middleware\CityMucinipalOfficer::class,
+        'CityMucinipalStaff' => \App\Http\Middleware\CityMucinipalStaff::class,
         'BarangayScholar' => \App\Http\Middleware\BarangayScholar::class,
     ];
     

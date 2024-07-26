@@ -68,6 +68,12 @@ class LoginController extends Controller
         elseif ($roles->name == 'Provincial Staff') {
             return redirect()->route('PSdashboard.index');
         }
+        elseif ($roles->name == 'City-Muinicipal Officer') {
+            return redirect()->route('CMOdashboard.index');
+        }
+        elseif ($roles->name == 'City-Muinicipal Staff') {
+            return redirect()->route('CMSdashboard.index');
+        }
         elseif ($roles->name == 'Barangay Scholar') {
             return redirect()->route('BSdashboard.index');
         }

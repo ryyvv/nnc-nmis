@@ -58,7 +58,7 @@
                     <div class="col col-4 col-2">
                         <div class="form-group">
                             <label for="totalPopulation">Total Population:<span style="color:red">*</span></label>
-                            <input type="number" min="1" max="100" class="form-control" placeholder="ex. 100" id="totalPopulation" 
+                            <input type="number" min="1" max="1000" class="form-control" placeholder="ex. 100" id="totalPopulation" 
                             name="totalPopulation" value="{{ old('totalPopulation') }}"> 
                             @error('totalPopulation')
                             <div class="text-danger">{{ $message }}</div>
@@ -68,12 +68,11 @@
 
                         <div class="form-group">
                             <div class="form-group">
-                                <label for="householdWater">No. of household with access to safe
-                                    water:<span style="color:red">*</span></label>
+                                <label for="householdWater">No. of household with access to safe water:<span style="color:red">*</span></label>
                                 <input type="number" min="1" max="1000" class="form-control" id="householdWater" name="householdWater" 
                                 placeholder="ex. 100"  
                                 value="{{ old('householdWater') }}">
-                                @error('totalPopulation')
+                                @error('householdWater')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -81,7 +80,7 @@
 
                         <div class="form-group">
                             <label for="householdToilets">No. of household with sanitary toilets:<span style="color:red">*</span></label>
-                            <input  type="number" min="1" max="100" class="form-control" id="householdToilets" name="householdToilets"
+                            <input  type="number" min="1" max="1000" class="form-control" id="householdToilets" name="householdToilets"
                             placeholder="ex. 100" value="{{ old('householdToilets') }}">
                             @error('householdToilets')
                             <div class="text-danger">{{ $message }}</div>
@@ -90,7 +89,7 @@
 
                         <div class="form-group">
                             <label for="dayCareCenter">No. of Day Care Centers:<span style="color:red">*</span></label>
-                            <input type="number" min="1" max="100"class="form-control" id="dayCareCenter" name="dayCareCenter"
+                            <input type="number" min="1" max="1000" class="form-control" id="dayCareCenter" name="dayCareCenter"
                             placeholder="ex. 100 " value="{{ old('dayCareCenter') }}">
                             @error('dayCareCenter')
                             <div class="text-danger">{{ $message }}</div>
@@ -98,7 +97,7 @@
                         </div>
                         <div class="form-group">
                             <label for="elementary">No. of public elementary schools:<span style="color:red">*</span></label>
-                            <input type="number" class="form-control" id="elementary" placeholder="ex. 100 " 
+                            <input type="number" min="1" max="1000"  class="form-control" id="elementary" placeholder="ex. 100 " 
                             value="{{ old('elementary') }}" name="elementary">
                             @error('elementary')
                             <div class="text-danger">{{ $message }}</div>
@@ -107,7 +106,7 @@
 
                         <div class="form-group">
                             <label for="secondarySchool">No. of public secondary schools:<span style="color:red">*</span></label>
-                            <input type="number" class="form-control" id="secondarySchool" name="secondarySchool"
+                            <input type="number" min="1" max="1000" class="form-control" id="secondarySchool" name="secondarySchool"
                             placeholder="ex. 100 " value="{{ old('secondarySchool') }}">
                             @error('secondarySchool')
                             <div class="text-danger">{{ $message }}</div>
@@ -116,7 +115,7 @@
 
                         <div class="form-group">
                             <label for="healthStations">No. of Barangay Health Stations:<span style="color:red">*</span></label>
-                            <input type="number" class="form-control" id="healthStations" name="healthStations"
+                            <input type="number" min="1" max="1000" class="form-control" id="healthStations" name="healthStations"
                             placeholder="ex. 100 " value="{{ old('healthStations') }}">
                             @error('healthStations')
                             <div class="text-danger">{{ $message }}</div>
@@ -125,7 +124,7 @@
 
                         <div class="form-group">
                             <label for="retailOutlets">No. of retail outlets/sari-sari stores:<span style="color:red">*</span></label>
-                            <input type="number" class="form-control" id="retailOutlets" name="retailOutlets"
+                            <input type="number" min="1" max="1000" class="form-control" id="retailOutlets" name="retailOutlets"
                             placeholder="ex. 100 " value="{{ old('retailOutlets') }}">
                             @error('retailOutlets')
                             <div class="text-danger">{{ $message }}</div>
@@ -134,7 +133,7 @@
 
                         <div class="form-group">
                             <label for="bakeries">No. of bakeries:<span style="color:red">*</span></label>
-                            <input type="number" class="form-control" id="bakeries" name="bakeries"
+                            <input type="number" min="1" max="1000" class="form-control" id="bakeries" name="bakeries"
                             placeholder="ex. 100 " value="{{ old('bakeries') }}">
                             @error('bakeries')
                             <div class="text-danger">{{ $message }}</div>
@@ -143,7 +142,7 @@
 
                         <div class="form-group">
                             <label for="markets">No. of public markets:<span style="color:red">*</span></label>
-                            <input type="number" class="form-control" id="markets" name="markets"
+                            <input type="number" min="1" max="1000" class="form-control" id="markets" name="markets"
                             placeholder="ex. 100 " value="{{ old('markets') }}">
                             @error('markets')
                             <div class="text-danger">{{ $message }}</div>
@@ -152,7 +151,7 @@
 
                         <div class="form-group">
                             <label for="transportTerminals">No. of transport terminals:<span style="color:red">*</span></label>
-                            <input type="number" class="form-control" id="transportTerminals" name="transportTerminals"
+                            <input type="number" min="1" max="1000" class="form-control" id="transportTerminals" name="transportTerminals"
                             placeholder="ex. 100 " value="{{ old('transportTerminals') }}">
                             @error('transportTerminals')
                             <div class="text-danger">{{ $message }}</div>
@@ -161,7 +160,7 @@
                         <div class="form-group">
                             <label for="breastfeeding">Percent of Lactating mothers exclusively
                                 breastfeeding u ntil the 5th month(%):<span style="color:red">*</span></label>
-                            <input type="number" class="form-control" id="breastfeeding" name="breastfeeding"
+                            <input type="number" min="1" max="1000" class="form-control" id="breastfeeding" name="breastfeeding"
                             placeholder="ex. 100 " value="{{ old('breastfeeding') }}">
                             @error('breastfeeding')
                             <div class="text-danger">{{ $message }}</div>
@@ -201,7 +200,7 @@
                         <div style="display:flex" class="row">
                             <div class="form-group col">
                                 <label for="noHousehold">No. of households:<span style="color:red">*</span></label>
-                                <input type="number" class="form-control" id="noHousehold" name="noHousehold"
+                                <input type="number" min="1" max="1000" class="form-control" id="noHousehold" name="noHousehold"
                                 placeholder="ex. 100 " value="{{ old('noHousehold') }}">
                                 @error('noHousehold')
                                 <div class="text-danger">{{ $message }}</div>
@@ -209,7 +208,7 @@
                             </div>
                             <div class="form-group col">
                                 <label for="noPuroks ">No.of SITIOS/PUROKS:<span style="color:red">*</span></label>
-                                <input type="number" class="form-control" id="noPuroks " 
+                                <input type="number" min="1" max="1000" class="form-control" id="noPuroks " 
                                 name="noPuroks" placeholder="ex. 100 " value="{{ old('noPuroks') }}">
                                 @error('noPuroks')
                             <div class="text-danger">{{ $message }}</div>
@@ -461,7 +460,20 @@
 
 
                             <!-- Obese -->
-                            <br>
+                            <br> <div style="display:flex" class="row">
+                                <div class="  col">
+                                    <label for="exampleFormControlInput1"></label>
+                                </div>
+                                <div class=" col">
+                                    Yr: <label for="exampleFormControlInput1" id="currentYearMinus2"> </label>
+                                </div>
+                                <div class=" col">
+                                    Yr: <label for="exampleFormControlInput1" id="currentYearMinus1"> </label>
+                                </div>
+                                <div class=" col">
+                                    Yr: <label for="exampleFormControlInput1" id="currentYear"> </label>
+                                </div>
+                            </div>
                             <div style="display:flex;">
                                 <div class="form-group col" style="width:170px">
                                     <label for="exampleFormControlInput1">Normal:<span style="color:red">*</span></label>
@@ -476,7 +488,7 @@
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="number" class="form-control" id="exampleFormControlInput1" 
                                     name="psnormalBBA"  value="{{ old('psnormalBBA') }}" placeholder="ex. 100">
-                                    @error('populapsnormalBBAtionA')
+                                    @error('psnormalBBA')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                                 </div>
@@ -598,6 +610,20 @@
 
 
                             <!-- tall -->
+                            <div style="display:flex" class="row">
+                                <div class="  col">
+                                    <label for="exampleFormControlInput1"></label>
+                                </div>
+                                <div class=" col">
+                                    Yr: <label for="exampleFormControlInput1" id="currentYearMinus2"> </label>
+                                </div>
+                                <div class=" col">
+                                    Yr: <label for="exampleFormControlInput1" id="currentYearMinus1"> </label>
+                                </div>
+                                <div class=" col">
+                                    Yr: <label for="exampleFormControlInput1" id="currentYear"> </label>
+                                </div>
+                            </div>
                             <div style="display:flex;">
                                 <div class="form-group col" style="width:170px">
                                     <label for="exampleFormControlInput1">Normal:<span style="color:red">*</span></label>
@@ -709,7 +735,20 @@
                         <br>
                         <label><b>Nutrition Status of School Children:</b></label>
                         <div>
-
+                        <div style="display:flex" class="row">
+                                <div class="  col">
+                                    <label for="exampleFormControlInput1"></label>
+                                </div>
+                                <div class=" col">
+                                    Yr: <label for="exampleFormControlInput1" id="currentYearMinus2"> </label>
+                                </div>
+                                <div class=" col">
+                                    Yr: <label for="exampleFormControlInput1" id="currentYearMinus1"> </label>
+                                </div>
+                                <div class=" col">
+                                    Yr: <label for="exampleFormControlInput1" id="currentYear"> </label>
+                                </div>
+                            </div>
                             <div style="display:flex;">
                                 <div class="form-group col" style="width:170px">
                                     <label for="exampleFormControlInput1">Normal:<span style="color:red">*</span></label>
@@ -846,7 +885,20 @@
                             <br>
                             <label><b>Nutrition Status of Pregnant Woman:</b></label>
                             <div>
-
+                            <div style="display:flex" class="row">
+                                <div class="  col">
+                                    <label for="exampleFormControlInput1"></label>
+                                </div>
+                                <div class=" col">
+                                    Yr: <label for="exampleFormControlInput1" id="currentYearMinus2"> </label>
+                                </div>
+                                <div class=" col">
+                                    Yr: <label for="exampleFormControlInput1" id="currentYearMinus1"> </label>
+                                </div>
+                                <div class=" col">
+                                    Yr: <label for="exampleFormControlInput1" id="currentYear"> </label>
+                                </div>
+                            </div>
                                 <div style="display:flex;">
                                     <div class="form-group col" style="width:170px">
                                         <label for="exampleFormControlInput1">Normal:<span style="color:red">*</span></label>
@@ -974,7 +1026,7 @@
                                     <label for="exampleFormControlInput1">Residential:<span style="color:red">*</span></label>
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
-                                    <input type="textarea" class="form-control" id="exampleFormControlInput1" 
+                                    <input type="number" min="1" max="1000000" class="form-control" id="exampleFormControlInput1" 
                                     name="landAreaResidential" value="{{ old('pwobeseCAA') }}"
                                     placeholder="ex.1000">  
                                     @error('pwobeseCAA')
@@ -995,7 +1047,7 @@
                                     <label for="exampleFormControlInput1">Commercial:<span style="color:red">*</span></label>
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
-                                    <input type="textarea" class="form-control" id="exampleFormControlInput1" 
+                                    <input type="number" min="1" max="1000000"class="form-control" id="exampleFormControlInput1" 
                                     placeholder="ex.1000"
                                     name="landAreaCommercial" value="{{ old('landAreaCommercial') }}"> 
                                     @error('landAreaCommercial')
@@ -1016,19 +1068,20 @@
                                     <label for="exampleFormControlInput1">Industrial:<span style="color:red">*</span></label>
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
-                                    <input type="textarea" class="form-control" id="exampleFormControlInput1" 
+                                    <input type="number" min="1" max="1000000" class="form-control" id="exampleFormControlInput1" 
                                     placeholder="ex.1000"  
                                     name="landAreaIndustrial" value="{{ old('landAreaIndustrial') }}">  
-                            @error('landAreaIndustrial')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                                    @error('landAreaIndustrial')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1" 
-                                    name="remarksIndustrial" value="{{ old('remarksIndustrial') }}">  
-                            @error('remarksIndustrial')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                                    name="remarksIndustrial" value="{{ old('remarksIndustrial') }}"
+                                    placeholder="Your remarks">  
+                                    @error('remarksIndustrial')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div style="display:flex;">
@@ -1036,7 +1089,7 @@
                                     <label for="exampleFormControlInput1">Agricultural:<span style="color:red">*</span></label>
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
-                                    <input type="textarea" class="form-control" id="exampleFormControlInput1" 
+                                    <input type="number" min="1" max="1000000" class="form-control" id="exampleFormControlInput1" 
                                     placeholder="ex.1000"
                                     name="landAreaAgricultural" value="{{ old('landAreaAgricultural') }}" >  
                             @error('landAreaAgricultural')
@@ -1057,7 +1110,7 @@
                                     </label>
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
-                                    <input type="textarea" class="form-control" id="exampleFormControlInput1" 
+                                    <input type="number" min="1" max="1000000"class="form-control" id="exampleFormControlInput1" 
                                     name="landAreaFLMLNP" value="{{ old('landAreaFLMLNP') }}" placeholder="ex.1000">
                              @error('landAreaFLMLNP')
                             <div class="text-danger">{{ $message }}</div>
@@ -1081,6 +1134,7 @@
                 <br>
                 <label><b>INTERVENTION WITH ACTION LINES FROM NGA/NEW STANDARDS:</b></label>
                 <div>
+                    
                     <div style="display:flex">
                         <div class="col">
                             <label for="exampleFormControlInput1"><b>Intervention</b></label>
@@ -1135,19 +1189,20 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <input type="date" class="form-control" id="exampleFormControlInput1" value="{{ old('Idatereceived') }}" name="Idatereceived">  
+                            <input type="date" class="form-control" id="exampleFormControlInput1"
+                             value="{{ old('Idatereceived') }}" name="Idatereceived">  
                             @error('Idatereceived')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col">
-                            <input type="text" class="form-control" id="exampleFormControlInput1" value="{{ old('Ivolumepax') }}" name="Ivolumepax"> 
+                        <input type="number" min="1" max="100000"   placeholder="ex.1000"  class="form-control" id="exampleFormControlInput1" value="{{ old('Ivolumepax') }}" name="Ivolumepax"> 
                              @error('Ivolumepax')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col">
-                            <input type="text" class="form-control" id="exampleFormControlInput1" value="{{ old('Iremarks') }}" name="Iremarks"> 
+                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="remarks" value="{{ old('Iremarks') }}" name="Iremarks"> 
                              @error('Iremarks')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -1191,7 +1246,7 @@
                                 <option value="LGU"  <?php echo ( old('IIAsource') == 'LGU' ? 'selected':'' )  ?> >LGU</option>
                                 <option value="NGO"  <?php echo ( old('IIAsource') == 'NGO' ? 'selected':'' )  ?> >NGO</option>
                                 <option value="Private"  <?php echo ( old('IIAsource') == 'Private' ? 'selected':'' )  ?> >Private</option>
-                            </select>  @error('populationA')
+                            </select>  @error('IIAsource')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -1213,7 +1268,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <input type="text" class="form-control" id="exampleFormControlInput1" 
+                        <input type="number" min="1" max="100000"  placeholder="ex.1000"   class="form-control" id="exampleFormControlInput1" 
                             value="{{ old('IIAvolumepax') }}" name="IIAvolumepax">  
                             @error('IIAvolumepax')
                             <div class="text-danger">{{ $message }}</div>
@@ -1221,7 +1276,7 @@
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1" 
-                            value="{{ old('IIAremarks') }}" name="IIAremarks"> 
+                            value="{{ old('IIAremarks') }}" name="IIAremarks" placeholder="remarks"> 
                              @error('IIAremarks')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -1267,7 +1322,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <input type="text" class="form-control" id="exampleFormControlInput1"
+                        <input type="number" min="1" max="100000"   placeholder="ex.1000"  class="form-control" id="exampleFormControlInput1"
                              value="{{ old('IIBvolumepax') }}"  name="IIBvolumepax">  
                              @error('IIBvolumepax')
                             <div class="text-danger">{{ $message }}</div>
@@ -1275,7 +1330,7 @@
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1" 
-                            value="{{ old('IIBremarks') }}" name="IIBremarks"> 
+                            value="{{ old('IIBremarks') }}" name="IIBremarks" placeholder="remarks"> 
                              @error('IIBremarks')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -1320,7 +1375,7 @@
                                 <option value="NGO"  <?php echo ( old('IIIAsource') == 'NGO' ? 'selected':'' )  ?> >NGO</option>
                                 <option value="Private"  <?php echo ( old('IIIAsource') == 'Private' ? 'selected':'' )  ?> >Private</option>
                             </select>  
-                              @error('populationA')
+                              @error('IIIAsource')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -1330,7 +1385,7 @@
                             <option value="Yes" <?php echo ( old('IIIAavailreceived') == 'Yes' ? 'selected':'' )  ?> >Yes</option>
                             <option value="No"  <?php echo ( old('IIIAavailreceived') == 'No' ? 'selected':'' )  ?> >No</option>
                             </select> 
-                             @error('populationA')
+                             @error('IIIAavailreceived')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -1342,7 +1397,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <input type="text" class="form-control" id="exampleFormControlInput1" 
+                        <input type="number" min="1" max="100000"  placeholder="ex.1000"  class="form-control" id="exampleFormControlInput1" 
                             value="{{ old('IIIAvolumepax') }}" name="IIIAvolumepax"> 
                              @error('IIIAvolumepax')
                             <div class="text-danger">{{ $message }}</div>
@@ -1350,7 +1405,7 @@
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1"
-                             value="{{ old('IIIAremarks') }}" name="IIIAremarks"> 
+                             value="{{ old('IIIAremarks') }}" name="IIIAremarks" placeholder="remarks"> 
                               @error('IIIAremarks')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -1372,7 +1427,7 @@
                                 <option value="NGO"  <?php echo ( old('IIIBsource') == 'NGO' ? 'selected':'' )  ?> >NGO</option>
                                 <option value="Private"  <?php echo ( old('IIIBsource') == 'Private' ? 'selected':'' )  ?> >Private</option>
                             </select>  
-                            @error('populationA')
+                            @error('IIIBsource')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -1382,7 +1437,7 @@
                             <option value="Yes" <?php echo ( old('IIIBavailreceived') == 'Yes' ? 'selected':'' )  ?> >Yes</option>
                             <option value="No"  <?php echo ( old('IIIBavailreceived') == 'No' ? 'selected':'' )  ?> >No</option>
                             </select>  
-                            @error('populationA')
+                            @error('IIIBavailreceived')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -1394,7 +1449,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <input type="text" class="form-control" id="exampleFormControlInput1" 
+                        <input type="number" min="1" max="100000"   placeholder="ex.1000"  class="form-control" id="exampleFormControlInput1" 
                             value="{{ old('IIIBvolumepax') }}" name="IIIBvolumepax"> 
                              @error('IIIBvolumepax')
                             <div class="text-danger">{{ $message }}</div>
@@ -1402,7 +1457,7 @@
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1"
-                             value="{{ old('IIIBremarks') }}" name="IIIBremarks">  
+                             value="{{ old('IIIBremarks') }}" name="IIIBremarks" placeholder="remarks">  
                              @error('IIIBremarks')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -1424,7 +1479,7 @@
                                 <option value="NGO"  <?php echo ( old('IIICsource') == 'NGO' ? 'selected':'' )  ?> >NGO</option>
                                 <option value="Private"  <?php echo ( old('IIICsource') == 'Private' ? 'selected':'' )  ?> >Private</option>
                             </select>   
-                            @error('populationA')
+                            @error('IIICsource')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -1433,7 +1488,7 @@
                             <option value="">Choose...</option> 
                             <option value="Yes" <?php echo ( old('IIICavailreceived') == 'Yes' ? 'selected':'' )  ?> >Yes</option>
                             <option value="No"  <?php echo ( old('IIICavailreceived') == 'No' ? 'selected':'' )  ?> >No</option>
-                            </select>  @error('populationA')
+                            </select>  @error('IIICavailreceived')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -1445,7 +1500,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <input type="text" class="form-control" id="exampleFormControlInput1" 
+                        <input type="number" min="1" max="100000"   placeholder="ex.1000"  class="form-control" id="exampleFormControlInput1" 
                             value="{{ old('IIICvolumepax') }}" name="IIICvolumepax">  
                             @error('IIICvolumepax')
                             <div class="text-danger">{{ $message }}</div>
@@ -1453,7 +1508,7 @@
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1" 
-                            value="{{ old('IIICremarks') }}" name="IIICremarks"> 
+                            value="{{ old('IIICremarks') }}" name="IIICremarks" placeholder="remarks"> 
                              @error('IIICremarks')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -1475,7 +1530,7 @@
                                 <option value="NGO"  <?php echo ( old('IIIDsource') == 'NGO' ? 'selected':'' )  ?> >NGO</option>
                                 <option value="Private"  <?php echo ( old('IIIDsource') == 'Private' ? 'selected':'' )  ?> >Private</option>
                             </select>  
-                             @error('populationA')
+                             @error('IIIDsource')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -1485,7 +1540,7 @@
                             <option value="Yes" <?php echo ( old('IIIDavailreceived') == 'Yes' ? 'selected':'' )  ?> >Yes</option>
                             <option value="No"  <?php echo ( old('IIIDavailreceived') == 'No' ? 'selected':'' )  ?> >No</option>
                             </select>  
-                            @error('populationA')
+                            @error('IIIDavailreceived')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -1497,7 +1552,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <input type="text" class="form-control" id="exampleFormControlInput1" 
+                        <input type="number" min="1" max="100000"  placeholder="ex.1000"  class="form-control" id="exampleFormControlInput1" 
                             value="{{ old('IIIDvolumepax') }}" name="IIIDvolumepax"> 
                             @error('IIIDvolumepax')
                             <div class="text-danger">{{ $message }}</div>
@@ -1505,7 +1560,7 @@
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1" 
-                            value="{{ old('IIIDremarks') }}" name="IIIDremarks">  
+                            value="{{ old('IIIDremarks') }}" name="IIIDremarks" placeholder="remarks">  
                             @error('IIIDremarks')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -1527,7 +1582,7 @@
                                 <option value="NGO"  <?php echo ( old('IIIEsource') == 'NGO' ? 'selected':'' )  ?> >NGO</option>
                                 <option value="Private"  <?php echo ( old('IIIEsource') == 'Private' ? 'selected':'' )  ?> >Private</option>
                             </select> 
-                             @error('populationA')
+                             @error('IIIEsource')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -1537,7 +1592,7 @@
                             <option value="Yes" <?php echo ( old('IIIEavailreceived') == 'Yes' ? 'selected':'' )  ?> >Yes</option>
                             <option value="No"  <?php echo ( old('IIIEavailreceived') == 'No' ? 'selected':'' )  ?> >No</option>
                             </select>  
-                             @error('populationA')
+                             @error('IIIEavailreceived')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -1549,7 +1604,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <input type="text" class="form-control" id="exampleFormControlInput1"
+                        <input type="number" min="1" max="100000"  placeholder="ex.1000"  class="form-control" id="exampleFormControlInput1"
                              value="{{ old('IIIEvolumepax') }}" name="IIIEvolumepax"> 
                               @error('IIIEvolumepax')
                             <div class="text-danger">{{ $message }}</div>
@@ -1557,7 +1612,7 @@
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1"
-                             value="{{ old('IIIEremarks') }}" name="IIIEremarks"> 
+                             value="{{ old('IIIEremarks') }}" name="IIIEremarks" placeholder="remarks"> 
                               @error('IIIEremarks')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -1579,7 +1634,7 @@
                                 <option value="NGO"  <?php echo ( old('IIIFsource') == 'NGO' ? 'selected':'' )  ?> >NGO</option>
                                 <option value="Private"  <?php echo ( old('IIIFsource') == 'Private' ? 'selected':'' )  ?> >Private</option>
                             </select>  
-                            @error('populationA')
+                            @error('IIIFsource')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -1589,7 +1644,7 @@
                             <option value="Yes" <?php echo ( old('IIIFavailreceived') == 'Yes' ? 'selected':'' )  ?> >Yes</option>
                             <option value="No"  <?php echo ( old('IIIFavailreceived') == 'No' ? 'selected':'' )  ?> >No</option>
                             </select>  
-                            @error('populationA')
+                            @error('IIIFavailreceived')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -1601,7 +1656,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <input type="text" class="form-control" id="exampleFormControlInput1" 
+                        <input type="number" min="1" max="100000"   placeholder="ex.1000"  class="form-control" id="exampleFormControlInput1" 
                             value="{{ old('IIIFvolumepax') }}" name="IIIFvolumepax"> 
                              @error('IIIFvolumepax')
                             <div class="text-danger">{{ $message }}</div>
@@ -1609,7 +1664,7 @@
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1" 
-                            value="{{ old('IIIFremarks') }}" name="IIIFremarks"> 
+                            value="{{ old('IIIFremarks') }}" name="IIIFremarks"  placeholder="remarks"  > 
                              @error('IIIFremarks')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -1655,7 +1710,7 @@
                                 <option value="NGO"  <?php echo ( old('IVAsource') == 'NGO' ? 'selected':'' )  ?> >NGO</option>
                                 <option value="Private"  <?php echo ( old('IVAsource') == 'Private' ? 'selected':'' )  ?> >Private</option>
                             </select>  
-                            @error('populationA')
+                            @error('IVAsource')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -1664,7 +1719,7 @@
                             <option value="">Choose...</option> 
                             <option value="Yes" <?php echo ( old('IVAavailreceived') == 'Yes' ? 'selected':'' )  ?> >Yes</option>
                             <option value="No"  <?php echo ( old('IVAavailreceived') == 'No' ? 'selected':'' )  ?> >No</option>
-                            </select>  @error('populationA')
+                            </select>  @error('IVAavailreceived')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -1676,7 +1731,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <input type="text" class="form-control" id="exampleFormControlInput1" 
+                        <input type="number" min="1" max="100000"  placeholder="ex.1000"  class="form-control" id="exampleFormControlInput1" 
                             value="{{ old('IVAvolumepax') }}" name="IVAvolumepax"> 
                              @error('IVAvolumepax')
                             <div class="text-danger">{{ $message }}</div>
@@ -1684,7 +1739,7 @@
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1" 
-                            value="{{ old('IVAremarks') }}" name="IVAremarks">  
+                            value="{{ old('IVAremarks') }}" name="IVAremarks"  placeholder="remarks"  >  
                             @error('IVAremarks')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -1729,7 +1784,7 @@
                                 <option value="LGU"  <?php echo ( old('VAsource') == 'LGU' ? 'selected':'' )  ?> >LGU</option>
                                 <option value="NGO"  <?php echo ( old('VAsource') == 'NGO' ? 'selected':'' )  ?> >NGO</option>
                                 <option value="Private"  <?php echo ( old('VAsource') == 'Private' ? 'selected':'' )  ?> >Private</option>
-                            </select>  @error('populationA')
+                            </select>  @error('VAsource')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -1739,7 +1794,7 @@
                                 <option value="Yes" <?php echo ( old('VAavailreceived') == 'Yes' ? 'selected':'' )  ?> >Yes</option>
                                 <option value="No"  <?php echo ( old('VAavailreceived') == 'No' ? 'selected':'' )  ?> >No</option>
                             </select> 
-                            @error('populationA')
+                            @error('VAavailreceived')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -1751,7 +1806,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <input type="text" class="form-control" id="e xampleFormControlInput1" 
+                        <input type="number" min="1" max="100000"   placeholder="ex.1000"  class="form-control" id="e xampleFormControlInput1" 
                             value="{{ old('VAvolumepax') }}" name="VAvolumepax"> 
                              @error('VAvolumepax')
                             <div class="text-danger">{{ $message }}</div>
@@ -1759,7 +1814,7 @@
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" id="exampleFormControlInput1"
-                              value="{{ old('VAremarks') }}" name="VAremarks">  
+                              value="{{ old('VAremarks') }}" name="VAremarks"  placeholder="remarks"  >  
                               @error('VAremarks')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -1771,10 +1826,10 @@
                     <!-- <button type="submit" class="btn btn-warning ">Save as draft</button> -->
                     <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
+                    <button type="button" class="bold btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
                     Save as Draft
                     </button>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                    <button type="button" class="bold btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
                    Save and Submit
                     </button>
 
