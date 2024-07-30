@@ -4,12 +4,13 @@ namespace App\Http\Controllers\BarangayScholar;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+
 use App\Models\LguProfile;
 use App\Models\barangaytracking;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\LocationController;
 use Termwind\Components\Raw;
+use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class BSLGUprofileController extends Controller
@@ -24,9 +25,15 @@ class BSLGUprofileController extends Controller
         $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
 
         $barangay = auth()->user()->barangay;
-        $lguProfile = DB::table('lguprofilebarangay')->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();
+        //$lguprofile = DB::table('lguprofilebarangay')->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();
 
-        return view('BarangayScholar.lguprofile.index', compact('lguProfile','prov', 'mun', 'city', 'brgy'));
+        $lguprofile = DB::table('users')
+         ->join('lguprofilebarangay', 'users.id', '=', 'lguprofilebarangay.user_id')
+         ->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')
+         ->select('users.Firstname as firstname','users.Middlename as middlename','users.Lastname as lastname', 'lguprofilebarangay.*')
+         ->get();
+
+        return view('BarangayScholar.lguprofile.index', compact('lguprofile','prov', 'mun', 'city', 'brgy'));
 
     }
  
@@ -531,7 +538,7 @@ class BSLGUprofileController extends Controller
 
 
     public function update( Request $request , $id ) {
-          dd($request->status);
+          //dd($request->status);
         $rules = [
             'dateMonitoring' => 'required|date|max:255',
             'periodCovereda' => 'required|string|max:255',

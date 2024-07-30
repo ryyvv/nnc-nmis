@@ -30,7 +30,7 @@
 'class' => 'sidebar-mini ',
 'namePage' => 'Mellpi Pro for LGU Profile',
 'activePage' => 'LGUPROFILE',
-'activeNav' => 'MELLPI PRO For LGU', 
+'activeNav' => '',
 ])
 
 
@@ -40,18 +40,15 @@
         <div class="card-header">
 
             <div class="d-flex justify-content-end center" style="padding-right:20px; ">
-
                 <form action="{{route('BSLGUprofile.download',$lguProfile->id)}}" method="POST">
                     @csrf
                     <input type="hidden" name="htmlContent" id="htmlContent">
                     <button type="submit" id="hiddenButton" style="display: none;"></button>
                 </form>
-
                 <div style="display:absolute;" onclick="downloadPDF('{{$lguProfile->id}}')">
                     <i class="fa fa-file-pdf-o fa-lg cursor " style="color:red;margin-right:7px;" aria-hidden="true"></i>
                     <label class="download">Download file</label>
                 </div>
-               
             </div>
 
             <div id="downloadable">

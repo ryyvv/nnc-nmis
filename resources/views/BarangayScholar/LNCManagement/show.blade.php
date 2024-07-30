@@ -28,7 +28,7 @@
 'class' => 'sidebar-mini ',
 'namePage' => 'LNC Management',
 'activePage' => 'LNCManagement',
-'activeNav' => '',
+'activeNav' => 'MELLPI PRO For LGU', 
 ])
 
 

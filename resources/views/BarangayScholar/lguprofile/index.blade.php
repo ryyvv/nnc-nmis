@@ -5,7 +5,7 @@
 'class' => 'sidebar-mini ',
 'namePage' => 'MELLPI PRO For LGU Profile',
 'activePage' => 'LGUPROFILE',
-'activeNav' => '',
+'activeNav' => 'MELLPI PRO For LGU', 
 ])
 
 @section('content')
@@ -46,55 +46,45 @@
                         <tbody>
 
                             <?php $num = 1; ?>
-                            @foreach($lguProfile as $lguProfile)
+                            @foreach($lguprofile as $lguProfile)
                             <tr>
                                 <td>{{$num}}</td>
-                                <td>Ryan James J. Pascual</td>
+                                <td>{{$lguProfile->firstname}} {{$lguProfile->middlename}} {{$lguProfile->lastname}}</td>
                                 <td>{{\Carbon\Carbon::parse($lguProfile->dateMonitoring)->format('F j, Y');}}</td>
                                 <td>{{$lguProfile->periodCovereda}}</td>
                                 <td>
                                     @if( $lguProfile->status == 0 )
-                                    <span class="statusApproved">APPROVED</span>
+                                    <span class="statusApproved cursor" title="Added to LGU Report">APPROVED</span>
                                     @elseif( $lguProfile->status == 1 )
-                                    <span class="statusPending">PENDING</span>
+                                    <span class="statusPending cursor" title="For Review">PENDING</span>
                                     @elseif( $lguProfile->status == 2 )
-                                    <span class="statusDraft">DRAFT</span>
+                                    <span class="statusDraft cursor" title="Saved as draft">DRAFT</span>
+                                    @elseif( $lguProfile->status == 3 )
+                                    <span class="statusDeclined cursor" title="Review and Submit">DECLINED</span>
                                     @endif
                                 </td>
                                 <td id="table-edit">
                                     <ul class="list-inline m-0">
                                         <li class="list-inline-item">
                                             @if( $lguProfile->status == 0 )
-                                            <i onclick="LGUmyFunction('{{ $lguProfile->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                            <i onclick="view('lguprofile','{{ $lguProfile->id }}','show')"  class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
                                             <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
                                             <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i>
-                                            
                                             @elseif( $lguProfile->status == 1 )
-                                            <i onclick="LGUmyFunction('{{ $lguProfile->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                            <i onclick="view('lguprofile','{{ $lguProfile->id }}','show')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
                                             <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
                                             <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i>
-                                            
                                             @elseif( $lguProfile->status == 2 )
-                                            <i onclick="LGUmyFunction('{{ $lguProfile->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                            <i onclick="view('lguprofile','{{ $lguProfile->id }}','show')"class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
                                             <i onclick="editlgu('{{ $lguProfile->id }}')" class="fa fa-edit fa-lg cursor" style="color:#FFB236;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Edit"></i>
                                             <i onclick="openModal('{{ $lguProfile->id }}')" class="fa fa-trash fa-lg cursor" style="color:red;margin-right:10px" title="Delete "></i>
-                                            
+                                            @elseif( $lguProfile->status == 3 ) 
+                                            <i onclick="view('lguprofile','{{ $lguProfile->id }}','show')"class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                            <i onclick="editlgu('{{ $lguProfile->id }}' )" class="fa fa-edit fa-lg cursor" style="color:#FFB236;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Edit"></i>
+                                            <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i>
                                             @endif
                                         </li>
-
-
-
                                     </ul>
-                                    <!-- <a href="{{route('BSLGUprofile.edit', $lguProfile->id)}}" id="button-edit" class="btn btn-info">
-                                        <img id="img-edit" src="{{ asset('assets') }}/img/edit.png">Edit</a> -->
-
-                                    <!-- <form action="{{ route('BSLGUprofile.destroy', $lguProfile->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete data?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger" style="align-items:center;padding-right:10px;padding-left:10px;padding-top:8px;padding-bottom:8px;margin-right:10px;font-size:12px;font-weight:bold" class="btn btn-primary">
-                                            <img style="margin-bottom:3px;color:white;height:15px;width:15px;background-color:none!important;" src="{{ asset('assets') }}/img/delete.png">
-                                            Delete</button>
-                                    </form> -->
                                 </td>
                              
 

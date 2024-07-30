@@ -4,7 +4,7 @@
 'class' => 'sidebar-mini ',
 'namePage' => 'Discussion Question',
 'activePage' => 'discussionquestion',
-'activeNav' => '',
+'activeNav' => 'MELLPI PRO For LGU', 
 ])
 
 @section('content')

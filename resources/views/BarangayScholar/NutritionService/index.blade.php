@@ -4,7 +4,7 @@
 'class' => 'sidebar-mini ',
 'namePage' => 'Nutrition Service',
 'activePage' => 'nutritionservice',
-'activeNav' => '',
+'activeNav' => 'MELLPI PRO For LGU', 
 ])
 
 @section('content')

@@ -25,11 +25,14 @@
                         <form action="{{ route('lnfpForm8Store') }}" method="post" id="lnfp-form8-form">
                             @csrf
 
+                            @if ($form8)
+
                             <center><img src="https://nnc-nmis.moodlearners.com/assets/img/logo.png" alt="" class="imgLogo"></center><br>
                             <center>
                                 <h5 class="title">{{__("MELLPI PRO FORM 8a: ACTION SHEET TO IMPROVE PERFORMANCE")}}</h5>
                                 <label for="period">For the period: </label>
                                 <select name="forTheperiod" id="forTheperiod" class="inputHeaderPeriod">
+                                    <option selected>{{ $form8->forThePeriod }}</option>
                                     <?php
                                     $currentYear = date('Y');
                                     $startYear = 1900;
@@ -38,7 +41,7 @@
                                         echo "<option value=\"$year\">$year</option>";
                                     }
                                     ?>
-                                    <option selected><?php echo $currentYear ?></option>
+                                    
                                 </select>
                             </center><br>
                             <input type="hidden" name="submitStatus" value="1">
@@ -50,17 +53,17 @@
                                 <div class="form-group col-md-6">
                                     <div class="form-group col-md-12">
                                         <label for="nameOf">Name of PNAO: </label>
-                                        <input class="inputHeader" type="text" name="nameOf" id="nameOf">
+                                        <input class="inputHeader" type="text" name="nameOf" id="nameOf" value="{{ $form8->nameOfPnao }}">
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label for="address">Area of Assignment: </label>
-                                        <input class="inputHeader" type="text" name="areaAssign" id="areaAssign">
+                                        <input class="inputHeader" type="text" name="areaAssign" id="areaAssign" value="{{ $form8->areaOfAssign }}">
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <div class="form-group col-md-12">
                                         <label for="bday">Date of Monitoring: </label>
-                                        <input class="form-control" type="date" name="dateMonitor" id="dateMonitor" >
+                                        <input class="form-control" type="date" name="dateMonitor" id="dateMonitor" value="{{ $form8->dateMonitor }}">
                                     </div>
                                 </div>
                             </div>
@@ -86,43 +89,43 @@
                                             </tr>
                                             <tr>
                                                 <td class="col-md-4"><input type="text" class="form8InputS" value="A. Coordination" readonly></td>
-                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoPNAO_A"></textarea></td>
-                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoLNC_A"></textarea></td>
+                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoPNAO_A" >{{ $form8->recoPNAO_A }}</textarea></td>
+                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoLNC_A" >{{ $form8->recoLNC_A }}</textarea></td>
                                             </tr>
                                             <tr>
                                                 <td class="col-md-4"><input type="text" class="form8InputS" value="B. Orientation, Promotion and Advocacy" readonly></td>
-                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoPNAO_B"></textarea></td>
-                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoLNC_B"></textarea></td>
+                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoPNAO_B" >{{ $form8->recoPNAO_B }}</textarea></td>
+                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoLNC_B" >{{ $form8->recoLNC_B }}</textarea></td>
                                             </tr>
                                             <tr>
                                                 <td class="col-md-4"><input type="text" class="form8InputS" value="C. Planning" readonly></td>
-                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoPNAO_C"></textarea></td>
-                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoLNC_C"></textarea></td>
+                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoPNAO_C" >{{ $form8->recoPNAO_C }}</textarea></td>
+                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoLNC_C" >{{ $form8->recoLNC_C }}</textarea></td>
                                             </tr>
                                             <tr>
                                                 <td class="col-md-4"><input type="text" class="form8InputS" value="D. Implementation" readonly></td>
-                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoPNAO_D"></textarea></td>
-                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoLNC_D"></textarea></td>
+                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoPNAO_D" >{{ $form8->recoPNAO_D }}</textarea></td>
+                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoLNC_D" >{{ $form8->recoLNC_D }}</textarea></td>
                                             </tr>
                                             <tr>
                                                 <td class="col-md-4"><input type="text" class="form8InputS" value="E. Monitoring and Evaluation" readonly></td>
-                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoPNAO_E"></textarea></td>
-                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoLNC_E"></textarea></td>
+                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoPNAO_E" >{{ $form8->recoPNAO_E }}</textarea></td>
+                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoLNC_E" >{{ $form8->recoLNC_E }}</textarea></td>
                                             </tr>
                                             <tr>
                                                 <td class="col-md-4"><input type="text" class="form8InputS" value="F. Resource Generation" readonly></td>
-                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoPNAO_F"></textarea></td>
-                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoLNC_F"></textarea></td>
+                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoPNAO_F" >{{ $form8->recoPNAO_F }}</textarea></td>
+                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoLNC_F" >{{ $form8->recoLNC_F }}</textarea></td>
                                             </tr>
                                             <tr>
                                                 <td class="col-md-4"><input type="text" class="form8InputS" value="G. Capacity Development" readonly></td>
-                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoPNAO_G"></textarea></td>
-                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoLNC_G"></textarea></td>
+                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoPNAO_G" >{{ $form8->recoPNAO_G }}</textarea></td>
+                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoLNC_G" >{{ $form8->recoLNC_G }}</textarea></td>
                                             </tr>
                                             <tr>
                                                 <td class="col-md-4"><input type="text" class="form8InputS" value="H. Documentation and record-keeping" readonly></td>
-                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoPNAO_H"></textarea></td>
-                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoLNC_H"></textarea></td>
+                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoPNAO_H" >{{ $form8->recoPNAO_H }}</textarea></td>
+                                                <td class="col-md-4"><textarea type="text" class="form8Input" name="recoLNC_H" >{{ $form8->recoLNC_H }}</textarea></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -143,19 +146,19 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td class="col-md-4"><input type="text" class="form8InputB" name="nameTM1"></td>
-                                                <td class="col-md-4"><input type="text" class="form8InputB" name="desigOffice1"></td>
-                                                <td class="col-md-4"><input type="file" class="form8InputB" name="sigDate1"></td>
+                                                <td class="col-md-4"><input type="text" class="form8InputB" name="nameTM1" value="{{ $form8->nameTM1 }}"></td>
+                                                <td class="col-md-4"><input type="text" class="form8InputB" name="desigOffice1" value="{{ $form8->desigOffice1 }}"></td>
+                                                <td class="col-md-4"><input type="file" class="form8InputB" name="sigDate1" value="{{ $form8->sigDate1 }}"></td>
                                             </tr>
                                             <tr>
-                                                <td class="col-md-4"><input type="text" class="form8InputB" name="nameTM2"></td>
-                                                <td class="col-md-4"><input type="text" class="form8InputB" name="desigOffice2"></td>
-                                                <td class="col-md-4"><input type="file" class="form8InputB" name="sigDate2"></td>
+                                                <td class="col-md-4"><input type="text" class="form8InputB" name="nameTM2" value="{{ $form8->nameTM2 }}"></td>
+                                                <td class="col-md-4"><input type="text" class="form8InputB" name="desigOffice2" value="{{ $form8->desigOffice2 }}"></td>
+                                                <td class="col-md-4"><input type="file" class="form8InputB" name="sigDate2" value="{{ $form8->sigDate2 }}"></td>
                                             </tr>
                                             <tr>
-                                                <td class="col-md-4"><input type="text" class="form8InputB" name="nameTM3"></td>
-                                                <td class="col-md-4"><input type="text" class="form8InputB" name="desigOffice3"></td>
-                                                <td class="col-md-4"><input type="file" class="form8InputB" name="sigDate3"></td>
+                                                <td class="col-md-4"><input type="text" class="form8InputB" name="nameTM3" value="{{ $form8->nameTM3 }}"></td>
+                                                <td class="col-md-4"><input type="text" class="form8InputB" name="desigOffice3" value="{{ $form8->desigOffice3 }}"></td>
+                                                <td class="col-md-4"><input type="file" class="form8InputB" name="sigDate3" value="{{ $form8->sigDate3 }}"></td>
                                             </tr>
                                             <!-- <tr>
                                                 <td class="col-md-4"><input type="text" class="form8InputB" name="nameTM4"></td>
@@ -168,11 +171,11 @@
                                     <div style="display: flex;">
                                         <div class="col-md-8">
                                             <label for="receivedBy">Received:</label>
-                                            <input type="text" name="receivedBy" id="receivedBy" class="form8InputBot">
+                                            <input type="text" name="receivedBy" id="receivedBy" class="form8InputBot" value="{{ $form8->receivedBy }}">
                                         </div>
                                         <div class="col-md-4">
                                             <label for="whatDate">Date:</label>
-                                            <input type="date" name="whatDate" id="whatDate" class="form8InputBot">
+                                            <input type="date" name="whatDate" id="whatDate" class="form8InputBot" value="{{ $form8->whatDate }}">
                                         </div>
                                     </div>
                                     <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
@@ -219,6 +222,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                         </form>
                     </div>
                 </div>

@@ -21,22 +21,27 @@
                 <!-- </a> -->
 
             </div>
-
+            
+            <!-- alerts -->
+            @include('layouts.page_template.crud_alert_message')
+ 
 
             <div class="content" style="margin:30px;">
 
                 <!-- alerts -->
                 @include('layouts.page_template.crud_alert_message')
- 
+               
                 <div class="row-12">
-                    <a href="{{route('BSLGUprofile.create')}}" class="btn btn-primary bolder">Create data</a>
+                    <a href="{{route('CMSLGUprofile.create')}}" class="btn btn-primary bolder">Create data</a>
                 </div>
+
                 <div class="row-12">
                     <table class="display" id="myTable" width="100%">
                         <thead style="background-color:#508D4E;">
                             <tr>
                                 <th scope="col" class="tableheader">#</th>
-                                <th scope="col-4" class="tableheader">Officer</th>
+                                <th scope="col-4" class="tableheader">Personnel Submitted</th>
+                                <th scope="col-4" class="tableheader">GeoLevel</th>
                                 <th scope="col-4" class="tableheader">Date Monitoring </th>
                                 <th scope="col" class="tableheader">Period Covered</th>
                                 <th scope="col-2" class="tableheader">Status</th>
@@ -46,59 +51,43 @@
                         <tbody>
 
                             <?php $num = 1; ?>
-                            @foreach($lguProfile as $lguProfile)
+                            @foreach($data as $data)
                             <tr>
                                 <td>{{$num}}</td>
                                 <td>Ryan James J. Pascual</td>
-                                <td>{{\Carbon\Carbon::parse($lguProfile->dateMonitoring)->format('F j, Y');}}</td>
-                                <td>{{$lguProfile->periodCovereda}}</td>
+                                <td>Barangay</td>
+                                <td>{{\Carbon\Carbon::parse($data->dateMonitoring)->format('F j, Y');}}</td>
+                                <td>{{$data->periodCovereda}}</td>
                                 <td>
-                                    @if( $lguProfile->status == 0 )
-                                    <span class="statusApproved">APPROVED</span>
-                                    @elseif( $lguProfile->status == 1 )
-                                    <span class="statusPending">PENDING</span>
-                                    @elseif( $lguProfile->status == 2 )
-                                    <span class="statusDraft">DRAFT</span>
+                                    @if( $data->status == 0 )
+                                    <span class="statusApproved">Approved</span>
+                                    @elseif( $data->status == 1 )
+                                    <span class="statusPending">For Review </span>
+                                    @elseif( $data->status == 3 )
+                                    <span class="statusDraft">Declined</span>
                                     @endif
                                 </td>
                                 <td id="table-edit">
                                     <ul class="list-inline m-0">
-                                        <li class="list-inline-item">
-                                            @if( $lguProfile->status == 0 )
-                                            <i onclick="LGUmyFunction('{{ $lguProfile->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
-                                            <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
-                                            <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i>
-                                            
-                                            @elseif( $lguProfile->status == 1 )
-                                            <i onclick="LGUmyFunction('{{ $lguProfile->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
-                                            <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
-                                            <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i>
-                                            
-                                            @elseif( $lguProfile->status == 2 )
-                                            <i onclick="LGUmyFunction('{{ $lguProfile->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
-                                            <i onclick="editlgu('{{ $lguProfile->id }}')" class="fa fa-edit fa-lg cursor" style="color:#FFB236;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Edit"></i>
-                                            <i onclick="openModal('{{ $lguProfile->id }}')" class="fa fa-trash fa-lg cursor" style="color:red;margin-right:10px" title="Delete "></i>
-                                            
-                                            @endif
+                                        <li class="list-inline-item"> 
+                                            <i onclick="view('lguProfile','{{ $data->id }}','show')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
                                         </li>
-
-
-
-                                    </ul>
-                                    <!-- <a href="{{route('BSLGUprofile.edit', $lguProfile->id)}}" id="button-edit" class="btn btn-info">
-                                        <img id="img-edit" src="{{ asset('assets') }}/img/edit.png">Edit</a> -->
-
-                                    <!-- <form action="{{ route('BSLGUprofile.destroy', $lguProfile->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete data?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger" style="align-items:center;padding-right:10px;padding-left:10px;padding-top:8px;padding-bottom:8px;margin-right:10px;font-size:12px;font-weight:bold" class="btn btn-primary">
-                                            <img style="margin-bottom:3px;color:white;height:15px;width:15px;background-color:none!important;" src="{{ asset('assets') }}/img/delete.png">
-                                            Delete</button>
-                                    </form> -->
+                                        <li class="list-inline-item"> 
+                                            <div class="cursor" id="Approved" type="button" onclick="openApproved('{{$data->id}}')">
+                                                <i class="fa fa-check"  title="Approved"  style="color:green;position:absolute;z-index:2"aria-hidden="true"></i>
+                                                <i class="fa fa-file-o fa-lg"  title="Approved" style="z-index:1;color:gray" aria-hidden="true"></i> 
+                                            </div>
+                                        </li>
+                                        <li class="list-inline-item"> 
+                                            <button></button>
+                                                <div class="cursor" id="Declined" type="button" onclick="openDeclined('{{$data->id}}')">
+                                                <i class="fa fa-times " title="Declined" style="color:red;position:absolute;z-index:2" aria-hidden="true"></i>
+                                                <i class="fa fa-file-o fa-lg" title="Declined" style="z-index:1;color:gray" aria-hidden="true"></i> 
+                                            </div>
+                                        </li> 
+                                        
+                                    </ul> 
                                 </td>
-                             
-
-
                             </tr>
                             <?php $num++; ?>
                             @endforeach
@@ -111,21 +100,42 @@
 </div>
 
 
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+<div class="modal fade" id="ApprovedModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Data</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                Are you sure you want to delete this data?
+            This data will be added to Mellpi Pro for the LGU Report.
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" onclick="confirmDelete('lguprofile','delete')">Sure</button>
+                <button type="button" class="bold btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="bold btn btn-primary" onclick="confirmApproved()">Proceed</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add report -->
+<div class="modal fade" id="DeclinedModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Declined</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            This data will be set as a declined item on the barangay staff dashboard.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="bold btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="bold btn btn-primary" onclick="confirmDeclined()">Proceed</button>
             </div>
         </div>
     </div>

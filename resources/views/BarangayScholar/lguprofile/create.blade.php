@@ -31,7 +31,7 @@
 'class' => 'sidebar-mini ',
 'namePage' => ' Mellpi Pro for LGU Profile',
 'activePage' => 'LGUPROFILE',
-'activeNav' => '',
+'activeNav' => 'MELLPI PRO For LGU', 
 ])
 
 @section('content') 
@@ -159,7 +159,7 @@
                         </div>
                         <div class="form-group">
                             <label for="breastfeeding">Percent of Lactating mothers exclusively
-                                breastfeeding u ntil the 5th month(%):<span style="color:red">*</span></label>
+                                breastfeeding until the 5th month(%):<span style="color:red">*</span></label>
                             <input type="number" min="1" max="1000" class="form-control" id="breastfeeding" name="breastfeeding"
                             placeholder="ex. 100 " value="{{ old('breastfeeding') }}">
                             @error('breastfeeding')
@@ -1851,7 +1851,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <h5>Are you sure want to submit this form?</h5>
+        <h5>Are you sure you want to submit this form?</h5>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>

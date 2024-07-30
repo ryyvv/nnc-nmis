@@ -30,7 +30,7 @@
 'class' => 'sidebar-mini ',
 'namePage' => 'User Profile',
 'activePage' => 'profile',
-'activeNav' => '',
+'activeNav' => 'MELLPI PRO For LGU', 
 ])
 
 

@@ -10,6 +10,7 @@ use App\Models\barangaytracking;
 use App\Models\lnfp_lguprofiletracking;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\LocationController;
 
 
 class MellpiProForLNFP_barangayLGUController extends Controller
@@ -18,23 +19,61 @@ class MellpiProForLNFP_barangayLGUController extends Controller
     //LGU Profile (LNFP)
     public function index()
     {
-        //
-        $lnfpProfile = lnfp_lguprofile::get();
+        $location = new LocationController;
+        $prov = $location->getLocationDataProvince(auth()->user()->Region);
+        $mun = $location->getLocationDataMuni(auth()->user()->Province);
+        $city = $location->getLocationDataCity(auth()->user()->Region);
+        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
 
-        return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPIndex', ['lnfpProfile' => $lnfpProfile]);
+        $barangay = auth()->user()->barangay;
+
+        $lnfpProfile = DB::table('users')
+        ->join('lnfp_lguprofile', 'users.id', '=', 'lnfp_lguprofile.user_id')
+        ->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')
+        ->select('users.Firstname as firstname','users.Middlename as middlename','users.Lastname as lastname', 'lnfp_lguprofile.*')
+        ->get();
+
+        return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPIndex', compact('lnfpProfile', 'prov', 'mun', 'city', 'brgy'));
         // return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPIndex');
     }
-    public function mellpiProLNFP_LGUedit(Request $request)
+    public function mellpiProLNFP_LGUedit(Request $request, $id)
     {
+        $action = 'edit';
+        $location = new LocationController;
+        $prov = $location->getLocationDataProvince(auth()->user()->Region);
+        $mun = $location->getLocationDataMuni(auth()->user()->Province);
+        $city = $location->getLocationDataCity(auth()->user()->Region);
+        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
 
-        $lnfpProfile = DB::table('lnfp_lguprofile')->where('id', $request->id)->first();
+        $years = range(date("Y"), 1900);
 
-        return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPEdit', ['lnfpProfile' => $lnfpProfile]);
+        //dd($request->id);
+        // $row = DB::table('lguprofilebarangay')->where('user_id', auth()->user()->id)->first();
+        $row = DB::table('lnfp_lguprofile')->where('id', $request->id)->first();
+        //dd($lguProfile);
+
+
+        return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPEdit',compact('row','prov', 'mun', 'city', 'brgy', 'years', 'action'));
+
+        // $lnfpProfile = DB::table('lnfp_lguprofile')->where('id', $request->id)->first();
+
+        // return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPEdit', ['lnfpProfile' => $lnfpProfile]);
     }
     public function mellpiProLNFP_LGUcreate()
     {
         //
-        return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPCreate');
+        $action = 'create';
+        $location = new LocationController;
+        $prov = $location->getLocationDataProvince(auth()->user()->Region);
+        $mun = $location->getLocationDataMuni(auth()->user()->Province);
+        $city = $location->getLocationDataCity(auth()->user()->Region);
+        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        
+        $years = range(date("Y"), 1900);
+
+        return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPCreate', compact('prov', 'mun', 'city', 'brgy','years', 'action'));
+
+        // return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPCreate');
     }
 
     public function storeSubmit(Request $request)
@@ -43,136 +82,136 @@ class MellpiProForLNFP_barangayLGUController extends Controller
         // dd($action);
         if ($action == 'submit') {
             $rules = [
-                'dateMonitoring' => 'nullable',
-                'periodCovereda' => 'nullable',
-                'totalPopulation' => 'nullable',
-                'householdWater' => 'nullable',
-                'householdToilets' => 'nullable',
-                'dayCareCenter' => 'nullable',
-                'elementary' => 'nullable',
-                'secondarySchool' => 'nullable',
-                'healthStations' => 'nullable',
-                'retailOutlets' => 'nullable',
-                'bakeries' => 'nullable',
-                'markets' => 'nullable',
-                'transportTerminals' => 'nullable',
-                'breastfeeding' => 'nullable',
-                'hazards' => 'nullable',
-                'affectedLGU' => 'nullable',
-                'noHousehold' => 'nullable',
-                'noPuroks' => 'nullable',
-                'populationA' => 'nullable',
-                'populationB' => 'nullable',
-                'populationC' => 'nullable',
-                'populationD' => 'nullable',
-                'populationE' => 'nullable',
-                'populationF' => 'nullable',
-                'actualA' => 'nullable',
-                'actualB' => 'nullable',
-                'actualC' => 'nullable',
-                'actualD' => 'nullable',
-                'actualE' => 'nullable',
-                'actualF' => 'nullable',
-                'psnormalAAA' => 'nullable',
-                'psunderweightAAA' => 'nullable',
-                'pssevereUnderweightAAA' => 'nullable',
-                'psoverweightAAA' => 'nullable',
-                'psnormalBAA' => 'nullable',
-                'psunderweightBAA' => 'nullable',
-                'pssevereUnderweightBAA' => 'nullable',
-                'psoverweightBAA' => 'nullable',
-                'psnormalCAA' => 'nullable',
-                'psunderweightCAA' => 'nullable',
-                'pssevereUnderweightCAA' => 'nullable',
-                'psoverweightCAA' => 'nullable',
-                'psnormalABA' => 'nullable',
-                'pswastedABA' => 'nullable',
-                'psseverelyWastedABA' => 'nullable',
-                'psoverweightABA' => 'nullable',
-                'psobeseABA' => 'nullable',
-                'psnormalBBA' => 'nullable',
-                'pswastedBBA' => 'nullable',
-                'psseverelyWastedBBA' => 'nullable',
-                'psoverweightBBA' => 'nullable',
-                'psobeseBBA' => 'nullable',
-                'psnormalCCA' => 'nullable',
-                'pswastedCCA' => 'nullable',
-                'psseverelyWastedCCA' => 'nullable',
-                'psoverweightCCA' => 'nullable',
-                'psobeseCCA' => 'nullable',
-                'psnormalAAB' => 'nullable',
-                'psstuntedAAB' => 'nullable',
-                'pssevereStuntedAAB' => 'nullable',
-                'pstallAAB' => 'nullable',
-                'psnormalBBB' => 'nullable',
-                'psstuntedBBB' => 'nullable',
-                'pssevereStuntedBBB' => 'nullable',
-                'pstallBBB' => 'nullable',
-                'psnormalCCC' => 'nullable',
-                'psstuntedCCC' => 'nullable',
-                'pssevereStuntedCCC' => 'nullable',
-                'pstallCCC' => 'nullable',
-                'scnormalABA' => 'nullable',
-                'scwastedABA' => 'nullable',
-                'scseverelyWastedABA' => 'nullable',
-                'scoverweightABA' => 'nullable',
-                'scobeseABA' => 'nullable',
-                'scnormalBBA' => 'nullable',
-                'scwastedBBA' => 'nullable',
-                'scseverelyWastedBBA' => 'nullable',
-                'scoverweightBBA' => 'nullable',
-                'scobeseBBA' => 'nullable',
-                'scnormalCCA' => 'nullable',
-                'scwastedCCA' => 'nullable',
-                'scseverelyWastedCCA' => 'nullable',
-                'scoverweightCCA' => 'nullable',
-                'scobeseCCA' => 'nullable',
-                'pwnormalAAA' => 'nullable',
-                'pwnutritionllyatriskAAA' => 'nullable',
-                'pwoverweightAAA' => 'nullable',
-                'pwobeseAAA' => 'nullable',
-                'pwnormalBAA' => 'nullable',
-                'pwnutritionllyatriskBAA' => 'nullable',
-                'pwoverweightBAA' => 'nullable',
-                'pwobeseBAA' => 'nullable',
-                'pwnormalCAA' => 'nullable',
-                'pwnutritionllyatriskCAA' => 'nullable',
-                'pwoverweightCAA' => 'nullable',
-                'pwobeseCAA' => 'nullable',
-                'newBrgyScholar' => 'nullable',
-                'oldBrgyScholar' => 'nullable',
-                'landAreaResidential' => 'nullable',
-                'remarksResidential' => 'nullable',
-                'landAreaCommercial' => 'nullable',
-                'remarksCommercial' => 'nullable',
-                'landAreaIndustrial' => 'nullable',
-                'remarksIndustrial' => 'nullable',
-                'landAreaAgricultural' => 'nullable',
-                'remarksAgricultural' => 'nullable',
-                'landAreaFLMLNP' => 'nullable',
-                'remarksFLMLNP' => 'nullable',
-                'status' => 'nullable',
-                'barangay_id' => 'nullable',
-                'municipal_id' => 'nullable',
-                'province_id' => 'nullable',
-                'region_id' => 'nullable',
-                'user_id' => 'nullable',
+                'dateMonitoring' => 'required',
+                'periodCovereda' => 'required',
+                'totalPopulation' => 'required',
+                'householdWater' => 'required',
+                'householdToilets' => 'required',
+                'dayCareCenter' => 'required',
+                'elementary' => 'required',
+                'secondarySchool' => 'required',
+                'healthStations' => 'required',
+                'retailOutlets' => 'required',
+                'bakeries' => 'required',
+                'markets' => 'required',
+                'transportTerminals' => 'required',
+                'breastfeeding' => 'required',
+                'hazards' => 'required',
+                'affectedLGU' => 'required',
+                'noHousehold' => 'required',
+                'noPuroks' => 'required',
+                'populationA' => 'required',
+                'populationB' => 'required',
+                'populationC' => 'required',
+                'populationD' => 'required',
+                'populationE' => 'required',
+                'populationF' => 'required',
+                'actualA' => 'required',
+                'actualB' => 'required',
+                'actualC' => 'required',
+                'actualD' => 'required',
+                'actualE' => 'required',
+                'actualF' => 'required',
+                'psnormalAAA' => 'required',
+                'psunderweightAAA' => 'required',
+                'pssevereUnderweightAAA' => 'required',
+                'psoverweightAAA' => 'required',
+                'psnormalBAA' => 'required',
+                'psunderweightBAA' => 'required',
+                'pssevereUnderweightBAA' => 'required',
+                'psoverweightBAA' => 'required',
+                'psnormalCAA' => 'required',
+                'psunderweightCAA' => 'required',
+                'pssevereUnderweightCAA' => 'required',
+                'psoverweightCAA' => 'required',
+                'psnormalABA' => 'required',
+                'pswastedABA' => 'required',
+                'psseverelyWastedABA' => 'required',
+                'psoverweightABA' => 'required',
+                'psobeseABA' => 'required',
+                'psnormalBBA' => 'required',
+                'pswastedBBA' => 'required',
+                'psseverelyWastedBBA' => 'required',
+                'psoverweightBBA' => 'required',
+                'psobeseBBA' => 'required',
+                'psnormalCCA' => 'required',
+                'pswastedCCA' => 'required',
+                'psseverelyWastedCCA' => 'required',
+                'psoverweightCCA' => 'required',
+                'psobeseCCA' => 'required',
+                'psnormalAAB' => 'required',
+                'psstuntedAAB' => 'required',
+                'pssevereStuntedAAB' => 'required',
+                'pstallAAB' => 'required',
+                'psnormalBBB' => 'required',
+                'psstuntedBBB' => 'required',
+                'pssevereStuntedBBB' => 'required',
+                'pstallBBB' => 'required',
+                'psnormalCCC' => 'required',
+                'psstuntedCCC' => 'required',
+                'pssevereStuntedCCC' => 'required',
+                'pstallCCC' => 'required',
+                'scnormalABA' => 'required',
+                'scwastedABA' => 'required',
+                'scseverelyWastedABA' => 'required',
+                'scoverweightABA' => 'required',
+                'scobeseABA' => 'required',
+                'scnormalBBA' => 'required',
+                'scwastedBBA' => 'required',
+                'scseverelyWastedBBA' => 'required',
+                'scoverweightBBA' => 'required',
+                'scobeseBBA' => 'required',
+                'scnormalCCA' => 'required',
+                'scwastedCCA' => 'required',
+                'scseverelyWastedCCA' => 'required',
+                'scoverweightCCA' => 'required',
+                'scobeseCCA' => 'required',
+                'pwnormalAAA' => 'required',
+                'pwnutritionllyatriskAAA' => 'required',
+                'pwoverweightAAA' => 'required',
+                'pwobeseAAA' => 'required',
+                'pwnormalBAA' => 'required',
+                'pwnutritionllyatriskBAA' => 'required',
+                'pwoverweightBAA' => 'required',
+                'pwobeseBAA' => 'required',
+                'pwnormalCAA' => 'required',
+                'pwnutritionllyatriskCAA' => 'required',
+                'pwoverweightCAA' => 'required',
+                'pwobeseCAA' => 'required',
+                'newNutritionScholar' => 'required',
+                'oldNutritionScholar' => 'required',
+                'landAreaResidential' => 'required',
+                'remarksResidential' => 'required',
+                'landAreaCommercial' => 'required',
+                'remarksCommercial' => 'required',
+                'landAreaIndustrial' => 'required',
+                'remarksIndustrial' => 'required',
+                'landAreaAgricultural' => 'required',
+                'remarksAgricultural' => 'required',
+                'landAreaFLMLNP' => 'required',
+                'remarksFLMLNP' => 'required',
+                'submitStatus' => 'required',
+                'barangay_id' => 'required',
+                'municipal_id' => 'required',
+                'province_id' => 'required',
+                'region_id' => 'required',
+                'user_id' => 'required',
     
             ];
     
     
             $message = [
                 'required' => 'The field is required.',
-                // 'integer' => 'The field must be a integer.',
-                // 'string' => 'The field must be a string.',
-                // 'date' => 'The field must be a valid date.',
-                // 'max' => 'The field may not be greater than :max characters.',
+                'integer' => 'The field must be a integer.',
+                'string' => 'The field must be a string.',
+                'date' => 'The field must be a valid date.',
+                'max' => 'The field may not be greater than :max characters.',
             ];
     
             // $validator = Validator::make($request->all(), $rules, $message);
     
             $input = $request->all();
-            $input = array_map('trim', $input);
+            // $input = array_map('trim', $input);
     
             $validator = Validator::make($input, $rules, $message);
     

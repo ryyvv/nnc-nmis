@@ -34,8 +34,105 @@
                             <a href="{{ route('lnfpForm8Create') }}" class="btn btn-primary bolder">Create data</a>
                         </div>
 
+                        <table class="display" id="form8myTable" width="100%">
+                            <thead class="table-light" style="background-color:#508D4E;">
+
+                                <tr>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">#</th>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Name</th>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Area of Assignment</th>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Date of Monitoring</th>
+
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Status</th>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;width:10%;">Action</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <?php $num = 1; ?>
+                                @foreach ($form8 as $form8)
+                                <tr>
+                                    <td>{{$num}}</td>
+                                    <td>{{ $form8->nameOfPnao }}</td>
+                                    <td>{{ $form8->areaOfAssign }}</td>
+                                    <td>{{ $form8->dateMonitor }}</td>
+                                    <td>
+                                        @if( $form8->status == 0 )
+                                        <span class="statusApproved">APPROVED</span>
+                                        @elseif( $form8->status == 1 )
+                                        <span class="statusPending">PENDING</span>
+                                        @elseif( $form8->status == 2 )
+                                        <span class="statusDraft">DRAFT</span>
+                                        @endif
+                                    </td>
+
+                                    <td>
+                                        <ul class="list-inline m-0">
+                                            <li class="list-inline-item">
+                                                @if( $form8->status == 0 )
+                                                <i onclick="LNFPmyFunction_form8('{{ $form8->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                                <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
+                                                <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i>
+                                                <!-- <i class="fa fa-file-pdf-o fa-lg cursor " style="color:red;margin-right:7px;" aria-hidden="true"></i>  -->
+                                                @elseif( $form8->status == 1 )
+                                                <i onclick="myFunctionLNFP_form8('{{ $form8->id }}', 'lncmanagement', 'edit')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                                <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
+                                                <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i>
+                                                <!-- <i class="fa fa-file-pdf-o fa-lg cursor " style="color:red;margin-right:7px;" aria-hidden="true"></i> -->
+                                                @elseif( $form8->status == 2 )
+                                                <i onclick="LNFPmyFunction_form8('{{ $form8->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                                <i onclick="myFunctionLNFP_form8('{{ $form8->id }}', 'lncmanagement', 'edit')" class="fa fa-edit fa-lg cursor" style="color:#FFB236;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Edit"></i>
+                                                <i onclick="LNFPopenModal_form8('{{ $form8->id }}')" class="fa fa-trash fa-lg cursor" style="color:red;margin-right:10px" title="Delete "></i>
+                                                <!-- <i class="fa fa-file-pdf-o fa-lg cursor " style="color:red;margin-right:7px;" aria-hidden="true"></i> -->
+                                                @endif
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <?php $num++; ?>
+
+
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM fully loaded and parsed');
+        setTimeout(function() {
+            var alertMessage = document.getElementById('alert-message');
+            if (alertMessage) {
+                console.log('Alert message found, hiding now');
+                alertMessage.style.display = 'none';
+            } else {
+                console.log('Alert message not found');
+            }
+        }, 3000);
+    });
+</script>
+
+<!-- Delete -->
+<div class="modal fade" id="deleteModal_form8" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this data?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" onclick="confirmDeleteLNFP_Form8()">Sure</button>
             </div>
         </div>
     </div>

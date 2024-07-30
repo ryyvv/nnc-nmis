@@ -18,7 +18,7 @@ class CityMunicipalStaff
     public function handle(Request $request, Closure $next): Response
     {
         $roles = DB::table('roles')->where('id',Auth::user()->role)->first();
-        if (Auth::check() && $roles->name == 'City-Municipal Staff') {
+        if (Auth::check() && $roles->name == 'CityMunicipal Staff') {
             return $next($request);
         }
 

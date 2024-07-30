@@ -315,7 +315,7 @@
                                         </tbody>
                                     </table>
                                     <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalUpdate">Submit</button>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalUpdate">Save</button>
                                     </div>
                                 </div>
                             </div>

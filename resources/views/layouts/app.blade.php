@@ -60,7 +60,8 @@
   <!-- custom  js/Jquery/ajax -->
   <script src="{{ asset('assets') }}/js/csvReadfile.js"></script>
   <script src="{{ asset('assets') }}/js/autoGenerateInput.js"></script>
-  <script src="{{ asset('assets') }}/js/MellpiProLGUBarangay.js"></script>
+  <script src="{{ asset('assets') }}/js/Barangay.js"></script>
+  <script src="{{ asset('assets') }}/js/Municipal.js"></script>
   <script src="{{ asset('assets') }}/js/joboy.js"></script>
   <script src="{{ asset('assets') }}/js/ryan.js"></script>
   <script src="{{ asset('assets') }}/js/diether.js"></script>

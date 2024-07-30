@@ -133,3 +133,11 @@ thead th {
     border: none;
     background-color: transparent;
 }
+.form8InputBot {
+    width: 40%;
+    outline: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    background-color: transparent;
+}

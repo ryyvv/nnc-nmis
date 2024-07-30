@@ -59,13 +59,13 @@
 
       <!-- for LGUs -->
       <li class="@if ($activePage == 'lgu') active @endif">
-        <a data-toggle="collapse" href="#LGU">
+        <a data-toggle="collapse " href="#LGU">
           <p>
             {{ __('MellPi Pro FOR LGUs') }}
             <b class="caret"></b>
           </p>
         </a>
-        <div class="collapse show" id="LGU">
+        <div class="collapse"   id="LGU">
           <ul class="nav">
             <li class="@if ($activePage == 'PersonnelDnaDirectoryIndex') active @endif">
               <a href="{{ route('personnelDnaDirectoryIndex') }}">
@@ -98,7 +98,7 @@
             <b class="caret"></b>
           </p>
         </a>
-        <div class="collapse show" id="LNFP">
+        <div class="collapse " id="LNFP">
           <ul class="nav">
             <li class="@if ($activePage == '') active @endif">
               <a href="#">
@@ -130,7 +130,7 @@
             <b class="caret"></b>
           </p>
         </a>
-        <div class="collapse show" id="Resources">
+        <div class="collapse " id="Resources">
           <ul class="nav">
             <li class="@if ($activePage == '') active @endif">
               <a href="#">
@@ -158,7 +158,7 @@
         <a data-toggle="collapse" href="#UserManagement">
           <p> {{ __("User Management") }} <b class="caret"></b> </p>
         </a>
-        <div class="collapse show" id="UserManagement">
+        <div class="collapse " id="UserManagement">
           <ul class="nav">
             <li class="@if ($activePage == 'profile') active @endif">
               <a href="{{ route('CAprofile.index') }}">
@@ -201,7 +201,7 @@
             <b class="caret"></b>
           </p>
         </a>
-        <div class="collapse show" id="FormManagement">
+        <div class="collapse " id="FormManagement">
           <ul class="nav">
             <li class="@if ($activePage == 'forms') active @endif">
               <a href="{{ route('forms.index') }}">
@@ -252,7 +252,7 @@
             <b class="caret"></b>
           </p>
         </a>
-        <div class="collapse show" id="MellpiPro">
+        <div class="collapse " id="MellpiPro">
           <ul class="nav">
             <li class="@if ($activePage == 'LGUPROFILE') active @endif">
               <a href="#">
@@ -327,10 +327,16 @@
             <b class="caret"></b>
           </p>
         </a>
-        <div class="collapse show" id="MellpiPro">
+        <div class="collapse " id="MellpiPro">
           <ul class="nav">
-            <li class="@if ($activePage == 'LGUPROFILE') active @endif">
+          <li class="@if ($activePage == 'REPORT') active @endif">
               <a href="#">
+
+                <p> <i class="now-ui-icons files_paper"></i>{{ __("LGU Report") }} </p>
+              </a>
+            </li>
+            <li class="@if ($activePage == 'LGUPROFILE') active @endif">
+              <a href="{{route('CMSLGUprofile.index')}}">
 
                 <p> <i class="now-ui-icons files_paper"></i>{{ __("LGU PROFILE") }} </p>
               </a>
@@ -397,13 +403,16 @@
         </a>
       </li>
 
+      @php 
+        $activeLGUPages = ['VISION', 'NutritionPolicies', 'Governance', 'LNCManagement', 'nutritionservice', 'changeNS', 'discussionquestion', 'budgetAIP'];
+      @endphp
       <li>
         <a data-toggle="collapse" href="#MellpiPro">
           <p> {{ __("MELLPI Pro for LGU") }}
             <b class="caret"></b>
           </p>
         </a>
-        <div class="collapse show" id="MellpiPro">
+        <div class="collapse @if ($namePage == 'MELLPI PRO For LGU Profile' || in_array($activePage, $activeLGUPages) ) show @endif" id="MellpiPro">
           <ul class="nav">
             <li class="@if ($activePage == 'LGUPROFILE') active @endif">
               <a href="{{ route('BSLGUprofile.index') }}">
@@ -463,13 +472,17 @@
         </div>
       </li>
 
+
+      @php 
+        $activeLNFPPages = ['mellpi_pro_form5', 'mellpi_pro_form6', 'mellpi_pro_form8'];
+      @endphp
       <li>
         <a data-toggle="collapse" href="#MellpiProLNFP">
           <p> {{ __("MELLPI Pro for LNFP") }}
             <b class="caret"></b>
           </p>
         </a>
-        <div class="collapse show" id="MellpiProLNFP">
+        <div class="collapse @if ($namePage == 'LGU Profile LNFP' || in_array($activePage, $activeLNFPPages) ) show @endif" " id="MellpiProLNFP">
           <ul class="nav">
             <li class="@if ($activePage == 'LGUPROFILELNFP') active @endif">
               <a href="{{ route('BSLGUprofileLNFPIndex.index') }}">
@@ -489,12 +502,7 @@
                 <p> {{ __("FORM 6 and 7") }} </p>
               </a>
             </li>
-            <!-- <li class="@if ($activePage == 'mellpi_pro_summary1b') active @endif">
-                <a href="#">
-                  <i class="now-ui-icons files_paper"></i>
-                  <p> {{ __("FORM 7") }} </p>
-                </a>
-              </li> -->
+          
             <li class="@if ($activePage == 'mellpi_pro_form8') active @endif">
               <a href="{{ route('lnfpForm8Index') }}">
                 <i class="now-ui-icons files_paper"></i>

@@ -30,7 +30,7 @@
 'class' => 'sidebar-mini ',
 'namePage' => 'Vision Mission',
 'activePage' => 'VISION',
-'activeNav' => '',
+'activeNav' => 'MELLPI PRO For LGU', 
 ])
 
 

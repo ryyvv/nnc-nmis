@@ -150,13 +150,13 @@ class RolesAndPermissionSeeder extends Seeder
         $role->givePermissionTo(Permission::all());
 
         $role = Role::create([
-            'name' => 'City-Municipal Officer',
+            'name' => 'City Municipal Officer',
             'codename' => 'is_citymunicipalofficer'
         ]);
         $role->givePermissionTo(Permission::all());
 
         $role = Role::create([
-            'name' => 'City-Municipal Staff',
+            'name' => 'CityMunicipal Staff',
             'codename' => 'is_citymunicipalstaff'
         ]);
         $role->givePermissionTo(Permission::all());

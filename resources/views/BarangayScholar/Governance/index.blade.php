@@ -5,7 +5,7 @@
 'class' => 'sidebar-mini ',
 'namePage' => 'Governance',
 'activePage' => 'Governance',
-'activeNav' => '',
+'activeNav' => 'MELLPI PRO For LGU', 
 ])
 
 

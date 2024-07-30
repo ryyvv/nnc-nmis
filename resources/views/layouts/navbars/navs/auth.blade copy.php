@@ -50,8 +50,8 @@
           </div>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="now-ui-icons users_single-02"></i>
+          <a class="nav-link dropdown-toggle"   id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="now-ui-icons users_single-02"  style="color:green!important"></i>
             <p>
               <span class="d-lg-none d-md-block">{{ __("Account") }}</span>
             </p>

@@ -4,15 +4,18 @@ namespace App\Http\Controllers\CityMunicipalStaff;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\LocationController;
 
-class MellpiLGUProfileBarangayBudgetAIP extends Controller
+class MellpiLGUProfileBarangayBudgetAIPController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
+    public function index() {
+
+    
+
     }
 
     /**

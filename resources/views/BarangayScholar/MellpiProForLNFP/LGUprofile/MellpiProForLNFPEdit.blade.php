@@ -29,141 +29,112 @@
                     @include('layouts.page_template.crud_alert_message')
 
                     <div>
-                        <form action="{{ route('MellpiProForLNFPUpdate.storeUpdate', $lnfpProfile->id) }}" id="lnfp-profile-form-edit" method="POST">
+                        <form action="{{ route('MellpiProForLNFPUpdate.storeUpdate', $row->id) }}" id="lnfp-profile-form-edit" method="POST">
                             @csrf
 
-                            @if ($lnfpProfile)
+                            @if ($row)
                             <center><img src="https://nnc-nmis.moodlearners.com/assets/img/logo.png" alt="" class="imgLogo"></center><br>
                             <center>
-                                <h5 class="title">{{__("Mellpi Pro PNAO Form: Provincial Profile Formsss")}}</h5>
+                                <h5 class="title">{{__("Mellpi Pro PNAO Form: Provincial Profile Forms")}}</h5>
                             </center><br>
+
+                            @include('layouts.page_template.location_header')
 
                             <input type="hidden" name="submitStatus" value="1">
                             <input type="hidden" name="DraftStatus" value="2">
 
                             <input type="hidden" name="action" id="action" value="">
-                            
+
                             <!-- header -->
-                            <div style="display:flex">
+                            <!-- <div style="display:flex">
                                 <div class="form-group col">
                                     <label for="exampleFormControlInput1">Barangay:</label>
-                                    <input type="text" class="form-control" name="barangay_id" value="{{Auth()->user()->barangay}}">
+                                    <input type="text" class="form-control" name="barangay_id" placeholder="ex. 100" value="{{Auth()->user()->barangay}}">
                                 </div>
                                 <div class="form-group col">
                                     <label for="exampleFormControlInput1">Municipality/City:</label>
-                                    <input type="text" class="form-control" name="municipal_id" value="{{auth()->user()->city_municipal }}">
+                                    <input type="text" class="form-control" name="municipal_id" placeholder="ex. 100" value="{{auth()->user()->city_municipal }}">
                                 </div>
                                 <div class="form-group col">
                                     <label for="exampleFormControlInput1">Province:</label>
-                                    <input type="text" class="form-control" name="province_id" value="{{auth()->user()->Province}}">
-                                    <!-- <input type="test" class="form-control" name="region_id" value="{{auth()->user()->Region}}"> -->
+                                    <input type="text" class="form-control" name="province_id" placeholder="ex. 100" value="{{auth()->user()->Province}}">
+                                    
                                 </div>
                                 <div class="form-group col">
                                     <label for="exampleFormControlInput1">Region:</label>
-                                    <input type="test" class="form-control" name="region_id" value="{{auth()->user()->Region}}">
+                                    <input type="test" class="form-control" name="region_id" placeholder="ex. 100" value="{{auth()->user()->Region}}">
                                 </div>
 
-                            </div>
+                            </div> -->
                             <br>
-                            <div style="display:flex">
-
-                                <div class="form-group col">
-                                    <label for="exampleFormControlInput1">Date of Monitoring:</label>
-                                    <input type="date" class="form-control" id="dateMonitoring" name="dateMonitoring" value="{{ $lnfpProfile->dateMonitoring }}">
-                                </div>
-                                <div class="form-group col">
-                                    <!-- <label for="exampleFormControlInput1">Period Covered From:</label>
-                                    <input type="date" class="form-control" id="exampleFormControlInput1"
-                                        data-date-format="mm-yyyy" name="periodCovereda"> -->
-
-                                    <label for="exampleFormControlInput1">Period Covered: </label>
-                                    <select name="periodCovereda" id="exampleFormControlInput1" class="form-control">
-                                        <option selected>{{ $lnfpProfile->periodCovereda }}</option>
-                                        <?php
-                                        $currentYear = date('Y');
-                                        $startYear = 1900;
-                                        $endYear = $currentYear;
-                                        for ($year = $startYear; $year <= $endYear; $year++) {
-                                            echo "<option value=\"$year\">$year</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                                <!-- <div class="form-group col">
-                                    <label for="exampleFormControlInput1">Period Covered To:</label>
-                                    <input type="date" class="form-control" id="exampleFormControlInput1"
-                                        data-date-format="mm-yyyy" name="periodCoveredb">
-                                </div> -->
-                                <div class="form-group col">
-                                    <label for="exampleFormControlInput1">No. of Municipalities:</label>
-                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="numOfMun">
-                                </div>
-                            </div>
-                            <!-- endheader -->
-                            <br>
+                            
 
                             <div style="display:flex">
                                 <!-- Div1 -->
                                 <div class="col col-4 col-2">
                                     <div class="form-group">
+                                        <label for="exampleFormControlInput1">No. of Municipalities:</label>
+                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="numOfMun">
+                                    </div>
+                                    <div class="form-group">
                                         <label for="exampleFormControlInput1">Total Population:</label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="totalPopulation" value="{{ $lnfpProfile->totalPopulation }}">
+                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="totalPopulation" placeholder="ex. 100" value="{{ $row->totalPopulation }}">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleFormControlInput2">No. of household with access to
                                             safe
                                             water:</label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput2" name="householdWater" value="{{ $lnfpProfile->householdWater }}">
+                                        <input type="number" class="form-control" id="exampleFormControlInput2" name="householdWater" placeholder="ex. 100" value="{{ $row->householdWater }}">
                                     </div>
 
                                     <div class="form-group">
                                         <label for="exampleFormControlInput3">No. of household with sanitary
                                             toilets:</label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput3" name="householdToilets" value="{{ $lnfpProfile->householdToilets }}">
+                                        <input type="number" class="form-control" id="exampleFormControlInput3" name="householdToilets" placeholder="ex. 100" value="{{ $row->householdToilets }}">
                                     </div>
 
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">No. of Day Care Centers</label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="dayCareCenter" value="{{ $lnfpProfile->dayCareCenter }}">
+                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="dayCareCenter" placeholder="ex. 100" value="{{ $row->dayCareCenter }}">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">No. of public elementary
                                             schools:</label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="elementary" value="{{ $lnfpProfile->elementary }}">
+                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="elementary" placeholder="ex. 100" value="{{ $row->elementary }}">
                                     </div>
 
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">No. of public secondary
                                             schools:</label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="secondarySchool" value="{{ $lnfpProfile->secondarySchool }}">
+                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="secondarySchool" placeholder="ex. 100" value="{{ $row->secondarySchool }}">
                                     </div>
 
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">No. of Barangay Health
                                             Stations:</label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="healthStations" value="{{ $lnfpProfile->healthStations }}">
+                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="healthStations" placeholder="ex. 100" value="{{ $row->healthStations }}">
                                     </div>
 
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">No. of retail outlets/sari-sari
                                             stores:</label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="retailOutlets" value="{{ $lnfpProfile->retailOutlets }}">
+                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="retailOutlets" placeholder="ex. 100" value="{{ $row->retailOutlets }}">
                                     </div>
 
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">No. of bakeries:</label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="bakeries" value="{{ $lnfpProfile->bakeries }}">
+                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="bakeries" placeholder="ex. 100" value="{{ $row->bakeries }}">
                                     </div>
 
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">No. of public markets:</label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="markets" value="{{ $lnfpProfile->markets }}">
+                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="markets" placeholder="ex. 100" value="{{ $row->markets }}">
                                     </div>
 
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">No. of transport
                                             terminals:</label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="transportTerminals" value="{{ $lnfpProfile->transportTerminals }}">
+                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="transportTerminals" placeholder="ex. 100" value="{{ $row->transportTerminals }}">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">Percent of Lactating mothers
@@ -171,18 +142,18 @@
                                             breastfeeding
                                             until
                                             the 5th month:</label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="breastfeeding" value="{{ $lnfpProfile->breastfeeding }}">
+                                        <input type="number" class="form-control" id="exampleFormControlInput1" name="breastfeeding" placeholder="ex. 100" value="{{ $row->breastfeeding }}">
                                     </div>
 
                                     <div style="display:flex">
                                         <div class="form-group col">
                                             <label for="exampleFormControlInput1">Hazard:</label>
-                                            <input class="form-control" id="exampleFormControlInput1" name="hazards" style="height:100px; border: 1px solid lightgray;border-radius:5px" value="{{ $lnfpProfile->hazards }}">
+                                            <input class="form-control" id="exampleFormControlInput1" name="hazards" style="height:100px; border: 1px solid lightgray;border-radius:5px" placeholder="ex. 100" value="{{ $row->hazards }}">
                                         </div>
                                         <div class="form-group col">
                                             <label for="exampleFormControlInput1">LGU/Households
                                                 affected:</label>
-                                            <input class="form-control" id="exampleFormControlInput1" name="affectedLGU" style="height:100px; border: 1px solid lightgray;border-radius:5px" value="{{ $lnfpProfile->affectedLGU }}">
+                                            <input class="form-control" id="exampleFormControlInput1" name="affectedLGU" style="height:100px; border: 1px solid lightgray;border-radius:5px" placeholder="ex. 100" value="{{ $row->affectedLGU }}">
 
                                         </div>
                                     </div>
@@ -192,11 +163,11 @@
                                     <div style="display:flex" class="row">
                                         <div class="form-group col">
                                             <label for="exampleFormControlInput1">No. of households:</label>
-                                            <input type="number" class="form-control" id="exampleFormControlInput1" name="noHousehold" value="{{ $lnfpProfile->noHousehold }}">
+                                            <input type="number" class="form-control" id="exampleFormControlInput1" name="noHousehold" placeholder="ex. 100" value="{{ $row->noHousehold }}">
                                         </div>
                                         <div class="form-group col">
                                             <label for="exampleFormControlInput1">No.of SITIOS/PUROKS:</label>
-                                            <input type="number" class="form-control" id="exampleFormControlInput1" name="noPuroks" value="{{ $lnfpProfile->noPuroks }}">
+                                            <input type="number" class="form-control" id="exampleFormControlInput1" name="noPuroks" placeholder="ex. 100" value="{{ $row->noPuroks }}">
                                         </div>
                                     </div>
                                     <br>
@@ -229,22 +200,22 @@
                                                 <label for="exampleFormControlInput1">Estimated: </label>
                                             </div>
                                             <div class="form-group" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="populationA" value="{{ $lnfpProfile->populationA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="populationA" placeholder="ex. 100" value="{{ $row->populationA }}">
                                             </div>
                                             <div class="form-group" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="populationB" value="{{ $lnfpProfile->populationB }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="populationB" placeholder="ex. 100" value="{{ $row->populationB }}">
                                             </div>
                                             <div class="form-group" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="populationC" value="{{ $lnfpProfile->populationC }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="populationC" placeholder="ex. 100" value="{{ $row->populationC }}">
                                             </div>
                                             <div class="form-group" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="populationD" value="{{ $lnfpProfile->populationD }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="populationD" placeholder="ex. 100" value="{{ $row->populationD }}">
                                             </div>
                                             <div class="form-group" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="populationE" value="{{ $lnfpProfile->populationE }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="populationE" placeholder="ex. 100" value="{{ $row->populationE }}">
                                             </div>
                                             <div class="form-group" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="populationF" value="{{ $lnfpProfile->populationF }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="populationF" placeholder="ex. 100" value="{{ $row->populationF }}">
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -252,22 +223,22 @@
                                                 <label for="exampleFormControlInput1">Actual: </label>
                                             </div>
                                             <div class="form-group" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="actualA" value="{{ $lnfpProfile->actualA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="actualA" placeholder="ex. 100" value="{{ $row->actualA }}">
                                             </div>
                                             <div class="form-group" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="actualB" value="{{ $lnfpProfile->actualB }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="actualB" placeholder="ex. 100" value="{{ $row->actualB }}">
                                             </div>
                                             <div class="form-group" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="actualC" value="{{ $lnfpProfile->actualC }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="actualC" placeholder="ex. 100" value="{{ $row->actualC }}">
                                             </div>
                                             <div class="form-group" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="actualD" value="{{ $lnfpProfile->actualD }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="actualD" placeholder="ex. 100" value="{{ $row->actualD }}">
                                             </div>
                                             <div class="form-group" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="actualE" value="{{ $lnfpProfile->actualE }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="actualE" placeholder="ex. 100" value="{{ $row->actualE }}">
                                             </div>
                                             <div class="form-group" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="actualF" value="{{ $lnfpProfile->actualF }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="actualF" placeholder="ex. 100" value="{{ $row->actualF }}">
                                             </div>
                                         </div>
                                     </div>
@@ -279,13 +250,13 @@
                                                 <label for="exampleFormControlInput1"></label>
                                             </div>
                                             <div class=" col">
-                                                <label for="exampleFormControlInput1">Year: <?php echo date("Y", strtotime("-1 year")); ?> </label>
+                                                Yr: <label for="exampleFormControlInput1" id="currentBYearMinus2"> </label>
                                             </div>
                                             <div class=" col">
-                                                <label for="exampleFormControlInput1">Year: <?php echo date("Y", strtotime("-2 year")); ?></label>
+                                                Yr: <label for="exampleFormControlInput1" id="currentBYearMinus1"> </label>
                                             </div>
                                             <div class=" col">
-                                                <label for="exampleFormControlInput1">Year: <?php echo date("Y", strtotime("-3 year")); ?></label>
+                                                Yr: <label for="exampleFormControlInput1" id="currentBYear"> </label>
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -293,13 +264,13 @@
                                                 <label for="exampleFormControlInput1">Normal: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psnormalAAA" value="{{ $lnfpProfile->psnormalAAA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psnormalAAA" placeholder="ex. 100" value="{{ $row->psnormalAAA }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psnormalBAA" value="{{ $lnfpProfile->psnormalBAA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psnormalBAA" placeholder="ex. 100" value="{{ $row->psnormalBAA }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psnormalCAA" value="{{ $lnfpProfile->psnormalCAA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psnormalCAA" placeholder="ex. 100" value="{{ $row->psnormalCAA }}">
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -307,13 +278,13 @@
                                                 <label for="exampleFormControlInput1">Underweight: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psunderweightAAA" value="{{ $lnfpProfile->psunderweightAAA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psunderweightAAA" placeholder="ex. 100" value="{{ $row->psunderweightAAA }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psunderweightBAA" value="{{ $lnfpProfile->psunderweightBAA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psunderweightBAA" placeholder="ex. 100" value="{{ $row->psunderweightBAA }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psunderweightCAA" value="{{ $lnfpProfile->psunderweightCAA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psunderweightCAA" placeholder="ex. 100" value="{{ $row->psunderweightCAA }}">
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -322,13 +293,13 @@
                                                 </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pssevereUnderweightAAA" value="{{ $lnfpProfile->pssevereUnderweightAAA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pssevereUnderweightAAA" placeholder="ex. 100" value="{{ $row->pssevereUnderweightAAA }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pssevereUnderweightBAA" value="{{ $lnfpProfile->pssevereUnderweightBAA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pssevereUnderweightBAA" placeholder="ex. 100" value="{{ $row->pssevereUnderweightBAA }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pssevereUnderweightCAA" value="{{ $lnfpProfile->pssevereUnderweightCAA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pssevereUnderweightCAA" placeholder="ex. 100" value="{{ $row->pssevereUnderweightCAA }}">
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -336,13 +307,13 @@
                                                 <label for="exampleFormControlInput1">Overweight: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psoverweightAAA" value="{{ $lnfpProfile->psoverweightAAA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psoverweightAAA" placeholder="ex. 100" value="{{ $row->psoverweightAAA }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psoverweightBAA" value="{{ $lnfpProfile->psoverweightBAA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psoverweightBAA" placeholder="ex. 100" value="{{ $row->psoverweightBAA }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psoverweightCAA" value="{{ $lnfpProfile->psoverweightCAA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psoverweightCAA" placeholder="ex. 100" value="{{ $row->psoverweightCAA }}">
                                             </div>
                                         </div>
 
@@ -354,13 +325,13 @@
                                                 <label for="exampleFormControlInput1">Normal: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psnormalABA" value="{{ $lnfpProfile->psnormalABA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psnormalABA" placeholder="ex. 100" value="{{ $row->psnormalABA }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psnormalBBA" value="{{ $lnfpProfile->psnormalBBA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psnormalBBA" placeholder="ex. 100" value="{{ $row->psnormalBBA }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psnormalCCA" value="{{ $lnfpProfile->psnormalCCA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psnormalCCA" placeholder="ex. 100" value="{{ $row->psnormalCCA }}">
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -368,13 +339,13 @@
                                                 <label for="exampleFormControlInput1">Wasted: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pswastedABA" value="{{ $lnfpProfile->pswastedABA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pswastedABA" placeholder="ex. 100" value="{{ $row->pswastedABA }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pswastedBBA" value="{{ $lnfpProfile->pswastedBBA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pswastedBBA" placeholder="ex. 100" value="{{ $row->pswastedBBA }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pswastedCCA" value="{{ $lnfpProfile->pswastedCCA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pswastedCCA" placeholder="ex. 100" value="{{ $row->pswastedCCA }}">
                                             </div>
                                         </div>
 
@@ -383,13 +354,13 @@
                                                 <label for="exampleFormControlInput1">Severely Wasted: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psseverelyWastedABA" value="{{ $lnfpProfile->psseverelyWastedABA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psseverelyWastedABA" placeholder="ex. 100" value="{{ $row->psseverelyWastedABA }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psseverelyWastedBBA" value="{{ $lnfpProfile->psseverelyWastedBBA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psseverelyWastedBBA" placeholder="ex. 100" value="{{ $row->psseverelyWastedBBA }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psseverelyWastedCCA" value="{{ $lnfpProfile->psseverelyWastedCCA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psseverelyWastedCCA" placeholder="ex. 100" value="{{ $row->psseverelyWastedCCA }}">
                                             </div>
                                         </div>
 
@@ -398,13 +369,13 @@
                                                 <label for="exampleFormControlInput1">Overweight: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psoverweightABA" value="{{ $lnfpProfile->psoverweightABA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psoverweightABA" placeholder="ex. 100" value="{{ $row->psoverweightABA }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psoverweightBBA" value="{{ $lnfpProfile->psoverweightBBA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psoverweightBBA" placeholder="ex. 100" value="{{ $row->psoverweightBBA }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psoverweightCCA" value="{{ $lnfpProfile->psoverweightCCA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psoverweightCCA" placeholder="ex. 100" value="{{ $row->psoverweightCCA }}">
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -412,13 +383,13 @@
                                                 <label for="exampleFormControlInput1">Obese: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psobeseABA" value="{{ $lnfpProfile->psobeseABA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psobeseABA" placeholder="ex. 100" value="{{ $row->psobeseABA }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psobeseBBA" value="{{ $lnfpProfile->psobeseBBA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psobeseBBA" placeholder="ex. 100" value="{{ $row->psobeseBBA }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psobeseCCA" value="{{ $lnfpProfile->psobeseCCA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psobeseCCA" placeholder="ex. 100" value="{{ $row->psobeseCCA }}">
                                             </div>
                                         </div>
                                         <br>
@@ -430,13 +401,13 @@
                                                 <label for="exampleFormControlInput1">Normal: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psnormalAAB" value="{{ $lnfpProfile->psnormalAAB }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psnormalAAB" placeholder="ex. 100" value="{{ $row->psnormalAAB }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psnormalBBB" value="{{ $lnfpProfile->psnormalBBB }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psnormalBBB" placeholder="ex. 100" value="{{ $row->psnormalBBB }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psnormalCCC" value="{{ $lnfpProfile->psnormalCCC }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psnormalCCC" placeholder="ex. 100" value="{{ $row->psnormalCCC }}">
                                             </div>
                                         </div>
 
@@ -445,13 +416,13 @@
                                                 <label for="exampleFormControlInput1">Stunted: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psstuntedAAB" value="{{ $lnfpProfile->psstuntedAAB }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psstuntedAAB" placeholder="ex. 100" value="{{ $row->psstuntedAAB }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psstuntedBBB" value="{{ $lnfpProfile->psstuntedBBB }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psstuntedBBB" placeholder="ex. 100" value="{{ $row->psstuntedBBB }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psstuntedCCC" value="{{ $lnfpProfile->psstuntedCCC }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="psstuntedCCC" placeholder="ex. 100" value="{{ $row->psstuntedCCC }}">
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -459,13 +430,13 @@
                                                 <label for="exampleFormControlInput1">Severely Stunted: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pssevereStuntedAAB" value="{{ $lnfpProfile->pssevereStuntedAAB }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pssevereStuntedAAB" placeholder="ex. 100" value="{{ $row->pssevereStuntedAAB }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pssevereStuntedBBB" value="{{ $lnfpProfile->pssevereStuntedBBB }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pssevereStuntedBBB" placeholder="ex. 100" value="{{ $row->pssevereStuntedBBB }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pssevereStuntedCCC" value="{{ $lnfpProfile->pssevereStuntedCCC }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pssevereStuntedCCC" placeholder="ex. 100" value="{{ $row->pssevereStuntedCCC }}">
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -473,13 +444,13 @@
                                                 <label for="exampleFormControlInput1">Tall: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pstallAAB" value="{{ $lnfpProfile->pstallAAB }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pstallAAB" placeholder="ex. 100" value="{{ $row->pstallAAB }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pstallBBB" value="{{ $lnfpProfile->pstallBBB }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pstallBBB" placeholder="ex. 100" value="{{ $row->pstallBBB }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pstallCCC" value="{{ $lnfpProfile->pstallCCC }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="pstallCCC" placeholder="ex. 100" value="{{ $row->pstallCCC }}">
                                             </div>
                                         </div>
                                     </div>
@@ -494,13 +465,13 @@
                                                 <label for="exampleFormControlInput1">Normal: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scnormalABA" value="{{ $lnfpProfile->scnormalABA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scnormalABA" placeholder="ex. 100" value="{{ $row->scnormalABA }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scnormalBBA" value="{{ $lnfpProfile->scnormalBBA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scnormalBBA" placeholder="ex. 100" value="{{ $row->scnormalBBA }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scnormalCCA" value="{{ $lnfpProfile->scnormalCCA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scnormalCCA" placeholder="ex. 100" value="{{ $row->scnormalCCA }}">
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -508,13 +479,13 @@
                                                 <label for="exampleFormControlInput1">Wasted: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scwastedABA" value="{{ $lnfpProfile->scwastedABA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scwastedABA" placeholder="ex. 100" value="{{ $row->scwastedABA }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scwastedBBA" value="{{ $lnfpProfile->scwastedBBA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scwastedBBA" placeholder="ex. 100" value="{{ $row->scwastedBBA }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scwastedCCA" value="{{ $lnfpProfile->scwastedCCA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scwastedCCA" placeholder="ex. 100" value="{{ $row->scwastedCCA }}">
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -522,13 +493,13 @@
                                                 <label for="exampleFormControlInput1">Severely Wasted: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scseverelyWastedABA" value="{{ $lnfpProfile->scseverelyWastedABA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scseverelyWastedABA" placeholder="ex. 100" value="{{ $row->scseverelyWastedABA }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scseverelyWastedBBA" value="{{ $lnfpProfile->scseverelyWastedBBA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scseverelyWastedBBA" placeholder="ex. 100" value="{{ $row->scseverelyWastedBBA }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scseverelyWastedCCA" value="{{ $lnfpProfile->scseverelyWastedCCA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scseverelyWastedCCA" placeholder="ex. 100" value="{{ $row->scseverelyWastedCCA }}">
                                             </div>
                                         </div>
 
@@ -537,13 +508,13 @@
                                                 <label for="exampleFormControlInput1">Overweight: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scoverweightABA" value="{{ $lnfpProfile->scoverweightABA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scoverweightABA" placeholder="ex. 100" value="{{ $row->scoverweightABA }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scoverweightBBA" value="{{ $lnfpProfile->scoverweightBBA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scoverweightBBA" placeholder="ex. 100" value="{{ $row->scoverweightBBA }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scoverweightCCA" value="{{ $lnfpProfile->scoverweightCCA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scoverweightCCA" placeholder="ex. 100" value="{{ $row->scoverweightCCA }}">
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -551,13 +522,13 @@
                                                 <label for="exampleFormControlInput1">Obese: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scobeseABA" value="{{ $lnfpProfile->scobeseABA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scobeseABA" placeholder="ex. 100" value="{{ $row->scobeseABA }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scobeseBBA" value="{{ $lnfpProfile->scobeseBBA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scobeseBBA" placeholder="ex. 100" value="{{ $row->scobeseBBA }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scobeseCCA" value="{{ $lnfpProfile->scobeseCCA }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="scobeseCCA" placeholder="ex. 100" value="{{ $row->scobeseCCA }}">
                                             </div>
                                         </div>
 
@@ -571,13 +542,13 @@
                                                     <label for="exampleFormControlInput1">Normal: </label>
                                                 </div>
                                                 <div class="form-group col" style="margin-left:10px">
-                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwnormalAAA" value="{{ $lnfpProfile->pwnormalAAA }}">
+                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwnormalAAA" placeholder="ex. 100" value="{{ $row->pwnormalAAA }}">
                                                 </div>
                                                 <div class="form-group col" style="margin-left:10px">
-                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwnormalBAA" value="{{ $lnfpProfile->pwnormalBAA }}">
+                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwnormalBAA" placeholder="ex. 100" value="{{ $row->pwnormalBAA }}">
                                                 </div>
                                                 <div class="form-group col" style="margin-left:10px">
-                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwnormalCAA" value="{{ $lnfpProfile->pwnormalCAA }}">
+                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwnormalCAA" placeholder="ex. 100" value="{{ $row->pwnormalCAA }}">
                                                 </div>
                                             </div>
                                             <div style="display:flex;">
@@ -586,13 +557,13 @@
                                                     </label>
                                                 </div>
                                                 <div class="form-group col" style="margin-left:10px">
-                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwnutritionllyatriskAAA" value="{{ $lnfpProfile->pwnutritionllyatriskAAA }}">
+                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwnutritionllyatriskAAA" placeholder="ex. 100" value="{{ $row->pwnutritionllyatriskAAA }}">
                                                 </div>
                                                 <div class="form-group col" style="margin-left:10px">
-                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwnutritionllyatriskBAA" value="{{ $lnfpProfile->pwnutritionllyatriskBAA }}">
+                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwnutritionllyatriskBAA" placeholder="ex. 100" value="{{ $row->pwnutritionllyatriskBAA }}">
                                                 </div>
                                                 <div class="form-group col" style="margin-left:10px">
-                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwnutritionllyatriskCAA" value="{{ $lnfpProfile->pwnutritionllyatriskCAA }}">
+                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwnutritionllyatriskCAA" placeholder="ex. 100" value="{{ $row->pwnutritionllyatriskCAA }}">
                                                 </div>
                                             </div>
                                             <div style="display:flex;">
@@ -600,13 +571,13 @@
                                                     <label for="exampleFormControlInput1">Overweight: </label>
                                                 </div>
                                                 <div class="form-group col" style="margin-left:10px">
-                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwoverweightAAA" value="{{ $lnfpProfile->pwoverweightAAA }}">
+                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwoverweightAAA" placeholder="ex. 100" value="{{ $row->pwoverweightAAA }}">
                                                 </div>
                                                 <div class="form-group col" style="margin-left:10px">
-                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwoverweightBAA" value="{{ $lnfpProfile->pwoverweightBAA }}">
+                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwoverweightBAA" placeholder="ex. 100" value="{{ $row->pwoverweightBAA }}">
                                                 </div>
                                                 <div class="form-group col" style="margin-left:10px">
-                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwoverweightCAA" value="{{ $lnfpProfile->pwoverweightCAA }}">
+                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwoverweightCAA" placeholder="ex. 100" value="{{ $row->pwoverweightCAA }}">
                                                 </div>
                                             </div>
 
@@ -615,13 +586,13 @@
                                                     <label for="exampleFormControlInput1">Obese: </label>
                                                 </div>
                                                 <div class="form-group col" style="margin-left:10px">
-                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwobeseAAA" value="{{ $lnfpProfile->pwobeseAAA }}">
+                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwobeseAAA" placeholder="ex. 100" value="{{ $row->pwobeseAAA }}">
                                                 </div>
                                                 <div class="form-group col" style="margin-left:10px">
-                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwobeseBAA" value="{{ $lnfpProfile->pwobeseBAA }}">
+                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwobeseBAA" placeholder="ex. 100" value="{{ $row->pwobeseBAA }}">
                                                 </div>
                                                 <div class="form-group col" style="margin-left:10px">
-                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwobeseCAA" value="{{ $lnfpProfile->pwobeseCAA }}">
+                                                    <input type="number" class="form-control" id="exampleFormControlInput1" name="pwobeseCAA" placeholder="ex. 100" value="{{ $row->pwobeseCAA }}">
                                                 </div>
                                             </div>
 
@@ -646,10 +617,10 @@
                                                 <label for="exampleFormControlInput1">Total No.: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="newNutritionScholar" value="{{ $lnfpProfile->newBrgyScholar }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="newNutritionScholar" placeholder="ex. 100" value="{{ $row->newBrgyScholar }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="oldNutritionScholar" value="{{ $lnfpProfile->oldBrgyScholar }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="oldNutritionScholar" placeholder="ex. 100" value="{{ $row->oldBrgyScholar }}">
                                             </div>
                                         </div>
                                     </div>
@@ -661,7 +632,7 @@
                                                 <label for="exampleFormControlInput1"><b>Land use Classification</b></label>
                                             </div>
                                             <div class="form-group col">
-                                                <label for="exampleFormControlInput1">land Area</label>
+                                                <label for="exampleFormControlInput1">Land Area</label>
                                             </div>
                                             <div class="form-group col">
                                                 <label for="exampleFormControlInput1">Remarks</label>
@@ -672,10 +643,10 @@
                                                 <label for="exampleFormControlInput1">Residential: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="landAreaResidential" value="{{ $lnfpProfile->landAreaResidential }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="landAreaResidential" placeholder="ex. 100" value="{{ $row->landAreaResidential }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="textarea" class="form-control" id="exampleFormControlInput1" name="remarksResidential" value="{{ $lnfpProfile->remarksResidential }}">
+                                                <input type="textarea" class="form-control" id="exampleFormControlInput1" name="remarksResidential" placeholder="ex. 100" value="{{ $row->remarksResidential }}">
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -683,10 +654,10 @@
                                                 <label for="exampleFormControlInput1">Commercial: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="landAreaCommercial" value="{{ $lnfpProfile->landAreaCommercial }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="landAreaCommercial" placeholder="ex. 100" value="{{ $row->landAreaCommercial }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="textarea" class="form-control" id="exampleFormControlInput1" name="remarksCommercial" value="{{ $lnfpProfile->remarksCommercial }}">
+                                                <input type="textarea" class="form-control" id="exampleFormControlInput1" name="remarksCommercial" placeholder="ex. 100" value="{{ $row->remarksCommercial }}">
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -694,10 +665,10 @@
                                                 <label for="exampleFormControlInput1">Industrial: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="landAreaIndustrial" value="{{ $lnfpProfile->landAreaIndustrial }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="landAreaIndustrial" placeholder="ex. 100" value="{{ $row->landAreaIndustrial }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="textarea" class="form-control" id="exampleFormControlInput1" name="remarksIndustrial" value="{{ $lnfpProfile->remarksIndustrial }}">
+                                                <input type="textarea" class="form-control" id="exampleFormControlInput1" name="remarksIndustrial" placeholder="ex. 100" value="{{ $row->remarksIndustrial }}">
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -705,10 +676,10 @@
                                                 <label for="exampleFormControlInput1">Agricultural: </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="landAreaAgricultural" value="{{ $lnfpProfile->landAreaAgricultural }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="landAreaAgricultural" placeholder="ex. 100" value="{{ $row->landAreaAgricultural }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="textarea" class="form-control" id="exampleFormControlInput1" name="remarksAgricultural" value="{{ $lnfpProfile->remarksAgricultural }}">
+                                                <input type="textarea" class="form-control" id="exampleFormControlInput1" name="remarksAgricultural" placeholder="ex. 100" value="{{ $row->remarksAgricultural }}">
                                             </div>
                                         </div>
                                         <div style="display:flex;">
@@ -718,10 +689,10 @@
                                                 </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="landAreaFLMLNP" value="{{ $lnfpProfile->landAreaFLMLNP }}">
+                                                <input type="number" class="form-control" id="exampleFormControlInput1" name="landAreaFLMLNP" placeholder="ex. 100" value="{{ $row->landAreaFLMLNP }}">
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="textArea" class="form-control" id="exampleFormControlInput1" name="remarksFLMLNP" value="{{ $lnfpProfile->remarksFLMLNP }}">
+                                                <input type="textArea" class="form-control" id="exampleFormControlInput1" name="remarksFLMLNP" placeholder="ex. 100" value="{{ $row->remarksFLMLNP }}">
                                             </div>
                                         </div>
                                     </div>
@@ -729,19 +700,20 @@
 
                             </div>
 
-
+                            @if ($row->status != 1)
                             <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
                                 <!-- <button type="submit" class="btn btn-warning ">Save as draft</button> -->
                                 <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
-                                    Draft
+                                    Save as Draft
                                 </button>
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                                    Submit
+                                    Save and Submit
                                 </button>
 
                             </div>
+                            @endif
                             @endif
                         </form>
                     </div>

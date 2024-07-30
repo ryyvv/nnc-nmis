@@ -27,6 +27,7 @@
 'class' => 'sidebar-mini ',
 'namePage' => 'Vision Mission',
 'activePage' => 'VISION',
+'activeNav' => 'MELLPI PRO For LGU', 
 ])
 
 

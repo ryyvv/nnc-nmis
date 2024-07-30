@@ -52,7 +52,7 @@
                                 @foreach ($lnfpProfile as $lnfpProfile)
                                 <tr>
                                     <td>{{$num}}</td>
-                                    <td>Sample Name</td>
+                                    <td>{{$lnfpProfile->firstname}} {{$lnfpProfile->middlename}} {{$lnfpProfile->lastname}}</td>
                                     <!-- <td>{{$lnfpProfile->dateMonitoring}}</td> -->
                                     <td>{{\Carbon\Carbon::parse($lnfpProfile->dateMonitoring)->format('F j, Y');}}</td>
                                     <td>{{$lnfpProfile->periodCovereda}}</td>

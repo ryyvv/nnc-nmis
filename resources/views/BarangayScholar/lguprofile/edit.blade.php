@@ -31,7 +31,7 @@
 'class' => 'sidebar-mini ',
 'namePage' => 'Mellpi Pro for LGU Profile',
 'activePage' => 'LGUPROFILE',
-'activeNav' => '',
+'activeNav' => 'MELLPI PRO For LGU', 
 ])
 
 
@@ -164,7 +164,7 @@
                         </div>
                         <div class="form-group">
                             <label for="breastfeeding">Percent of Lactating mothers exclusively
-                                breastfeeding u ntil the 5th month(%):<span style="color:red">*</span></label>
+                                breastfeeding until the 5th month(%):<span style="color:red">*</span></label>
                             <input type="number" min="1" max="1000" class="form-control" id="breastfeeding" name="breastfeeding"
                             placeholder="ex. 100 " value="{{$row->breastfeeding}}">
                             @error('breastfeeding')

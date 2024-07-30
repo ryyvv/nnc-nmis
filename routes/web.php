@@ -41,7 +41,9 @@ use App\Http\Controllers\ProvincialStaff\PSDashboardController;
 
 
 // City-Municipal Staff
-use App\Http\Controllers\CityMunicipalStaff\MellpiLGUProfileBarangay;
+use App\Http\Controllers\CityMunicipalStaff\MellpiLGUProfileBarangayController;
+use App\Http\Controllers\CityMunicipalStaff\DashboardController;
+ 
 
 
 // BarangayScholar
@@ -326,9 +328,24 @@ Route::group(['middleware' => 'auth'], function () {
         // Route::get('/admin/{admin}', [AdminUserController::class, 'destroy'])->name('admin.destroy');
 
     });
-    Route::prefix('City-MunicipalStaff')->middleware(['auth', 'City-MunicipalStaff'])->group(function () {
-        Route::get('/dashboard', [MellpiLGUProfileBarangay::class, 'index'])->name('CMSdashboard.index');
+    Route::prefix('CityMunicipalStaff')->middleware(['auth', 'CityMunicipalStaff'])->group(function () {
 
+        // DashBoard
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('CMSdashboard.index');
+
+        //LGUProfileController
+        Route::get('/lguProfile', [MellpiLGUProfileBarangayController::class, 'index'])->name('CMSLGUprofile.index');
+        Route::get('/lguProfile/{id}/show', [MellpiLGUProfileBarangayController::class, 'show'])->name('CMSLGUprofile.show');
+        //   Route::POST('/lguprofile', [BSLGUprofileController::class, 'storeSubmit'])->name('BSLGUprofilest.storeSubmit');
+        Route::get('/lguProfile/create', [MellpiLGUProfileBarangayController::class, 'create'])->name('CMSLGUprofile.create');
+        //   Route::put('/lguprofile/{id}', [BSLGUprofileController::class, 'update'])->name('BSLGUprofile.update');
+        //   Route::get('/lguprofile/{id}/edit', [BSLGUprofileController::class, 'edit'])->name('BSLGUprofile.edit');
+        //   Route::get('/lguprofile/{id}/delete', [BSLGUprofileController::class, 'destroy'])->name('BSLGUprofile.destroy');  
+          //LGU Profile Downloadable
+        //   Route::POST('/lguprofile/{id}/download-pdf',[BSLGUprofileController::class , 'downloads'])->name('BSLGUprofile.download');z
+        Route::POST('/lguProfile/approved', [MellpiLGUProfileBarangayController::class, 'Approved'])->name('CMSLGUprofile.approved');
+        Route::POST('/lguProfile/declined', [MellpiLGUProfileBarangayController::class, 'Declined'])->name('CMSLGUprofile.declined');
+         
 
     });
 
@@ -465,6 +482,9 @@ Route::group(['middleware' => 'auth'], function () {
         //Form 8 Action Sheet
         Route::get('/lguform8Index', [MellpiProForLNFP_form8Controller::class, 'ActionSheetForm8'])->name('lnfpForm8Index');
         Route::get('/lguform8Create', [MellpiProForLNFP_form8Controller::class, 'ActionSheetForm8Create'])->name('lnfpForm8Create');
+        Route::post('/lguform8Store', [MellpiProForLNFP_form8Controller::class, 'storeASForm8'])->name('lnfpForm8Store');
+        Route::get('/lguLnfpDeleteForm8/{id}', [MellpiProForLNFP_form8Controller::class, 'deleteForm8'])->name('deleteForm8');
+        Route::get('/lguLnfpEditForm8/{id}', [MellpiProForLNFP_form8Controller::class, 'ActionSheetForm8Edit'])->name('editForm8');
 
 
     });

@@ -80,6 +80,25 @@ $(function() {
     $('#lnfp-form7-with-id').on('click', function(e) {
         $('#lnfp-form7-edit').submit();
     });
+
+});
+
+$(function() {
+    // Submit LNFP Form 8
+    $('#lnfpForm8-submit').on('click', function(e) {
+        document.getElementsByName('submitStatus').value = 1;
+        var actionSubmit = document.getElementById('action');
+        actionSubmit.value = "submit";
+        $('#lnfp-form8-form').submit();
+    });
+
+    // Draft LNFP Form 8
+    $('#lnfpForm8-draft').on('click', function(e) {
+        document.getElementsByName('DraftStatus').value = 2;
+        var actionDraft = document.getElementById('action');
+        actionDraft.value = "draft";
+        $('#lnfp-form8-form').submit();
+    });
 });
 
 // Submit Edit function Mellpi Pro For LGU
@@ -102,6 +121,10 @@ function myFunctionLNFP_lguprofile(id){
 
 function myFunctionLNFP(id){
     window.location.href = "lguLnfpEdit/"+ id;
+
+}
+function myFunctionLNFP_form8(id){
+    window.location.href = "lguLnfpEditForm8/"+ id;
 
 }
 
@@ -218,6 +241,40 @@ function confirmDeleteLNFP_form5(id){
     // }
 };
 
+
+
+function LNFPopenModal_form8(id) {
+    LNFP_profile_id = id; // Store the ID
+    $('#deleteModal_form8').modal('show'); // Show the modal
+}
+
+function confirmDeleteLNFP_Form8(){
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    // console.log(profileId);
+    if (LNFP_profile_id) { // Check if profileId has been set
+        $.ajax({
+            url: "lguLnfpDeleteForm8/" + LNFP_profile_id, // Ensure the URL is correct
+            type: 'GET',
+            success: function(result) {
+                setTimeout(function() {
+                    window.location.reload(); // Reload the page after a delay
+                }, 2000); // Delay before reload (2 seconds)
+                $('#successAlert').removeClass('d-none').fadeIn(); // Show success alert
+               
+            },
+            error: function(xhr) {
+                alert('Error deleting profile: ' + xhr.responseText);
+            }
+        });
+        $('#deleteModal_form8').modal('hide'); // Hide the modal
+    }
+};
 
  /////
 
@@ -385,3 +442,4 @@ new DataTable('#myTable');
 new DataTable('#form5myTable');
 new DataTable('#LNFP_Profile_myTable');
 new DataTable('#form6Table');
+new DataTable('#form8myTable');

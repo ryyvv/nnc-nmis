@@ -52,6 +52,18 @@
   background-color:#6295A2 ;
   display:absolute
 }
+ 
+.statusDeclined {
+  margin:0px;
+  font-size:14px;
+  border-radius: 3px;
+  font-weight:bold;
+  color:white;
+  padding:5px;
+  background-color:#D95F59 ;
+  display:absolute
+}
+
 .statusApproved {
   margin:0px;
   font-size:14px;

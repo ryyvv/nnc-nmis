@@ -41,7 +41,7 @@
                                     <?php
                                     $currentYear = date('Y');
                                     $startYear = 1900;
-                                    $endYear = $currentYear;
+                                    $endYear = $currentYear-1;
                                     for ($year = $startYear; $year <= $endYear; $year++) {
                                         echo "<option value=\"$year\">$year</option>";
                                     }
@@ -52,23 +52,23 @@
                             <div class="formHeader">
                                 <div class="form-group col-md-6">
                                     <div class="form-group col-md-12">
-                                        <label for="nameOf">Name of PNAO: </label>
+                                        <label for="nameOf">Name of PNAO:<span style="color:red">*</span> </label>
                                         <input class="inputHeader" type="text" name="nameOf" id="nameOf">
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label for="address">address: </label>
+                                        <label for="address">address:<span style="color:red">*</span> </label>
                                         <input class="inputHeader" type="text" name="address" id="address">
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label for="provDep">Province of Deployment: </label>
+                                        <label for="provDep">Province of Deployment:<span style="color:red">*</span> </label>
                                         <input class="inputHeader" type="text" name="provDev" id="provDev">
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label for="numYr">Number of Years PNAO: </label>
-                                        <input class="inputHeader" type="number" name="numYr" id="numYr" placeholder="0">
+                                        <label for="numYr">Number of Years PNAO:<span style="color:red">*</span> </label>
+                                        <input class="inputHeader" type="number" name="numYr" id="numYr" placeholder="0" min="1" max="100">
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label for="fulltime">Full time: </label>
+                                        <label for="fulltime">Full time:<span style="color:red">*</span> </label>
                                         <select class="form-control" name="fulltime" id="fulltime">
                                             <option value="">Select</option>
                                             <option value="Yes">Yes</option>
@@ -76,7 +76,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label for="profAct">With continuing professional Activities?: </label>
+                                        <label for="profAct">With continuing professional Activities?:<span style="color:red">*</span> </label>
                                         <select class="form-control" name="profAct" id="profAct">
                                             <option value="">Select</option>
                                             <option value="Yes">Yes</option>
@@ -86,11 +86,11 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <div class="form-group col-md-12">
-                                        <label for="bday">Birthday: </label>
+                                        <label for="bday">Birthday:<span style="color:red">*</span> </label>
                                         <input class="form-control" type="date" name="bday" id="bday">
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label for="sex">Sex: </label>
+                                        <label for="sex">Sex:<span style="color:red">*</span> </label>
                                         <select class="form-control" name="sex" id="sex">
                                             <option value="">Select</option>
                                             <option value="Male">Male</option>
@@ -98,18 +98,18 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label for="dateDesig">Date of Designation: </label>
+                                        <label for="dateDesig">Date of Designation:<span style="color:red">*</span> </label>
                                         <input class="form-control" type="date" name="dateDesig" id="dateDesig">
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label for="seconded">Seconded from the Office of: </label>
+                                        <label for="seconded">Seconded from the Office of:<span style="color:red">*</span> </label>
                                         <input class="inputHeader" type="text" name="seconded" id="seconded">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label>Capacity development activities attended in the previous year: </label>
+                                <label>Capacity development activities attended in the previous year:<span style="color:red">*</span> </label>
                                 <div class="form-group col-md-12">
                                     <label for="devAct">1</label>
                                     <input class="inputHeader" type="text" id="devAct" name="num1">
