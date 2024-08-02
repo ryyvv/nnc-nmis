@@ -123,6 +123,9 @@
       </li>
 
       <!-- for Resources -->
+      @php 
+        $activeResourcesPages = ['PersonnelDnaDirectoryIndex', 'NutritionOfficesIndex', 'EquipmentInventoryIndex'];
+      @endphp
       <li class="@if ($activePage == 'resources') active @endif">
         <a data-toggle="collapse" href="#Resources">
           <p>
@@ -130,24 +133,24 @@
             <b class="caret"></b>
           </p>
         </a>
-        <div class="collapse " id="Resources">
+        <div class="collapse @if ($namePage == 'MELLPI PRO For LGU Profile' || in_array($activePage, $activeResourcesPages) ) show @endif"  id="Resources">
           <ul class="nav">
-            <li class="@if ($activePage == '') active @endif">
-              <a href="#">
+            <li class="@if ($activePage == 'PersonnelDnaDirectoryIndex') active @endif">
+              <a href="{{ route('personnelDnaDirectoryIndex') }}">
                 <i class="now-ui-icons files_paper"></i>
-                <p> {{ __("Empty") }} </p>
+                <p> {{ __("Personnel DNA Directory") }} </p>
               </a>
             </li>
-            <li class="@if ($activePage == '') active @endif">
-              <a href="#">
+            <li class="@if ($activePage == 'NutritionOfficesIndex') active @endif">
+              <a href="{{ route('nutritionOfficesIndex') }}">
                 <i class="now-ui-icons files_paper"></i>
-                <p> {{ __("Empty") }} </p>
+                <p> {{ __("Nutrition Offices") }} </p>
               </a>
             </li>
-            <li class="@if ($activePage == '') active @endif">
-              <a href="#">
+            <li class="@if ($activePage == 'EquipmentInventoryIndex') active @endif">
+              <a href="{{ route('equipmentInventoryIndex') }}">
                 <i class="now-ui-icons files_paper"></i>
-                <p> {{ __("Empty") }} </p>
+                <p> {{ __("Equipment Inventory") }} </p>
               </a>
             </li>
           </ul>
@@ -240,77 +243,77 @@
 
       <!-- Municipal Officer section -->
       @elseif(auth()->user()->role == 8 )
-      <li class="@if ($activePage == 'dashboard') active @endif">
-        <a href="#">
-          <i class="now-ui-icons users_single-02"></i>
-          <p> {{ __("Dashboard") }} </p>
-        </a>
-      </li>
-      <li>
-        <a data-toggle="collapse" href="#MellpiPro">
-          <p> {{ __("MELLPI Pro for LGU") }}
-            <b class="caret"></b>
-          </p>
-        </a>
-        <div class="collapse " id="MellpiPro">
-          <ul class="nav">
-            <li class="@if ($activePage == 'LGUPROFILE') active @endif">
-              <a href="#">
+        <li class="@if ($activePage == 'dashboard') active @endif">
+          <a href="#">
+            <i class="now-ui-icons users_single-02"></i>
+            <p> {{ __("Dashboard") }} </p>
+          </a>
+        </li>
+        <li>
+          <a data-toggle="collapse" href="#MellpiPro">
+            <p> {{ __("MELLPI Pro for LGU") }}
+              <b class="caret"></b>
+            </p>
+          </a>
+          <div class="collapse " id="MellpiPro">
+            <ul class="nav">
+              <li class="@if ($activePage == 'LGUPROFILE') active @endif">
+                <a href="#">
 
-                <p> <i class="now-ui-icons files_paper"></i>{{ __("LGU PROFILE") }} </p>
-              </a>
-            </li>
-            <li class="@if ($activePage == 'VISION') active @endif">
-              <a href="#">
-                <i class="now-ui-icons files_paper"></i>
-                <p> {{ __("vision mission") }} </p>
-              </a>
-            </li>
-            <li class="@if ($activePage == 'NutritionPolicies') active @endif">
-              <a href="#">
-                <i class="now-ui-icons files_paper"></i>
-                <p> {{ __("Nutrition policies") }} </p>
-              </a>
-            </li>
-            <li class="@if ($activePage == 'Governance') active @endif">
-              <a href="#">
-                <i class="now-ui-icons files_paper"></i>
-                <p> {{ __("Governance") }} </p>
-              </a>
-            </li>
-            <li class="@if ($activePage == 'LNCManagement') active @endif">
-              <a href="#">
-                <i class="now-ui-icons files_paper"></i>
-                <p> {{ __("LNC Management") }} </p>
-              </a>
-            </li>
-            <li class="@if ($activePage == 'nutritionservice') active @endif">
-              <a href="#">
-                <i class="now-ui-icons files_paper"></i>
-                <p> {{ __("nutrition service") }} </p>
-              </a>
-            </li>
-            <li class="@if ($activePage == 'changeNS') active @endif">
-              <a href="#">
-                <i class="now-ui-icons files_paper"></i>
-                <p> {{ __("Change in NS") }} </p>
-              </a>
-            </li>
-            <li class="@if ($activePage == 'discussionquestion') active @endif">
-              <a href="#">
-                <i class="now-ui-icons files_paper"></i>
-                <p> {{ __("Discussion Question") }} </p>
-              </a>
-            </li>
-            <li class="@if ($activePage == 'budgetAIP') active @endif">
-              <a href="#  ">
-                <i class="now-ui-icons files_paper"></i>
-                <p> {{ __("Budget (AIP)") }} </p>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </li>
+                  <p> <i class="now-ui-icons files_paper"></i>{{ __("LGU PROFILE") }} </p>
+                </a>
+              </li>
+              <li class="@if ($activePage == 'VISION') active @endif">
+                <a href="#">
+                  <i class="now-ui-icons files_paper"></i>
+                  <p> {{ __("vision mission") }} </p>
+                </a>
+              </li>
+              <li class="@if ($activePage == 'NutritionPolicies') active @endif">
+                <a href="#">
+                  <i class="now-ui-icons files_paper"></i>
+                  <p> {{ __("Nutrition policies") }} </p>
+                </a>
+              </li>
+              <li class="@if ($activePage == 'Governance') active @endif">
+                <a href="#">
+                  <i class="now-ui-icons files_paper"></i>
+                  <p> {{ __("Governance") }} </p>
+                </a>
+              </li>
+              <li class="@if ($activePage == 'LNCManagement') active @endif">
+                <a href="#">
+                  <i class="now-ui-icons files_paper"></i>
+                  <p> {{ __("LNC Management") }} </p>
+                </a>
+              </li>
+              <li class="@if ($activePage == 'nutritionservice') active @endif">
+                <a href="#">
+                  <i class="now-ui-icons files_paper"></i>
+                  <p> {{ __("nutrition service") }} </p>
+                </a>
+              </li>
+              <li class="@if ($activePage == 'changeNS') active @endif">
+                <a href="#">
+                  <i class="now-ui-icons files_paper"></i>
+                  <p> {{ __("Change in NS") }} </p>
+                </a>
+              </li>
+              <li class="@if ($activePage == 'discussionquestion') active @endif">
+                <a href="#">
+                  <i class="now-ui-icons files_paper"></i>
+                  <p> {{ __("Discussion Question") }} </p>
+                </a>
+              </li>
+              <li class="@if ($activePage == 'budgetAIP') active @endif">
+                <a href="#  ">
+                  <i class="now-ui-icons files_paper"></i>
+                  <p> {{ __("Budget (AIP)") }} </p>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
 
        <!-- Municipal Staff section -->
       @elseif(auth()->user()->role == 9 )
@@ -321,17 +324,19 @@
         </a>
       </li>
 
+      @php 
+        $activeLGUPages = ['VISION', 'NutritionPolicies', 'Governance', 'LNCManagement', 'nutritionservice', 'changeNS', 'discussionquestion', 'budgetAIP'];
+      @endphp
       <li>
         <a data-toggle="collapse" href="#MellpiPro">
           <p> {{ __("MELLPI Pro for LGU") }}
             <b class="caret"></b>
           </p>
         </a>
-        <div class="collapse " id="MellpiPro">
+        <div class="collapse @if ($namePage == 'MELLPI PRO For LGU Profile' || in_array($activePage, $activeLGUPages) ) show @endif"" id="MellpiPro">
           <ul class="nav">
-          <li class="@if ($activePage == 'REPORT') active @endif">
-              <a href="#">
-
+          <li class="@if ($activePage == 'LGUReport') active @endif">
+              <a href="{{route('CMSLGUprofile.report')}}">
                 <p> <i class="now-ui-icons files_paper"></i>{{ __("LGU Report") }} </p>
               </a>
             </li>
@@ -474,7 +479,7 @@
 
 
       @php 
-        $activeLNFPPages = ['mellpi_pro_form5', 'mellpi_pro_form6', 'mellpi_pro_form8'];
+        $activeLNFPPages = ['mellpi_pro_form5', 'mellpi_pro_form6', 'mellpi_pro_form8', 'mellpi_pro_interview'];
       @endphp
       <li>
         <a data-toggle="collapse" href="#MellpiProLNFP">
@@ -509,8 +514,8 @@
                 <p> {{ __("FORM 8") }} </p>
               </a>
             </li>
-            <li class="@if ($activePage == 'mellpi_pro_summary1b') active @endif">
-              <a href="#">
+            <li class="@if ($activePage == 'mellpi_pro_interview') active @endif">
+              <a href="{{ route('lnfpFormInterviewIndex') }}">
                 <i class="now-ui-icons files_paper"></i>
                 <p> {{ __("INTERVIEW") }} </p>
               </a>

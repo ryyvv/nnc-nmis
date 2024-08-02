@@ -54,7 +54,7 @@
                                 <td>{{$lguProfile->periodCovereda}}</td>
                                 <td>
                                     @if( $lguProfile->status == 0 )
-                                    <span class="statusApproved cursor" title="Added to LGU Report">APPROVED</span>
+                                    <span class="statusApproved cursor" title="Added to LGU Report">APPROVED</span> 
                                     @elseif( $lguProfile->status == 1 )
                                     <span class="statusPending cursor" title="For Review">PENDING</span>
                                     @elseif( $lguProfile->status == 2 )
@@ -86,9 +86,7 @@
                                         </li>
                                     </ul>
                                 </td>
-                             
-
-
+                              
                             </tr>
                             <?php $num++; ?>
                             @endforeach

@@ -141,3 +141,29 @@ thead th {
     border-right: none;
     background-color: transparent;
 }
+.interviewForm {
+    outline: none;
+    width: 100%;
+    border: none;
+    background-color: transparent;
+}
+.interviewForms {
+    outline: none;
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    text-align: center;
+}
+.interviewFormsnum {
+    text-align: center;
+}
+.interviewFormSub {
+    outline: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    background-color: transparent;
+}
+#subASTot {
+    font-weight: bold;
+}

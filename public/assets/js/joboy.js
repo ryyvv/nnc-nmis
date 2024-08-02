@@ -100,6 +100,59 @@ $(function() {
         $('#lnfp-form8-form').submit();
     });
 });
+$(function() {
+    // Submit LNFP Form 8
+    $('#lnfpForm8-submit-with-id').on('click', function(e) {
+        document.getElementsByName('submitStatus').value = 1;
+        var actionSubmit = document.getElementById('action');
+        actionSubmit.value = "submit";
+        $('#lnfp-form8-form').submit();
+    });
+
+    // Draft LNFP Form 8
+    $('#lnfpForm8-draft-with-id').on('click', function(e) {
+        document.getElementsByName('DraftStatus').value = 2;
+        var actionDraft = document.getElementById('action');
+        actionDraft.value = "draft";
+        $('#lnfp-form8-form').submit();
+    });
+});
+
+$(function() {
+    // Submit LNFP Interview Form
+    $('#lnfpInterviewForm-submit').on('click', function(e) {
+        document.getElementsByName('submitStatus').value = 1;
+        var actionSubmit = document.getElementById('action');
+        actionSubmit.value = "submit";
+        $('#lnfp-interview-form').submit();
+    });
+
+    // Draft LNFP Interview Form
+    $('#lnfpInterviewForm-draft').on('click', function(e) {
+        document.getElementsByName('DraftStatus').value = 2;
+        var actionDraft = document.getElementById('action');
+        actionDraft.value = "draft";
+        $('#lnfp-interview-form').submit();
+    });
+});
+
+$(function() {
+    // Submit LNFP Interview Form
+    $('#lnfpInterviewForm-submit').on('click', function(e) {
+        document.getElementsByName('submitStatus').value = 1;
+        var actionSubmit = document.getElementById('action');
+        actionSubmit.value = "submit";
+        $('#lnfp-interview-form').submit();
+    });
+
+    // Draft LNFP Interview Form
+    $('#lnfpInterviewForm-draft').on('click', function(e) {
+        document.getElementsByName('DraftStatus').value = 2;
+        var actionDraft = document.getElementById('action');
+        actionDraft.value = "draft";
+        $('#lnfp-interview-form').submit();
+    });
+});
 
 // Submit Edit function Mellpi Pro For LGU
 function myFunction(id, url, action){
@@ -125,6 +178,19 @@ function myFunctionLNFP(id){
 }
 function myFunctionLNFP_form8(id){
     window.location.href = "lguLnfpEditForm8/"+ id;
+
+}
+function LNFPmyFunction_form8(id){
+    window.location.href = "lguLnfpEditForm8/"+ id;
+
+}
+
+function myFunctionLNFP_InterviewForm(id){
+    window.location.href = "lguLnfpEditInterview/"+ id;
+
+}
+function LNFPmyFunction_InterviewForm(id){
+    window.location.href = "lguLnfpEditInterview/"+ id;
 
 }
 
@@ -273,6 +339,41 @@ function confirmDeleteLNFP_Form8(){
             }
         });
         $('#deleteModal_form8').modal('hide'); // Hide the modal
+    }
+};
+
+
+
+function LNFPopenModal_InterviewForm(id) {
+    LNFP_profile_id = id; // Store the ID
+    $('#deleteModal_InterviewForm').modal('show'); // Show the modal
+}
+
+function confirmDeleteLNFP_IntForm(){
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    // console.log(profileId);
+    if (LNFP_profile_id) { // Check if profileId has been set
+        $.ajax({
+            url: "lguLnfpDeleteInterview/" + LNFP_profile_id, // Ensure the URL is correct
+            type: 'GET',
+            success: function(result) {
+                setTimeout(function() {
+                    window.location.reload(); // Reload the page after a delay
+                }, 2000); // Delay before reload (2 seconds)
+                $('#successAlert').removeClass('d-none').fadeIn(); // Show success alert
+               
+            },
+            error: function(xhr) {
+                alert('Error deleting profile: ' + xhr.responseText);
+            }
+        });
+        $('#deleteModal_InterviewForm').modal('hide'); // Hide the modal
     }
 };
 
@@ -443,3 +544,4 @@ new DataTable('#form5myTable');
 new DataTable('#LNFP_Profile_myTable');
 new DataTable('#form6Table');
 new DataTable('#form8myTable');
+new DataTable('#InterviewFormmyTable');

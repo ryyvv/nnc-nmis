@@ -727,10 +727,10 @@
                             <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
                                 <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
                                 <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalDraft">
-                                    Draft
+                                    Save as Draft
                                 </button>
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalSubmit">
-                                    Submit
+                                    Save and Submit
                                 </button>
                                 <!-- <button type="submit" name="action" value="submit" class="btn btn-primary">Submit</button> -->
                             </div>

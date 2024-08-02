@@ -40,5 +40,24 @@
     text-align: center;
 }
 .text-center {
+    text-align:  center; 
+}
+.center {
     text-align: center; 
 }
+
+.table2ndth {
+    font-size:15px!important;
+    text-align:center!important;
+    color:gray!important;
+    padding:8px
+}
+
+.table2ndtd {
+    font-size:15px!important;
+    text-align:center!important;
+    color:black!important;
+    padding:8px
+}
+
+

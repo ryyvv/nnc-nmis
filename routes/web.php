@@ -63,6 +63,7 @@ use App\Http\Controllers\BarangayScholar\MellpiProForLNFP_barangayController;
 use App\Http\Controllers\BarangayScholar\MellpiProForLNFP_barangayLGUController;
 use App\Http\Controllers\BarangayScholar\MellpiProForLNFP_form6Controller;
 use App\Http\Controllers\BarangayScholar\MellpiProForLNFP_form8Controller;
+use App\Http\Controllers\BarangayScholar\MellpiProForLNFP_InterviewController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\FormSubmissionController;
 use Faker\Guesser\Name;
@@ -334,6 +335,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('CMSdashboard.index');
 
         //LGUProfileController
+        Route::get('/lguProfile/fetchreport', [MellpiLGUProfileBarangayController::class, 'fetchReport'])->name('CMSLGUprofile.fetch');
+        Route::get('/lguProfile/report', [MellpiLGUProfileBarangayController::class, 'report'])->name('CMSLGUprofile.report');
         Route::get('/lguProfile', [MellpiLGUProfileBarangayController::class, 'index'])->name('CMSLGUprofile.index');
         Route::get('/lguProfile/{id}/show', [MellpiLGUProfileBarangayController::class, 'show'])->name('CMSLGUprofile.show');
         //   Route::POST('/lguprofile', [BSLGUprofileController::class, 'storeSubmit'])->name('BSLGUprofilest.storeSubmit');
@@ -343,7 +346,8 @@ Route::group(['middleware' => 'auth'], function () {
         //   Route::get('/lguprofile/{id}/delete', [BSLGUprofileController::class, 'destroy'])->name('BSLGUprofile.destroy');  
           //LGU Profile Downloadable
         //   Route::POST('/lguprofile/{id}/download-pdf',[BSLGUprofileController::class , 'downloads'])->name('BSLGUprofile.download');z
-        Route::POST('/lguProfile/approved', [MellpiLGUProfileBarangayController::class, 'Approved'])->name('CMSLGUprofile.approved');
+        //Route::POST('/lguProfile/approved', [MellpiLGUProfileBarangayController::class, 'Approved'])->name('CMSLGUprofile.approved');
+        Route::POST('/lguProfile/approved', [MellpiLGUProfileBarangayController::class, 'approvedReport'])->name('CMSLGUprofile.approved');
         Route::POST('/lguProfile/declined', [MellpiLGUProfileBarangayController::class, 'Declined'])->name('CMSLGUprofile.declined');
          
 
@@ -485,13 +489,18 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/lguform8Store', [MellpiProForLNFP_form8Controller::class, 'storeASForm8'])->name('lnfpForm8Store');
         Route::get('/lguLnfpDeleteForm8/{id}', [MellpiProForLNFP_form8Controller::class, 'deleteForm8'])->name('deleteForm8');
         Route::get('/lguLnfpEditForm8/{id}', [MellpiProForLNFP_form8Controller::class, 'ActionSheetForm8Edit'])->name('editForm8');
-
+        Route::post('/lguLnfpUpdateForm8/{id}', [MellpiProForLNFP_form8Controller::class, 'storeUpdateASForm8'])->name('MellpiProForLNFPUpdate.storeUpdateASForm8');
+        //Interview Form
+        Route::get('/lguformInterviewIndex', [MellpiProForLNFP_InterviewController::class, 'InterviewFormLNFP'])->name('lnfpFormInterviewIndex');
+        Route::get('/lguformInterviewCreate', [MellpiProForLNFP_InterviewController::class, 'InterviewFormLNFPCreate'])->name('lnfpFormInterviewCreate');
+        Route::post('/lguLnfpInterviewStore', [MellpiProForLNFP_InterviewController::class, 'storeInterviewForm'])->name('lnfpInterviewStore');
+        Route::get('/lguLnfpDeleteInterview/{id}', [MellpiProForLNFP_InterviewController::class, 'deleteIntForm'])->name('deleteIntForm');
+        Route::get('/lguLnfpEditInterview/{id}', [MellpiProForLNFP_InterviewController::class, 'InterviewFormLNFPEdit'])->name('editIntForm');
 
     });
 
     Route::prefix('PublicUser')->middleware(['auth', 'PublicUser'])->group(function () {
         // userProfile and history download only
-
         //AdminUserController
         // Route::get('/admin', [AdminUserController::class, 'index'])->name('COadmin.index');
         // Route::POST('/admin', [AdminUserController::class, 'store'])->name('COadmin.store');

@@ -582,6 +582,49 @@ function toggleReadonly() {
 //     })
 // }
 
+function interviewSubTotal() {
+    const as1 = parseInt(document.getElementById('actualScore1').value, 10);
+    const as2 = parseInt(document.getElementById('actualScore2').value, 10);;
+    const as3 = parseInt(document.getElementById('actualScore3').value, 10);;
+    const as4 = parseInt(document.getElementById('actualScore4').value, 10);;
+
+    const sum = as1 + as2 + as3 + as4;
+
+    document.getElementById('subASTot').value = sum;
+
+    console.log(sum);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('actualScore1').addEventListener('change', interviewSubTotal);
+    document.getElementById('actualScore2').addEventListener('change', interviewSubTotal);
+    document.getElementById('actualScore3').addEventListener('change', interviewSubTotal);
+    document.getElementById('actualScore4').addEventListener('change', interviewSubTotal);
+
+    interviewSubTotal();
+});
 
 
 
+function AsSubTotal() {
+    const as1 = document.getElementById("actualScore1").value;
+    const as2 = document.getElementById("actualScore2").value;
+    const as3 = document.getElementById("actualScore3").value;
+    const as4 = document.getElementById("actualScore4").value;
+
+    const as1_num = parseFloat(as1);
+    const as2_num = parseFloat(as2);
+    const as3_num = parseFloat(as3);
+    const as4_num = parseFloat(as4);
+  
+
+    if (!isNaN(as1_num) && !isNaN(as2_num) && !isNaN(as3_num) && !isNaN(as4_num)) {
+        const sum = as1_num + as2_num + as3_num + as4_num;
+        // const difference = sum - inputHBNonF_num;
+
+        var total = document.getElementById("subASTot").value = sum;
+        console.log("total:",total);
+    } else {
+        document.getElementById("subASTot").value = '';
+    }
+}

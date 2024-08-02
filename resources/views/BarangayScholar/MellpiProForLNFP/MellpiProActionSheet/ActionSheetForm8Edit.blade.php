@@ -21,8 +21,11 @@
                     </div>
                     @endif
 
+                    <!-- alert -->
+                    @include('layouts.page_template.crud_alert_message')
+
                     <div>
-                        <form action="{{ route('lnfpForm8Store') }}" method="post" id="lnfp-form8-form">
+                        <form action="{{ route('MellpiProForLNFPUpdate.storeUpdateASForm8', $form8->id) }}" method="post" id="lnfp-form8-form">
                             @csrf
 
                             @if ($form8)
@@ -30,7 +33,7 @@
                             <center><img src="https://nnc-nmis.moodlearners.com/assets/img/logo.png" alt="" class="imgLogo"></center><br>
                             <center>
                                 <h5 class="title">{{__("MELLPI PRO FORM 8a: ACTION SHEET TO IMPROVE PERFORMANCE")}}</h5>
-                                <label for="period">For the period: </label>
+                                <label for="period">For the period:<span style="color:red">*</span> </label>
                                 <select name="forTheperiod" id="forTheperiod" class="inputHeaderPeriod">
                                     <option selected>{{ $form8->forThePeriod }}</option>
                                     <?php
@@ -41,8 +44,10 @@
                                         echo "<option value=\"$year\">$year</option>";
                                     }
                                     ?>
-                                    
                                 </select>
+                                @error('forTheperiod')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </center><br>
                             <input type="hidden" name="submitStatus" value="1">
                             <input type="hidden" name="DraftStatus" value="2">
@@ -52,18 +57,27 @@
                             <div class="formHeader">
                                 <div class="form-group col-md-6">
                                     <div class="form-group col-md-12">
-                                        <label for="nameOf">Name of PNAO: </label>
+                                        <label for="nameOf">Name of PNAO:<span style="color:red">*</span> </label>
                                         <input class="inputHeader" type="text" name="nameOf" id="nameOf" value="{{ $form8->nameOfPnao }}">
+                                        @error('nameOf')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label for="address">Area of Assignment: </label>
+                                        <label for="address">Area of Assignment:<span style="color:red">*</span> </label>
                                         <input class="inputHeader" type="text" name="areaAssign" id="areaAssign" value="{{ $form8->areaOfAssign }}">
+                                        @error('areaAssign')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <div class="form-group col-md-12">
-                                        <label for="bday">Date of Monitoring: </label>
+                                        <label for="bday">Date of Monitoring:<span style="color:red">*</span> </label>
                                         <input class="form-control" type="date" name="dateMonitor" id="dateMonitor" value="{{ $form8->dateMonitor }}">
+                                        @error('dateMonitor')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -146,19 +160,46 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td class="col-md-4"><input type="text" class="form8InputB" name="nameTM1" value="{{ $form8->nameTM1 }}"></td>
-                                                <td class="col-md-4"><input type="text" class="form8InputB" name="desigOffice1" value="{{ $form8->desigOffice1 }}"></td>
-                                                <td class="col-md-4"><input type="file" class="form8InputB" name="sigDate1" value="{{ $form8->sigDate1 }}"></td>
+                                                <td class="col-md-4"><input type="text" class="form8InputB" name="nameTM1" value="{{ $form8->nameTM1 }}">
+                                                @error('nameTM1')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror</td>
+                                                <td class="col-md-4"><input type="text" class="form8InputB" name="desigOffice1" value="{{ $form8->desigOffice1 }}">
+                                                @error('desigOffice1')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror</td>
+                                                <td class="col-md-4"><input type="file" class="form8InputB" name="sigDate1" value="{{ $form8->sigDate1 }}"><img src="{{ Storage::url($form8->sigDate1) }}" alt="Sig Date 1" style="width: 200px; height: 150px;">
+                                                @error('sigDate1')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror</td>
                                             </tr>
                                             <tr>
-                                                <td class="col-md-4"><input type="text" class="form8InputB" name="nameTM2" value="{{ $form8->nameTM2 }}"></td>
-                                                <td class="col-md-4"><input type="text" class="form8InputB" name="desigOffice2" value="{{ $form8->desigOffice2 }}"></td>
-                                                <td class="col-md-4"><input type="file" class="form8InputB" name="sigDate2" value="{{ $form8->sigDate2 }}"></td>
+                                                <td class="col-md-4"><input type="text" class="form8InputB" name="nameTM2" value="{{ $form8->nameTM2 }}">
+                                                @error('nameTM2')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror</td>
+                                                <td class="col-md-4"><input type="text" class="form8InputB" name="desigOffice2" value="{{ $form8->desigOffice2 }}">
+                                                @error('desigOffice2')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror</td>
+                                                <td class="col-md-4"><input type="file" class="form8InputB" name="sigDate2" value="{{ $form8->sigDate2 }}"><img src="{{ Storage::url($form8->sigDate2) }}" alt="Sig Date 2" style="width: 200px; height: 150px;">
+                                                @error('sigDate2')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror</td>
                                             </tr>
                                             <tr>
-                                                <td class="col-md-4"><input type="text" class="form8InputB" name="nameTM3" value="{{ $form8->nameTM3 }}"></td>
-                                                <td class="col-md-4"><input type="text" class="form8InputB" name="desigOffice3" value="{{ $form8->desigOffice3 }}"></td>
-                                                <td class="col-md-4"><input type="file" class="form8InputB" name="sigDate3" value="{{ $form8->sigDate3 }}"></td>
+                                                <td class="col-md-4"><input type="text" class="form8InputB" name="nameTM3" value="{{ $form8->nameTM3 }}">
+                                                @error('nameTM3')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror</td>
+                                                <td class="col-md-4"><input type="text" class="form8InputB" name="desigOffice3" value="{{ $form8->desigOffice3 }}">
+                                                @error('desigOffice3')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror</td>
+                                                <td class="col-md-4"><input type="file" class="form8InputB" name="sigDate3" value="{{ $form8->sigDate3 }}"><img src="{{ Storage::url($form8->sigDate3) }}" alt="Sig Date 3" style="width: 200px; height: 150px;">
+                                                @error('sigDate3')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror</td>
                                             </tr>
                                             <!-- <tr>
                                                 <td class="col-md-4"><input type="text" class="form8InputB" name="nameTM4"></td>
@@ -178,10 +219,13 @@
                                             <input type="date" name="whatDate" id="whatDate" class="form8InputBot" value="{{ $form8->whatDate }}">
                                         </div>
                                     </div>
+                                    
+                                    @if ($form8->status != 1)
                                     <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
-                                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalDraft">Draft</button>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalSubmit">Submit</button>
+                                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalDraft">Save as Draft</button>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalSubmit">Save and Submit</button>
                                     </div>
+                                    @endif
                                 </div>
                             </div>
                             <div class="modal fade" id="exampleModalSubmit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -198,7 +242,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                            <button type="submit" id="lnfpForm8-submit" class="btn btn-primary" name="action" value="submit">Yes</button>
+                                            <button type="submit" id="lnfpForm8-submit-with-id" class="btn btn-primary" name="action" value="submit">Yes</button>
                                         </div>
                                     </div>
                                 </div>
@@ -217,7 +261,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                            <button type="submit" id="lgu-form8-dra" class="btn btn-primary" name="action" value="draft">Yes</button>
+                                            <button type="submit" id="lgu-form8-draft-with-id" class="btn btn-primary" name="action" value="draft">Yes</button>
                                         </div>
                                     </div>
                                 </div>

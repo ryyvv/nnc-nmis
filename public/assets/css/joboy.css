@@ -41,6 +41,16 @@
   background-color:#e7b14b;
   display:absolute
 }
+.statusNA {
+  margin:0px;
+  font-size:14px;
+  border-radius: 3px;
+  font-weight:bold;
+  color:white;
+  padding:5px;
+  background-color:gray;
+  display:absolute
+}
 
 .statusDraft {
   margin:0px;
