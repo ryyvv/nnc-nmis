@@ -5,7 +5,7 @@ namespace App\Http\Controllers\CityMunicipalStaff;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\LguProfile;
-
+use Yajra\DataTables\DataTables;
 use App\Models\barangaytracking;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\LocationController;
@@ -18,8 +18,76 @@ class MellpiLGUProfileBarangayController  extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
+    public function report() {
+        $location = new LocationController;
+        $prov = $location->getLocationDataProvince(auth()->user()->Region);
+        $mun = $location->getLocationDataMuni(auth()->user()->Province);
+        $city = $location->getLocationDataCity(auth()->user()->Region);
+        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+
+        $barangay = auth()->user()->barangay;
+        $lguProfile = DB::table('lguprofilebarangay')->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();
+
+        // get Municipal id and user id 
+       
+        $data  = DB::table('municipals')
+            ->join('lguprofilebarangay', 'municipals.id', '=', 'lguprofilebarangay.municipal_id')
+            ->where('lguprofilebarangay.status', 1) 
+            ->get();
+
+        return view('CityMunicipalStaff.LGUReport', ['data' => $data]);
+        
+    }
+
+
+    public function fetchReport() {
+        $location = new LocationController;
+        $prov = $location->getLocationDataProvince(auth()->user()->Region);
+        $mun = $location->getLocationDataMuni(auth()->user()->Province);
+        $city = $location->getLocationDataCity(auth()->user()->Region);
+        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+
+        $barangay = auth()->user()->barangay;
+        $lguProfile = DB::table('lguprofilebarangay')->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();
+
+       
+        // $data  = DB::table('municipals')
+        //     ->join('lguprofilebarangay', 'municipals.id', '=', 'lguprofilebarangay.municipal_id')
+        //     ->join('barangays', 'lguprofilebarangay.barangay_id', '=', 'barangays.id')
+        //     ->where('lguprofilebarangay.status', 1) 
+        //     ->select('lguprofilebarangay.*', 'barangays.barangay as barangay')
+        //     ->get();
+
+            // $data  = DB::table('lgubarangayreport')
+            // ->join('lguprofilebarangay', 'lgubarangayreport.lguprofilebarangay_id', '=', 'lguprofilebarangay.id') //lgu
+            // ->join('mplgubrgyvisionmissions', 'lgubarangayreport.mplgubrgyvisionmissions_id', '=', 'mplgubrgyvisionmissions.id')  //visionmission
+            // ->join('mellpiprobarangaynationalpolicies', 'lgubarangayreport.mellpiprobarangaynationalpolicies_id', '=', 'mellpiprobarangaynationalpolicies.id') //nutritionpolicies
+            // ->join('mplgubrgygovernance', 'lgubarangayreport.mplgubrgygovernance_id', '=', 'mplgubrgygovernance.id') //governance
+            // ->join('mplgubrgylncmanagement', 'lgubarangayreport.mplgubrgylncmanagement_id', '=', 'mplgubrgylncmanagement.id') //LNC
+            // ->join('mplgubrgynutritionservice', 'lgubarangayreport.mplgubrgynutritionservice_id', '=', 'mplgubrgynutritionservice.id') //Nutrition Service
+            // ->join('mplgubrgychangeNS', 'lgubarangayreport.mplgubrgychangeNS_id', '=', 'mplgubrgychangeNS.id') //Change in Nutrition Service
+            // ->join('mplgubrgydiscussionquestion', 'lgubarangayreport.mplgubrgydiscussionquestion_id', '=', 'mplgubrgydiscussionquestion.id') //Change in Nutrition Service
+            // ->join('users', 'lgubarangayreport.user_id', '=', 'users.id') //Change in Nutrition Service
+            // ->join('barangays', 'lgubarangayreport.barangay_id', '=', 'barangays.id')
+            // ->where('lguprofilebarangay.status', 2) 
+            // ->select('lguprofilebarangay.*', 'mplgubrgyvisionmissions.*','mellpiprobarangaynationalpolicies.*','mplgubrgygovernance.*','mplgubrgylncmanagement.*','mplgubrgynutritionservice.*','mplgubrgychangeNS.*','mplgubrgydiscussionquestion.*','lgubarangayreport.*','users.*','barangays.barangay as barangay')
+            // ->get();
+
+            $data  = DB::table('lgubarangayreport')
+            ->join('lguprofilebarangay', 'lgubarangayreport.lguprofilebarangay_id', '=', 'lguprofilebarangay.id') //lgu
+            ->join('barangays', 'lgubarangayreport.barangay_id', '=', 'barangays.id')
+            ->where('lgubarangayreport.status', 1) 
+            ->select('lgubarangayreport.*','lgubarangayreport.status as LGUReportStatus',
+                    'lguprofilebarangay.*','lguprofilebarangay.status as LGUprofileBarangayStatus',
+                    'barangays.barangay as barangay')
+            ->get();
+
+
+            return response()->json(['data' => $data]);
+
+    }
+
+    public function index() {
         $location = new LocationController;
         $prov = $location->getLocationDataProvince(auth()->user()->Region);
         $mun = $location->getLocationDataMuni(auth()->user()->Province);
@@ -42,8 +110,7 @@ class MellpiLGUProfileBarangayController  extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
+    public function create() {
         $action = 'create';
         $location = new LocationController;
         $prov = $location->getLocationDataProvince(auth()->user()->Region);
@@ -52,15 +119,13 @@ class MellpiLGUProfileBarangayController  extends Controller
         $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
         
         $years = range(date("Y"), 1900);
-
         return view('BarangayScholar.lguprofile.create', compact('prov', 'mun', 'city', 'brgy','years', 'action'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $rules = [
             'dateMonitoring' => 'required|date|max:255',
             'periodCovereda' => 'required|string|max:255',
@@ -264,7 +329,6 @@ class MellpiLGUProfileBarangayController  extends Controller
             'province_id' => 'required',
             'region_id' => 'required',
             'user_id' => 'required',
-    
         ]; 
 
        
@@ -758,13 +822,13 @@ class MellpiLGUProfileBarangayController  extends Controller
       ]; 
 
      
-  $message = [ 
+    $message = [ 
       'required' => 'The field is required.',
       'integer' => 'The field is number.',
       'string' => 'The field must be a string.',
       'date' => 'The field must be a valid date.',
       'max' => 'The field may not be greater than :max characters.',
-  ]; 
+    ]; 
 
       $validator = Validator::make($request->all() , $rules,$message);
 
@@ -989,7 +1053,7 @@ class MellpiLGUProfileBarangayController  extends Controller
       return redirect('BarangayScholar/lguprofile')->with('success', 'Data updated successfullySuccessfully!');
   }
 
-  public function destroy(Request $request, $id ) {
+ public function destroy(Request $request, $id ) {
       
       DB::table('barangaytracking')->where('lguprofilebarangay_id', $request->id)->delete();
       $lguprofile = LguProfile::find($id); 
@@ -997,10 +1061,10 @@ class MellpiLGUProfileBarangayController  extends Controller
      
 
       return redirect()->route('CMSLGUprofile.index')->with('success', 'Data updated Successfully!');
-  }
+ }
   
 
-  public function Approved(Request $request ) {
+ public function Approved(Request $request ) {
     //dd($request->id);
    
     $lguprofile = LguProfile::find($request->id); 
@@ -1011,23 +1075,71 @@ class MellpiLGUProfileBarangayController  extends Controller
     }
   
     return redirect()->route('CMSLGUprofile.index')->with('success', 'Data updated Successfully!');
-}
+ }
 
-public function Declined(Request $request ) {
-    //dd($request->id);  
+ public function approvedReport(Request $request) {
+    //dd($request->id); 
 
-    $lguprofile = LguProfile::find($request->id); 
-
-    if($lguprofile){
-        $lguprofile->update(['status' => '3']);
-        DB::table('barangaytracking')->where('lguprofilebarangay_id', $lguprofile->id)->update(['status' => '3']);
-       } 
+    // Check if the record exists using the ID from the request
+    $record =  DB::table('lgubarangayreport') 
+                        ->where('dateMonitoring', $request->dateMonitoring)
+                        ->where('periodCovereda', $request->periodCovereda)
+                        ->where('barangay_id', $request->barangay_id)
+                        ->where('municipal_id', $request->municipal_id)
+                        ->first();
+  
+     $dataLGU = LguProfile::find($request->id); 
+     //dd($dataLGU); 
      
+
+    if ($record) {
+        DB::table('lgubarangayreport')
+        ->where('id', $request->id)
+        ->update([
+            'lguprofilebarangay_id' => $dataLGU['id'],
+            'lguapproveddate' => $dataLGU['updated_at'], 
+        ]);
+
+        $dataLGU->update(['status' => '0']);
+        DB::table('barangaytracking')->where('lguprofilebarangay_id', $dataLGU->id)->update(['status' => '0']);
+
+    } else {
+        // Create a new record if none exists foir LGU form only
+        DB::table('lgubarangayreport')->insert([ 
+            'dateMonitoring' => $dataLGU['dateMonitoring'],
+            'periodCovereda' => $dataLGU['periodCovereda'],
+            'barangay_id' => $dataLGU['barangay_id'], 
+            'municipal_id' => $dataLGU['municipal_id'], 
+            'lguprofilebarangay_id' =>  $dataLGU['id'],
+            'lguapproveddate' => $dataLGU['updated_at'], 
+            'user_id' => $dataLGU['user_id'],   
+            'status' => $dataLGU['status'],   
+            'count' => 1,  
+        ]);
+        $dataLGU->update(['status' => '0']);
+        DB::table('barangaytracking')->where('lguprofilebarangay_id', $dataLGU->id)->update(['status' => '0']);
+    }
+  
+ 
     return redirect()->route('CMSLGUprofile.index')->with('success', 'Data updated Successfully!');
 }
 
 
-  public function downloads(Request $request ) { 
+ public function Declined(Request $request ) {
+        //dd($request->id);  
+
+        $lguprofile = LguProfile::find($request->id); 
+
+        if($lguprofile){
+            $lguprofile->update(['status' => '3']);
+            DB::table('barangaytracking')->where('lguprofilebarangay_id', $lguprofile->id)->update(['status' => '3']);
+        } 
+        
+        return redirect()->route('CMSLGUprofile.index')->with('success', 'Data updated Successfully!');
+ }
+
+
+ public function downloads(Request $request ) { 
       
       $htmlContent = $request->input('htmlContent');
       //dd($htmlContent);
@@ -1042,5 +1154,5 @@ public function Declined(Request $request ) {
       return response($pdfContent, 200)
       ->header('Content-Type', 'application/pdf')
       ->header('Content-Disposition', 'attachment; filename="document.pdf"');
-  }
+ }
 }
