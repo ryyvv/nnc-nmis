@@ -8,6 +8,8 @@ use App\Models\lnfp_form8;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+// use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class MellpiProForLNFP_form8Controller extends Controller
 {
@@ -221,12 +223,13 @@ class MellpiProForLNFP_form8Controller extends Controller
             }
         }
     }
-    public function storeUpdateASForm8(Request $request)
+    public function storeUpdateASForm8(Request $request, $id)
     {
         $action = $request->input('action');
         // dd($action);
         if ($action == 'submit') {
             # code...
+            // dd($action);
             try {
                 $rules = [
                     'forTheperiod' => 'required|string|max:255',
@@ -261,93 +264,36 @@ class MellpiProForLNFP_form8Controller extends Controller
                     'receivedBy' => 'nullable|string',
                     'whatDate' => 'nullable|date',
                 ];
-            
-                $message = [
-                    'required' => 'The field is required.',
-                    'integer' => 'The field must be a integer.',
-                    'string' => 'The field must be a string.',
-                    'date' => 'The field must be a valid date.',
-                    'max' => 'The field may not be greater than :max characters.',
+        
+                $messages = [
+                    'required' => 'The :attribute field is required.',
+                    'integer' => 'The :attribute field must be an integer.',
+                    'string' => 'The :attribute field must be a string.',
+                    'date' => 'The :attribute field must be a valid date.',
+                    'max' => 'The :attribute field may not be greater than :max characters.',
+                    'mimes' => 'The :attribute field must be a file of type: :values.',
+                    'file' => 'The :attribute field must be a valid file.',
                 ];
-            
+        
                 $input = $request->all();
-            
-                $validator = Validator::make($input, $rules, $message);
-            
+        
+                $validator = Validator::make($input, $rules, $messages);
+        
                 if ($validator->fails()) {
                     Log::error($validator->errors());
                     return redirect()->back()
                         ->withErrors($validator)
                         ->withInput()
                         ->with('error', 'Something went wrong! Please try again.');
-                } else {
-                    $form8 = lnfp_form8::find($request->id);
-            
-                    if ($request->hasFile('sigDate1')) {
-                        $file1 = $request->file('sigDate1');
-                        $fileName1 = time() . '_sigDate1_' . $file1->getClientOriginalName();
-                        $sigDate1 = $file1->storeAs('uploads', $fileName1, 'public');
-                        $form8->sigDate1 = $sigDate1;
-                    }
-            
-                    if ($request->hasFile('sigDate2')) {
-                        $file2 = $request->file('sigDate2');
-                        $fileName2 = time() . '_sigDate2_' . $file2->getClientOriginalName();
-                        $sigDate2 = $file2->storeAs('uploads', $fileName2, 'public');
-                        $form8->sigDate2 = $sigDate2;
-                    }
-            
-                    if ($request->hasFile('sigDate3')) {
-                        $file3 = $request->file('sigDate3');
-                        $fileName3 = time() . '_sigDate3_' . $file3->getClientOriginalName();
-                        $sigDate3 = $file3->storeAs('uploads', $fileName3, 'public');
-                        $form8->sigDate3 = $sigDate3;
-                    }
-            
-                    $form8->forThePeriod = $request->input('forTheperiod');
-                    $form8->nameOfPnao = $request->input('nameOf');
-                    $form8->areaOfAssign = $request->input('areaAssign');
-                    $form8->dateMonitor = $request->input('dateMonitor');
-                    $form8->recoPNAO_A = $request->input('recoPNAO_A');
-                    $form8->recoPNAO_B = $request->input('recoPNAO_B');
-                    $form8->recoPNAO_C = $request->input('recoPNAO_C');
-                    $form8->recoPNAO_D = $request->input('recoPNAO_D');
-                    $form8->recoPNAO_E = $request->input('recoPNAO_E');
-                    $form8->recoPNAO_F = $request->input('recoPNAO_F');
-                    $form8->recoPNAO_G = $request->input('recoPNAO_G');
-                    $form8->recoPNAO_H = $request->input('recoPNAO_H');
-                    $form8->recoLNC_A = $request->input('recoLNC_A');
-                    $form8->recoLNC_B = $request->input('recoLNC_B');
-                    $form8->recoLNC_C = $request->input('recoLNC_C');
-                    $form8->recoLNC_D = $request->input('recoLNC_D');
-                    $form8->recoLNC_E = $request->input('recoLNC_E');
-                    $form8->recoLNC_F = $request->input('recoLNC_F');
-                    $form8->recoLNC_G = $request->input('recoLNC_G');
-                    $form8->recoLNC_H = $request->input('recoLNC_H');
-                    $form8->nameTM1 = $request->input('nameTM1');
-                    $form8->nameTM2 = $request->input('nameTM2');
-                    $form8->nameTM3 = $request->input('nameTM3');
-                    $form8->desigOffice1 = $request->input('desigOffice1');
-                    $form8->desigOffice2 = $request->input('desigOffice2');
-                    $form8->desigOffice3 = $request->input('desigOffice3');
-                    $form8->receivedBy = $request->input('receivedBy');
-                    $form8->whatDate = $request->input('whatDate');
-                    $form8->status = $request->input('submitStatus');
-            
-                    $form8->save();
-            
-                    return redirect()->route('lnfpForm8Index')->with('alert', 'Data Submitted Successfully!');
                 }
-            } catch (\Throwable $th) {
-                return "An error occurred: " . $th->getMessage();
-            }
-            
-        } elseif ($action == 'draft') {
-            # code...
-            try {
-                //code...
-                $LNFPForm8AS = lnfp_form8::where('id', $request->id)
-                    ->update([
+        
+                $LNFPForm8AS = lnfp_form8::findOrFail($id);
+        
+                $sigDate1 = $this->handleFileUpload($request, 'sigDate1', $LNFPForm8AS->sigDate1);
+                $sigDate2 = $this->handleFileUpload($request, 'sigDate2', $LNFPForm8AS->sigDate2);
+                $sigDate3 = $this->handleFileUpload($request, 'sigDate3', $LNFPForm8AS->sigDate3);
+        
+                $LNFPForm8AS->update([
                     'forThePeriod' => $request->input('forTheperiod'),
                     'nameOfPnao' => $request->input('nameOf'),
                     'areaOfAssign' => $request->input('areaAssign'),
@@ -374,20 +320,85 @@ class MellpiProForLNFP_form8Controller extends Controller
                     'desigOffice1' => $request->input('desigOffice1'),
                     'desigOffice2' => $request->input('desigOffice2'),
                     'desigOffice3' => $request->input('desigOffice3'),
-                    'sigDate1' => $request->input('sigDate1'),
-                    'sigDate2' => $request->input('sigDate2'),
-                    'sigDate3' => $request->input('sigDate3'),
+                    'sigDate1' => $sigDate1,
+                    'sigDate2' => $sigDate2,
+                    'sigDate3' => $sigDate3,
+                    'receivedBy' => $request->input('receivedBy'),
+                    'whatDate' => $request->input('whatDate'),
+                    'status' => $request->input('submitStatus'),
+                ]);
+        
+                return redirect()->route('lnfpForm8Index')->with('alert', 'Data Submitted Successfully!');
+            } catch (\Throwable $th) {
+                Log::error('An error occurred: ' . $th->getMessage());
+                return redirect()->back()->with('error', 'An error occurred. Please try again.');
+            }
+        } elseif ($action == 'draft') {
+            # code...
+            // dd($action);
+            try {
+                //code...
+                $LNFPForm8AS = lnfp_form8::findOrFail($id);
+        
+                $sigDate1 = $this->handleFileUpload($request, 'sigDate1', $LNFPForm8AS->sigDate1);
+                $sigDate2 = $this->handleFileUpload($request, 'sigDate2', $LNFPForm8AS->sigDate2);
+                $sigDate3 = $this->handleFileUpload($request, 'sigDate3', $LNFPForm8AS->sigDate3);
+        
+                $LNFPForm8AS->update([
+                    'forThePeriod' => $request->input('forTheperiod'),
+                    'nameOfPnao' => $request->input('nameOf'),
+                    'areaOfAssign' => $request->input('areaAssign'),
+                    'dateMonitor' => $request->input('dateMonitor'),
+                    'recoPNAO_A' => $request->input('recoPNAO_A'),
+                    'recoPNAO_B' => $request->input('recoPNAO_B'),
+                    'recoPNAO_C' => $request->input('recoPNAO_C'),
+                    'recoPNAO_D' => $request->input('recoPNAO_D'),
+                    'recoPNAO_E' => $request->input('recoPNAO_E'),
+                    'recoPNAO_F' => $request->input('recoPNAO_F'),
+                    'recoPNAO_G' => $request->input('recoPNAO_G'),
+                    'recoPNAO_H' => $request->input('recoPNAO_H'),
+                    'recoLNC_A' => $request->input('recoLNC_A'),
+                    'recoLNC_B' => $request->input('recoLNC_B'),
+                    'recoLNC_C' => $request->input('recoLNC_C'),
+                    'recoLNC_D' => $request->input('recoLNC_D'),
+                    'recoLNC_E' => $request->input('recoLNC_E'),
+                    'recoLNC_F' => $request->input('recoLNC_F'),
+                    'recoLNC_G' => $request->input('recoLNC_G'),
+                    'recoLNC_H' => $request->input('recoLNC_H'),
+                    'nameTM1' => $request->input('nameTM1'),
+                    'nameTM2' => $request->input('nameTM2'),
+                    'nameTM3' => $request->input('nameTM3'),
+                    'desigOffice1' => $request->input('desigOffice1'),
+                    'desigOffice2' => $request->input('desigOffice2'),
+                    'desigOffice3' => $request->input('desigOffice3'),
+                    'sigDate1' => $sigDate1,
+                    'sigDate2' => $sigDate2,
+                    'sigDate3' => $sigDate3,
                     'receivedBy' => $request->input('receivedBy'),
                     'whatDate' => $request->input('whatDate'),
                     'status' => $request->input('DraftStatus'),
                 ]);
+        
                 return redirect()->route('lnfpForm8Index')->with('alert', 'Data Saved as Draft Successfully!');
             } catch (\Throwable $th) {
                 //throw $th;
-                return "An error occured: " . $th->getMessage();
+                Log::error('An error occurred: ' . $th->getMessage());
+                return redirect()->back()->with('error', 'An error occurred. Please try again.');
             }
         }
     }
+    private function handleFileUpload($request, $fieldName, $existingFilePath = null) {
+        if ($request->hasFile($fieldName)) {
+            if ($existingFilePath) {
+                Storage::disk('public')->delete($existingFilePath);
+            }
+            $file = $request->file($fieldName);
+            $fileName = time() . '_' . $fieldName . '_' . $file->getClientOriginalName();
+            return $file->storeAs('uploads', $fileName, 'public');
+        }
+        return $existingFilePath;
+    }
+    
     public function deleteForm8($id)
     {
         $lnfp_form8 = lnfp_form8::find($id);

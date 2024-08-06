@@ -77,7 +77,7 @@
                                 <div class="col col-4 col-2">
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">No. of Municipalities:<span style="color:red">*</span></label>
-                                        <input type="number" min="1" placeholder="ex. 100" class="form-control" id="exampleFormControlInput1" name="numOfMun">
+                                        <input type="number" min="1" placeholder="ex. 100" class="form-control" value="{{ old('numOfMun') }}" id="exampleFormControlInput1" name="numOfMun">
                                         @error('numOfMun')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror

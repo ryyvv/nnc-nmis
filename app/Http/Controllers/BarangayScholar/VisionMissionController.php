@@ -66,12 +66,20 @@ class VisionMissionController extends Controller
     
         ]; 
 
-        $validator = Validator::make($request->all() , $rules);
+        $message = [ 
+            'required' => 'The field is required.',
+            'integer' => 'The field is number.',
+            'string' => 'The field must be a string.',
+            'date' => 'The field must be a valid date.',
+            'max' => 'The field may not be greater than :max characters.',
+        ]; 
+
+        $validator = Validator::make($request->all() , $rules, $message );
 
         if($validator->fails()){
-                return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
+            return redirect()->back()
+            ->withErrors($validator)
+            ->withInput()->with('error', 'Something went wrong! Please try again.');
         }else {
 
             $vmBarangay = MellpiproLGUBarangayVisionMission::create([
@@ -100,7 +108,7 @@ class VisionMissionController extends Controller
             ]);
         }
 
-        return redirect('BarangayScholar/visionmission');
+        return redirect('BarangayScholar/visionmission')->with('success', 'Data created successfullySuccessfully!');
     }
 
     /**
@@ -168,12 +176,21 @@ class VisionMissionController extends Controller
     
         ]; 
 
-        $validator = Validator::make($request->all() , $rules);
+        $message = [ 
+            'required' => 'The field is required.',
+            'integer' => 'The field is number.',
+            'string' => 'The field must be a string.',
+            'date' => 'The field must be a valid date.',
+            'max' => 'The field may not be greater than :max characters.',
+        ]; 
+
+
+        $validator = Validator::make($request->all() , $rules, $message);
 
         if($validator->fails()){
-            return response()->json([
-                'errors' => $validator->errors()
-            ], 422);
+            return redirect()->back()
+            ->withErrors($validator)
+            ->withInput()->with('error', 'Something went wrong! Please try again.');
         }else {
             $vmbarangay = MellpiproLGUBarangayVisionMission::find($id);
             
@@ -208,7 +225,7 @@ class VisionMissionController extends Controller
         DB::table('mplgubrgyvisionmissionstracking')->where('mplgubrgyvisionmissions_id', $request->id)->delete();
         $lguprofile = MellpiproLGUBarangayVisionMission::find($request->id); 
         $lguprofile->delete();
-        return redirect()->route('visionmission.index')->with('success', 'Deleted successfully!');
+        return redirect()->route('visionmission.index')->with('success', 'Data Deleted successfully!'); 
     }
 
     public function downloads(Request $request ) { 

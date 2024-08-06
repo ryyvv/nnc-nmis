@@ -99,7 +99,14 @@
                                                     </select>
                                                 </td>
                                                 <!-- <td class="col-md-2"><input type="number" class="interviewForm"></td> -->
-                                                <td class="col-md-3"><textarea type="text" class="interviewForm" name="q1Remarks"></textarea></td>
+                                                <td class="col-md-3">
+                                                    <textarea type="text" class="interviewForm" name="q1Remarks">
+                                                        {{ old('q1Remarks') }}
+                                                    </textarea>
+                                                    @error('q1Remarks')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td class="interviewFormsnum">2</td>
@@ -118,7 +125,14 @@
                                                     </select>
                                                 </td>
                                                 <!-- <td class="col-md-2"><input type="number" class="interviewForm"></td> -->
-                                                <td class="col-md-3"><textarea type="text" class="interviewForm" name="q2Remarks"></textarea></td>
+                                                <td class="col-md-3">
+                                                    <textarea type="text" class="interviewForm" name="q2Remarks">
+                                                    {{ old('q2Remarks') }}
+                                                    </textarea>
+                                                    @error('q2Remarks')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td class="interviewFormsnum">3</td>
@@ -137,7 +151,14 @@
                                                     </select>
                                                 </td>
                                                 <!-- <td class="col-md-2"><input type="number" class="interviewForm"></td> -->
-                                                <td class="col-md-3"><textarea type="text" class="interviewForm" name="q3Remarks"></textarea></td>
+                                                <td class="col-md-3">
+                                                    <textarea type="text" class="interviewForm" name="q3Remarks">
+                                                    {{ old('q3Remarks') }}
+                                                    </textarea>
+                                                    @error('q3Remarks')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td class="interviewFormsnum">4</td>
@@ -156,17 +177,25 @@
                                                     </select>
                                                 </td>
                                                 <!-- <td class="col-md-2"><input type="number" class="interviewForm"></td> -->
-                                                <td class="col-md-3"><textarea type="text" class="interviewForm" name="q4Remarks"></textarea></td>
+                                                <td class="col-md-3">
+                                                    <textarea type="text" class="interviewForm" name="q4Remarks">
+                                                    {{ old('q4Remarks') }}
+                                                    </textarea>
+                                                    @error('q4Remarks')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td class="col-md-6" colspan="2"><b>SUBTOTAL:</b></td>
                                                 <!-- <td class="col-md-1"><input type="number" class="interviewForms" value="0" readonly></td> -->
                                                 <td class="col-md-1 interviewForms"><b>20</b></td>
-                                                <td class="col-md-1"><b><input type="number" class="interviewForms" id="subASTot" name="subASTot" value="0" readonly></b></td>
+                                                <td class="col-md-1"><b><input type="number" class="interviewFormsTotal" id="subASTot" name="subASTot" value="0" readonly></b></td>
                                                 <td class="col-md-3"></td>
                                             </tr>
                                         </tbody>
                                     </table>
+                                    
                                     <br>
                                     <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
                                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalDraft">Save as Draft</button>

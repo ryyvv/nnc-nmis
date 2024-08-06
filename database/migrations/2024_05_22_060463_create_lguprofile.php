@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lnfp_lguprofile', function (Blueprint $table) {
-            $table->id();
+ 
+        Schema::create('lguprofilebarangay', function (Blueprint $table) {
+            $table->increments('id'); 
             $table->date('dateMonitoring')->nullable();
-            $table->string('periodCovereda',10)->nullable();
-            $table->integer('numOfMuni')->nullable();
+            $table->string('periodCovereda',10)->nullable(); 
             $table->integer('totalPopulation')->nullable();
             $table->integer('noHousehold')->nullable();
             $table->integer('noPuroks')->nullable();
@@ -30,9 +30,10 @@ return new class extends Migration
             $table->integer('markets')->nullable();
             $table->integer('transportTerminals')->nullable();
             $table->integer('breastfeeding')->nullable();
+            $table->string('terrain')->nullable();
             $table->string('hazards')->nullable();
             $table->string('affectedLGU')->nullable();
-
+           
             $table->integer('populationA')->nullable(); //6-11mos
             $table->integer('populationB')->nullable(); //12-59mos
             $table->integer('populationC')->nullable(); //0-59mos
@@ -79,7 +80,7 @@ return new class extends Migration
             $table->integer('pswastedCCA')->nullable(); 
             $table->integer('psseverelyWastedCCA')->nullable(); 
             $table->integer('psoverweightCCA')->nullable(); 
-            $table->integer('psobeseCCA')->nullable();
+            $table->integer('psobeseCCA')->nullable(); 
 
             // overweight (%) tall
             $table->integer('psnormalAAB')->nullable(); 
@@ -95,9 +96,9 @@ return new class extends Migration
             $table->integer('psnormalCCC')->nullable(); 
             $table->integer('psstuntedCCC')->nullable(); 
             $table->integer('pssevereStuntedCCC')->nullable(); 
-            $table->integer('pstallCCC')->nullable();
+            $table->integer('pstallCCC')->nullable(); 
 
-            // overweight (%) obese School Children
+           // overweight (%) obese School Children
            $table->integer('scnormalABA')->nullable(); 
            $table->integer('scwastedABA')->nullable(); 
            $table->integer('scseverelyWastedABA')->nullable(); 
@@ -116,7 +117,7 @@ return new class extends Migration
            $table->integer('scoverweightCCA')->nullable(); 
            $table->integer('scobeseCCA')->nullable(); 
 
-           // overweight (%) obese Pregnant Woman
+        // overweight (%) obese Pregnant Woman
            $table->integer('pwnormalAAA')->nullable(); 
            $table->integer('pwnutritionllyatriskAAA')->nullable();  
            $table->integer('pwoverweightAAA')->nullable(); 
@@ -130,13 +131,8 @@ return new class extends Migration
            $table->integer('pwnormalCAA')->nullable(); 
            $table->integer('pwnutritionllyatriskCAA')->nullable();  
            $table->integer('pwoverweightCAA')->nullable(); 
-           $table->integer('pwobeseCAA')->nullable();
+           $table->integer('pwobeseCAA')->nullable(); 
 
-           // total brgy nutrition scholar
-           $table->integer('newBrgyScholar')->nullable();
-           $table->integer('oldBrgyScholar')->nullable();
-
-           //Land Class
            $table->string('landAreaResidential')->nullable();
            $table->string('remarksResidential')->nullable(); 
 
@@ -152,28 +148,101 @@ return new class extends Migration
            $table->string('landAreaFLMLNP')->nullable();
            $table->string('remarksFLMLNP')->nullable();
 
-           //-----
-           $table->integer('status');
+           $table->string('Isource')->nullable();
+           $table->string('Iavailreceived')->nullable();
+           $table->date('Idatereceived')->nullable();
+           $table->integer('Ivolumepax')->nullable();
+           $table->string('Iremarks')->nullable();
 
-           // 
-        //    $table->integer('user_id')->unsigned(); 
-        //    $table->foreign('user_id')->references('id')->on('users');
-            $table->bigInteger('user_id')->unsigned()->change();
-            $table->foreign('user_id')->references('id')->on('users');
+           $table->string('IIAsource')->nullable();
+           $table->string('IIAavailreceived')->nullable();
+           $table->date('IIAdatereceived')->nullable();
+           $table->integer('IIAvolumepax')->nullable();
+           $table->string('IIAremarks')->nullable();
 
-           $table->integer('barangay_id')->unsigned();
-           $table->foreign('barangay_id')->references('id')->on('barangays'); 
+           $table->string('IIBsource')->nullable();
+           $table->string('IIBavailreceived')->nullable();
+           $table->date('IIBdatereceived')->nullable();
+           $table->integer('IIBvolumepax')->nullable();
+           $table->string('IIBremarks')->nullable();
 
-           $table->integer('municipal_id')->unsigned(); 
-           $table->foreign('municipal_id')->references('id')->on('municipals');
+           $table->string('IIIAsource')->nullable();
+           $table->string('IIIAavailreceived')->nullable();
+           $table->date('IIIAdatereceived')->nullable();
+           $table->integer('IIIAvolumepax')->nullable();
+           $table->string('IIIAremarks')->nullable();
 
-           $table->integer('province_id')->unsigned(); 
-           $table->foreign('province_id')->references('id')->on('provinces');
+           $table->string('IIIBsource')->nullable();
+           $table->string('IIIBavailreceived')->nullable();
+           $table->date('IIIBdatereceived')->nullable();
+           $table->integer('IIIBvolumepax')->nullable();
+           $table->string('IIIBremarks')->nullable();
 
-           $table->integer('region_id')->unsigned(); 
-           $table->foreign('region_id')->references('id')->on('regions');
+           $table->string('IIICsource')->nullable();
+           $table->string('IIICavailreceived')->nullable();
+           $table->date('IIICdatereceived')->nullable();
+           $table->integer('IIICvolumepax')->nullable();
+           $table->string('IIICremarks')->nullable();
+
+           $table->string('IIIDsource')->nullable();
+           $table->string('IIIDavailreceived')->nullable();
+           $table->date('IIIDdatereceived')->nullable();
+           $table->integer('IIIDvolumepax')->nullable();
+           $table->string('IIIDremarks')->nullable();
+
+           $table->string('IIIEsource')->nullable();
+           $table->string('IIIEavailreceived')->nullable();
+           $table->date('IIIEdatereceived')->nullable();
+           $table->integer('IIIEvolumepax')->nullable();
+           $table->string('IIIEremarks')->nullable();
+
+           $table->string('IIIFsource')->nullable();
+           $table->string('IIIFavailreceived')->nullable();
+           $table->date('IIIFdatereceived')->nullable();
+           $table->integer('IIIFvolumepax')->nullable();
+           $table->string('IIIFremarks')->nullable();
+
+           $table->string('IVAsource')->nullable();
+           $table->string('IVAavailreceived')->nullable();
+           $table->date('IVAdatereceived')->nullable();
+           $table->integer('IVAvolumepax')->nullable();
+           $table->string('IVAremarks')->nullable();
+
+           $table->string('VAsource')->nullable();
+           $table->string('VAavailreceived')->nullable();
+           $table->date('VAdatereceived')->nullable();
+           $table->integer('VAvolumepax')->nullable();
+           $table->string('VAremarks')->nullable();
            
-           $table->timestamps();
+            $table->integer('status')->nullable(); 
+
+            $table->integer('barangay_id')->unsigned(); 
+            $table->integer('user_id')->unsigned(); 
+            $table->integer('municipal_id')->unsigned(); 
+            $table->integer('province_id')->unsigned(); 
+            $table->integer('region_id')->unsigned(); 
+            $table->foreign('user_id')->references('id')->on('users'); 
+            $table->foreign('region_id')->references('id')->on('regions'); 
+            $table->foreign('province_id')->references('id')->on('provinces'); 
+            $table->foreign('municipal_id')->references('id')->on('municipals');
+            $table->foreign('barangay_id')->references('id')->on('barangays'); 
+            $table->timestamps();
+        });
+
+
+        Schema::create('barangaytracking', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('status'); 
+            $table->integer('barangay_id')->unsigned(); 
+            $table->integer('municipal_id')->unsigned();
+            $table->integer('user_id')->unsigned();
+            
+            $table->integer('lguprofilebarangay_id')->unsigned(); 
+            $table->foreign('lguprofilebarangay_id')->references('id')->on('lguprofilebarangay');
+            $table->foreign('municipal_id')->references('id')->on('municipals');
+            $table->foreign('barangay_id')->references('id')->on('barangays'); 
+            $table->foreign('user_id')->references('id')->on('users'); 
+            $table->timestamps();
         });
     }
 
@@ -182,6 +251,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lnfp_lguprofile');
+        Schema::dropIfExists('lguprofilebarangay');
+        Schema::dropIfExists('barangaytracking');
     }
 };

@@ -1,6 +1,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/joboy.css') }}">
 <script src="{{ asset('assets') }}/js/joboy.js"></script>
+<script src="https://cdn.lordicon.com/lordicon.js"></script>
 
 <style>
     .form-section {
@@ -46,11 +47,12 @@
         @include('layouts.page_template.crud_alert_message')
 
         <div style="padding:25px">
-            <form action="{{ route('BSLGUprofilest.storeSubmit') }}" id="lgu-profile-form" method="POST">
+            <form action="{{ route('BSLGUprofilest.storeSubmit') }}" id="form" method="POST">
                 @csrf
                 
                 <input type="hidden" name="status" id="status"> 
-                @include('layouts.page_template.location_header') 
+                <!-- header -->
+                @include('layouts.page_template.location_header')
 
                 <br>
                 <div style="display:flex">
@@ -178,7 +180,7 @@
 
 
                         <div class="form-group">
-                            <label for="hazards">Hazard:<span style="color:red">*</span></label>
+                            <label for="hazards">Hazard (Type/ Month):<span style="color:red">*</span></label>
                             <textarea class="form-control" id="hazards" height="800px" style="max-height:380px;height:300px;border: 1px solid lightgray;border-radius:5px" name="hazards"
                             >{{ old('hazards') }}</textarea>
                             @error('hazards')
@@ -222,16 +224,16 @@
                                     <label for="exampleFormControlInput1"><b>Population</b></label>
                                 </div>
                                 <div class="col">
-                                    <label for="exampleFormControlInput1"><b>6-11mons</b></label>
+                                    <label for="exampleFormControlInput1"><b>6-11mos</b></label>
                                 </div>
                                 <div class="col">
-                                    <label for="exampleFormControlInput1"><b>6-23mons</b></label>
+                                    <label for="exampleFormControlInput1"><b>6-23mos</b></label>
                                 </div>
                                 <div class="col">
-                                    <label for="exampleFormControlInput1"><b>12-59mons</b></label>
+                                    <label for="exampleFormControlInput1"><b>12-59mos</b></label>
                                 </div>
                                 <div class="col">
-                                    <label for="exampleFormControlInput1"><b>0-59mons</b></label>
+                                    <label for="exampleFormControlInput1"><b>0-59mos</b></label>
                                 </div>
                                 <div class="col">
                                     <label for="exampleFormControlInput1"><b>Pregnant</b></label>
@@ -344,13 +346,13 @@
                                     <label for="exampleFormControlInput1"></label>
                                 </div>
                                 <div class=" col">
-                                    Yr: <label for="exampleFormControlInput1" id="currentYearMinus2"> </label>
+                                    Yr:  <label for="exampleFormControlInput1" id="currentYearMinus2"></label>
                                 </div>
                                 <div class=" col">
-                                    Yr: <label for="exampleFormControlInput1" id="currentYearMinus1"> </label>
+                                    Yr:  <label for="exampleFormControlInput1" id="currentYearMinus1"></label>
                                 </div>
                                 <div class=" col">
-                                    Yr: <label for="exampleFormControlInput1" id="currentYear"> </label>
+                                    Yr:  <label for="exampleFormControlInput1" id="currentYear"></label>
                                 </div>
                             </div>
                             <div style="display:flex;">
@@ -465,13 +467,13 @@
                                     <label for="exampleFormControlInput1"></label>
                                 </div>
                                 <div class=" col">
-                                    Yr: <label for="exampleFormControlInput1" id="currentYearMinus2"> </label>
+                                    Yr: <label for="exampleFormControlInput1" id="currentYearMinus2b"> </label>
                                 </div>
                                 <div class=" col">
-                                    Yr: <label for="exampleFormControlInput1" id="currentYearMinus1"> </label>
+                                    Yr: <label for="exampleFormControlInput1" id="currentYearMinus1b"> </label>
                                 </div>
                                 <div class=" col">
-                                    Yr: <label for="exampleFormControlInput1" id="currentYear"> </label>
+                                    Yr: <label for="exampleFormControlInput1" id="currentYearb"> </label>
                                 </div>
                             </div>
                             <div style="display:flex;">
@@ -569,8 +571,8 @@
                                     <input type="number" class="form-control" id="exampleFormControlInput1" 
                                     name="psoverweightBBA" value="{{ old('psoverweightBBA') }}" placeholder="ex. 100">
                                     @error('psoverweightBBA')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="number" class="form-control" id="exampleFormControlInput1" 
@@ -615,13 +617,13 @@
                                     <label for="exampleFormControlInput1"></label>
                                 </div>
                                 <div class=" col">
-                                    Yr: <label for="exampleFormControlInput1" id="currentYearMinus2"> </label>
+                                    Yr: <label for="exampleFormControlInput1" id="currentYearMinus2c"> </label>
                                 </div>
                                 <div class=" col">
-                                    Yr: <label for="exampleFormControlInput1" id="currentYearMinus1"> </label>
+                                    Yr: <label for="exampleFormControlInput1" id="currentYearMinus1c"> </label>
                                 </div>
                                 <div class=" col">
-                                    Yr: <label for="exampleFormControlInput1" id="currentYear"> </label>
+                                    Yr: <label for="exampleFormControlInput1" id="currentYearc"> </label>
                                 </div>
                             </div>
                             <div style="display:flex;">
@@ -740,13 +742,13 @@
                                     <label for="exampleFormControlInput1"></label>
                                 </div>
                                 <div class=" col">
-                                    Yr: <label for="exampleFormControlInput1" id="currentYearMinus2"> </label>
+                                    Yr: <label for="exampleFormControlInput1" id="currentYearMinus2d"> </label>
                                 </div>
                                 <div class=" col">
-                                    Yr: <label for="exampleFormControlInput1" id="currentYearMinus1"> </label>
+                                    Yr: <label for="exampleFormControlInput1" id="currentYearMinus1d"> </label>
                                 </div>
                                 <div class=" col">
-                                    Yr: <label for="exampleFormControlInput1" id="currentYear"> </label>
+                                    Yr: <label for="exampleFormControlInput1" id="currentYeard"> </label>
                                 </div>
                             </div>
                             <div style="display:flex;">
@@ -890,13 +892,13 @@
                                     <label for="exampleFormControlInput1"></label>
                                 </div>
                                 <div class=" col">
-                                    Yr: <label for="exampleFormControlInput1" id="currentYearMinus2"> </label>
+                                    Yr: <label for="exampleFormControlInput1" id="currentYearMinus2e"> </label>
                                 </div>
                                 <div class=" col">
-                                    Yr: <label for="exampleFormControlInput1" id="currentYearMinus1"> </label>
+                                    Yr: <label for="exampleFormControlInput1" id="currentYearMinus1e"> </label>
                                 </div>
                                 <div class=" col">
-                                    Yr: <label for="exampleFormControlInput1" id="currentYear"> </label>
+                                    Yr: <label for="exampleFormControlInput1" id="currentYeare"> </label>
                                 </div>
                             </div>
                                 <div style="display:flex;">
@@ -958,16 +960,16 @@
                                     <div class="form-group col" style="margin-left:10px">
                                         <input type="number" class="form-control" id="exampleFormControlInput1" 
                                         name="pwoverweightAAA"  value="{{ old('pwoverweightAAA') }}" placeholder="ex. 100">  
-                            @error('pwoverweightAAA')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                                        @error('pwoverweightAAA')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="form-group col" style="margin-left:10px">
                                         <input type="number" class="form-control" id="exampleFormControlInput1" 
                                         name="pwoverweightBAA" value="{{ old('pwoverweightBAA') }}" placeholder="ex. 100"> 
-                            @error('pwoverweightBAA')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                                        @error('pwoverweightBAA')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="form-group col" style="margin-left:10px">
                                         <input type="number" class="form-control" id="exampleFormControlInput1" 
@@ -1143,16 +1145,16 @@
                             <label for="exampleFormControlInput1">Type</label>
                         </div>
                         <div class="col">
-                            <label for="exampleFormControlInput1">Source</label>
+                            <label for="exampleFormControlInput1">Source (NGA/LGU/NGO/Private)</label>
                         </div>
                         <div class="col">
-                            <label for="exampleFormControlInput1">Available Received</label>
+                            <label for="exampleFormControlInput1">Available/Received (Y/N)</label>
                         </div>
                         <div class="col">
                             <label for="exampleFormControlInput1">Date Received</label>
                         </div>
                         <div class="col">
-                            <label for="exampleFormControlInput1">Volume No. of Pax</label>
+                            <label for="exampleFormControlInput1">Volume/No. of Pax</label>
                         </div>
                         <div class="col">
                             <label for="exampleFormControlInput1">Remarks</label>
@@ -1296,8 +1298,7 @@
                                 <option value="NGA" <?php echo ( old('IIBsource') == 'NGA' ? 'selected':'' )  ?> >NGA</option>
                                 <option value="LGU"  <?php echo ( old('IIBsource') == 'LGU' ? 'selected':'' )  ?> >LGU</option>
                                 <option value="NGO"  <?php echo ( old('IIBsource') == 'NGO' ? 'selected':'' )  ?> >NGO</option>
-                                <option value="Private"  <?php echo ( old('IIBsource') == 'Private' ? 'selected':'' )  ?> >Private</option>
-                                <option value="Private">Private</option>
+                                <option value="Private"  <?php echo ( old('IIBsource') == 'Private' ? 'selected':'' )  ?> >Private</option> 
                             </select>  
                             @error('IIBsource')
                             <div class="text-danger">{{ $message }}</div>
@@ -1627,7 +1628,7 @@
                             <label for="exampleFormControlInput1">Commodity</label>
                         </div>
                         <div class="col">
-                            <select id="loadProvince1" class="form-control" name="IIIFsource">                            <option value="">Choose...</option>
+                            <select id="loadProvince1" class="form-control" name="IIIFsource">                           
                             <option value="">Choose...</option> 
                                 <option value="NGA" <?php echo ( old('IIIFsource') == 'NGA' ? 'selected':'' )  ?> >NGA</option>
                                 <option value="LGU"  <?php echo ( old('IIIFsource') == 'LGU' ? 'selected':'' )  ?> >LGU</option>
@@ -1826,7 +1827,7 @@
                     <!-- <button type="submit" class="btn btn-warning ">Save as draft</button> -->
                     <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
                     <!-- Button trigger modal -->
-                    <button type="button" class="bold btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
+                    <button type="button" style="margin-right:6px" class="bold btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
                     Save as Draft
                     </button>
                     <button type="button" class="bold btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
@@ -1840,46 +1841,13 @@
 </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <!-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <h5>Are you sure you want to submit this form?</h5>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-        <button type="submit" id="lgu-submit" class="btn btn-primary">Yes</button>
-      </div>
-    </div>
-  </div>
-</div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModalCenterDraft" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <!-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <h5>Save as Draft?</h5>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-        <button type="submit" id="lgu-draft" class="btn btn-primary">Yes</button>
-      </div>
-    </div>
-  </div>
-</div>
+ <!-- alert Modal -->
+ @include('Modal.Draft')
+
+<!-- alert Modal -->
+@include('Modal.Submit')
+
+
 
 @endsection

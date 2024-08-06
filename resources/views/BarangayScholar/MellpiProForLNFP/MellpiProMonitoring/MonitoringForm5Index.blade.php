@@ -138,7 +138,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" onclick="confirmDeleteLNFP_form5('{{ $form5a_rr->id }}')">Sure</button>
+                <button type="button" class="btn btn-danger" onclick="confirmDeleteLNFP_form5('{{ $form5a_rr->id }}')">Yes</button>
             </div>
         </div>
     </div>

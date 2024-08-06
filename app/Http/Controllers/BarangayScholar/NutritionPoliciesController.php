@@ -82,13 +82,20 @@ class NutritionPoliciesController extends Controller
             'user_id' => 'required|integer',
     
         ]; 
+        $message = [ 
+            'required' => 'The field is required.',
+            'integer' => 'The field is number.',
+            'string' => 'The field must be a string.',
+            'date' => 'The field must be a valid date.',
+            'max' => 'The field may not be greater than :max characters.',
+        ]; 
 
-        $validator = Validator::make($request->all() , $rules);
+        $validator = Validator::make($request->all() , $rules,$message);
 
         if($validator->fails()){
-            return response()->json([
-                'errors' => $validator->errors()
-            ], 422);
+            return redirect()->back()
+            ->withErrors($validator)
+            ->withInput()->with('error', 'Something went wrong! Please try again.');
         }
 
         $npbarangay = MellpiprobarangayNationalpolicies::create([
@@ -213,12 +220,20 @@ class NutritionPoliciesController extends Controller
     
         ]; 
 
-        $validator = Validator::make($request->all() , $rules);
+        $message = [ 
+            'required' => 'The field is required.',
+            'integer' => 'The field is number.',
+            'string' => 'The field must be a string.',
+            'date' => 'The field must be a valid date.',
+            'max' => 'The field may not be greater than :max characters.',
+        ]; 
+
+        $validator = Validator::make($request->all() , $rules, $message);
 
         if($validator->fails()){
-            return response()->json([
-                'errors' => $validator->errors()
-            ], 422);
+            return redirect()->back()
+            ->withErrors($validator)
+            ->withInput()->with('error', 'Something went wrong! Please try again.');
         }else  {
             $npbarangay =  MellpiprobarangayNationalpolicies::find($request->id);
 

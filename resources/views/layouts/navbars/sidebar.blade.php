@@ -479,7 +479,7 @@
 
 
       @php 
-        $activeLNFPPages = ['mellpi_pro_form5', 'mellpi_pro_form6', 'mellpi_pro_form8', 'mellpi_pro_interview'];
+        $activeLNFPPages = ['mellpi_pro_form5', 'mellpi_pro_form6', 'mellpi_pro_form8', 'mellpi_pro_interview', 'mellpi_pro_overallScore'];
       @endphp
       <li>
         <a data-toggle="collapse" href="#MellpiProLNFP">
@@ -526,8 +526,8 @@
                 <p> {{ __("WRITTEN EXAM COMPUTATION") }} </p>
               </a>
             </li>
-            <li class="@if ($activePage == 'mellpi_pro_summary1b') active @endif">
-              <a href="#">
+            <li class="@if ($activePage == 'mellpi_pro_overallScore') active @endif">
+              <a href="{{ route('lnfpFormOverallScoreIndex') }}">
                 <i class="now-ui-icons files_paper"></i>
                 <p> {{ __("OVERALL SCORE") }} </p>
               </a>

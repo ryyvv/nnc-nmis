@@ -101,7 +101,17 @@ $(document).ready(function () {
 
 
 
- 
+    switch (d.status) {
+        case 0:
+           c
+            break;
+        case 1:
+            statusLabel = '<span class="statusPending cursor" title="For Review">Uploaded</span>';
+            break;
+        default:
+            statusLabel = '<span class="statusUnknown cursor" title="Unknown Status">Unknown</span>';
+            break;
+    }
 
     //LGUStatus
     let LGUStatus;
@@ -248,7 +258,6 @@ $(document).ready(function () {
     DiscussionQuestionServiceLabel = '<span class="statusApproved cursor" title="Added to LGU Report">Uploaded</span>';
     DiscussionQuestionServiceStatus = dataApproveddq;
   } else {
-
     DiscussionQuestionServiceStatus = '<span class="statusNA cursor">N/A</span>';
     DiscussionQuestionServiceLabel = '<span class="statusPending cursor" title="Added to LGU Report">Waiting</span>';
   }
@@ -357,7 +366,7 @@ $(document).ready(function () {
 
   let table = new DataTable('#example1', {
     ajax: {
-       url: "https://nnc-nmis.moodlearners.com/CityMunicipalStaff/lguProfile/fetchreport",
+      url: "https://nnc-nmis.moodlearners.com/CityMunicipalStaff/lguProfile/fetchreport",
       type: 'GET',
       dataSrc: 'data',
     },

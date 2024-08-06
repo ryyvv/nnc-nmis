@@ -23,7 +23,7 @@
             </div>
 
 
-            <div class="content" style="margin:30px;">
+            <div class="content"  id="deleteAlert"  style="margin:30px;">
 
                 <!-- alerts -->
                 @include('layouts.page_template.crud_alert_message')

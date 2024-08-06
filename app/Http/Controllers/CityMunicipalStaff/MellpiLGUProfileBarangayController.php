@@ -47,8 +47,8 @@ class MellpiLGUProfileBarangayController  extends Controller
         $city = $location->getLocationDataCity(auth()->user()->Region);
         $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
 
-        $barangay = auth()->user()->barangay;
-        $lguProfile = DB::table('lguprofilebarangay')->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();
+        // $barangay = auth()->user()->barangay;
+        // $lguProfile = DB::table('lguprofilebarangay')->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();
 
        
         // $data  = DB::table('municipals')
@@ -1078,36 +1078,38 @@ class MellpiLGUProfileBarangayController  extends Controller
  }
 
  public function approvedReport(Request $request) {
-    //dd($request->id); 
+    $dataLGU = LguProfile::find($request->id); 
 
-    // Check if the record exists using the ID from the request
-    $record =  DB::table('lgubarangayreport') 
-                        ->where('dateMonitoring', $request->dateMonitoring)
-                        ->where('periodCovereda', $request->periodCovereda)
-                        ->where('barangay_id', $request->barangay_id)
-                        ->where('municipal_id', $request->municipal_id)
-                        ->first();
-  
-     $dataLGU = LguProfile::find($request->id); 
-     //dd($dataLGU); 
-     
+    // Check if the record exists of DateMonitoring and periodCovered
+    $record =  DB::table('lgubarangayreport')
+                ->where(function ($query) use ($dataLGU) {
+                    $query->where('dateMonitoring',  $dataLGU['dateMonitoring'])
+                        ->orWhere('periodCovereda', $dataLGU['periodCovereda']);
+                        // ->orWhere('barangay_id', $dataLGU['barangay_id'])
+                        // ->orWhere('municipal_id', $dataLGU['municipal_id']);
+                })->exists();
+
 
     if ($record) {
-        DB::table('lgubarangayreport')
-        ->where('id', $request->id)
-        ->update([
-            'lguprofilebarangay_id' => $dataLGU['id'],
-            'lguapproveddate' => $dataLGU['updated_at'], 
-        ]);
+        $findData = DB::table('lgubarangayreport')->whereNotNull('lguprofilebarangay_id')->whereNotNull('lguapproveddate')->exists();
 
-        $dataLGU->update(['status' => '0']);
-        DB::table('barangaytracking')->where('lguprofilebarangay_id', $dataLGU->id)->update(['status' => '0']);
+        if($findData) {
+            DB::table('lgubarangayreport')
+            ->where('id', $request->id)
+            ->update([
+                'lguprofilebarangay_id' => $dataLGU['id'],
+                'lguapproveddate' => $dataLGU['updated_at'], 
+            ]);
+
+            //  need if-else return notification and after this if statement
+        }  
+     
 
     } else {
         // Create a new record if none exists foir LGU form only
         DB::table('lgubarangayreport')->insert([ 
             'dateMonitoring' => $dataLGU['dateMonitoring'],
-            'periodCovereda' => $dataLGU['periodCovereda'],
+            'periodCovereda' => $dataLGU['periodCovereda'], 
             'barangay_id' => $dataLGU['barangay_id'], 
             'municipal_id' => $dataLGU['municipal_id'], 
             'lguprofilebarangay_id' =>  $dataLGU['id'],
@@ -1122,6 +1124,7 @@ class MellpiLGUProfileBarangayController  extends Controller
   
  
     return redirect()->route('CMSLGUprofile.index')->with('success', 'Data updated Successfully!');
+    
 }
 
 

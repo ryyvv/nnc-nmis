@@ -103,7 +103,7 @@ thead th {
     background-color: transparent;
 }
 .form7Input {
-    outline: none;
+    /* outline: none; */
     width: 100%;
     text-align: center;
     border: none;
@@ -154,6 +154,19 @@ thead th {
     background-color: transparent;
     text-align: center;
 }
+.interviewFormsTotal::-webkit-inner-spin-button,
+.interviewFormsTotal::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.interviewFormsTotal {
+    -moz-appearance: textfield;
+    outline: none;
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    text-align: center;
+}
 .interviewFormsnum {
     text-align: center;
 }
@@ -166,4 +179,33 @@ thead th {
 }
 #subASTot {
     font-weight: bold;
+}
+
+.formOverallInputS {
+    outline: none;
+    width: 100%;
+    border: none;
+    background-color: transparent;
+}
+.formOverallInput {
+    outline: none;
+    width: 90%;
+    text-align: center;
+    border: none;
+    background-color: transparent;
+}
+.formOverallInputB {
+    outline: none;
+    width: 100%;
+    text-align: center;
+    border: none;
+    background-color: transparent;
+}
+.formOverallInputBot {
+    width: 40%;
+    outline: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    background-color: transparent;
 }

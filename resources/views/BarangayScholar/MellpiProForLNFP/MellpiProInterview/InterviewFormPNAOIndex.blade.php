@@ -130,7 +130,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" onclick="confirmDeleteLNFP_IntForm()">Sure</button>
+                <button type="button" class="btn btn-danger" onclick="confirmDeleteLNFP_IntForm()">Yes</button>
             </div>
         </div>
     </div>

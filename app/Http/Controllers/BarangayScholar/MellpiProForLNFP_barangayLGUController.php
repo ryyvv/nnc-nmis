@@ -84,6 +84,7 @@ class MellpiProForLNFP_barangayLGUController extends Controller
             $rules = [
                 'dateMonitoring' => 'required',
                 'periodCovereda' => 'required',
+                'numOfMun' => 'required',
                 'totalPopulation' => 'required',
                 'householdWater' => 'required',
                 'householdToilets' => 'required',
@@ -227,6 +228,7 @@ class MellpiProForLNFP_barangayLGUController extends Controller
                 $LNFPProfileBarangay = lnfp_lguprofile::create([
                     'dateMonitoring' => $request->dateMonitoring,
                     'periodCovereda' => $request->periodCovereda,
+                    'numOfMuni' => $request->numOfMun,
                     'totalPopulation' => $request->totalPopulation,
                     'householdWater' => $request->householdWater,
                     'householdToilets' => $request->householdToilets,
@@ -400,6 +402,7 @@ class MellpiProForLNFP_barangayLGUController extends Controller
             $LNFPProfileBarangay = lnfp_lguprofile::create([
                 'dateMonitoring' => $request->dateMonitoring,
                 'periodCovereda' => $request->periodCovereda,
+                'numOfMuni' => $request->numOfMun,
                 'totalPopulation' => $request->totalPopulation,
                 'householdWater' => $request->householdWater,
                 'householdToilets' => $request->householdToilets,
@@ -578,10 +581,147 @@ class MellpiProForLNFP_barangayLGUController extends Controller
             # code...
             try {
                 //code...
+                $rules = [
+                    'dateMonitoring' => 'required',
+                    'periodCovereda' => 'required',
+                    'numOfMun' => 'required',
+                    'totalPopulation' => 'required',
+                    'householdWater' => 'required',
+                    'householdToilets' => 'required',
+                    'dayCareCenter' => 'required',
+                    'elementary' => 'required',
+                    'secondarySchool' => 'required',
+                    'healthStations' => 'required',
+                    'retailOutlets' => 'required',
+                    'bakeries' => 'required',
+                    'markets' => 'required',
+                    'transportTerminals' => 'required',
+                    'breastfeeding' => 'required',
+                    'hazards' => 'required',
+                    'affectedLGU' => 'required',
+                    'noHousehold' => 'required',
+                    'noPuroks' => 'required',
+                    'populationA' => 'required',
+                    'populationB' => 'required',
+                    'populationC' => 'required',
+                    'populationD' => 'required',
+                    'populationE' => 'required',
+                    'populationF' => 'required',
+                    'actualA' => 'required',
+                    'actualB' => 'required',
+                    'actualC' => 'required',
+                    'actualD' => 'required',
+                    'actualE' => 'required',
+                    'actualF' => 'required',
+                    'psnormalAAA' => 'required',
+                    'psunderweightAAA' => 'required',
+                    'pssevereUnderweightAAA' => 'required',
+                    'psoverweightAAA' => 'required',
+                    'psnormalBAA' => 'required',
+                    'psunderweightBAA' => 'required',
+                    'pssevereUnderweightBAA' => 'required',
+                    'psoverweightBAA' => 'required',
+                    'psnormalCAA' => 'required',
+                    'psunderweightCAA' => 'required',
+                    'pssevereUnderweightCAA' => 'required',
+                    'psoverweightCAA' => 'required',
+                    'psnormalABA' => 'required',
+                    'pswastedABA' => 'required',
+                    'psseverelyWastedABA' => 'required',
+                    'psoverweightABA' => 'required',
+                    'psobeseABA' => 'required',
+                    'psnormalBBA' => 'required',
+                    'pswastedBBA' => 'required',
+                    'psseverelyWastedBBA' => 'required',
+                    'psoverweightBBA' => 'required',
+                    'psobeseBBA' => 'required',
+                    'psnormalCCA' => 'required',
+                    'pswastedCCA' => 'required',
+                    'psseverelyWastedCCA' => 'required',
+                    'psoverweightCCA' => 'required',
+                    'psobeseCCA' => 'required',
+                    'psnormalAAB' => 'required',
+                    'psstuntedAAB' => 'required',
+                    'pssevereStuntedAAB' => 'required',
+                    'pstallAAB' => 'required',
+                    'psnormalBBB' => 'required',
+                    'psstuntedBBB' => 'required',
+                    'pssevereStuntedBBB' => 'required',
+                    'pstallBBB' => 'required',
+                    'psnormalCCC' => 'required',
+                    'psstuntedCCC' => 'required',
+                    'pssevereStuntedCCC' => 'required',
+                    'pstallCCC' => 'required',
+                    'scnormalABA' => 'required',
+                    'scwastedABA' => 'required',
+                    'scseverelyWastedABA' => 'required',
+                    'scoverweightABA' => 'required',
+                    'scobeseABA' => 'required',
+                    'scnormalBBA' => 'required',
+                    'scwastedBBA' => 'required',
+                    'scseverelyWastedBBA' => 'required',
+                    'scoverweightBBA' => 'required',
+                    'scobeseBBA' => 'required',
+                    'scnormalCCA' => 'required',
+                    'scwastedCCA' => 'required',
+                    'scseverelyWastedCCA' => 'required',
+                    'scoverweightCCA' => 'required',
+                    'scobeseCCA' => 'required',
+                    'pwnormalAAA' => 'required',
+                    'pwnutritionllyatriskAAA' => 'required',
+                    'pwoverweightAAA' => 'required',
+                    'pwobeseAAA' => 'required',
+                    'pwnormalBAA' => 'required',
+                    'pwnutritionllyatriskBAA' => 'required',
+                    'pwoverweightBAA' => 'required',
+                    'pwobeseBAA' => 'required',
+                    'pwnormalCAA' => 'required',
+                    'pwnutritionllyatriskCAA' => 'required',
+                    'pwoverweightCAA' => 'required',
+                    'pwobeseCAA' => 'required',
+                    'newNutritionScholar' => 'required',
+                    'oldNutritionScholar' => 'required',
+                    'landAreaResidential' => 'required',
+                    'remarksResidential' => 'required',
+                    'landAreaCommercial' => 'required',
+                    'remarksCommercial' => 'required',
+                    'landAreaIndustrial' => 'required',
+                    'remarksIndustrial' => 'required',
+                    'landAreaAgricultural' => 'required',
+                    'remarksAgricultural' => 'required',
+                    'landAreaFLMLNP' => 'required',
+                    'remarksFLMLNP' => 'required',
+        
+                ];
+        
+        
+                $message = [
+                    'required' => 'The field is required.',
+                    'integer' => 'The field must be a integer.',
+                    'string' => 'The field must be a string.',
+                    'date' => 'The field must be a valid date.',
+                    'max' => 'The field may not be greater than :max characters.',
+                ];
+
+                $input = $request->all();
+            // $input = array_map('trim', $input);
+    
+            $validator = Validator::make($input, $rules, $message);
+    
+            if ($validator->fails()) {
+                Log::error($validator->errors());
+                return redirect()->back()
+                    ->withErrors($validator)
+                    ->withInput()
+                    ->with('error', 'Something went wrong! Please try again.');
+    
+                
+            } else {
                 $updateResponse = lnfp_lguprofile::where('id', $request->id)
                 ->update([
                     'dateMonitoring' => $request->dateMonitoring,
                     'periodCovereda' => $request->periodCovereda,
+                    'numOfMuni' => $request->numOfMun,
                     'totalPopulation' => $request->totalPopulation,
                     'householdWater' => $request->householdWater,
                     'householdToilets' => $request->householdToilets,
@@ -725,6 +865,7 @@ class MellpiProForLNFP_barangayLGUController extends Controller
                 ]);
 
                 return redirect()->route('BSLGUprofileLNFPIndex.index')->with('alert', 'Data Created Successfully!');
+            }
             } catch (\Throwable $th) {
                 //throw $th;
                 return "An error occured: " . $th->getMessage();
@@ -737,6 +878,7 @@ class MellpiProForLNFP_barangayLGUController extends Controller
                 ->update([
                     'dateMonitoring' => $request->dateMonitoring,
                     'periodCovereda' => $request->periodCovereda,
+                    'numOfMuni' => $request->numOfMun,
                     'totalPopulation' => $request->totalPopulation,
                     'householdWater' => $request->householdWater,
                     'householdToilets' => $request->householdToilets,

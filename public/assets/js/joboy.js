@@ -11,36 +11,28 @@ $(document).ready(function() {
         document.getElementById('currentYearMinus1').innerText = selectedPeriod-1;
         document.getElementById('currentYearMinus2').innerText = selectedPeriod-2;
 
+        document.getElementById('currentYearb').innerText = selectedPeriod;
+        document.getElementById('currentYearMinus1b').innerText = selectedPeriod-1;
+        document.getElementById('currentYearMinus2b').innerText = selectedPeriod-2;
+
+        document.getElementById('currentYearc').innerText = selectedPeriod;
+        document.getElementById('currentYearMinus1c').innerText = selectedPeriod-1;
+        document.getElementById('currentYearMinus2c').innerText = selectedPeriod-2;
+
+        document.getElementById('currentYeard').innerText = selectedPeriod;
+        document.getElementById('currentYearMinus1d').innerText = selectedPeriod-1;
+        document.getElementById('currentYearMinus2d').innerText = selectedPeriod-2;
+
+        document.getElementById('currentYeare').innerText = selectedPeriod;
+        document.getElementById('currentYearMinus1e').innerText = selectedPeriod-1;
+        document.getElementById('currentYearMinus2e').innerText = selectedPeriod-2;
+
     });
 
 
 });
 
-$(function() {
-    // Submit LGU Profile
-    $('#lgu-submit').on('click', function(e) {
-        document.getElementById('status').value = 1;
-        $('#lgu-profile-form').submit();
-    });
 
-    // Draft LGU Profile
-    $('#lgu-draft').on('click', function(e) {
-        document.getElementById('status').value = 2;
-        $('#lgu-profile-form').submit();
-    });
-
-    // $('#lgu-submit-edit').on('click', function(e) {
-    //     document.getElementById('status').value = 1;
-    //     $('#lgu-profile-form-edit').submit();
-    // });
-
-    // // Draft LGU Profile
-    // $('#lgu-draft-edit').on('click', function(e) {LNFP_form_id
-    //     document.getElementById('status').value = 2;
-    //     $('#lgu-profile-form-edit').submit();
-    // });
-
-});
 
 $(function() {
     // Submit LNFP Profile
@@ -129,6 +121,23 @@ $(function() {
 
     // Draft LNFP Interview Form
     $('#lnfpInterviewForm-draft').on('click', function(e) {
+        document.getElementsByName('DraftStatus').value = 2;
+        var actionDraft = document.getElementById('action');
+        actionDraft.value = "draft";
+        $('#lnfp-interview-form').submit();
+    });
+});
+$(function() {
+    // Submit LNFP Interview Form
+    $('#lnfpInterviewForm-submit-with-id').on('click', function(e) {
+        document.getElementsByName('submitStatus').value = 1;
+        var actionSubmit = document.getElementById('action');
+        actionSubmit.value = "submit";
+        $('#lnfp-interview-form').submit();
+    });
+
+    // Draft LNFP Interview Form
+    $('#lnfpInterviewForm-draft-with-id').on('click', function(e) {
         document.getElementsByName('DraftStatus').value = 2;
         var actionDraft = document.getElementById('action');
         actionDraft.value = "draft";
@@ -379,13 +388,7 @@ function confirmDeleteLNFP_IntForm(){
 
  /////
 
-
-//Delete Entry
-
-function openModal(id) {
-    profileId = id; // Store the ID
-    $('#deleteModal').modal('show'); // Show the modal
-}
+ 
 
 
 // Mellpi Pro For LGU  delete
@@ -507,34 +510,7 @@ function confirmDeleteLNC(){
     }
 };
 
-function confirmDeleteNP(){
 
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    // console.log(profileId);
-    if (profileId) { // Check if profileId has been set
-        $.ajax({
-            url: "nutritionpolicies/delete", // Ensure the URL is correct
-            data: { id: profileId },
-            type: 'POST',
-            success: function(result) {
-                setTimeout(function() {
-                    window.location.reload(); // Reload the page after a delay
-                }, 2000); // Delay before reload (2 seconds)
-                $('#successAlert').removeClass('d-none').fadeIn(); // Show success alert
-               
-            },
-            error: function(xhr) {
-                alert('Error deleting profile: ' + xhr.responseText);
-            }
-        });
-        $('#deleteModal').modal('hide'); // Hide the modal
-    }
-};
 
 
 new DataTable('#myTable');

@@ -22,8 +22,9 @@
 
             </div>
             
-            <!-- alerts -->
-            @include('layouts.page_template.crud_alert_message')
+
+                <!-- alerts -->
+                @include('layouts.page_template.crud_alert_message') 
  
 
             <div class="content" style="margin:30px;">

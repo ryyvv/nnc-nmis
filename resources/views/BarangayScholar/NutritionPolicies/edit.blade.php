@@ -66,8 +66,7 @@
                                 <th class="tableheader text-center"><b>Rating</b></th>
                                 <th class="tableheader  text-center"><b>Remarks</b></th>
                             </thead>
-                            <tbody>
-                                <tr>
+                            <tbody> 
                                 <tr>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
@@ -78,8 +77,7 @@
                                     <td class="bold text-center">5</td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                </tr>
+                                    <td>&nbsp;</td> 
                                 </tr>
                                 <tr>
                                     <td>2a</td>
@@ -92,17 +90,23 @@
                                     <td>Resolutions Barangay Nutrition Action Plan Approved Annual Budget PPAN Accomplishment Report Minutes of meeting</td>
                                     <td>
                                         <select id="loadProvince1" class="form-control" name="rating2a">
-                                            <option>Select</option>
+                                            <option value="">Choose...</option> 
                                             <option value="1" {{ old('rating2a', $row->rating2a) == '1' ? 'selected' : '' }}>1</option>
                                             <option value="2" {{ old('rating2a', $row->rating2a) == '2' ? 'selected' : '' }}>2</option>
                                             <option value="3" {{ old('rating2a', $row->rating2a) == '3' ? 'selected' : '' }}>3</option>
                                             <option value="4" {{ old('rating2a', $row->rating2a) == '4' ? 'selected' : '' }}>4</option>
                                             <option value="5" {{ old('rating2a', $row->rating2a) == '5' ? 'selected' : '' }}>5</option>
                                         </select>
+                                    @error('rating2a')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                     </td>
                                     <td>
                                         <textarea name="remarks2a" class="form-control">{{ old('remarks2a', $row->remarks2a) }}</textarea>
-                                    </td>
+                                        @error('remarks2a')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </td>
                                 </tr>
                                 <tr>
                                     <td>2b</td>
@@ -137,15 +141,23 @@
                                         Documentation of posting and/or dissemination activities;</td>
                                     <td>
                                         <select id="loadProvince1" class="form-control" name="rating2b">
-                                            <option>Select</option>
+                                            <option value="">Choose...</option> 
                                             <option value="1" {{ old('rating2b', $row->rating2b) == '1' ? 'selected' : '' }}>1</option>
                                             <option value="2" {{ old('rating2b', $row->rating2b) == '2' ? 'selected' : '' }}>2</option>
                                             <option value="3" {{ old('rating2b', $row->rating2b) == '3' ? 'selected' : '' }}>3</option>
                                             <option value="4" {{ old('rating2b', $row->rating2b) == '4' ? 'selected' : '' }}>4</option>
                                             <option value="5" {{ old('rating2b', $row->rating2b) == '5' ? 'selected' : '' }}>5</option>
                                         </select>
+                                        @error('rating2b')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                     </td>
-                                    <td><textarea name="remarks2b" class="form-control">{{ old('remarks2b', $row->remarks2b) }}</textarea></td>
+                                    <td>
+                                        <textarea name="remarks2b" class="form-control">{{ old('remarks2b', $row->remarks2b) }}</textarea>
+                                        @error('remarks2b')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </td>
                                 </tr>
                                 <tr>
                                     <td>2c</td>
@@ -175,15 +187,23 @@
                                     <td>Annual Investment Program</td>
                                     <td>
                                         <select id="loadProvince1" class="form-control" name="rating2c">
-                                            <option>Select</option>
+                                            <option value="">Choose...</option> 
                                             <option value="1" {{ old('rating2c', $row->rating2c) == '1' ? 'selected' : '' }}>1</option>
                                             <option value="2" {{ old('rating2c', $row->rating2c) == '2' ? 'selected' : '' }}>2</option>
                                             <option value="3" {{ old('rating2c', $row->rating2c) == '3' ? 'selected' : '' }}>3</option>
                                             <option value="4" {{ old('rating2c', $row->rating2c) == '4' ? 'selected' : '' }}>4</option>
                                             <option value="5" {{ old('rating2c', $row->rating2c) == '5' ? 'selected' : '' }}>5</option>
                                         </select>
+                                        @error('rating2c') 
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                                     </td>
-                                    <td><textarea name="remarks2c" class="form-control">{{ old('remarks2c', $row->remarks2c) }}</textarea></td>
+                                    <td>
+                                        <textarea name="remarks2c" class="form-control">{{ old('remarks2c', $row->remarks2c) }}</textarea>
+                                        @error('remarks2c') 
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror 
+                            </td>
                                 </tr>
                                 <tr>
                                     <td>2d</td>
@@ -228,15 +248,23 @@
                                     </td>
                                     <td>
                                         <select id="loadProvince1" class="form-control" name="rating2d">
-                                            <option>Select</option>
+                                            <option value="">Choose...</option> 
                                             <option value="1" {{ old('rating2d', $row->rating2d) == '1' ? 'selected' : '' }}>1</option>
                                             <option value="2" {{ old('rating2d', $row->rating2d) == '2' ? 'selected' : '' }}>2</option>
                                             <option value="3" {{ old('rating2d', $row->rating2d) == '3' ? 'selected' : '' }}>3</option>
                                             <option value="4" {{ old('rating2d', $row->rating2d) == '4' ? 'selected' : '' }}>4</option>
                                             <option value="5" {{ old('rating2d', $row->rating2d) == '5' ? 'selected' : '' }}>5</option>
                                         </select>
+                                        @error('rating2d') 
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                                     </td>
-                                    <td><textarea name="remarks2d" class="form-control">{{ old('remarks2d', $row->remarks2d) }}</textarea></td>
+                                    <td>
+                                        <textarea name="remarks2d" class="form-control">{{ old('remarks2d', $row->remarks2d) }}</textarea>
+                                        @error('remarks2d') 
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </td>
                                 </tr>
                                 <tr>
                                     <td>2e</td>
@@ -291,15 +319,23 @@
                                     </td>
                                     <td>
                                         <select id="loadProvince1" class="form-control" name="rating2e">
-                                            <option>Select</option>
+                                            <option value="">Choose...</option> 
                                             <option value="1" {{ old('rating2e', $row->rating2e) == '1' ? 'selected' : '' }}>1</option>
                                             <option value="2" {{ old('rating2e', $row->rating2e) == '2' ? 'selected' : '' }}>2</option>
                                             <option value="3" {{ old('rating2e', $row->rating2e) == '3' ? 'selected' : '' }}>3</option>
                                             <option value="4" {{ old('rating2e', $row->rating2e) == '4' ? 'selected' : '' }}>4</option>
                                             <option value="5" {{ old('rating2e', $row->rating2e) == '5' ? 'selected' : '' }}>5</option>
                                         </select>
+                                        @error('rating2e') 
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                     </td>
-                                    <td> <textarea class="form-control" name="remarks2e">{{ old('remarks2e', $row->remarks2e) }}</textarea></td>
+                                    <td> 
+                                        <textarea class="form-control" name="remarks2e">{{ old('remarks2e', $row->remarks2e) }}</textarea>
+                                    @error('remarks2e') 
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>2f</td>
@@ -339,15 +375,23 @@
                                     </td>
                                     <td>
                                         <select id="loadProvince1" class="form-control" name="rating2f">
-                                            <option>Select</option>
+                                            <option value="">Choose...</option> 
                                             <option value="1" {{ old('rating2f', $row->rating2f) == '1' ? 'selected' : '' }}>1</option>
                                             <option value="2" {{ old('rating2f', $row->rating2f) == '2' ? 'selected' : '' }}>2</option>
                                             <option value="3" {{ old('rating2f', $row->rating2f) == '3' ? 'selected' : '' }}>3</option>
                                             <option value="4" {{ old('rating2f', $row->rating2f) == '4' ? 'selected' : '' }}>4</option>
                                             <option value="5" {{ old('rating2f', $row->rating2f) == '5' ? 'selected' : '' }}>5</option>
                                         </select>
+                                        @error('rating2f') 
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                     </td>
-                                    <td><textarea class="form-control" name="remarks2f">{{ old('remarks2f', $row->remarks2f) }}</textarea></td>
+                                    <td>
+                                        <textarea class="form-control" name="remarks2f">{{ old('remarks2f', $row->remarks2f) }}</textarea>
+                                        @error('remarks2f') 
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </td>
 
                                 </tr>
                                 <tr>
@@ -385,14 +429,22 @@
                                         fortified foods
                                     </td>
                                     <td><select id="loadProvince1" class="form-control" name="rating2g">
-                                            <option>Select</option>
+                                        <option value="">Choose...</option> 
                                             <option value="1" {{ old('rating2g', $row->rating2g) == '1' ? 'selected' : '' }}>1</option>
                                             <option value="2" {{ old('rating2g', $row->rating2g) == '2' ? 'selected' : '' }}>2</option>
                                             <option value="3" {{ old('rating2g', $row->rating2g) == '3' ? 'selected' : '' }}>3</option>
                                             <option value="4" {{ old('rating2g', $row->rating2g) == '4' ? 'selected' : '' }}>4</option>
                                             <option value="5" {{ old('rating2g', $row->rating2g) == '5' ? 'selected' : '' }}>5</option>
-                                        </select></td>
-                                    <td><textarea class="form-control" name="remarks2g">{{ old('remarks2g', $row->remarks2g) }}</textarea></td>
+                                        </select>
+                                        @error('rating2g') 
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                    </td>
+                                    <td><textarea class="form-control" name="remarks2g">{{ old('remarks2g', $row->remarks2g) }}</textarea>
+                                    @error('remarks2g') 
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </td>
                                 </tr>
                                 <tr>
                                     <td>2h</td>
@@ -449,15 +501,22 @@
                                     </td>
                                     <td>
                                         <select id="loadProvince1" class="form-control" name="rating2h">
-                                            <option>Select</option>
+                                            <option value="">Choose...</option> 
                                             <option value="1" {{ old('rating2h', $row->rating2h) == '1' ? 'selected' : '' }}>1</option>
                                             <option value="2" {{ old('rating2h', $row->rating2h) == '2' ? 'selected' : '' }}>2</option>
                                             <option value="3" {{ old('rating2h', $row->rating2h) == '3' ? 'selected' : '' }}>3</option>
                                             <option value="4" {{ old('rating2h', $row->rating2h) == '4' ? 'selected' : '' }}>4</option>
                                             <option value="5" {{ old('rating2h', $row->rating2h) == '5' ? 'selected' : '' }}>5</option>
                                         </select>
+                                        @error('rating2h') 
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                     </td>
-                                    <td><textarea class="form-control" name="remarks2h">{{ old('remarks2h', $row->remarks2h) }}</textarea></td>
+                                    <td>
+                                        <textarea class="form-control" name="remarks2h">{{ old('remarks2h', $row->remarks2h) }}</textarea>
+                                    @error('remarks2h') 
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror</td>
                                 </tr>
                                 <tr>
                                     <td>2i</td>
@@ -511,15 +570,23 @@
                                     </td>
                                     <td>
                                         <select id="loadProvince1" class="form-control" name="rating2i">
-                                            <option>Select</option>
+                                            <option value="">Choose...</option> 
                                             <option value="1" {{ old('rating2i', $row->rating2i) == '1' ? 'selected' : '' }}>1</option>
                                             <option value="2" {{ old('rating2i', $row->rating2i) == '2' ? 'selected' : '' }}>2</option>
                                             <option value="3" {{ old('rating2i', $row->rating2i) == '3' ? 'selected' : '' }}>3</option>
                                             <option value="4" {{ old('rating2i', $row->rating2i) == '4' ? 'selected' : '' }}>4</option>
                                             <option value="5" {{ old('rating2i', $row->rating2i) == '5' ? 'selected' : '' }}>5</option>
                                         </select>
+                                        @error('rating2i') 
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </td>
-                                    <td><textarea class="form-control" name="remarks2i">{{ old('remarks2i', $row->remarks2i) }}</textarea></td>
+                                    <td>
+                                        <textarea class="form-control" name="remarks2i">{{ old('remarks2i', $row->remarks2i) }}</textarea>
+                                        @error('remarks2i') 
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>2j</td>
@@ -577,16 +644,22 @@
                                     </td>
                                     <td>
                                         <select id="loadProvince1" class="form-control" name="rating2j">
-                                            <option>Select</option>
+                                            <option value="">Choose...</option> 
                                             <option value="1" {{ old('rating2j', $row->rating2j) == '1' ? 'selected' : '' }}>1</option>
                                             <option value="2" {{ old('rating2j', $row->rating2j) == '2' ? 'selected' : '' }}>2</option>
                                             <option value="3" {{ old('rating2j', $row->rating2j) == '3' ? 'selected' : '' }}>3</option>
                                             <option value="4" {{ old('rating2j', $row->rating2j) == '4' ? 'selected' : '' }}>4</option>
                                             <option value="5" {{ old('rating2j', $row->rating2j) == '5' ? 'selected' : '' }}>5</option>
                                         </select>
+                                        @error('rating2j') 
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                     </td>
                                     <td>
                                         <textarea class="form-control" name="remarks2j">{{ old('remarks2j', $row->remarks2j) }}</textarea>
+                                        @error('remarks2j') 
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                     </td>
                                 </tr>
                                 <tr>
@@ -636,16 +709,22 @@
                                     </td>
                                     <td>
                                         <select id="loadProvince1" class="form-control" name="rating2k">
-                                            <option>Select</option>
+                                            <option value="">Choose...</option> 
                                             <option value="1" {{ old('rating2k', $row->rating2k) == '1' ? 'selected' : '' }}>1</option>
                                             <option value="2" {{ old('rating2k', $row->rating2k) == '2' ? 'selected' : '' }}>2</option>
                                             <option value="3" {{ old('rating2k', $row->rating2k) == '3' ? 'selected' : '' }}>3</option>
                                             <option value="4" {{ old('rating2k', $row->rating2k) == '4' ? 'selected' : '' }}>4</option>
                                             <option value="5" {{ old('rating2k', $row->rating2k) == '5' ? 'selected' : '' }}>5</option>
                                         </select>
+                                        @error('rating2k') 
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                     </td>
                                     <td>
                                         <textarea class="form-control" name="remarks2k">{{ old('remarks2k', $row->remarks2k) }}</textarea>
+                                        @error('remarks2k') 
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                     </td>
                                 </tr>
                                 <tr>
@@ -690,16 +769,22 @@
                                     </td>
                                     <td>
                                         <select id="loadProvince1" class="form-control" name="rating2l">
-                                            <option>Select</option>
+                                        <option value="">Choose...</option> 
                                             <option value="1" {{ old('rating2l', $row->rating2l) == '1' ? 'selected' : '' }}>1</option>
                                             <option value="2" {{ old('rating2l', $row->rating2l) == '2' ? 'selected' : '' }}>2</option>
                                             <option value="3" {{ old('rating2l', $row->rating2l) == '3' ? 'selected' : '' }}>3</option>
                                             <option value="4" {{ old('rating2l', $row->rating2l) == '4' ? 'selected' : '' }}>4</option>
                                             <option value="5" {{ old('rating2l', $row->rating2l) == '5' ? 'selected' : '' }}>5</option>
                                         </select>
+                                        @error('rating2l') 
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </td>
                                     <td>
                                         <textarea class="form-control" name="remarks2l">{{ old('remarks2l', $row->remarks2l) }}</textarea>
+                                        @error('remarks2l') 
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </td>
                                 </tr>
                             </tbody>

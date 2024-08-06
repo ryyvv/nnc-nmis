@@ -25,7 +25,7 @@
                     @include('layouts.page_template.crud_alert_message')
 
                     <div>
-                        <form action="{{ route('MellpiProForLNFPUpdate.storeUpdateASForm8', $form8->id) }}" method="post" id="lnfp-form8-form">
+                        <form action="{{ route('MellpiProForLNFPUpdate.storeUpdateASForm8', $form8->id) }}" method="post" id="lnfp-form8-form" enctype="multipart/form-data">
                             @csrf
 
                             @if ($form8)
@@ -168,7 +168,10 @@
                                                 @error('desigOffice1')
                                                 <div class="text-danger">{{ $message }}</div>
                                                 @enderror</td>
-                                                <td class="col-md-4"><input type="file" class="form8InputB" name="sigDate1" value="{{ $form8->sigDate1 }}"><img src="{{ Storage::url($form8->sigDate1) }}" alt="Sig Date 1" style="width: 200px; height: 150px;">
+                                                <td class="col-md-4"><input type="file" class="form8InputB" name="sigDate1">
+                                                @if($form8->sigDate1)
+                                                    <img src="{{ Storage::url($form8->sigDate1) }}" alt="Sig Date 1" style="width: 200px; height: 150px;">
+                                                @endif
                                                 @error('sigDate1')
                                                 <div class="text-danger">{{ $message }}</div>
                                                 @enderror</td>
@@ -182,7 +185,10 @@
                                                 @error('desigOffice2')
                                                 <div class="text-danger">{{ $message }}</div>
                                                 @enderror</td>
-                                                <td class="col-md-4"><input type="file" class="form8InputB" name="sigDate2" value="{{ $form8->sigDate2 }}"><img src="{{ Storage::url($form8->sigDate2) }}" alt="Sig Date 2" style="width: 200px; height: 150px;">
+                                                <td class="col-md-4"><input type="file" class="form8InputB" name="sigDate2">
+                                                @if($form8->sigDate2)
+                                                    <img src="{{ Storage::url($form8->sigDate2) }}" alt="Sig Date 2" style="width: 200px; height: 150px;">
+                                                @endif
                                                 @error('sigDate2')
                                                 <div class="text-danger">{{ $message }}</div>
                                                 @enderror</td>
@@ -196,7 +202,10 @@
                                                 @error('desigOffice3')
                                                 <div class="text-danger">{{ $message }}</div>
                                                 @enderror</td>
-                                                <td class="col-md-4"><input type="file" class="form8InputB" name="sigDate3" value="{{ $form8->sigDate3 }}"><img src="{{ Storage::url($form8->sigDate3) }}" alt="Sig Date 3" style="width: 200px; height: 150px;">
+                                                <td class="col-md-4"><input type="file" class="form8InputB" name="sigDate3">
+                                                @if($form8->sigDate3)
+                                                    <img src="{{ Storage::url($form8->sigDate3) }}" alt="Sig Date 3" style="width: 200px; height: 150px;">
+                                                @endif
                                                 @error('sigDate3')
                                                 <div class="text-danger">{{ $message }}</div>
                                                 @enderror</td>

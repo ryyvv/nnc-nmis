@@ -22,7 +22,7 @@
             </div>
 
 
-            <div class="content" style="margin:30px;">
+            <div class="content"  id="deleteAlert"  style="margin:30px;">
 
                 <!-- alerts -->
                 @include('layouts.page_template.crud_alert_message')
@@ -110,7 +110,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" onclick="confirmDeleteMission()">Sure</button>
+                <button type="button" class="btn btn-danger" onclick="confirmDeleteVM()">Sure</button>
             </div>
         </div>
     </div>

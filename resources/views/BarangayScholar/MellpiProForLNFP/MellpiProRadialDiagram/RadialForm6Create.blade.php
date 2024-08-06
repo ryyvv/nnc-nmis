@@ -241,11 +241,21 @@
                                     <table id="form7Discussion" class="table table-striped table-bordered" style="width: 100%;">
                                         <thead>
                                             <tr>
-                                                <td>Parameters</td>
-                                                <td>Accomplishments of the PNAO</td>
-                                                <td>Good practices related to the Accomplishments of the PNAO</td>
-                                                <td>Issues and challenges encountered</td>
-                                                <td>Actions taken by PNOA to address issues and challenges</td>
+                                                <td class="col-md-2">
+                                                    <center>Parameters</center>
+                                                </td>
+                                                <td class="col-md-2">
+                                                    <center>Accomplishments of the PNAO</center>
+                                                </td>
+                                                <td class="col-md-2">
+                                                    <center>Good practices related to the Accomplishments of the PNAO</center>
+                                                </td>
+                                                <td class="col-md-2">
+                                                    <center>Issues and challenges encountered</center>
+                                                </td>
+                                                <td class="col-md-2">
+                                                    <center>Actions taken by PNOA to address issues and challenges</center>
+                                                </td>
                                             </tr>
                                         </thead>
                                         <tbody>

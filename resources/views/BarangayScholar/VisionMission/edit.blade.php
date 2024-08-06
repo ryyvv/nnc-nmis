@@ -90,15 +90,25 @@
                                 <td>The vision mission statement for nutrition program exists and disseminated to BNC members and other stakeholders</td>
                                 <td>The vision mission statement for nutrition program exists and to BNC members, stakeholders and to the rest of the community</td>
                                 <td> Barangay Nutrition Action Plan Minutes of Meeting Documentation of dissemination</td>
-                                <td> <select id="loadProvince1" class="form-control" name="rating1a" >
-                                <option >Select</option>
-                                <option value="1" {{ old('rating1a', $row->rating1a) == '1' ? 'selected' : '' }}>1</option>
-                                <option value="2" {{ old('rating1a', $row->rating1a) == '2' ? 'selected' : '' }}>2</option>
-                                <option value="3" {{ old('rating1a', $row->rating1a) == '3' ? 'selected' : '' }}>3</option>
-                                <option value="4" {{ old('rating1a', $row->rating1a) == '4' ? 'selected' : '' }}>4</option>
-                                <option value="5" {{ old('rating1a', $row->rating1a) == '5' ? 'selected' : '' }}>5</option>
-                                </select></td>
-                                <td><textarea class="form-control" name="remarks1a" >{{ old('remarks1a', $row->remarks1a) }}</textarea></td>
+                                <td>
+                                  <select id="loadProvince1" class="form-control" name="rating1a" >
+                                    <option value="">Select</option>
+                                    <option value="1" {{ old('rating1a', $row->rating1a) == '1' ? 'selected' : '' }}>1</option>
+                                    <option value="2" {{ old('rating1a', $row->rating1a) == '2' ? 'selected' : '' }}>2</option>
+                                    <option value="3" {{ old('rating1a', $row->rating1a) == '3' ? 'selected' : '' }}>3</option>
+                                    <option value="4" {{ old('rating1a', $row->rating1a) == '4' ? 'selected' : '' }}>4</option>
+                                    <option value="5" {{ old('rating1a', $row->rating1a) == '5' ? 'selected' : '' }}>5</option>
+                                  </select>
+                                  @error('rating1a')
+                                    <div class="text-danger">{{ $message }}</div>
+                                  @enderror
+                              </td>
+                                <td>
+                                  <textarea class="form-control" name="remarks1a" >{{ old('remarks1a', $row->remarks1a) }}</textarea>
+                                  @error('remarks1a')
+                                    <div class="text-danger">{{ $message }}</div>
+                                  @enderror
+                                </td>
                             </tr>
                             <tr>
                                 <td>1b</td>
@@ -109,15 +119,24 @@
                                 <td>Nutrition-related objectives are included in at least three of the sectoral plans </td>
                                 <td>Nutrition outcomes included in the overall success indicators of the Barangay Development Plan</td>
                                 <td>Barangay Development Plan</td>
-                                <td><select id="loadProvince1" class="form-control" name="rating1b"  > 
-                                <option value="1" {{ old('rating1b', $row->rating1b) == '1' ? 'selected' : '' }}>1</option>
-                                <option value="2" {{ old('rating1b', $row->rating1b) == '2' ? 'selected' : '' }}>2</option>
-                                <option value="3" {{ old('rating1b', $row->rating1b) == '3' ? 'selected' : '' }}>3</option>
-                                <option value="4" {{ old('rating1b', $row->rating1b) == '4' ? 'selected' : '' }}>4</option>
-                                <option value="5" {{ old('rating1b', $row->rating1b) == '5' ? 'selected' : '' }}>5</option>
-                                </select></td>
+                                <td>
+                                  <select id="loadProvince1" class="form-control" name="rating1b"  > 
+                                  <option value="">Select</option>
+                                    <option value="1" {{ old('rating1b', $row->rating1b) == '1' ? 'selected' : '' }}>1</option>
+                                    <option value="2" {{ old('rating1b', $row->rating1b) == '2' ? 'selected' : '' }}>2</option>
+                                    <option value="3" {{ old('rating1b', $row->rating1b) == '3' ? 'selected' : '' }}>3</option>
+                                    <option value="4" {{ old('rating1b', $row->rating1b) == '4' ? 'selected' : '' }}>4</option>
+                                    <option value="5" {{ old('rating1b', $row->rating1b) == '5' ? 'selected' : '' }}>5</option>
+                                  </select>
+                                  @error('rating1b')
+                                    <div class="text-danger">{{ $message }}</div>
+                                  @enderror
+                              </td>
                                 <td>
                                 <textarea  class="form-control" name="remarks1b"> {{ old('remarks1b', $row->remarks1b) }}</textarea>
+                                @error('remarks1b')
+                                  <div class="text-danger">{{ $message }}</div>
+                                @enderror
                                 </td>
                             </tr>
                             <tr>
@@ -131,16 +150,22 @@
                                 <td>Annual Investment Program</td>
                                 <td>
                                     <select id="loadProvince1" class="form-control" name="rating1c"  >
-                                    <option>Select</option>
+                                    <option value="">Select</option>
                                     <option value="1" {{ old('rating1c', $row->rating1c) == '1' ? 'selected' : '' }}>1</option>
                                     <option value="2" {{ old('rating1c', $row->rating1c) == '2' ? 'selected' : '' }}>2</option>
                                     <option value="3" {{ old('rating1c', $row->rating1c) == '3' ? 'selected' : '' }}>3</option>
                                     <option value="4" {{ old('rating1c', $row->rating1c) == '4' ? 'selected' : '' }}>4</option>
                                     <option value="5" {{ old('rating1c', $row->rating1c) == '5' ? 'selected' : '' }}>5</option>
                                     </select>
+                                    @error('rating1c')
+                                      <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </td>
                                 <td>
                                 <textarea class="form-control"  name="remarks1c">{{ old('remarks1c', $row->remarks1c) }}</textarea>
+                                @error('remarks1c')
+                                    <div class="text-danger">{{ $message }}</div>
+                                  @enderror
                             </tr>
 
 

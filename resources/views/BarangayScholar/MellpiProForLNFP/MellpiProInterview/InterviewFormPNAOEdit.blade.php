@@ -23,7 +23,7 @@
                     @endif
 
                     <div style="padding:25px">
-                        <form action="{{ route('lnfpInterviewStore') }}" method="post" id="lnfp-interview-form">
+                        <form action="{{ route('MellpiProForLNFPUpdate.storeUpdateIntForm', $InterviewForm->id) }}" method="post" id="lnfp-interview-form">
                             @csrf
 
                             @if($InterviewForm)
@@ -169,10 +169,12 @@
                                         </tbody>
                                     </table>
                                     <br>
+                                    @if($InterviewForm->status == 2)
                                     <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
                                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalDraft">Save as Draft</button>
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalSubmit">Save and Submit</button>
                                     </div>
+                                    @endif
                                 </div>
                             </div>
 

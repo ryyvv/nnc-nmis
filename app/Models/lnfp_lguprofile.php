@@ -11,7 +11,8 @@ class lnfp_lguprofile extends Model
 
     protected $fillable = [
         'dateMonitoring',
-        'periodCovereda', 
+        'periodCovereda',
+        'numOfMuni',  
         'totalPopulation',
         'householdWater',
         'householdToilets',
