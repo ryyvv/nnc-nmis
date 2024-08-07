@@ -78,7 +78,7 @@
                                     <th class="tableheader text-center"><b>Elements</b></th>
                                     <th colspan="5" class="tableheader text-center"><b>Performance Level<b></th>
                                     <th class="tableheader text-center"><b>Document Source</b></th>
-                                    <th class="tableheader text-center"><b>Rating</b></th>
+                                    <th class="tableheader text-center" style="padding-left:20px;padding-right:20px"><b>Rating</b></th>
                                     <th class="tableheader  text-center"><b>Remarks</b></th>
                                 </thead>
                                 <tbody>
@@ -97,15 +97,15 @@
                                     </tr>
                                     </tr>
                                     <tr>
-                                        <td>2a</td>
-                                        <td>Adoption, implementation and monitoring of Barangay Nutrition Action Plan</td>
-                                        <td>Barangay Nutrition Action Plan formulated</td>
-                                        <td>The barangay passed a resolution adopting the Barangay Nutrition Action Plan</td>
-                                        <td>The barangay passed a resolution adopting the Barangay Nutrition Action Plans and allocating funds thereof</td>
-                                        <td>The PAPs in the Barangay Nutrition Action Plan are implemented and accomplishments are reported during BNC meetings once a year</td>
-                                        <td>The PAPs in the Barangay Nutrition Action Plan are implemented and accomplishments are reported during BNC meetings at least twice a year</td>
-                                        <td>Resolutions Barangay Nutrition Action Plan Approved Annual Budget PPAN Accomplishment Report Minutes of meeting</td>
-                                        <td>
+                                        <td class="fontA bold">2a</td>
+                                        <td class="fontA">Adoption, implementation and monitoring of Barangay Nutrition Action Plan</td>
+                                        <td class="fontA">Barangay Nutrition Action Plan formulated</td>
+                                        <td class="fontA">The barangay passed a resolution adopting the Barangay Nutrition Action Plan</td>
+                                        <td class="fontA">The barangay passed a resolution adopting the Barangay Nutrition Action Plans and allocating funds thereof</td>
+                                        <td class="fontA">The PAPs in the Barangay Nutrition Action Plan are implemented and accomplishments are reported during BNC meetings once a year</td>
+                                        <td class="fontA">The PAPs in the Barangay Nutrition Action Plan are implemented and accomplishments are reported during BNC meetings at least twice a year</td>
+                                        <td class="fontA">Resolutions Barangay Nutrition Action Plan Approved Annual Budget PPAN Accomplishment Report Minutes of meeting</td>
+                                        <td class="fontA">
                                             <select id="loadProvince1" class="form-control" name="rating2a">
                                                 <option>Select</option>
                                                 <option value="1" {{ old('rating2a', $row->rating2a) == '1' ? 'selected' : '' }}>1</option>
@@ -115,32 +115,32 @@
                                                 <option value="5" {{ old('rating2a', $row->rating2a) == '5' ? 'selected' : '' }}>5</option>
                                             </select>
                                         </td>
-                                        <td>
-                                            <textarea name="remarks2a" class="form-control">{{ old('remarks2a', $row->remarks2a) }}</textarea>
+                                        <td class="fontA">
+                                            <textarea  style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks2a" class="form-control">{{ old('remarks2a', $row->remarks2a) }}</textarea>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>2b</td>
-                                        <td>Republic Act 11037
+                                        <td class="fontA bold">2b</td>
+                                        <td class="fontA">Republic Act 11037
                                             Masustansyang
                                             Pagkain Para sa
                                             Batang Pilipino
                                         </td>
-                                        <td>The barangay
+                                        <td class="fontA">The barangay
                                             maintains a printed/
                                             electronic copy of RA 11037
                                         </td>
-                                        <td> The law was discussed in one of the Barangay
+                                        <td class="fontA"> The law was discussed in one of the Barangay
                                             Nutrition Committee
                                             meetings within one year after it was enacted
                                         </td>
-                                        <td>The barangay maintained a copy of the resolution in the barangay hall</td>
-                                        <td>
+                                        <td class="fontA">The barangay maintained a copy of the resolution in the barangay hall</td>
+                                        <td class="fontA">
                                             The barangay
                                             implemented activities to disseminate provisions of the law to the general
                                             public
                                         </td>
-                                        <td> Copy of the law
+                                        <td class="fontA"> Copy of the law
                                             Minutes of meetings
                                             Resolution
                                             Documentation of
@@ -148,9 +148,9 @@
                                             dissemination
                                             activities
                                         </td>
-                                        <td>Copy of the law Minutes of meetings Resolution
+                                        <td class="fontA">Copy of the law Minutes of meetings Resolution
                                             Documentation of posting and/or dissemination activities;</td>
-                                        <td>
+                                        <td class="fontA">
                                             <select id="loadProvince1" class="form-control" name="rating2b">
                                                 <option>Select</option>
                                                 <option value="1" {{ old('rating2b', $row->rating2b) == '1' ? 'selected' : '' }}>1</option>
@@ -160,35 +160,35 @@
                                                 <option value="5" {{ old('rating2b', $row->rating2b) == '5' ? 'selected' : '' }}>5</option>
                                             </select>
                                         </td>
-                                        <td><textarea name="remarks2b" class="form-control">{{ old('remarks2b', $row->remarks2b) }}</textarea></td>
+                                        <td class="fontA"><textarea  style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks2b" class="form-control">{{ old('remarks2b', $row->remarks2b) }}</textarea></td>
                                     </tr>
                                     <tr>
-                                        <td>2c</td>
-                                        <td>Presence of nutrition-related concerns in the
+                                        <td class="fontA bold">2c</td>
+                                        <td class="fontA">Presence of nutrition-related concerns in the
                                             Annual Investment Program
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             Republic Act 11037 Masustansyang Pagkain Para
                                             sa Batang Pilipino
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             The barangay has a
                                             resolution/ordinance/Executive Order and/or a line item in the Approved Annual
                                             Budget on EO 51 - related concerns
                                         </td>
-                                        <td>The barangay conducted activities to promote
+                                        <td class="fontA">The barangay conducted activities to promote
                                             compliance to EO 51
                                         </td>
-                                        <td>The barangay conducted activities to promote
+                                        <td class="fontA">The barangay conducted activities to promote
                                             and monitor compliance to EO 51 and reporting of results during BNC
                                             meetings
                                         </td>
-                                        <td>Copy of the law Resolution/ Ordinance Barangay
+                                        <td class="fontA">Copy of the law Resolution/ Ordinance Barangay
                                             Nutrition Action Plan Approved Annual Budget Documentation of promotion and
                                             monitoring
                                         </td>
-                                        <td>Annual Investment Program</td>
-                                        <td>
+                                        <td class="fontA">Annual Investment Program</td>
+                                        <td class="fontA">
                                             <select id="loadProvince1" class="form-control" name="rating2c">
                                                 <option>Select</option>
                                                 <option value="1" {{ old('rating2c', $row->rating2c) == '1' ? 'selected' : '' }}>1</option>
@@ -198,40 +198,40 @@
                                                 <option value="5" {{ old('rating2c', $row->rating2c) == '5' ? 'selected' : '' }}>5</option>
                                             </select>
                                         </td>
-                                        <td><textarea name="remarks2c" class="form-control">{{ old('remarks2c', $row->remarks2c) }}</textarea></td>
+                                        <td class="fontA"><textarea  style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks2c" class="form-control">{{ old('remarks2c', $row->remarks2c) }}</textarea></td>
                                     </tr>
                                     <tr>
-                                        <td>2d</td>
-                                        <td>Adoption,
+                                        <td class="fontA bold">2d</td>
+                                        <td class="fontA">Adoption,
                                             implementation and monitoring of national/ sectoral
                                             nutrition policies
                                             <br><br>
                                             Executive Order 51: National Code of Marketing Breastmilk Substitutes, Breastmilk
                                             Supplements and Other Related Products
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             The barangay
                                             maintains a printed/
                                             electronic copy of EO 51
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             The barangay has a
                                             resolution/ ordinance/
                                             Executive Order and/or a line item in the Approved Annual Budget on EO 51 -
                                             related concerns
                                         </td>
-                                        <td>The barangay
+                                        <td class="fontA">The barangay
                                             conducted activities to promote compliance to EO 51
                                         </td>
-                                        <td>The barangay
+                                        <td class="fontA">The barangay
                                             conducted activities
                                             to monitor
                                             compliance to EO 51
                                         </td>
-                                        <td>The barangay conducted activities to promote and monitor compliance to EO 51 and
+                                        <td class="fontA">The barangay conducted activities to promote and monitor compliance to EO 51 and
                                             reporting of results during BNC meetings
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             Copy of the law
                                             Resolution/ Ordinance
                                             Barangay Nutrition
@@ -241,7 +241,7 @@
                                             Documentation of
                                             promotion and monitoring
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             <select id="loadProvince1" class="form-control" name="rating2d">
                                                 <option>Select</option>
                                                 <option value="1" {{ old('rating2d', $row->rating2d) == '1' ? 'selected' : '' }}>1</option>
@@ -251,11 +251,11 @@
                                                 <option value="5" {{ old('rating2d', $row->rating2d) == '5' ? 'selected' : '' }}>5</option>
                                             </select>
                                         </td>
-                                        <td><textarea name="remarks2d" class="form-control">{{ old('remarks2d', $row->remarks2d) }}</textarea></td>
+                                        <td class="fontA"><textarea  style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks2d" class="form-control">{{ old('remarks2d', $row->remarks2d) }}</textarea></td>
                                     </tr>
                                     <tr>
-                                        <td>2e</td>
-                                        <td>Republic Act 10028:
+                                        <td class="fontA bold">2e</td>
+                                        <td class="fontA">Republic Act 10028:
                                             Expanded
                                             Breastfeeding
                                             Promotion Act of
@@ -268,28 +268,28 @@
                                             National
                                             Breastfeeding Policy
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             The barangay
                                             maintains a printed/
                                             electronic copy of RA 10028 and/or DILG MC 2011-54
                                         </td>
-                                        <td>The barangay has a resolution/ ordinance and/or budget in the Approved Annual
+                                        <td class="fontA">The barangay has a resolution/ ordinance and/or budget in the Approved Annual
                                             Budget on RA 10028 - related concerns
                                         </td>
-                                        <td>The barangay
+                                        <td class="fontA">The barangay
                                             conducted activities to promote
                                             compliance to the law
                                         </td>
-                                        <td>The barangay
+                                        <td class="fontA">The barangay
                                             conducted activities to monitor compliance to RA 10028
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             The barangay conducted
                                             activities to monitor
                                             compliance to RA 10028 and maintains an updated masterlist of establishments/
                                             offices with lactation stations
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             Copy of the law
                                             Resolution/ Ordinance
                                             Barangay Nutrition
@@ -304,7 +304,7 @@
                                             offices with
                                             lactation stations
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             <select id="loadProvince1" class="form-control" name="rating2e">
                                                 <option>Select</option>
                                                 <option value="1" {{ old('rating2e', $row->rating2e) == '1' ? 'selected' : '' }}>1</option>
@@ -314,33 +314,33 @@
                                                 <option value="5" {{ old('rating2e', $row->rating2e) == '5' ? 'selected' : '' }}>5</option>
                                             </select>
                                         </td>
-                                        <td> <textarea class="form-control" name="remarks2e">{{ old('remarks2e', $row->remarks2e) }}</textarea></td>
+                                        <td class="fontA"> <textarea  style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" class="form-control" name="remarks2e">{{ old('remarks2e', $row->remarks2e) }}</textarea></td>
                                     </tr>
                                     <tr>
-                                        <td>2f</td>
-                                        <td>Republic Act 8172: An Act for Salt Iodization Nationwide (ASIN Law)</td>
-                                        <td>The barangay
+                                        <td class="fontA bold">2f</td>
+                                        <td class="fontA">Republic Act 8172: An Act for Salt Iodization Nationwide (ASIN Law)</td>
+                                        <td class="fontA">The barangay
                                             maintains a printed/
                                             electronic copy of RA 8172
                                         </td>
-                                        <td>The barangay has a
+                                        <td class="fontA">The barangay has a
                                             resolution/ ordinance
                                             and/or budget in the Approved Annual Budget on RA 8172 - related
                                             concerns
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             The barangay
                                             conducted activities to promote compliance to the law
                                         </td>
-                                        <td> The barangay
+                                        <td class="fontA"> The barangay
                                             conducted activities to monitor compliance to RA 8172
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             The barangay conducted activities to monitor
                                             compliance to RA 8172 and maintains an updated masterlist of retail stores
                                             selling iodized salt
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             Copy of the law
                                             Resolution/ Ordinance
                                             Barangay Nutrition
@@ -352,7 +352,7 @@
                                             retail stores selling
                                             iodized salt
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             <select id="loadProvince1" class="form-control" name="rating2f">
                                                 <option>Select</option>
                                                 <option value="1" {{ old('rating2f', $row->rating2f) == '1' ? 'selected' : '' }}>1</option>
@@ -362,32 +362,32 @@
                                                 <option value="5" {{ old('rating2f', $row->rating2f) == '5' ? 'selected' : '' }}>5</option>
                                             </select>
                                         </td>
-                                        <td><textarea class="form-control" name="remarks2f">{{ old('remarks2f', $row->remarks2f) }}</textarea></td>
+                                        <td class="fontA"><textarea  style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" class="form-control" name="remarks2f">{{ old('remarks2f', $row->remarks2f) }}</textarea></td>
 
                                     </tr>
                                     <tr>
-                                        <td>2g</td>
-                                        <td>Republic Act 8976:
+                                        <td class="fontA bold">2g</td>
+                                        <td class="fontA">Republic Act 8976:
                                             Philippine Food
                                             Fortification Act</td>
-                                        <td>The barangay
+                                        <td class="fontA">The barangay
                                             maintains a printed/
                                             electronic copy of RA 8976
                                         </td>
-                                        <td>The barangay has a resolution/ ordinance and/or budget in the Approved Annual
+                                        <td class="fontA">The barangay has a resolution/ ordinance and/or budget in the Approved Annual
                                             Budget on RA 8976 - related concerns
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             The barangay
                                             conducted activities to promote compliance to the law
                                         </td>
-                                        <td>The barangay
+                                        <td class="fontA">The barangay
                                             conducted activities to monitor compliance to RA 8976</td>
-                                        <td> The barangay conducted
+                                        <td class="fontA"> The barangay conducted
                                             activities to monitor
                                             compliance to RA 8976 and maintains an updated masterlist of retail stores
                                             selling fortified foods</td>
-                                        <td>Copy of the law
+                                        <td class="fontA">Copy of the law
                                             Resolution/ Ordinance
                                             Barangay Nutrition
                                             Action Plan
@@ -399,7 +399,7 @@
                                             retail stores selling
                                             fortified foods
                                         </td>
-                                        <td><select id="loadProvince1" class="form-control" name="rating2g">
+                                        <td class="fontA"><select id="loadProvince1" class="form-control" name="rating2g">
                                                 <option>Select</option>
                                                 <option value="1" {{ old('rating2g', $row->rating2g) == '1' ? 'selected' : '' }}>1</option>
                                                 <option value="2" {{ old('rating2g', $row->rating2g) == '2' ? 'selected' : '' }}>2</option>
@@ -407,11 +407,11 @@
                                                 <option value="4" {{ old('rating2g', $row->rating2g) == '4' ? 'selected' : '' }}>4</option>
                                                 <option value="5" {{ old('rating2g', $row->rating2g) == '5' ? 'selected' : '' }}>5</option>
                                             </select></td>
-                                        <td><textarea class="form-control" name="remarks2g">{{ old('remarks2g', $row->remarks2g) }}</textarea></td>
+                                        <td class="fontA"><textarea  style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" class="form-control" name="remarks2g">{{ old('remarks2g', $row->remarks2g) }}</textarea></td>
                                     </tr>
                                     <tr>
-                                        <td>2h</td>
-                                        <td>
+                                        <td class="fontA bold">2h</td>
+                                        <td class="fontA">
                                             NNC Governing
                                             Board Resolution
                                             No.1 series of 2017:
@@ -426,31 +426,31 @@
                                             Implementation of
                                             PPAN 2017-2022
                                         </td>
-                                        <td>The barangay
+                                        <td class="fontA">The barangay
                                             maintains a printed/
                                             electronic copy of NNC GB Resolution No. 1 S. 2017 and/or DILG MC 2018-42
                                         </td>
-                                        <td>The activities in the
+                                        <td class="fontA">The activities in the
                                             Barangay Nutrition
                                             Action Plan are
                                             aligned with the
                                             priorities of the
                                             PPAN 2017-2022
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             The activities in the Barangay Nutrition Action Plan are aligned with the
                                             priorities of the PPAN 2017-2022 are allocated with budget based on the approved
                                             annual budget
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             The BNC monitors implementation of the PPAN priorities in the Barangay Nutrition
                                             Action Plan
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             The BNC discuss the result of monitoring and identify action lines to improve
                                             implementation of the PPAN priorities
                                         </td>
-                                        <td> Resolutions
+                                        <td class="fontA"> Resolutions
                                             Ordinances
                                             Barangay Nutrition
                                             Action Plan
@@ -462,7 +462,7 @@
                                             Documentation
                                             reports
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             <select id="loadProvince1" class="form-control" name="rating2h">
                                                 <option>Select</option>
                                                 <option value="1" {{ old('rating2h', $row->rating2h) == '1' ? 'selected' : '' }}>1</option>
@@ -472,11 +472,11 @@
                                                 <option value="5" {{ old('rating2h', $row->rating2h) == '5' ? 'selected' : '' }}>5</option>
                                             </select>
                                         </td>
-                                        <td><textarea class="form-control" name="remarks2h">{{ old('remarks2h', $row->remarks2h) }}</textarea></td>
+                                        <td class="fontA"><textarea  style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" class="form-control" name="remarks2h">{{ old('remarks2h', $row->remarks2h) }}</textarea></td>
                                     </tr>
                                     <tr>
-                                        <td>2i</td>
-                                        <td>
+                                        <td class="fontA bold">2i</td>
+                                        <td class="fontA">
                                             NNC Governing
                                             Board Resolutions
                                             Nos. #1 3 S.2012:
@@ -494,37 +494,37 @@
                                             and Length
                                             Measuring Tool
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             The barangay
                                             maintains a printed/
                                             electronic copy of NNC GB Resolution
                                             No. 3 S. 2012 and No. 3 S. 2018
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             The barangay has any type of height and length measuring tools available in the
                                             barangay
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             The barangay uses the type of height and length measuring tools of wooden/
                                             non-wood material prescribed in the guidelines
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             The barangay uses verified height and length measuring tools of wooden/ non-wood
                                             material prescribed in the guidelines
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             The barangay uses verified height and length measuring tools of wooden/ non-wood
                                             material as prescribed in the guidelines and allocates budget for maintenance/
                                             replacement of height and length measuirng tools as necessary
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             Approved Annual
                                             Budget
                                             Local Nutrition
                                             Action Plan
                                             OPT Plus Report
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             <select id="loadProvince1" class="form-control" name="rating2i">
                                                 <option>Select</option>
                                                 <option value="1" {{ old('rating2i', $row->rating2i) == '1' ? 'selected' : '' }}>1</option>
@@ -534,11 +534,11 @@
                                                 <option value="5" {{ old('rating2i', $row->rating2i) == '5' ? 'selected' : '' }}>5</option>
                                             </select>
                                         </td>
-                                        <td><textarea class="form-control" name="remarks2i">{{ old('remarks2i', $row->remarks2i) }}</textarea></td>
+                                        <td class="fontA"><textarea  style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" class="form-control" name="remarks2i">{{ old('remarks2i', $row->remarks2i) }}</textarea></td>
                                     </tr>
                                     <tr>
-                                        <td>2j</td>
-                                        <td>
+                                        <td class="fontA bold">2j</td>
+                                        <td class="fontA">
                                             NNC Governing
                                             Board Resolution
                                             No.2 S.2012:
@@ -548,9 +548,9 @@
                                             Guidelines on
                                             OPT Plus
                                         </td>
-                                        <td>The LNC maintains a printed/ electronic copy of NNC GB Resolution No. 3
+                                        <td class="fontA">The LNC maintains a printed/ electronic copy of NNC GB Resolution No. 3
                                             S.2012</td>
-                                        <td>The barangay conducts OPT Plus but not in accordance to the guidelines on the
+                                        <td class="fontA">The barangay conducts OPT Plus but not in accordance to the guidelines on the
                                             ff:
                                             <br><br>
                                             1. Use of proper
@@ -560,7 +560,7 @@
                                             <br>
                                             3. Timely submission
                                         </td>
-                                        <td>The barangay conducts OPT Plus as provided in the guidelines:
+                                        <td class="fontA">The barangay conducts OPT Plus as provided in the guidelines:
                                             <br><br>
                                             1. Use of proper
                                             measurement tools
@@ -570,15 +570,15 @@
                                             <br>
                                             3. Timely submission
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             The barangay
                                             conducts OPT Plus as provided in the guidelines and uses E-OPT
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             The barangay conducts OPT Plus, utilizes the E-OPT tool and disseminates results
                                             during the BNC meetings
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             OPT Plus
                                             Implementing
                                             Guidelines
@@ -590,7 +590,7 @@
                                             malnourished children
                                             Minutes of meeting
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             <select id="loadProvince1" class="form-control" name="rating2j">
                                                 <option>Select</option>
                                                 <option value="1" {{ old('rating2j', $row->rating2j) == '1' ? 'selected' : '' }}>1</option>
@@ -600,43 +600,43 @@
                                                 <option value="5" {{ old('rating2j', $row->rating2j) == '5' ? 'selected' : '' }}>5</option>
                                             </select>
                                         </td>
-                                        <td>
-                                            <textarea class="form-control" name="remarks2j">{{ old('remarks2j', $row->remarks2j) }}</textarea>
+                                        <td class="fontA">
+                                            <textarea  style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" class="form-control" name="remarks2j">{{ old('remarks2j', $row->remarks2j) }}</textarea>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>2k</td>
-                                        <td>
+                                        <td class="fontA bold">2k</td>
+                                        <td class="fontA">
                                             NNC Governing
                                             Board Resolution No. 6 series of 2012: Adoption of the 2012 Nutritional Guidelines
                                             for Filipinos
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             The barangay
                                             maintains a printed/
                                             electronic copy of NNC GB Resolution No. 6 S. 2012
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             The barangay has a
                                             resolution, ordinance,
                                             Executive Order
                                             in support to the
                                             resolution
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             The barangay
                                             implemented at least one activity with multi-stakeholder participation to
                                             promote the NGF
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             The barangay
                                             conducted more than one activity to promote the NGF
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             The barangay conducted more than one activity to promote the NGF using more than
                                             one media/ platform
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             Resolutions
                                             Ordinances
                                             Executive Order
@@ -649,7 +649,7 @@
                                             documentation
                                             report
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             <select id="loadProvince1" class="form-control" name="rating2k">
                                                 <option>Select</option>
                                                 <option value="1" {{ old('rating2k', $row->rating2k) == '1' ? 'selected' : '' }}>1</option>
@@ -659,42 +659,42 @@
                                                 <option value="5" {{ old('rating2k', $row->rating2k) == '5' ? 'selected' : '' }}>5</option>
                                             </select>
                                         </td>
-                                        <td>
-                                            <textarea class="form-control" name="remarks2k">{{ old('remarks2k', $row->remarks2k) }}</textarea>
+                                        <td class="fontA">
+                                            <textarea  style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" class="form-control" name="remarks2k">{{ old('remarks2k', $row->remarks2k) }}</textarea>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>2l</td>
-                                        <td>
+                                        <td class="fontA bold">2l</td>
+                                        <td class="fontA">
                                             NNC Governing
                                             Board Resolution No. 2 series of 2009: Adopting the National Policy on Nutrition
                                             Management in Emergencies and Disasters
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             The barangay
                                             maintains a printed/
                                             electronic copy of NNC GB Resolution
                                             No. 2 S. 2009
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             The barangay designated
                                             the lead or focal point for Nutrition-in-Emergencies
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             The barangay has issued a resolution organizing the nutrition cluster in the
                                             area
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             Barangay Nutrition Cluster has been formed and planning has been initiated/
                                             completed
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             Barangay Nutrition
                                             Cluster has been
                                             formed and integrated
                                             with the BDRRMC with allocated budget
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             Resolutions
                                             Ordinances
                                             Executive Order
@@ -703,7 +703,7 @@
                                             NIEM Plan
                                             Minutes of meeting
                                         </td>
-                                        <td>
+                                        <td class="fontA">
                                             <select id="loadProvince1" class="form-control" name="rating2l">
                                                 <option>Select</option>
                                                 <option value="1" {{ old('rating2l', $row->rating2l) == '1' ? 'selected' : '' }}>1</option>
@@ -713,8 +713,8 @@
                                                 <option value="5" {{ old('rating2l', $row->rating2l) == '5' ? 'selected' : '' }}>5</option>
                                             </select>
                                         </td>
-                                        <td>
-                                            <textarea class="form-control" name="remarks2l">{{ old('remarks2l', $row->remarks2l) }}</textarea>
+                                        <td class="fontA">
+                                            <textarea  style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" class="form-control" name="remarks2l">{{ old('remarks2l', $row->remarks2l) }}</textarea>
                                         </td>
                                     </tr>
                                 </tbody>

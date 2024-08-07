@@ -7,11 +7,13 @@ $(function () {
     });
 
     // Draft LGU Profile
-    $('#draft').on('click', function (e) {
+    $('#draft').on('click', function (e) { 
         document.getElementById('status').value = 2;
         document.getElementById('formrequest').value = 'draft';
         $('#form').submit();
     });
+
+
 });
 
 // dynamic View/edit
@@ -46,7 +48,7 @@ function openModal(id, url) {
 
 
 // Delete LGUProfile
-function confirmDeleteLGU(url){
+function confirmDeleteLGU(){    
 
     $.ajaxSetup({
         headers: {
@@ -83,7 +85,7 @@ function confirmDeleteLGU(url){
                     // Reload the page after a delay
                     setTimeout(function() {
                         window.location.reload();
-                    }, 5000); // Delay before reload (2 seconds)
+                    }, 3000); // Delay before reload (2 seconds)
                
             },
             error: function(xhr) {
@@ -94,7 +96,7 @@ function confirmDeleteLGU(url){
     }
 };
 
-// Delete LGUProfile
+// Delete confirmDeleteVM
 function confirmDeleteVM(){
 
     $.ajaxSetup({
@@ -110,31 +112,29 @@ function confirmDeleteVM(){
             data: { id: profileId },
             type: 'POST',
             success: function(result) {
-                setTimeout(function() {
-                    window.location.reload(); // Reload the page after a delay
-                }, 2000); // Delay before reload (2 seconds)
-                //$('#success-alert').removeClass('d-none').fadeIn(); // Show success alert
-                
-             
                     // Insert the alert HTML into your page
                     $('#deleteAlert').prepend(`
-                        <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
-                            Data Deleted Successfully!
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                    <div id="success-alert" style="background-color:#d1fad7!important;border: 2px solid #109121!important;border-radius:5px" class="alert alert-success alert-dismissible fade show" role="alert">
+                        <div class="d-flex" style="align-items:center!important">
+                            <lord-icon src="https://cdn.lordicon.com/guqkthkk.json" trigger="loop" delay="2000" colors="primary:#109121" style="width:25px;height:25px">
+                            </lord-icon>
+                            <label style="color:#109121;margin-bottom:0px!important;font-size:15px;margin-left:8px" for="">Success! </label><span style="color:#109121;margin-bottom:0px!important;font-size:15px;margin-left:5px">Data deleted successfully.</span>
                         </div>
+                        <button type="button" class="close" style="color:gray!important " data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
                     `);
     
                     // Auto close alert after 5 seconds
                     setTimeout(function() {
-                        $('#success-alert').fadeOut('slow');
-                    }, 5000); // 5000 milliseconds = 5 seconds
+                        $('#success-alert').fadeOut('slow'); 
+                    }, 2000); // 5000 milliseconds = 5 seconds
     
                     // Reload the page after a delay
                     setTimeout(function() {
                         window.location.reload();
-                    }, 2000); // Delay before reload (2 seconds)
+                    }, 3000); // Delay before reload (2 seconds)
                
             },
             error: function(xhr) {
@@ -145,10 +145,9 @@ function confirmDeleteVM(){
     }
 };
 
-
-// Delete Nutrition Policies
+// Delete confirmDeleteVM
 function confirmDeleteNP(){
-s
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -162,30 +161,29 @@ s
             data: { id: profileId },
             type: 'POST',
             success: function(result) {
-                setTimeout(function() {
-                    window.location.reload(); // Reload the page after a delay
-                }, 2000); // Delay before reload (2 seconds)
-                
                     // Insert the alert HTML into your page
                     $('#deleteAlert').prepend(`
-                        <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
-                            Data Deleted Successfully!
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                    <div id="success-alert" style="background-color:#d1fad7!important;border: 2px solid #109121!important;border-radius:5px" class="alert alert-success alert-dismissible fade show" role="alert">
+                        <div class="d-flex" style="align-items:center!important">
+                            <lord-icon src="https://cdn.lordicon.com/guqkthkk.json" trigger="loop" delay="2000" colors="primary:#109121" style="width:25px;height:25px">
+                            </lord-icon>
+                            <label style="color:#109121;margin-bottom:0px!important;font-size:15px;margin-left:8px" for="">Success! </label><span style="color:#109121;margin-bottom:0px!important;font-size:15px;margin-left:5px">Data deleted successfully.</span>
                         </div>
+                        <button type="button" class="close" style="color:gray!important " data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
                     `);
     
                     // Auto close alert after 5 seconds
                     setTimeout(function() {
-                        $('#success-alert').fadeOut('slow');
-                    }, 5000); // 5000 milliseconds = 5 seconds
+                        $('#success-alert').fadeOut('slow'); 
+                    }, 2000); // 5000 milliseconds = 5 seconds
     
                     // Reload the page after a delay
                     setTimeout(function() {
                         window.location.reload();
-                    }, 2000); // Delay before reload (2 seconds)
-               
+                    }, 3000); // Delay before reload (2 seconds)
                
             },
             error: function(xhr) {
@@ -195,3 +193,5 @@ s
         $('#deleteModal').modal('hide'); // Hide the modal
     }
 };
+
+ 

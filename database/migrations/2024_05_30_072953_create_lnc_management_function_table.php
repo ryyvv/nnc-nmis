@@ -13,22 +13,22 @@ return new class extends Migration
     {
         Schema::create('lnc_management_function', function (Blueprint $table) {
             $table->id();
-            $table->integer('rating4a');
-            $table->integer('rating4b');
-            $table->integer('rating4c');
-            $table->integer('rating4d');
-            $table->integer('rating4e');
-            $table->integer('rating4f');
+            $table->integer('rating4a')->nullable();
+            $table->integer('rating4b')->nullable();
+            $table->integer('rating4c')->nullable();
+            $table->integer('rating4d')->nullable();
+            $table->integer('rating4e')->nullable();
+            $table->integer('rating4f')->nullable();
 
-            $table->string('remarks4a', 255);
-            $table->string('remarks4b', 255);
-            $table->string('remarks4c', 255);
-            $table->string('remarks4d', 255);
-            $table->string('remarks4e', 255);
-            $table->string('remarks4f', 255);
+            $table->string('remarks4a', 255)->nullable();
+            $table->string('remarks4b', 255)->nullable();
+            $table->string('remarks4c', 255)->nullable();
+            $table->string('remarks4d', 255)->nullable();
+            $table->string('remarks4e', 255)->nullable();
+            $table->string('remarks4f', 255)->nullable();
 
-            $table->integer('rating4g');
-            $table->string('remarks4g', 255);
+            $table->integer('rating4g')->nullable();
+            $table->string('remarks4g', 255)->nullable();
 
             $table->integer('region_id')->unsigned(); 
             $table->integer('province_id')->unsigned(); 

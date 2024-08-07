@@ -18,10 +18,14 @@
                 </div>
                 <div>
                     <button type="button" style="margin-right:5px" class="bold btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                    <button type="button" class="bold btn btn-danger" style="background-color:#ee6d66!important" onclick="confirmDeleteLGU()">YES</button>
+                    <button type="button" class="bold btn btn-danger" style="background-color:#ee6d66!important" onclick="confirmDeleteVM()">YES</button>
                 </div>
             </div>
 
         </div>
     </div>
 </div>
+
+
+
+ 

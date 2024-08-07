@@ -47,41 +47,7 @@ class VisionMissionController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
-        $rules = [
-            'barangay_id' => 'required|integer',
-            'municipal_id' => 'required|integer',
-            'province_id' => 'required|integer',
-            'region_id' => 'required|integer',
-            'dateMonitoring' => 'required|date|max:255',
-            'periodCovereda' => 'required|string |max:255',
-            'rating1a' => 'required|string|max:255',
-            'rating1b' => 'required|string|max:255',
-            'rating1c' => 'required|string|max:255',
-            'remarks1a' => 'required|string|max:255',
-            'remarks1b' => 'required|string|max:255',
-            'remarks1c' => 'required|string|max:255', 
-            'status' => 'required|string|max:255',
-            'user_id' => 'required|integer',
-    
-        ]; 
-
-        $message = [ 
-            'required' => 'The field is required.',
-            'integer' => 'The field is number.',
-            'string' => 'The field must be a string.',
-            'date' => 'The field must be a valid date.',
-            'max' => 'The field may not be greater than :max characters.',
-        ]; 
-
-        $validator = Validator::make($request->all() , $rules, $message );
-
-        if($validator->fails()){
-            return redirect()->back()
-            ->withErrors($validator)
-            ->withInput()->with('error', 'Something went wrong! Please try again.');
-        }else {
-
+        if ($request->formrequest == 'draft') {
             $vmBarangay = MellpiproLGUBarangayVisionMission::create([
                 'barangay_id' =>  $request->barangay_id,
                 'municipal_id' =>  $request->municipal_id,
@@ -106,9 +72,73 @@ class VisionMissionController extends Controller
                 'municipal_id' => auth()->user()->city_municipal,
                 'user_id' => auth()->user()->id,
             ]);
-        }
 
-        return redirect('BarangayScholar/visionmission')->with('success', 'Data created successfullySuccessfully!');
+            return redirect('BarangayScholar/visionmission')->with('success', 'Data stored as Draft!'); 
+
+        }else {
+
+            $rules = [
+                'barangay_id' => 'required|integer',
+                'municipal_id' => 'required|integer',
+                'province_id' => 'required|integer',
+                'region_id' => 'required|integer',
+                'dateMonitoring' => 'required|date|max:255',
+                'periodCovereda' => 'required|string |max:255',
+                'rating1a' => 'required|string|max:255',
+                'rating1b' => 'required|string|max:255',
+                'rating1c' => 'required|string|max:255',
+                'remarks1a' => 'required|string|max:255',
+                'remarks1b' => 'required|string|max:255',
+                'remarks1c' => 'required|string|max:255', 
+                'status' => 'required|string|max:255',
+                'user_id' => 'required|integer',
+        
+            ]; 
+    
+            $message = [ 
+                'required' => 'The field is required.',
+                'integer' => 'The field is number.',
+                'string' => 'The field must be a string.',
+                'date' => 'The field must be a valid date.',
+                'max' => 'The field may not be greater than :max characters.',
+            ]; 
+    
+            $validator = Validator::make($request->all() , $rules, $message );
+    
+            if($validator->fails()){
+                return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()->with('error', 'Something went wrong! Please try again.');
+            }else {
+    
+                $vmBarangay = MellpiproLGUBarangayVisionMission::create([
+                    'barangay_id' =>  $request->barangay_id,
+                    'municipal_id' =>  $request->municipal_id,
+                    'province_id' =>  $request->province_id,
+                    'region_id' =>  $request->region_id,
+                    'dateMonitoring' =>  $request->dateMonitoring,
+                    'periodCovereda' =>  $request->periodCovereda,
+                    'rating1a' =>  $request->rating1a,
+                    'rating1b' =>  $request->rating1b,
+                    'rating1c' =>  $request->rating1c,
+                    'remarks1a' =>  $request->remarks1a,
+                    'remarks1b' =>  $request->remarks1b,
+                    'remarks1c' =>  $request->remarks1c,
+                    'status' =>  $request->status,
+                    'user_id' =>  $request->user_id,
+                ]);
+    
+                MellpiproLGUBarangayVisionMissionTracker::create([
+                    'mplgubrgyvisionmissions_id' => $vmBarangay->id,
+                    'status' => $request->status,
+                    'barangay_id' => auth()->user()->barangay,
+                    'municipal_id' => auth()->user()->city_municipal,
+                    'user_id' => auth()->user()->id,
+                ]);
+            }
+    
+            return redirect('BarangayScholar/visionmission')->with('success', 'Data created successfullySuccessfully!');
+        }
     }
 
     /**
@@ -157,43 +187,9 @@ class VisionMissionController extends Controller
      */
     public function update(Request $request, $id)
     {
-         //dd($request);
-         $rules = [
-            'barangay_id' => 'required|integer',
-            'municipal_id' => 'required|integer',
-            'province_id' => 'required|integer',
-            'region_id' => 'required|integer',
-            'dateMonitoring' => 'required|date|max:255',
-            'periodCovereda' => 'required|string |max:255',
-            'rating1a' => 'required|string|max:255',
-            'rating1b' => 'required|string|max:255',
-            'rating1c' => 'required|string|max:255',
-            'remarks1a' => 'required|string|max:255',
-            'remarks1b' => 'required|string|max:255',
-            'remarks1c' => 'required|string|max:255', 
-            'status' => 'required|string|max:255',
-            'user_id' => 'required|integer',
-    
-        ]; 
-
-        $message = [ 
-            'required' => 'The field is required.',
-            'integer' => 'The field is number.',
-            'string' => 'The field must be a string.',
-            'date' => 'The field must be a valid date.',
-            'max' => 'The field may not be greater than :max characters.',
-        ]; 
-
-
-        $validator = Validator::make($request->all() , $rules, $message);
-
-        if($validator->fails()){
-            return redirect()->back()
-            ->withErrors($validator)
-            ->withInput()->with('error', 'Something went wrong! Please try again.');
-        }else {
+        if ($request->formrequest == 'draft') {
             $vmbarangay = MellpiproLGUBarangayVisionMission::find($id);
-            
+                
             //dd($vmbarangay);
             $vmbarangay->update([
                 'barangay_id' =>  $request->barangay_id,
@@ -209,11 +205,69 @@ class VisionMissionController extends Controller
                 'remarks1b' =>  $request->remarks1b,
                 'remarks1c' =>  $request->remarks1c,
                 'status' =>  $request->status,
-                // 'user_id' =>  $request->user_id,
+                'user_id' =>  $request->user_id,
             ]); 
-        }
+            return redirect('BarangayScholar/visionmission')->with('success', 'Data stored as Draft!'); 
 
-        return redirect()->route('visionmission.index')->with('success', 'Updated successfully!');
+        }else {
+            $rules = [
+                'barangay_id' => 'required|integer',
+                'municipal_id' => 'required|integer',
+                'province_id' => 'required|integer',
+                'region_id' => 'required|integer',
+                'dateMonitoring' => 'required|date|max:255',
+                'periodCovereda' => 'required|string |max:255',
+                'rating1a' => 'required|string|max:255',
+                'rating1b' => 'required|string|max:255',
+                'rating1c' => 'required|string|max:255',
+                'remarks1a' => 'required|string|max:255',
+                'remarks1b' => 'required|string|max:255',
+                'remarks1c' => 'required|string|max:255', 
+                'status' => 'required|string|max:255',
+                'user_id' => 'required|integer',
+        
+            ]; 
+    
+            $message = [ 
+                'required' => 'The field is required.',
+                'integer' => 'The field is number.',
+                'string' => 'The field must be a string.',
+                'date' => 'The field must be a valid date.',
+                'max' => 'The field may not be greater than :max characters.',
+            ]; 
+    
+    
+            $validator = Validator::make($request->all() , $rules, $message);
+    
+            if($validator->fails()){
+                return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()->with('error', 'Something went wrong! Please try again.');
+            }else {
+                $vmbarangay = MellpiproLGUBarangayVisionMission::find($id);
+                
+                //dd($vmbarangay);
+                $vmbarangay->update([
+                    'barangay_id' =>  $request->barangay_id,
+                    'municipal_id' =>  $request->municipal_id,
+                    'province_id' =>  $request->province_id,
+                    'region_id' =>  $request->region_id,
+                    'dateMonitoring' =>  $request->dateMonitoring,
+                    'periodCovereda' =>  $request->periodCovereda,
+                    'rating1a' =>  $request->rating1a,
+                    'rating1b' =>  $request->rating1b,
+                    'rating1c' =>  $request->rating1c,
+                    'remarks1a' =>  $request->remarks1a,
+                    'remarks1b' =>  $request->remarks1b,
+                    'remarks1c' =>  $request->remarks1c,
+                    'status' =>  $request->status,
+                    'user_id' =>  $request->user_id,
+                ]); 
+            }
+    
+            return redirect()->route('visionmission.index')->with('success', 'Updated successfully!');
+        }
+        
     }
 
     /**

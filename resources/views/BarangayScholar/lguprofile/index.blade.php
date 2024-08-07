@@ -103,9 +103,8 @@
     </div>
 </div>
 
- <!-- alert Modal -->
- <?php $url = 'lguprofile'; ?>
- @include('Modal.Deleted')
+ 
+ @include('Modal.DeleteLGU')
 
  
 

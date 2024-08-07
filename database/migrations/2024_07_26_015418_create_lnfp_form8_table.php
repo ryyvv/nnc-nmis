@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('lnfp_form8', function (Blueprint $table) {
             $table->id();
+            $table->string('lnfp_officer', 255)->nullable();
             $table->integer('forThePeriod')->nullable();
             $table->text('nameOfPnao')->nullable();
             $table->text('areaOfAssign')->nullable();

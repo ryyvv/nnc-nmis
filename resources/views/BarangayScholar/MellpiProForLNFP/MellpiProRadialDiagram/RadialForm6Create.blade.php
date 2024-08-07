@@ -56,17 +56,17 @@
                             <div class="formHeader">
                                 <div class="form-group col-md-6">
                                     <div class="form-group col-md-12">
-                                        <label for="nameOf">Name of PNAO: </label>
+                                        <label for="nameOf">Name of PNAO:<span style="color:red">*</span></label>
                                         <input class="inputHeader" required type="text" name="nameOf" id="nameOf" value="{{ $form6->nameofPnao }}">
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label for="address">Area of Assignment: </label>
+                                        <label for="address">Area of Assignment:<span style="color:red">*</span></label>
                                         <input class="inputHeader" required type="text" name="areaAssign" id="areaAssign" value="{{ $form6->provDeploy }}">
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <div class="form-group col-md-12">
-                                        <label for="bday">Date of Monitoring: </label>
+                                        <label for="bday">Date of Monitoring:<span style="color:red">*</span></label>
                                         <input class="form-control" type="date" name="dateMonitor" id="dateMonitor" required>
                                     </div>
                                 </div>

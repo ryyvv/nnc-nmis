@@ -1823,9 +1823,7 @@
                     </div>
                 </div>
 
-                <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
-                    <!-- <button type="submit" class="btn btn-warning ">Save as draft</button> -->
-                    <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+                <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end"> 
                     <!-- Button trigger modal -->
                     <button type="button" style="margin-right:6px" class="bold btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
                     Save as Draft

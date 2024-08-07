@@ -13,41 +13,39 @@ return new class extends Migration
     {
         Schema::create('mplgubrgydiscussionquestion' , function (Blueprint $table) {
             $table->increments('id');
-            $table->string('practice7aa', 255);
-            $table->string('practice7ab', 255);
-            $table->string('practice7ac', 255);
-            $table->string('practice7ad', 255); 
+            $table->string('practice7aa', 255)->nullable();
+            $table->string('practice7ab', 255)->nullable();
+            $table->string('practice7ac', 255)->nullable();
+            $table->string('practice7ad', 255)->nullable(); 
 
-            $table->string('practice7ba', 255);
-            $table->string('practice7bb', 255);
-            $table->string('practice7bc', 255);
-            $table->string('practice7bd', 255); 
+            $table->string('practice7ba', 255)->nullable();
+            $table->string('practice7bb', 255)->nullable();
+            $table->string('practice7bc', 255)->nullable();
+            $table->string('practice7bd', 255)->nullable(); 
 
-            $table->string('practice7ca', 255);
-            $table->string('practice7cb', 255);
-            $table->string('practice7cc', 255);
-            $table->string('practice7cd', 255); 
+            $table->string('practice7ca', 255)->nullable();
+            $table->string('practice7cb', 255)->nullable();
+            $table->string('practice7cc', 255)->nullable();
+            $table->string('practice7cd', 255)->nullable(); 
 
-            $table->string('practice7da', 255);
-            $table->string('practice7db', 255);
-            $table->string('practice7dc', 255);
-            $table->string('practice7dd', 255); 
+            $table->string('practice7da', 255)->nullable();
+            $table->string('practice7db', 255)->nullable();
+            $table->string('practice7dc', 255)->nullable();
+            $table->string('practice7dd', 255)->nullable(); 
 
-            $table->string('practice7ea', 255);
-            $table->string('practice7eb', 255);
-            $table->string('practice7ec', 255);
-            $table->string('practice7ed', 255); 
+            $table->string('practice7ea', 255)->nullable();
+            $table->string('practice7eb', 255)->nullable();
+            $table->string('practice7ec', 255)->nullable();
+            $table->string('practice7ed', 255)->nullable(); 
 
-            $table->string('practice7fa', 255);
-            $table->string('practice7fb', 255);
-            $table->string('practice7fc', 255);
-            $table->string('practice7fd', 255); 
+            $table->string('practice7fa', 255)->nullable();
+            $table->string('practice7fb', 255)->nullable();
+            $table->string('practice7fc', 255)->nullable();
+            $table->string('practice7fd', 255)->nullable(); 
  
-            $table->integer('status');
-            $table->date('dateCreated');
-            $table->date('dateUpdates');
-            $table->date('dateMonitoring');
-            $table->year('periodCovered'); 
+            $table->integer('status'); 
+            $table->date('dateMonitoring')->nullable();
+            $table->year('periodCovereda')->nullable();
             $table->integer('region_id')->unsigned(); 
             $table->integer('province_id')->unsigned(); 
             $table->integer('municipal_id')->unsigned(); 

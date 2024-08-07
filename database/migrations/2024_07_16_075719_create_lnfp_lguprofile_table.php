@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('lnfp_lguprofile', function (Blueprint $table) {
             $table->id();
+            $table->string('lnfp_officer', 255)->nullable();
             $table->date('dateMonitoring')->nullable();
             $table->string('periodCovereda',10)->nullable();
             $table->integer('numOfMuni')->nullable();
