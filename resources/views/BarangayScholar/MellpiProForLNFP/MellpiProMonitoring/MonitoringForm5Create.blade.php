@@ -59,10 +59,10 @@
                                         <label for="address">address:<span style="color:red">*</span> </label>
                                         <input class="inputHeader" type="text" name="address" id="address">
                                     </div>
-                                    <div class="form-group col-md-12">
+                                    <!-- <div class="form-group col-md-12">
                                         <label for="provDep">Province of Deployment:<span style="color:red">*</span> </label>
                                         <input class="inputHeader" type="text" name="provDev" id="provDev">
-                                    </div>
+                                    </div> -->
                                     <div class="form-group col-md-12">
                                         <label for="numYr">Number of Years PNAO:<span style="color:red">*</span> </label>
                                         <input class="inputHeader" type="number" name="numYr" id="numYr" placeholder="0" min="1" max="100">

@@ -37,12 +37,12 @@
                             <thead class="table-light" style="background-color:#508D4E;">
 
                                 <tr>
-                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">#</th>
-                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Officer</th>
-                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Date Monitoring</th>
-                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Period Covered</th>
-                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Status</th>
-                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;width:10%;">Action</th>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">#</th>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Officer</th>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Date Monitoring</th>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Period Covered</th>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Status</th>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center;width:10%;">Action</th>
 
                                 </tr>
                             </thead>
@@ -51,13 +51,22 @@
                                 <?php $num = 1; ?>
                                 @foreach ($lnfpProfile as $lnfpProfile)
                                 <tr>
-                                    <td>{{$num}}</td>
-                                    <td>{{$lnfpProfile->firstname}} {{$lnfpProfile->middlename}} {{$lnfpProfile->lastname}}</td>
+                                    <td>
+                                        <center>{{$num}}</center>
+                                    </td>
+                                    <td>
+                                        <center>{{$lnfpProfile->lnfp_officer}}</center>
+                                    </td>
                                     <!-- <td>{{$lnfpProfile->dateMonitoring}}</td> -->
-                                    <td>{{\Carbon\Carbon::parse($lnfpProfile->dateMonitoring)->format('F j, Y');}}</td>
-                                    <td>{{$lnfpProfile->periodCovereda}}</td>
+                                    <td>
+                                        <center>{{\Carbon\Carbon::parse($lnfpProfile->dateMonitoring)->format('F j, Y');}}</center>
+                                    </td>
+                                    <td>
+                                        <center>{{$lnfpProfile->periodCovereda}}</center>
+                                    </td>
                                 
                                     <td>
+                                        <center>
                                             @if( $lnfpProfile->status == 0 )
                                             <span class="statusApproved">APPROVED</span>
                                             @elseif( $lnfpProfile->status == 1 )
@@ -65,6 +74,7 @@
                                             @elseif( $lnfpProfile->status == 2 )
                                             <span class="statusDraft">DRAFT</span>
                                             @endif
+                                        </center>
                                     </td>
 
                                     <td>

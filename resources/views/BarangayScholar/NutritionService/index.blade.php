@@ -1,4 +1,5 @@
 <script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.8/datatables.min.js"></script>
+<script src="https://cdn.lordicon.com/lordicon.js"></script>
 
 @extends('layouts.app', [
 'class' => 'sidebar-mini ',
@@ -36,15 +37,14 @@
                 </div>
                 <div class="row-12">
                     <table class="display" id="myTable" width="100%">
-                        <thead style="background-color:#508D4E;">
+                    <thead style="background-color:#508D4E;">
                             <tr>
-                                <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">#</th>
-                                <th scope="col-4" style="font-weight:bold;font-size:16px!important;color:white">Officer</th>
-                                <th scope="col-4" style="font-weight:bold;font-size:16px!important;color:white">Date Monitoring </th>
-                                <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Period Covered</th>
-                                <th scope="col-2" style="font-weight:bold;font-size:16px!important;color:white">Status</th>
-                                <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Action</th>
-                                <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Download</th>
+                                <th scope="col" class="tableheader">#</th>
+                                <th scope="col-4" class="tableheader">Officer</th>
+                                <th scope="col-4" class="tableheader">Date Monitoring </th>
+                                <th scope="col" class="tableheader">Period Covered</th>
+                                <th scope="col-2" class="tableheader">Status</th>
+                                <th scope="col" class="tableheader">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -53,13 +53,48 @@
                             
                             @foreach($nserlocation as $nserlocation)
                                     <tr>
-                                        <th scope="rowspan=1">{{$nserlocation->id}}</th>
+                                        <th scope="rowspan=1">{{$num}}</th>
+                                        <td>{{$nserlocation->firstname}} {{$nserlocation->middlename}} {{$nserlocation->lastname}}</td>
                                         <td>{{$nserlocation->dateMonitoring}}</td>
-                                        <td>{{$nserlocation->periodCovereda}}</td>
-                                        <td>{{$nserlocation->periodCoveredb}}</td>
-                                        <td>{{$nserlocation->status}}</td>
+                                        <td>{{$nserlocation->periodCovereda}}</td>  
+                                        <td>
+                                            @if( $nserlocation->status == 0 )
+                                            <span class="statusApproved cursor" title="Added to LGU Report">APPROVED</span>
+                                            @elseif( $nserlocation->status == 1 )
+                                            <span class="statusPending cursor" title="For Review">PENDING</span>
+                                            @elseif( $nserlocation->status == 2 )
+                                            <span class="statusDraft cursor" title="Saved as draft">DRAFT</span>
+                                            @elseif( $nserlocation->status == 3 )
+                                            <span class="statusDeclined cursor" title="Review and Submit">DECLINED</span>
+                                            @endif
+                                        </td>
                                         <td class="d-flex">
-                                            <a href="{{route('nutritionservice.edit', $nserlocation->id)}}"
+                                            <ul class="list-inline m-0">
+                                                <li class="list-inline-item">
+                                                    <!-- Approved  -->
+                                                    @if( $nserlocation->status == 0 )
+                                                    <i onclick="view('nutritionservice','{{ $nserlocation->id }}','show')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                                    <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
+                                                    <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i>
+                                                    <!-- Pending -->
+                                                    @elseif( $nserlocation->status == 1 )
+                                                    <i onclick="view('nutritionservice','{{ $nserlocation->id }}','show')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" title="View Disabled"></i>
+                                                    <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
+                                                    <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i>
+                                                    <!-- Draft -->
+                                                    @elseif( $nserlocation->status == 2 )
+                                                    <i class="fa fa-eye fa-lg cursor" style="color:gray;margin-right:10px" title="View"></i>
+                                                    <i onclick="view('nutritionservice','{{ $nserlocation->id }}','edit')"  class="fa fa-edit fa-lg cursor" style="color:#FFB236;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Edit"></i>
+                                                    <i onclick="openModal('{{ $nserlocation->id }}')" class="fa fa-trash fa-lg cursor" style="color:red;margin-right:10px" title="Delete "></i>
+                                                    <!-- Declined -->
+                                                    @elseif( $nserlocation->status == 3 )
+                                                    <i onclick="view('nutritionservice','{{ $nserlocation->id }}','show')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                                    <i onclick="view('nutritionservice','{{ $nserlocation->id }}','edit')" class="fa fa-edit fa-lg cursor" style="color:#FFB236;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Edit"></i>
+                                                    <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i>
+                                                    @endif
+                                                </li>
+                                            </ul>
+                                            <!-- <a href="{{route('nutritionservice.edit', $nserlocation->id)}}"
                                                 class="btn btn-primary">edit</a>
                                             <form action="{{ route('nutritionservice.destroy', $nserlocation->id) }}"
                                                 method="POST"
@@ -67,10 +102,8 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">Delete</button>
-                                            </form>
+                                            </form> -->
                                         </td>
-
-
                                     </tr>
                                     <?php $num++; ?>
                              @endforeach
@@ -82,24 +115,6 @@
     </div>
 </div>
 
+@include('Modal.DeleteNS')
 
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to delete this data?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" onclick="confirmDelete()">Sure</button>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection

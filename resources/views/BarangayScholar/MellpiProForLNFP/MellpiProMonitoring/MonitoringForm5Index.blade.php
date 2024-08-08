@@ -29,25 +29,23 @@
                         <div class="alert alert-success d-none" id="successAlert" role="alert">
                             Data deleted successfully!
                         </div>
-                        <div class="row-12">
+                        <!-- <div class="row-12">
                             <a href="{{ route('MellpiProMonitoringCreate.create') }}" class="btn btn-primary bolder">Create data</a>
-                        </div>
+                        </div> -->
+                        <!-- <div class="row-12">
+                            <a href="{{ route('form5CreateData') }}" class="btn btn-primary bolder">CreateData</a>
+                        </div> -->
 
                         <table class="display" id="form5myTable" width="100%">
                             <thead class="table-light" style="background-color:#508D4E;">
 
                                 <tr>
-                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">#</th>
-                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Name</th>
-                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Address</th>
-                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Province Of Deployment</th>
-                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Number of Years</th>
-                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Fulltime</th>
-                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">With Continuing Activities</th>
-                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Date of Designation</th>
-
-                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white">Status</th>
-                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;width:10%;">Action</th>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">#</th>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Officer</th>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Period Covered</th>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Name</th>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Status</th>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center;width:10%;">Action</th>
 
                                 </tr>
                             </thead>
@@ -56,15 +54,20 @@
                                 <?php $num = 1; ?>
                                 @foreach ($form5a_rr as $form5a_rr)
                                 <tr>
-                                    <td>{{$num}}</td>
-                                    <td>{{ $form5a_rr->nameofPnao }}</td>
-                                    <td>{{ $form5a_rr->address }}</td>
-                                    <td>{{ $form5a_rr->provDeploy }}</td>
-                                    <td>{{ $form5a_rr->numYearPnao }}</td>
-                                    <td>{{ $form5a_rr->fulltime }}</td>
-                                    <td>{{ $form5a_rr->profAct }}</td>
-                                    <td>{{ $form5a_rr->dateDesignation }}</td>
                                     <td>
+                                        <center>{{$num}}</center>
+                                    </td>
+                                    <td>
+                                        <center>{{$form5a_rr->lnfp_officer}}</center>
+                                    </td>
+                                    <td>
+                                        <center>{{$form5a_rr->forThePeriod}}</center>
+                                    </td>
+                                    <td>
+                                        <center>{{ $form5a_rr->nameofPnao }}</center>
+                                    </td>
+                                    <td>
+                                        <center>
                                         @if( $form5a_rr->status == 0 )
                                         <span class="statusApproved">APPROVED</span>
                                         @elseif( $form5a_rr->status == 1 )
@@ -72,6 +75,7 @@
                                         @elseif( $form5a_rr->status == 2 )
                                         <span class="statusDraft">DRAFT</span>
                                         @endif
+                                        </center>
                                     </td>
                                     <!-- <td>{{$form5a_rr->status}}</td> -->
 
@@ -138,7 +142,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" onclick="confirmDeleteLNFP_form5('{{ $form5a_rr->id }}')">Yes</button>
+                <button type="button" class="btn btn-danger" onclick="confirmDeleteLNFP_form5()">Yes</button>
             </div>
         </div>
     </div>

@@ -45,6 +45,8 @@
 
                             <input type="hidden" name="action" id="action" value="">
 
+                            <input type="hidden" name="user_name" value="{{ $row->lnfp_officer }}">
+
                             <!-- header -->
                             <!-- <div style="display:flex">
                                 <div class="form-group col">

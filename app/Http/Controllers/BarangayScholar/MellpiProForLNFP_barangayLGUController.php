@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\lnfp_lguprofile;
 use App\Models\barangaytracking;
+use App\Models\lnfp_form5a_rr;
 use App\Models\lnfp_lguprofiletracking;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
@@ -28,10 +29,10 @@ class MellpiProForLNFP_barangayLGUController extends Controller
         $barangay = auth()->user()->barangay;
 
         $lnfpProfile = DB::table('users')
-        ->join('lnfp_lguprofile', 'users.id', '=', 'lnfp_lguprofile.user_id')
-        ->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')
-        ->select('users.Firstname as firstname','users.Middlename as middlename','users.Lastname as lastname', 'lnfp_lguprofile.*')
-        ->get();
+            ->join('lnfp_lguprofile', 'users.id', '=', 'lnfp_lguprofile.user_id')
+            ->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')
+            ->select('users.Firstname as firstname', 'users.Middlename as middlename', 'users.Lastname as lastname', 'lnfp_lguprofile.*')
+            ->get();
 
         return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPIndex', compact('lnfpProfile', 'prov', 'mun', 'city', 'brgy'));
         // return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPIndex');
@@ -53,7 +54,7 @@ class MellpiProForLNFP_barangayLGUController extends Controller
         //dd($lguProfile);
 
 
-        return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPEdit',compact('row','prov', 'mun', 'city', 'brgy', 'years', 'action'));
+        return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPEdit', compact('row', 'prov', 'mun', 'city', 'brgy', 'years', 'action'));
 
         // $lnfpProfile = DB::table('lnfp_lguprofile')->where('id', $request->id)->first();
 
@@ -68,10 +69,10 @@ class MellpiProForLNFP_barangayLGUController extends Controller
         $mun = $location->getLocationDataMuni(auth()->user()->Province);
         $city = $location->getLocationDataCity(auth()->user()->Region);
         $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
-        
+
         $years = range(date("Y"), 1900);
 
-        return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPCreate', compact('prov', 'mun', 'city', 'brgy','years', 'action'));
+        return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPCreate', compact('prov', 'mun', 'city', 'brgy', 'years', 'action'));
 
         // return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPCreate');
     }
@@ -197,10 +198,10 @@ class MellpiProForLNFP_barangayLGUController extends Controller
                 'province_id' => 'required',
                 'region_id' => 'required',
                 'user_id' => 'required',
-    
+
             ];
-    
-    
+
+
             $message = [
                 'required' => 'The field is required.',
                 'integer' => 'The field must be a integer.',
@@ -208,24 +209,239 @@ class MellpiProForLNFP_barangayLGUController extends Controller
                 'date' => 'The field must be a valid date.',
                 'max' => 'The field may not be greater than :max characters.',
             ];
-    
+
             // $validator = Validator::make($request->all(), $rules, $message);
-    
+
             $input = $request->all();
             // $input = array_map('trim', $input);
-    
+
             $validator = Validator::make($input, $rules, $message);
-    
+
             if ($validator->fails()) {
                 Log::error($validator->errors());
                 return redirect()->back()
                     ->withErrors($validator)
                     ->withInput()
                     ->with('error', 'Something went wrong! Please try again.');
-    
-                
             } else {
+                // $lnfpProfile = DB::table('users')
+                //     ->join('lnfp_lguprofile', 'users.id', '=', 'lnfp_lguprofile.user_id')
+                //     ->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')
+                //     ->select('users.Firstname as firstname', 'users.Middlename as middlename', 'users.Lastname as lastname', 'lnfp_lguprofile.*')
+                //     ->first();
+
+                $user = DB::table('users')
+                ->where('id', auth()->user()->id)
+                ->first();
+
+                // dd($user);
+
+                if ($user) {
+                    # code...
+                    $fullname = $user->Firstname . ' ' . $user->Middlename . ' ' . $user->Lastname;
+
+                    $LNFPProfileBarangay = lnfp_lguprofile::create([
+                        'lnfp_officer' => $fullname,
+                        'dateMonitoring' => $request->dateMonitoring,
+                        'periodCovereda' => $request->periodCovereda,
+                        'numOfMuni' => $request->numOfMun,
+                        'totalPopulation' => $request->totalPopulation,
+                        'householdWater' => $request->householdWater,
+                        'householdToilets' => $request->householdToilets,
+                        'dayCareCenter' => $request->dayCareCenter,
+                        'elementary' => $request->elementary,
+                        'secondarySchool' => $request->secondarySchool,
+                        'healthStations' => $request->healthStations,
+                        'retailOutlets' => $request->retailOutlets,
+                        'bakeries' => $request->bakeries,
+                        'markets' => $request->markets,
+                        'transportTerminals' => $request->transportTerminals,
+                        'breastfeeding' => $request->breastfeeding,
+
+                        'hazards' => $request->hazards,
+                        'affectedLGU' => $request->affectedLGU,
+                        'noHousehold' => $request->noHousehold,
+                        'noPuroks' => $request->noPuroks,
+                        'populationA' => $request->populationA,
+                        'populationB' => $request->populationB,
+                        'populationC' => $request->populationC,
+                        'populationD' => $request->populationD,
+                        'populationE' => $request->populationE,
+                        'populationF' => $request->populationF,
+                        'actualA' => $request->actualA,
+                        'actualB' => $request->actualB,
+                        'actualC' => $request->actualC,
+                        'actualD' => $request->actualD,
+                        'actualE' => $request->actualE,
+                        'actualF' => $request->actualF,
+
+                        // overweight (%) overweight
+                        'psnormalAAA' => $request->psnormalAAA,
+                        'psunderweightAAA' => $request->psunderweightAAA,
+                        'pssevereUnderweightAAA' => $request->pssevereUnderweightAAA,
+                        'psoverweightAAA' => $request->psoverweightAAA,
+
+                        'psnormalBAA' => $request->psnormalBAA,
+                        'psunderweightBAA' => $request->psunderweightBAA,
+                        'pssevereUnderweightBAA' => $request->pssevereUnderweightBAA,
+                        'psoverweightBAA' => $request->psoverweightBAA,
+
+                        'psnormalCAA' => $request->psnormalCAA,
+                        'psunderweightCAA' => $request->psunderweightCAA,
+                        'pssevereUnderweightCAA' => $request->pssevereUnderweightCAA,
+                        'psoverweightCAA' => $request->psoverweightCAA,
+
+                        // overweight (%) obese
+                        'psnormalABA' => $request->psnormalABA,
+                        'pswastedABA' => $request->pswastedABA,
+                        'psseverelyWastedABA' => $request->psseverelyWastedABA,
+                        'psoverweightABA' => $request->psoverweightABA,
+                        'psobeseABA' => $request->psobeseABA,
+
+                        'psnormalBBA' => $request->psnormalBBA,
+                        'pswastedBBA' => $request->pswastedBBA,
+                        'psseverelyWastedBBA' => $request->psseverelyWastedBBA,
+                        'psoverweightBBA' => $request->psoverweightBBA,
+                        'psobeseBBA' => $request->psobeseBBA,
+
+                        'psnormalCCA' => $request->psnormalCCA,
+                        'pswastedCCA' => $request->pswastedCCA,
+                        'psseverelyWastedCCA' => $request->psseverelyWastedCCA,
+                        'psoverweightCCA' => $request->psoverweightCCA,
+                        'psobeseCCA' => $request->psobeseCCA,
+
+                        // overweight (%) tall
+                        'psnormalAAB' => $request->psnormalAAB,
+                        'psstuntedAAB' => $request->psstuntedAAB,
+                        'pssevereStuntedAAB' => $request->pssevereStuntedAAB,
+                        'pstallAAB' => $request->pstallAAB,
+
+                        'psnormalBBB' => $request->psnormalBBB,
+                        'psstuntedBBB' => $request->psstuntedBBB,
+                        'pssevereStuntedBBB' => $request->pssevereStuntedBBB,
+                        'pstallBBB' => $request->pstallBBB,
+
+                        'psnormalCCC' => $request->psnormalCCC,
+                        'psstuntedCCC' => $request->psstuntedCCC,
+                        'pssevereStuntedCCC' => $request->pssevereStuntedCCC,
+                        'pstallCCC' => $request->pstallCCC,
+
+                        // overweight (%) obese School Children
+                        'scnormalABA' => $request->scnormalABA,
+                        'scwastedABA' => $request->scwastedABA,
+                        'scseverelyWastedABA' => $request->scseverelyWastedABA,
+                        'scoverweightABA' => $request->scoverweightABA,
+                        'scobeseABA' => $request->scobeseABA,
+
+                        'scnormalBBA' => $request->scnormalBBA,
+                        'scwastedBBA' => $request->scwastedABA,
+                        'scseverelyWastedBBA' => $request->scseverelyWastedBBA,
+                        'scoverweightBBA' => $request->scoverweightBBA,
+                        'scobeseBBA' => $request->scobeseBBA,
+
+                        'scnormalCCA' => $request->scnormalCCA,
+                        'scwastedCCA' => $request->scwastedCCA,
+                        'scseverelyWastedCCA' => $request->scseverelyWastedCCA,
+                        'scoverweightCCA' => $request->scoverweightCCA,
+                        'scobeseCCA' => $request->scobeseCCA,
+
+                        // overweight (%) obese Pregnant Woman
+                        'pwnormalAAA' => $request->pwnormalAAA,
+                        'pwnutritionllyatriskAAA' => $request->pwnutritionllyatriskAAA,
+                        'pwoverweightAAA' => $request->pwoverweightAAA,
+                        'pwobeseAAA' => $request->pwobeseAAA,
+
+                        'pwnormalBAA' => $request->pwnormalBAA,
+                        'pwnutritionllyatriskBAA' => $request->pwnutritionllyatriskBAA,
+                        'pwoverweightBAA' => $request->pwoverweightBAA,
+                        'pwobeseBAA' => $request->pwobeseBAA,
+
+                        'pwnormalCAA' => $request->pwnormalCAA,
+                        'pwnutritionllyatriskCAA' => $request->pwnutritionllyatriskCAA,
+                        'pwoverweightCAA' => $request->pwoverweightCAA,
+                        'pwobeseCAA' => $request->pwobeseCAA,
+
+                        'newBrgyScholar' => $request->newNutritionScholar,
+                        'oldBrgyScholar' => $request->oldNutritionScholar,
+
+                        /////
+
+                        'landAreaResidential' => $request->landAreaResidential,
+                        'remarksResidential' => $request->remarksResidential,
+
+                        /////
+
+                        'landAreaCommercial' => $request->landAreaCommercial,
+                        'remarksCommercial' => $request->remarksCommercial,
+
+                        'landAreaIndustrial' => $request->landAreaIndustrial,
+                        'remarksIndustrial' => $request->remarksIndustrial,
+
+                        'landAreaAgricultural' => $request->landAreaAgricultural,
+                        'remarksAgricultural' => $request->remarksAgricultural,
+
+                        'landAreaFLMLNP' => $request->landAreaFLMLNP,
+                        'remarksFLMLNP' => $request->remarksFLMLNP,
+
+
+                        'status' => $request->submitStatus,
+
+                        'barangay_id' => $request->barangay_id,
+                        'municipal_id' => $request->municipal_id,
+                        'province_id' => $request->province_id,
+                        'region_id' => $request->region_id,
+                        'user_id' => auth()->user()->id,
+                        // 'barangay_id' => $request->barangay_id,
+                        // 'municipal_id' => $request->municipal_id,
+                        // 'province_id' => $request->province_id,
+                        // 'region_id' => $request->region_id,
+                        // 'user_id' => auth()->user()->id,
+                        // 'user_id' => $request->input('userId'),
+
+                    ]);
+                    // dd($LNFPProfileBarangay);
+
+                    if ($LNFPProfileBarangay) {
+                        # code...
+                        lnfp_lguprofiletracking::create([
+                            'lnfp_lguprofile_id' => $LNFPProfileBarangay->id,
+                            'status' => $request->submitStatus,
+                            'barangay_id' => auth()->user()->barangay,
+                            'municipal_id' => auth()->user()->city_municipal,
+                            'user_id' => auth()->user()->id,
+                        ]);
+
+                        lnfp_form5a_rr::create([
+                            'lnfp_lgu_id' => $LNFPProfileBarangay->id,
+                            'lnfp_officer' => $LNFPProfileBarangay->lnfp_officer,
+                            'forThePeriod' => $LNFPProfileBarangay->periodCovereda,
+                            'dateMonitoring' => $LNFPProfileBarangay->dateMonitoring,
+                            'status' => 2
+                        ]);
+                    }
+
+                    return redirect()->route('BSLGUprofileLNFPIndex.index')->with('alert', 'Data created Successfully!');
+                }
+            }
+        } elseif ($action == 'draft') {
+            // $lnfpProfile = DB::table('users')
+            //     ->join('lnfp_lguprofile', 'users.id', '=', 'lnfp_lguprofile.user_id')
+            //     ->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')
+            //     ->select('users.Firstname as firstname', 'users.Middlename as middlename', 'users.Lastname as lastname', 'lnfp_lguprofile.*')
+            //     ->first();
+
+                $user = DB::table('users')
+                ->where('id', auth()->user()->id)
+                ->first();
+
+                // dd($user);
+
+            if ($user) {
+                # code...
+                $fullname = $user->Firstname . ' ' . $user->Middlename . ' ' . $user->Lastname;
+
                 $LNFPProfileBarangay = lnfp_lguprofile::create([
+                    'lnfp_officer' => $fullname,
                     'dateMonitoring' => $request->dateMonitoring,
                     'periodCovereda' => $request->periodCovereda,
                     'numOfMuni' => $request->numOfMun,
@@ -241,7 +457,7 @@ class MellpiProForLNFP_barangayLGUController extends Controller
                     'markets' => $request->markets,
                     'transportTerminals' => $request->transportTerminals,
                     'breastfeeding' => $request->breastfeeding,
-    
+
                     'hazards' => $request->hazards,
                     'affectedLGU' => $request->affectedLGU,
                     'noHousehold' => $request->noHousehold,
@@ -258,118 +474,118 @@ class MellpiProForLNFP_barangayLGUController extends Controller
                     'actualD' => $request->actualD,
                     'actualE' => $request->actualE,
                     'actualF' => $request->actualF,
-    
+
                     // overweight (%) overweight
                     'psnormalAAA' => $request->psnormalAAA,
                     'psunderweightAAA' => $request->psunderweightAAA,
                     'pssevereUnderweightAAA' => $request->pssevereUnderweightAAA,
                     'psoverweightAAA' => $request->psoverweightAAA,
-    
+
                     'psnormalBAA' => $request->psnormalBAA,
                     'psunderweightBAA' => $request->psunderweightBAA,
                     'pssevereUnderweightBAA' => $request->pssevereUnderweightBAA,
                     'psoverweightBAA' => $request->psoverweightBAA,
-    
+
                     'psnormalCAA' => $request->psnormalCAA,
                     'psunderweightCAA' => $request->psunderweightCAA,
                     'pssevereUnderweightCAA' => $request->pssevereUnderweightCAA,
                     'psoverweightCAA' => $request->psoverweightCAA,
-    
+
                     // overweight (%) obese
                     'psnormalABA' => $request->psnormalABA,
                     'pswastedABA' => $request->pswastedABA,
                     'psseverelyWastedABA' => $request->psseverelyWastedABA,
                     'psoverweightABA' => $request->psoverweightABA,
                     'psobeseABA' => $request->psobeseABA,
-    
+
                     'psnormalBBA' => $request->psnormalBBA,
                     'pswastedBBA' => $request->pswastedBBA,
                     'psseverelyWastedBBA' => $request->psseverelyWastedBBA,
                     'psoverweightBBA' => $request->psoverweightBBA,
                     'psobeseBBA' => $request->psobeseBBA,
-    
+
                     'psnormalCCA' => $request->psnormalCCA,
                     'pswastedCCA' => $request->pswastedCCA,
                     'psseverelyWastedCCA' => $request->psseverelyWastedCCA,
                     'psoverweightCCA' => $request->psoverweightCCA,
                     'psobeseCCA' => $request->psobeseCCA,
-    
+
                     // overweight (%) tall
                     'psnormalAAB' => $request->psnormalAAB,
                     'psstuntedAAB' => $request->psstuntedAAB,
                     'pssevereStuntedAAB' => $request->pssevereStuntedAAB,
                     'pstallAAB' => $request->pstallAAB,
-    
+
                     'psnormalBBB' => $request->psnormalBBB,
                     'psstuntedBBB' => $request->psstuntedBBB,
                     'pssevereStuntedBBB' => $request->pssevereStuntedBBB,
                     'pstallBBB' => $request->pstallBBB,
-    
+
                     'psnormalCCC' => $request->psnormalCCC,
                     'psstuntedCCC' => $request->psstuntedCCC,
                     'pssevereStuntedCCC' => $request->pssevereStuntedCCC,
                     'pstallCCC' => $request->pstallCCC,
-    
+
                     // overweight (%) obese School Children
                     'scnormalABA' => $request->scnormalABA,
                     'scwastedABA' => $request->scwastedABA,
                     'scseverelyWastedABA' => $request->scseverelyWastedABA,
                     'scoverweightABA' => $request->scoverweightABA,
                     'scobeseABA' => $request->scobeseABA,
-    
+
                     'scnormalBBA' => $request->scnormalBBA,
                     'scwastedBBA' => $request->scwastedABA,
                     'scseverelyWastedBBA' => $request->scseverelyWastedBBA,
                     'scoverweightBBA' => $request->scoverweightBBA,
                     'scobeseBBA' => $request->scobeseBBA,
-    
+
                     'scnormalCCA' => $request->scnormalCCA,
                     'scwastedCCA' => $request->scwastedCCA,
                     'scseverelyWastedCCA' => $request->scseverelyWastedCCA,
                     'scoverweightCCA' => $request->scoverweightCCA,
                     'scobeseCCA' => $request->scobeseCCA,
-    
+
                     // overweight (%) obese Pregnant Woman
                     'pwnormalAAA' => $request->pwnormalAAA,
                     'pwnutritionllyatriskAAA' => $request->pwnutritionllyatriskAAA,
                     'pwoverweightAAA' => $request->pwoverweightAAA,
                     'pwobeseAAA' => $request->pwobeseAAA,
-    
+
                     'pwnormalBAA' => $request->pwnormalBAA,
                     'pwnutritionllyatriskBAA' => $request->pwnutritionllyatriskBAA,
                     'pwoverweightBAA' => $request->pwoverweightBAA,
                     'pwobeseBAA' => $request->pwobeseBAA,
-    
+
                     'pwnormalCAA' => $request->pwnormalCAA,
                     'pwnutritionllyatriskCAA' => $request->pwnutritionllyatriskCAA,
                     'pwoverweightCAA' => $request->pwoverweightCAA,
                     'pwobeseCAA' => $request->pwobeseCAA,
-    
+
                     'newBrgyScholar' => $request->newNutritionScholar,
                     'oldBrgyScholar' => $request->oldNutritionScholar,
-    
+
                     /////
-    
+
                     'landAreaResidential' => $request->landAreaResidential,
                     'remarksResidential' => $request->remarksResidential,
-    
+
                     /////
-    
+
                     'landAreaCommercial' => $request->landAreaCommercial,
                     'remarksCommercial' => $request->remarksCommercial,
-    
+
                     'landAreaIndustrial' => $request->landAreaIndustrial,
                     'remarksIndustrial' => $request->remarksIndustrial,
-    
+
                     'landAreaAgricultural' => $request->landAreaAgricultural,
                     'remarksAgricultural' => $request->remarksAgricultural,
-    
+
                     'landAreaFLMLNP' => $request->landAreaFLMLNP,
                     'remarksFLMLNP' => $request->remarksFLMLNP,
-    
-    
-                    'status' => $request->submitStatus,
-    
+
+
+                    'status' => $request->DraftStatus,
+
                     'barangay_id' => $request->barangay_id,
                     'municipal_id' => $request->municipal_id,
                     'province_id' => $request->province_id,
@@ -381,10 +597,10 @@ class MellpiProForLNFP_barangayLGUController extends Controller
                     // 'region_id' => $request->region_id,
                     // 'user_id' => auth()->user()->id,
                     // 'user_id' => $request->input('userId'),
-    
+
                 ]);
                 // dd($LNFPProfileBarangay);
-    
+
                 if ($LNFPProfileBarangay) {
                     # code...
                     lnfp_lguprofiletracking::create([
@@ -395,186 +611,14 @@ class MellpiProForLNFP_barangayLGUController extends Controller
                         'user_id' => auth()->user()->id,
                     ]);
                 }
-    
-                return redirect()->route('BSLGUprofileLNFPIndex.index')->with('alert', 'Data created Successfully!');
+
+                return redirect()->route('BSLGUprofileLNFPIndex.index')->with('alert', 'Saved as Draft Successfully!');
             }
-        } elseif ($action == 'draft') {
-            $LNFPProfileBarangay = lnfp_lguprofile::create([
-                'dateMonitoring' => $request->dateMonitoring,
-                'periodCovereda' => $request->periodCovereda,
-                'numOfMuni' => $request->numOfMun,
-                'totalPopulation' => $request->totalPopulation,
-                'householdWater' => $request->householdWater,
-                'householdToilets' => $request->householdToilets,
-                'dayCareCenter' => $request->dayCareCenter,
-                'elementary' => $request->elementary,
-                'secondarySchool' => $request->secondarySchool,
-                'healthStations' => $request->healthStations,
-                'retailOutlets' => $request->retailOutlets,
-                'bakeries' => $request->bakeries,
-                'markets' => $request->markets,
-                'transportTerminals' => $request->transportTerminals,
-                'breastfeeding' => $request->breastfeeding,
-
-                'hazards' => $request->hazards,
-                'affectedLGU' => $request->affectedLGU,
-                'noHousehold' => $request->noHousehold,
-                'noPuroks' => $request->noPuroks,
-                'populationA' => $request->populationA,
-                'populationB' => $request->populationB,
-                'populationC' => $request->populationC,
-                'populationD' => $request->populationD,
-                'populationE' => $request->populationE,
-                'populationF' => $request->populationF,
-                'actualA' => $request->actualA,
-                'actualB' => $request->actualB,
-                'actualC' => $request->actualC,
-                'actualD' => $request->actualD,
-                'actualE' => $request->actualE,
-                'actualF' => $request->actualF,
-
-                // overweight (%) overweight
-                'psnormalAAA' => $request->psnormalAAA,
-                'psunderweightAAA' => $request->psunderweightAAA,
-                'pssevereUnderweightAAA' => $request->pssevereUnderweightAAA,
-                'psoverweightAAA' => $request->psoverweightAAA,
-
-                'psnormalBAA' => $request->psnormalBAA,
-                'psunderweightBAA' => $request->psunderweightBAA,
-                'pssevereUnderweightBAA' => $request->pssevereUnderweightBAA,
-                'psoverweightBAA' => $request->psoverweightBAA,
-
-                'psnormalCAA' => $request->psnormalCAA,
-                'psunderweightCAA' => $request->psunderweightCAA,
-                'pssevereUnderweightCAA' => $request->pssevereUnderweightCAA,
-                'psoverweightCAA' => $request->psoverweightCAA,
-
-                // overweight (%) obese
-                'psnormalABA' => $request->psnormalABA,
-                'pswastedABA' => $request->pswastedABA,
-                'psseverelyWastedABA' => $request->psseverelyWastedABA,
-                'psoverweightABA' => $request->psoverweightABA,
-                'psobeseABA' => $request->psobeseABA,
-
-                'psnormalBBA' => $request->psnormalBBA,
-                'pswastedBBA' => $request->pswastedBBA,
-                'psseverelyWastedBBA' => $request->psseverelyWastedBBA,
-                'psoverweightBBA' => $request->psoverweightBBA,
-                'psobeseBBA' => $request->psobeseBBA,
-
-                'psnormalCCA' => $request->psnormalCCA,
-                'pswastedCCA' => $request->pswastedCCA,
-                'psseverelyWastedCCA' => $request->psseverelyWastedCCA,
-                'psoverweightCCA' => $request->psoverweightCCA,
-                'psobeseCCA' => $request->psobeseCCA,
-
-                // overweight (%) tall
-                'psnormalAAB' => $request->psnormalAAB,
-                'psstuntedAAB' => $request->psstuntedAAB,
-                'pssevereStuntedAAB' => $request->pssevereStuntedAAB,
-                'pstallAAB' => $request->pstallAAB,
-
-                'psnormalBBB' => $request->psnormalBBB,
-                'psstuntedBBB' => $request->psstuntedBBB,
-                'pssevereStuntedBBB' => $request->pssevereStuntedBBB,
-                'pstallBBB' => $request->pstallBBB,
-
-                'psnormalCCC' => $request->psnormalCCC,
-                'psstuntedCCC' => $request->psstuntedCCC,
-                'pssevereStuntedCCC' => $request->pssevereStuntedCCC,
-                'pstallCCC' => $request->pstallCCC,
-
-                // overweight (%) obese School Children
-                'scnormalABA' => $request->scnormalABA,
-                'scwastedABA' => $request->scwastedABA,
-                'scseverelyWastedABA' => $request->scseverelyWastedABA,
-                'scoverweightABA' => $request->scoverweightABA,
-                'scobeseABA' => $request->scobeseABA,
-
-                'scnormalBBA' => $request->scnormalBBA,
-                'scwastedBBA' => $request->scwastedABA,
-                'scseverelyWastedBBA' => $request->scseverelyWastedBBA,
-                'scoverweightBBA' => $request->scoverweightBBA,
-                'scobeseBBA' => $request->scobeseBBA,
-
-                'scnormalCCA' => $request->scnormalCCA,
-                'scwastedCCA' => $request->scwastedCCA,
-                'scseverelyWastedCCA' => $request->scseverelyWastedCCA,
-                'scoverweightCCA' => $request->scoverweightCCA,
-                'scobeseCCA' => $request->scobeseCCA,
-
-                // overweight (%) obese Pregnant Woman
-                'pwnormalAAA' => $request->pwnormalAAA,
-                'pwnutritionllyatriskAAA' => $request->pwnutritionllyatriskAAA,
-                'pwoverweightAAA' => $request->pwoverweightAAA,
-                'pwobeseAAA' => $request->pwobeseAAA,
-
-                'pwnormalBAA' => $request->pwnormalBAA,
-                'pwnutritionllyatriskBAA' => $request->pwnutritionllyatriskBAA,
-                'pwoverweightBAA' => $request->pwoverweightBAA,
-                'pwobeseBAA' => $request->pwobeseBAA,
-
-                'pwnormalCAA' => $request->pwnormalCAA,
-                'pwnutritionllyatriskCAA' => $request->pwnutritionllyatriskCAA,
-                'pwoverweightCAA' => $request->pwoverweightCAA,
-                'pwobeseCAA' => $request->pwobeseCAA,
-
-                'newBrgyScholar' => $request->newNutritionScholar,
-                'oldBrgyScholar' => $request->oldNutritionScholar,
-
-                /////
-
-                'landAreaResidential' => $request->landAreaResidential,
-                'remarksResidential' => $request->remarksResidential,
-
-                /////
-
-                'landAreaCommercial' => $request->landAreaCommercial,
-                'remarksCommercial' => $request->remarksCommercial,
-
-                'landAreaIndustrial' => $request->landAreaIndustrial,
-                'remarksIndustrial' => $request->remarksIndustrial,
-
-                'landAreaAgricultural' => $request->landAreaAgricultural,
-                'remarksAgricultural' => $request->remarksAgricultural,
-
-                'landAreaFLMLNP' => $request->landAreaFLMLNP,
-                'remarksFLMLNP' => $request->remarksFLMLNP,
-
-
-                'status' => $request->DraftStatus,
-
-                'barangay_id' => $request->barangay_id,
-                'municipal_id' => $request->municipal_id,
-                'province_id' => $request->province_id,
-                'region_id' => $request->region_id,
-                'user_id' => auth()->user()->id,
-                // 'barangay_id' => $request->barangay_id,
-                // 'municipal_id' => $request->municipal_id,
-                // 'province_id' => $request->province_id,
-                // 'region_id' => $request->region_id,
-                // 'user_id' => auth()->user()->id,
-                // 'user_id' => $request->input('userId'),
-
-            ]);
-            // dd($LNFPProfileBarangay);
-
-            if ($LNFPProfileBarangay) {
-                # code...
-                lnfp_lguprofiletracking::create([
-                    'lnfp_lguprofile_id' => $LNFPProfileBarangay->id,
-                    'status' => $request->submitStatus,
-                    'barangay_id' => auth()->user()->barangay,
-                    'municipal_id' => auth()->user()->city_municipal,
-                    'user_id' => auth()->user()->id,
-                ]);
-            }
-
-            return redirect()->route('BSLGUprofileLNFPIndex.index')->with('alert', 'Saved as Draft Successfully!');
         }
     }
 
-    public function storeUpdate(Request $request) {
+    public function storeUpdate(Request $request)
+    {
         $action = $request->input('action');
         // dd($action);
         if ($action == 'submit') {
@@ -691,10 +735,10 @@ class MellpiProForLNFP_barangayLGUController extends Controller
                     'remarksAgricultural' => 'required',
                     'landAreaFLMLNP' => 'required',
                     'remarksFLMLNP' => 'required',
-        
+
                 ];
-        
-        
+
+
                 $message = [
                     'required' => 'The field is required.',
                     'integer' => 'The field must be a integer.',
@@ -704,168 +748,174 @@ class MellpiProForLNFP_barangayLGUController extends Controller
                 ];
 
                 $input = $request->all();
-            // $input = array_map('trim', $input);
-    
-            $validator = Validator::make($input, $rules, $message);
-    
-            if ($validator->fails()) {
-                Log::error($validator->errors());
-                return redirect()->back()
-                    ->withErrors($validator)
-                    ->withInput()
-                    ->with('error', 'Something went wrong! Please try again.');
-    
-                
-            } else {
-                $updateResponse = lnfp_lguprofile::where('id', $request->id)
-                ->update([
-                    'dateMonitoring' => $request->dateMonitoring,
-                    'periodCovereda' => $request->periodCovereda,
-                    'numOfMuni' => $request->numOfMun,
-                    'totalPopulation' => $request->totalPopulation,
-                    'householdWater' => $request->householdWater,
-                    'householdToilets' => $request->householdToilets,
-                    'dayCareCenter' => $request->dayCareCenter,
-                    'elementary' => $request->elementary,
-                    'secondarySchool' => $request->secondarySchool,
-                    'healthStations' => $request->healthStations,
-                    'retailOutlets' => $request->retailOutlets,
-                    'bakeries' => $request->bakeries,
-                    'markets' => $request->markets,
-                    'transportTerminals' => $request->transportTerminals,
-                    'breastfeeding' => $request->breastfeeding,
+                // $input = array_map('trim', $input);
 
-                    'hazards' => $request->hazards,
-                    'affectedLGU' => $request->affectedLGU,
-                    'noHousehold' => $request->noHousehold,
-                    'noPuroks' => $request->noPuroks,
-                    'populationA' => $request->populationA,
-                    'populationB' => $request->populationB,
-                    'populationC' => $request->populationC,
-                    'populationD' => $request->populationD,
-                    'populationE' => $request->populationE,
-                    'populationF' => $request->populationF,
-                    'actualA' => $request->actualA,
-                    'actualB' => $request->actualB,
-                    'actualC' => $request->actualC,
-                    'actualD' => $request->actualD,
-                    'actualE' => $request->actualE,
-                    'actualF' => $request->actualF,
+                $validator = Validator::make($input, $rules, $message);
 
-                // overweight (%) overweight
-                    'psnormalAAA' => $request->psnormalAAA,
-                    'psunderweightAAA' => $request->psunderweightAAA,
-                    'pssevereUnderweightAAA' => $request->pssevereUnderweightAAA,
-                    'psoverweightAAA' => $request->psoverweightAAA,
+                if ($validator->fails()) {
+                    Log::error($validator->errors());
+                    return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput()
+                        ->with('error', 'Something went wrong! Please try again.');
+                } else {
+                    $updateResponse = lnfp_lguprofile::where('id', $request->id)
+                        ->update([
+                            'dateMonitoring' => $request->dateMonitoring,
+                            'periodCovereda' => $request->periodCovereda,
+                            'numOfMuni' => $request->numOfMun,
+                            'totalPopulation' => $request->totalPopulation,
+                            'householdWater' => $request->householdWater,
+                            'householdToilets' => $request->householdToilets,
+                            'dayCareCenter' => $request->dayCareCenter,
+                            'elementary' => $request->elementary,
+                            'secondarySchool' => $request->secondarySchool,
+                            'healthStations' => $request->healthStations,
+                            'retailOutlets' => $request->retailOutlets,
+                            'bakeries' => $request->bakeries,
+                            'markets' => $request->markets,
+                            'transportTerminals' => $request->transportTerminals,
+                            'breastfeeding' => $request->breastfeeding,
 
-                    'psnormalBAA' => $request->psnormalBAA,
-                    'psunderweightBAA' => $request->psunderweightBAA,
-                    'pssevereUnderweightBAA' => $request->pssevereUnderweightBAA,
-                    'psoverweightBAA' => $request->psoverweightBAA,
+                            'hazards' => $request->hazards,
+                            'affectedLGU' => $request->affectedLGU,
+                            'noHousehold' => $request->noHousehold,
+                            'noPuroks' => $request->noPuroks,
+                            'populationA' => $request->populationA,
+                            'populationB' => $request->populationB,
+                            'populationC' => $request->populationC,
+                            'populationD' => $request->populationD,
+                            'populationE' => $request->populationE,
+                            'populationF' => $request->populationF,
+                            'actualA' => $request->actualA,
+                            'actualB' => $request->actualB,
+                            'actualC' => $request->actualC,
+                            'actualD' => $request->actualD,
+                            'actualE' => $request->actualE,
+                            'actualF' => $request->actualF,
 
-                    'psnormalCAA' => $request->psnormalCAA,
-                    'psunderweightCAA' => $request->psunderweightCAA,
-                    'pssevereUnderweightCAA' => $request->pssevereUnderweightCAA,
-                    'psoverweightCAA' => $request->psoverweightCAA,
+                            // overweight (%) overweight
+                            'psnormalAAA' => $request->psnormalAAA,
+                            'psunderweightAAA' => $request->psunderweightAAA,
+                            'pssevereUnderweightAAA' => $request->pssevereUnderweightAAA,
+                            'psoverweightAAA' => $request->psoverweightAAA,
 
-                // overweight (%) obese
-                    'psnormalABA' => $request->psnormalABA,
-                    'pswastedABA' => $request->pswastedABA,
-                    'psseverelyWastedABA' => $request->psseverelyWastedABA,
-                    'psoverweightABA' => $request->psoverweightABA,
-                    'psobeseABA' => $request->psobeseABA,
+                            'psnormalBAA' => $request->psnormalBAA,
+                            'psunderweightBAA' => $request->psunderweightBAA,
+                            'pssevereUnderweightBAA' => $request->pssevereUnderweightBAA,
+                            'psoverweightBAA' => $request->psoverweightBAA,
 
-                    'psnormalBBA' => $request->psnormalBBA,
-                    'pswastedBBA' => $request->pswastedBBA,
-                    'psseverelyWastedBBA' => $request->psseverelyWastedBBA,
-                    'psoverweightBBA' => $request->psoverweightBBA,
-                    'psobeseBBA' => $request->psobeseBBA,
+                            'psnormalCAA' => $request->psnormalCAA,
+                            'psunderweightCAA' => $request->psunderweightCAA,
+                            'pssevereUnderweightCAA' => $request->pssevereUnderweightCAA,
+                            'psoverweightCAA' => $request->psoverweightCAA,
 
-                    'psnormalCCA' => $request->psnormalCCA,
-                    'pswastedCCA' => $request->pswastedCCA,
-                    'psseverelyWastedCCA' => $request->psseverelyWastedCCA,
-                    'psoverweightCCA' => $request->psoverweightCCA,
-                    'psobeseCCA' => $request->psobeseCCA,
+                            // overweight (%) obese
+                            'psnormalABA' => $request->psnormalABA,
+                            'pswastedABA' => $request->pswastedABA,
+                            'psseverelyWastedABA' => $request->psseverelyWastedABA,
+                            'psoverweightABA' => $request->psoverweightABA,
+                            'psobeseABA' => $request->psobeseABA,
 
-                // overweight (%) tall
-                    'psnormalAAB' => $request->psnormalAAB,
-                    'psstuntedAAB' => $request->psstuntedAAB,
-                    'pssevereStuntedAAB' => $request->pssevereStuntedAAB,
-                    'pstallAAB' => $request->pstallAAB,
+                            'psnormalBBA' => $request->psnormalBBA,
+                            'pswastedBBA' => $request->pswastedBBA,
+                            'psseverelyWastedBBA' => $request->psseverelyWastedBBA,
+                            'psoverweightBBA' => $request->psoverweightBBA,
+                            'psobeseBBA' => $request->psobeseBBA,
 
-                    'psnormalBBB' => $request->psnormalBBB,
-                    'psstuntedBBB' => $request->psstuntedBBB,
-                    'pssevereStuntedBBB' => $request->pssevereStuntedBBB,
-                    'pstallBBB' => $request->pstallBBB,
+                            'psnormalCCA' => $request->psnormalCCA,
+                            'pswastedCCA' => $request->pswastedCCA,
+                            'psseverelyWastedCCA' => $request->psseverelyWastedCCA,
+                            'psoverweightCCA' => $request->psoverweightCCA,
+                            'psobeseCCA' => $request->psobeseCCA,
 
-                    'psnormalCCC' => $request->psnormalCCC,
-                    'psstuntedCCC' => $request->psstuntedCCC,
-                    'pssevereStuntedCCC' => $request->pssevereStuntedCCC,
-                    'pstallCCC' => $request->pstallCCC,
+                            // overweight (%) tall
+                            'psnormalAAB' => $request->psnormalAAB,
+                            'psstuntedAAB' => $request->psstuntedAAB,
+                            'pssevereStuntedAAB' => $request->pssevereStuntedAAB,
+                            'pstallAAB' => $request->pstallAAB,
 
-                // overweight (%) obese School Children
-                    'scnormalABA' => $request->scnormalABA,
-                    'scwastedABA' => $request->scwastedABA,
-                    'scseverelyWastedABA' => $request->scseverelyWastedABA,
-                    'scoverweightABA' => $request->scoverweightABA,
-                    'scobeseABA' => $request->scobeseABA,
+                            'psnormalBBB' => $request->psnormalBBB,
+                            'psstuntedBBB' => $request->psstuntedBBB,
+                            'pssevereStuntedBBB' => $request->pssevereStuntedBBB,
+                            'pstallBBB' => $request->pstallBBB,
 
-                    'scnormalBBA' => $request->scnormalBBA,
-                    'scwastedBBA' => $request->scwastedABA,
-                    'scseverelyWastedBBA' => $request->scseverelyWastedBBA,
-                    'scoverweightBBA' => $request->scoverweightBBA,
-                    'scobeseBBA' => $request->scobeseBBA,
+                            'psnormalCCC' => $request->psnormalCCC,
+                            'psstuntedCCC' => $request->psstuntedCCC,
+                            'pssevereStuntedCCC' => $request->pssevereStuntedCCC,
+                            'pstallCCC' => $request->pstallCCC,
 
-                    'scnormalCCA' => $request->scnormalCCA,
-                    'scwastedCCA' => $request->scwastedCCA,
-                    'scseverelyWastedCCA' => $request->scseverelyWastedCCA,
-                    'scoverweightCCA' => $request->scoverweightCCA,
-                    'scobeseCCA' => $request->scobeseCCA,
+                            // overweight (%) obese School Children
+                            'scnormalABA' => $request->scnormalABA,
+                            'scwastedABA' => $request->scwastedABA,
+                            'scseverelyWastedABA' => $request->scseverelyWastedABA,
+                            'scoverweightABA' => $request->scoverweightABA,
+                            'scobeseABA' => $request->scobeseABA,
 
-                // overweight (%) obese Pregnant Woman
-                    'pwnormalAAA' => $request->pwnormalAAA,
-                    'pwnutritionllyatriskAAA' => $request->pwnutritionllyatriskAAA,
-                    'pwoverweightAAA' => $request->pwoverweightAAA,
-                    'pwobeseAAA' => $request->pwobeseAAA,
+                            'scnormalBBA' => $request->scnormalBBA,
+                            'scwastedBBA' => $request->scwastedABA,
+                            'scseverelyWastedBBA' => $request->scseverelyWastedBBA,
+                            'scoverweightBBA' => $request->scoverweightBBA,
+                            'scobeseBBA' => $request->scobeseBBA,
 
-                    'pwnormalBAA' => $request->pwnormalBAA,
-                    'pwnutritionllyatriskBAA' => $request->pwnutritionllyatriskBAA,
-                    'pwoverweightBAA' => $request->pwoverweightBAA,
-                    'pwobeseBAA' => $request->pwobeseBAA,
+                            'scnormalCCA' => $request->scnormalCCA,
+                            'scwastedCCA' => $request->scwastedCCA,
+                            'scseverelyWastedCCA' => $request->scseverelyWastedCCA,
+                            'scoverweightCCA' => $request->scoverweightCCA,
+                            'scobeseCCA' => $request->scobeseCCA,
 
-                    'pwnormalCAA' => $request->pwnormalCAA,
-                    'pwnutritionllyatriskCAA' => $request->pwnutritionllyatriskCAA,
-                    'pwoverweightCAA' => $request->pwoverweightCAA,
-                    'pwobeseCAA' => $request->pwobeseCAA,
+                            // overweight (%) obese Pregnant Woman
+                            'pwnormalAAA' => $request->pwnormalAAA,
+                            'pwnutritionllyatriskAAA' => $request->pwnutritionllyatriskAAA,
+                            'pwoverweightAAA' => $request->pwoverweightAAA,
+                            'pwobeseAAA' => $request->pwobeseAAA,
 
-                    'newBrgyScholar' => $request->newNutritionScholar,
-                    'oldBrgyScholar' => $request->oldNutritionScholar,
+                            'pwnormalBAA' => $request->pwnormalBAA,
+                            'pwnutritionllyatriskBAA' => $request->pwnutritionllyatriskBAA,
+                            'pwoverweightBAA' => $request->pwoverweightBAA,
+                            'pwobeseBAA' => $request->pwobeseBAA,
 
-                /////
+                            'pwnormalCAA' => $request->pwnormalCAA,
+                            'pwnutritionllyatriskCAA' => $request->pwnutritionllyatriskCAA,
+                            'pwoverweightCAA' => $request->pwoverweightCAA,
+                            'pwobeseCAA' => $request->pwobeseCAA,
 
-                    'landAreaResidential' => $request->landAreaResidential,
-                    'remarksResidential' => $request->remarksResidential,
+                            'newBrgyScholar' => $request->newNutritionScholar,
+                            'oldBrgyScholar' => $request->oldNutritionScholar,
 
-                /////
+                            /////
 
-                    'landAreaCommercial' => $request->landAreaCommercial,
-                    'remarksCommercial' => $request->remarksCommercial,
+                            'landAreaResidential' => $request->landAreaResidential,
+                            'remarksResidential' => $request->remarksResidential,
 
-                    'landAreaIndustrial' => $request->landAreaIndustrial,
-                    'remarksIndustrial' => $request->remarksIndustrial,
+                            /////
 
-                    'landAreaAgricultural' => $request->landAreaAgricultural,
-                    'remarksAgricultural' => $request->remarksAgricultural,
+                            'landAreaCommercial' => $request->landAreaCommercial,
+                            'remarksCommercial' => $request->remarksCommercial,
 
-                    'landAreaFLMLNP' => $request->landAreaFLMLNP,
-                    'remarksFLMLNP' => $request->remarksFLMLNP,
+                            'landAreaIndustrial' => $request->landAreaIndustrial,
+                            'remarksIndustrial' => $request->remarksIndustrial,
+
+                            'landAreaAgricultural' => $request->landAreaAgricultural,
+                            'remarksAgricultural' => $request->remarksAgricultural,
+
+                            'landAreaFLMLNP' => $request->landAreaFLMLNP,
+                            'remarksFLMLNP' => $request->remarksFLMLNP,
 
 
-                    'status' => $request->submitStatus,
-                ]);
+                            'status' => $request->submitStatus,
+                        ]);
 
-                return redirect()->route('BSLGUprofileLNFPIndex.index')->with('alert', 'Data Created Successfully!');
-            }
+                    lnfp_form5a_rr::create([
+                        'lnfp_lgu_id' => $request->id,
+                        'lnfp_officer' => $request->user_name,
+                        'forThePeriod' => $request->periodCovereda,
+                        'dateMonitoring' => $request->dateMonitoring,
+                        'status' => 2
+                    ]);
+
+                    return redirect()->route('BSLGUprofileLNFPIndex.index')->with('alert', 'Data Created Successfully!');
+                }
             } catch (\Throwable $th) {
                 //throw $th;
                 return "An error occured: " . $th->getMessage();
@@ -875,151 +925,151 @@ class MellpiProForLNFP_barangayLGUController extends Controller
             try {
                 //code...
                 $updateResponse = lnfp_lguprofile::where('id', $request->id)
-                ->update([
-                    'dateMonitoring' => $request->dateMonitoring,
-                    'periodCovereda' => $request->periodCovereda,
-                    'numOfMuni' => $request->numOfMun,
-                    'totalPopulation' => $request->totalPopulation,
-                    'householdWater' => $request->householdWater,
-                    'householdToilets' => $request->householdToilets,
-                    'dayCareCenter' => $request->dayCareCenter,
-                    'elementary' => $request->elementary,
-                    'secondarySchool' => $request->secondarySchool,
-                    'healthStations' => $request->healthStations,
-                    'retailOutlets' => $request->retailOutlets,
-                    'bakeries' => $request->bakeries,
-                    'markets' => $request->markets,
-                    'transportTerminals' => $request->transportTerminals,
-                    'breastfeeding' => $request->breastfeeding,
+                    ->update([
+                        'dateMonitoring' => $request->dateMonitoring,
+                        'periodCovereda' => $request->periodCovereda,
+                        'numOfMuni' => $request->numOfMun,
+                        'totalPopulation' => $request->totalPopulation,
+                        'householdWater' => $request->householdWater,
+                        'householdToilets' => $request->householdToilets,
+                        'dayCareCenter' => $request->dayCareCenter,
+                        'elementary' => $request->elementary,
+                        'secondarySchool' => $request->secondarySchool,
+                        'healthStations' => $request->healthStations,
+                        'retailOutlets' => $request->retailOutlets,
+                        'bakeries' => $request->bakeries,
+                        'markets' => $request->markets,
+                        'transportTerminals' => $request->transportTerminals,
+                        'breastfeeding' => $request->breastfeeding,
 
-                    'hazards' => $request->hazards,
-                    'affectedLGU' => $request->affectedLGU,
-                    'noHousehold' => $request->noHousehold,
-                    'noPuroks' => $request->noPuroks,
-                    'populationA' => $request->populationA,
-                    'populationB' => $request->populationB,
-                    'populationC' => $request->populationC,
-                    'populationD' => $request->populationD,
-                    'populationE' => $request->populationE,
-                    'populationF' => $request->populationF,
-                    'actualA' => $request->actualA,
-                    'actualB' => $request->actualB,
-                    'actualC' => $request->actualC,
-                    'actualD' => $request->actualD,
-                    'actualE' => $request->actualE,
-                    'actualF' => $request->actualF,
+                        'hazards' => $request->hazards,
+                        'affectedLGU' => $request->affectedLGU,
+                        'noHousehold' => $request->noHousehold,
+                        'noPuroks' => $request->noPuroks,
+                        'populationA' => $request->populationA,
+                        'populationB' => $request->populationB,
+                        'populationC' => $request->populationC,
+                        'populationD' => $request->populationD,
+                        'populationE' => $request->populationE,
+                        'populationF' => $request->populationF,
+                        'actualA' => $request->actualA,
+                        'actualB' => $request->actualB,
+                        'actualC' => $request->actualC,
+                        'actualD' => $request->actualD,
+                        'actualE' => $request->actualE,
+                        'actualF' => $request->actualF,
 
-                // overweight (%) overweight
-                    'psnormalAAA' => $request->psnormalAAA,
-                    'psunderweightAAA' => $request->psunderweightAAA,
-                    'pssevereUnderweightAAA' => $request->pssevereUnderweightAAA,
-                    'psoverweightAAA' => $request->psoverweightAAA,
+                        // overweight (%) overweight
+                        'psnormalAAA' => $request->psnormalAAA,
+                        'psunderweightAAA' => $request->psunderweightAAA,
+                        'pssevereUnderweightAAA' => $request->pssevereUnderweightAAA,
+                        'psoverweightAAA' => $request->psoverweightAAA,
 
-                    'psnormalBAA' => $request->psnormalBAA,
-                    'psunderweightBAA' => $request->psunderweightBAA,
-                    'pssevereUnderweightBAA' => $request->pssevereUnderweightBAA,
-                    'psoverweightBAA' => $request->psoverweightBAA,
+                        'psnormalBAA' => $request->psnormalBAA,
+                        'psunderweightBAA' => $request->psunderweightBAA,
+                        'pssevereUnderweightBAA' => $request->pssevereUnderweightBAA,
+                        'psoverweightBAA' => $request->psoverweightBAA,
 
-                    'psnormalCAA' => $request->psnormalCAA,
-                    'psunderweightCAA' => $request->psunderweightCAA,
-                    'pssevereUnderweightCAA' => $request->pssevereUnderweightCAA,
-                    'psoverweightCAA' => $request->psoverweightCAA,
+                        'psnormalCAA' => $request->psnormalCAA,
+                        'psunderweightCAA' => $request->psunderweightCAA,
+                        'pssevereUnderweightCAA' => $request->pssevereUnderweightCAA,
+                        'psoverweightCAA' => $request->psoverweightCAA,
 
-                // overweight (%) obese
-                    'psnormalABA' => $request->psnormalABA,
-                    'pswastedABA' => $request->pswastedABA,
-                    'psseverelyWastedABA' => $request->psseverelyWastedABA,
-                    'psoverweightABA' => $request->psoverweightABA,
-                    'psobeseABA' => $request->psobeseABA,
+                        // overweight (%) obese
+                        'psnormalABA' => $request->psnormalABA,
+                        'pswastedABA' => $request->pswastedABA,
+                        'psseverelyWastedABA' => $request->psseverelyWastedABA,
+                        'psoverweightABA' => $request->psoverweightABA,
+                        'psobeseABA' => $request->psobeseABA,
 
-                    'psnormalBBA' => $request->psnormalBBA,
-                    'pswastedBBA' => $request->pswastedBBA,
-                    'psseverelyWastedBBA' => $request->psseverelyWastedBBA,
-                    'psoverweightBBA' => $request->psoverweightBBA,
-                    'psobeseBBA' => $request->psobeseBBA,
+                        'psnormalBBA' => $request->psnormalBBA,
+                        'pswastedBBA' => $request->pswastedBBA,
+                        'psseverelyWastedBBA' => $request->psseverelyWastedBBA,
+                        'psoverweightBBA' => $request->psoverweightBBA,
+                        'psobeseBBA' => $request->psobeseBBA,
 
-                    'psnormalCCA' => $request->psnormalCCA,
-                    'pswastedCCA' => $request->pswastedCCA,
-                    'psseverelyWastedCCA' => $request->psseverelyWastedCCA,
-                    'psoverweightCCA' => $request->psoverweightCCA,
-                    'psobeseCCA' => $request->psobeseCCA,
+                        'psnormalCCA' => $request->psnormalCCA,
+                        'pswastedCCA' => $request->pswastedCCA,
+                        'psseverelyWastedCCA' => $request->psseverelyWastedCCA,
+                        'psoverweightCCA' => $request->psoverweightCCA,
+                        'psobeseCCA' => $request->psobeseCCA,
 
-                // overweight (%) tall
-                    'psnormalAAB' => $request->psnormalAAB,
-                    'psstuntedAAB' => $request->psstuntedAAB,
-                    'pssevereStuntedAAB' => $request->pssevereStuntedAAB,
-                    'pstallAAB' => $request->pstallAAB,
+                        // overweight (%) tall
+                        'psnormalAAB' => $request->psnormalAAB,
+                        'psstuntedAAB' => $request->psstuntedAAB,
+                        'pssevereStuntedAAB' => $request->pssevereStuntedAAB,
+                        'pstallAAB' => $request->pstallAAB,
 
-                    'psnormalBBB' => $request->psnormalBBB,
-                    'psstuntedBBB' => $request->psstuntedBBB,
-                    'pssevereStuntedBBB' => $request->pssevereStuntedBBB,
-                    'pstallBBB' => $request->pstallBBB,
+                        'psnormalBBB' => $request->psnormalBBB,
+                        'psstuntedBBB' => $request->psstuntedBBB,
+                        'pssevereStuntedBBB' => $request->pssevereStuntedBBB,
+                        'pstallBBB' => $request->pstallBBB,
 
-                    'psnormalCCC' => $request->psnormalCCC,
-                    'psstuntedCCC' => $request->psstuntedCCC,
-                    'pssevereStuntedCCC' => $request->pssevereStuntedCCC,
-                    'pstallCCC' => $request->pstallCCC,
+                        'psnormalCCC' => $request->psnormalCCC,
+                        'psstuntedCCC' => $request->psstuntedCCC,
+                        'pssevereStuntedCCC' => $request->pssevereStuntedCCC,
+                        'pstallCCC' => $request->pstallCCC,
 
-                // overweight (%) obese School Children
-                    'scnormalABA' => $request->scnormalABA,
-                    'scwastedABA' => $request->scwastedABA,
-                    'scseverelyWastedABA' => $request->scseverelyWastedABA,
-                    'scoverweightABA' => $request->scoverweightABA,
-                    'scobeseABA' => $request->scobeseABA,
+                        // overweight (%) obese School Children
+                        'scnormalABA' => $request->scnormalABA,
+                        'scwastedABA' => $request->scwastedABA,
+                        'scseverelyWastedABA' => $request->scseverelyWastedABA,
+                        'scoverweightABA' => $request->scoverweightABA,
+                        'scobeseABA' => $request->scobeseABA,
 
-                    'scnormalBBA' => $request->scnormalBBA,
-                    'scwastedBBA' => $request->scwastedABA,
-                    'scseverelyWastedBBA' => $request->scseverelyWastedBBA,
-                    'scoverweightBBA' => $request->scoverweightBBA,
-                    'scobeseBBA' => $request->scobeseBBA,
+                        'scnormalBBA' => $request->scnormalBBA,
+                        'scwastedBBA' => $request->scwastedABA,
+                        'scseverelyWastedBBA' => $request->scseverelyWastedBBA,
+                        'scoverweightBBA' => $request->scoverweightBBA,
+                        'scobeseBBA' => $request->scobeseBBA,
 
-                    'scnormalCCA' => $request->scnormalCCA,
-                    'scwastedCCA' => $request->scwastedCCA,
-                    'scseverelyWastedCCA' => $request->scseverelyWastedCCA,
-                    'scoverweightCCA' => $request->scoverweightCCA,
-                    'scobeseCCA' => $request->scobeseCCA,
+                        'scnormalCCA' => $request->scnormalCCA,
+                        'scwastedCCA' => $request->scwastedCCA,
+                        'scseverelyWastedCCA' => $request->scseverelyWastedCCA,
+                        'scoverweightCCA' => $request->scoverweightCCA,
+                        'scobeseCCA' => $request->scobeseCCA,
 
-                // overweight (%) obese Pregnant Woman
-                    'pwnormalAAA' => $request->pwnormalAAA,
-                    'pwnutritionllyatriskAAA' => $request->pwnutritionllyatriskAAA,
-                    'pwoverweightAAA' => $request->pwoverweightAAA,
-                    'pwobeseAAA' => $request->pwobeseAAA,
+                        // overweight (%) obese Pregnant Woman
+                        'pwnormalAAA' => $request->pwnormalAAA,
+                        'pwnutritionllyatriskAAA' => $request->pwnutritionllyatriskAAA,
+                        'pwoverweightAAA' => $request->pwoverweightAAA,
+                        'pwobeseAAA' => $request->pwobeseAAA,
 
-                    'pwnormalBAA' => $request->pwnormalBAA,
-                    'pwnutritionllyatriskBAA' => $request->pwnutritionllyatriskBAA,
-                    'pwoverweightBAA' => $request->pwoverweightBAA,
-                    'pwobeseBAA' => $request->pwobeseBAA,
+                        'pwnormalBAA' => $request->pwnormalBAA,
+                        'pwnutritionllyatriskBAA' => $request->pwnutritionllyatriskBAA,
+                        'pwoverweightBAA' => $request->pwoverweightBAA,
+                        'pwobeseBAA' => $request->pwobeseBAA,
 
-                    'pwnormalCAA' => $request->pwnormalCAA,
-                    'pwnutritionllyatriskCAA' => $request->pwnutritionllyatriskCAA,
-                    'pwoverweightCAA' => $request->pwoverweightCAA,
-                    'pwobeseCAA' => $request->pwobeseCAA,
+                        'pwnormalCAA' => $request->pwnormalCAA,
+                        'pwnutritionllyatriskCAA' => $request->pwnutritionllyatriskCAA,
+                        'pwoverweightCAA' => $request->pwoverweightCAA,
+                        'pwobeseCAA' => $request->pwobeseCAA,
 
-                    'newBrgyScholar' => $request->newNutritionScholar,
-                    'oldBrgyScholar' => $request->oldNutritionScholar,
+                        'newBrgyScholar' => $request->newNutritionScholar,
+                        'oldBrgyScholar' => $request->oldNutritionScholar,
 
-                /////
+                        /////
 
-                    'landAreaResidential' => $request->landAreaResidential,
-                    'remarksResidential' => $request->remarksResidential,
+                        'landAreaResidential' => $request->landAreaResidential,
+                        'remarksResidential' => $request->remarksResidential,
 
-                /////
+                        /////
 
-                    'landAreaCommercial' => $request->landAreaCommercial,
-                    'remarksCommercial' => $request->remarksCommercial,
+                        'landAreaCommercial' => $request->landAreaCommercial,
+                        'remarksCommercial' => $request->remarksCommercial,
 
-                    'landAreaIndustrial' => $request->landAreaIndustrial,
-                    'remarksIndustrial' => $request->remarksIndustrial,
+                        'landAreaIndustrial' => $request->landAreaIndustrial,
+                        'remarksIndustrial' => $request->remarksIndustrial,
 
-                    'landAreaAgricultural' => $request->landAreaAgricultural,
-                    'remarksAgricultural' => $request->remarksAgricultural,
+                        'landAreaAgricultural' => $request->landAreaAgricultural,
+                        'remarksAgricultural' => $request->remarksAgricultural,
 
-                    'landAreaFLMLNP' => $request->landAreaFLMLNP,
-                    'remarksFLMLNP' => $request->remarksFLMLNP,
+                        'landAreaFLMLNP' => $request->landAreaFLMLNP,
+                        'remarksFLMLNP' => $request->remarksFLMLNP,
 
 
-                    'status' => $request->DraftStatus,
-                ]);
+                        'status' => $request->DraftStatus,
+                    ]);
 
                 return redirect()->route('BSLGUprofileLNFPIndex.index')->with('alert', 'Saved as Draft Successfully!');
             } catch (\Throwable $th) {
@@ -1027,7 +1077,6 @@ class MellpiProForLNFP_barangayLGUController extends Controller
                 return "An error occured: " . $th->getMessage();
             }
         }
-        
     }
 
 
@@ -1035,6 +1084,7 @@ class MellpiProForLNFP_barangayLGUController extends Controller
     {
 
         DB::table('lnfp_lguprofiletracking')->where('lnfp_lguprofile_id', $request->id)->delete();
+        DB::table('lnfp_form5a_rr')->where('lnfp_lgu_id', $request->id)->delete();
         $lnfp_lguprofile = lnfp_lguprofile::find($id);
         $lnfp_lguprofile->delete();
 

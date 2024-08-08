@@ -10,6 +10,7 @@ class lnfp_lguprofile extends Model
     use HasFactory;
 
     protected $fillable = [
+        'lnfp_officer',
         'dateMonitoring',
         'periodCovereda',
         'numOfMuni',  

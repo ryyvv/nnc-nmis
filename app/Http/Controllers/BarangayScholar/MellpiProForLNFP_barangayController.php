@@ -16,6 +16,20 @@ use App\Models\lnfp_form7;
 
 class MellpiProForLNFP_barangayController extends Controller
 {
+    public function createdata()
+    {
+        $lnfp = lnfp_lguprofile::get();
+
+        return view('BarangayScholar/MellpiProForLNFP/MellpiProMonitoring.MonitoringForm5CreateData', ['lnfp' => $lnfp]);
+    }
+    public function addForm(Request $request)
+    {
+        $form5a = lnfp_form5a::get();
+
+        $lnfp = DB::table('lnfp_lguprofile')->where('id', $request->id)->first();
+
+        return view('BarangayScholar/MellpiProForLNFP/MellpiProMonitoring.MonitoringForm5Create', ['lnfp' => $lnfp, 'form5a' => $form5a]);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -26,6 +40,7 @@ class MellpiProForLNFP_barangayController extends Controller
     {
         //
         $form5a_rr = lnfp_form5a_rr::get();
+
 
         return view('BarangayScholar/MellpiProForLNFP/MellpiProMonitoring.MonitoringForm5Index', ['form5a_rr' => $form5a_rr]);
     }
@@ -161,8 +176,8 @@ class MellpiProForLNFP_barangayController extends Controller
         $remarksG = $request->input('remarksG');
         $remarksGG = $request->input('remarksGG');
         $remarksH = $request->input('remarksH');
-        $statusSubmit = 2;
-        $statusDraft = 1;
+        $statusSubmit = 1;
+        $statusDraft = 2;
 
         $action = $request->input('action');
 
@@ -253,7 +268,7 @@ class MellpiProForLNFP_barangayController extends Controller
                 }
 
                 // return redirect()->back()->with('alert', 'Rate and Remarks Submitted Successfully!');
-                return redirect()->route('MellpiProMonitoringIndex.index')->with('alert', 'Rate and Remarks Submitted Successfully!');
+                return redirect()->route('MellpiProMonitoringIndex.index')->with('alert', 'Save and Submitted Successfully!');
             } catch (\Throwable $th) {
                 return "An error occured: " . $th->getMessage();
             }
@@ -344,7 +359,7 @@ class MellpiProForLNFP_barangayController extends Controller
                 }
 
                 // return redirect()->back()->with('alert', 'Rate and Remarks Submitted Successfully!');
-                return redirect()->route('MellpiProMonitoringIndex.index')->with('alert', 'Rate and Remarks Submitted Successfully!');
+                return redirect()->route('MellpiProMonitoringIndex.index')->with('alert', 'Save and Submitted Successfully!');
             } catch (\Throwable $th) {
                 return "An error occured: " . $th->getMessage();
             }
@@ -480,7 +495,7 @@ class MellpiProForLNFP_barangayController extends Controller
                         'status' => $statusSubmit
 
                     ]);
-                return redirect()->route('MellpiProMonitoringIndex.index')->with('alert', 'Responses Updated and Submitted Successfully!');
+                return redirect()->route('MellpiProMonitoringIndex.index')->with('alert', 'Save and Submitted Successfully!');
             } catch (\Throwable $th) {
                 //throw $th;
                 return "An error occured: " . $th->getMessage();
@@ -528,7 +543,7 @@ class MellpiProForLNFP_barangayController extends Controller
                         'status' => $statusDraft
 
                     ]);
-                return redirect()->route('MellpiProMonitoringIndex.index')->with('alert', 'Responses Updated Successfully!');
+                return redirect()->route('MellpiProMonitoringIndex.index')->with('alert', 'Save as Draft Successfully!');
             } catch (\Throwable $th) {
                 //throw $th;
                 return "An error occured: " . $th->getMessage();

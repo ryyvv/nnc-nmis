@@ -371,7 +371,7 @@
               </a>
             </li>
             <li class="@if ($activePage == 'nutritionservice') active @endif">
-              <a href="#">
+              <a href="nutritionservice.index">
                 <i class="now-ui-icons files_paper"></i>
                 <p> {{ __("nutrition service") }} </p>
               </a>

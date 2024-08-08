@@ -978,7 +978,7 @@ class BSLGUprofileController extends Controller
                 'user_id' => $request->user_id,
             ]);
 
-            return redirect('BarangayScholar/lguprofile')->with('success', 'Data stored as draft!');
+            return redirect('BarangayScholar/nutritionservice')->with('success', 'Data stored as draft!');
 
         }else {
 

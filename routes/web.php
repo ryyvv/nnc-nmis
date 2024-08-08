@@ -436,7 +436,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/nutritionservice/{id}', [NutritionServiceController::class, 'update'])->name('nutritionservice.update');
         Route::get('/nutritionservice/{id}/edit', [NutritionServiceController::class, 'edit'])->name('nutritionservice.edit');
         Route::DELETE('/nutritionservice/{id}', [NutritionServiceController::class, 'destroy'])->name('nutritionservice.destroy');  
-
+        Route::get('/nutritionservice/{id}/show', [NutritionServiceController::class, 'show'])->name('nutritionservice.show');
+        Route::POST('/nutritionservice/{id}/download-pdf',[NutritionServiceController::class , 'downloads'])->name('nutritionservice.download');
 
            //ChangeNSController
            Route::get('/changeNS', [ChangeNSController::class, 'index'])->name('changeNS.index');
@@ -482,6 +483,8 @@ Route::group(['middleware' => 'auth'], function () {
           Route::put('/lguLnfpUpdate', [MellpiProForLNFP_barangayController::class, 'editForm5a'])->name('lguLnfpUpdateRemarks');
           Route::POST('/lguLnfpDelete', [MellpiProForLNFP_barangayController::class, 'deleteForm5arr'])->name('lguLnfpDeleteForm5a');
           Route::get('/lguLnfpEdit/{id}', [MellpiProForLNFP_barangayController::class, 'monitoringForm5edit'])->name('lguLnfpEdit');
+          Route::get('/lguform5createdata', [MellpiProForLNFP_barangayController::class, 'createdata'])->name('form5CreateData');
+          Route::get('/lguForm5addForm/{id}', [MellpiProForLNFP_barangayController::class, 'addForm'])->name('lguForm5addForm');
           //Form 6 Radial Diagram
           Route::get('/lguform6Index', [MellpiProForLNFP_form6Controller::class, 'radialForm6'])->name('MellpiProRadialIndex.index');
           Route::get('lguform6Create', [MellpiProForLNFP_form6Controller::class, 'radialForm6Create'])->name('MellpiProRadialCreate.create');

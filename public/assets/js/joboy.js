@@ -185,6 +185,9 @@ function myFunctionLNFP(id){
     window.location.href = "lguLnfpEdit/"+ id;
 
 }
+function myFunctionLNFP_addform(id){
+    window.location.href = "lguForm5addForm/"+ id;
+}
 function myFunctionLNFP_form8(id){
     window.location.href = "lguLnfpEditForm8/"+ id;
 

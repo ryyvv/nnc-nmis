@@ -63,3 +63,10 @@
 .fontA {
     font-size:14px;
 }
+
+.textarealineheight  {
+    width:inherit;
+    height:300px;
+    max-height:1050px!important;
+    line-height:1.5;
+}

@@ -63,10 +63,10 @@
                                         <label for="address">address: </label>
                                         <input class="inputHeader" type="text" name="address" id="address" value="{{ $lguLnfpForm5->address }}">
                                     </div>
-                                    <div class="form-group col-md-12">
+                                    <!-- <div class="form-group col-md-12">
                                         <label for="provDep">Province of Deployment: </label>
                                         <input class="inputHeader" type="text" name="provDev" id="provDev" value="{{ $lguLnfpForm5->provDeploy }}">
-                                    </div>
+                                    </div> -->
                                     <div class="form-group col-md-12">
                                         <label for="numYr">Number of Years PNAO: </label>
                                         <input class="inputHeader" type="number" name="numYr" id="numYr" placeholder="0" value="{{ $lguLnfpForm5->numYearPnao }}">
