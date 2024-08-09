@@ -4,6 +4,10 @@ namespace App\Http\Controllers\BarangayScholar;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\LocationController;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator; 
 
 class BudgetAIPController extends Controller
 {
@@ -12,7 +16,22 @@ class BudgetAIPController extends Controller
      */
     public function index()
     {
-        return view('BarangayScholar.BudgetAIP.index');
+        $location = new LocationController;
+        $prov = $location->getLocationDataProvince(auth()->user()->Region);
+        $mun = $location->getLocationDataMuni(auth()->user()->Province);
+        $city = $location->getLocationDataCity(auth()->user()->Region);
+        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+
+        $barangay = auth()->user()->barangay;
+
+        $cnlocation = DB::table('users')
+        ->join('mplgubrgychangeNS', 'users.id', '=', 'mplgubrgychangeNS.user_id')
+        ->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')
+        ->select('users.Firstname as firstname', 'users.Middlename as middlename', 'users.Lastname as lastname', 'mplgubrgychangeNS.*')
+        ->get();
+
+
+        return view('BarangayScholar.BudgetAIP.index', compact('cnlocation', 'prov', 'mun', 'city', 'brgy')); 
     }
 
     /**

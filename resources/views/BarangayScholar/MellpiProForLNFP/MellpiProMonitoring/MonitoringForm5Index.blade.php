@@ -42,8 +42,9 @@
                                 <tr>
                                     <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">#</th>
                                     <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Officer</th>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Date Monitoring</th>
                                     <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Period Covered</th>
-                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Name</th>
+                                    <!-- <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Name</th> -->
                                     <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Status</th>
                                     <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center;width:10%;">Action</th>
 
@@ -61,11 +62,14 @@
                                         <center>{{$form5a_rr->lnfp_officer}}</center>
                                     </td>
                                     <td>
-                                        <center>{{$form5a_rr->forThePeriod}}</center>
+                                        <center>{{\Carbon\Carbon::parse($form5a_rr->dateMonitoring)->format('F j');}}</center>
                                     </td>
                                     <td>
-                                        <center>{{ $form5a_rr->nameofPnao }}</center>
+                                        <center>{{$form5a_rr->forThePeriod}}</center>
                                     </td>
+                                    <!-- <td>
+                                        <center>{{ $form5a_rr->nameofPnao }}</center>
+                                    </td> -->
                                     <td>
                                         <center>
                                         @if( $form5a_rr->status == 0 )
@@ -85,17 +89,17 @@
                                                 @if( $form5a_rr->status == 0 )
                                                 <i onclick="LNFPmyFunction('{{ $form5a_rr->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
                                                 <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
-                                                <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i>
+                                                <!-- <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i> -->
                                                 <!-- <i class="fa fa-file-pdf-o fa-lg cursor " style="color:red;margin-right:7px;" aria-hidden="true"></i>  -->
                                                 @elseif( $form5a_rr->status == 1 )
                                                 <i onclick="myFunctionLNFP('{{ $form5a_rr->id }}', 'lncmanagement', 'edit')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
                                                 <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
-                                                <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i>
+                                                <!-- <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i> -->
                                                 <!-- <i class="fa fa-file-pdf-o fa-lg cursor " style="color:red;margin-right:7px;" aria-hidden="true"></i> -->
                                                 @elseif( $form5a_rr->status == 2 )
                                                 <i onclick="LNFPmyFunction('{{ $form5a_rr->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
                                                 <i onclick="myFunctionLNFP('{{ $form5a_rr->id }}', 'lncmanagement', 'edit')" class="fa fa-edit fa-lg cursor" style="color:#FFB236;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Edit"></i>
-                                                <i onclick="LNFPopenModal('{{ $form5a_rr->id }}')" class="fa fa-trash fa-lg cursor" style="color:red;margin-right:10px" title="Delete "></i>
+                                                <!-- <i onclick="LNFPopenModal('{{ $form5a_rr->id }}')" class="fa fa-trash fa-lg cursor" style="color:red;margin-right:10px" title="Delete "></i> -->
                                                 <!-- <i class="fa fa-file-pdf-o fa-lg cursor " style="color:red;margin-right:7px;" aria-hidden="true"></i> -->
                                                 @endif
                                             </li>

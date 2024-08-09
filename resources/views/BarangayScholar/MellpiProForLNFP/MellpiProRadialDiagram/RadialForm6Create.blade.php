@@ -67,7 +67,7 @@
                                 <div class="form-group col-md-6">
                                     <div class="form-group col-md-12">
                                         <label for="bday">Date of Monitoring:<span style="color:red">*</span></label>
-                                        <input class="form-control" type="date" name="dateMonitor" id="dateMonitor" required>
+                                        <input class="form-control" type="date" name="dateMonitor" id="dateMonitor" value="{{ $form6->dateMonitoring }}">
                                     </div>
                                 </div>
                             </div>

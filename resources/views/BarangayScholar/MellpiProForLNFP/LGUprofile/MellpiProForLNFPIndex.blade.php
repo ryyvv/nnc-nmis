@@ -59,7 +59,7 @@
                                     </td>
                                     <!-- <td>{{$lnfpProfile->dateMonitoring}}</td> -->
                                     <td>
-                                        <center>{{\Carbon\Carbon::parse($lnfpProfile->dateMonitoring)->format('F j, Y');}}</center>
+                                        <center>{{\Carbon\Carbon::parse($lnfpProfile->dateMonitoring)->format('F j');}}</center>
                                     </td>
                                     <td>
                                         <center>{{$lnfpProfile->periodCovereda}}</center>
@@ -88,7 +88,8 @@
                                                 @elseif( $lnfpProfile->status == 1 )
                                                 <i onclick="myFunctionLNFP_lguprofile('{{ $lnfpProfile->id }}', 'lncmanagement', 'edit')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
                                                 <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
-                                                <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i>
+                                                <!-- <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i> -->
+                                                <i onclick="LNFPopenModaLguProfilel('{{ $lnfpProfile->id }}')" class="fa fa-trash fa-lg cursor" style="color:red;margin-right:10px" title="Delete "></i>
                                                 <!-- <i class="fa fa-file-pdf-o fa-lg cursor " style="color:red;margin-right:7px;" aria-hidden="true"></i> -->
                                                 @elseif( $lnfpProfile->status == 2 )
                                                 <i onclick="LNFPmyFunction_lguprofile('{{ $lnfpProfile->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>

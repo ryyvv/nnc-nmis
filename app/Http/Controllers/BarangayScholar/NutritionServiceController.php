@@ -622,10 +622,10 @@ class NutritionServiceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        DB::table('mplgubrgynutritionservicetracking')->where('mplgubrgynutritionservice_id', $id)->delete();
-        $lguprofile = MellpiproNutritionService::find($id); 
+        DB::table('mplgubrgynutritionservicetracking')->where('mplgubrgynutritionservice_id', $request->id)->delete();
+        $lguprofile = MellpiproNutritionService::find($request->id); 
         $lguprofile->delete();
         return redirect()->route('nutritionservice.index')->with('success', 'Deleted successfully!');
     }

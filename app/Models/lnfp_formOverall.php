@@ -8,4 +8,37 @@ use Illuminate\Database\Eloquent\Model;
 class lnfp_formOverall extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'lnfp_lgu_id',
+        'form5_id', 
+        'lnfp_form8',
+        'lnfp_officer',
+        'name',
+        'areaOfAssign',
+        'date',
+        'pointsP1AS',
+        'pointsP2AS',
+        'weightP1AS',
+        'weightP2AS',
+        'scoreP1AS',
+        'scoreP2AS',
+        'totalScoreAS',
+        'nameTM1',
+        'nameTM2',
+        'nameTM3',
+        'desigOffice1',
+        'desigOffice2',
+        'desigOffice3',
+        'sigDate1_filePath',
+        'sigDate2_filePath',
+        'sigDate3_filePath',
+        'receivedBy',
+        'whatDate',
+        'status',
+    ];
+
+    protected $guarded = ['id'];
+
+    protected $table = 'lnfp_overall_score_form';
 }

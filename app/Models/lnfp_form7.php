@@ -11,6 +11,7 @@ class lnfp_form7 extends Model
     
     protected $fillable = [
         'form5_id',
+        'lnfp_lgu_id',
         'accomplishmentA',
         'accomplishmentB',
         'accomplishmentC',

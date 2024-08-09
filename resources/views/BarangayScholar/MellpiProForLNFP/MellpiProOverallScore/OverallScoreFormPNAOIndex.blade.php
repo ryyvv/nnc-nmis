@@ -27,9 +27,77 @@
                         <div class="alert alert-success d-none" id="successAlert" role="alert">
                             Data deleted successfully!
                         </div>
-                        <div class="row-12">
+                        <!-- <div class="row-12">
                             <a href="{{ route('lnfpFormOverallScoreCreate') }}" class="btn btn-primary bolder">Create data</a>
-                        </div>
+                        </div> -->
+
+                        <table class="display" id="overallScoremyTable" width="100%">
+                            <thead class="table-light" style="background-color:#508D4E;">
+
+                                <tr>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">#</th>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Officer</th>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Period Covered</th>
+                                    <!-- <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Status</th> -->
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center;width:10%;">Action</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <?php $num = 1; ?>
+                                @foreach ($overallScore as $overallScore)
+                                <tr>
+                                    <td>
+                                        <center>{{$num}}</center>
+                                    </td>
+                                    <td>
+                                        <center>{{ $overallScore->os_officer }}</center>
+                                    </td>
+                                    <td>
+                                        <center>{{ $overallScore->lgu_periodCovered }}</center>
+                                    </td>
+                                    <!-- <td>
+                                        <center>
+                                        @if( $overallScore->status == 0 )
+                                        <span class="statusApproved">APPROVED</span>
+                                        @elseif( $overallScore->status == 1 )
+                                        <span class="statusPending">PENDING</span>
+                                        @elseif( $overallScore->status == 2 )
+                                        <span class="statusDraft">DRAFT</span>
+                                        @endif
+                                        </center>
+                                    </td> -->
+
+                                    <td>
+                                        <ul class="list-inline m-0">
+                                            <li class="list-inline-item">
+                                                @if( $overallScore->lnfp_stat == 0 )
+                                                <i onclick="LNFPmyFunction_overallScore('{{ $overallScore->os_id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                                <!-- <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i> -->
+                                                <!-- <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i> -->
+                                                <!-- <i class="fa fa-file-pdf-o fa-lg cursor " style="color:red;margin-right:7px;" aria-hidden="true"></i>  -->
+                                                @elseif( $overallScore->lnfp_stat == 1 )
+                                                <i onclick="myFunctionLNFP_overallScore('{{ $overallScore->os_id }}', 'lncmanagement', 'edit')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                                <!-- <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i> -->
+                                                <!-- <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i> -->
+                                                <!-- <i class="fa fa-file-pdf-o fa-lg cursor " style="color:red;margin-right:7px;" aria-hidden="true"></i> -->
+                                                @elseif( $overallScore->lnfp_stat == 2 )
+                                                <i onclick="LNFPmyFunction_overallScore('{{ $overallScore->os_id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                                <!-- <i onclick="myFunctionLNFP_overallScore('{{ $overallScore->id }}', 'lncmanagement', 'edit')" class="fa fa-edit fa-lg cursor" style="color:#FFB236;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Edit"></i> -->
+                                                <!-- <i onclick="LNFPopenModal_overallScore('{{ $overallScore->id }}')" class="fa fa-trash fa-lg cursor" style="color:red;margin-right:10px" title="Delete "></i> -->
+                                                <!-- <i class="fa fa-file-pdf-o fa-lg cursor " style="color:red;margin-right:7px;" aria-hidden="true"></i> -->
+                                                @endif
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <?php $num++; ?>
+
+
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
 
                 </div>

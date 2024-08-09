@@ -137,7 +137,7 @@ class VisionMissionController extends Controller
                 ]);
             }
     
-            return redirect('BarangayScholar/visionmission')->with('success', 'Data created successfullySuccessfully!');
+            return redirect('BarangayScholar/visionmission')->with('success', 'Data created successfully!');
         }
     }
 

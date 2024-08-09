@@ -8,6 +8,7 @@ use App\Models\lnfp_formInterview;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use App\Models\lnfp_formOverall;
 
 class MellpiProForLNFP_InterviewController extends Controller
 {
@@ -158,6 +159,11 @@ class MellpiProForLNFP_InterviewController extends Controller
                     'q4Remarks' => $request->input('q4Remarks'),
                     'subtotalAScore' => $request->input('subASTot'),
                     'status' => $request->input('submitStatus'),
+                ]);
+
+                $overallScore = lnfp_formOverall::where('lnfp_lgu_id', $request->lgu_id)
+                ->update([
+                    'formInterview_id' => $request->id
                 ]);
 
                 return redirect()->route('lnfpFormInterviewIndex')->with('alert', 'Data Submitted Successfully!');

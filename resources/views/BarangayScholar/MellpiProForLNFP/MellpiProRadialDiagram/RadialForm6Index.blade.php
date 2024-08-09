@@ -26,8 +26,8 @@
                             <tr>
                                 <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">#</th>
                                 <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Officer</th>
-                                <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Period Covered</th>
                                 <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Date Monitoring</th>
+                                <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Period Covered</th>
                                 <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Name</th>
                                 <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Status</th>
                                 <!-- <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Date of Monitoring</th> -->
@@ -45,24 +45,30 @@
                                     <center>{{$form6->lnfp_officer}}</center>
                                 </td>
                                 <td>
+                                    <center>{{\Carbon\Carbon::parse($form6->dateMonitoring)->format('F j');}}</center>
+                                </td>
+                                <td>
                                     <center>{{$form6->forThePeriod}}</center>
                                 </td>
-                                <td>{{$form6->provDeploy}}</td>
                                 <td>
                                     <center>{{$form6->nameofPnao}}</center>
                                 </td>
                                 <td>
-                                @if( $form6->status == 0 )
+                                    <center>
+                                        @if( $form6->status == 0 )
                                             <span class="statusApproved">APPROVED</span>
                                             @elseif( $form6->status == 1 )
                                             <span class="statusPending">PENDING</span>
                                             @elseif( $form6->status == 2 )
                                             <span class="statusDraft">DRAFT</span>
-                                            @endif
+                                        @endif
+                                    </center>
                                 </td>
                                 <!-- <td>Date of Monitoring</td> -->
                                 <td>
-                                    <i onclick="LNFPmyFunction_form6('{{ $form6->id }}')" class="fa fa-eye cursor" style="color:#4bb5ff" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                    <center>
+                                        <i onclick="LNFPmyFunction_form6('{{ $form6->id }}')" class="fa fa-eye cursor" style="color:#4bb5ff" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                    </center>
                                 </td>
                             </tr>
                             <?php $num++; ?>

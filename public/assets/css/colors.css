@@ -39,6 +39,17 @@
     font-weight: bold!important;
     text-align: center;
 }
+.tableDQ {
+    width: 100%!important;
+    border-collapse: collapse!important;
+}
+.tableheader2 {
+ 
+    font-size:14px!important;
+    padding: 8px;
+    text-align: left;
+    word-wrap: break-word; /* Ensures long words will break and wrap */
+}
 .text-center {
     text-align:  center; 
 }
@@ -70,3 +81,6 @@
     max-height:1050px!important;
     line-height:1.5;
 }
+ .white {
+    color:white;
+ }

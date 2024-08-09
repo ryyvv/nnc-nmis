@@ -33,6 +33,8 @@
                            
 
                             @if($lguLnfpForm5)
+                            <input type="hidden" name="lgu_id" value="{{$lguLnfpForm5->lnfp_lgu_id}}">
+                            <input type="hidden" name="dateMoni" value="{{$lguLnfpForm5->dateMonitoring}}">
                             <input type="hidden" value="{{ $lguLnfpForm5->status }}" name="statForm">
 
                             @foreach ($form5a as $form5a)

@@ -32,6 +32,7 @@
                                 <h5 class="title">{{__("SEARCH FOR REGIONAL OUTSTANDING PROVINCIAL NUTRITION ACTION OFFICER")}}</h5>
                             </center><br>
 
+                            <input type="hidden" name="lgu_id" value="{{$InterviewForm->lnfp_lgu_id}}">
                             <input type="hidden" name="submitStatus" value="1">
                             <input type="hidden" name="DraftStatus" value="2">
 

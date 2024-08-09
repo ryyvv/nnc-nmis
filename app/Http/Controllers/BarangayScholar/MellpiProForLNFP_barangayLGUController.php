@@ -1085,6 +1085,10 @@ class MellpiProForLNFP_barangayLGUController extends Controller
 
         DB::table('lnfp_lguprofiletracking')->where('lnfp_lguprofile_id', $request->id)->delete();
         DB::table('lnfp_form5a_rr')->where('lnfp_lgu_id', $request->id)->delete();
+        DB::table('lnfp_form7')->where('lnfp_lgu_id', $request->id)->delete();
+        DB::table('lnfp_form8')->where('lnfp_lgu_id', $request->id)->delete();
+        DB::table('lnfp_interview_form')->where('lnfp_lgu_id', $request->id)->delete();
+        DB::table('lnfp_overall_score_form')->where('lnfp_lgu_id', $request->id)->delete();
         $lnfp_lguprofile = lnfp_lguprofile::find($id);
         $lnfp_lguprofile->delete();
 

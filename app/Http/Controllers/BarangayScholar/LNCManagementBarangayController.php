@@ -22,9 +22,26 @@ class LNCManagementBarangayController extends Controller
      */
     public function index()
     {
-        $barangay = auth()->user()->barangay; 
-        $lnclocation = DB::table('mplgubrgylncmanagement')->where('user_id', auth()->user()->id)->get();
-        return view('BarangayScholar.LNCManagement.index', ['lnclocation' => $lnclocation ]);
+        // $barangay = auth()->user()->barangay; 
+        // $lnclocation = DB::table('mplgubrgylncmanagement')->where('user_id', auth()->user()->id)->get();
+        // return view('BarangayScholar.LNCManagement.index', ['lnclocation' => $lnclocation ]);
+
+        $location = new LocationController;
+        $prov = $location->getLocationDataProvince(auth()->user()->Region);
+        $mun = $location->getLocationDataMuni(auth()->user()->Province);
+        $city = $location->getLocationDataCity(auth()->user()->Region);
+        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+
+        $barangay = auth()->user()->barangay;
+
+        $lnclocation = DB::table('users')
+        ->join('mplgubrgylncmanagement', 'users.id', '=', 'mplgubrgylncmanagement.user_id')
+        ->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')
+        ->select('users.Firstname as firstname', 'users.Middlename as middlename', 'users.Lastname as lastname', 'mplgubrgylncmanagement.*')
+        ->get();
+
+
+        return view('BarangayScholar.LNCManagement.index', compact('lnclocation', 'prov', 'mun', 'city', 'brgy'));
     }
 
     /**

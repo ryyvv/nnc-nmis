@@ -1,4 +1,5 @@
 <script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.8/datatables.min.js"></script>
+<script src="https://cdn.lordicon.com/lordicon.js"></script>
 
 @extends('layouts.app', [
 'class' => 'sidebar-mini ',
@@ -16,7 +17,7 @@
             <!-- <h5 class="title">{{__("List of Mellpi Pro for LGU Profile Sheet (Barangay)")}}</h5> -->
 
             <div style="display:flex;align-items:center">
-                <a href="{{route('formsb.index')}}">
+                <a href="{{route('discussionquestion.index')}}">
                     <h5 class="title">{{__("List of Discussion Question")}}</h5>
                 </a>
             </div>
@@ -27,9 +28,7 @@
                 <!-- alerts -->
                 @include('layouts.page_template.crud_alert_message')
 
-                <div class="alert alert-success d-none" id="successAlert" role="alert">
-                    Data deleted successfully!
-                </div>
+                 
                 <div class="row-12">
                     <a href="{{route('discussionquestion.create')}}" class="btn btn-primary bolder">Create data</a>
                 </div>
@@ -52,9 +51,9 @@
                             @foreach($dqlocation as $dqlocations)
                             <tr>
                                 <td>{{$nums}}</td>
-                                <td>dynamic Name(show)</td>
+                                <td>{{$dqlocations->firstname}} {{$dqlocations->middlename}} {{$dqlocations->lastname}}</td>
                                 <td>{{$dqlocations->dateMonitoring}}</td>
-                                <td>{{$dqlocations->periodCovered}}</td>
+                                <td>{{$dqlocations->periodCovereda}}</td>
                                 <td>
                                     @if( $dqlocations->status == 0 )
                                     <span class="statusApproved">APPROVED</span>
@@ -76,18 +75,13 @@
                                                 <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
                                                 <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i>
                                                 @elseif( $dqlocations->status == 2 )
-                                                <i onclick="view('discussionquestion','{{ $dqlocations->id }}','show')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                                <i  class="fa fa-eye fa-lg cursor" style="color:gray;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
                                                 <i onclick="view('discussionquestion','{{ $dqlocations->id }}','edit')"  class="fa fa-edit fa-lg cursor" style="color:#FFB236;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Edit"></i>
                                                 <i onclick="openModal('{{ $dqlocations->id }}')" class="fa fa-trash fa-lg cursor" style="color:red;margin-right:10px" title="Delete "></i>
                                                 @endif
                                             </li>
                                         </ul>
-                                    <!-- <a href="{{route('discussionquestion.edit', $dqlocations->id)}}" class="btn btn-primary">edit</a>
-                                    <form action="{{ route('discussionquestion.destroy', $dqlocations->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete data?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                    </form> -->
+                               
                                 </td> 
                             </tr>
                             <?php $nums++; ?>
@@ -100,24 +94,6 @@
     </div>
 </div>
 
-
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to delete this data?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" onclick="confirmDelete()">Sure</button>
-            </div>
-        </div>
-    </div>
-</div>
+@include('Modal.DeleteDQ')
+ 
 @endsection

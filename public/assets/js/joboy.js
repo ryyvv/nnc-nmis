@@ -206,6 +206,11 @@ function LNFPmyFunction_InterviewForm(id){
 
 }
 
+function LNFPmyFunction_overallScore(id){
+    window.location.href = "lguLnfpEditOverall/"+ id;
+
+}
+
 // Submit show function Mellpi Pro For LNFP
 function LNFPmyFunction_lguprofile(id){
     window.location.href = "lguLnfpEditprofile/"+id;
@@ -524,3 +529,4 @@ new DataTable('#LNFP_Profile_myTable');
 new DataTable('#form6Table');
 new DataTable('#form8myTable');
 new DataTable('#InterviewFormmyTable');
+new DataTable('#overallScoremyTable');

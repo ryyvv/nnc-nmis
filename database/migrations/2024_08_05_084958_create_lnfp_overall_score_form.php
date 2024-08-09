@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('lnfp_overall_score_form', function (Blueprint $table) {
             $table->id();
+            $table->integer('lnfp_lgu_id')->nullable();
+            $table->integer('form5_id')->nullable();
+            $table->integer('form8_id')->nullable();
+            $table->integer('formInterview_id')->nullable();
+            $table->string('lnfp_officer', 255)->nullable();
+            
             $table->text('name')->nullable();
             $table->text('areaOfAssign')->nullable();
             $table->date('date')->nullable();

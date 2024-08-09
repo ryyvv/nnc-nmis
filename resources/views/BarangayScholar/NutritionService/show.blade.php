@@ -1,54 +1,76 @@
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/joboy.css') }}">
-<script src="https://cdn.lordicon.com/lordicon.js"></script>
 
 <style>
-    .form-section {
-        display: none;
-    }
+.form-section {
+    display: none;
+}
 
-    .form-section.current {
-        display: inline;
-    }
+.form-section.current {
+    display: inline;
+}
 
-    .striped-rows .row:nth-child(odd) {
-        background-color: #f2f2f2;
-    }
+.striped-rows .row:nth-child(odd) {
+    background-color: #f2f2f2;
+}
 
-    .col-sm {
-        margin: auto;
-        padding: 1rem 1rem;
-    }
+.col-sm {
+    margin: auto;
+    padding: 1rem 1rem;
+}
 
-    .row .form-control {
-        border-color: #bebebe !important;
-        border: 1px solid;
-        border-radius: 5px;
-    }
+.row .form-control {
+    border-color: #bebebe !important;
+    border: 1px solid;
+    border-radius: 5px;
+}
 </style>
 
 @extends('layouts.app', [
 'class' => 'sidebar-mini ',
 'namePage' => 'Nutrition Service',
 'activePage' => 'nutritionservice',
-'activeNav' => 'MELLPI PRO For LGU', 
+'activeNav' => 'MELLPI PRO For LGU',
 ])
 
 
 
-@section('content')
+@section('content') 
 <div class="content" style="margin-top:50px;padding:2%">
-    <div class="card" style="border-radius:10px;padding-left:2rem!important;padding-right:1rem!important">
-        <div style="display:flex;align-items:center">
-            <a href="{{route('nutritionservice.index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a>
-            <h4 style="margin-top:18px;font-weight:bold">MELLPI PRO FORM B: BARANGAY PROFILE SHEET</h4>
+<div class="card" style="border-radius:10px;padding-left:2rem!important;padding-right:1rem!important">
+<div class="card-header">
+      <div class="d-flex justify-content-end center" style="padding-right:20px; ">
+                <form action="{{route('lncmanagement.download',$row->id)}}" method="POST">
+                    @csrf
+                    <input type="hidden" name="htmlContent" id="htmlContent">
+                    <button type="submit" id="hiddenButton" style="display: none;"></button>
+                </form>
+
+                <div style="display:absolute;" onclick="downloadPDF('{{$row->id}}')">
+                    <i class="fa fa-file-pdf-o fa-lg cursor " style="color:red;margin-right:7px;" aria-hidden="true"></i>
+                    <label class="download">Download file</label>
+                </div>
         </div>
+ 
 
-        @if(session('status'))
-        <div class="alert alert-success">{{session('status')}}</div>
-        @endif
+        @include('layouts.page_template.crud_alert_message')
+            <div id="downloadable"> 
+                <div style="display:flex;align-items:center">
+                        <a href="#">
+                            <h5 class="title" style="margin:0px">FORM B: BARANGAY PROFILE SHEET</h5>
+                        </a>
+                </div>
 
-        <div style="padding:25px">
+                <div style="margin-right:15px">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a style="font-family: Arial, sans-serif;font-style:italic" href="{{route('BSLGUprofile.index')}}">Mellpi Pro for LGU Profile</a></li>
+                                <li class="breadcrumb-item active" style="font-style:italic" aria-current="page">Form B: Barangay Profile Sheet -
+                                    <?php echo auth()->user()->barangay ?>
+                                </li>
+                            </ol>
+                        </nav>
+                </div>
+                
+                <div style="padding:25px">
             <form action="{{ route('nutritionservice.store') }}" id="form" method="POST">
                 @csrf
 
@@ -1339,24 +1361,13 @@
                 </div>
 
 
-                <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
-                    <button type="button" class="bold btn btn-warning" style="margin-right:6px" data-toggle="modal" data-target="#exampleModalCenterDraft">
-                        Save as Draft
-                    </button>
-                    <button type="button" class="bold btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                        Save and Submit
-                    </button>
-                </div>
+ 
             </form>
-        </div>
+        </div>  
+            </div>
+      </div>
     </div>
 </div>
 </div>
-
-<!-- alert Modal -->
-@include('Modal.Draft')
-
-<!-- alert Modal -->
-@include('Modal.Submit')
 
 @endsection

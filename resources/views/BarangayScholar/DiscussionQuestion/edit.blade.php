@@ -1,119 +1,90 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/joboy.css') }}">
+<script src="https://cdn.lordicon.com/lordicon.js"></script>
 
 <style>
-.form-section {
-    display: none;
-}
+    .form-section {
+        display: none;
+    }
 
-.form-section.current {
-    display: inline;
-}
+    .form-section.current {
+        display: inline;
+    }
 
-.striped-rows .row:nth-child(odd) {
-    background-color: #f2f2f2;
-}
+    .striped-rows .row:nth-child(odd) {
+        background-color: #f2f2f2;
+    }
 
-.col-sm {
-    margin: auto;
-    padding: 1rem 1rem;
-}
+    .col-sm {
+        margin: auto;
+        padding: 1rem 1rem;
+    }
 
-.row .form-control {
-    border-color: #bebebe !important;
-    border: 1px solid;
-    border-radius: 5px;
-}
+    .row .form-control {
+        border-color: #bebebe !important;
+        border: 1px solid;
+        border-radius: 5px;
+    }
 </style>
 
 @extends('layouts.app', [
 'class' => 'sidebar-mini ',
-'namePage' => 'User Profile',
-'activePage' => 'profile',
+'namePage' => 'Discussion Question',
+'activePage' => 'discussionquestion',
 'activeNav' => 'MELLPI PRO For LGU', 
 ])
 
 
-@section('content') 
+@section('content')
 <div class="content" style="margin-top:50px;padding:2%">
-<div class="card" style="border-radius:10px;padding-left:2rem!important;padding-right:1rem!important">  
-        <div style="display:flex;align-items:center">
-            <a href="{{route('discussionquestion.index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a>
-            <h4 style="margin-top:18px;font-weight:bold">MELLPI PRO FORM B 1a: BARANGAY NUTRITION MONITORING</h4>
-        </div>
-        
-        @include('layouts.page_template.crud_alert_message')
+  <div class="card" style="border-radius:10px;padding-left:2rem!important;padding-right:1rem!important"> 
+    <div style="display:flex;align-items:center">
+      <a href="{{route('discussionquestion.index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a>
+      <h4 style="margin-top:18px;font-weight:bold">MELLPI PRO FORM B-3: DISCUSSION QUESTIONS FOR LEARNING AND ACTION</h4>
+    </div>
 
-      <div style="padding:25px">
-            <form action="{{route('discussionquestion.update', $dqlocation->id)}}"  method="POST">
-            @csrf
-            @method('PUT')
+        @if(session('status'))
+        <div class="alert alert-success">{{session('status')}}</div>
+        @endif
 
+        <div>
+            <form action="{{ route('discussionquestion.update', $row->id ) }}" id="form" method="POST">
+                @csrf
+                @method('PUT')
 
-
-                <input type="hidden" name="status"  value="{{$dqlocation->status}}">
-                <input type="hidden" name="dateCreated"  value="{{$dqlocation->dateCreated}}">
-                <input type="hidden" name="dateUpdates"  value="{{$dqlocation->dateUpdates}}">
-                <input type="hidden" name="user_id"  value="{{$dqlocation->user_id}}">
+                <input type="hidden" name="status" id="status" > 
+                <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
                 <!-- header -->
-                <div style="display:flex">
-                    <div class="form-group col">
-                        <label for="exampleFormControlInput1">Barangay:</label>
-                        <input type="text" class="form-control" name="barangay_id" value="{{$dqlocation->barangay_id}}">
-                    </div>
-                    <div class="form-group col">
-                        <label for="exampleFormControlInput1">Municipality/City:</label>
-                        <input type="text" class="form-control" name="municipal_id"
-                        value="{{$dqlocation->municipal_id}}">
-                    </div>
-                    <div class="form-group col">
-                        <label for="exampleFormControlInput1">Province:</label>
-                        <input type="text" class="form-control" name="province_id"  value="{{$dqlocation->province_id}}">
-                        <input type="hidden" class="form-control" name="region_id"  value="{{$dqlocation->region_id}}">
-                    </div>
-
-                </div>
-                <br>
-                <div style="display:flex">
-
-                    <div class="form-group col">
-                        <label for="exampleFormControlInput1">Date of Monitoring:</label>
-                        <input type="date" class="form-control" id="exampleFormControlInput1" 
-                        name="dateMonitoring"  value="{{$dqlocation->dateMonitoring}}">
-                    </div>
-                    <div class="form-group col">
-                        <label for="exampleFormControlInput1">Period Covered:</label> 
-                        <input type="number" id="yearInput" name="periodCovered" class="form-control" 
-                        min="1900" max="2100" required  value="{{$dqlocation->periodCovered}}">
-
-                    </div> 
-                </div>
+                @include('layouts.page_template.location_header')
                 <!-- endheader -->
                 <br>
                 <br>
+         
+              
+        
                 <div>
                     <!--tablehearder -->
-                    <div class="row-12" style="display:flex;background-color:#F5F5F5;padding:10px;border-radius:5px;">
+                    <div class="row-12" style="display:flex;background-color:#508D4E;padding:10px;border-radius:5px;">
                         <div class="justify-content-center">
-                            <label for="exampleFormControlInput1"></label>
+                            <p class="white fontA"  for="exampleFormControlInput1"></p>
                         </div>
                         <div class="col justify-content-center">
-                            <label for="exampleFormControlInput1"><b>Dimensions</b></label>
+                            <p class="white fontA" for="exampleFormControlInput1"><b>Dimensions</b></p>
                         </div>
                         <div class="col " style="padding:0px!important">
-                            <label for="exampleFormControlInput1"><b>What are the good practices
-                                    done/initiated?</b></label>
+                            <p class="white fontA" for="exampleFormControlInput1"><b>What are the good practices
+                                    done/initiated?</b></p>
                         </div>
                         <div class="col">
-                            <label for="exampleFormControlInput1"><b>What are the issues and problems and
-                                    why?</b></label>
+                            <p class="white fontA" for="exampleFormControlInput1"><b>What are the issues and problems and
+                                    why?</b></p>
                         </div>
                         <div class="col">
-                            <label for="exampleFormControlInput1"><b>What local initiatives have been done?</b></label>
+                            <p class="white fontA" for="exampleFormControlInput1"><b>What local initiatives have been done?</b></p>
                         </div>
                         <div class="col">
-                            <label for="exampleFormControlInput1"><b>What are the immediate actions for
-                                    improvement?</b></label>
+                            <p class="white fontA" for="exampleFormControlInput1"><b>What are the immediate actions for
+                                    improvement?</b></p>
                         </div>
                     </div>
                     <!-- endtablehearder -->
@@ -125,31 +96,39 @@
                             <label for="exampleFormControlInput1"><b>1</b></label>
                         </div>
                         <div class="col justify-content-center" style="padding-right:0px">
-                            <label for="exampleFormControlInput1">
+                            <p class="fontA" for="exampleFormControlInput1">
                                 Vision and Mission
-                            </label>
+                            </p>
                         </div>
 
                         <div class="col" style="padding-left:0px!important">
-                            <textarea type="text" name="practice7aa"  
-                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;
-                                width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7aa', $dqlocation->practice7aa) }}</textarea>
+                            <textarea type="text" name="practice7aa" placeholder="Your remarks"
+                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7aa', $row->practice7aa) }}</textarea>
+                                @error('practice7aa')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
                         </div>
                         <div class="col" style="padding-left:0px!important">
-                            <textarea type="text" name="practice7ab"  
-                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;
-                                width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7ab', $dqlocation->practice7ab) }}</textarea>
-                        </div>
+                            <textarea type="text" name="practice7ab" placeholder="Your remarks"
+                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7ab', $row->practice7ab) }}</textarea>
+                                @error('practice7ab')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         <div class="col" style="padding-left:0px!important">
-                            <textarea type="text" name="practice7ac"  
-                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;
-                                width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7ac', $dqlocation->practice7ac) }}</textarea>
-                        </div>
+                            <textarea type="text" name="practice7ac" placeholder="Your remarks"
+                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7ad', $row->practice7ad) }}</textarea>
+                                @error('practice7ac')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         <div class="col" style="padding-left:0px!important">
-                            <textarea type="text" name="practice7ad" 
-                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;
-                                width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7ad', $dqlocation->practice7ad) }}</textarea>
-                        </div>
+                            <textarea type="text" name="practice7ad" placeholder="Your remarks"
+                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7ad', $row->practice7ad) }}</textarea>
+                                @error('practice7ad')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                     </div>
 
                     <!-- 2 -->
@@ -159,31 +138,39 @@
                             <label for="exampleFormControlInput1"><b>2</b></label>
                         </div>
                         <div class="col justify-content-center" style="padding-right:0px">
-                            <label for="exampleFormControlInput1">
+                            <p for="exampleFormControlInput1">
                                 Nutrition Laws and Policies
-                            </label>
+                            </p>
                         </div>
 
                         <div class="col" style="padding-left:0px!important">
-                            <textarea type="text" name="practice7ba" 
-                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;
-                                width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7ba', $dqlocation->practice7ba) }}</textarea>
-                        </div>
+                            <textarea type="text" name="practice7ba" placeholder="Your remarks"
+                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7ba', $row->practice7ba) }}</textarea>
+                                @error('practice7ba')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         <div class="col" style="padding-left:0px!important">
-                            <textarea type="text" name="practice7bb" 
-                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;
-                                width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7bb', $dqlocation->practice7bb) }}</textarea>
-                        </div>
+                            <textarea type="text" name="practice7bb" placeholder="Your remarks"
+                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7bb', $row->practice7bb) }}</textarea>
+                                @error('practice7bb')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         <div class="col" style="padding-left:0px!important">
-                            <textarea type="text" name="practice7bc" 
-                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;
-                                width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7bc', $dqlocation->practice7bc) }}</textarea>
-                        </div>
+                            <textarea type="text" name="practice7bc" placeholder="Your remarks"
+                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7bc', $row->practice7bc) }}</textarea>
+                                @error('practice7bc')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         <div class="col" style="padding-left:0px!important">
-                            <textarea type="text" name="practice7bd" 
-                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;
-                                width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7bd', $dqlocation->practice7bd) }}</textarea>
-                        </div>
+                            <textarea type="text" name="practice7bd" placeholder="Your remarks"
+                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7bd', $row->practice7bd) }}</textarea>
+                                @error('practice7bd')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                     </div>
 
                     <!-- 3 -->
@@ -193,32 +180,40 @@
                             <label for="exampleFormControlInput1"><b>3</b></label>
                         </div>
                         <div class="col justify-content-center" style="padding-right:0px">
-                            <label for="exampleFormControlInput1">
-                            Governance and Organizational
-                            Structure
-                            </label>
+                            <p for="exampleFormControlInput1">
+                                Governance and Organizational
+                                Structure
+                            </p>
                         </div>
 
                         <div class="col" style="padding-left:0px!important">
-                            <textarea type="text" name="practice7ca" 
-                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;
-                                width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7ca', $dqlocation->practice7ca) }}</textarea>
-                        </div>
+                            <textarea type="text" name="practice7ca" placeholder="Your remarks"
+                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7ca', $row->practice7ca) }}</textarea>
+                                @error('practice7ca')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         <div class="col" style="padding-left:0px!important">
-                            <textarea type="text" name="practice7cb" 
-                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;
-                                width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7cb', $dqlocation->practice7cb) }}</textarea>
-                        </div>
+                            <textarea type="text" name="practice7cb" placeholder="Your remarks"
+                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7cb', $row->practice7cb) }}</textarea>
+                                @error('practice7cb')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         <div class="col" style="padding-left:0px!important">
-                            <textarea type="text" name="practice7cc" 
-                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;
-                                width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7cc', $dqlocation->practice7cc) }}</textarea>
-                        </div>
+                            <textarea type="text" name="practice7cc" placeholder="Your remarks"
+                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7cc', $row->practice7cc) }}</textarea>
+                                @error('practice7cc')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         <div class="col" style="padding-left:0px!important">
-                            <textarea type="text" name="practice7cd" 
-                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;
-                                width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7cd', $dqlocation->practice7cd) }}</textarea>
-                        </div>
+                            <textarea type="text" name="practice7cd" placeholder="Your remarks"
+                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7cd', $row->practice7cd) }}</textarea>
+                                @error('practice7cd')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                     </div>
 
                     <!-- 4 -->
@@ -228,32 +223,40 @@
                             <label for="exampleFormControlInput1"><b>4</b></label>
                         </div>
                         <div class="col justify-content-center" style="padding-right:0px">
-                            <label for="exampleFormControlInput1">
-                            Local Nutrition Committee
-                            Management Functions
-                            </label>
+                            <p for="exampleFormControlInput1">
+                                Local Nutrition Committee
+                                Management Functions
+                            </p>
                         </div>
 
                         <div class="col" style="padding-left:0px!important">
-                            <textarea type="text" name="practice7da" 
-                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;
-                                width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7da', $dqlocation->practice7da) }}</textarea>
-                        </div>
+                            <textarea type="text" name="practice7da" placeholder="Your remarks"
+                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7da', $row->practice7da) }}</textarea>
+                                @error('practice7da')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         <div class="col" style="padding-left:0px!important">
-                            <textarea type="text" name="practice7db" 
-                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;
-                                width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7db', $dqlocation->practice7db) }}</textarea>
-                        </div>
+                            <textarea type="text" name="practice7db" placeholder="Your remarks"
+                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7db', $row->practice7db) }}</textarea>
+                                @error('practice7db')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         <div class="col" style="padding-left:0px!important">
-                            <textarea type="text" name="practice7dc" 
-                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;
-                                width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7dc', $dqlocation->practice7dc) }}</textarea>
-                        </div>
+                            <textarea type="text" name="practice7dc" placeholder="Your remarks"
+                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7dc', $row->practice7dc) }}</textarea>
+                                @error('practice7dc')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         <div class="col" style="padding-left:0px!important">
-                            <textarea type="text" name="practice7dd" 
-                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;
-                                width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7dd', $dqlocation->practice7dd) }}</textarea>
-                        </div>
+                            <textarea type="text" name="practice7dd" placeholder="Your remarks"
+                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7dd', $row->practice7dd) }}</textarea>
+                                @error('practice7dd')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                     </div>
 
                     <!-- 5 -->
@@ -263,31 +266,39 @@
                             <label for="exampleFormControlInput1"><b>5</b></label>
                         </div>
                         <div class="col justify-content-center" style="padding-right:0px">
-                            <label for="exampleFormControlInput1">
-                            Nutrition Interventions/ Services
-                            </label>
+                            <p for="exampleFormControlInput1">
+                                Nutrition Interventions/ Services
+                            </p>
                         </div>
 
                         <div class="col" style="padding-left:0px!important">
-                            <textarea type="text" name="practice7ea" 
-                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;
-                                width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7ea', $dqlocation->practice7ea) }}</textarea>
-                        </div>
+                            <textarea type="text" name="practice7ea" placeholder="Your remarks"
+                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7ea', $row->practice7ea) }}</textarea>
+                                @error('practice7ea')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         <div class="col" style="padding-left:0px!important">
-                            <textarea type="text" name="practice7eb" 
-                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;
-                                width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7eb', $dqlocation->practice7eb) }}</textarea>
-                        </div>
+                            <textarea type="text" name="practice7eb" placeholder="Your remarks"
+                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7eb', $row->practice7eb) }}</textarea>
+                                @error('practice7eb')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         <div class="col" style="padding-left:0px!important">
-                            <textarea type="text" name="practice7ec" 
-                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;
-                                width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7ec', $dqlocation->practice7ec) }}</textarea>
-                        </div>
+                            <textarea type="text" name="practice7ec" placeholder="Your remarks"
+                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7ec', $row->practice7ec) }}</textarea>
+                                @error('practice7ec')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         <div class="col" style="padding-left:0px!important">
-                            <textarea type="text" name="practice7ed" 
-                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;
-                                width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7ed', $dqlocation->practice7ed) }}</textarea>
-                        </div>
+                            <textarea type="text" name="practice7ed" placeholder="Your remarks"
+                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7ed', $row->practice7ed) }}</textarea>
+                                @error('practice7ed')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                     </div>
 
                     <!-- 6 -->
@@ -297,94 +308,64 @@
                             <label for="exampleFormControlInput1"><b>6</b></label>
                         </div>
                         <div class="col justify-content-center" style="padding-right:0px">
-                            <label for="exampleFormControlInput1">
-                            Changes in Nutritional Status in
-                            the Local Government Unit
-                            </label>
+                            <p for="exampleFormControlInput1">
+                                Changes in Nutritional Status in
+                                the Local Government Unit
+                            </p>
                         </div>
 
                         <div class="col" style="padding-left:0px!important">
-                            <textarea type="text" name="practice7fa" 
-                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;
-                                width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7fa', $dqlocation->practice7fa) }}</textarea>
-                        </div>
+                            <textarea type="text" name="practice7fa" placeholder="Your remarks"
+                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7fa', $row->practice7fa) }}</textarea>
+                                @error('practice7fa')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         <div class="col" style="padding-left:0px!important">
-                            <textarea type="text" name="practice7fb" 
-                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;
-                                width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7fb', $dqlocation->practice7fb) }}</textarea>
-                        </div>
+                            <textarea type="text" name="practice7fb" placeholder="Your remarks"
+                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7fb', $row->practice7fb) }}</textarea>
+                                @error('practice7fb')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         <div class="col" style="padding-left:0px!important">
-                            <textarea type="text" name="practice7fc" 
-                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;
-                                width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7fc', $dqlocation->practice7fc) }}</textarea>
-                        </div>
+                            <textarea type="text" name="practice7fc" placeholder="Your remarks"
+                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7fc', $row->practice7fc) }}</textarea>
+                                @error('practice7fc')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         <div class="col" style="padding-left:0px!important">
-                            <textarea type="text" name="practice7fd" 
-                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;
-                                width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7fd', $dqlocation->practice7fd) }}</textarea>
-                        </div>
+                            <textarea type="text" name="practice7fd" placeholder="Your remarks"
+                                style="border-radius: 5px;border:1px solid lightgray;font-size:12px;width:inherit;max-height:120px;height:120px;padding:7px">{{ old('practice7fd', $row->practice7fd) }}</textarea>
+                                @error('practice7fd')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                     </div>
-
                 </div>
-    
 
-                <!-- <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
-                    <button type="submit" class="btn btn-primary">update</button>
-                </div> -->
+
+                
                 <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
-                    <button type="button" class="bold btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
-                    Save as Draft
+                    <button type="button" style="margin-right:6px" class="bold btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
+                        Save as Draft
                     </button>
                     <button type="button" class="bold btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                    Save and Submit
+                        Save and Submit
                     </button>
                 </div>
+
             </form>
         </div>
     </div>
 </div>
 </div>
+ <!-- alert Modal -->
+ @include('Modal.Draft')
+
+<!-- alert Modal -->
+@include('Modal.Submit')
 
 
-<!-- Modal Submit -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <!-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <h5>Are you sure want to submit this form?</h5>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-        <button type="submit" id="lgu-submit" class="btn btn-primary">Yes</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Draft -->
-<div class="modal fade" id="exampleModalCenterDraft" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <!-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <h5>Save as Draft?</h5>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-        <button type="submit" id="lgu-draft" class="btn btn-primary">Yes</button>
-      </div>
-    </div>
-  </div>
-</div>
 @endsection

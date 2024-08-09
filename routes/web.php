@@ -435,7 +435,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/nutritionservice/create', [NutritionServiceController::class, 'create'])->name('nutritionservice.create');
         Route::put('/nutritionservice/{id}', [NutritionServiceController::class, 'update'])->name('nutritionservice.update');
         Route::get('/nutritionservice/{id}/edit', [NutritionServiceController::class, 'edit'])->name('nutritionservice.edit');
-        Route::DELETE('/nutritionservice/{id}', [NutritionServiceController::class, 'destroy'])->name('nutritionservice.destroy');  
+        Route::POST('/nutritionservice/delete', [NutritionServiceController::class, 'destroy'])->name('nutritionservice.destroy');  
         Route::get('/nutritionservice/{id}/show', [NutritionServiceController::class, 'show'])->name('nutritionservice.show');
         Route::POST('/nutritionservice/{id}/download-pdf',[NutritionServiceController::class , 'downloads'])->name('nutritionservice.download');
 
@@ -445,7 +445,9 @@ Route::group(['middleware' => 'auth'], function () {
            Route::get('/changeNS/create', [ChangeNSController::class, 'create'])->name('changeNS.create');
            Route::put('/changeNS/{id}', [ChangeNSController::class, 'update'])->name('changeNS.update');
            Route::get('/changeNS/{id}/edit', [ChangeNSController::class, 'edit'])->name('changeNS.edit');
-           Route::DELETE('/changeNS/{id}', [ChangeNSController::class, 'destroy'])->name('changeNS.destroy');  
+           Route::POST('/changeNS/delete', [ChangeNSController::class, 'destroy'])->name('changeNS.destroy');
+           Route::get('/changeNS/{id}/show', [ChangeNSController::class, 'show'])->name('changeNS.show');
+           Route::POST('/changeNS/{id}/download-pdf',[ChangeNSController::class , 'downloads'])->name('changeNS.download');  
    
            //DiscussionQuestionController
            Route::get('/discussionquestion', [DiscussionQuestionController::class, 'index'])->name('discussionquestion.index');
@@ -453,7 +455,7 @@ Route::group(['middleware' => 'auth'], function () {
            Route::get('/discussionquestion/create', [DiscussionQuestionController::class, 'create'])->name('discussionquestion.create');
            Route::put('/discussionquestion/{id}', [DiscussionQuestionController::class, 'update'])->name('discussionquestion.update');
            Route::get('/discussionquestion/{id}/edit', [DiscussionQuestionController::class, 'edit'])->name('discussionquestion.edit');
-           Route::DELETE('/discussionquestion/{id}', [DiscussionQuestionController::class, 'destroy'])->name('discussionquestion.destroy');  
+           Route::POST('/discussionquestion/delete', [DiscussionQuestionController::class, 'destroy'])->name('discussionquestion.destroy');  
            Route::get('/discussionquestion/{id}/show', [DiscussionQuestionController::class, 'show'])->name('discussionquestion.show');
 
 
@@ -508,6 +510,7 @@ Route::group(['middleware' => 'auth'], function () {
         //Overall Score
         Route::get('/lguformOverallScoreIndex', [MellpiProForLNFP_OverallScoreController::class, 'OverallScoreFormLNFP'])->name('lnfpFormOverallScoreIndex');
         Route::get('/lguLnfpOverallScoreCreate', [MellpiProForLNFP_OverallScoreController::class, 'OverallScoreFormLNFPCreate'])->name('lnfpFormOverallScoreCreate');
+        Route::get('/lguLnfpEditOverall/{id}', [MellpiProForLNFP_OverallScoreController::class, 'OverallScoreFormLNFPEdit'])->name('editOSForm');
 
     });
 

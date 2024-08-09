@@ -30,10 +30,11 @@
 
 @extends('layouts.app', [
 'class' => 'sidebar-mini ',
-'namePage' => ' Mellpi Pro for LGU Profile',
+'namePage' => 'MELLPI PRO For LGU Profile',
 'activePage' => 'LGUPROFILE',
-'activeNav' => 'MELLPI PRO For LGU', 
+'activeNav' => 'MELLPI PRO For LGU',
 ])
+
 
 @section('content') 
 <div class="content" style="margin-top:50px;padding:2%">

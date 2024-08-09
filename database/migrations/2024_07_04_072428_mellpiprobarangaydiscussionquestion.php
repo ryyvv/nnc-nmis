@@ -44,8 +44,8 @@ return new class extends Migration
             $table->string('practice7fd', 255)->nullable(); 
  
             $table->integer('status'); 
-            $table->date('dateMonitoring')->nullable();
-            $table->year('periodCovereda')->nullable();
+            $table->string('dateMonitoring',255)->nullable();
+            $table->string('periodCovereda',255)->nullable();
             $table->integer('region_id')->unsigned(); 
             $table->integer('province_id')->unsigned(); 
             $table->integer('municipal_id')->unsigned(); 

@@ -47,7 +47,7 @@ class MellpiproBarangayDiscussionQuestion extends Model
         'dateCreated',
         'dateUpdates',
         'dateMonitoring', 
-        'periodCovered', 
+        'periodCovereda', 
         'status',
         'user_id'
  ];

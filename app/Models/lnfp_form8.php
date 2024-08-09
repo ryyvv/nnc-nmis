@@ -10,6 +10,9 @@ class lnfp_form8 extends Model
     use HasFactory;
 
     protected $fillable = [
+        'form5_id',
+        'lnfp_lgu_id',
+        'lnfp_officer',
         'forThePeriod',
         'nameOfPnao',
         'areaOfAssign',

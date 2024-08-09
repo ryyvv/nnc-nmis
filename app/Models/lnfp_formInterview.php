@@ -10,6 +10,9 @@ class lnfp_formInterview extends Model
     use HasFactory;
 
     protected $fillable = [
+        'form5_id',
+        'lnfp_lgu_id', 
+        'lnfp_officer', 
         'nameOf',
         'areaAssign',
         'dateOfInterview',

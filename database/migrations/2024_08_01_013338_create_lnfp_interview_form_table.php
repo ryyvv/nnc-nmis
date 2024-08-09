@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('lnfp_interview_form', function (Blueprint $table) {
             $table->id();
+            $table->integer('form5_id')->nullable();
+            $table->integer('lnfp_lgu_id')->nullable();
+            $table->string('lnfp_officer', 255)->nullable();
             $table->text('nameOf')->nullable();
             $table->text('areaAssign')->nullable();
             $table->date('dateOfInterview')->nullable();

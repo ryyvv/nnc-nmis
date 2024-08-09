@@ -13,6 +13,9 @@ use illuminate\Database\QueryException;
 use PhpParser\Node\Stmt\TryCatch;
 use App\Models\lnfp_lguprofile;
 use App\Models\lnfp_form7;
+use App\Models\lnfp_form8;
+use App\Models\lnfp_formInterview;
+use App\Models\lnfp_formOverall;
 
 class MellpiProForLNFP_barangayController extends Controller
 {
@@ -458,6 +461,7 @@ class MellpiProForLNFP_barangayController extends Controller
                 //code...
                 $updateResponse = lnfp_form5a_rr::where('id', $request->id)
                     ->update([
+                        // 'lnfp_lgu_id' => $request->lgu_id,
                         'forThePeriod' => $forTheperiod,
                         'nameofPnao' => $nameOf,
                         'address' => $address,
@@ -495,6 +499,47 @@ class MellpiProForLNFP_barangayController extends Controller
                         'status' => $statusSubmit
 
                     ]);
+                    // dd($request->lgu_id);
+                        # code...
+                    $form7 = lnfp_form7::create([
+                            'form5_id' => $request->id,
+                            'lnfp_lgu_id' => $request->lgu_id
+                        ]);
+                    // dd($form7);
+
+                    $user = DB::table('users')
+                        ->where('id', auth()->user()->id)
+                        ->first();
+
+                    if ($user) {
+                        $fullname = $user->Firstname . ' ' . $user->Middlename . ' ' . $user->Lastname;
+                        $form8 = lnfp_form8::create([
+                            'form5_id' => $request->id,
+                            'lnfp_lgu_id' => $request->lgu_id,
+                            'lnfp_officer' => $fullname,
+                            'forThePeriod' => $request->forTheperiod,
+                            'nameOfPnao' => $request->nameOf,
+                            'areaOfAssign' => $request->address,
+                            'dateMonitor' => $request->dateMoni,
+                            'status' => 2
+                        ]);
+
+                        $interviewForm = lnfp_formInterview::create([
+                            'form5_id' => $request->id,
+                            'lnfp_lgu_id' => $request->lgu_id,
+                            'lnfp_officer' => $fullname,
+                            'nameOf' => $request->nameOf,
+                            'areaAssign' => $request->address,
+                            'status' => 2
+                        ]);
+
+                        $overallScore = lnfp_formOverall::create([
+                            'lnfp_lgu_id' => $request->lgu_id,
+                            'form5_id' => $request->id,
+                            'lnfp_officer' => $fullname,
+                            'status' => 2
+                        ]);
+                    }
                 return redirect()->route('MellpiProMonitoringIndex.index')->with('alert', 'Save and Submitted Successfully!');
             } catch (\Throwable $th) {
                 //throw $th;
@@ -543,6 +588,12 @@ class MellpiProForLNFP_barangayController extends Controller
                         'status' => $statusDraft
 
                     ]);
+                    // if ($updateResponse) {
+                    //     # code...
+                    //     lnfp_form7::create([
+                    //         'form5_id' => $request->id
+                    //     ]);
+                    // }
                 return redirect()->route('MellpiProMonitoringIndex.index')->with('alert', 'Save as Draft Successfully!');
             } catch (\Throwable $th) {
                 //throw $th;

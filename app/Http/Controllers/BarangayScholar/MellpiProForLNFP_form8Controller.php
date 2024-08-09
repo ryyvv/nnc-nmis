@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 // use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
+use App\Models\lnfp_formOverall;
 
 class MellpiProForLNFP_form8Controller extends Controller
 {
@@ -327,6 +328,12 @@ class MellpiProForLNFP_form8Controller extends Controller
                     'whatDate' => $request->input('whatDate'),
                     'status' => $request->input('submitStatus'),
                 ]);
+
+                $overallScore = lnfp_formOverall::where('lnfp_lgu_id', $request->lgu_id)
+                ->update([
+                    'form8_id' => $request->id
+                ]);
+                
         
                 return redirect()->route('lnfpForm8Index')->with('alert', 'Data Submitted Successfully!');
             } catch (\Throwable $th) {

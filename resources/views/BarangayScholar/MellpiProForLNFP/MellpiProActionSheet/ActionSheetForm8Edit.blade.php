@@ -49,6 +49,7 @@
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </center><br>
+                            <input type="hidden" name="lgu_id" value="{{$form8->lnfp_lgu_id}}">
                             <input type="hidden" name="submitStatus" value="1">
                             <input type="hidden" name="DraftStatus" value="2">
 

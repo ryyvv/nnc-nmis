@@ -114,7 +114,7 @@
                 </tr>
                 <tr>
                   <td class="fontA bold">4b</td>
-                  <td class="fontA">Planning</td>
+                  <td class="fontA">Planning</td> 
                   <td class="fontA">Barangay Nutrition Action Plan is formulated but not adopted through a resolution</td>
                   <td class="fontA">BNAP is formulated and adopted through a resolution with allocation of funds</td>
                   <td class="fontA">BNAP formulated and adopted through a resolution with allocation of fund adopts a three year format</td>

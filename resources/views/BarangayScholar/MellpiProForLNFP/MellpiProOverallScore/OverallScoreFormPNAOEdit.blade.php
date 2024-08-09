@@ -26,6 +26,7 @@
                         <form action="#" method="post" id="lnfp-overallScore-form">
                             @csrf
 
+                            @if ($overallScore)
                             <center><img src="https://nnc-nmis.moodlearners.com/assets/img/logo.png" alt="" class="imgLogo"></center><br>
                             <center>
                                 <h5 class="title">{{__("SEARCH FOR REGIONAL OUTSTANDING PROVINCIAL NUTRITION ACTION OFFICER")}}</h5>
@@ -40,14 +41,14 @@
                                 <div class="form-group col-md-6">
                                     <div class="form-group col-md-12">
                                         <label for="nameOf">Name of PNAO:<span style="color:red">*</span> </label>
-                                        <input class="inputHeader" type="text" name="nameOf" id="nameOf" value="{{ old('nameOf') }}">
+                                        <input class="inputHeader" type="text" name="nameOf" id="nameOf" value="{{ $overallScore->pnaoName }}">
                                         @error('nameOf')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label for="address">Area of Assignment:<span style="color:red">*</span> </label>
-                                        <input class="inputHeader" type="text" name="areaAssign" id="areaAssign" value="{{ old('areaAssign') }}">
+                                        <input class="inputHeader" type="text" name="areaAssign" id="areaAssign" value="{{ $overallScore->pnaoAddress }}">
                                         @error('areaAssign')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -307,6 +308,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                         </form>
                     </div>
 
