@@ -1,3 +1,5 @@
+<script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.8/datatables.min.js"></script>
+<script src="https://cdn.lordicon.com/lordicon.js"></script>
 @extends('layouts.app', [
 'class' => 'sidebar-mini ',
 'namePage' => 'Users',
@@ -10,108 +12,101 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/joboy.css') }}">
 
 <style>
-.form-section {
-    display: none;
-}
+    .form-section {
+        display: none;
+    }
 
-.form-section.current {
-    display: inline;
-}
+    .form-section.current {
+        display: inline;
+    }
 
-.striped-rows .row:nth-child(odd) {
-    background-color: #f2f2f2;
-}
+    .striped-rows .row:nth-child(odd) {
+        background-color: #f2f2f2;
+    }
 
-.col-sm {
-    margin: auto;
-    padding: 1rem 1rem;
-}
+    .col-sm {
+        margin: auto;
+        padding: 1rem 1rem;
+    }
 
-.row .form-control {
-    border-color: #bebebe !important;
-    border: 1px solid;
-    border-radius: 5px;
-}
+    .row .form-control {
+        border-color: #bebebe !important;
+        border: 1px solid;
+        border-radius: 5px;
+    }
 </style>
+<div class="content" style="margin-top:50px;padding:2%">
+    <div class="card" style="border-radius:10px;padding-left:2rem!important;padding-right:1rem!important">
+        <div class="card-header">
+            <!-- <h5 class="title">{{__("List of Mellpi Pro for LGU Profile Sheet (Barangay)")}}</h5> -->
 
- 
-<div class="content" style="padding:2%">
+            <div style="display:flex;align-items:center">
+                <!-- <a href="{{route('formsb.index')}}"> -->
+                <h5 class="title">{{__("List of Mellpi Pro for LGU Profile Sheet (Barangay)")}}</h5>
+                <!-- </a> -->
 
-    <h4>Roles</h4>
-    @if(session('status'))
-    <div class="alert alert-success">{{session('status')}}</div>
-    @endif
-    <div>
-        <a href="{{route('CAadmin.create')}}" class="btn btn-primary">Add new Account </a>
+            </div>
+
+            <!-- alerts -->
+            @include('layouts.page_template.crud_alert_message')
+
+            <div class="content" id="deleteAlert" style="margin:30px;">
+
+
+
+                <div class="row-12">
+                    <a href="{{route('CAadmin.create')}}" class="btn btn-primary">Add new Account </a>
+                </div>
+                <div class="row-12">
+                    <table class="display" id="myTable" width="100%">
+                        <thead style="background-color:#508D4E;">
+                            <tr>
+                                <th scope="col" class="tableheader">#</th>
+                                <th scope="col-4" class="tableheader">Name</th>
+                                <th scope="col-4" class="tableheader">Email</th>
+                                <th scope="col" class="tableheader">Agency/Unit</th>
+                                <th scope="col" class="tableheader">Designation</th>
+                                <th scope="col" class="tableheader">Status</th>
+                                <th scope="col" class="tableheader">Date_Created </th>
+                                <th scope="col" class="tableheader">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <?php $num = 1; ?>
+                            @foreach($users as $users)
+                            <tr>
+                                <td>{{$num}}</td>
+                                <td>{{$users->Firstname}} {{$users->Middlename}} {{$users->Lastname}}</td>
+                                <td>{{$users->email}}</td>
+                                <td>{{$users->agency_office_lgu}}</td>
+
+                                <td>{{$users->agency_office_lgu}}</td>
+                                <td>
+                                    @php
+                                    $roles = DB::table('roles')->where('id', $users->role)->first();
+                                    @endphp
+                                    {{ $roles->name }}
+                                </td>
+                                <td>{{$users->status}}</td>
+
+                                <td class="d-flex">
+                                    <i onclick="view('lguprofile','{{ $lguProfile->id }}','show')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                    <i onclick="editlgu('{{ $users->id }}')" class="fa fa-edit fa-lg cursor" style="color:#FFB236;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Edit"></i>
+                                    <i onclick="openModal('{{ $users->id }}')" class="fa fa-trash fa-lg cursor" style="color:red;margin-right:10px" title="Delete "></i>
+                                </td>
+
+                            </tr>
+                            <?php $num++; ?>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="colspan=1">#</th>
-                <th scope="col">Name </th>
-                <th scope="col">Email </th>
-                <th scope="col">Address</th>
-                <th scope="col">Agency/Unit</th>
-                <th scope="col">Designation</th>
-                <th scope="col">Status</th>
-                <th scope="col">Date_Created </th>
-                <th scope="col">Action </th>
-            </tr>
-        </thead>
-        <tbody>
-      
-            
-            @foreach($users as $users)
-            <tr>
-                <th scope="rowspan=1">{{$users->id}}</th>
-                <td>{{$users->Firstname}} {{$users->Middlename}} {{$users->Lastname}}</td>
-                <td>{{$users->email}}</td>
-                <td>
-
-                    @php
-                        $municipals = DB::table('municipals')->select('municipal')->where('id', $users->city_municipal)->first();
-                    @endphp
-                        {{$municipals->municipal}}, 
-
-                    @php
-                        $provinces  = DB::table('provinces')->where('id', $users->Province)->first();
-                    @endphp
-                    {{  $provinces->province }}, 
-
-                    @php
-                        $regions = DB::table('regions')->where('id', $users->Region)->first();
-                    @endphp
-                    {{  $regions->region }}
-
-                </td>
-                <td>{{$users->agency_office_lgu}}</td>
-                <td>
-                @php
-                        $roles = DB::table('roles')->where('id', $users->role)->first();
-                @endphp
-                    {{  $roles->name }}
-
-            
-                </td>
-                <td>{{$users->status}}</td>
-                <td>{{$users->created_at}}</td>
-                <td class="d-flex">
-
-                <!-- <a href="{{url('/adminusers/'.$users->id.'/edit')}}" class="btn btn-primary" style="margin-right:10px">Edit</a>     -->
-                <a href="{{route('CAadmin.edit', $users->id)}}" class="btn btn-primary" >edit</a>
-                    <form action="{{ route('CAadmin.destroy', $users->id) }}" method="POST"
-                        onsubmit="return confirm('Are you sure you want to delete this account?');">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
 </div>
+
 </div>
 
 @endsection

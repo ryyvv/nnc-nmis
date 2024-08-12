@@ -154,6 +154,16 @@
                                             </tr>
                                         </tbody>
                                     </table>
+                                    <!-- <input type="text" value="{{
+                                        ((($form6->ratingA * 100) / 5) +
+                                        (($form6->ratingB * 100) / 5) +
+                                        (($form6->ratingC * 100) / 5) +
+                                        (($form6->ratingD * 100) / 5) +
+                                        (($form6->ratingE * 100) / 5) +
+                                        (($form6->ratingF * 100) / 5) +
+                                        (($form6->ratingG * 100) / 5) +
+                                        (($form6->ratingH * 100) / 5))/8
+                                    }}"> -->
                                 </div>
                             </div>
                             <div class="divChart">

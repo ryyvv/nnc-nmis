@@ -347,19 +347,19 @@
               </a>
             </li>
             <li class="@if ($activePage == 'VISION') active @endif">
-              <a href="#">
+            <a href="{{route('CMSvisionmission.index')}}"> 
                 <i class="now-ui-icons files_paper"></i>
                 <p> {{ __("vision mission") }} </p>
               </a>
             </li>
             <li class="@if ($activePage == 'NutritionPolicies') active @endif">
-              <a href="#">
+            <a href="{{route('CMSvisionmission.index')}}"> 
                 <i class="now-ui-icons files_paper"></i>
                 <p> {{ __("Nutrition policies") }} </p>
               </a>
             </li>
             <li class="@if ($activePage == 'Governance') active @endif">
-              <a href="#">
+            <a href="{{route('CMSvisionmission.index')}}"> 
                 <i class="now-ui-icons files_paper"></i>
                 <p> {{ __("Governance") }} </p>
               </a>

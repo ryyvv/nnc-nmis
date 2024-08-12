@@ -58,11 +58,11 @@
                             <div class="formHeader">
                                 <div class="form-group col-md-6">
                                     <div class="form-group col-md-12">
-                                        <label for="nameOf">Name of PNAO: </label>
+                                        <label for="nameOf">Name of PNAO:<span style="color:red">*</span> </label>
                                         <input class="inputHeader" type="text" name="nameOf" id="nameOf" value="{{ $lguLnfpForm5->nameofPnao }}">
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label for="address">address: </label>
+                                        <label for="address">Address:<span style="color:red">*</span> </label>
                                         <input class="inputHeader" type="text" name="address" id="address" value="{{ $lguLnfpForm5->address }}">
                                     </div>
                                     <!-- <div class="form-group col-md-12">
@@ -70,23 +70,23 @@
                                         <input class="inputHeader" type="text" name="provDev" id="provDev" value="{{ $lguLnfpForm5->provDeploy }}">
                                     </div> -->
                                     <div class="form-group col-md-12">
-                                        <label for="numYr">Number of Years PNAO: </label>
+                                        <label for="numYr">Number of Years PNAO:<span style="color:red">*</span> </label>
                                         <input class="inputHeader" type="number" name="numYr" id="numYr" placeholder="0" value="{{ $lguLnfpForm5->numYearPnao }}">
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label for="fulltime">Full time: </label>
+                                        <label for="fulltime">Full time:<span style="color:red">*</span> </label>
                                         <select class="form-control" name="fulltime" id="fulltime" value="{{ $lguLnfpForm5->fulltime }}">
                                             <!-- <option value="">{{ $lguLnfpForm5->fulltime }}</option> -->
-                                            <option {{ old('fulltime', $lguLnfpForm5->fulltime) == '' ? 'selected' : '' }}></option>
+                                            <option {{ old('fulltime', $lguLnfpForm5->fulltime) == '' ? 'selected' : '' }}>Select</option>
                                             <option value="Yes" {{ old('fulltime', $lguLnfpForm5->fulltime) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                             <option value="No" {{ old('fulltime', $lguLnfpForm5->fulltime) == 'No' ? 'selected' : '' }}>No</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label for="profAct">With continuing professional Activities?: </label>
+                                        <label for="profAct">With continuing professional Activities?:<span style="color:red">*</span> </label>
                                         <select class="form-control" name="profAct" id="profAct" value="{{ $lguLnfpForm5->profAct }}">
                                             <!-- <option Selected>Select</option> -->
-                                            <option {{ old('profAct', $lguLnfpForm5->profAct) == '' ? 'selected' : '' }}></option>
+                                            <option {{ old('profAct', $lguLnfpForm5->profAct) == '' ? 'selected' : '' }}>Select</option>
                                             <option value="Yes" {{ old('profAct', $lguLnfpForm5->profAct) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                             <option value="No" {{ old('profAct', $lguLnfpForm5->profAct) == 'No' ? 'selected' : '' }}>No</option>
                                         </select>
@@ -94,20 +94,20 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <div class="form-group col-md-12">
-                                        <label for="bday">Birthday: </label>
+                                        <label for="bday">Birthday:<span style="color:red">*</span> </label>
                                         <input class="form-control" type="date" name="bday" id="bday" value="{{ $lguLnfpForm5->bdate }}">
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label for="sex">Sex: </label>
+                                        <label for="sex">Sex:<span style="color:red">*</span> </label>
                                         <select class="form-control" name="sex" id="sex" value="{{ $lguLnfpForm5->sex }}">
                                             <!-- <option selected>Select</option> -->
-                                            <option {{ old('sex', $lguLnfpForm5->sex) == '' ? 'selected' : '' }}></option>
+                                            <option {{ old('sex', $lguLnfpForm5->sex) == '' ? 'selected' : '' }}>Select</option>
                                             <option value="Male" {{ old('sex', $lguLnfpForm5->sex) == 'Male' ? 'selected' : '' }}>Male</option>
                                             <option value="Female" {{ old('sex', $lguLnfpForm5->sex) == 'Female' ? 'selected' : '' }}>Female</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label for="dateDesig">Date of Designation: </label>
+                                        <label for="dateDesig">Date of Designation:<span style="color:red">*</span> </label>
                                         <input class="form-control" type="date" name="dateDesig" id="dateDesig" value="{{ $lguLnfpForm5->dateDesignation }}">
                                     </div>
                                     <div class="form-group col-md-12">
@@ -227,7 +227,7 @@
                                     <div class="col-1" name="ratingSelect">
                                         <select id="loadProvince1" class="form-control" name="ratingA">
                                             <!-- <option>Select</option> -->
-                                            <option {{ old('ratingA', $lguLnfpForm5->ratingA) == '' ? 'selected' : '' }}></option>
+                                            <option {{ old('ratingA', $lguLnfpForm5->ratingA) == '' ? 'selected' : '' }}>Select</option>
                                             <option value="1" {{ old('ratingA', $lguLnfpForm5->ratingA) == 1 ? 'selected' : '' }}>1</option>
                                             <option value="2" {{ old('ratingA', $lguLnfpForm5->ratingA) == 2 ? 'selected' : '' }}>2</option>
                                             <option value="3" {{ old('ratingA', $lguLnfpForm5->ratingA) == 3 ? 'selected' : '' }}>3</option>
@@ -283,7 +283,7 @@
                                     <div class="col-1" name="ratingSelect">
                                         <select id="loadProvince1" class="form-control" name="ratingB">
                                             <!-- <option>Select</option> -->
-                                            <option {{ old('ratingB', $lguLnfpForm5->ratingB) == '' ? 'selected' : '' }}></option>
+                                            <option {{ old('ratingB', $lguLnfpForm5->ratingB) == '' ? 'selected' : '' }}>Select</option>
                                             <option value="1" {{ old('ratingB', $lguLnfpForm5->ratingB) == 1 ? 'selected' : '' }}>1</option>
                                             <option value="2" {{ old('ratingB', $lguLnfpForm5->ratingB) == 2 ? 'selected' : '' }}>2</option>
                                             <option value="3" {{ old('ratingB', $lguLnfpForm5->ratingB) == 3 ? 'selected' : '' }}>3</option>
@@ -337,7 +337,7 @@
                                     <div class="col-1" name="ratingSelect">
                                         <select id="loadProvince1" class="form-control" name="ratingBB">
                                             <!-- <option>Select</option> -->
-                                            <option {{ old('ratingBB', $lguLnfpForm5->ratingBB) == '' ? 'selected' : '' }}></option>
+                                            <option {{ old('ratingBB', $lguLnfpForm5->ratingBB) == '' ? 'selected' : '' }}>Select</option>
                                             <option value="1" {{ old('ratingBB', $lguLnfpForm5->ratingBB) == 1 ? 'selected' : '' }}>1</option>
                                             <option value="2" {{ old('ratingBB', $lguLnfpForm5->ratingBB) == 2 ? 'selected' : '' }}>2</option>
                                             <option value="3" {{ old('ratingBB', $lguLnfpForm5->ratingBB) == 3 ? 'selected' : '' }}>3</option>
@@ -393,7 +393,7 @@
                                     <div class="col-1" name="ratingSelect">
                                         <select id="loadProvince1" class="form-control" name="ratingC">
                                             <!-- <option>Select</option> -->
-                                            <option {{ old('ratingC', $lguLnfpForm5->ratingC) == '' ? 'selected' : '' }}></option>
+                                            <option {{ old('ratingC', $lguLnfpForm5->ratingC) == '' ? 'selected' : '' }}>Select</option>
                                             <option value="1" {{ old('ratingC', $lguLnfpForm5->ratingC) == 1 ? 'selected' : '' }}>1</option>
                                             <option value="2" {{ old('ratingC', $lguLnfpForm5->ratingC) == 2 ? 'selected' : '' }}>2</option>
                                             <option value="3" {{ old('ratingC', $lguLnfpForm5->ratingC) == 3 ? 'selected' : '' }}>3</option>
@@ -449,7 +449,7 @@
                                     <div class="col-1" name="ratingSelect">
                                         <select id="loadProvince1" class="form-control" name="ratingD">
                                             <!-- <option>Select</option> -->
-                                            <option {{ old('ratingD', $lguLnfpForm5->ratingD) == '' ? 'selected' : '' }}></option>
+                                            <option {{ old('ratingD', $lguLnfpForm5->ratingD) == '' ? 'selected' : '' }}>Select</option>
                                             <option value="1" {{ old('ratingD', $lguLnfpForm5->ratingD) == 1 ? 'selected' : '' }}>1</option>
                                             <option value="2" {{ old('ratingD', $lguLnfpForm5->ratingD) == 2 ? 'selected' : '' }}>2</option>
                                             <option value="3" {{ old('ratingD', $lguLnfpForm5->ratingD) == 3 ? 'selected' : '' }}>3</option>
@@ -505,7 +505,7 @@
                                     <div class="col-1" name="ratingSelect">
                                         <select id="loadProvince1" class="form-control" name="ratingE">
                                             <!-- <option>Select</option> -->
-                                            <option {{ old('ratingE', $lguLnfpForm5->ratingE) == '' ? 'selected' : '' }}></option>
+                                            <option {{ old('ratingE', $lguLnfpForm5->ratingE) == '' ? 'selected' : '' }}>Select</option>
                                             <option value="1" {{ old('ratingE', $lguLnfpForm5->ratingE) == 1 ? 'selected' : '' }}>1</option>
                                             <option value="2" {{ old('ratingE', $lguLnfpForm5->ratingE) == 2 ? 'selected' : '' }}>2</option>
                                             <option value="3" {{ old('ratingE', $lguLnfpForm5->ratingE) == 3 ? 'selected' : '' }}>3</option>
@@ -561,7 +561,7 @@
                                     <div class="col-1" name="ratingSelect">
                                         <select id="loadProvince1" class="form-control" name="ratingF">
                                             <!-- <option>Select</option> -->
-                                            <option {{ old('ratingF', $lguLnfpForm5->ratingF) == '' ? 'selected' : '' }}></option>
+                                            <option {{ old('ratingF', $lguLnfpForm5->ratingF) == '' ? 'selected' : '' }}>Select</option>
                                             <option value="1" {{ old('ratingF', $lguLnfpForm5->ratingF) == 1 ? 'selected' : '' }}>1</option>
                                             <option value="2" {{ old('ratingF', $lguLnfpForm5->ratingF) == 2 ? 'selected' : '' }}>2</option>
                                             <option value="3" {{ old('ratingF', $lguLnfpForm5->ratingF) == 3 ? 'selected' : '' }}>3</option>
@@ -617,7 +617,7 @@
                                     <div class="col-1" name="ratingSelect">
                                         <select id="loadProvince1" class="form-control" name="ratingG">
                                             <!-- <option>Select</option> -->
-                                            <option {{ old('ratingG', $lguLnfpForm5->ratingG) == '' ? 'selected' : '' }}></option>
+                                            <option {{ old('ratingG', $lguLnfpForm5->ratingG) == '' ? 'selected' : '' }}>Select</option>
                                             <option value="1" {{ old('ratingG', $lguLnfpForm5->ratingG) == 1 ? 'selected' : '' }}>1</option>
                                             <option value="2" {{ old('ratingG', $lguLnfpForm5->ratingG) == 2 ? 'selected' : '' }}>2</option>
                                             <option value="3" {{ old('ratingG', $lguLnfpForm5->ratingG) == 3 ? 'selected' : '' }}>3</option>
@@ -672,7 +672,7 @@
                                     <div class="col-1" name="ratingSelect">
                                         <select id="loadProvince1" class="form-control" name="ratingGG">
                                             <!-- <option>Select</option> -->
-                                            <option {{ old('ratingGG', $lguLnfpForm5->ratingGG) == '' ? 'selected' : '' }}></option>
+                                            <option {{ old('ratingGG', $lguLnfpForm5->ratingGG) == '' ? 'selected' : '' }}>Select</option>
                                             <option value="1" {{ old('ratingGG', $lguLnfpForm5->ratingGG) == 1 ? 'selected' : '' }}>1</option>
                                             <option value="2" {{ old('ratingGG', $lguLnfpForm5->ratingGG) == 2 ? 'selected' : '' }}>2</option>
                                             <option value="3" {{ old('ratingGG', $lguLnfpForm5->ratingGG) == 3 ? 'selected' : '' }}>3</option>
@@ -728,7 +728,7 @@
                                     <div class="col-1" name="ratingSelect">
                                         <select id="loadProvince1" class="form-control" name="ratingH">
                                             <!-- <option>Select</option> -->
-                                            <option {{ old('ratingH', $lguLnfpForm5->ratingH) == '' ? 'selected' : '' }}></option>
+                                            <option {{ old('ratingH', $lguLnfpForm5->ratingH) == '' ? 'selected' : '' }}>Select</option>
                                             <option value="1" {{ old('ratingH', $lguLnfpForm5->ratingH) == 1 ? 'selected' : '' }}>1</option>
                                             <option value="2" {{ old('ratingH', $lguLnfpForm5->ratingH) == 2 ? 'selected' : '' }}>2</option>
                                             <option value="3" {{ old('ratingH', $lguLnfpForm5->ratingH) == 3 ? 'selected' : '' }}>3</option>

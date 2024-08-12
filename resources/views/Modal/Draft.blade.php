@@ -21,7 +21,7 @@
                     Save as draft?
                 </div>
                 <div style="padding-top: 10px;padding-bottom: 20px; font-size:15px" >
-                    Are you sure you want to save this as a draft? This process cannot be undone.
+                    Are you sure you want to save this as a draft?
                 </div>
                 <div>
                     <button type="button" style="margin-right:5px" class="bold btn btn-secondary" data-dismiss="modal">CANCEL</button>

@@ -33,12 +33,19 @@ class MellpiProForLNFP_OverallScoreController extends Controller
     {
         $overallScore = DB::table('lnfp_overall_score_form')
         ->join('lnfp_form5a_rr', 'lnfp_overall_score_form.form5_id', '=', 'lnfp_form5a_rr.id')
+        ->join('lnfp_interview_form', 'lnfp_overall_score_form.formInterview_id', '=', 'lnfp_interview_form.id')
+        ->join('lnfp_form8', 'lnfp_overall_score_form.form8_id', '=', 'lnfp_form8.id')
         ->select(
+            'lnfp_overall_score_form.id as overallId',
             'lnfp_form5a_rr.nameofPnao as pnaoName',
-            'lnfp_form5a_rr.address as pnaoAddress'
+            'lnfp_form5a_rr.address as pnaoAddress',
+            'lnfp_form5a_rr.*',
+            'lnfp_interview_form.subtotalAScore as intSubtotal',
+            'lnfp_form8.*'
         )
         ->where('lnfp_overall_score_form.id', $request->id)
         ->first();
+        // dd($overallScore);
 
         return view('BarangayScholar/MellpiProForLNFP/MellpiProOverallScore/OverallScoreFormPNAOEdit', ['overallScore' => $overallScore]);
     }

@@ -41,6 +41,7 @@ use App\Http\Controllers\ProvincialStaff\PSDashboardController;
 
 
 // City-Municipal Staff
+use App\Http\Controllers\CityMunicipalStaff\MellpiLGUProfileBarangayVisionMissionController;
 use App\Http\Controllers\CityMunicipalStaff\MellpiLGUProfileBarangayController;
 use App\Http\Controllers\CityMunicipalStaff\DashboardController;
  
@@ -345,20 +346,20 @@ Route::group(['middleware' => 'auth'], function () {
         Route::POST('/lguProfile/declined', [MellpiLGUProfileBarangayController::class, 'Declined'])->name('CMSLGUprofile.declined');
 
         //VisionMissionController
-        Route::get('/visionmission/fetchreport', [VisionMissionController::class, 'fetchReport'])->name('visionmission.fetch');
-        Route::get('/visionmission/report', [VisionMissionController::class, 'report'])->name('visionmission.report');
-        
-        Route::get('/visionmission', [VisionMissionController::class, 'index'])->name('visionmission.index');
-        Route::POST('/visionmission', [VisionMissionController::class, 'store'])->name('visionmission.store');
-        Route::get('/visionmission/create', [VisionMissionController::class, 'create'])->name('visionmission.create');  
-        Route::get('/visionmission/{id}/show', [VisionMissionController::class, 'show'])->name('visionmission.show'); 
-        Route::POST('/visionmission/approved', [VisionMissionController::class, 'approvedReport'])->name('visionmission.approved');
-        Route::POST('/visionmission/declined', [VisionMissionController::class, 'Declined'])->name('visionmission.declined');
+        Route::get('/visionmission/fetchreport', [MellpiLGUProfileBarangayVisionMissionController::class, 'fetchReport'])->name('CMSvisionmission.fetch');
+        Route::get('/visionmission/report', [MellpiLGUProfileBarangayVisionMissionController::class, 'report'])->name('CMSvisionmission.report');
+        Route::get('/visionmission', [MellpiLGUProfileBarangayVisionMissionController::class, 'index'])->name('CMSvisionmission.index');
+        Route::POST('/visionmission', [MellpiLGUProfileBarangayVisionMissionController::class, 'store'])->name('CMSvisionmission.store');
+        Route::get('/visionmission/create', [MellpiLGUProfileBarangayVisionMissionController::class, 'create'])->name('CMSvisionmission.create');  
+        Route::get('/visionmission/{id}/show', [MellpiLGUProfileBarangayVisionMissionController::class, 'show'])->name('CMSvisionmission.show'); 
+        Route::POST('/visionmission/approved', [MellpiLGUProfileBarangayVisionMissionController::class, 'approvedReport'])->name('CMSvisionmission.approved');
+        Route::POST('/visionmission/declined', [MellpiLGUProfileBarangayVisionMissionController::class, 'Declined'])->name('CMSvisionmission.declined');
          
 
     });
 
     Route::prefix('BarangayScholar')->middleware(['auth', 'BarangayScholar'])->group(function () {
+        
           //DashboardController
           Route::get('/dashboard', [BSDashboardController::class, 'index'])->name('BSdashboard.index');
           Route::POST('/dashboard', [BSDashboardController::class, 'store'])->name('BSdashboard.store');

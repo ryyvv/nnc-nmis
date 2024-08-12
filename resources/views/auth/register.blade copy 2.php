@@ -1,4 +1,4 @@
-    <head>
+<head>
         <!-- Other head content -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
@@ -19,22 +19,18 @@
             <div class="col-md-12 d-flex" style="padding-left:0px">
                 <div class="card card-signup text-center">
 
-                    <div class="card-body d-flex" style="align-items:center;justify-content:center!important">
-                        <!-- left -->
-                        <div class="col-5" >
-                            <div class="row" style="justify-content:center!important">
-                                <img src="/assets/img/logo.png" alt="NNC logo" height="300px" width="300px">
+                    <div class="card-body d-flex ">
+                        <div class="col-5">
+                            <div class="row">
+                                <img src="/assets/img/logo.png" alt="NNC logo" height="250px" width="250px">
                             </div>
-                            <div class="row" style="justify-content:center!important; margin-top:20px">
-                                <label style="font-size: 40px;color:#59987e" for="">Nutrition Management Nutrition System</label>
+                            <div class="row">
+                                <label for="">National Nutrition Council 1</label>
                             </div>
                         </div>
-
-                        <!-- right -->
-                        <!-- style="padding-left:20px;border-left: 2px solid gray" -->
-                        <div class="col-7" >
+                        <div class="col-7">
                             <div class="card-header">
-                                <h4 class="bold card-title" style="color:#59987e">{{ __('Register') }}</h4>
+                                <h4 class="card-title">{{ __('Register') }}</h4>
                             </div>
                             <form method="POST" action="{{ route('register') }}">
                                 @csrf
@@ -276,7 +272,249 @@
                 </div>
             </div>
 
+
+            <!-- <div class="col-md-5" style="padding-right:0px;" >
+                    <div class="card card-signup text-center">
+                        <img src="/assets/img/logo.png" alt="NNC logo" height="250px" width="250px">
+                    </div>
+                </div> -->
+            <!-- <div class="col-md-7 " style="padding-left:0px" >
+                    <div class="card card-signup text-center">
+                        <div class="card-header">
+                            <h4 class="card-title">{{ __('Register') }}</h4>
+                        </div>
+                        <div class="card-body">
+                            <form method="POST" action="{{ route('register') }}">
+                                @csrf
+                       
+                                <div>
+                                    <div class="input-group  form-control-lg {{ $errors->has('email') ? ' has-danger' : '' }}" style="border-radius:40px;  ">
+                                        <span class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="now-ui-icons users_circle-08 text-dark"></i>
+                                            </div>
+                                        </span>
+                                        <input class="form-control text-dark {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Firstname') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;" type="email" name="email" required autofocus>
+                                    </div>
+                                    @if ($errors->has('email'))
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                    @endif
+                                    <div class="input-group  form-control-lg {{ $errors->has('email') ? ' has-danger' : '' }}" style="border-radius:40px;  ">
+                                        <span class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="now-ui-icons users_circle-08 text-dark"></i>
+                                            </div>
+                                        </span>
+                                        <input class="form-control text-dark {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Middlename') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;" type="email" name="email" required autofocus>
+                                    </div>
+                                    @if ($errors->has('email'))
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                    @endif
+                                    <div class="input-group  form-control-lg {{ $errors->has('email') ? ' has-danger' : '' }}" style="border-radius:40px;  ">
+                                        <span class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="now-ui-icons users_circle-08 text-dark"></i>
+                                            </div>
+                                        </span>
+                                        <input class="form-control text-dark {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Lastname') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;" type="email" name="email" required autofocus>
+                                    </div>
+                                    @if ($errors->has('email'))
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
  
+                                <div>
+                                    <div class="d-flex">
+                                       
+                                        <div class="input-group form-control-lg {{ $errors->has('dropdown') ? 'has-danger' : '' }}" style="border-radius: 40px; margin-right:15px  ">
+                                            <span class="input-group-prepend">
+                                                <div class="input-group-text" style="border-top-left-radius: 40px; border-bottom-left-radius: 40px;">
+                                                    <i class="now-ui-icons location_pin text-dark"></i>
+                                                </div>
+                                            </span>
+                                            <select class="form-control text-dark {{ $errors->has('dropdown') ? 'is-invalid' : '' }}" style="border-top-right-radius: 40px; border-bottom-right-radius: 40px;" name="Region" required>
+                                                <option value="">Select your Region</option>
+                                                <option value="option1">Option 1</option>
+                                                <option value="option2">Option 2</option>
+                                                <option value="option3">Option 3</option>
+                                            </select>
+                                        </div>
+                                        @if ($errors->has('dropdown'))
+                                        <span class="invalid-feedback" style="display: block;" role="alert">
+                                            <strong>{{ $errors->first('dropdown') }}</strong>
+                                        </span>
+                                        @endif
+
+              
+                                        <div class="input-group form-control-lg {{ $errors->has('dropdown') ? 'has-danger' : '' }}" style="border-radius: 40px;">
+                                            <span class="input-group-prepend">
+                                                <div class="input-group-text" style="border-top-left-radius: 40px; border-bottom-left-radius: 40px;">
+                                                    <i class="now-ui-icons location_pin text-dark"></i>
+                                                </div>
+                                            </span>
+                                            <select class="form-control text-dark {{ $errors->has('dropdown') ? 'is-invalid' : '' }}" style="border-top-right-radius: 40px; border-bottom-right-radius: 40px;" name="Province" required>
+                                                <option value="">Select your Province</option>
+                                    
+                                                <option value="option1">Option 1</option>
+                                                <option value="option2">Option 2</option>
+                                                <option value="option3">Option 3</option>
+                                            </select>
+                                        </div>
+                                        @if ($errors->has('dropdown'))
+                                        <span class="invalid-feedback" style="display: block;" role="alert">
+                                            <strong>{{ $errors->first('dropdown') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+
+                                    <div class="d-flex"> 
+                                  
+                                        <div class="input-group form-control-lg {{ $errors->has('dropdown') ? 'has-danger' : '' }}" style="border-radius: 40px;margin-right:15px  ">
+                                            <span class="input-group-prepend">
+                                                <div class="input-group-text" style="border-top-left-radius: 40px; border-bottom-left-radius: 40px;">
+                                                    <i class="now-ui-icons location_pin text-dark"></i>
+                                                </div>
+                                            </span>
+                                            <select class="form-control text-dark {{ $errors->has('dropdown') ? 'is-invalid' : '' }}" style="border-top-right-radius: 40px; border-bottom-right-radius: 40px;" name="city_municipal" required>
+                                                <option value="">Select your City/Municipal</option>
+                           
+                                                <option value="option1">Option 1</option>
+                                                <option value="option2">Option 2</option>
+                                                <option value="option3">Option 3</option>
+                                            </select>
+                                        </div>
+                                        @if ($errors->has('dropdown'))
+                                        <span class="invalid-feedback" style="display: block;" role="alert">
+                                            <strong>{{ $errors->first('dropdown') }}</strong>
+                                        </span>
+                                        @endif
+ 
+                                        <div class="input-group form-control-lg {{ $errors->has('dropdown') ? 'has-danger' : '' }}" style="border-radius: 40px; ">
+                                            <span class="input-group-prepend">
+                                                <div class="input-group-text" style="border-top-left-radius: 40px; border-bottom-left-radius: 40px;">
+                                                    <i class="now-ui-icons location_pin text-dark"></i>
+                                                </div>
+                                            </span>
+                                            <select class="form-control text-dark {{ $errors->has('dropdown') ? 'is-invalid' : '' }}" style="border-top-right-radius: 40px; border-bottom-right-radius: 40px;" name="city_municipal" required>
+                                                <option value="">Select your Barangay</option>
+                                            
+                                                <option value="option1">Option 1</option>
+                                                <option value="option2">Option 2</option>
+                                                <option value="option3">Option 3</option>
+                                            </select>
+                                        </div>
+                                        @if ($errors->has('dropdown'))
+                                        <span class="invalid-feedback" style="display: block;" role="alert">
+                                            <strong>{{ $errors->first('dropdown') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+ 
+                                <div>
+                                    <div class="input-group  form-control-lg {{ $errors->has('email') ? ' has-danger' : '' }}" style="border-radius:40px;  ">
+                                        <span class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="now-ui-icons business_badge text-dark"></i>
+                                            </div>
+                                        </span>
+                                        <input class="form-control text-dark {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Agency/Office/Unit') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;" type="email" name="email" required autofocus>
+                                    </div>
+                                    @if ($errors->has('email'))
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                    @endif
+
+                                    <div class="input-group  form-control-lg {{ $errors->has('email') ? ' has-danger' : '' }}" style="border-radius:40px;  ">
+                                        <span class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="now-ui-icons business_badge text-dark"></i>
+                                            </div>
+                                        </span>
+                                        <input class="form-control text-dark {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Division Unit ') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;" type="email" name="email" required autofocus>
+                                    </div>
+                                    @if ($errors->has('email'))
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                    @endif
+
+                                    <div class="input-group  form-control-lg {{ $errors->has('email') ? ' has-danger' : '' }}" style="border-radius:40px; ">
+                                        <span class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="now-ui-icons business_badge text-dark"></i>
+                                            </div>
+                                        </span>
+                                        <input class="form-control text-dark {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Designation') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;" type="email" name="email" required autofocus>
+                                    </div>
+                                    @if ($errors->has('email'))
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+                               
+                                <div>
+                                    <div class="input-group  form-control-lg {{ $errors->has('email') ? ' has-danger' : '' }}" style="border-radius:40px;  ">
+                                        <span class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="now-ui-icons ui-1_email-85"></i>
+                                            </div>
+                                        </span>
+                                        <input class="form-control text-dark {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;" type="email" name="email" required autofocus>
+                                    </div>
+                                    @if ($errors->has('email'))
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                    @endif
+
+
+                               
+                                    <div class="input-group  form-control-lg {{ $errors->has('password') ? ' has-danger' : '' }}" style="border-radius:40px; margin-right:15px">
+                                        <span class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="now-ui-icons objects_key-25"></i>
+                                            </div>
+                                        </span>
+                                        <input class="form-control text-dark {{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="{{ __('Password') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;" type="password" name="password" required autofocus>
+                                    </div>
+                                    @if ($errors->has('password'))
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                    @endif
+
+                            
+                                    <div class="input-group  form-control-lg {{ $errors->has('password') ? ' has-danger' : '' }}" style="border-radius:40px;  ">
+                                        <span class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="now-ui-icons objects_key-25"></i>
+                                            </div>
+                                        </span>
+                                        <input class="form-control" placeholder="{{ __('Confirm Password') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;" type="password"
+                                            name="password_confirmation" required>
+                                    </div>
+                    
+
+                                </div>
+
+                                <div class="card-footer">
+                                    <button type="submit" class="bold btn btn-primary btn-round btn-lg">Submit</button>
+                                </div>
+                            </form>
+                        </div>  
+                    </div>
+                </div>   -->
+            <!-- </div>  -->
             @include('layouts.footer')
             @endsection
 

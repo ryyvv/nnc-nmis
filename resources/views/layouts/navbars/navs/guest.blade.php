@@ -26,11 +26,11 @@
             <i  class="now-ui-icons design_app  bold-icon"></i> {{ __("Dashboards") }}
           </a> 
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a href="{{ route('register') }}"  style="color:white!important" class="nav-link">
             <i class="now-ui-icons tech_mobile bold-icon"></i> {{ __("Register") }}
           </a>
-        </li>
+        </li> -->
         <li class="nav-item">
           <a href="{{ route('login') }}" style="color:white!important" class="nav-link">
             <i class="now-ui-icons users_circle-08 bold-icon"></i> {{ __("Login") }}
