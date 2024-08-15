@@ -69,6 +69,6 @@ class MellpiProForLNFP_form6Controller extends Controller
             'actionsI' => $request->input('ActionsI'),
         ]);
 
-        return redirect()->back()->with('alert', 'Updated successfully!');
+        return redirect()->back()->with('success', 'Data Added Successfully!');
     }
 }

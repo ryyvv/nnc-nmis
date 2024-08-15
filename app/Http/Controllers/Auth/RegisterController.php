@@ -75,7 +75,11 @@ class RegisterController extends Controller
      * @var string
      */
     // edit route 
-    protected $redirectTo = '/home';
+    protected function redirectTo()
+    {   
+        // after reg. session submitted
+        return route('UURdashboard.index');
+    }
 
     /**
      * Create a new controller instance.
@@ -102,7 +106,8 @@ class RegisterController extends Controller
             'Region' => 'required|string|max:255',
             'Province' => 'required|string|max:255',
             'city_municipal' => 'required|string|max:255',
-            'barangay' => 'required|string|max:255',
+            'barangay' => 'string|max:255',
+            // 'barangay' => 'required|string|max:255',
             'agency_office_lgu' => 'required|string|max:255',
             'Division_unit' => 'required|string|max:255',
             'role' => 'required|string|max:255',
@@ -120,7 +125,7 @@ class RegisterController extends Controller
      * @return \App\Models\User
      */
     protected function create(array $data)
-    {
+    {   
         return User::create([ 
             'Firstname' => $data['Firstname'],
             'Middlename' => $data['Middlename'],
@@ -133,7 +138,7 @@ class RegisterController extends Controller
             'Division_unit' => $data['Division_unit'],
             'role' => $data['role'],
             'email' => $data['email'], 
-            'status' =>'approved', $data['status'],
+            'status' =>$data['status'],
             'password' => Hash::make($data['password']),
         ]);
     }

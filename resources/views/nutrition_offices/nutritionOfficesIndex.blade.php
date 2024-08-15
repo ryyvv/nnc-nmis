@@ -1,17 +1,20 @@
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/joboy.css') }}">
-<script src="{{ asset('assets/js/joboy.js') }}"></script>
+<script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.8/datatables.min.js"></script>
+<script src="{{ asset('js/diether.js') }}"></script>
 
 <style>
     table {
         width: 100%;
-        table-layout: auto; /* Adjusts column width based on content */
+        table-layout: auto;
+        /* Adjusts column width based on content */
         border-collapse: collapse;
     }
+
     tr>td {
         border: 1px solid black;
         padding: 8px;
         text-align: left;
-        white-space: nowrap; /* Prevents text from wrapping to a new line */
+        white-space: nowrap;
+        /* Prevents text from wrapping to a new line */
     }
 </style>
 
@@ -23,9 +26,7 @@
 ])
 
 @section('content')
-<div class="panel-header panel-header-sm">
-</div>
-<div class="content">
+<div class="content" style="margin-top:50px;padding:2%">
     <div class="card">
         <div class="row row-12" style="display:inline-block">
             <div class="card-header">

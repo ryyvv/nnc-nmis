@@ -1,6 +1,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/form5a.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/common.css') }}">
+<script src="https://cdn.lordicon.com/lordicon.js"></script>
 
 @extends('layouts.app', [
 'class' => 'sidebar-mini ',
@@ -21,98 +22,113 @@
                         <!-- <h4>MELLPI PRO FOR LNFP FORM 5a:</h4> -->
                     </div>
 
-                    @if(session('alert'))
+                    <!-- @if(session('alert'))
                     <div class="alert alert-success" id="alert-message">
                         {{ session('alert') }}
                     </div>
-                    @endif
+                    @endif -->
+                    <!-- alert -->
+                    @include('layouts.page_template.crud_alert_message')
 
                     <div>
-                        <form action="{{ route('lguLnfpUpdate', $lguLnfpForm5->id) }}" method="POST">
+                        <form action="{{ route('lguLnfpUpdate', $row->id) }}" method="POST">
                             @csrf
-                           
 
-                            @if($lguLnfpForm5)
-                            <input type="hidden" name="lgu_id" value="{{$lguLnfpForm5->lnfp_lgu_id}}">
-                            <input type="hidden" name="dateMoni" value="{{$lguLnfpForm5->dateMonitoring}}">
-                            <input type="hidden" value="{{ $lguLnfpForm5->status }}" name="statForm">
+
+                            @if($row)
+                            <input type="hidden" name="lgu_id" value="{{$row->lnfp_lgu_id}}">
+                            <input type="hidden" name="dateMoni" value="{{$row->dateMonitoring}}">
+                            <input type="hidden" value="{{ $row->status }}" name="statForm">
 
                             @foreach ($form5a as $form5a)
                             <center><img src="https://nnc-nmis.moodlearners.com/assets/img/logo.png" alt="" class="imgLogo"></center><br>
                             <center>
                                 <h5 class="title">{{__("Mellpi Pro Form 5a: Provincial Nutrition Action Officer Monitoring")}}</h5>
-                                <label for="period">For the period: </label>
-                                <select name="forTheperiod" id="forTheperiod" class="inputHeaderPeriod">
-                                    <!-- <option selected>Select</option> -->
-                                    <option selected>{{ $lguLnfpForm5->forThePeriod }}</option>
-                                    <?php
-                                    $currentYear = date('Y');
-                                    $startYear = 1900;
-                                    $endYear = $currentYear;
-                                    for ($year = $startYear; $year <= $endYear; $year++) {
-                                        echo "<option value=\"$year\">$year</option>";
-                                    }
-                                    ?>
-                                </select>
+                                
                             </center><br>
+                            @include('layouts.page_template.location_header')
                             <div class="formHeader">
                                 <div class="form-group col-md-6">
                                     <div class="form-group col-md-12">
                                         <label for="nameOf">Name of PNAO:<span style="color:red">*</span> </label>
-                                        <input class="inputHeader" type="text" name="nameOf" id="nameOf" value="{{ $lguLnfpForm5->nameofPnao }}">
+                                        <input class="inputHeader" type="text" name="nameOf" id="nameOf" value="{{ $row->nameofPnao }}">
+                                        @error('numOf')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label for="address">Address:<span style="color:red">*</span> </label>
-                                        <input class="inputHeader" type="text" name="address" id="address" value="{{ $lguLnfpForm5->address }}">
+                                        <input class="inputHeader" type="text" name="address" id="address" value="{{ $row->address }}">
+                                        @error('address')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <!-- <div class="form-group col-md-12">
                                         <label for="provDep">Province of Deployment: </label>
-                                        <input class="inputHeader" type="text" name="provDev" id="provDev" value="{{ $lguLnfpForm5->provDeploy }}">
+                                        <input class="inputHeader" type="text" name="provDev" id="provDev" value="{{ $row->provDeploy }}">
                                     </div> -->
                                     <div class="form-group col-md-12">
                                         <label for="numYr">Number of Years PNAO:<span style="color:red">*</span> </label>
-                                        <input class="inputHeader" type="number" name="numYr" id="numYr" placeholder="0" value="{{ $lguLnfpForm5->numYearPnao }}">
+                                        <input class="inputHeader" type="number" name="numYr" id="numYr" placeholder="0" value="{{ $row->numYearPnao }}">
+                                        @error('numYr')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label for="fulltime">Full time:<span style="color:red">*</span> </label>
-                                        <select class="form-control" name="fulltime" id="fulltime" value="{{ $lguLnfpForm5->fulltime }}">
-                                            <!-- <option value="">{{ $lguLnfpForm5->fulltime }}</option> -->
-                                            <option {{ old('fulltime', $lguLnfpForm5->fulltime) == '' ? 'selected' : '' }}>Select</option>
-                                            <option value="Yes" {{ old('fulltime', $lguLnfpForm5->fulltime) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                            <option value="No" {{ old('fulltime', $lguLnfpForm5->fulltime) == 'No' ? 'selected' : '' }}>No</option>
+                                        <select class="form-control" name="fulltime" id="fulltime" value="{{ $row->fulltime }}">
+                                            <!-- <option value="">{{ $row->fulltime }}</option> -->
+                                            <option {{ old('fulltime', $row->fulltime) == '' ? 'selected' : '' }}>Select</option>
+                                            <option value="Yes" {{ old('fulltime', $row->fulltime) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                            <option value="No" {{ old('fulltime', $row->fulltime) == 'No' ? 'selected' : '' }}>No</option>
                                         </select>
+                                        @error('fulltime')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label for="profAct">With continuing professional Activities?:<span style="color:red">*</span> </label>
-                                        <select class="form-control" name="profAct" id="profAct" value="{{ $lguLnfpForm5->profAct }}">
+                                        <select class="form-control" name="profAct" id="profAct" value="{{ $row->profAct }}">
                                             <!-- <option Selected>Select</option> -->
-                                            <option {{ old('profAct', $lguLnfpForm5->profAct) == '' ? 'selected' : '' }}>Select</option>
-                                            <option value="Yes" {{ old('profAct', $lguLnfpForm5->profAct) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                            <option value="No" {{ old('profAct', $lguLnfpForm5->profAct) == 'No' ? 'selected' : '' }}>No</option>
+                                            <option {{ old('profAct', $row->profAct) == '' ? 'selected' : '' }}>Select</option>
+                                            <option value="Yes" {{ old('profAct', $row->profAct) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                            <option value="No" {{ old('profAct', $row->profAct) == 'No' ? 'selected' : '' }}>No</option>
                                         </select>
+                                        @error('profAct')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <div class="form-group col-md-12">
                                         <label for="bday">Birthday:<span style="color:red">*</span> </label>
-                                        <input class="form-control" type="date" name="bday" id="bday" value="{{ $lguLnfpForm5->bdate }}">
+                                        <input class="form-control" type="date" name="bday" id="bday" value="{{ $row->bdate }}">
+                                        @error('bday')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label for="sex">Sex:<span style="color:red">*</span> </label>
-                                        <select class="form-control" name="sex" id="sex" value="{{ $lguLnfpForm5->sex }}">
+                                        <select class="form-control" name="sex" id="sex" value="{{ $row->sex }}">
                                             <!-- <option selected>Select</option> -->
-                                            <option {{ old('sex', $lguLnfpForm5->sex) == '' ? 'selected' : '' }}>Select</option>
-                                            <option value="Male" {{ old('sex', $lguLnfpForm5->sex) == 'Male' ? 'selected' : '' }}>Male</option>
-                                            <option value="Female" {{ old('sex', $lguLnfpForm5->sex) == 'Female' ? 'selected' : '' }}>Female</option>
+                                            <option {{ old('sex', $row->sex) == '' ? 'selected' : '' }}>Select</option>
+                                            <option value="Male" {{ old('sex', $row->sex) == 'Male' ? 'selected' : '' }}>Male</option>
+                                            <option value="Female" {{ old('sex', $row->sex) == 'Female' ? 'selected' : '' }}>Female</option>
                                         </select>
+                                        @error('sex')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label for="dateDesig">Date of Designation:<span style="color:red">*</span> </label>
-                                        <input class="form-control" type="date" name="dateDesig" id="dateDesig" value="{{ $lguLnfpForm5->dateDesignation }}">
+                                        <input class="form-control" type="date" name="dateDesig" id="dateDesig" value="{{ $row->dateDesignation }}">
+                                        @error('dateDesig')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label for="seconded">Seconded from the Office of: </label>
-                                        <input class="inputHeader" type="text" name="seconded" id="seconded" value="{{ $lguLnfpForm5->secondedOffice }}">
+                                        <input class="inputHeader" type="text" name="seconded" id="seconded" value="{{ $row->secondedOffice }}">
                                     </div>
                                 </div>
                             </div>
@@ -121,15 +137,15 @@
                                 <label>Capacity development activities attended in the previous year: </label>
                                 <div class="form-group col-md-12">
                                     <label for="devAct">1</label>
-                                    <input class="inputHeader" type="text" id="devAct" name="num1" value="{{ $lguLnfpForm5->devActnum1 }}">
+                                    <input class="inputHeader" type="text" id="devAct" name="num1" value="{{ $row->devActnum1 }}">
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label for="devAct">2</label>
-                                    <input class="inputHeader" type="text" id="devAct" name="num2" value="{{ $lguLnfpForm5->devActnum2 }}">
+                                    <input class="inputHeader" type="text" id="devAct" name="num2" value="{{ $row->devActnum2 }}">
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label for="devAct">3</label>
-                                    <input class="inputHeader" type="text" id="devAct" name="num3" value="{{ $lguLnfpForm5->devActnum3 }}">
+                                    <input class="inputHeader" type="text" id="devAct" name="num3" value="{{ $row->devActnum3 }}">
                                 </div>
                             </div>
                             <div>
@@ -227,16 +243,19 @@
                                     <div class="col-1" name="ratingSelect">
                                         <select id="loadProvince1" class="form-control" name="ratingA">
                                             <!-- <option>Select</option> -->
-                                            <option {{ old('ratingA', $lguLnfpForm5->ratingA) == '' ? 'selected' : '' }}>Select</option>
-                                            <option value="1" {{ old('ratingA', $lguLnfpForm5->ratingA) == 1 ? 'selected' : '' }}>1</option>
-                                            <option value="2" {{ old('ratingA', $lguLnfpForm5->ratingA) == 2 ? 'selected' : '' }}>2</option>
-                                            <option value="3" {{ old('ratingA', $lguLnfpForm5->ratingA) == 3 ? 'selected' : '' }}>3</option>
-                                            <option value="4" {{ old('ratingA', $lguLnfpForm5->ratingA) == 4 ? 'selected' : '' }}>4</option>
-                                            <option value="5" {{ old('ratingA', $lguLnfpForm5->ratingA) == 5 ? 'selected' : '' }}>5</option>
+                                            <option {{ old('ratingA', $row->ratingA) == '' ? 'selected' : '' }}>Select</option>
+                                            <option value="1" {{ old('ratingA', $row->ratingA) == 1 ? 'selected' : '' }}>1</option>
+                                            <option value="2" {{ old('ratingA', $row->ratingA) == 2 ? 'selected' : '' }}>2</option>
+                                            <option value="3" {{ old('ratingA', $row->ratingA) == 3 ? 'selected' : '' }}>3</option>
+                                            <option value="4" {{ old('ratingA', $row->ratingA) == 4 ? 'selected' : '' }}>4</option>
+                                            <option value="5" {{ old('ratingA', $row->ratingA) == 5 ? 'selected' : '' }}>5</option>
                                         </select>
+                                        @error('ratingA')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="col-1" name="remarksTextarea">
-                                        <textarea type="text" name="remarksA" placeholder="Your remarks" class="inputRemarks">{{ $lguLnfpForm5->remarksA }}</textarea>
+                                        <textarea type="text" name="remarksA" placeholder="Your remarks" class="inputRemarks">{{ $row->remarksA }}</textarea>
                                     </div>
                                 </div>
 
@@ -283,16 +302,19 @@
                                     <div class="col-1" name="ratingSelect">
                                         <select id="loadProvince1" class="form-control" name="ratingB">
                                             <!-- <option>Select</option> -->
-                                            <option {{ old('ratingB', $lguLnfpForm5->ratingB) == '' ? 'selected' : '' }}>Select</option>
-                                            <option value="1" {{ old('ratingB', $lguLnfpForm5->ratingB) == 1 ? 'selected' : '' }}>1</option>
-                                            <option value="2" {{ old('ratingB', $lguLnfpForm5->ratingB) == 2 ? 'selected' : '' }}>2</option>
-                                            <option value="3" {{ old('ratingB', $lguLnfpForm5->ratingB) == 3 ? 'selected' : '' }}>3</option>
-                                            <option value="4" {{ old('ratingB', $lguLnfpForm5->ratingB) == 4 ? 'selected' : '' }}>4</option>
-                                            <option value="5" {{ old('ratingB', $lguLnfpForm5->ratingB) == 5 ? 'selected' : '' }}>5</option>
+                                            <option {{ old('ratingB', $row->ratingB) == '' ? 'selected' : '' }}>Select</option>
+                                            <option value="1" {{ old('ratingB', $row->ratingB) == 1 ? 'selected' : '' }}>1</option>
+                                            <option value="2" {{ old('ratingB', $row->ratingB) == 2 ? 'selected' : '' }}>2</option>
+                                            <option value="3" {{ old('ratingB', $row->ratingB) == 3 ? 'selected' : '' }}>3</option>
+                                            <option value="4" {{ old('ratingB', $row->ratingB) == 4 ? 'selected' : '' }}>4</option>
+                                            <option value="5" {{ old('ratingB', $row->ratingB) == 5 ? 'selected' : '' }}>5</option>
                                         </select>
+                                        @error('ratingB')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="col-1" name="remarksTextarea">
-                                        <textarea type="text" name="remarksB" placeholder="Your remarks" class="inputRemarks">{{ $lguLnfpForm5->remarksB }}</textarea>
+                                        <textarea type="text" name="remarksB" placeholder="Your remarks" class="inputRemarks">{{ $row->remarksB }}</textarea>
                                     </div>
                                 </div>
                                 <br>
@@ -337,16 +359,19 @@
                                     <div class="col-1" name="ratingSelect">
                                         <select id="loadProvince1" class="form-control" name="ratingBB">
                                             <!-- <option>Select</option> -->
-                                            <option {{ old('ratingBB', $lguLnfpForm5->ratingBB) == '' ? 'selected' : '' }}>Select</option>
-                                            <option value="1" {{ old('ratingBB', $lguLnfpForm5->ratingBB) == 1 ? 'selected' : '' }}>1</option>
-                                            <option value="2" {{ old('ratingBB', $lguLnfpForm5->ratingBB) == 2 ? 'selected' : '' }}>2</option>
-                                            <option value="3" {{ old('ratingBB', $lguLnfpForm5->ratingBB) == 3 ? 'selected' : '' }}>3</option>
-                                            <option value="4" {{ old('ratingBB', $lguLnfpForm5->ratingBB) == 4 ? 'selected' : '' }}>4</option>
-                                            <option value="5" {{ old('ratingBB', $lguLnfpForm5->ratingBB) == 5 ? 'selected' : '' }}>5</option>
+                                            <option {{ old('ratingBB', $row->ratingBB) == '' ? 'selected' : '' }}>Select</option>
+                                            <option value="1" {{ old('ratingBB', $row->ratingBB) == 1 ? 'selected' : '' }}>1</option>
+                                            <option value="2" {{ old('ratingBB', $row->ratingBB) == 2 ? 'selected' : '' }}>2</option>
+                                            <option value="3" {{ old('ratingBB', $row->ratingBB) == 3 ? 'selected' : '' }}>3</option>
+                                            <option value="4" {{ old('ratingBB', $row->ratingBB) == 4 ? 'selected' : '' }}>4</option>
+                                            <option value="5" {{ old('ratingBB', $row->ratingBB) == 5 ? 'selected' : '' }}>5</option>
                                         </select>
+                                        @error('ratingBB')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="col-1" name="remarksTextarea">
-                                        <textarea type="text" name="remarksBB" placeholder="Your remarks" class="inputRemarks">{{ $lguLnfpForm5->remarksBB }}</textarea>
+                                        <textarea type="text" name="remarksBB" placeholder="Your remarks" class="inputRemarks">{{ $row->remarksBB }}</textarea>
                                     </div>
                                 </div>
 
@@ -393,16 +418,19 @@
                                     <div class="col-1" name="ratingSelect">
                                         <select id="loadProvince1" class="form-control" name="ratingC">
                                             <!-- <option>Select</option> -->
-                                            <option {{ old('ratingC', $lguLnfpForm5->ratingC) == '' ? 'selected' : '' }}>Select</option>
-                                            <option value="1" {{ old('ratingC', $lguLnfpForm5->ratingC) == 1 ? 'selected' : '' }}>1</option>
-                                            <option value="2" {{ old('ratingC', $lguLnfpForm5->ratingC) == 2 ? 'selected' : '' }}>2</option>
-                                            <option value="3" {{ old('ratingC', $lguLnfpForm5->ratingC) == 3 ? 'selected' : '' }}>3</option>
-                                            <option value="4" {{ old('ratingC', $lguLnfpForm5->ratingC) == 4 ? 'selected' : '' }}>4</option>
-                                            <option value="5" {{ old('ratingC', $lguLnfpForm5->ratingC) == 5 ? 'selected' : '' }}>5</option>
+                                            <option {{ old('ratingC', $row->ratingC) == '' ? 'selected' : '' }}>Select</option>
+                                            <option value="1" {{ old('ratingC', $row->ratingC) == 1 ? 'selected' : '' }}>1</option>
+                                            <option value="2" {{ old('ratingC', $row->ratingC) == 2 ? 'selected' : '' }}>2</option>
+                                            <option value="3" {{ old('ratingC', $row->ratingC) == 3 ? 'selected' : '' }}>3</option>
+                                            <option value="4" {{ old('ratingC', $row->ratingC) == 4 ? 'selected' : '' }}>4</option>
+                                            <option value="5" {{ old('ratingC', $row->ratingC) == 5 ? 'selected' : '' }}>5</option>
                                         </select>
+                                        @error('ratingC')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="col-1" name="remarksTextarea">
-                                        <textarea type="text" name="remarksC" placeholder="Your remarks" class="inputRemarks">{{ $lguLnfpForm5->remarksC }}</textarea>
+                                        <textarea type="text" name="remarksC" placeholder="Your remarks" class="inputRemarks">{{ $row->remarksC }}</textarea>
                                     </div>
                                 </div>
 
@@ -449,16 +477,19 @@
                                     <div class="col-1" name="ratingSelect">
                                         <select id="loadProvince1" class="form-control" name="ratingD">
                                             <!-- <option>Select</option> -->
-                                            <option {{ old('ratingD', $lguLnfpForm5->ratingD) == '' ? 'selected' : '' }}>Select</option>
-                                            <option value="1" {{ old('ratingD', $lguLnfpForm5->ratingD) == 1 ? 'selected' : '' }}>1</option>
-                                            <option value="2" {{ old('ratingD', $lguLnfpForm5->ratingD) == 2 ? 'selected' : '' }}>2</option>
-                                            <option value="3" {{ old('ratingD', $lguLnfpForm5->ratingD) == 3 ? 'selected' : '' }}>3</option>
-                                            <option value="4" {{ old('ratingD', $lguLnfpForm5->ratingD) == 4 ? 'selected' : '' }}>4</option>
-                                            <option value="5" {{ old('ratingD', $lguLnfpForm5->ratingD) == 5 ? 'selected' : '' }}>5</option>
+                                            <option {{ old('ratingD', $row->ratingD) == '' ? 'selected' : '' }}>Select</option>
+                                            <option value="1" {{ old('ratingD', $row->ratingD) == 1 ? 'selected' : '' }}>1</option>
+                                            <option value="2" {{ old('ratingD', $row->ratingD) == 2 ? 'selected' : '' }}>2</option>
+                                            <option value="3" {{ old('ratingD', $row->ratingD) == 3 ? 'selected' : '' }}>3</option>
+                                            <option value="4" {{ old('ratingD', $row->ratingD) == 4 ? 'selected' : '' }}>4</option>
+                                            <option value="5" {{ old('ratingD', $row->ratingD) == 5 ? 'selected' : '' }}>5</option>
                                         </select>
+                                        @error('ratingD')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="col-1" name="remarksTextarea">
-                                        <textarea type="text" name="remarksD" placeholder="Your remarks" class="inputRemarks">{{ $lguLnfpForm5->remarksD }}</textarea>
+                                        <textarea type="text" name="remarksD" placeholder="Your remarks" class="inputRemarks">{{ $row->remarksD }}</textarea>
                                     </div>
                                 </div>
 
@@ -505,16 +536,19 @@
                                     <div class="col-1" name="ratingSelect">
                                         <select id="loadProvince1" class="form-control" name="ratingE">
                                             <!-- <option>Select</option> -->
-                                            <option {{ old('ratingE', $lguLnfpForm5->ratingE) == '' ? 'selected' : '' }}>Select</option>
-                                            <option value="1" {{ old('ratingE', $lguLnfpForm5->ratingE) == 1 ? 'selected' : '' }}>1</option>
-                                            <option value="2" {{ old('ratingE', $lguLnfpForm5->ratingE) == 2 ? 'selected' : '' }}>2</option>
-                                            <option value="3" {{ old('ratingE', $lguLnfpForm5->ratingE) == 3 ? 'selected' : '' }}>3</option>
-                                            <option value="4" {{ old('ratingE', $lguLnfpForm5->ratingE) == 4 ? 'selected' : '' }}>4</option>
-                                            <option value="5" {{ old('ratingE', $lguLnfpForm5->ratingE) == 5 ? 'selected' : '' }}>5</option>
+                                            <option {{ old('ratingE', $row->ratingE) == '' ? 'selected' : '' }}>Select</option>
+                                            <option value="1" {{ old('ratingE', $row->ratingE) == 1 ? 'selected' : '' }}>1</option>
+                                            <option value="2" {{ old('ratingE', $row->ratingE) == 2 ? 'selected' : '' }}>2</option>
+                                            <option value="3" {{ old('ratingE', $row->ratingE) == 3 ? 'selected' : '' }}>3</option>
+                                            <option value="4" {{ old('ratingE', $row->ratingE) == 4 ? 'selected' : '' }}>4</option>
+                                            <option value="5" {{ old('ratingE', $row->ratingE) == 5 ? 'selected' : '' }}>5</option>
                                         </select>
+                                        @error('ratingE')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="col-1" name="remarksTextarea">
-                                        <textarea type="text" name="remarksE" placeholder="Your remarks" class="inputRemarks">{{ $lguLnfpForm5->remarksE }}</textarea>
+                                        <textarea type="text" name="remarksE" placeholder="Your remarks" class="inputRemarks">{{ $row->remarksE }}</textarea>
                                     </div>
                                 </div>
 
@@ -561,16 +595,19 @@
                                     <div class="col-1" name="ratingSelect">
                                         <select id="loadProvince1" class="form-control" name="ratingF">
                                             <!-- <option>Select</option> -->
-                                            <option {{ old('ratingF', $lguLnfpForm5->ratingF) == '' ? 'selected' : '' }}>Select</option>
-                                            <option value="1" {{ old('ratingF', $lguLnfpForm5->ratingF) == 1 ? 'selected' : '' }}>1</option>
-                                            <option value="2" {{ old('ratingF', $lguLnfpForm5->ratingF) == 2 ? 'selected' : '' }}>2</option>
-                                            <option value="3" {{ old('ratingF', $lguLnfpForm5->ratingF) == 3 ? 'selected' : '' }}>3</option>
-                                            <option value="4" {{ old('ratingF', $lguLnfpForm5->ratingF) == 4 ? 'selected' : '' }}>4</option>
-                                            <option value="5" {{ old('ratingF', $lguLnfpForm5->ratingF) == 5 ? 'selected' : '' }}>5</option>
+                                            <option {{ old('ratingF', $row->ratingF) == '' ? 'selected' : '' }}>Select</option>
+                                            <option value="1" {{ old('ratingF', $row->ratingF) == 1 ? 'selected' : '' }}>1</option>
+                                            <option value="2" {{ old('ratingF', $row->ratingF) == 2 ? 'selected' : '' }}>2</option>
+                                            <option value="3" {{ old('ratingF', $row->ratingF) == 3 ? 'selected' : '' }}>3</option>
+                                            <option value="4" {{ old('ratingF', $row->ratingF) == 4 ? 'selected' : '' }}>4</option>
+                                            <option value="5" {{ old('ratingF', $row->ratingF) == 5 ? 'selected' : '' }}>5</option>
                                         </select>
+                                        @error('ratingF')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="col-1" name="remarksTextarea">
-                                        <textarea type="text" name="remarksF" placeholder="Your remarks" class="inputRemarks">{{ $lguLnfpForm5->remarksF }}</textarea>
+                                        <textarea type="text" name="remarksF" placeholder="Your remarks" class="inputRemarks">{{ $row->remarksF }}</textarea>
                                     </div>
                                 </div>
 
@@ -617,16 +654,19 @@
                                     <div class="col-1" name="ratingSelect">
                                         <select id="loadProvince1" class="form-control" name="ratingG">
                                             <!-- <option>Select</option> -->
-                                            <option {{ old('ratingG', $lguLnfpForm5->ratingG) == '' ? 'selected' : '' }}>Select</option>
-                                            <option value="1" {{ old('ratingG', $lguLnfpForm5->ratingG) == 1 ? 'selected' : '' }}>1</option>
-                                            <option value="2" {{ old('ratingG', $lguLnfpForm5->ratingG) == 2 ? 'selected' : '' }}>2</option>
-                                            <option value="3" {{ old('ratingG', $lguLnfpForm5->ratingG) == 3 ? 'selected' : '' }}>3</option>
-                                            <option value="4" {{ old('ratingG', $lguLnfpForm5->ratingG) == 4 ? 'selected' : '' }}>4</option>
-                                            <option value="5" {{ old('ratingG', $lguLnfpForm5->ratingG) == 5 ? 'selected' : '' }}>5</option>
+                                            <option {{ old('ratingG', $row->ratingG) == '' ? 'selected' : '' }}>Select</option>
+                                            <option value="1" {{ old('ratingG', $row->ratingG) == 1 ? 'selected' : '' }}>1</option>
+                                            <option value="2" {{ old('ratingG', $row->ratingG) == 2 ? 'selected' : '' }}>2</option>
+                                            <option value="3" {{ old('ratingG', $row->ratingG) == 3 ? 'selected' : '' }}>3</option>
+                                            <option value="4" {{ old('ratingG', $row->ratingG) == 4 ? 'selected' : '' }}>4</option>
+                                            <option value="5" {{ old('ratingG', $row->ratingG) == 5 ? 'selected' : '' }}>5</option>
                                         </select>
+                                        @error('ratingG')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="col-1" name="remarksTextarea">
-                                        <textarea type="text" name="remarksG" placeholder="Your remarks" class="inputRemarks">{{ $lguLnfpForm5->remarksG }}</textarea>
+                                        <textarea type="text" name="remarksG" placeholder="Your remarks" class="inputRemarks">{{ $row->remarksG }}</textarea>
                                     </div>
                                 </div>
                                 <br>
@@ -672,16 +712,19 @@
                                     <div class="col-1" name="ratingSelect">
                                         <select id="loadProvince1" class="form-control" name="ratingGG">
                                             <!-- <option>Select</option> -->
-                                            <option {{ old('ratingGG', $lguLnfpForm5->ratingGG) == '' ? 'selected' : '' }}>Select</option>
-                                            <option value="1" {{ old('ratingGG', $lguLnfpForm5->ratingGG) == 1 ? 'selected' : '' }}>1</option>
-                                            <option value="2" {{ old('ratingGG', $lguLnfpForm5->ratingGG) == 2 ? 'selected' : '' }}>2</option>
-                                            <option value="3" {{ old('ratingGG', $lguLnfpForm5->ratingGG) == 3 ? 'selected' : '' }}>3</option>
-                                            <option value="4" {{ old('ratingGG', $lguLnfpForm5->ratingGG) == 4 ? 'selected' : '' }}>4</option>
-                                            <option value="5" {{ old('ratingGG', $lguLnfpForm5->ratingGG) == 5 ? 'selected' : '' }}>5</option>
+                                            <option {{ old('ratingGG', $row->ratingGG) == '' ? 'selected' : '' }}>Select</option>
+                                            <option value="1" {{ old('ratingGG', $row->ratingGG) == 1 ? 'selected' : '' }}>1</option>
+                                            <option value="2" {{ old('ratingGG', $row->ratingGG) == 2 ? 'selected' : '' }}>2</option>
+                                            <option value="3" {{ old('ratingGG', $row->ratingGG) == 3 ? 'selected' : '' }}>3</option>
+                                            <option value="4" {{ old('ratingGG', $row->ratingGG) == 4 ? 'selected' : '' }}>4</option>
+                                            <option value="5" {{ old('ratingGG', $row->ratingGG) == 5 ? 'selected' : '' }}>5</option>
                                         </select>
+                                        @error('ratingGG')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="col-1" name="remarksTextarea">
-                                        <textarea type="text" name="remarksGG" placeholder="Your remarks" class="inputRemarks">{{ $lguLnfpForm5->remarksGG }}</textarea>
+                                        <textarea type="text" name="remarksGG" placeholder="Your remarks" class="inputRemarks">{{ $row->remarksGG }}</textarea>
                                     </div>
                                 </div>
 
@@ -728,22 +771,25 @@
                                     <div class="col-1" name="ratingSelect">
                                         <select id="loadProvince1" class="form-control" name="ratingH">
                                             <!-- <option>Select</option> -->
-                                            <option {{ old('ratingH', $lguLnfpForm5->ratingH) == '' ? 'selected' : '' }}>Select</option>
-                                            <option value="1" {{ old('ratingH', $lguLnfpForm5->ratingH) == 1 ? 'selected' : '' }}>1</option>
-                                            <option value="2" {{ old('ratingH', $lguLnfpForm5->ratingH) == 2 ? 'selected' : '' }}>2</option>
-                                            <option value="3" {{ old('ratingH', $lguLnfpForm5->ratingH) == 3 ? 'selected' : '' }}>3</option>
-                                            <option value="4" {{ old('ratingH', $lguLnfpForm5->ratingH) == 4 ? 'selected' : '' }}>4</option>
-                                            <option value="5" {{ old('ratingH', $lguLnfpForm5->ratingH) == 5 ? 'selected' : '' }}>5</option>
+                                            <option {{ old('ratingH', $row->ratingH) == '' ? 'selected' : '' }}>Select</option>
+                                            <option value="1" {{ old('ratingH', $row->ratingH) == 1 ? 'selected' : '' }}>1</option>
+                                            <option value="2" {{ old('ratingH', $row->ratingH) == 2 ? 'selected' : '' }}>2</option>
+                                            <option value="3" {{ old('ratingH', $row->ratingH) == 3 ? 'selected' : '' }}>3</option>
+                                            <option value="4" {{ old('ratingH', $row->ratingH) == 4 ? 'selected' : '' }}>4</option>
+                                            <option value="5" {{ old('ratingH', $row->ratingH) == 5 ? 'selected' : '' }}>5</option>
                                         </select>
+                                        @error('ratingH')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="col-1" name="remarksTextarea">
-                                        <textarea type="text" name="remarksH" placeholder="Your remarks" class="inputRemarks">{{ $lguLnfpForm5->remarksH }}</textarea>
+                                        <textarea type="text" name="remarksH" placeholder="Your remarks" class="inputRemarks">{{ $row->remarksH }}</textarea>
                                     </div>
                                 </div>
 
                             </div>
 
-                            @if ($lguLnfpForm5->status != 1)
+                            @if ($row->status != 1)
                             <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
                                 <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
                                 <!-- <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
@@ -751,10 +797,10 @@
                                 </button> -->
                                 <button type="submit" name="action" value="submit" class="btn btn-primary" hidden>Submit</button>
                                 <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalDraft">
-                                Save as Draft
+                                    Save as Draft
                                 </button>
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalUpdate">
-                                Save and Submit
+                                    Save and Submit
                                 </button>
                                 <!-- <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModalUpdate">Update</button> -->
                             </div>
@@ -764,11 +810,10 @@
 
 
                             <!-- Modal Submit -->
-                            <div class="modal fade" id="exampleModalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <!-- <div class="modal fade" id="exampleModalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <!-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -782,14 +827,40 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div> -->
+                            <div class="modal fade" id="exampleModalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="center modal-body" style="padding-bottom:50px; padding-left:50px;padding-right:50px;">
+                                            <div>
+                                                <lord-icon
+                                                    src="https://cdn.lordicon.com/yqiuuheo.json"
+                                                    trigger="hover"
+                                                    colors="primary:#109121,secondary:#d1fad7"
+                                                    style="width:150px;height:150px">
+                                                </lord-icon>
+                                            </div>
+                                            <!-- <div class="bold" style="font-size: 25px;color:#109121"> -->
+                                            <div class="bold" style="font-size: 25px;color:#59987e">
+                                                Confirm Submission?
+                                            </div>
+                                            <div style="padding-top: 10px;padding-bottom: 20px; font-size:15px">
+                                                Are you sure you want to save and submit this form? This process cannot be undone.
+                                            </div>
+                                            <div>
+                                                <button type="button" style="margin-right:5px" class="bold btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                                <button type="submit" id="lgu-draft" name="action" value="updateResponse" class="bold btn btn-danger" style="background-color:#59987e!important">YES</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- Modal Draft -->
-                            <div class="modal fade" id="exampleModalDraft" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <!-- <div class="modal fade" id="exampleModalDraft" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <!-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -803,7 +874,35 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div> -->
+
+                            <div class="modal fade" id="exampleModalDraft" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog " role="document">
+                                    <div class="modal-content">
+                                        <div class="center modal-body" style="padding-bottom:50px; padding-left:50px;padding-right:50px;">
+                                            <div>
+                                                <lord-icon
+                                                    src="https://cdn.lordicon.com/yqiuuheo.json"
+                                                    trigger="hover"
+                                                    colors="primary:#faf9d1,secondary:#ffbe55"
+                                                    style="width:150px;height:150px">
+                                                </lord-icon>
+                                            </div>
+                                            <div class="bold" style="font-size: 25px;color:#e88c30">
+                                                Save as draft?
+                                            </div>
+                                            <div style="padding-top: 10px;padding-bottom: 20px; font-size:15px">
+                                                Are you sure you want to save this as a draft?
+                                            </div>
+                                            <div>
+                                                <button type="button" style="margin-right:5px" class="bold btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                                <button type="submit" id="lgu-draft" class="bold btn btn-danger" name="action" value="saveDraft" style="background-color:#ffbe55!important;color:white!important">YES</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
                         </form>
                     </div>
 

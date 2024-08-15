@@ -37,47 +37,51 @@
                                 <h4 class="bold card-title" style="color:#59987e">{{ __('Register') }}</h4>
                             </div>
                             <form method="POST" action="{{ route('register') }}">
-                                @csrf
-                                <!--userinfo -->
+                                @csrf 
+                                <input type="hidden" name="status" value="pending">
+                                <input type="hidden" name="role" value="11">
 
                                 <div>
-                                    <div class="input-group  form-control-lg {{ $errors->has('email') ? ' has-danger' : '' }}" style="border-radius:40px;  ">
+                                    <div class="input-group  form-control-lg {{ $errors->has('Firstname') ? ' has-danger' : '' }}" style="border-radius:40px;  ">
                                         <span class="input-group-prepend">
                                             <div class="input-group-text">
                                                 <i class="now-ui-icons users_circle-08 text-dark"></i>
                                             </div>
                                         </span>
-                                        <input class="form-control text-dark {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Firstname') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;" type="email" name="email" required autofocus>
+                                        <input class="form-control text-dark {{ $errors->has('Firstname') ? ' is-invalid' : '' }}" placeholder="{{ __('Firstname') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;"  value="{{ old('Firstname') }}" name="Firstname" required autofocus>
                                     </div>
-                                    @if ($errors->has('email'))
+                                    @if ($errors->has('Firstname'))
                                     <span class="invalid-feedback" style="display: block;" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('Firstname') }}</strong>
                                     </span>
                                     @endif
-                                    <div class="input-group  form-control-lg {{ $errors->has('email') ? ' has-danger' : '' }}" style="border-radius:40px;  ">
+
+
+                                    <div class="input-group  form-control-lg {{ $errors->has('Middlename') ? ' has-danger' : '' }}" style="border-radius:40px;  ">
                                         <span class="input-group-prepend">
                                             <div class="input-group-text">
                                                 <i class="now-ui-icons users_circle-08 text-dark"></i>
                                             </div>
                                         </span>
-                                        <input class="form-control text-dark {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Middlename') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;" type="email" name="email" required autofocus>
+                                        <input class="form-control text-dark {{ $errors->has('Middlename') ? ' is-invalid' : '' }}" placeholder="{{ __('Middlename') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;"  value="{{ old('Middlename') }}"  name="Middlename" required autofocus>
                                     </div>
-                                    @if ($errors->has('email'))
+                                    @if ($errors->has('Middlename'))
                                     <span class="invalid-feedback" style="display: block;" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('Middlename') }}</strong>
                                     </span>
                                     @endif
-                                    <div class="input-group  form-control-lg {{ $errors->has('email') ? ' has-danger' : '' }}" style="border-radius:40px;  ">
+
+                                    <div class="input-group  form-control-lg {{ $errors->has('Lastname') ? ' has-danger' : '' }}" style="border-radius:40px;  ">
                                         <span class="input-group-prepend">
                                             <div class="input-group-text">
                                                 <i class="now-ui-icons users_circle-08 text-dark"></i>
                                             </div>
                                         </span>
-                                        <input class="form-control text-dark {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Lastname') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;" type="email" name="email" required autofocus>
+                                        <input class="form-control text-dark {{ $errors->has('Lastname') ? ' is-invalid' : '' }}" placeholder="{{ __('Lastname') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;"   value="{{ old('Lastname') }}" name="Lastname" required autofocus>
                                     </div>
-                                    @if ($errors->has('email'))
+                                    @if ($errors->has('Lastname'))
                                     <span class="invalid-feedback" style="display: block;" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('Lastname') }}</strong>
                                     </span>
                                     @endif
                                 </div>
@@ -86,133 +90,121 @@
                                 <div>
                                     <div class="d-flex">
                                         <!-- Region -->
-                                        <div class="input-group form-control-lg {{ $errors->has('dropdown') ? 'has-danger' : '' }}" style="border-radius: 40px; margin-right:15px  ">
+                                        <div class="input-group form-control-lg {{ $errors->has('Region') ? 'has-danger' : '' }}" style="border-radius: 40px; margin-right:15px  ">
                                             <span class="input-group-prepend">
                                                 <div class="input-group-text" style="border-top-left-radius: 40px; border-bottom-left-radius: 40px;">
                                                     <i class="now-ui-icons location_pin text-dark"></i>
                                                 </div>
                                             </span>
-                                            <select class="form-control text-dark {{ $errors->has('dropdown') ? 'is-invalid' : '' }}" style="border-top-right-radius: 40px; border-bottom-right-radius: 40px;" name="Region" required>
-                                                <option value="">Select your Region</option>
-                                                <option value="option1">Option 1</option>
-                                                <option value="option2">Option 2</option>
-                                                <option value="option3">Option 3</option>
+                                            <select   class="form-control text-dark {{ $errors->has('Region') ? 'is-invalid' : '' }}" style="border-top-right-radius: 40px; border-bottom-right-radius: 40px;" name="Region" required>
+                                                <!-- <option value="">Select your Region</option>  -->
+                                                <option value="428" selected>Sample-Region 428</option>
                                             </select>
                                         </div>
-                                        @if ($errors->has('dropdown'))
+                                        <!-- @if ($errors->has('Region'))
                                         <span class="invalid-feedback" style="display: block;" role="alert">
-                                            <strong>{{ $errors->first('dropdown') }}</strong>
+                                            <strong>{{ $errors->first('Region') }}</strong>
                                         </span>
-                                        @endif
+                                        @endif -->
 
                                         <!-- Province -->
-                                        <div class="input-group form-control-lg {{ $errors->has('dropdown') ? 'has-danger' : '' }}" style="border-radius: 40px;">
+                                        <div class="input-group form-control-lg {{ $errors->has('Province') ? 'has-danger' : '' }}" style="border-radius: 40px;">
                                             <span class="input-group-prepend">
                                                 <div class="input-group-text" style="border-top-left-radius: 40px; border-bottom-left-radius: 40px;">
                                                     <i class="now-ui-icons location_pin text-dark"></i>
                                                 </div>
                                             </span>
-                                            <select class="form-control text-dark {{ $errors->has('dropdown') ? 'is-invalid' : '' }}" style="border-top-right-radius: 40px; border-bottom-right-radius: 40px;" name="Province" required>
-                                                <option value="">Select your Province</option>
-                                                <!-- Add your options here -->
-                                                <option value="option1">Option 1</option>
-                                                <option value="option2">Option 2</option>
-                                                <option value="option3">Option 3</option>
+                                            <select   class="form-control text-dark {{ $errors->has('Province') ? 'is-invalid' : '' }}" style="border-top-right-radius: 40px; border-bottom-right-radius: 40px;" name="Province" required>
+                                                <!-- <option value="">Select your Province</option>  -->
+                                                <option value="1301" selected>Sample-Province 1301</option>
                                             </select>
                                         </div>
-                                        @if ($errors->has('dropdown'))
+                                        <!-- @if ($errors->has('Province'))
                                         <span class="invalid-feedback" style="display: block;" role="alert">
-                                            <strong>{{ $errors->first('dropdown') }}</strong>
+                                            <strong>{{ $errors->first('Province') }}</strong>
                                         </span>
-                                        @endif
+                                        @endif -->
                                     </div>
 
                                     <div class="d-flex">
                                         <!-- Municipal -->
-                                        <div class="input-group form-control-lg {{ $errors->has('dropdown') ? 'has-danger' : '' }}" style="border-radius: 40px;margin-right:15px  ">
+                                        <div class="input-group form-control-lg {{ $errors->has('city_municipal') ? 'has-danger' : '' }}" style="border-radius: 40px;margin-right:15px  ">
                                             <span class="input-group-prepend">
                                                 <div class="input-group-text" style="border-top-left-radius: 40px; border-bottom-left-radius: 40px;">
                                                     <i class="now-ui-icons location_pin text-dark"></i>
                                                 </div>
                                             </span>
-                                            <select class="form-control text-dark {{ $errors->has('dropdown') ? 'is-invalid' : '' }}" style="border-top-right-radius: 40px; border-bottom-right-radius: 40px;" name="city_municipal" required>
-                                                <option value="">Select your City/Municipal</option>
-                                                <!-- Add your options here -->
-                                                <option value="option1">Option 1</option>
-                                                <option value="option2">Option 2</option>
-                                                <option value="option3">Option 3</option>
+                                            <select   class="form-control text-dark {{ $errors->has('city_municipal') ? 'is-invalid' : '' }}" style="border-top-right-radius: 40px; border-bottom-right-radius: 40px;" name="city_municipal" required>
+                                                <!-- <option value="">Select your City/Municipal</option>  -->
+                                                <option value="1923" selected>Sample-City/Municipality 1923</option>
                                             </select>
                                         </div>
-                                        @if ($errors->has('dropdown'))
+                                        <!-- @if ($errors->has('city_municipal'))
                                         <span class="invalid-feedback" style="display: block;" role="alert">
-                                            <strong>{{ $errors->first('dropdown') }}</strong>
+                                            <strong>{{ $errors->first('city_municipal') }}</strong>
                                         </span>
-                                        @endif
+                                        @endif -->
 
                                         <!-- Barangay -->
-                                        <div class="input-group form-control-lg {{ $errors->has('dropdown') ? 'has-danger' : '' }}" style="border-radius: 40px; ">
+                                        <div class="input-group form-control-lg {{ $errors->has('barangay') ? 'has-danger' : '' }}" style="border-radius: 40px; ">
                                             <span class="input-group-prepend">
                                                 <div class="input-group-text" style="border-top-left-radius: 40px; border-bottom-left-radius: 40px;">
                                                     <i class="now-ui-icons location_pin text-dark"></i>
                                                 </div>
                                             </span>
-                                            <select class="form-control text-dark {{ $errors->has('dropdown') ? 'is-invalid' : '' }}" style="border-top-right-radius: 40px; border-bottom-right-radius: 40px;" name="city_municipal" required>
-                                                <option value="">Select your Barangay</option>
-                                                <!-- Add your options here -->
-                                                <option value="option1">Option 1</option>
-                                                <option value="option2">Option 2</option>
-                                                <option value="option3">Option 3</option>
+                                            <select  class="form-control text-dark {{ $errors->has('barangay') ? 'is-invalid' : '' }}" style="border-top-right-radius: 40px; border-bottom-right-radius: 40px;" value="{{ old('barangay') }}" name="barangay" >
+                                                <option value="Suyo">Sample-Barangay Suyo</option> 
                                             </select>
                                         </div>
-                                        @if ($errors->has('dropdown'))
+                                        <!-- @if ($errors->has('barangay'))
                                         <span class="invalid-feedback" style="display: block;" role="alert">
-                                            <strong>{{ $errors->first('dropdown') }}</strong>
+                                            <strong>{{ $errors->first('barangay') }}</strong>
                                         </span>
-                                        @endif
+                                        @endif -->
                                     </div>
                                 </div>
 
                                 <!-- workstation/designation -->
                                 <div>
-                                    <div class="input-group  form-control-lg {{ $errors->has('email') ? ' has-danger' : '' }}" style="border-radius:40px;  ">
+                                    <div class="input-group  form-control-lg {{ $errors->has('agency_office_lgu') ? 'is-invalid' : '' }}" style="border-radius:40px;  ">
                                         <span class="input-group-prepend">
                                             <div class="input-group-text">
                                                 <i class="now-ui-icons business_badge text-dark"></i>
                                             </div>
                                         </span>
-                                        <input class="form-control text-dark {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Agency/Office/Unit') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;" type="email" name="email" required autofocus>
+                                        <input class="form-control text-dark {{ $errors->has('agency_office_lgu') ? ' is-invalid' : '' }}" placeholder="{{ __('Agency/Office/Unit') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;"    value="{{ old('agency_office_lgu') }}" name="agency_office_lgu" required autofocus>
                                     </div>
-                                    @if ($errors->has('email'))
+                                    @if ($errors->has('agency_office_lgu'))
                                     <span class="invalid-feedback" style="display: block;" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('agency_office_lgu') }}</strong>
                                     </span>
                                     @endif
 
-                                    <div class="input-group  form-control-lg {{ $errors->has('email') ? ' has-danger' : '' }}" style="border-radius:40px;  ">
+                                    <div class="input-group  form-control-lg {{ $errors->has('Division_unit') ? ' has-danger' : '' }}" style="border-radius:40px;  ">
                                         <span class="input-group-prepend">
                                             <div class="input-group-text">
                                                 <i class="now-ui-icons business_badge text-dark"></i>
                                             </div>
                                         </span>
-                                        <input class="form-control text-dark {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Division Unit ') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;" type="email" name="email" required autofocus>
+                                        <input class="form-control text-dark {{ $errors->has('Division_unit') ? ' is-invalid' : '' }}" placeholder="{{ __('Division Unit ') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;"  value="{{ old('Division_unit') }}"  name="Division_unit" required autofocus>
                                     </div>
-                                    @if ($errors->has('email'))
+                                    @if ($errors->has('Division_unit'))
                                     <span class="invalid-feedback" style="display: block;" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('Division_unit') }}</strong>
                                     </span>
                                     @endif
 
-                                    <div class="input-group  form-control-lg {{ $errors->has('email') ? ' has-danger' : '' }}" style="border-radius:40px; ">
+                                    <div class="input-group  form-control-lg {{ $errors->has('designation') ? ' has-danger' : '' }}" style="border-radius:40px; ">
                                         <span class="input-group-prepend">
                                             <div class="input-group-text">
                                                 <i class="now-ui-icons business_badge text-dark"></i>
                                             </div>
                                         </span>
-                                        <input class="form-control text-dark {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Designation') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;" type="email" name="email" required autofocus>
+                                        <input class="form-control text-dark {{ $errors->has('designation') ? ' is-invalid' : '' }}" placeholder="{{ __('Designation/Position') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;" value="{{ old('designation') }}"  name="designation" required autofocus>
                                     </div>
-                                    @if ($errors->has('email'))
+                                    @if ($errors->has('designation'))
                                     <span class="invalid-feedback" style="display: block;" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('designation') }}</strong>
                                     </span>
                                     @endif
                                 </div>
@@ -225,7 +217,7 @@
                                                 <i class="now-ui-icons ui-1_email-85"></i>
                                             </div>
                                         </span>
-                                        <input class="form-control text-dark {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;" type="email" name="email" required autofocus>
+                                        <input class="form-control text-dark {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;" type="email"  value="{{ old('email') }}" name="email" required autofocus>
                                     </div>
                                     @if ($errors->has('email'))
                                     <span class="invalid-feedback" style="display: block;" role="alert">

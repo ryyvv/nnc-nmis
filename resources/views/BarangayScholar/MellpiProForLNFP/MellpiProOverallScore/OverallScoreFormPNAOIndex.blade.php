@@ -27,9 +27,9 @@
                         <div class="alert alert-success d-none" id="successAlert" role="alert">
                             Data deleted successfully!
                         </div>
-                        <!-- <div class="row-12">
+                        <div class="row-12">
                             <a href="{{ route('lnfpFormOverallScoreCreate') }}" class="btn btn-primary bolder">Create data</a>
-                        </div> -->
+                        </div>
 
                         <table class="display" id="overallScoremyTable" width="100%">
                             <thead class="table-light" style="background-color:#508D4E;">

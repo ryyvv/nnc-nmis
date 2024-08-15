@@ -1,5 +1,5 @@
 
-@extends('layouts.POapp', [
+@extends('layouts.app', [
     'namePage' => 'Dashboard',
     'class' =>  'sidebar-mini ',
     'activePage' => 'dashboard',

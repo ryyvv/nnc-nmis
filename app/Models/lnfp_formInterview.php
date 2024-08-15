@@ -29,7 +29,15 @@ class lnfp_formInterview extends Model
         'q3Remarks',
         'q4Remarks',
         'subtotalAScore',
+        'periodCovereda',
+        'dateMonitoring',
         'status',
+
+        'barangay_id',
+        'municipal_id',
+        'province_id',
+        'region_id',
+        'user_id'
     ];
 
     protected $guarded = ['id'];

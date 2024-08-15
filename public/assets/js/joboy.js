@@ -181,6 +181,8 @@ function myFunctionLNFP_lguprofile(id){
 
 }
 
+
+
 function myFunctionLNFP(id){
     window.location.href = "lguLnfpEdit/"+ id;
 
@@ -530,3 +532,4 @@ new DataTable('#form6Table');
 new DataTable('#form8myTable');
 new DataTable('#InterviewFormmyTable');
 new DataTable('#overallScoremyTable');
+new DataTable('nutriOffice');

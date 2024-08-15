@@ -84,3 +84,30 @@
  .white {
     color:white;
  }
+ .nowrap {
+    white-space:nowrap; 
+ }
+ .middletext {
+    vertical-align:center!important
+ }
+ .label1 {
+    margin:2px
+ }
+
+ .inputstyleNone {
+        border: none;
+        outline: none;
+        background: none;
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+        text-align:center
+ }
+
+ .inputstyleNone:focus {
+    outline: none;
+    box-shadow: none;
+    cursor:pointer
+}
+
+ 

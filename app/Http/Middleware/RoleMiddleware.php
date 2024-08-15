@@ -30,7 +30,7 @@ class RoleMiddleware
             // Check if the user's account status is 'for review'
             if ($user->status === 'pending') {
                 // Redirect to the empty dashboard or a specific page
-                return redirect()->route('accountDashboard');
+                return redirect()->route('DashboardApproval');
             }
         }
  

@@ -1,5 +1,5 @@
 
-@extends('layouts.PSapp', [
+@extends('layouts.app', [
     'namePage' => 'Dashboard',
     'class' =>  'sidebar-mini ',
     'activePage' => 'dashboard',

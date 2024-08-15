@@ -101,6 +101,7 @@ thead th {
     width: 100%;
     border: none;
     background-color: transparent;
+    font-weight: bold;
 }
 .form7Input {
     /* outline: none; */
@@ -116,9 +117,10 @@ thead th {
     width: 100%;
     border: none;
     background-color: transparent;
+    font-weight: bold;
 }
 .form8Input {
-    outline: none;
+    /* outline: none; */
     width: 100%;
     text-align: center;
     border: none;
@@ -127,15 +129,17 @@ thead th {
     resize: none;
 }
 .form8InputB {
-    outline: none;
+    /* outline: none; */
     width: 100%;
     text-align: center;
     border: none;
     background-color: transparent;
+    height: 4vh;
 }
 .form8InputBot {
     width: 40%;
-    outline: none;
+    text-align: center;
+    /* outline: none; */
     border-top: none;
     border-left: none;
     border-right: none;
@@ -153,6 +157,13 @@ thead th {
     border: none;
     background-color: transparent;
     text-align: center;
+}
+.interviewFormInput {
+    /* outline: none; */
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    resize: none;
 }
 .interviewFormsTotal::-webkit-inner-spin-button,
 .interviewFormsTotal::-webkit-outer-spin-button {
@@ -208,4 +219,11 @@ thead th {
     border-left: none;
     border-right: none;
     background-color: transparent;
+}
+
+.text-area-custom {
+    max-height:380px;
+    height:300px;
+    border: 1px solid lightgray;
+    border-radius:5px"
 }

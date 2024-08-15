@@ -38,14 +38,20 @@
 <body class="{{ $class ?? '' }}">
   <div class="wrapper">
     @auth
-      @include('layouts.page_template.auth')
+      @if(auth()->user()->status == 'pending')
+          @include('layouts.page_template.authuserReview')
+      @else
+        @include('layouts.page_template.auth')
+      @endif
+      
     @endauth
+
     @guest
       @include('layouts.page_template.guest')
     @endguest
   </div>
 
-  @yield('additional-content') <!-- This is where the new section will be included -->
+  @yield('additional-content')  
   @yield('footer')
   @stack('scripts')
 
@@ -65,6 +71,7 @@
   <script src="{{ asset('assets') }}/js/joboy.js"></script>
   <script src="{{ asset('assets') }}/js/ryan.js"></script>
   <script src="{{ asset('assets') }}/js/diether.js"></script>
+  <script src="{{ asset('assets') }}/js/Location.js"></script>
   
   <!-- Stock -->
   <!-- Bootstrap v4.2.1 (https://getbootstrap.com/) -->

@@ -21,6 +21,9 @@ class BarangayScholar
         if (Auth::check() && $roles->name == 'Barangay Scholar') {
             return $next($request);
         }
+        // elseif(){
+// 
+        //}
 
         return redirect('home');
     }

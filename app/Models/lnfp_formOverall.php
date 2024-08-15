@@ -36,6 +36,12 @@ class lnfp_formOverall extends Model
         'receivedBy',
         'whatDate',
         'status',
+
+        'barangay_id',
+        'municipal_id',
+        'province_id',
+        'region_id',
+        'user_id'
     ];
 
     protected $guarded = ['id'];

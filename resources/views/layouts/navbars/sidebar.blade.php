@@ -124,7 +124,7 @@
 
       <!-- for Resources -->
       @php 
-        $activeResourcesPages = ['PersonnelDnaDirectoryIndex', 'NutritionOfficesIndex', 'EquipmentInventoryIndex'];
+        $activeResourcesPages = ['PersonnelDnaDirectoryIndex', 'NutritionOfficesIndex', 'NutriOfficeIndex', 'EquipmentInventoryIndex'];
       @endphp
       <li class="@if ($activePage == 'resources') active @endif">
         <a data-toggle="collapse" href="#Resources">
@@ -147,6 +147,12 @@
                 <p> {{ __("Nutrition Offices") }} </p>
               </a>
             </li>
+            <!-- <li class="@if ($activePage == 'NutriOfficeIndex') active @endif">
+              <a href="{{ route('nutriOfficeIndex') }}">
+                <i class="now-ui-icons files_paper"></i>
+                <p> {{ __("Nutrition Offices V2") }} </p>
+              </a>
+            </li> -->
             <li class="@if ($activePage == 'EquipmentInventoryIndex') active @endif">
               <a href="{{ route('equipmentInventoryIndex') }}">
                 <i class="now-ui-icons files_paper"></i>
@@ -520,12 +526,12 @@
                 <p> {{ __("INTERVIEW") }} </p>
               </a>
             </li>
-            <li class="@if ($activePage == 'mellpi_pro_summary1b') active @endif">
+            <!-- <li class="@if ($activePage == 'mellpi_pro_summary1b') active @endif">
               <a href="#">
                 <i class="now-ui-icons files_paper"></i>
                 <p> {{ __("WRITTEN EXAM COMPUTATION") }} </p>
               </a>
-            </li>
+            </li> -->
             <li class="@if ($activePage == 'mellpi_pro_overallScore') active @endif">
               <a href="{{ route('lnfpFormOverallScoreIndex') }}">
                 <i class="now-ui-icons files_paper"></i>

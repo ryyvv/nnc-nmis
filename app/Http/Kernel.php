@@ -79,6 +79,7 @@ class Kernel extends HttpKernel
         'CityMunicipalOfficer' => \App\Http\Middleware\CityMunicipalOfficer::class,
         'CityMunicipalStaff' => \App\Http\Middleware\CityMunicipalStaff::class, 
         'BarangayScholar' => \App\Http\Middleware\BarangayScholar::class,
+        'UserUnderReview' => \App\Http\Middleware\UserUnderReview::class,
     ];
     
  

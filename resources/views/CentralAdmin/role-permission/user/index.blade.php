@@ -62,12 +62,12 @@
                         <thead style="background-color:#508D4E;">
                             <tr>
                                 <th scope="col" class="tableheader">#</th>
-                                <th scope="col-4" class="tableheader">Name</th>
-                                <th scope="col-4" class="tableheader">Email</th>
+                                <th scope="col-2" class="tableheader">Name</th>
+                                <!-- <th scope="col-4" class="tableheader">Email</th> -->
                                 <th scope="col" class="tableheader">Agency/Unit</th>
                                 <th scope="col" class="tableheader">Designation</th>
+                                <th scope="col" class="tableheader">Role</th>
                                 <th scope="col" class="tableheader">Status</th>
-                                <th scope="col" class="tableheader">Date_Created </th>
                                 <th scope="col" class="tableheader">Action</th>
                             </tr>
                         </thead>
@@ -78,7 +78,7 @@
                             <tr>
                                 <td>{{$num}}</td>
                                 <td>{{$users->Firstname}} {{$users->Middlename}} {{$users->Lastname}}</td>
-                                <td>{{$users->email}}</td>
+                                <!-- <td>{{$users->email}}</td> -->
                                 <td>{{$users->agency_office_lgu}}</td>
 
                                 <td>{{$users->agency_office_lgu}}</td>
@@ -86,12 +86,30 @@
                                     @php
                                     $roles = DB::table('roles')->where('id', $users->role)->first();
                                     @endphp
+
+
+
                                     {{ $roles->name }}
                                 </td>
-                                <td>{{$users->status}}</td>
+                                <td>
+                                    <div class="row">
+                                    <div class="d-flex" style="display:inline-block;text-align:center;border: 2px solid #3795BD;padding:4px;border-radius:15px; ">
+                                        <div style="border-radius:15px; border: 2px solid green; background-color: #3795BD; padding: 2px;margin-right:5px">
+                                            <lord-icon
+                                                src="https://cdn.lordicon.com/guqkthkk.json"
+                                                trigger="hover"
+                                                colors="primary:#ffffff"
+                                                style="width:15px;height:15px">
+                                            </lord-icon>
+                                        </div>
+                                        <div class="bold" style="text-align:center;margin-right:8px"> {{$users->status}} </div>
+                                    </div>
+                                    </div>
+                                    <!-- <button> {{$users->status}}</button> -->
+                                </td>
 
                                 <td class="d-flex">
-                                    <i onclick="view('lguprofile','{{ $lguProfile->id }}','show')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                    <i onclick="view('lguprofile','{{ $users->id }}','show')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
                                     <i onclick="editlgu('{{ $users->id }}')" class="fa fa-edit fa-lg cursor" style="color:#FFB236;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Edit"></i>
                                     <i onclick="openModal('{{ $users->id }}')" class="fa fa-trash fa-lg cursor" style="color:red;margin-right:10px" title="Delete "></i>
                                 </td>

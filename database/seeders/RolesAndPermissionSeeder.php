@@ -167,5 +167,10 @@ class RolesAndPermissionSeeder extends Seeder
             'codename' => 'is_barangayscholar'
         ]);
         $role->givePermissionTo(Permission::all());
+
+        $role = Role::create([
+            'name' => 'User Under Review',
+            'codename' => 'is_UserUnderReview'
+        ]);
     }
 }

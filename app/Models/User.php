@@ -29,6 +29,7 @@ class User extends Authenticatable
         'Division_unit',
         'barangay',
         'role',
+        'designation',
         'email',
         'password',
         'status',
@@ -54,4 +55,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    public function isPending(){
+        $this->status == 'pending';
+    }
+
+    public function isRejected(){
+        $this->status == 'rejected';
+    }
+
+    public function isApproved(){
+        $this->status == 'rejected';
+    }
 }

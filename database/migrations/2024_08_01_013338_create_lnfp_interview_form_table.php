@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('lnfp_interview_form', function (Blueprint $table) {
             $table->id();
+            $table->integer('forThePeriod')->nullable();
             $table->integer('form5_id')->nullable();
             $table->integer('lnfp_lgu_id')->nullable();
             $table->string('lnfp_officer', 255)->nullable();
@@ -33,6 +34,21 @@ return new class extends Migration
             $table->text('q4Remarks')->nullable();
             $table->double('subtotalAScore')->nullable();
             $table->integer('status');
+            
+            $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->nullable();
+
+           $table->integer('barangay_id')->unsigned()->nullable();
+           $table->foreign('barangay_id')->references('id')->on('barangays')->nullable(); 
+
+           $table->integer('municipal_id')->unsigned()->nullable(); 
+           $table->foreign('municipal_id')->references('id')->on('municipals')->nullable();
+
+           $table->integer('province_id')->unsigned()->nullable(); 
+           $table->foreign('province_id')->references('id')->on('provinces')->nullable();
+
+           $table->integer('region_id')->unsigned()->nullable(); 
+           $table->foreign('region_id')->references('id')->on('regions')->nullable();
             $table->timestamps();
         });
     }

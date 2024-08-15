@@ -63,6 +63,11 @@ function myFunctionLNFP(id){
 
 }
 
+function myFunctionLNFP_lguprofile_View(id){
+    window.location.href = "lguLnfpViewProfile/"+ id +"/view";
+
+}
+
 // Submit show function Mellpi Pro For LGU
 function LNFPmyFunction(id){
     window.location.href = "lguLnfpEdit/"+id;

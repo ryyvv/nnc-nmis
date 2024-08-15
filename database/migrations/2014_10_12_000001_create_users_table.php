@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('agency_office_lgu');
             $table->string('Division_unit');
             $table->string('barangay');
+            $table->string('designation');
             $table->string('role'); //user role
             $table->string('status'); //approved or pending 
             $table->string('email')->unique();

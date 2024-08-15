@@ -30,7 +30,8 @@
                             <center>
                                 <h5 class="title">{{__("SEARCH FOR REGIONAL OUTSTANDING PROVINCIAL NUTRITION ACTION OFFICER")}}</h5>
                             </center><br>
-
+                            @include('layouts.page_template.location_header')
+                            <br>
                             <input type="hidden" name="submitStatus" value="1">
                             <input type="hidden" name="DraftStatus" value="2">
 

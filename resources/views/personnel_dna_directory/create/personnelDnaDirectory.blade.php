@@ -23,9 +23,7 @@
 ])
 
 @section('content')
-<div class="panel-header panel-header-sm">
-</div>
-<div class="content">
+<div class="content" style="margin-top:50px;padding:2%">
     <div class="card">
         <div class="row row-12" style="display:inline-block">
             <div class="card-header">

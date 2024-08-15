@@ -16,6 +16,7 @@ use App\Http\Controllers\NutritionOfficesController;
 use App\Http\Controllers\PersonnelDnaDirectoryController;
 
 // added
+
 use App\Http\Controllers\CentralAdmin\PermissionController;
 use App\Http\Controllers\CentralAdmin\RolesController;
 use App\Http\Controllers\CentralAdmin\ProfileController;
@@ -68,7 +69,10 @@ use App\Http\Controllers\BarangayScholar\MellpiProForLNFP_InterviewController;
 use App\Http\Controllers\BarangayScholar\MellpiProForLNFP_OverallScoreController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\FormSubmissionController;
+use App\Http\Controllers\UserController\UserReviewController as UserControllerUserReviewController;
 use Faker\Guesser\Name;
+
+Use App\Http\Controllers\UserUnderReview\UserReviewController;
 
 use function PHPSTORM_META\map;
 
@@ -134,12 +138,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/personnelDnaDirectory/npc' ,[PersonnelDnaDirectoryController::class, 'storeNPC'])->name('personnelDnaDirectory.storeNPC');
     Route::post('/personnelDnaDirectory/bns' ,[PersonnelDnaDirectoryController::class, 'storeBNS'])->name('personnelDnaDirectory.storeBNS');
 
+    //Nutrition Office
     Route::get('/nutritionOfficesIndex' ,[NutritionOfficesController::class, 'index'])->name('nutritionOfficesIndex');
     Route::get('/nutritionOffices', [NutritionOfficesController::class, 'create'])->name('nutritionOffices');
     Route::post('/nutritionOffices', [NutritionOfficesController::class, 'store'])->name('nutritionOffices.store');
     Route::get('/equipmentInventoryIndex' ,[EquipmentInventoryController::class, 'index'])->name('equipmentInventoryIndex');
     Route::get('/equipmentInventory' ,[EquipmentInventoryController::class, 'create'])->name('equipmentInventory');
     Route::post('/equipmentInventory', [EquipmentInventoryController::class, 'store'])->name('equipmentInventory.store');
+    //////////////////////////////
+    Route::get('/nutriOfficeIndex', [NutritionOfficesController::class, 'nutriOfficeIndex'])->name('nutriOfficeIndex');
 
     // action="{{ route('upload.csv') }}" 
     // ->name('upload.csv');
@@ -476,6 +483,7 @@ Route::group(['middleware' => 'auth'], function () {
           Route::post('/lguprofileLnfpSubmit', [MellpiProForLNFP_barangayLGUController::class, 'storeSubmit'])->name('MellpiProForLNFPSubmit.storeSubmit');
           Route::post('/lguprofileLnfpUpdate/{id}', [MellpiProForLNFP_barangayLGUController::class, 'storeUpdate'])->name('MellpiProForLNFPUpdate.storeUpdate');
           Route::get('/lguLnfpDeleteProfile/{id}', [MellpiProForLNFP_barangayLGUController::class, 'deleteLNFP_lguprofile'])->name('lguLnfpDeleteProfile');
+          Route::get('/lguLnfpViewProfile/{id}/view', [MellpiProForLNFP_barangayLGUController::class, 'viewLNFP_lguprofile'])->name('lguLnfpViewProfile');
           Route::get('/lguLnfpEditprofile/{id}', [MellpiProForLNFP_barangayLGUController::class, 'mellpiProLNFP_LGUedit'])->name('lguLnfpEditProfile');
 
           //Form 5 Monitoring
@@ -525,6 +533,10 @@ Route::group(['middleware' => 'auth'], function () {
         // Route::get('/admin/{admin}/edit', [AdminUserController::class, 'create'])->name('COadmin.edit');
         // Route::get('/admin/{admin}', [AdminUserController::class, 'destroy'])->name('COadmin.destroy');
 
+    });
+
+    Route::prefix('UserUnderReview')->middleware(['auth', 'UserUnderReview'])->group(function () {
+        Route::get('/dashboard',[UserReviewController::class, 'index'])->name('UURdashboard.index');
     });
 
 });

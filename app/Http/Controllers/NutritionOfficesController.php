@@ -17,6 +17,11 @@ class NutritionOfficesController extends Controller
     {
         $this->middleware('auth');
     }
+
+    public function nutriOfficeIndex()
+    {
+        return view('nutrition_offices/nutri_officeIndex');
+    }
      
     public function index()
     {

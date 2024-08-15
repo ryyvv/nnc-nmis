@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Validator;
 // use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use App\Models\lnfp_formOverall;
+use App\Models\lnfp_lguform8tracking;
+use App\Http\Controllers\LocationController;
 
 class MellpiProForLNFP_form8Controller extends Controller
 {
@@ -22,13 +24,31 @@ class MellpiProForLNFP_form8Controller extends Controller
     }
     public function ActionSheetForm8Edit(Request $request)
     {
-        $form8 = DB::table('lnfp_form8')->where('id', $request->id)->first();
+        $action = 'edit';
+        $location = new LocationController;
+        $prov = $location->getLocationDataProvince(auth()->user()->Region);
+        $mun = $location->getLocationDataMuni(auth()->user()->Province);
+        $city = $location->getLocationDataCity(auth()->user()->Region);
+        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
 
-        return view('BarangayScholar/MellpiProForLNFP/MellpiProActionSheet/ActionSheetForm8Edit', ['form8' => $form8]);
+        $years = range(date("Y"), 1900);
+
+        $row = DB::table('lnfp_form8')->where('id', $request->id)->first();
+
+        return view('BarangayScholar/MellpiProForLNFP/MellpiProActionSheet/ActionSheetForm8Edit',compact('row', 'prov', 'mun', 'city', 'brgy', 'years', 'action'));
     }
     public function ActionSheetForm8Create()
     {
-        return view('BarangayScholar/MellpiProForLNFP/MellpiProActionSheet/ActionSheetForm8Create');
+        $action = 'create';
+        $location = new LocationController;
+        $prov = $location->getLocationDataProvince(auth()->user()->Region);
+        $mun = $location->getLocationDataMuni(auth()->user()->Province);
+        $city = $location->getLocationDataCity(auth()->user()->Region);
+        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+
+        $years = range(date("Y"), 1900);
+
+        return view('BarangayScholar/MellpiProForLNFP/MellpiProActionSheet/ActionSheetForm8Create', compact('prov', 'mun', 'city', 'brgy', 'years', 'action'));
     }
     public function storeASForm8(Request $request)
     {
@@ -40,10 +60,10 @@ class MellpiProForLNFP_form8Controller extends Controller
             try {
                 //code...
                 $rules = [
-                    'forTheperiod' => 'required|string|max:255',
+                    'periodCovereda' => 'required|string|max:255',
                     'nameOf' => 'required|string|max:255',
                     'areaAssign' => 'required|string|max:255',
-                    'dateMonitor' => 'required|date',
+                    'dateMonitoring' => 'required|date',
                     'recoPNAO_A' => 'nullable|string',
                     'recoPNAO_B' => 'nullable|string',
                     'recoPNAO_C' => 'nullable|string',
@@ -117,10 +137,10 @@ class MellpiProForLNFP_form8Controller extends Controller
                     }
 
                     $LNFPForm8AS = lnfp_form8::create([
-                        'forThePeriod' => $request->input('forTheperiod'),
+                        'periodCovereda' => $request->input('periodCovereda'),
                         'nameOfPnao' => $request->input('nameOf'),
                         'areaOfAssign' => $request->input('areaAssign'),
-                        'dateMonitor' => $request->input('dateMonitor'),
+                        'dateMonitoring' => $request->input('dateMonitoring'),
                         'recoPNAO_A' => $request->input('recoPNAO_A'),
                         'recoPNAO_B' => $request->input('recoPNAO_B'),
                         'recoPNAO_C' => $request->input('recoPNAO_C'),
@@ -149,7 +169,24 @@ class MellpiProForLNFP_form8Controller extends Controller
                         'receivedBy' => $request->input('receivedBy'),
                         'whatDate' => $request->input('whatDate'),
                         'status' => $request->input('submitStatus'),
+
+                        'barangay_id' => $request->barangay_id,
+                        'municipal_id' => $request->municipal_id,
+                        'province_id' => $request->province_id,
+                        'region_id' => $request->region_id,
+                        'user_id' => auth()->user()->id,
                     ]);
+
+                    if ($LNFPForm8AS) {
+                        # code...
+                        lnfp_lguform8tracking::create([
+                            'lnfp_form8_id' => $LNFPForm8AS->id,
+                            'status' => $request->input('submitStatus'),
+                            'barangay_id' => auth()->user()->barangay,
+                            'municipal_id' => auth()->user()->city_municipal,
+                            'user_id' => auth()->user()->id,
+                        ]);
+                    }
 
                     return redirect()->route('lnfpForm8Index')->with('alert', 'Data Submitted Successfully!');
                 }
@@ -184,10 +221,10 @@ class MellpiProForLNFP_form8Controller extends Controller
                         $sigDate3 = $file3->storeAs('uploads', $fileName3, 'public');
                     }
                 $LNFPForm8AS = lnfp_form8::create([
-                    'forThePeriod' => $request->input('forTheperiod'),
+                    'periodCovereda' => $request->input('periodCovereda'),
                     'nameOfPnao' => $request->input('nameOf'),
                     'areaOfAssign' => $request->input('areaAssign'),
-                    'dateMonitor' => $request->input('dateMonitor'),
+                    'dateMonitoring' => $request->input('dateMonitoring'),
                     'recoPNAO_A' => $request->input('recoPNAO_A'),
                     'recoPNAO_B' => $request->input('recoPNAO_B'),
                     'recoPNAO_C' => $request->input('recoPNAO_C'),
@@ -233,10 +270,10 @@ class MellpiProForLNFP_form8Controller extends Controller
             // dd($action);
             try {
                 $rules = [
-                    'forTheperiod' => 'required|string|max:255',
+                    'periodCovereda' => 'required|string|max:255',
                     'nameOf' => 'required|string|max:255',
                     'areaAssign' => 'required|string|max:255',
-                    'dateMonitor' => 'required|date',
+                    'dateMonitoring' => 'required|date',
                     'recoPNAO_A' => 'nullable|string',
                     'recoPNAO_B' => 'nullable|string',
                     'recoPNAO_C' => 'nullable|string',
@@ -259,11 +296,11 @@ class MellpiProForLNFP_form8Controller extends Controller
                     'desigOffice1' => 'required|string',
                     'desigOffice2' => 'required|string',
                     'desigOffice3' => 'required|string',
-                    'sigDate1' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
-                    'sigDate2' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
-                    'sigDate3' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
-                    'receivedBy' => 'nullable|string',
-                    'whatDate' => 'nullable|date',
+                    'sigDate1' => 'required|file|mimes:jpg,jpeg,png|max:2048',
+                    'sigDate2' => 'required|file|mimes:jpg,jpeg,png|max:2048',
+                    'sigDate3' => 'required|file|mimes:jpg,jpeg,png|max:2048',
+                    'receivedBy' => 'required|string',
+                    'whatDate' => 'required|date',
                 ];
         
                 $messages = [
@@ -295,10 +332,10 @@ class MellpiProForLNFP_form8Controller extends Controller
                 $sigDate3 = $this->handleFileUpload($request, 'sigDate3', $LNFPForm8AS->sigDate3);
         
                 $LNFPForm8AS->update([
-                    'forThePeriod' => $request->input('forTheperiod'),
+                    'periodCovereda' => $request->input('periodCovereda'),
                     'nameOfPnao' => $request->input('nameOf'),
                     'areaOfAssign' => $request->input('areaAssign'),
-                    'dateMonitor' => $request->input('dateMonitor'),
+                    'dateMonitoring' => $request->input('dateMonitoring'),
                     'recoPNAO_A' => $request->input('recoPNAO_A'),
                     'recoPNAO_B' => $request->input('recoPNAO_B'),
                     'recoPNAO_C' => $request->input('recoPNAO_C'),
@@ -327,12 +364,29 @@ class MellpiProForLNFP_form8Controller extends Controller
                     'receivedBy' => $request->input('receivedBy'),
                     'whatDate' => $request->input('whatDate'),
                     'status' => $request->input('submitStatus'),
+
+                    'barangay_id' => $request->barangay_id,
+                    'municipal_id' => $request->municipal_id,
+                    'province_id' => $request->province_id,
+                    'region_id' => $request->region_id,
+                    'user_id' => auth()->user()->id,
                 ]);
 
-                $overallScore = lnfp_formOverall::where('lnfp_lgu_id', $request->lgu_id)
-                ->update([
-                    'form8_id' => $request->id
-                ]);
+                if ($LNFPForm8AS) {
+                    # code...
+                    lnfp_lguform8tracking::create([
+                        'lnfp_form8_id' => $request->id,
+                        'status' => $request->input('submitStatus'),
+                        'barangay_id' => auth()->user()->barangay,
+                        'municipal_id' => auth()->user()->city_municipal,
+                        'user_id' => auth()->user()->id,
+                    ]);
+                }
+
+                // $overallScore = lnfp_formOverall::where('lnfp_lgu_id', $request->lgu_id)
+                // ->update([
+                //     'form8_id' => $request->id
+                // ]);
                 
         
                 return redirect()->route('lnfpForm8Index')->with('alert', 'Data Submitted Successfully!');
@@ -352,10 +406,10 @@ class MellpiProForLNFP_form8Controller extends Controller
                 $sigDate3 = $this->handleFileUpload($request, 'sigDate3', $LNFPForm8AS->sigDate3);
         
                 $LNFPForm8AS->update([
-                    'forThePeriod' => $request->input('forTheperiod'),
+                    'periodCovereda' => $request->input('periodCovereda'),
                     'nameOfPnao' => $request->input('nameOf'),
                     'areaOfAssign' => $request->input('areaAssign'),
-                    'dateMonitor' => $request->input('dateMonitor'),
+                    'dateMonitoring' => $request->input('dateMonitoring'),
                     'recoPNAO_A' => $request->input('recoPNAO_A'),
                     'recoPNAO_B' => $request->input('recoPNAO_B'),
                     'recoPNAO_C' => $request->input('recoPNAO_C'),
@@ -406,8 +460,10 @@ class MellpiProForLNFP_form8Controller extends Controller
         return $existingFilePath;
     }
     
-    public function deleteForm8($id)
+    public function deleteForm8(Request $request, $id)
     {
+        DB::table('lnfp_lguform8tracking')->where('lnfp_form8_id', $request->id)->delete();
+
         $lnfp_form8 = lnfp_form8::find($id);
         $lnfp_form8->delete();
 

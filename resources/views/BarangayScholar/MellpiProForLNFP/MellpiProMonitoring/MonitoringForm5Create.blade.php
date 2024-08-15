@@ -1,6 +1,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/form5a.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/common.css') }}">
+<script src="https://cdn.lordicon.com/lordicon.js"></script>
 
 @extends('layouts.app', [
 'class' => 'sidebar-mini ',
@@ -36,19 +37,8 @@
                             <center><img src="https://nnc-nmis.moodlearners.com/assets/img/logo.png" alt="" class="imgLogo"></center><br>
                             <center>
                                 <h5 class="title">{{__("Mellpi Pro Form 5a: Provincial Nutrition Action Officer Monitoring")}}</h5>
-                                <label for="period">For the period: </label>
-                                <select name="forTheperiod" id="forTheperiod" class="inputHeaderPeriod">
-                                    <?php
-                                    $currentYear = date('Y');
-                                    $startYear = 1900;
-                                    $endYear = $currentYear-1;
-                                    for ($year = $startYear; $year <= $endYear; $year++) {
-                                        echo "<option value=\"$year\">$year</option>";
-                                    }
-                                    ?>
-                                    <option selected><?php echo $currentYear ?></option>
-                                </select>
                             </center><br>
+                            @include('layouts.page_template.location_header')
                             <div class="formHeader">
                                 <div class="form-group col-md-6">
                                     <div class="form-group col-md-12">
@@ -738,11 +728,10 @@
 
 
                             <!-- Modal Submit -->
-                            <div class="modal fade" id="exampleModalSubmit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <!-- <div class="modal fade" id="exampleModalSubmit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <!-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -756,14 +745,39 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div> -->
+                            <div class="modal fade" id="exampleModalSubmit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="center modal-body" style="padding-bottom:50px; padding-left:50px;padding-right:50px;">
+                                            <div>
+                                                <lord-icon
+                                                    src="https://cdn.lordicon.com/yqiuuheo.json"
+                                                    trigger="hover"
+                                                    colors="primary:#109121,secondary:#d1fad7"
+                                                    style="width:150px;height:150px">
+                                                </lord-icon>
+                                            </div>
+                                            <div class="bold" style="font-size: 25px;color:#59987e">
+                                                Confirm Submission?
+                                            </div>
+                                            <div style="padding-top: 10px;padding-bottom: 20px; font-size:15px">
+                                                Are you sure you want to save and submit this form? This process cannot be undone.
+                                            </div>
+                                            <div>
+                                                <button type="button" style="margin-right:5px" class="bold btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                                <button type="submit" id="lgu-draft" name="action" value="submit" class="bold btn btn-danger" style="background-color:#59987e!important">YES</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- Modal Draft -->
-                            <div class="modal fade" id="exampleModalDraft" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <!-- <div class="modal fade" id="exampleModalDraft" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <!-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -774,6 +788,32 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                                             <button type="submit" id="lgu-draft" class="btn btn-primary" name="action" value="draft">Yes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div class="modal fade" id="exampleModalDraft" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog " role="document">
+                                    <div class="modal-content">
+                                        <div class="center modal-body" style="padding-bottom:50px; padding-left:50px;padding-right:50px;">
+                                            <div>
+                                                <lord-icon
+                                                    src="https://cdn.lordicon.com/yqiuuheo.json"
+                                                    trigger="hover"
+                                                    colors="primary:#faf9d1,secondary:#ffbe55"
+                                                    style="width:150px;height:150px">
+                                                </lord-icon>
+                                            </div>
+                                            <div class="bold" style="font-size: 25px;color:#e88c30">
+                                                Save as draft?
+                                            </div>
+                                            <div style="padding-top: 10px;padding-bottom: 20px; font-size:15px">
+                                                Are you sure you want to save this as a draft?
+                                            </div>
+                                            <div>
+                                                <button type="button" style="margin-right:5px" class="bold btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                                <button type="submit" id="lgu-draft" class="bold btn btn-danger" name="action" value="draft" style="background-color:#ffbe55!important;color:white!important">YES</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

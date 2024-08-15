@@ -13,7 +13,7 @@ class lnfp_form5a_rr extends Model
         'lnfp_lgu_id',
         'lnfp_officer',
         'dateMonitoring',
-        'forThePeriod',
+        'periodCovereda',
         'nameofPnao',
         'address',
         'provDeploy',
@@ -48,6 +48,12 @@ class lnfp_form5a_rr extends Model
         'remarksGG',
         'remarksH',
         'status',
+        
+        'barangay_id',
+        'municipal_id',
+        'province_id',
+        'region_id',
+        'user_id'
     ];
 
     protected $guarded = ['id'];

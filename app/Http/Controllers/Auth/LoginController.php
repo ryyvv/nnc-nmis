@@ -77,6 +77,9 @@ class LoginController extends Controller
         elseif ($roles->name == 'Barangay Scholar') {
             return redirect()->route('BSdashboard.index');
         }
+        elseif ($roles->name == 'User Under Review') {
+            return redirect()->route('UURdashboard.index');
+        }
 
 
         return redirect()->route('home');

@@ -13,10 +13,10 @@ class lnfp_form8 extends Model
         'form5_id',
         'lnfp_lgu_id',
         'lnfp_officer',
-        'forThePeriod',
+        'periodCovereda',
         'nameOfPnao',
         'areaOfAssign',
-        'dateMonitor',
+        'dateMonitoring',
         'recoPNAO_A',
         'recoPNAO_B',
         'recoPNAO_C',
@@ -45,6 +45,12 @@ class lnfp_form8 extends Model
         'receivedBy',
         'whatDate',
         'status',
+
+        'barangay_id',
+        'municipal_id',
+        'province_id',
+        'region_id',
+        'user_id'
     ];
 
     protected $guarded = ['id'];

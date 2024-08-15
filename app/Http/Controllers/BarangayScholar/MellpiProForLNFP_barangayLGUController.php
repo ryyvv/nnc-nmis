@@ -11,6 +11,7 @@ use App\Models\lnfp_form5a_rr;
 use App\Models\lnfp_lguprofiletracking;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\LocationController;
 
 
@@ -55,10 +56,7 @@ class MellpiProForLNFP_barangayLGUController extends Controller
 
 
         return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPEdit', compact('row', 'prov', 'mun', 'city', 'brgy', 'years', 'action'));
-
-        // $lnfpProfile = DB::table('lnfp_lguprofile')->where('id', $request->id)->first();
-
-        // return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPEdit', ['lnfpProfile' => $lnfpProfile]);
+        
     }
     public function mellpiProLNFP_LGUcreate()
     {
@@ -73,6 +71,23 @@ class MellpiProForLNFP_barangayLGUController extends Controller
         $years = range(date("Y"), 1900);
 
         return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPCreate', compact('prov', 'mun', 'city', 'brgy', 'years', 'action'));
+
+        // return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPCreate');
+    }
+
+    public function viewLNFP_lguprofile(Request $request)
+    {
+        //
+        $action = 'edit';
+        $location = new LocationController;
+        $prov = $location->getLocationDataProvince(auth()->user()->Region);
+        $mun = $location->getLocationDataMuni(auth()->user()->Province);
+        $city = $location->getLocationDataCity(auth()->user()->Region);
+        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+
+        $years = range(date("Y"), 1900);
+        $row = DB::table('lnfp_lguprofile')->where('id', $request->id)->first();
+        return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPView', compact('row','prov', 'mun', 'city', 'brgy', 'years', 'action'));
 
         // return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPCreate');
     }
@@ -411,16 +426,16 @@ class MellpiProForLNFP_barangayLGUController extends Controller
                             'user_id' => auth()->user()->id,
                         ]);
 
-                        lnfp_form5a_rr::create([
-                            'lnfp_lgu_id' => $LNFPProfileBarangay->id,
-                            'lnfp_officer' => $LNFPProfileBarangay->lnfp_officer,
-                            'forThePeriod' => $LNFPProfileBarangay->periodCovereda,
-                            'dateMonitoring' => $LNFPProfileBarangay->dateMonitoring,
-                            'status' => 2
-                        ]);
+                        // $LNFPForm5arr = lnfp_form5a_rr::create([
+                        //     'lnfp_lgu_id' => $LNFPProfileBarangay->id,
+                        //     'lnfp_officer' => $LNFPProfileBarangay->lnfp_officer,
+                        //     'forThePeriod' => $LNFPProfileBarangay->periodCovereda,
+                        //     'dateMonitoring' => $LNFPProfileBarangay->dateMonitoring,
+                        //     'status' => 2
+                        // ]);
                     }
 
-                    return redirect()->route('BSLGUprofileLNFPIndex.index')->with('alert', 'Data created Successfully!');
+                    return redirect()->route('BSLGUprofileLNFPIndex.index')->with('success', 'Data stored successfully!');
                 }
             }
         } elseif ($action == 'draft') {
@@ -601,18 +616,18 @@ class MellpiProForLNFP_barangayLGUController extends Controller
                 ]);
                 // dd($LNFPProfileBarangay);
 
-                if ($LNFPProfileBarangay) {
-                    # code...
-                    lnfp_lguprofiletracking::create([
-                        'lnfp_lguprofile_id' => $LNFPProfileBarangay->id,
-                        'status' => $request->submitStatus,
-                        'barangay_id' => auth()->user()->barangay,
-                        'municipal_id' => auth()->user()->city_municipal,
-                        'user_id' => auth()->user()->id,
-                    ]);
-                }
+                // if ($LNFPProfileBarangay) {
+                //     # code...
+                //     lnfp_lguprofiletracking::create([
+                //         'lnfp_lguprofile_id' => $LNFPProfileBarangay->id,
+                //         'status' => $request->submitStatus,
+                //         'barangay_id' => auth()->user()->barangay,
+                //         'municipal_id' => auth()->user()->city_municipal,
+                //         'user_id' => auth()->user()->id,
+                //     ]);
+                // }
 
-                return redirect()->route('BSLGUprofileLNFPIndex.index')->with('alert', 'Saved as Draft Successfully!');
+                return redirect()->route('BSLGUprofileLNFPIndex.index')->with('success', 'Data stored as Draft!');
             }
         }
     }
@@ -904,17 +919,34 @@ class MellpiProForLNFP_barangayLGUController extends Controller
 
 
                             'status' => $request->submitStatus,
+
+                            'barangay_id' => $request->barangay_id,
+                            'municipal_id' => $request->municipal_id,
+                            'province_id' => $request->province_id,
+                            'region_id' => $request->region_id,
+                            'user_id' => auth()->user()->id,
                         ]);
 
-                    lnfp_form5a_rr::create([
-                        'lnfp_lgu_id' => $request->id,
-                        'lnfp_officer' => $request->user_name,
-                        'forThePeriod' => $request->periodCovereda,
-                        'dateMonitoring' => $request->dateMonitoring,
-                        'status' => 2
-                    ]);
+                        if ($updateResponse) {
+                            # code...
+                            lnfp_lguprofiletracking::create([
+                                'lnfp_lguprofile_id' => $request->id,
+                                'status' => $request->submitStatus,
+                                'barangay_id' => auth()->user()->barangay,
+                                'municipal_id' => auth()->user()->city_municipal,
+                                'user_id' => auth()->user()->id,
+                            ]);
+                        }
 
-                    return redirect()->route('BSLGUprofileLNFPIndex.index')->with('alert', 'Data Created Successfully!');
+                    // $LNFPForm5arr = lnfp_form5a_rr::create([
+                    //     'lnfp_lgu_id' => $request->id,
+                    //     'lnfp_officer' => $request->user_name,
+                    //     'forThePeriod' => $request->periodCovereda,
+                    //     'dateMonitoring' => $request->dateMonitoring,
+                    //     'status' => 2
+                    // ]);
+
+                    return redirect()->route('BSLGUprofileLNFPIndex.index')->with('success', 'Data stored successfully!');
                 }
             } catch (\Throwable $th) {
                 //throw $th;
@@ -1071,7 +1103,7 @@ class MellpiProForLNFP_barangayLGUController extends Controller
                         'status' => $request->DraftStatus,
                     ]);
 
-                return redirect()->route('BSLGUprofileLNFPIndex.index')->with('alert', 'Saved as Draft Successfully!');
+                return redirect()->route('BSLGUprofileLNFPIndex.index')->with('success', 'Data stored as Draft!');
             } catch (\Throwable $th) {
                 //throw $th;
                 return "An error occured: " . $th->getMessage();
@@ -1084,11 +1116,7 @@ class MellpiProForLNFP_barangayLGUController extends Controller
     {
 
         DB::table('lnfp_lguprofiletracking')->where('lnfp_lguprofile_id', $request->id)->delete();
-        DB::table('lnfp_form5a_rr')->where('lnfp_lgu_id', $request->id)->delete();
-        DB::table('lnfp_form7')->where('lnfp_lgu_id', $request->id)->delete();
-        DB::table('lnfp_form8')->where('lnfp_lgu_id', $request->id)->delete();
-        DB::table('lnfp_interview_form')->where('lnfp_lgu_id', $request->id)->delete();
-        DB::table('lnfp_overall_score_form')->where('lnfp_lgu_id', $request->id)->delete();
+        
         $lnfp_lguprofile = lnfp_lguprofile::find($id);
         $lnfp_lguprofile->delete();
 
