@@ -19,8 +19,10 @@
                 <div class="card-header">
                     <div style="display: flex; align-items:center;">
                         <a href="{{route('MellpiProMonitoringIndex.index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a>
-                        <!-- <h4>MELLPI PRO FOR LNFP FORM 5a:</h4> -->
+                        <h4>CREATE MELLPI PRO FOR LNFP FORM 5</h4>
                     </div>
+
+                    <br />
 
                     @if(session('alert'))
                     <div class="alert alert-success" id="alert-message">
@@ -34,10 +36,10 @@
 
                             @foreach ($form5a as $form5a)
                             <!-- <input type="hidden" value="2" name="statForm"> -->
-                            <center><img src="https://nnc-nmis.moodlearners.com/assets/img/logo.png" alt="" class="imgLogo"></center><br>
+                            <!-- <center><img src="https://nnc-nmis.moodlearners.com/assets/img/logo.png" alt="" class="imgLogo"></center><br>
                             <center>
                                 <h5 class="title">{{__("Mellpi Pro Form 5a: Provincial Nutrition Action Officer Monitoring")}}</h5>
-                            </center><br>
+                            </center><br> -->
                             @include('layouts.page_template.location_header')
                             <div class="formHeader">
                                 <div class="form-group col-md-6">

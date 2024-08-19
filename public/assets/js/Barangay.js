@@ -488,9 +488,37 @@ function confirmDeleteBudget() {
     }
 }
 
+ 
 
 // Test2 Add row
 $(document).ready(function () {
+
+    function SocialcalculateRowTotal(row) {
+        const SocialrowpersonelService = parseFloat(row.find('input[name="personel_service[]"]').val()) || 0;
+        const  Socialrowmooe = parseFloat(row.find('input[name="mooe[]"]').val()) || 0;
+        const  SocialrowcapitalOutlay = parseFloat(row.find('input[name="capital_outlay[]"]').val()) || 0;
+        const  Socialrowtotal = SocialrowpersonelService + Socialrowmooe + SocialrowcapitalOutlay;
+
+        row.find('input[name="total[]"]').val(Socialrowtotal.toFixed(2));
+    }
+
+    // Trigger calculation when any of the inputs are changed
+    $("#dataTable").on("input", 'input[name="personel_service[]"], input[name="mooe[]"], input[name="capital_outlay[]"]', function () {
+        const row = $(this).closest('tr');
+        SocialcalculateRowTotal(row);
+    });
+
+    // If you need to recalculate all rows (e.g., after dynamically adding rows)
+    function recalculateAllRows() {
+        $("#dataTable tbody tr").each(function () {
+            SocialcalculateRowTotal($(this));
+        });
+    }
+    
+    // Initial calculation (if values are pre-filled)
+    // recalculateAllRows();
+
+
     const content = [
         // page1
         '<div class="row">' +
@@ -530,7 +558,14 @@ $(document).ready(function () {
             "</div>" +
             '<div class="form-group">' +
                     '<label class="bold label1" for="field2">Source of Funds</label>' +
-                    '<input type="text" class="form-control" id="sourceoffund" name="sourceoffund" required>' +
+                    '<select class="form-control" name="sourceoffund"  id="sourceoffund">'+
+                    ' <option selected value="">Please select one</option>'+
+                    '<option value="local" >local</option>'+
+                    '<option value="Provincial Government" >Provincial Government</option>'+
+                    '<option value="National" >National</option>'+
+                    '<option value="External" >External</option>'+
+                    '<option value="City/Municipal" >City/Municipal</option>'+
+                '</select>'+
                 "</div>" ,
 
         // page3
@@ -546,11 +581,7 @@ $(document).ready(function () {
             '<div class="col form-group">' +
             '<span class="bold" style="font-size:12px;color:gray">Capital Outlay</label>' +
             '<input type="text" class="form-control" id="capital_outlay" name="capital_outlay" required>' +
-            "</div>" +
-            '<div class="col form-group">' +
-            '<span class="bold" style="font-size:12px;color:gray">Total</label>' +
-            '<input type="text" class="form-control" id="total" name="total" required>' +
-            "</div>" +
+            "</div>" + 
         "</div>",
 
         // page4
@@ -571,6 +602,9 @@ $(document).ready(function () {
         "</div>",
     ];
 
+
+    // '<input type="text" class="form-control" id="sourceoffund" name="sourceoffund" required>' +
+
     let currentPage = 0;
     let formData = [];
     let editIndex = null;
@@ -583,23 +617,21 @@ $(document).ready(function () {
                 aipcode: $("#aipcode").val() || "",
                 nutrition_topology_code: $("#nutrition_topology_code").val() || "",
                 program: $("#program").val() || "",
-                implementing_agency: $("#implementing_agency").val() || "",
-                startdate: $("#startdate").val() || "",
-                completiondate: $("#completiondate").val() || "",
+                implementing_agency: $("#implementing_agency").val() || "", 
             };
         } else if (currentPage === 1) {
             pageData = {
                 startdate: $("#startdate").val() || "",
                 completiondate: $("#completiondate").val() || "",
-               epected_output: $("#epected_output").val() || "",
+               expected_output: $("#expected_output").val() || "",
                sourceoffund: $("#sourceoffund").val() || "",
             };
         } else if (currentPage === 2) {
             pageData = {
                 personel_service: $("#personel_service").val() || "",
                 mooe: $("#mooe").val() || "",
-                capital_outlay: $("#capital_outlay").val() || "",
-                total: $("#total").val() || "",
+                capital_outlay: $("#capital_outlay").val() || "", 
+                total: $("#total").val() || "", 
             };
         } else if (currentPage === 3) {
             pageData = {
@@ -652,6 +684,9 @@ $(document).ready(function () {
         updateContent();
     });
 
+    function red() {
+        alert('alert!');
+    }
 
     $("#addToTable").on("click", function () {
         saveFormData();
@@ -670,7 +705,16 @@ $(document).ready(function () {
             <td><input readonly class="inputstyleNone" type="text" name="startdate[]" value="${formData[1]?.startdate || ""}" required></td>
             <td><input readonly class="inputstyleNone" type="text" name="completiondate[]" value="${formData[1]?.completiondate || ""}" required></td>
             <td><input readonly class="inputstyleNone" type="text" name="expected_output[]" value="${formData[1]?.expected_output || ""}" required></td>
-            <td><input readonly class="inputstyleNone" type="text" name="sourceoffund[]" value="${formData[1]?.sourceoffund || ""}" required></td>
+            <td>
+                <select disabled class="inputstyleNone" type="text" name="sourceoffund[]">
+                <option selected value="">Please select one</option>
+                <option value="local" ${formData[1]?.sourceoffund === "local" ? "selected" : ""}>local</option>
+                <option value="Provincial Government" ${formData[1]?.sourceoffund === "Provincial Government" ? "selected" : ""}>Provincial Government</option>
+                <option value="National" ${formData[1]?.sourceoffund === "National" ? "selected" : ""}>National</option>
+                <option value="External" ${formData[1]?.sourceoffund === "External" ? "selected" : ""}>External</option>
+                <option value="City/Municipal" ${formData[1]?.sourceoffund === "City/Municipal" ? "selected" : ""}>City/Municipal</option>
+                </select>
+            </td>
             <td><input readonly class="inputstyleNone" type="text" name="personel_service[]" value="${formData[2]?.personel_service || ""}" required></td>
             <td><input readonly class="inputstyleNone" type="text" name="mooe[]" value="${formData[2]?.mooe || ""}" required></td>
             <td><input readonly class="inputstyleNone" type="text" name="capital_outlay[]" value="${formData[2]?.capital_outlay || ""}" required></td>
@@ -681,8 +725,12 @@ $(document).ready(function () {
             <td><input readonly class="inputstyleNone" type="text" name="nutrition_topology_code[]" value="${formData[0]?.nutrition_topology_code || ""}" required></td>
         </tr>`;
 
+        // <td><input readonly class="inputstyleNone" type="text" name="sourceoffund[]" value="${formData[1]?.sourceoffund || ""}" required></td>
         $("#spacing").before(newRow);
+        formData = [];
         $("#exampleModal").modal("hide");
+        recalculateAllRows();
+       
     });
 
 
@@ -694,13 +742,11 @@ $(document).ready(function () {
         // Remove row from the table
         $row.remove();
     });
-});
-
-// Edit Modal
-$(document).ready(function () {
+ 
     let editingRowIndexedit = null;
     let currentPageedit = 0;
 
+    
     const pages = [
         // Page 1 content
         `<div class="row">
@@ -739,8 +785,14 @@ $(document).ready(function () {
              <textarea class="form-control" style="width:100%;border-radius:5px;border: 1px solid #888;max-height:130px;height:130px"  id="edit_expected_output"></textarea>
             </div>
             <div class="form-group"> 
-             <label for="edit_implementing_agency" class="bold">Source of Funds</label>
-            <input type="text" class="form-control" id="edit_sourceoffund"  required>
+             <label for="edit_implementing_agency" class="bold">Source of Funds</label> 
+                <select class="form-control" id="edit_sourceoffund"> 
+                <option value="local">local</option>
+                <option value="Provincial Government">Provincial Government</option>
+                <option value="National">National</option>
+                <option value="External">External</option>
+                <option value="City/Municipal">City/Municipal</option>
+            </select> 
             </div>
         </div>`,
         
@@ -775,20 +827,67 @@ $(document).ready(function () {
         </div>`,
     ];
 
+
+    let modalData = {
+        aipcode: '',
+        nutrition_topology_code: '',
+        program: '',
+        implementing_agency: '',
+        startdate: '',
+        completiondate: '',
+        expected_output: '',
+        sourceoffund: '',
+        personel_service: '',
+        mooe: '',
+        capital_outlay: '',
+        direct_nutrition_specific: '',
+        indirect_nutrition_specific: '',
+        enabling_mechanism: ''
+    };
+
     function showEditModal(index) {
         editingRowIndexedit = index;
         updateEditModalContent();
         $("#editModal").modal("show");
     }
 
+    function saveModalPageData() {
+        modalData.aipcode = $("#edit_aipcode").val() || modalData.aipcode;
+        modalData.nutrition_topology_code = $("#edit_nutrition_topology_code").val() || modalData.nutrition_topology_code;
+        modalData.program = $("#edit_program").val() || modalData.program;
+        modalData.implementing_agency = $("#edit_implementing_agency").val() || modalData.implementing_agency;
+        modalData.startdate = $("#edit_startdate").val() || modalData.startdate;
+        modalData.completiondate = $("#edit_completiondate").val() || modalData.completiondate;
+        modalData.expected_output = $("#edit_expected_output").val() || modalData.expected_output;
+        modalData.sourceoffund = $("#edit_sourceoffund").val() || modalData.sourceoffund;
+        modalData.personel_service = $("#edit_personel_service").val() || modalData.personel_service;
+        modalData.mooe = $("#edit_mooe").val() || modalData.mooe;
+        modalData.capital_outlay = $("#edit_capital_outlay").val() || modalData.capital_outlay;
+        modalData.total = $("#edit_total").val() || modalData.total;
+        modalData.direct_nutrition_specific = $("#edit_direct_nutrition_specific").val() || modalData.direct_nutrition_specific;
+        modalData.indirect_nutrition_specific = $("#edit_indirect_nutrition_specific").val() || modalData.indirect_nutrition_specific;
+        modalData.enabling_mechanism = $("#edit_enabling_mechanism").val() || modalData.enabling_mechanism;
+    }
+
     function updateEditModalContent() {
         $("#editModalContent").html(pages[currentPageedit]);
 
-        // Populate fields with row data
-        const row = $(
-            `#dataTable tbody tr[data-index="${editingRowIndexedit}"]`,
-        );
-        const rowData = {
+        // Populate fields with modal data
+        $.each(modalData, function (key, value) {
+            $(`#edit_${key}`).val(value);
+        });
+
+        $("#pageIndicatorEdit").text(`Page ${currentPageedit + 1} of ${pages.length}`);
+        $("#prevPageEdit").prop("disabled", currentPageedit === 0);
+        $("#nextPageEdit").prop("disabled", currentPageedit === pages.length - 1);
+    }
+
+    $("#dataTable").on("click", ".editBtn", function () {
+        const index = $(this).closest("tr").data("index");
+
+        // Load existing data into modalData for editing
+        const row = $(`#dataTable tbody tr[data-index="${index}"]`);
+        modalData = {
             aipcode: row.find('input[name="aipcode[]"]').val(),
             nutrition_topology_code: row.find('input[name="nutrition_topology_code[]"]').val(),
             program: row.find('input[name="program[]"]').val(),
@@ -806,22 +905,12 @@ $(document).ready(function () {
             enabling_mechanism: row.find('input[name="enabling_mechanism[]"]').val(),
         };
 
-        $.each(rowData, function (key, value) {
-            $(`#edit_${key}`).val(value);
-        });
-
-        $("#prevPageEdit").prop("disabled", currentPageedit === 0);
-        $("#nextPageEdit").prop("disabled",currentPageedit === pages.length - 1,
-        );
-    }
-
-    $("#dataTable").on("click", ".editBtn", function () {
-        const index = $(this).closest("tr").data("index");
         showEditModal(index);
     });
 
     $("#prevPageEdit").click(function () {
         if (currentPageedit > 0) {
+            saveModalPageData();
             currentPageedit--;
             updateEditModalContent();
         }
@@ -829,39 +918,22 @@ $(document).ready(function () {
 
     $("#nextPageEdit").click(function () {
         if (currentPageedit < pages.length - 1) {
+            saveModalPageData();
             currentPageedit++;
             updateEditModalContent();
         }
     });
 
     $("#saveChanges").click(function () {
-        const updatedData = {
-            aipcode: $("#edit_aipcode").val(),
-            nutrition_topology_code: $("#edit_nutrition_topology_code").val(),
-            program: $("#edit_program").val(),
-            implementing_agency: $("#edit_implementing_agency").val(),
-            startdate: $("#edit_startdate").val(),
-            completiondate: $("#edit_completiondate").val(),
-            personel_service: $("#edit_personel_service").val(),
-            mooe: $("#edit_mooe").val(),
-            capital_outlay: $("#edit_capital_outlay").val(),
-            total: $("#edit_total").val(),
-            direct_nutrition_specific: $(
-                "#edit_direct_nutrition_specific",
-            ).val(),
-            indirect_nutrition_specific: $(
-                "#edit_indirect_nutrition_specific",
-            ).val(),
-            enabling_mechanism: $("#edit_enabling_mechanism").val(),
-        };
+        saveModalPageData(); // Ensure the last page's data is saved
 
-        const row = $(
-            `#dataTable tbody tr[data-index="${editingRowIndexedit}"]`,
-        );
-        $.each(updatedData, function (key, value) {
+        const row = $(`#dataTable tbody tr[data-index="${editingRowIndexedit}"]`);
+        $.each(modalData, function (key, value) {
             row.find(`input[name="${key}[]"]`).val(value);
         });
 
         $("#editModal").modal("hide");
+
+        recalculateAllRows();
     });
 });

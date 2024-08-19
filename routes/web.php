@@ -40,6 +40,17 @@ use App\Http\Controllers\ProvincialOfficer\PODashboardController;
 
 use App\Http\Controllers\ProvincialStaff\PSDashboardController;
 
+// City-Municipal Officer
+use App\Http\Controllers\CityMunicipalOfficer\CMODashboardController;
+use App\Http\Controllers\CityMunicipalOfficer\CMOMellpiLGUProfileBarangayBudgetAIPController;
+use App\Http\Controllers\CityMunicipalOfficer\CMOMellpiLGUProfileBarangayChangeNSController;
+use App\Http\Controllers\CityMunicipalOfficer\CMOMellpiLGUProfileBarangayDiscussionQuestionController;
+use App\Http\Controllers\CityMunicipalOfficer\CMOMellpiLGUProfileBarangayGovernanceController;
+use App\Http\Controllers\CityMunicipalOfficer\CMOMellpiLGUProfileBarangayLNCMagementController;
+use App\Http\Controllers\CityMunicipalOfficer\CMOMellpiLGUProfileBarangayNutritionPoliciesController;
+use App\Http\Controllers\CityMunicipalOfficer\CMOMellpiLGUProfileBarangayVisionMissionController;
+
+
 
 // City-Municipal Staff
 use App\Http\Controllers\CityMunicipalStaff\MellpiLGUProfileBarangayVisionMissionController;
@@ -338,6 +349,35 @@ Route::group(['middleware' => 'auth'], function () {
         // Route::get('/admin/{admin}', [AdminUserController::class, 'destroy'])->name('admin.destroy');
 
     });
+
+    Route::prefix('CityMunicipalOfficer')->middleware(['auth', 'CityMunicipalStaff'])->group(function () {
+
+        // DashBoard
+        Route::get('/dashboard', [CMODashboardController::class, 'index'])->name('CMOdashboard.index');
+
+        //LGUProfileController
+        Route::get('/lguProfile/fetchreport', [CMOMellpiLGUProfileBarangayController::class, 'fetchReport'])->name('CMOLGUprofile.fetch');
+        Route::get('/lguProfile/report', [CMOMellpiLGUProfileBarangayController::class, 'report'])->name('CMOLGUprofile.report');
+        Route::get('/lguProfile', [CMOMellpiLGUProfileBarangayController::class, 'index'])->name('CMOLGUprofile.index');
+        Route::get('/lguProfile/{id}/show', [CMOMellpiLGUProfileBarangayController::class, 'show'])->name('CMOLGUprofile.show');
+        Route::get('/lguProfile/create', [CMOMellpiLGUProfileBarangayController::class, 'create'])->name('CMOLGUprofile.create');
+        Route::POST('/lguProfile/approved', [CMOMellpiLGUProfileBarangayController::class, 'approvedReport'])->name('CMOLGUprofile.approved');
+        Route::POST('/lguProfile/declined', [CMOMellpiLGUProfileBarangayController::class, 'Declined'])->name('CMOLGUprofile.declined');
+
+        //VisionMissionController
+        Route::get('/visionmission/fetchreport', [CMOMellpiLGUProfileBarangayVisionMissionController::class, 'fetchReport'])->name('CMOvisionmission.fetch');
+        Route::get('/visionmission/report', [CMOMellpiLGUProfileBarangayVisionMissionController::class, 'report'])->name('CMOvisionmission.report');
+        Route::get('/visionmission', [CMOMellpiLGUProfileBarangayVisionMissionController::class, 'index'])->name('CMOvisionmission.index');
+        Route::POST('/visionmission', [CMOMellpiLGUProfileBarangayVisionMissionController::class, 'store'])->name('CMOvisionmission.store');
+        Route::get('/visionmission/create', [CMOMellpiLGUProfileBarangayVisionMissionController::class, 'create'])->name('CMOvisionmission.create');  
+        Route::get('/visionmission/{id}/show', [CMOMellpiLGUProfileBarangayVisionMissionController::class, 'show'])->name('CMOvisionmission.show'); 
+        Route::POST('/visionmission/approved', [CMOMellpiLGUProfileBarangayVisionMissionController::class, 'approvedReport'])->name('CMOvisionmission.approved');
+        Route::POST('/visionmission/declined', [CMOMellpiLGUProfileBarangayVisionMissionController::class, 'Declined'])->name('CMOvisionmission.declined');
+         
+
+    });
+
+
     Route::prefix('CityMunicipalStaff')->middleware(['auth', 'CityMunicipalStaff'])->group(function () {
 
         // DashBoard

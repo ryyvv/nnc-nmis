@@ -56,18 +56,13 @@
                                 <?php $num = 1; ?>
                                 @foreach ($form5a_rr as $form5a_rr)
                                 <tr>
-                                    <td>
-                                        <center>{{$num}}</center>
+                                    <td>{{$num}}
                                     </td>
-                                    <td>
-                                        <center>{{$form5a_rr->lnfp_officer}}</center>
+                                    <td>{{$form5a_rr->lnfp_officer}}
                                     </td>
-                                    <td>
-                                        <center>{{\Carbon\Carbon::parse($form5a_rr->dateMonitoring)->format('F j');}}</center>
+                                    <td>{{\Carbon\Carbon::parse($form5a_rr->dateMonitoring)->format('F j');}}
                                     </td>
-                                    <td>
-                                        <center>{{$form5a_rr->forThePeriod}}</center>
-                                    </td>
+                                    <td><center>{{$form5a_rr->forThePeriod}}</center></td>
                                     <!-- <td>
                                         <center>{{ $form5a_rr->nameofPnao }}</center>
                                     </td> -->
