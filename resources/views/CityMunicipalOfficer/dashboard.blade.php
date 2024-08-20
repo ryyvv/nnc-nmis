@@ -9,7 +9,7 @@
 <div class="content" style="margin-top:50px;padding:2%">
   <div class="card" style="border-radius:10px;">
     <div class="card-header">
-      <p>City Municipal Dashboard</p>
+      <p>City Municipal Officer Dashboard</p>
     </div>
   </div>
 </div>

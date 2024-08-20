@@ -2,81 +2,81 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/joboy.css') }}">
 
 <style>
-.form-section {
+  .form-section {
     display: none;
-}
+  }
 
-.form-section.current {
+  .form-section.current {
     display: inline;
-}
+  }
 
-.striped-rows .row:nth-child(odd) {
+  .striped-rows .row:nth-child(odd) {
     background-color: #f2f2f2;
-}
+  }
 
-.col-sm {
+  .col-sm {
     margin: auto;
     padding: 1rem 1rem;
-}
+  }
 
-.row .form-control {
+  .row .form-control {
     border-color: #bebebe !important;
     border: 1px solid;
     border-radius: 5px;
-}
+  }
 </style>
 
 @extends('layouts.app', [
 'class' => 'sidebar-mini ',
 'namePage' => 'Governance',
 'activePage' => 'Governance',
-'activeNav' => 'MELLPI PRO For LGU', 
+'activeNav' => 'MELLPI PRO For LGU',
 ])
 
 @section('content')
- 
+
 <div class="content" style="margin-top:50px;padding:2%">
-    <div class="card" style="border-radius:10px;padding-left:2rem!important;padding-right:1rem!important">
+  <div class="card" style="border-radius:10px;padding-left:2rem!important;padding-right:1rem!important">
     <div class="card-header">
 
-            <div class="d-flex justify-content-end center" style="padding-right:20px; ">
-                <form action="{{route('nutritionpolicies.download',$row->id)}}" method="POST">
-                    @csrf
-                    <input type="hidden" name="htmlContent" id="htmlContent">
-                    <button type="submit" id="hiddenButton" style="display: none;"></button>
-                </form>
+      <div class="d-flex justify-content-end center" style="padding-right:20px; ">
+        <form action="{{route('nutritionpolicies.download',$row->id)}}" method="POST">
+          @csrf
+          <input type="hidden" name="htmlContent" id="htmlContent">
+          <button type="submit" id="hiddenButton" style="display: none;"></button>
+        </form>
 
-                <div style="display:absolute;" onclick="downloadPDF('{{$row->id}}')">
-                    <i class="fa fa-file-pdf-o fa-lg cursor " style="color:red;margin-right:7px;" aria-hidden="true"></i>
-                    <label class="download">Download file</label>
-                </div>
-            </div>
+        <div style="display:absolute;" onclick="downloadPDF('{{$row->id}}')">
+          <i class="fa fa-file-pdf-o fa-lg cursor " style="color:red;margin-right:7px;" aria-hidden="true"></i>
+          <label class="download">Download file</label>
+        </div>
+      </div>
 
-            @include('layouts.page_template.crud_alert_message')
-            
-        <div id="downloadable">
-            <div style="display:flex;align-items:center">
-                <!-- <a href="{{route('governance.index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a> -->
-                        <a href="#">
-                            <h5 class="title" style="margin:0px">FORM B: BARANGAY PROFILE SHEET</h5>
-                        </a>
-                <!-- <h4 style="margin-top:18px;font-weight:bold">MELLPI PRO FORM B 1a: BARANGAY NUTRITION MONITORING</h4> -->
-            </div>
+      @include('layouts.page_template.crud_alert_message')
 
-            <div style="margin-right:15px">
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a style="font-family: Arial, sans-serif;font-style:italic" href="{{route('BSLGUprofile.index')}}">Mellpi Pro for LGU Profile</a></li>
-                                <li class="breadcrumb-item active" style="font-style:italic" aria-current="page">Form B: Barangay Profile Sheet -
-                                    <?php echo auth()->user()->barangay ?>
-                                </li>
-                            </ol>
-                        </nav>
-                    </div>
+      <div id="downloadable">
+        <div style="display:flex;align-items:center">
+          <!-- <a href="{{route('governance.index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a> -->
+          <a href="#">
+            <h5 class="title" style="margin:0px">FORM B: BARANGAY PROFILE SHEET</h5>
+          </a>
+          <!-- <h4 style="margin-top:18px;font-weight:bold">MELLPI PRO FORM B 1a: BARANGAY NUTRITION MONITORING</h4> -->
+        </div>
 
-            <div style="padding:30px">
-            @include('layouts.page_template.location_header')
-            <div class="row table-responsive" style="display:flex;padding:10px;">
+        <div style="margin-right:15px">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a style="font-family: Arial, sans-serif;font-style:italic" href="{{route('BSLGUprofile.index')}}">Mellpi Pro for LGU Profile</a></li>
+              <li class="breadcrumb-item active" style="font-style:italic" aria-current="page">Form B: Barangay Profile Sheet -
+                <?php echo auth()->user()->barangay ?>
+              </li>
+            </ol>
+          </nav>
+        </div>
+
+        <div style="padding:30px">
+          @include('layouts.page_template.location_header')
+          <div class="row table-responsive" style="display:flex;padding:10px;">
             <table class="table table-striped table-hover">
               <thead style="background-color:#508D4E;">
                 <th class="text-center">&nbsp;</th>
@@ -205,10 +205,10 @@
             </table>
           </div>
 
-            </div>
         </div>
-        </div>
+      </div>
     </div>
+  </div>
 </div>
 </div>
 @endsection

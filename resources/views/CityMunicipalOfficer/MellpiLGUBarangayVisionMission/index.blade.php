@@ -1,10 +1,10 @@
 <script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.8/datatables.min.js"></script>
-
+<script src="https://cdn.lordicon.com/lordicon.js"></script>
 
 @extends('layouts.app', [
 'class' => 'sidebar-mini ',
 'namePage' => 'MELLPI PRO For LGU Profile',
-'activePage' => 'LGUPROFILE',
+'activePage' => 'VISION',
 'activeNav' => '',
 ])
 
@@ -71,7 +71,7 @@
                                 <td id="table-edit">
                                     <ul class="list-inline m-0">
                                         <li class="list-inline-item"> 
-                                            <i onclick="view('lguProfile','{{ $data->id }}','show')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                            <i onclick="view('visionmission','{{ $data->id }}','show')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
                                         </li>
                                         <li class="list-inline-item"> 
                                             <div class="cursor" id="Approved" type="button" onclick="openApproved('{{$data->id}}')">
@@ -101,45 +101,10 @@
 </div>
 
 
-<div class="modal fade" id="ApprovedModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Confirm Data</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-            This data will be added to Mellpi Pro for the LGU Report.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="bold btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="bold btn btn-primary" onclick="confirmApproved()">Proceed</button>
-            </div>
-        </div>
-    </div>
-</div>
+ 
+@include('Modal.Approved')
 
-<!-- Add report -->
-<div class="modal fade" id="DeclinedModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Confirm Declined</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-            This data will be set as a declined item on the barangay staff dashboard.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="bold btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="bold btn btn-primary" onclick="confirmDeclined()">Proceed</button>
-            </div>
-        </div>
-    </div>
-</div>
+<!-- alert Modal -->
+@include('Modal.Warning')
 
 @endsection

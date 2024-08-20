@@ -35,7 +35,7 @@ class CMOMellpiLGUProfileBarangayController  extends Controller
             ->where('lguprofilebarangay.status', 1) 
             ->get();
 
-        return view('CityMunicipalStaff.LGUReport', ['data' => $data]);
+        return view('CityMunicipalOfficer.LGUReport', ['data' => $data]);
         
     }
 
@@ -104,7 +104,7 @@ class CMOMellpiLGUProfileBarangayController  extends Controller
             ->where('lguprofilebarangay.status', 1) 
             ->get();
 
-        return view('CityMunicipalStaff.MellpiLGUProfileBarangay.index', ['data' => $data]);
+        return view('CityMunicipalOfficer.MellpiLGUProfileBarangay.index', ['data' => $data]);
     }
 
     /**
@@ -119,7 +119,7 @@ class CMOMellpiLGUProfileBarangayController  extends Controller
         $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
         
         $years = range(date("Y"), 1900);
-        return view('BarangayScholar.lguprofile.create', compact('prov', 'mun', 'city', 'brgy','years', 'action'));
+        return view('CityMunicipalOfficer.lguprofile.create', compact('prov', 'mun', 'city', 'brgy','years', 'action'));
     }
 
     /**
@@ -567,7 +567,7 @@ class CMOMellpiLGUProfileBarangayController  extends Controller
             ]);
 
 
-    return redirect('BarangayScholar/lguprofile')->with('success', 'Data created successfullySuccessfully!');
+    return redirect('CityMunicipalOfficer/lguprofile')->with('success', 'Data created successfullySuccessfully!');
     }
 
     /**
@@ -575,7 +575,7 @@ class CMOMellpiLGUProfileBarangayController  extends Controller
      */
     public function show(Request $request,string $id)
     {
-        $action = 'create'; 
+        $action = 'edit'; 
         $location = new LocationController;
         $prov = $location->getLocationDataProvince(auth()->user()->Region);
         $mun = $location->getLocationDataMuni(auth()->user()->Province);
@@ -584,9 +584,9 @@ class CMOMellpiLGUProfileBarangayController  extends Controller
 
         $years = range(date("Y"), 1900); 
 
-        $lguProfile = DB::table('lguprofilebarangay')->where('id', $id)->first();
+        $row = DB::table('lguprofilebarangay')->where('id', $id)->first();
 
-        return view('CityMunicipalStaff.MellpiLGUProfileBarangay.show',compact('lguProfile','prov', 'mun', 'city', 'brgy', 'years', 'action'));
+        return view('CityMunicipalOfficer.MellpiLGUProfileBarangay.show',compact('row','prov', 'mun', 'city', 'brgy', 'years', 'action'));
     }
 
     /**
@@ -607,7 +607,7 @@ class CMOMellpiLGUProfileBarangayController  extends Controller
         $row = DB::table('lguprofilebarangay')->where('user_id', auth()->user()->id)->first();
         //dd($lguProfile);
 
-        return view('BarangayScholar.lguprofile.edit',compact('row','prov', 'mun', 'city', 'brgy', 'years', 'action'));
+        return view('CityMunicipalOfficer.lguprofile.edit',compact('row','prov', 'mun', 'city', 'brgy', 'years', 'action'));
     }
 
     /**
@@ -1050,7 +1050,7 @@ class CMOMellpiLGUProfileBarangayController  extends Controller
           ]);
       }
       
-      return redirect('BarangayScholar/lguprofile')->with('success', 'Data updated successfullySuccessfully!');
+      return redirect('CityMunicipalOfficer/lguprofile')->with('success', 'Data updated successfullySuccessfully!');
   }
 
  public function destroy(Request $request, $id ) {
@@ -1060,7 +1060,7 @@ class CMOMellpiLGUProfileBarangayController  extends Controller
       $lguprofile->delete();
      
 
-      return redirect()->route('CMSLGUprofile.index')->with('success', 'Data updated Successfully!');
+      return redirect()->route('CMOLGUprofile.index')->with('success', 'Data updated Successfully!');
  }
   
 
@@ -1074,7 +1074,7 @@ class CMOMellpiLGUProfileBarangayController  extends Controller
         DB::table('barangaytracking')->where('lguprofilebarangay_id', $lguprofile->id)->update(['status' => '0']);
     }
   
-    return redirect()->route('CMSLGUprofile.index')->with('success', 'Data updated Successfully!');
+    return redirect()->route('CMOLGUprofile.index')->with('success', 'Data updated Successfully!');
  }
 
  public function approvedReport(Request $request) {
@@ -1123,7 +1123,7 @@ class CMOMellpiLGUProfileBarangayController  extends Controller
     }
   
  
-    return redirect()->route('CMSLGUprofile.index')->with('success', 'Data updated Successfully!');
+    return redirect()->route('CMOLGUprofile.index')->with('success', 'Data updated Successfully!');
     
 }
 
@@ -1138,7 +1138,7 @@ class CMOMellpiLGUProfileBarangayController  extends Controller
             DB::table('barangaytracking')->where('lguprofilebarangay_id', $lguprofile->id)->update(['status' => '3']);
         } 
         
-        return redirect()->route('CMSLGUprofile.index')->with('success', 'Data updated Successfully!');
+        return redirect()->route('CMOLGUprofile.index')->with('success', 'Data updated Successfully!');
  }
 
 

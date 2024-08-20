@@ -1,5 +1,5 @@
 <script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.8/datatables.min.js"></script>
-
+<script src="https://cdn.lordicon.com/lordicon.js"></script>
 
 @extends('layouts.app', [
 'class' => 'sidebar-mini ',
@@ -80,7 +80,7 @@
                                             </div>
                                         </li>
                                         <li class="list-inline-item"> 
-                                            <button></button>
+                                
                                                 <div class="cursor" id="Declined" type="button" onclick="openDeclined('{{$data->id}}')">
                                                 <i class="fa fa-times " title="Declined" style="color:red;position:absolute;z-index:2" aria-hidden="true"></i>
                                                 <i class="fa fa-file-o fa-lg" title="Declined" style="z-index:1;color:gray" aria-hidden="true"></i> 
@@ -121,6 +121,7 @@
     </div>
 </div>
 
+
 <!-- Add report -->
 <div class="modal fade" id="DeclinedModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -141,5 +142,13 @@
         </div>
     </div>
 </div>
+
+ <!-- alert Modal -->
+ @include('Modal.Approved')
+
+<!-- alert Modal -->
+@include('Modal.Warning')
+
+
 
 @endsection

@@ -1,11 +1,11 @@
 function openApproved(id) {
   profileId = id; // Store the ID
-  $('#ApprovedModal').modal('show'); // Show the modal
+  $('#approved').modal('show'); // Show the modal
 }
 
 function openDeclined(id) {
   profileId = id; // Store the ID
-  $('#DeclinedModal').modal('show'); // Show the modal
+  $('#warning').modal('show'); // Show the modal
 }
 
 
@@ -80,7 +80,7 @@ function confirmDeclined() {
 };
 
 
-//Fetch Report function
+//Fetch Report function LGU report
 $(document).ready(function () {
   function format(d) {
 
@@ -357,7 +357,7 @@ $(document).ready(function () {
 
   let table = new DataTable('#example1', {
     ajax: {
-       url: "https://nnc-nmis.moodlearners.com/CityMunicipalStaff/lguProfile/fetchreport",
+       url: "https://nnc-nmis.moodlearners.com/CityMunicipalOfficer/lguProfile/fetchreport",
       type: 'GET',
       dataSrc: 'data',
     },

@@ -12,6 +12,9 @@ $(function () {
         document.getElementById("formrequest").value = "draft";
         $("#form").submit();
     });
+
+    // warning
+    // AprrovedDocument
 });
 
 $(function () {
@@ -647,7 +650,7 @@ $(document).ready(function () {
     }
 
     function updateContent() {
-        $("#modalContent").html(content[currentPage]);
+        $("#modalContent").html(content[currentPage]); 
 
         // Populate fields with existing form data
         if (formData[currentPage]) {
