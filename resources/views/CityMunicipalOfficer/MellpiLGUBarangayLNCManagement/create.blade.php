@@ -30,7 +30,7 @@
 @extends('layouts.app', [
 'class' => 'sidebar-mini ',
 'namePage' => ' Mellpi Pro for LGU Profile',
-'activePage' => 'NutritionPolicies',
+'activePage' => 'LNCManagement',
 'activeNav' => '',
 ])
 
@@ -46,7 +46,7 @@
         @include('layouts.page_template.crud_alert_message')
 
         <div style="padding:25px">
-            <form action="{{ route('BSLGUprofilest.storeSubmit') }}" id="lgu-profile-form" method="POST">
+            <form action="{{ route('CMOLGUprofilest.storeSubmit') }}" id="lgu-profile-form" method="POST">
                 @csrf
                 
                 <input type="hidden" name="status" id="status"> 

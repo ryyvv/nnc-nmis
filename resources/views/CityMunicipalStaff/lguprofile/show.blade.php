@@ -715,6 +715,7 @@
                                     </div>
                                     <div class="col">
                                         <select id="loadProvince1" class="form-control" name="Isource" value="{{$row->Isource}}">
+                                            <option  value="" {{ old('Isource', $row->Isource) == 'null' ? 'selected' : '' }}>choose </option>
                                             <option value="NGA" {{ old('Isource', $row->Isource) == 'NGA' ? 'selected' : '' }}>NGA</option>
                                             <option value="LGU" {{ old('Isource', $row->Isource) == 'LGU' ? 'selected' : '' }}>LGU</option>
                                             <option value="NGO" {{ old('Isource', $row->Isource) == 'NGO' ? 'selected' : '' }}>NGO</option>
@@ -771,6 +772,7 @@
                                     </div>
                                     <div class="col">
                                         <select id="loadProvince1" class="form-control" name="IIAsource" value="{{$row->IIAsource}}">
+                                        <option  value="" {{ old('IIAsource', $row->Isource) == 'null' ? 'selected' : '' }}>choose </option>
                                             <option value="NGA" {{ old('IIAsource', $row->IIAsource) == 'NGA' ? 'selected' : '' }}>NGA
                                             </option>
                                             <option value="LGU" {{ old('IIAsource', $row->IIAsource) == 'LGU' ? 'selected' : '' }}>LGU
@@ -807,6 +809,7 @@
                                     </div>
                                     <div class="col">
                                         <select id="loadProvince1" class="form-control" name="IIBsource" value="{{$row->IIBsource}}">
+                                            <option  value="" {{ old('IIBsource', $row->Isource) == 'null' ? 'selected' : '' }}>choose </option>
                                             <option value="NGA" {{ old('IIBsource', $row->IIBsource) == 'NGA' ? 'selected' : '' }}>NGA
                                             </option>
                                             <option value="LGU" {{ old('IIBsource', $row->IIBsource) == 'LGU' ? 'selected' : '' }}>LGU
@@ -866,6 +869,7 @@
                                     </div>
                                     <div class="col">
                                         <select id="loadProvince1" class="form-control" name="IIIAsource" value="{{$row->IIIAsource}}">
+                                            <option  value="" {{ old('IIIAsource', $row->Isource) == 'null' ? 'selected' : '' }}>choose </option>
                                             <option value="NGA" {{ old('IIIAsource', $row->IIIAsource) == 'NGA' ? 'selected' : '' }}>NGA
                                             </option>
                                             <option value="LGU" {{ old('IIIAsource', $row->IIIAsource) == 'LGU' ? 'selected' : '' }}>LGU
@@ -903,6 +907,7 @@
                                     </div>
                                     <div class="col">
                                         <select id="loadProvince1" class="form-control" name="IIIBsource" value="{{$row->IIIBsource}}">
+                                            <option  value="" {{ old('IIIBsource', $row->Isource) == 'null' ? 'selected' : '' }}>choose </option>
                                             <option value="NGA" {{ old('IIIBsource', $row->IIIBsource) == 'NGA' ? 'selected' : '' }}>NGA
                                             </option>
                                             <option value="LGU" {{ old('IIIBsource', $row->IIIBsource) == 'LGU' ? 'selected' : '' }}>LGU
@@ -939,6 +944,7 @@
                                     </div>
                                     <div class="col">
                                         <select id="loadProvince1" class="form-control" name="IIICsource" value="{{$row->IIICsource}}">
+                                            <option  value="" {{ old('IIICsource', $row->Isource) == 'null' ? 'selected' : '' }}>choose </option>
                                             <option value="NGA" {{ old('IIICsource', $row->IIICsource) == 'NGA' ? 'selected' : '' }}>NGA
                                             </option>
                                             <option value="LGU" {{ old('IIICsource', $row->IIICsource) == 'LGU' ? 'selected' : '' }}>LGU
@@ -975,6 +981,7 @@
                                     </div>
                                     <div class="col">
                                         <select id="loadProvince1" class="form-control" name="IIIDsource" value="{{$row->IIIDsource}}">
+                                            <option  value="" {{ old('IIIDsource', $row->Isource) == 'null' ? 'selected' : '' }}>choose </option>
                                             <option value="NGA" {{ old('IIIDsource', $row->IIIDsource) == 'NGA' ? 'selected' : '' }}>NGA
                                             </option>
                                             <option value="LGU" {{ old('IIIDsource', $row->IIIDsource) == 'LGU' ? 'selected' : '' }}>LGU
@@ -1011,6 +1018,7 @@
                                     </div>
                                     <div class="col">
                                         <select id="loadProvince1" class="form-control" name="IIIEsource" value="{{$row->IIIEsource}}">
+                                            <option  value="" {{ old('IIIEsource', $row->Isource) == 'null' ? 'selected' : '' }}>choose </option>
                                             <option value="NGA" {{ old('IIIEsource', $row->IIIEsource) == 'NGA' ? 'selected' : '' }}>NGA
                                             </option>
                                             <option value="LGU" {{ old('IIIEsource', $row->IIIEsource) == 'LGU' ? 'selected' : '' }}>LGU
@@ -1047,6 +1055,7 @@
                                     </div>
                                     <div class="col">
                                         <select id="loadProvince1" class="form-control" name="IIIFsource" value="{{$row->IIIFsource}}">
+                                            <option  value="" {{ old('IIIFsource', $row->Isource) == 'null' ? 'selected' : '' }}>choose </option>
                                             <option value="NGA" {{ old('IIIFsource', $row->IIIFsource) == 'NGA' ? 'selected' : '' }}>NGA
                                             </option>
                                             <option value="LGU" {{ old('IIIFsource', $row->IIIFsource) == 'LGU' ? 'selected' : '' }}>LGU
@@ -1103,10 +1112,15 @@
                                             salt</label>
                                     </div>
                                     <div class="col">
-                                        <label for="exampleFormControlInput1">Dropdown</label>
+                                        <select id="loadProvince1" class="form-control" name="food_fortification" value="{{$row->food_fortification}}">
+                                            <option  value="" {{ old('food_fortification', $row->Isource) == 'null' ? 'selected' : '' }}>choose </option>
+                                            <option value="Equipment"{{ old('food_fortification', $row->IVAsource) == 'Equipment' ? 'selected' : '' }}>Equipment (WYD) </option>
+                                            <option value="Saktong" {{ old('food_fortification', $row->IVAsource) == 'Saktong' ? 'selected' : '' }}>Saktong Iodine sa Asin (SISA) </option> 
+                                        </select>   
                                     </div>
                                     <div class="col">
                                         <select id="loadProvince1" class="form-control" name="IVAsource" value="{{$row->IVAsource}}">
+                                            <option  value="" {{ old('IVAsource', $row->Isource) == 'null' ? 'selected' : '' }}>choose </option>
                                             <option value="NGA" {{ old('IVAsource', $row->IVAsource) == 'NGA' ? 'selected' : '' }}>NGA
                                             </option>
                                             <option value="LGU" {{ old('IVAsource', $row->IVAsource) == 'LGU' ? 'selected' : '' }}>LGU
@@ -1167,6 +1181,7 @@
                                     </div>
                                     <div class="col">
                                         <select id="loadProvince1" class="form-control" name="VAsource" value="{{$row->VAsource}}">
+                                            <option  value="" {{ old('VAsource', $row->Isource) == 'null' ? 'selected' : '' }}>choose </option>
                                             <option value="NGA" {{ old('VAsource', $row->VAsource) == 'NGA' ? 'selected' : '' }}>NGA</option>
                                             <option value="LGU" {{ old('VAsource', $row->VAsource) == 'LGU' ? 'selected' : '' }}>LGU</option>
                                             <option value="NGO" {{ old('VAsource', $row->VAsource) == 'NGO' ? 'selected' : '' }}>NGO</option>
@@ -1175,7 +1190,7 @@
                                         </select>
                                     </div>
                                     <div class="col">
-                                        <select id="loadProvince1" class="form-control" name="VAavailreceived" value="{{$row->VAavailreceived}}">
+                                        <select id="loadProvince1" class="form-control" name="VAavailreceived" value="{{$row->VAavailreceived}}"> 
                                             <option value="Yes" {{ old('VAavailreceived', $row->VAavailreceived) == 'Yes' ? 'selected' : '' }}>Yes </option>
                                             <option value="No" {{ old('VAavailreceived', $row->VAavailreceived) == 'No' ? 'selected' : '' }}>No </option>
                                         </select>

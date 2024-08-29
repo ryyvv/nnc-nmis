@@ -41,7 +41,7 @@ table {
             <div class="card-header">
                 <h5 class="title">{{__("Personnel Directory")}}</h5>
                 <div>
-                    <a class="btn btn-outline-primary" href="{{route('personnelDnaDirectory.create')}}">Add Personnel
+                    <a class="btn btn-outline-primary" href="{{route('CMSpersonnelDnaDirectory.create')}}">Add Personnel
                         DNA Directory</a>
                 </div>
             </div>

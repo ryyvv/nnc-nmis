@@ -25,6 +25,10 @@
         <div class="col flex">
             <div class="card">
                 <div class="card-header">
+                <div style="display: flex; align-items:center;">
+                        <a href="{{route('MellpiProRadialIndex.index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a>
+                        <h4>CREATE MELLPI PRO FOR LNFP FORM 6 and 7:</h4>
+                    </div>
                     <!-- @if(session('alert'))
                     <div class="alert alert-success" id="alert-message">
                         {{ session('alert') }}
@@ -34,46 +38,75 @@
                     @include('layouts.page_template.crud_alert_message')
 
                     <div>
-                        <form action="#" method="post">
+                        <!-- <form action="#" method="post"> -->
                             @csrf
 
                             @if($form6)
 
-                            <center><img src="https://nnc-nmis.moodlearners.com/assets/img/logo.png" alt="" class="imgLogo"></center><br>
+                            <!-- <center><img src="https://nnc-nmis.moodlearners.com/assets/img/logo.png" alt="" class="imgLogo"></center><br>
                             <center>
                                 <h5 class="title">{{__("MELLPI PRO FORM 6a: RADIAL DIEAGRAM FOR PROVINCIAL NUTRITION ACTION OFFICER MONITORING")}}</h5>
                                 <label for="period">For the period: </label>
                                 <select name="forTheperiod" id="forTheperiod" class="inputHeaderPeriod">
                                     <option selected>{{ $form6->periodCovereda }}</option>
                                     <?php
-                                    $currentYear = date('Y');
-                                    $startYear = 1900;
-                                    $endYear = $currentYear;
-                                    for ($year = $startYear; $year <= $endYear; $year++) {
-                                        echo "<option value=\"$year\">$year</option>";
-                                    }
+                                    // $currentYear = date('Y');
+                                    // $startYear = 1900;
+                                    // $endYear = $currentYear;
+                                    // for ($year = $startYear; $year <= $endYear; $year++) {
+                                    //     echo "<option value=\"$year\">$year</option>";
+                                    // }
                                     ?>
                                 </select>
-                            </center><br>
+                            </center><br> -->
+
+                            <div style="display:flex">
+                            <div class="form-group col">
+                                <label for="nameOf"> HEADER:<span style="color:red">*</span> </label>
+                                <select class="form-control" name="header" id="header">
+                                    <option>Select</option>
+                                    <!-- For provincial staff -->
+                                    @if( auth()->user()->role == 7 )
+                                    <option value="MELLPI PRO FORM 6a: RADIAL DIAGRAM FOR PROVINCIAL NUTRITION ACTION OFFICER MONITORING">MELLPI PRO FORM 6a: RADIAL DIAGRAM FOR PROVINCIAL NUTRITION ACTION OFFICER MONITORING</option>
+                                    <!-- For City Municipal staff -->
+                                    @elseif( auth()->user()->role == 7 || auth()->user()->role == 9 )
+                                    <option value="MELLPI PRO FORM 6b: RADIAL DIAGRAM FOR CITY/MUNICIPAL NUTRITION ACTION OFFICER MONITORING">MELLPI PRO FORM 6b: RADIAL DIAGRAM FOR CITY/MUNICIPAL NUTRITION ACTION OFFICER MONITORING</option>
+                                    <option value="MELLPI PRO FORM 6c.1: RADIAL DIAGRAM FOR DISTRICT NUTRITION PROGRAM COORDINATOR MONITORING">MELLPI PRO FORM 6c.1: RADIAL DIAGRAM FOR DISTRICT NUTRITION PROGRAM COORDINATOR MONITORING</option>
+                                    <option value="MELLPI PRO FORM 6c.2: RADIAL DIAGRAM FOR CITY/MUNICIPAL NUTRITION PROGRAM COORDINATOR MONITORING">MELLPI PRO FORM 6c.2: RADIAL DIAGRAM FOR CITY/MUNICIPAL NUTRITION PROGRAM COORDINATOR MONITORING</option>
+                                    <!-- For barangay staff -->
+                                    @elseif( auth()->user()->role == 7 || auth()->user()->role == 10 )
+                                    <option value="MELLPI PRO FORM 6d: RADIAL DIAGRAM FOR BARANGAY NUTRITION SCHOLAR MONITORING" selected >MELLPI PRO FORM 6d: RADIAL DIAGRAM FOR BARANGAY NUTRITION SCHOLAR MONITORING</option>
+                                    @endif
+                                </select>
+                            </div>
+                            
+                            </div>
 
                             <div class="formHeader">
                                 <div class="form-group col-md-6">
                                     <div class="form-group col-md-12">
-                                        <label for="nameOf">Name of PNAO:<span style="color:red">*</span></label>
-                                        <input class="inputHeader" required type="text" name="nameOf" id="nameOf" value="{{ $form6->nameofPnao }}">
+                                        <label for="nameOf">Name of PNAO:</label>
+                                        <h5> {{$form6->nameofPnao}}</h5>
+                                       
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label for="address">Area of Assignment:<span style="color:red">*</span></label>
-                                        <input class="inputHeader" required type="text" name="areaAssign" id="areaAssign" value="{{ $form6->address }}">
+                                        <label for="address">For the Period:</label>
+                                        <h5>{{$form6->periodCovereda}}</h5>
+                                        
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <div class="form-group col-md-12">
+                                        <label for="address">Area of Assignment:</label>
+                                        <h5>{{ $form6->address }}</h5>
+                                    </div>
+                                    <div class="form-group col-md-12">
                                         <label for="bday">Date of Monitoring:<span style="color:red">*</span></label>
-                                        <input class="form-control" type="date" name="dateMonitor" id="dateMonitor" value="{{ $form6->dateMonitoring }}">
+                                        <h5>{{\Carbon\Carbon::parse($form6->dateMonitoring)->format('F j y');}}</h5>
                                     </div>
                                 </div>
                             </div>
+                            <br />
                             <div class="form-row">
                                 <div class="col-md-12">
                                     <table id="equipInventoryTable" class="table table-striped table-bordered" style="width: 100%;">
@@ -86,7 +119,7 @@
                                                         <center>TARGET RATING</center>
                                                     </b></td>
                                                 <td class="col-md-2"><b>
-                                                        <center>PERFORMANCE RATING</center>
+                                                        <center>PERFORMANCE RATING(%)</center>
                                                     </b></td>
                                             </tr>
                                         </thead>
@@ -96,64 +129,80 @@
                                                     <center><b>A</b></center>
                                                 </td>
                                                 <td class="col-md-6"><input type="text" class="form6InputS" value="Coordination" readonly></td>
-                                                <td class="col-md-2"><input type="text" class="form6Input" value="100%" readonly></td>
-                                                <td class="col-md-2"><input type="text" class="form6Input" value="{{ ($form6->ratingA / 5) * 100 }}%" readonly></td>
+                                                <td class="col-md-2"><span><center>100%</center></span></td>
+                                                <input type="hidden" class="form6InputA" id="form6InputA" value="{{$form6->ratingA}}" >
+                                                <td class="col-md-2"><input type="text" class="form6Input" id="form6InputAveA" value="" readonly></td>
                                             </tr>
                                             <tr>
                                                 <td class="col-md-2">
                                                     <center><b>B</b></center>
                                                 </td>
                                                 <td class="col-md-6"><input type="text" class="form6InputS" value="Orientation, Promotion and Advocacy" readonly></td>
-                                                <td class="col-md-2"><input type="text" class="form6Input" value="100%" readonly></td>
-                                                <td class="col-md-2"><input type="text" class="form6Input" value="{{ ($form6->ratingB / 5) * 100 }}%" readonly></td>
+                                                <td class="col-md-2"><span><center>100%</center></span></td>
+                                                <input type="text" class="form6InputA" id="form6InputB" value="{{$form6->ratingB}}" >
+                                                <input type="text" class="form6InputA" id="form6InputBB" value="{{$form6->ratingBB}}" >
+                                                <td class="col-md-2"><input type="text" class="form6Input" id="form6InputAveB" value="" readonly></td>
                                             </tr>
                                             <tr>
                                                 <td class="col-md-2">
                                                     <center><b>C</b></center>
                                                 </td>
                                                 <td class="col-md-6"><input type="text" class="form6InputS" value="Planning" readonly></td>
-                                                <td class="col-md-2"><input type="text" class="form6Input" value="100%" readonly></td>
-                                                <td class="col-md-2"><input type="text" class="form6Input" value="{{ ($form6->ratingC / 5) * 100 }}%" readonly></td>
+                                                <td class="col-md-2"><span><center>100%</center></span></td>
+                                                <input type="hidden" class="form6InputA" id="form6InputC" value="{{$form6->ratingC}}" >
+                                                <td class="col-md-2"><input type="text" class="form6Input" id="form6InputAveC" value="" readonly></td>
                                             </tr>
                                             <tr>
                                                 <td class="col-md-2">
                                                     <center><b>D</b></center>
                                                 </td>
                                                 <td class="col-md-6"><input type="text" class="form6InputS" value="Implementation" readonly></td>
-                                                <td class="col-md-2"><input type="text" class="form6Input" value="100%" readonly></td>
-                                                <td class="col-md-2"><input type="text" class="form6Input" value="{{ ($form6->ratingD / 5) * 100 }}%" readonly></td>
+                                                <td class="col-md-2"><span><center>100%</center></span></td>
+                                                <input type="hidden" class="form6InputA" id="form6InputD" value="{{$form6->ratingD}}" >
+                                                <td class="col-md-2"><input type="text" class="form6Input" id="form6InputAveD" value="" readonly></td>
                                             </tr>
                                             <tr>
                                                 <td class="col-md-2">
                                                     <center><b>E</b></center>
                                                 </td>
                                                 <td class="col-md-6"><input type="text" class="form6InputS" value="Monitoring and Evaluation" readonly></td>
-                                                <td class="col-md-2"><input type="text" class="form6Input" value="100%" readonly></td>
-                                                <td class="col-md-2"><input type="text" class="form6Input" value="{{ ($form6->ratingE / 5) * 100 }}%" readonly></td>
+                                                <td class="col-md-2"><span><center>100%</center></span></td>
+                                                <input type="hidden" class="form6InputA" id="form6InputE" value="{{$form6->ratingE}}" >
+                                                <td class="col-md-2"><input type="text" class="form6Input" id="form6InputAveE" value="" readonly></td>
                                             </tr>
                                             <tr>
                                                 <td class="col-md-2">
                                                     <center><b>F</b></center>
                                                 </td>
                                                 <td class="col-md-6"><input type="text" class="form6InputS" value="Resource Generation" readonly></td>
-                                                <td class="col-md-2"><input type="text" class="form6Input" value="100%" readonly></td>
-                                                <td class="col-md-2"><input type="text" class="form6Input" value="{{ ($form6->ratingF / 5) * 100 }}%" readonly></td>
+                                                <td class="col-md-2"><span><center>100%</center></span></td>
+                                                <input type="hidden" class="form6InputA" id="form6InputF" value="{{$form6->ratingF}}" >
+                                                <td class="col-md-2"><input type="text" class="form6Input" id="form6InputAveF" value="" readonly></td>
                                             </tr>
                                             <tr>
                                                 <td class="col-md-2">
                                                     <center><b>G</b></center>
                                                 </td>
                                                 <td class="col-md-6"><input type="text" class="form6InputS" value="Capacity Development" readonly></td>
-                                                <td class="col-md-2"><input type="text" class="form6Input" value="100%" readonly></td>
-                                                <td class="col-md-2"><input type="text" class="form6Input" value="{{ ($form6->ratingG / 5) * 100 }}%" readonly></td>
+                                                <td class="col-md-2"><span><center>100%</center></span></td>
+                                                <input type="hidden" class="form6InputA" id="form6InputG" value="{{$form6->ratingG}}" >
+                                                <input type="hidden" class="form6InputA" id="form6InputGG" value="{{$form6->ratingGG}}" >
+                                                <td class="col-md-2"><input type="text" class="form6Input" id="form6InputAveG" value="" readonly></td>
                                             </tr>
                                             <tr>
                                                 <td class="col-md-2">
                                                     <center><b>H</b></center>
                                                 </td>
                                                 <td class="col-md-6"><input type="text" class="form6InputS" value="Documentation and record-keeping" readonly></td>
-                                                <td class="col-md-2"><input type="text" class="form6Input" value="100%" readonly></td>
-                                                <td class="col-md-2"><input type="text" class="form6Input" value="{{ ($form6->ratingH / 5) * 100 }}%" readonly></td>
+                                                <td class="col-md-2"><span><center>100%</center></span></td>
+                                                <input type="hidden" class="form6InputA" id="form6InputH" value="{{$form6->ratingH}}" >
+                                                <td class="col-md-2"><input type="text" class="form6Input" id="form6InputAveH" value="" readonly></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-md-2">&nbsp;</td>
+                                                <td class="col-md-6">&nbsp;</td>
+                                                <td class="col-md-2"><span><center><b>MELLPI PRO SCORE</b></center></span></td>
+                                                <td class="col-md-2"><input type="text" class="form6Input" id="form6InputScore" value="" readonly></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -168,6 +217,13 @@
                                         (($form6->ratingH * 100) / 5))/8
                                     }}"> -->
                                 </div>
+                            </div>
+                            <br />
+                            <br />
+                            <div>
+                            <center>
+                                <h5 class="title">{{__("Diagram for Changes in Nutritional Status")}}</h5>
+                            </center>
                             </div>
                             <div class="divChart">
                                 <canvas id="myRadarChart" width="400" height="400"></canvas>
@@ -243,14 +299,20 @@
                                     });
                                 </script>
                             </div>
-                        </form>
-                        <form action="{{ route('lnfpUpdateform7', $form6->form5_id) }}" id="lnfp-form7-edit" method="post">
+                        <!-- </form> -->
+                        <form action="{{ route('lnfpUpdateform7', $form6->id) }}" id="form" method="post">
                             @csrf
                             <div class="form-row">
                                 <div class="col-md-12">
                                     <center>
                                         <h5 class="title">{{__("MELLPI PRO FORM 7b : DISCUSSION QUESTION FOR LEARNING AND ACTION")}}</h5>
                                     </center>
+
+                                    <input type="hidden" name="lnfp_lgu_id" value="{{$form6->lnfp_lgu_id}}">
+                                    <input type="hidden" value="" name="status" id="status">
+                                    <input type="hidden" value="draft" name="formrequest" id="formrequest" />
+                                    <input type="hidden" value="{{ $form6->id }}" name="id" id="id" />
+
                                     <table id="form7Discussion" class="table table-striped table-bordered" style="width: 100%;">
                                         <thead>
                                             <tr>
@@ -338,7 +400,13 @@
                                         </tbody>
                                     </table>
                                     <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalUpdate">Save</button>
+                                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
+                                            Save as Draft
+                                        </button>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                                            Next Form
+                                        </button>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -361,33 +429,7 @@
                                     </div>
                                 </div>
                             </div> -->
-                            <div class="modal fade" id="exampleModalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="center modal-body" style="padding-bottom:50px; padding-left:50px;padding-right:50px;">
-                                            <div>
-                                                <lord-icon
-                                                    src="https://cdn.lordicon.com/yqiuuheo.json"
-                                                    trigger="hover"
-                                                    colors="primary:#109121,secondary:#d1fad7"
-                                                    style="width:150px;height:150px">
-                                                </lord-icon>
-                                            </div>
-                                            <!-- <div class="bold" style="font-size: 25px;color:#109121"> -->
-                                            <div class="bold" style="font-size: 25px;color:#59987e">
-                                                Confirm Submission?
-                                            </div>
-                                            <div style="padding-top: 10px;padding-bottom: 20px; font-size:15px">
-                                                Are you sure you want to submit?
-                                            </div>
-                                            <div>
-                                                <button type="button" style="margin-right:5px" class="bold btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                                                <button type="submit" id="lgu-draft" name="action" value="updateResponse" class="bold btn btn-danger" style="background-color:#59987e!important">YES</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+            
                         </form>
                     </div>
                 </div>
@@ -395,19 +437,17 @@
         </div>
     </div>
 </div>
+
+
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('DOM fully loaded and parsed');
-        setTimeout(function() {
-            var alertMessage = document.getElementById('alert-message');
-            if (alertMessage) {
-                console.log('Alert message found, hiding now');
-                alertMessage.style.display = 'none';
-            } else {
-                console.log('Alert message not found');
-            }
-        }, 3000);
+    $(document).ready(function() {
+        computePR();
     });
 </script>
-<script src="{{ asset('assets/js/autoGenerateInput.js') }}"></script>
+
+@include('Modal.Draft');
+@include('Modal.Submit');
+
+
+
 @endsection

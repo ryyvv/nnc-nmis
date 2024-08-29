@@ -126,4 +126,106 @@ function downloadPDF(id) {
     setTimeout(copyInputValueAndSubmit);
 }
 
+// Password Section
+$(document).ready(function () {
+    $('#togglePassword').on('change', function() {
+        var passwordInput = $('#password');
+        var confirmpasswordInput = $('#password_confirmation');
+        if ($(this).is(':checked')) {
+            passwordInput.attr('type', 'text');
+            confirmpasswordInput.attr('type', 'text');
+        } else {
+            passwordInput.attr('type', 'password');
+            confirmpasswordInput.attr('type', 'password');
+        }
+    });
 
+    $('#customSwitch1').on('change', function() {
+        if ($(this).is(':checked')) {
+            $('#updateAccountStatusBtn').removeAttr('disabled');
+            $('#userrole').removeAttr('disabled');
+            $('#userdesignation').removeAttr('disabled');
+            $('#userrequest').removeAttr('disabled');
+        } else {
+            $('#updateAccountStatusBtn').attr('disabled', 'disabled');
+            $('#userrole').attr('disabled', 'disabled');
+            $('#userdesignation').attr('disabled', 'disabled');
+            $('#userrequest').attr('disabled', 'disabled');
+        }
+    });
+
+    $('#userrequest').on('change', function() {
+        var requestValue = $(this).val();
+
+        if(requestValue == 1){
+            $('#userstatus').removeAttr('disabled');
+            $('#userstatus').val('1');
+            $('#hiddenuserstatus').val('1');
+        }else {
+            $('#hiddenuserstatus').val('2');
+            $('#userstatus').val('2');
+            $('#userstatus').attr('disabled', 'disabled');
+        }
+    });
+
+    $('#userstatus').on('change', function() {
+        var requestValuestatus = $(this).val();
+
+        if(requestValuestatus == 1){
+            $('#hiddenuserstatus').val('1');
+        }else {
+            $('#hiddenuserstatus').val('2');
+        }
+    });
+
+    // $('#customSwitch2').on('change', function() {
+    //     if ($(this).is(':checked')) {
+    //         // $('#updatePasswordBtn').removeAttr('disabled');
+    //         $('#password').removeAttr('disabled');
+    //         $('#password_confirmation').removeAttr('disabled');
+
+    //         if ($('#password').val().trim() !== '' && $('#password_confirmation').val().trim() !== '') {
+    //             $('#updatePasswordBtn').removeAttr('disabled');
+    //         } else {
+    //           $('#updatePasswordBtn').attr('disabled', 'disabled');
+    //         }
+    //     } else {
+    //         $('#password').attr('disabled', 'disabled');
+    //         $('#password_confirmation').attr('disabled', 'disabled');
+    //     }
+    // });
+
+
+    $('#customSwitch2').on('change', function() {
+        if ($(this).is(':checked')) {
+            // Enable the fields when the switch is checked
+            $('#password').removeAttr('disabled');
+            $('#password_confirmation').removeAttr('disabled');
+    
+            // Check if the fields have non-empty values
+            updateUpdateButtonState();
+        } else {
+            // Disable the fields and the button when the switch is unchecked
+            $('#password').attr('disabled', 'disabled');
+            $('#password_confirmation').attr('disabled', 'disabled');
+            $('#updatePasswordBtn').attr('disabled', 'disabled');
+        }
+    });
+    
+    // Function to update the state of the update button based on field values
+    function updateUpdateButtonState() {
+        if ($('#password').val().trim() !== '' && $('#password_confirmation').val().trim() !== '') {
+            $('#updatePasswordBtn').removeAttr('disabled');
+        } else {
+            $('#updatePasswordBtn').attr('disabled', 'disabled');
+        }
+    }
+    
+    // Also check the button state when the input values change
+    $('#password, #password_confirmation').on('input', function() {
+        if ($('#customSwitch2').is(':checked')) {
+            updateUpdateButtonState();
+        }
+    });
+    
+});

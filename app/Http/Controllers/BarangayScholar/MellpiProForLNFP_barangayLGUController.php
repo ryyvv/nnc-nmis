@@ -426,13 +426,13 @@ class MellpiProForLNFP_barangayLGUController extends Controller
                             'user_id' => auth()->user()->id,
                         ]);
 
-                        // $LNFPForm5arr = lnfp_form5a_rr::create([
-                        //     'lnfp_lgu_id' => $LNFPProfileBarangay->id,
-                        //     'lnfp_officer' => $LNFPProfileBarangay->lnfp_officer,
-                        //     'forThePeriod' => $LNFPProfileBarangay->periodCovereda,
-                        //     'dateMonitoring' => $LNFPProfileBarangay->dateMonitoring,
-                        //     'status' => 2
-                        // ]);
+                        lnfp_form5a_rr::create([
+                            'lnfp_lgu_id' => $LNFPProfileBarangay->id,
+                            'lnfp_officer' => $LNFPProfileBarangay->lnfp_officer,
+                            'forThePeriod' => $LNFPProfileBarangay->periodCovereda,
+                            'dateMonitoring' => $LNFPProfileBarangay->dateMonitoring,
+                            'status' => 2
+                        ]);
                     }
 
                     return redirect()->route('BSLGUprofileLNFPIndex.index')->with('success', 'Data stored successfully!');
@@ -938,13 +938,13 @@ class MellpiProForLNFP_barangayLGUController extends Controller
                             ]);
                         }
 
-                    // $LNFPForm5arr = lnfp_form5a_rr::create([
-                    //     'lnfp_lgu_id' => $request->id,
-                    //     'lnfp_officer' => $request->user_name,
-                    //     'forThePeriod' => $request->periodCovereda,
-                    //     'dateMonitoring' => $request->dateMonitoring,
-                    //     'status' => 2
-                    // ]);
+                        lnfp_form5a_rr::create([
+                            'lnfp_lgu_id' => $request->id,
+                            'lnfp_officer' => $request->lnfp_officer,
+                            'forThePeriod' => $request->periodCovereda,
+                            'dateMonitoring' => $request->dateMonitoring,
+                            'status' => 1
+                        ]);
 
                     return redirect()->route('BSLGUprofileLNFPIndex.index')->with('success', 'Data stored successfully!');
                 }

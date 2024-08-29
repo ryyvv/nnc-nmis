@@ -42,7 +42,7 @@
         <div class="form-row">
             <div id="tab-contents" class="col-md-12">
                 <div class="tab-content" id="tab1">
-                    <form action="{{ route('personnelDnaDirectory.storeNAO') }}" method="POST">
+                    <form action="{{ route('CMSpersonnelDnaDirectory.storeNAO') }}" method="POST">
                         @csrf
                         <div class="form-row">
                             <div class="form-group col-md-3">
@@ -221,7 +221,7 @@
                     </form>
                 </div>
                 <div class="tab-content" id="tab2">
-                    <form action="{{ route('personnelDnaDirectory.storeNPC') }}" method="POST">
+                    <form action="{{ route('CMSpersonnelDnaDirectory.storeNPC') }}" method="POST">
                         @csrf
                         <div class="form-row">
                             <div class="form-group col-md-3">
@@ -418,7 +418,7 @@
                     </form>
                 </div>
                 <div class="tab-content" id="tab3">
-                <form action="{{ route('personnelDnaDirectory.storeBNS') }}" method="POST">
+                <form action="{{ route('CMSpersonnelDnaDirectory.storeBNS') }}" method="POST">
                         @csrf
                         <div class="form-row">
                             <div class="form-group col-md-3">

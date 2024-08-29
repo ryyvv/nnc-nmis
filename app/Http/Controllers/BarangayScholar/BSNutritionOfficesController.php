@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\BarangayScholar;
 
-use App\Models\NutritionOfficesModel;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Region;
 use App\Models\Province;
 use App\Models\Municipal;
 use App\Models\Barangay;
+use App\Models\NutritionOfficesModel;
 use PhpParser\Node\Stmt\TryCatch;
 
-class NutritionOfficesController extends Controller
+class BSNutritionOfficesController extends Controller
 {
     //
     public function __construct()

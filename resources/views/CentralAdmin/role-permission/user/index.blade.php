@@ -93,8 +93,11 @@
                                 </td>
                                 <td>
                                     <div class="row">
-                                    <div class="d-flex" style="display:inline-block;text-align:center;border: 2px solid #3795BD;padding:4px;border-radius:15px; ">
-                                        <div style="border-radius:15px; border: 2px solid green; background-color: #3795BD; padding: 2px;margin-right:5px">
+
+
+                                    @if( $users->status == 1 )
+                                    <div class="d-flex" style="display:inline-block;text-align:center;border: 2px solid #28a745;padding:4px;border-radius:15px; ">
+                                        <div style="border-radius:15px; border: 2px solid #28a745; background-color: #28a745; padding: 2px;margin-right:5px">
                                             <lord-icon
                                                 src="https://cdn.lordicon.com/guqkthkk.json"
                                                 trigger="hover"
@@ -102,15 +105,36 @@
                                                 style="width:15px;height:15px">
                                             </lord-icon>
                                         </div>
-                                        <div class="bold" style="text-align:center;margin-right:8px"> {{$users->status}} </div>
+                                        <div class="bold" style="text-align:center;margin-right:8px;color:#28a745">Approved</div>
                                     </div>
+                                    @elseif( $users->status == 2 )
+                                    <div class="d-flex" style="display:inline-block;text-align:center;border: 2px solid #FF6969;padding:4px;border-radius:15px; ">
+                                        <div style="border-radius:15px; border: 2px solid white; background-color: #FF6969; padding: 2px;margin-right:5px"> 
+                                            <i class="fas fa-times" style="color:white;padding-left:2px;padding-right:2px"></i>
+                                        </div>
+                                        <div class="bold" style="text-align:center;margin-right:8px;color: #FF6969;">Declined</div>
                                     </div>
-                                    <!-- <button> {{$users->status}}</button> -->
+                                    @elseif( $users->status == 3 )
+                                    <div class="d-flex" style="display:inline-block;text-align:center;border: 2px solid #ffbe55;;padding:4px;border-radius:15px; ">
+                                        <div style="border-radius:15px; background-color: #ffbe55;; padding: 2px;margin-right:5px"> 
+                                            <lord-icon
+                                                src="https://cdn.lordicon.com/qvyppzqz.json"
+                                                trigger="hover"
+                                                stroke="bold"
+                                                colors="primary:#ffffff,secondary:#ffffff"
+                                                style="width:20px;height:20px">
+                                            </lord-icon>
+                                        </div>
+                                        <div class="bold" style="text-align:center;margin-right:8px;color:#ffbe55;">Pending</div>
+                                    </div>
+                                    @endif
+                            
+                                    </div> 
                                 </td>
 
                                 <td class="d-flex">
-                                    <i onclick="view('lguprofile','{{ $users->id }}','show')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
-                                    <i onclick="editlgu('{{ $users->id }}')" class="fa fa-edit fa-lg cursor" style="color:#FFB236;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Edit"></i>
+                                    <i onclick="view('admin','{{ $users->id }}','show')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                    <!-- <i onclick="editlgu('{{ $users->id }}')" class="fa fa-edit fa-lg cursor" style="color:#FFB236;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Edit"></i> -->
                                     <i onclick="openModal('{{ $users->id }}')" class="fa fa-trash fa-lg cursor" style="color:red;margin-right:10px" title="Delete "></i>
                                 </td>
 

@@ -12,7 +12,7 @@ class lnfp_formOverall extends Model
     protected $fillable = [
         'lnfp_lgu_id',
         'form5_id', 
-        'lnfp_form8',
+        'form8_id',
         'lnfp_officer',
         'name',
         'areaOfAssign',
@@ -36,12 +36,8 @@ class lnfp_formOverall extends Model
         'receivedBy',
         'whatDate',
         'status',
-
-        'barangay_id',
-        'municipal_id',
-        'province_id',
-        'region_id',
-        'user_id'
+        'header',
+        'formInterview_id',
     ];
 
     protected $guarded = ['id'];

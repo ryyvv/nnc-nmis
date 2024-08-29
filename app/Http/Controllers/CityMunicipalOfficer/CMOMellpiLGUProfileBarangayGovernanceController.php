@@ -27,13 +27,13 @@ class CMOMellpiLGUProfileBarangayGovernanceController extends Controller
          $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
  
          $barangay = auth()->user()->barangay;
-         $lguProfile = DB::table('visionmissions')->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();
+         $lguProfile = DB::table('mplgubrgygovernance')->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();
  
          // get Municipal id and user id 
         
          $data  = DB::table('municipals')
-             ->join('mellpiprobarangaynationalpolicies', 'municipals.id', '=', 'mellpiprobarangaynationalpolicies.municipal_id')
-             ->where('mellpiprobarangaynationalpolicies.status', 1) 
+             ->join('mplgubrgygovernance', 'municipals.id', '=', 'mplgubrgygovernance.municipal_id')
+             ->where('mplgubrgygovernance.status', 1) 
              ->get();
  
          return view('CityMunicipalStaff.VMReport', ['data' => $data]);
@@ -70,11 +70,11 @@ class CMOMellpiLGUProfileBarangayGovernanceController extends Controller
         $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
 
         $barangay = auth()->user()->barangay;
-        $lguProfile = DB::table('lguprofilebarangay')->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();
+        $lguProfile = DB::table('mplgubrgygovernance')->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();
 
         $data  = DB::table('municipals')
-        ->join('mellpiprobarangaynationalpolicies', 'municipals.id', '=', 'mellpiprobarangaynationalpolicies.municipal_id')
-        ->where('mellpiprobarangaynationalpolicies.status', 1) 
+        ->join('mplgubrgygovernance', 'municipals.id', '=', 'mplgubrgygovernance.municipal_id')
+        ->where('mplgubrgygovernance.status', 1) 
         ->get();
 
         return view('CityMunicipalOfficer.MellpiLGUBarangayGovernance.index', ['data' => $data]);

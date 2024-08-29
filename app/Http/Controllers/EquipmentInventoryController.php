@@ -3,179 +3,265 @@
 namespace App\Http\Controllers;
 
 use App\Models\EquipmentInventoryModel;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
+use App\Models\PsgcCity;
+use App\Models\PsgcEquipmentInventory;
+use App\Models\PsgcMunicipality;
+use App\Models\PsgcProvince;
+use App\Models\PsgcRegion;
+use App\Models\Region;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EquipmentInventoryController extends Controller
 {
-
-    public function getProvinces()
-    {
-        try {
-            $provinces = DB::connection('nnc_db')->table('provinces')->get(['id', 'province']);
-            return response()->json($provinces);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to fetch provinces data. Please try again later.'], 500);
-        }
-    }
-
-    public function getProvincesByRegion($regionId)
-    {
-        try {
-            $provinces = DB::connection('nnc_db')->table('provinces')->where('region_id', $regionId)->get(['provcode', 'province']);
-            return response()->json($provinces);
-        } catch (\Exception $e) { 
-            return response()->json(['error' => 'Failed to fetch provinces data. Please try again later.'], 500);
-        }
-    }
-
-    public function getCitiesByProvince($provcode)
-    {
-        try {
-            $cities = DB::connection('nnc_db')->table('cities')->where('provcode', $provcode)->get(['provcode', 'cityname']);
-            return response()->json($cities);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to fetch cities data. Please try again later.'], 500);
-        }
-    }    
-
     public function getRegions()
     {
-        try {
-            $regions = DB::connection('nnc_db')->table('regions')->get(['id', 'region']);
-            return response()->json($regions);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to fetch regions data. Please try again later.'], 500);
-        }
+        $regions = PsgcRegion::all();
+        return response()->json($regions);
     }
 
-    //
-    public function __construct()
+    public function getProvinces($region_code)
     {
-        $this->middleware('auth');
+        $provinces = PsgcProvince::where('reg_code', $region_code)->get();
+        return response()->json($provinces);
     }
-     
+
+    public function getCities($province_code) {
+        $cities = PsgcCity::where('prov_code', $province_code)->get();
+        return response()->json($cities);
+    }
+
+    public function getCitiesAndMunicipalitiesWithEquipmentInventory($province_code)
+    {
+        $region_code = 14;
+        $provinces = PsgcProvince::where('reg_code', $region_code)->get();
+        
+        $cities = PsgcCity::where('prov_code', $province_code)->get();
+        $municipalities = PsgcMunicipality::where('prov_code', $province_code)->get();
+        $inventory = PsgcEquipmentInventory::where('prov_code', $province_code)->first();
+        
+    
+        $combined = $cities->merge($municipalities);
+        
+        foreach ($combined as $location) {
+
+            if (!$inventory) {
+                PsgcEquipmentInventory::create([
+                    'psgc_code' => $location->psgc_code,
+                    'name' => $location->name,
+                    'correspondence_code' => $location->correspondence_code,
+                    'reg_code' => $location->reg_code,
+                    'prov_code' => $location->prov_code,
+                    'citymun_code' => $location->citymun_code,
+                    'total_barangay' => 0,
+                    'wooden_hb' => 0,
+                    'non_wooden_hb' => 0,
+                    'defective_hb' => 0.00,
+                    'total_hb' => 0.00,
+                    'availability_hb' => 0.00,
+                    'steel_rules' => 0,
+                    'microtoise' => 0,
+                    'infantometer' => 0,
+                    'remarks_hb' => '',
+                    'hanging_type' => 0,
+                    'defective_ws' => 0,
+                    'total_ws' => 0.00,
+                    'availability_ws' => 0.00,
+                    'infat_scale' => 0,
+                    'beam_balance' => 0,
+                    'remarks_ws' => '',
+                    'child' => 0,
+                    'defective_muac_child' => 0,
+                    'total_muac_child' => 0.00,
+                    'availability_muac_child' => 0.00,
+                    'adults' => 0,
+                    'defective_muac_adults' => 0,
+                    'total_muac_adults' => 0.00,
+                    'availability_muac_adults' => 0.00,
+                    'remarks_muac' => '',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+        }
+
+        $citiesWithInventory = PsgcEquipmentInventory::where('prov_code', $province_code)->get();
+
+        return response()->json($citiesWithInventory);
+    }
+
+    public function getCitiesWithEquipmentInventory($province_code)
+    {
+        $cities = PsgcCity::where('prov_code', $province_code)->get();
+        $inventory = PsgcEquipmentInventory::where('prov_code', $province_code)->first();
+        
+        foreach ($cities as $city) {
+            if (!$inventory) {
+                PsgcEquipmentInventory::create([
+                    'psgc_code' => $city->psgc_code,
+                    'name' => $city->name,
+                    'correspondence_code' => $city->correspondence_code,
+                    'reg_code' => $city->reg_code,
+                    'prov_code' => $city->prov_code,
+                    'citymun_code' => $city->citymun_code,
+                    'total_barangay' => 0,
+                    'wooden_hb' => 0,
+                    'non_wooden_hb' => 0,
+                    'defective_hb' => 0.00,
+                    'total_hb' => 0.00,
+                    'availability_hb' => 0.00,
+                    'steel_rules' => 0,
+                    'microtoise' => 0,
+                    'infantometer' => 0,
+                    'remarks_hb' => '',
+                    'hanging_type' => 0,
+                    'defective_ws' => 0,
+                    'total_ws' => 0.00,
+                    'availability_ws' => 0.00,
+                    'infat_scale' => 0,
+                    'beam_balance' => 0,
+                    'remarks_ws' => '',
+                    'child' => 0,
+                    'defective_muac_child' => 0,
+                    'total_muac_child' => 0.00,
+                    'availability_muac_child' => 0.00,
+                    'adults' => 0,
+                    'defective_muac_adults' => 0,
+                    'total_muac_adults' => 0.00,
+                    'availability_muac_adults' => 0.00,
+                    'remarks_muac' => '',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+        }
+
+        $citiesWithInventory = PsgcEquipmentInventory::where('prov_code', $province_code)->get();
+
+        return response()->json($citiesWithInventory);
+    }
+    
+    public function getCityWithEquipmentInventory($psgc_code)
+    {
+        $city = PsgcCity::where('psgc_code', $psgc_code)->first();
+        $inventory = PsgcEquipmentInventory::where('psgc_code', $psgc_code)->first();
+        
+        if (!$inventory) {
+            PsgcEquipmentInventory::create([
+                'psgc_code' => $city->psgc_code,
+                'name' => $city->name,
+                'correspondence_code' => $city->correspondence_code,
+                'reg_code' => $city->reg_code,
+                'prov_code' => $city->prov_code,
+                'citymun_code' => $city->citymun_code,
+                'total_barangay' => 0,
+                'wooden_hb' => 0,
+                'non_wooden_hb' => 0,
+                'defective_hb' => 0.00,
+                'total_hb' => 0.00,
+                'availability_hb' => 0.00,
+                'steel_rules' => 0,
+                'microtoise' => 0,
+                'infantometer' => 0,
+                'remarks_hb' => '',
+                'hanging_type' => 0,
+                'defective_ws' => 0,
+                'total_ws' => 0.00,
+                'availability_ws' => 0.00,
+                'infat_scale' => 0,
+                'beam_balance' => 0,
+                'remarks_ws' => '',
+                'child' => 0,
+                'defective_muac_child' => 0,
+                'total_muac_child' => 0.00,
+                'availability_muac_child' => 0.00,
+                'adults' => 0,
+                'defective_muac_adults' => 0,
+                'total_muac_adults' => 0.00,
+                'availability_muac_adults' => 0.00,
+                'remarks_muac' => '',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
+        $cityWithInventory = PsgcEquipmentInventory::where('psgc_code', $psgc_code)->first();
+
+        return response()->json($cityWithInventory);
+    }
+
+    public function getMunicipalities($province_code)
+    {
+        $municipalities = PsgcMunicipality::where('prov_code', $province_code)->get();
+        return response()->json($municipalities);
+    }
+    
+    public function getCitiesAndMunicipalities($province_code)
+    {
+        $cities = PsgcCity::where('prov_code', $province_code)->get();
+        $municipalities = PsgcMunicipality::where('prov_code', $province_code)->get();
+    
+        // Merge cities and municipalities
+        $combined = $cities->merge($municipalities);
+    
+        return response()->json($combined);
+    }
+
+    public function getCitiesInNCR($region_code)
+    {
+        $cities = PsgcCity::where('reg_code', $region_code)->get();
+        return response()->json($cities);
+    }
+
+    public function getMunicipalitiesInNCR($region_code)
+    {
+        $municipalities = PsgcMunicipality::where('reg_code', $region_code)->get();
+        return response()->json($municipalities);
+    }
+
+    public function getCitiesAndMunicipalitiesInNCR($region_code)
+    {
+        $cities = PsgcCity::where('reg_code', $region_code)->get();
+        $municipalities = PsgcMunicipality::where('reg_code', $region_code)->get();
+    
+        // Merge cities and municipalities
+        $combined = $cities->merge($municipalities);
+    
+        return response()->json($combined);
+    }
+    
     public function index()
     {
-        $equipmentInventory = EquipmentInventoryModel::get();
-        // get the total of each column in Equipment inventory
-        // $grandTotalBarangay = DB::table('equipment_inventory')->sum('equipment_inventory.totalBarangay');
-        $granTotal = DB::table('equipment_inventory')
-            ->select(
-                DB::raw('SUM("totalBarangay") as totalBarangay'), 
-                DB::raw('SUM("woodenHB") as woodenHB'),
-                DB::raw('SUM("nonWoodenHB") as nonWoodenHB'),
-                DB::raw('SUM("defectiveHB") as defectiveHB'),
-                DB::raw('SUM("totalHB") as totalHB'),
-                // DB::raw('SUM("availabilityHB") as availabilityHB'),
-                DB::raw('SUM("steelRules") as steelRules'),
-                DB::raw('SUM("microtoise") as microtoise'),
-                DB::raw('SUM("infantometer") as infantometer'),
-                DB::raw('SUM("hangingType") as hangingType'),
-                DB::raw('SUM("defectiveWS") as defectiveWS'),
-                DB::raw('SUM("totalWS") as totalWS'),
-                // DB::raw('SUM("availabilityWS") as availabilityWS'),
-                DB::raw('SUM("infatScale") as infatScale'),
-                DB::raw('SUM("beamBalance") as beamBalance'),
-                DB::raw('SUM("child") as child'),
-                DB::raw('SUM("defectiveMUAC_child") as defectiveMUAC_child'),
-                DB::raw('SUM("totalMUAC_Child") as totalMUAC_Child'),
-                // DB::raw('SUM("availabilityMUAC_child") as availabilityMUAC_child'),
-                DB::raw('SUM("adults") as adults'),
-                DB::raw('SUM("defectiveMUAC_adults") as defectiveMUAC_adults'),
-                DB::raw('SUM("totalMUAC_adults") as totalMUAC_adults'),
-                // DB::raw('SUM("availabilityMUAC_adults") as availabilityMUAC_adults'),
-                )->first();
-            $availabilityHB = ($granTotal->totalhb / $granTotal->totalbarangay) * 100;
-            $availabilityWS = ($granTotal->totalws / $granTotal->totalbarangay) * 100;
-            $availabilityMUAC_child = ($granTotal->totalmuac_child / $granTotal->totalbarangay) * 100;
-            $availabilityMUAC_adults = ($granTotal->totalmuac_adults / $granTotal->totalbarangay) * 100;
+        $EquipmentInventory = EquipmentInventoryModel::with(['psgc','municipal', 'psgc_cities'])->get();
+        
+        $grandTotal = [
+            'totalBarangay' => EquipmentInventoryModel::sum('totalBarangay'),
+            'woodenHB' => EquipmentInventoryModel::sum('woodenHB'),
+            'nonWoodenHB' => EquipmentInventoryModel::sum('nonWoodenHB'),
+            'defectiveHB' => EquipmentInventoryModel::sum('defectiveHB'),
+            'totalHB' => EquipmentInventoryModel::sum('totalHB'),
+            'availabilityHB' => EquipmentInventoryModel::sum('availabilityHB'),
+            'steelRules' => EquipmentInventoryModel::sum('steelRules'),
+            'microtoise' => EquipmentInventoryModel::sum('microtoise'),
+            'infantometer' => EquipmentInventoryModel::sum('infantometer'),
+            'hangingType' => EquipmentInventoryModel::sum('hangingType'),
+            'defectiveWS' => EquipmentInventoryModel::sum('defectiveWS'),
+            'totalWS' => EquipmentInventoryModel::sum('totalWS'),
+            'availabilityWS' => EquipmentInventoryModel::sum('availabilityWS'),
+            'infatScale' => EquipmentInventoryModel::sum('infatScale'),
+            'beamBalance' => EquipmentInventoryModel::sum('beamBalance'),
+            'child' => EquipmentInventoryModel::sum('child'),
+            'defectiveMUAC_child' => EquipmentInventoryModel::sum('defectiveMUAC_child'),
+            'totalMUAC_Child' => EquipmentInventoryModel::sum('totalMUAC_Child'),
+            'availabilityMUAC_child' => EquipmentInventoryModel::sum('availabilityMUAC_child'),
+            'adults' => EquipmentInventoryModel::sum('adults'),
+            'defectiveMUAC_adults' => EquipmentInventoryModel::sum('defectiveMUAC_adults'),
+            'totalMUAC_adults' => EquipmentInventoryModel::sum('totalMUAC_adults'),
+            'availabilityMUAC_adults' => EquipmentInventoryModel::sum('availabilityMUAC_adults'),
+        ];
 
-        return view('equipment_inventory/create.equipmentInventoryIndex', [
-            'EquipmentInventory' => $equipmentInventory,
-            'totalBarangay' => $granTotal->totalbarangay,
-            'woodenHB' => $granTotal->woodenhb,
-            'nonWoodenHB' => $granTotal->nonwoodenhb,
-            'defectiveHB' => $granTotal->defectivehb,
-            'totalHB' => $granTotal->totalhb,
-            'availabilityHB' => $availabilityHB,
-            'steelRules' => $granTotal->steelrules,
-            'microtoise' => $granTotal->microtoise,
-            'infantometer' => $granTotal->infantometer,
-            'hangingType' => $granTotal->hangingtype,
-            'defectiveWS' => $granTotal->defectivews,
-            'totalWS' => $granTotal->totalws,
-            'availabilityWS' => $availabilityWS,
-            'infatScale' => $granTotal->infatscale,
-            'beamBalance' => $granTotal->beambalance,
-            'child' => $granTotal->child,
-            'defectiveMUAC_child' => $granTotal->defectivemuac_child,
-            'totalMUAC_Child' => $granTotal->totalmuac_child,
-            'availabilityMUAC_child' => $availabilityMUAC_child,
-            'adults' => $granTotal->adults,
-            'defectiveMUAC_adults' => $granTotal->defectivemuac_adults,
-            'totalMUAC_adults' => $granTotal->totalmuac_adults,
-            'availabilityMUAC_adults' => $availabilityMUAC_adults
-
-        ]);
+        // use compact for multiple data passing
+        return view('equipment_inventory.index', compact('EquipmentInventory','grandTotal'));
     }
-
-    public function create()
-    {
-        return view('equipment_inventory/create.equipmentInventory'); 
-    }
-
-    public function store(Request $request) {
-
-        try {
-          
-            $addEquipmentInventory = new EquipmentInventoryModel;
-
-            $addEquipmentInventory->totalBarangay  =   $request->input('inputtotalBarangay');
-            $addEquipmentInventory->woodenHB  =        $request->input('inputWHB');
-            $addEquipmentInventory->nonWoodenHB  =     $request->input('inputNonWHB');
-            $addEquipmentInventory->defectiveHB  =     $request->input('inputHBNonF');
-            $addEquipmentInventory->totalHB  =         $request->input('inputTotalHB');
-            $addEquipmentInventory->availabilityHB  =  $request->input('inputHBpercent');
-            $addEquipmentInventory->steelRules  =      $request->input('inputSteelRules');
-            $addEquipmentInventory->microtoise  =       $request->input('inputMicrotoise');
-            $addEquipmentInventory->infantometer  =      $request->input('inputInfantometer');
-            $addEquipmentInventory->remarksHB  =        $request->input('inputHBRemarks');
-            $addEquipmentInventory->hangingType  =   $request->input('inputWSHanging');
-            $addEquipmentInventory->defectiveWS  =   $request->input('inputWSNonF');
-            $addEquipmentInventory->totalWS  =   $request->input('inputTotalWS');
-            $addEquipmentInventory->availabilityWS  =   $request->input('inputWSpercent');
-            $addEquipmentInventory->infatScale  =   $request->input('inputInfantScale');
-            $addEquipmentInventory->beamBalance  =   $request->input('inputBeamBalance');
-            $addEquipmentInventory->remarksWS  =   $request->input('inputWSRemarks');
-            $addEquipmentInventory->child  =       $request->input('inputMChild');
-            $addEquipmentInventory->defectiveMUAC_child  =   $request->input('inputMNonFChild');
-            $addEquipmentInventory->totalMUAC_Child  =   $request->input('inputTotalChild');
-            $addEquipmentInventory->availabilityMUAC_child  =   $request->input('inputChildpercent');
-            $addEquipmentInventory->adults  =   $request->input('inputMAdult');
-            $addEquipmentInventory->defectiveMUAC_adults  =   $request->input('inputMNonFAdult');
-            $addEquipmentInventory->totalMUAC_adults  =   $request->input('inputTotalAdult');
-            $addEquipmentInventory->availabilityMUAC_adults  =   $request->input('inputAdultpercent');
-            $addEquipmentInventory->remarksMUAC  =   $request->input('inputMRemarks');
-
-            $addEquipmentInventory->psgccode_id  =   $request->input('inputPSGC');
-            $addEquipmentInventory->psgccode_id  =   $request->input('inputPSGC');
-
-            $addEquipmentInventory->region_id  =   $request->input('inputRegion');
-            $addEquipmentInventory->region_id  =   $request->input('inputRegion');
-
-            $addEquipmentInventory->province_id  =   $request->input('inputProvince');
-            $addEquipmentInventory->province_id  =   $request->input('inputProvince');
-
-            $addEquipmentInventory->municipal_id  =   $request->input('inputCM');
-            $addEquipmentInventory->municipal_id  =   $request->input('inputCM');
-
-            $addEquipmentInventory->save();
-            return redirect()->back()->with('success', 'Equipment Inventory added successfully.');
-        } catch (\Throwable $th) {
-            //throw $th;
-            return "An error occurred: " . $th->getMessage();
-        }
-    }
+    
 }

@@ -6,6 +6,16 @@ $(function () {
         $("#form").submit();
     });
 
+    $("#savechanges").on("click", function (e) {
+        $("#formuserstatusupdate").submit();
+    });
+
+    $("#updatePasswordSubmit").on("click", function (e) {
+        $("#formuserpasswordupdate").submit();
+    });
+
+
+
     // Draft LGU Profile
     $("#draft").on("click", function (e) {
         document.getElementById("status").value = 2;
@@ -38,6 +48,7 @@ $(function () {
 function view(url, id, action) {
     window.location.href = url + "/" + id + "/" + action;
 }
+
 $(function () {
     // Submit LGU Profile
     $("#nutritionService-submit").on("click", function (e) {
@@ -517,9 +528,7 @@ $(document).ready(function () {
             SocialcalculateRowTotal($(this));
         });
     }
-    
-    // Initial calculation (if values are pre-filled)
-    // recalculateAllRows();
+ 
 
 
     const content = [
@@ -563,11 +572,11 @@ $(document).ready(function () {
                     '<label class="bold label1" for="field2">Source of Funds</label>' +
                     '<select class="form-control" name="sourceoffund"  id="sourceoffund">'+
                     ' <option selected value="">Please select one</option>'+
-                    '<option value="local" >local</option>'+
-                    '<option value="Provincial Government" >Provincial Government</option>'+
-                    '<option value="National" >National</option>'+
-                    '<option value="External" >External</option>'+
-                    '<option value="City/Municipal" >City/Municipal</option>'+
+                    '<option value="barangay" >local</option>'+
+                    '<option value="provincial" >Provincial Government</option>'+
+                    '<option value="national" >National</option>'+
+                    '<option value="external" >External</option>'+
+                    '<option value="municipal" >City/Municipal</option>'+
                 '</select>'+
                 "</div>" ,
 
@@ -687,9 +696,9 @@ $(document).ready(function () {
         updateContent();
     });
 
-    function red() {
-        alert('alert!');
-    }
+    // function red() {
+    //     alert('alert!');
+    // }
 
     $("#addToTable").on("click", function () {
         saveFormData();
@@ -711,11 +720,11 @@ $(document).ready(function () {
             <td>
                 <select disabled class="inputstyleNone" type="text" name="sourceoffund[]">
                 <option selected value="">Please select one</option>
-                <option value="local" ${formData[1]?.sourceoffund === "local" ? "selected" : ""}>local</option>
-                <option value="Provincial Government" ${formData[1]?.sourceoffund === "Provincial Government" ? "selected" : ""}>Provincial Government</option>
-                <option value="National" ${formData[1]?.sourceoffund === "National" ? "selected" : ""}>National</option>
-                <option value="External" ${formData[1]?.sourceoffund === "External" ? "selected" : ""}>External</option>
-                <option value="City/Municipal" ${formData[1]?.sourceoffund === "City/Municipal" ? "selected" : ""}>City/Municipal</option>
+                <option value="barangay" ${formData[1]?.sourceoffund === "Barangay" ? "selected" : ""}>Local</option>
+                <option value="provincial" ${formData[1]?.sourceoffund === "provincial" ? "selected" : ""}>Provincial Government</option>
+                <option value="national" ${formData[1]?.sourceoffund === "national" ? "selected" : ""}>National</option>
+                <option value="external" ${formData[1]?.sourceoffund === "external" ? "selected" : ""}>External</option>
+                <option value="municipal" ${formData[1]?.sourceoffund === "municipal" ? "selected" : ""}>City/Municipal</option>
                 </select>
             </td>
             <td><input readonly class="inputstyleNone" type="text" name="personel_service[]" value="${formData[2]?.personel_service || ""}" required></td>
@@ -938,5 +947,131 @@ $(document).ready(function () {
         $("#editModal").modal("hide");
 
         recalculateAllRows();
+    });
+});
+
+
+
+// BudgetAIP SocialS
+$(document).ready(function () {
+
+   //Function to calculate the total for a row
+   function SScalculateRowTotal(row) {
+
+        let SSpersonalService = parseFloat($(row).find('#personel_service').val()) || 0;
+        let SSMOOE = parseFloat($(row).find('#mooe').val()) || 0;
+        let SSCapitalOutlay = parseFloat($(row).find('#capital_outlay').val()) || 0;
+        let SSColumnSubtotal = (SSpersonalService+SSMOOE+SSCapitalOutlay);
+
+        let SSstructure  = parseFloat($(row).find('.amount').val()) || 0;
+        let SSnutritionSensitive  = parseFloat($(row).find('.amount').val()) || 0;
+        let SSEnablingMecanism  = parseFloat($(row).find('.amount').val()) || 0;
+
+
+        let category = $(row).find('#sourceoffund').val();
+        //let total = amount; // Assuming total is just the amount for now
+
+        // Set the row total
+        // $(row).find('#total').val(SSColumnSubtotal.toFixed(2));
+
+        // Update the subtotal based on the category
+        SSupdateCategorySubtotal(category ,SSpersonalService ,SSMOOE ,SSCapitalOutlay ,SSstructure ,SSnutritionSensitive ,SSEnablingMecanism );
+    }
+ 
+
+
+
+
+
+    // grantotalSS
+    function calculateGrandTotalSSbarangay() {
+        let grandTotal = 0;
+
+        // make it array
+
+        //SSPSbarangay
+        $('#SSPSbarangay').each(function(){
+            let value = parseFloat($(this).val()) || 0;
+            grandTotal += value;
+        });
+
+        //SSPSmunicipal
+        $('#SSPSmunicipal').each(function(){
+            let value = parseFloat($(this).val()) || 0;
+            grandTotal += value;
+        });
+
+        //SSPSprovincial
+        $('#SSPSprovincial').each(function(){
+            let value = parseFloat($(this).val()) || 0;
+            grandTotal += value;
+        });
+
+        //SSPSnational
+        $('#SSPSprovincial').each(function(){
+            let value = parseFloat($(this).val()) || 0;
+            grandTotal += value;
+        });
+
+        //SSPSexternal
+        $('#SSPSexternal').each(function(){
+            let value = parseFloat($(this).val()) || 0;
+            grandTotal += value;
+        });
+
+        $('#SSPSTSSS').val(grandTotal.toFixed(2));
+    };
+
+    $('#SSPSbarangay').on('change keyup', function() {
+        SScalculateRowTotal();
+    });
+
+    $('#SSPSmunicipal').on('change keyup', function() {
+        calculateGrandTotalSSbarangay();
+    });
+
+    $('#SSPSprovincial').on('change keyup', function() {
+        calculateGrandTotalSSbarangay();
+    });
+
+    $('#SSPSnational').on('change keyup', function() {
+        calculateGrandTotalSSbarangay();
+    });
+
+    $('#SSPSexternal').on('change keyup', function() {
+        calculateGrandTotalSSbarangay();
+    });
+
+
+    // Function to update the subtotal for a specific category
+    function SSupdateCategorySubtotal(category) {
+        let subtotals = {
+            
+            barangay:  0,
+            municipal: 0,
+            province:  0,
+            national:  0,
+            external:  0,
+        };
+
+         // Iterate through each row to calculate category subtotals
+         $('#dataTable tbody tr').each(function () {
+            let category = $(this).find('#category').val();
+            let rowTotal = parseFloat($(this).find('.row-total').val()) || 0;
+            subtotals[category] += rowTotal;
+        });
+
+        // Update the subtotal inputs
+        $('#localTotal').val(subtotals.local.toFixed(2));
+        $('#nationalTotal').val(subtotals.national.toFixed(2));
+        $('#externalTotal').val(subtotals.external.toFixed(2));
+    }
+
+
+    //Calculation for calculateGrandTotalSSbarangay
+    calculateGrandTotalSSbarangay();
+     // Initial calculation when the document is ready
+     $('#dataTable tbody tr').each(function () {
+        SScalculateRowTotal(this);
     });
 });

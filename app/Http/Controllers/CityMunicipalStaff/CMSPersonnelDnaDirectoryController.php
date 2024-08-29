@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
 
+namespace App\Http\Controllers\CityMunicipalStaff;
+
+use App\Http\Controllers\Controller;
 use App\Models\PersonnelDnaDirectoryModel;
 use App\Models\PersonnelDnaDirectoryNaoModel;
 use App\Models\PersonnelDnaDirectoryNpcModel;
@@ -14,7 +16,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
-class PersonnelDnaDirectoryController extends Controller
+class CMSPersonnelDnaDirectoryController extends Controller
 {
     // public function getProvinces()
     // {
@@ -126,10 +128,14 @@ class PersonnelDnaDirectoryController extends Controller
                     'civilstatus' => $request -> inputCivilStatus,
                     'educationalbackground' => $request->inputEB,
                     'degreeCourse' => $request->inputDegree,
-                    'region_id' => $request->inputRegionNAO,
-                    'province_id' => $request->inputProvinceNAO,
-                    // 'municipal_id' => $request->inputCityNAO,
-                    'cities_id' => $request->inputCityNAO,
+                    'region_id' => '482',
+                    'province_id' => '1301',
+                    'cities_id' =>  '1919',
+                    'barangay_id' => '358',
+
+                    // 'region_id' => $request->inputRegionNAO,
+                    // 'province_id' => $request->inputProvinceNAO, 
+                    // 'cities_id' => $request->inputCityNAO,
                 ]);
 
                 $addNao = PersonnelDnaDirectoryNaoModel::create([
@@ -163,10 +169,14 @@ class PersonnelDnaDirectoryController extends Controller
             'civilstatus' => $request -> inputCivilStatus,
             'educationalbackground' => $request->inputEB,
             'degreeCourse' => $request->inputDegree,
-            'region_id' => $request->inputRegion,
-            'province_id' => $request->inputProvince,
-            'municipal_id' => $request->inputCM,
-            'barangay_id' => $request->inputBarangayID,
+            'region_id' => '482',
+            'province_id' => '1301',
+            'cities_id' =>  '1919',
+            'barangay_id' => '358',
+            // 'region_id' => $request->inputRegion,
+            // 'province_id' => $request->inputProvince,
+            // 'municipal_id' => $request->inputCM,
+            // 'barangay_id' => $request->inputBarangayID,
         ]);
 
         $addNao = PersonnelDnaDirectoryNpcModel::create([
@@ -204,10 +214,14 @@ class PersonnelDnaDirectoryController extends Controller
             'civilstatus' => $request -> inputCivilStat,
             'educationalbackground' => $request->inputEB,
             'degreeCourse' => $request->inputDegree,
-            'region_id' => $request->inputRegion,
-            'province_id' => $request->inputProvince,
-            'municipal_id' => $request->inputCM,
-            'barangay_id' => $request->inputBarangayID,
+            'region_id' => '482',
+            'province_id' => '1301',
+            'cities_id' =>  '1919',
+            'barangay_id' => '358',
+            // 'region_id' => $request->inputRegion,
+            // 'province_id' => $request->inputProvince,
+            // 'municipal_id' => $request->inputCM,
+            // 'barangay_id' => $request->inputBarangayID,
         ]);
 
         $addNao = PersonnelDnaDirectoryBnsModel::create([

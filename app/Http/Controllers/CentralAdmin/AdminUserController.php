@@ -9,6 +9,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;  
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class AdminUserController extends Controller
 {
@@ -75,6 +77,23 @@ class AdminUserController extends Controller
         return view('CentralAdmin.role-permission.user.create', ['roles' => $roles]);
         //return view('CentralAdmin.role-permission.user.create');
     }
+
+    public function show(Request $request)
+    {
+        $users = User::find($request->id);
+        $role = Role::get();
+        $userstatus = DB::table('userstatus')->get();
+        $userrequeststatus = DB::table('userrequeststatus')->get();
+
+        $lnclocation = DB::table('users')
+        ->join('mplgubrgylncmanagement', 'users.id', '=', 'mplgubrgylncmanagement.user_id')
+        ->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')
+        ->select('users.Firstname as firstname', 'users.Middlename as middlename', 'users.Lastname as lastname', 'mplgubrgylncmanagement.*')
+        ->get();
+        
+        return view('CentralAdmin.role-permission.user.show', compact('users', 'role', 'userstatus', 'userrequeststatus'));
+    }
+
 
     public function store(Request $request)
     {
@@ -188,4 +207,90 @@ class AdminUserController extends Controller
 
         return redirect('/adminusers')->with('status','User Delete Successfully');
     }
+
+    public function changeuserstatus(Request $request)
+    {
+        // dd($request);
+        $user = User::findOrFail($request->id);
+  
+        // DB::table('mplgubrgyvisionmissionstracking')->where('mplgubrgyvisionmissions_id', $request->id)->delete();
+        // $lguprofile = MellpiproLGUBarangayVisionMission::find($request->id); 
+        // $lguprofile->delete();
+    
+        $rules = [
+            'role' => 'required|string',
+            'designation' => 'required|string',
+            'userrequest' => 'required|string',
+            'hiddenuserstatus' => 'required|string',
+        ];
+
+        $message = [ 
+            'required' => 'The field is required.',
+            'integer' => 'The field is number.',
+            'string' => 'The field must be a string.',
+            'date' => 'The field must be a valid date.',
+            'max' => 'The field may not be greater than :max characters.',
+        ]; 
+
+        $validator = Validator::make($request->all() , $rules, $message );
+
+        if($validator->fails()){
+            return redirect()->back()
+            ->withErrors($validator)
+            ->withInput()->with('error', 'Something went wrong! Please try again.');
+        }else {
+            $user->update([
+                'role' =>  $request->role,
+                'designation' =>  $request->designation,
+                'status' =>  $request->userrequest,
+                'userstatus' =>  $request->hiddenuserstatus,
+            ]);
+        }
+        
+        return redirect()->route('CAadmin.show', ['id' => $request->id])->with('success','User data updated successfully!');
+    }
+
+    public function changepassword(Request $request)
+    {
+        $user = Auth::user();
+
+        // // dd($request);
+        // $user = User::findOrFail($request->id);
+       
+        // $validated = $request->validate([
+        //     'password' => 'required|string|min:8|confirmed',
+        // ]);
+
+        // if (!Hash::check($validated['password'], $user->password)) {
+        //     return back()->withErrors(['error' => 'Current password is incorrect']);
+        //     dd('error!');
+        // }
+
+        // $user->password = Hash::make($validated['password']);
+        // $user->save();
+
+        $user = User::findOrFail($request->id);
+
+        $rules = [
+            'password' => 'required|string|min:8|confirmed',
+        ];
+        
+        $messages = [ 
+            'required' => 'The :attribute field is required.',
+        ];
+        
+        $validator = Validator::make($request->all(), $rules, $messages);
+        
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $user->update([ 
+            'password' => Hash::make($request->input('password'))
+        ]);
+        
+        return redirect()->route('CAadmin.show', ['id' => $request->id])->with('success', 'User password updated successfully!');
+    }
+
+
 }

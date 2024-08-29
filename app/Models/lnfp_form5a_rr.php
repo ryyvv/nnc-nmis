@@ -48,11 +48,7 @@ class lnfp_form5a_rr extends Model
         'remarksGG',
         'remarksH',
         'status',
-        
-        'barangay_id',
-        'municipal_id',
-        'province_id',
-        'region_id',
+        'header',
         'user_id'
     ];
 

@@ -25,13 +25,13 @@ class CMOMellpiLGUProfileBarangayVisionMissionController extends Controller
         $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
 
         $barangay = auth()->user()->barangay;
-        $lguProfile = DB::table('visionmissions')->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();
+        $lguProfile = DB::table('mplgubrgyvisionmissions')->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();
 
         // get Municipal id and user id 
        
         $data  = DB::table('municipals')
-            ->join('visionmissions', 'municipals.id', '=', 'visionmissions.municipal_id')
-            ->where('visionmissions.status', 1) 
+            ->join('mplgubrgyvisionmissions', 'municipals.id', '=', 'mplgubrgyvisionmissions.municipal_id')
+            ->where('mplgubrgyvisionmissions.status', 1) 
             ->get();
 
         return view('CityMunicipalStaff.VMReport', ['data' => $data]);
@@ -68,7 +68,7 @@ class CMOMellpiLGUProfileBarangayVisionMissionController extends Controller
         $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
 
         $barangay = auth()->user()->barangay;
-        $lguProfile = DB::table('mplgubrgygovernance')->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();
+        $lguProfile = DB::table('mplgubrgyvisionmissions')->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();
 
         // get Municipal id and user id 
        
@@ -83,8 +83,8 @@ class CMOMellpiLGUProfileBarangayVisionMissionController extends Controller
         // ->get();
 
            $data  = DB::table('municipals')
-            ->join('mplgubrgygovernance', 'municipals.id', '=', 'mplgubrgygovernance.municipal_id')
-            ->where('mplgubrgygovernance.status', 1) 
+            ->join('mplgubrgyvisionmissions', 'municipals.id', '=', 'mplgubrgyvisionmissions.municipal_id')
+            ->where('mplgubrgyvisionmissions.status', 1) 
             ->get();
 
 

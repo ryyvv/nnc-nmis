@@ -58,6 +58,7 @@
   <!-- jQuery v3.6.0  -->
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  
   <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 
   <!-- papaparse data in csv -->
@@ -72,6 +73,7 @@
   <script src="{{ asset('assets') }}/js/ryan.js"></script>
   <script src="{{ asset('assets') }}/js/diether.js"></script>
   <script src="{{ asset('assets') }}/js/Location.js"></script>
+  <script src="{{ asset('assets') }}/js/custom.js"></script>
   
   <!-- Stock -->
   <!-- Bootstrap v4.2.1 (https://getbootstrap.com/) -->
@@ -79,7 +81,8 @@
   {{-- <script src="{{ asset('assets') }}/js/core/popper.min.js"></script> --}}
   {{-- <script src="{{ asset('assets') }}/js/core/bootstrap.min.js"></script> --}}
   <script src="{{ asset('assets') }}/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-  
+  <script src="https://cdn.lordicon.com/lordicon.js"></script>
+
   <!-- Bootstrap v4.2.1 cdn (https://getbootstrap.com/) -->
   <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"> -->
   <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->

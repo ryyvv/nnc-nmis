@@ -1608,7 +1608,14 @@
                                 salt<span style="color:red">*</span></label>
                         </div>
                         <div class="col">
-                            <label for="exampleFormControlInput1">Dropdown</label>
+                            <select id="loadProvince1" class="form-control" name="food_fortification" value="{{$row->food_fortification}}">
+                                <option value="" {{ old('food_fortification', $row->food_fortification) == 'null' ? 'selected' : '' }}>choose </option>
+                                <option value="Equipment" {{ old('food_fortification', $row->food_fortification) == 'Equipment' ? 'selected' : '' }}>Equipment (WYD) </option>
+                                <option value="Saktong" {{ old('food_fortification', $row->food_fortification) == 'Saktong' ? 'selected' : '' }}>Saktong Iodine sa Asin (SISA) </option>
+                            </select>
+                            @error('food_fortification')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="col">
                             <select id="loadProvince1" class="form-control" name="IVAsource" value="{{$row->IVAsource}}">
@@ -1702,7 +1709,7 @@
                         </div>
                         <div class="col">
                             <select id="loadProvince1" class="form-control" name="VAavailreceived" value="{{$row->VAavailreceived}}">
-                                <option value="">Choose...</option>
+                                <option value="" {{ old('VAavailreceived', $row->VAavailreceived) == '' ? 'selected' : '' }}>choose </option>
                                 <option value="Yes" {{ old('VAavailreceived', $row->VAavailreceived) == 'Yes' ? 'selected' : '' }}>Yes </option>
                                 <option value="No" {{ old('VAavailreceived', $row->VAavailreceived) == 'No' ? 'selected' : '' }}>No </option>
                             </select>

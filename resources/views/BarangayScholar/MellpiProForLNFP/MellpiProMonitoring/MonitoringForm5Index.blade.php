@@ -30,9 +30,9 @@
                         <div class="alert alert-success d-none" id="successAlert" role="alert">
                             Data deleted successfully!
                         </div>
-                        <div class="row-12">
+                        <!-- <div class="row-12">
                             <a href="{{ route('MellpiProMonitoringCreate.create') }}" class="btn btn-primary bolder">Create data</a>
-                        </div>
+                        </div> -->
                         <!-- <div class="row-12">
                             <a href="{{ route('form5CreateData') }}" class="btn btn-primary bolder">CreateData</a>
                         </div> -->
@@ -41,12 +41,14 @@
                             <thead class="table-light" style="background-color:#508D4E;">
 
                                 <tr>
-                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">#</th>
-                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Officer</th>
-                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Date Monitoring</th>
-                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Period Covered</th>
-                                    <!-- <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Name</th> -->
-                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Status</th>
+                                    <th scope="col"  class="tableheader">#</th>
+                                    <th scope="col"  class="tableheader">Form Type</th>
+                                    <th scope="col"  class="tableheader">Name of PNAO</th>
+                                    <th scope="col"  class="tableheader">Date Monitoring</th>
+                                    <th scope="col"  class="tableheader">Period Covered</th>
+                                    <!-- <th scope="col"  class="tableheader">Name</th> -->
+                                    <th scope="col"  class="tableheader">Status</th>
+                                    <th scope="col"  class="tableheader">Next Form</th>
                                     <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center;width:10%;">Action</th>
 
                                 </tr>
@@ -56,13 +58,15 @@
                                 <?php $num = 1; ?>
                                 @foreach ($form5a_rr as $form5a_rr)
                                 <tr>
-                                    <td>{{$num}}
+                                    <td>{{$num}}<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/common.css') }}">
                                     </td>
-                                    <td>{{$form5a_rr->lnfp_officer}}
+                                    <td>{{ $form5a_rr->header }}</td>
+                                    <td>{{$form5a_rr->nameofPnao}}
                                     </td>
+                                    
                                     <td>{{\Carbon\Carbon::parse($form5a_rr->dateMonitoring)->format('F j');}}
                                     </td>
-                                    <td><center>{{$form5a_rr->forThePeriod}}</center></td>
+                                    <td>{{$form5a_rr->periodCovereda}}</td>
                                     <!-- <td>
                                         <center>{{ $form5a_rr->nameofPnao }}</center>
                                     </td> -->
@@ -77,15 +81,18 @@
                                         @endif
                                         </center>
                                     </td>
-                                    <!-- <td>{{$form5a_rr->status}}</td> -->
+                                    <td><a href="lguform6Edit/{{ $form5a_rr->form7_id }}" target="_blank" >Form 6 & 7</td>
 
                                     <td>
                                         <ul class="list-inline m-0">
                                             <li class="list-inline-item">
-                                                <i onclick="LNFPmyFunction('{{ $form5a_rr->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
-                                                <i onclick="myFunctionLNFP('{{ $form5a_rr->id }}', 'lncmanagement', 'edit')" class="fa fa-edit fa-lg cursor" style="color:#FFB236;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Edit"></i>
-                                                <i onclick="LNFPopenModal('{{ $form5a_rr->id }}')" class="fa fa-trash fa-lg cursor" style="color:red;margin-right:10px" title="Delete "></i>
 
+                                                
+                                                <i onclick="LNFPmyFunction('{{ $form5a_rr->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                                @if( $form5a_rr->status == 2 )
+                                                <i onclick="myFunctionLNFP('{{ $form5a_rr->id }}', 'lncmanagement', 'edit')" class="fa fa-edit fa-lg cursor" style="color:#FFB236;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Edit"></i>
+                                                <!-- <i onclick="LNFPopenModal('{{ $form5a_rr->id }}')" class="fa fa-trash fa-lg cursor" style="color:red;margin-right:10px" title="Delete "></i> -->
+                                                @endif
                                                 <!-- @if( $form5a_rr->status == 0 )
                                                 <i onclick="LNFPmyFunction('{{ $form5a_rr->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
                                                 <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>

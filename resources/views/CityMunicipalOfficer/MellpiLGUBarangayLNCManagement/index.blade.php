@@ -4,7 +4,7 @@
 @extends('layouts.app', [
 'class' => 'sidebar-mini ',
 'namePage' => 'MELLPI PRO For LGU Profile',
-'activePage' => 'NutritionPolicies',
+'activePage' => 'LNCManagement',
 'activeNav' => '',
 ])
 
@@ -33,7 +33,7 @@
                 @include('layouts.page_template.crud_alert_message')
                
                 <div class="row-12">
-                    <a href="{{route('CMOLGUprofile.create')}}" class="btn btn-primary bolder">Create data</a>
+                    <a href="{{route('CMOlncmanagement.create')}}" class="btn btn-primary bolder">Create data</a>
                 </div>
 
                 <div class="row-12">
@@ -71,7 +71,7 @@
                                 <td id="table-edit">
                                     <ul class="list-inline m-0">
                                         <li class="list-inline-item"> 
-                                            <i onclick="view('nutritionpolicies','{{ $data->id }}','show')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                            <i onclick="view('lncmanagement','{{ $data->id }}','show')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
                                         </li>
                                         <li class="list-inline-item"> 
                                             <div class="cursor" id="Approved" type="button" onclick="openApproved('{{$data->id}}')">
@@ -104,7 +104,6 @@
  
 @include('Modal.Approved')
 
-<!-- alert Modal -->
 @include('Modal.Warning')
 
 @endsection

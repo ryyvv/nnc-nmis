@@ -23,35 +23,35 @@
                     @endif
 
                     <div style="padding:25px">
-                        <form action="#" method="post" id="lnfp-overallScore-form">
+                        <form action="#" method="post" id="form">
                             @csrf
 
                             @if ($overallScore)
-                            <center><img src="https://nnc-nmis.moodlearners.com/assets/img/logo.png" alt="" class="imgLogo"></center><br>
+                            <!-- <center><img src="https://nnc-nmis.moodlearners.com/assets/img/logo.png" alt="" class="imgLogo"></center><br> -->
                             <center>
-                                <h5 class="title">{{__("SEARCH FOR REGIONAL OUTSTANDING PROVINCIAL NUTRITION ACTION OFFICER")}}</h5>
+                                <h5 class="title">{{ $overallScore->interview_header }}</h5>
                             </center><br>
 
-                            <input type="hidden" name="submitStatus" value="1">
-                            <input type="hidden" name="DraftStatus" value="2">
+                            <input type="hidden" name="lnfp_lgu_id" value="{{$overallScore->lnfp_lgu_id}}">
+                            <input type="hidden" value="" name="status" id="status">
+                            <input type="hidden" value="draft" name="formrequest" id="formrequest" />
+                            <input type="hidden" value="{{ $overallScore->overallId }}" name="id" id="id" />
 
                             <input type="hidden" id="action" name="action" value="">
 
                             <div class="formHeader">
                                 <div class="form-group col-md-6">
                                     <div class="form-group col-md-12">
-                                        <label for="nameOf">Name of PNAO:<span style="color:red">*</span> </label>
-                                        <input class="inputHeader" type="text" name="nameOf" id="nameOf" value="{{ $overallScore->pnaoName }}">
-                                        @error('nameOf')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <label for="nameOf">Name of PNAO:
+                                        <h5>{{ $overallScore->pnaoName }}</h5>
+                                        <input class="inputHeader" type="hidden" name="nameOf" id="nameOf" value="{{ $overallScore->pnaoName }}">
+                                       
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label for="address">Area of Assignment:<span style="color:red">*</span> </label>
-                                        <input class="inputHeader" type="text" name="areaAssign" id="areaAssign" value="{{ $overallScore->pnaoAddress }}">
-                                        @error('areaAssign')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <label for="address">Area of Assignment:
+                                        <h5>{{ $overallScore->pnaoAddress }}</h5>
+                                        <input class="inputHeader" type="hidden" name="areaAssign" id="areaAssign" value="{{ $overallScore->pnaoAddress }}">
+                                        
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
@@ -126,6 +126,17 @@
 
                                     <br>
 
+                                                    <input type="hidden" id="ratingA" value="{{ $overallScore->ratingA }}">
+                                                    <input type="hidden" id="ratingBB" value="{{ $overallScore->ratingBB }}">
+                                                    <input type="hidden" id="ratingB" value="{{ $overallScore->ratingB }}">
+                                                    <input type="hidden" id="ratingC" value="{{ $overallScore->ratingC }}">
+                                                    <input type="hidden" id="ratingD" value="{{ $overallScore->ratingD }}">
+                                                    <input type="hidden" id="ratingE" value="{{ $overallScore->ratingE }}">
+                                                    <input type="hidden" id="ratingF" value="{{ $overallScore->ratingF }}">
+                                                    <input type="hidden" id="ratingG" value="{{ $overallScore->ratingG }}">
+                                                    <input type="hidden" id="ratingGG" value="{{ $overallScore->ratingGG }}">
+                                                    <input type="hidden" id="ratingH" value="{{ $overallScore->ratingH }}">  
+
                                     <label for="lnfp_OverallScore2_form">ACTUAL SCORE</label>
                                     <table id="lnfp_OverallScore2_form" class="table table-striped table-bordered" style="width: 100%;">
                                         <thead>
@@ -148,35 +159,13 @@
                                             <tr>
                                                 <td>Part I: MELLPI Pro</td>
                                                 <td>
-                                                    <center><input type="text" name="pointsP1AS" value="{{
-                                                        (
-                                                            (($overallScore->ratingA * 100) / 5) +
-                                                            (($overallScore->ratingB * 100) / 5) +
-                                                            (($overallScore->ratingC * 100) / 5) +
-                                                            (($overallScore->ratingD * 100) / 5) +
-                                                            (($overallScore->ratingE * 100) / 5) +
-                                                            (($overallScore->ratingF * 100) / 5) +
-                                                            (($overallScore->ratingG * 100) / 5) + 
-                                                            (($overallScore->ratingH * 100) / 5) 
-                                                        ) / 8
-                                                    }}" class="formOverallInput" readonly></center>
+                                                    <center><input type="text" name="pointsP1AS" value="" class="formOverallInput" id="pointsP1AS" readonly></center>
                                                 </td>
                                                 <td>
                                                     <center><input type="text" name="weightP1AS" value="0.8" step="0.1" class="formOverallInput" readonly></center>
                                                 </td>
                                                 <td>
-                                                    <center><input type="text" name="scoreP1AS" value="{{
-                                                        ((((
-                                                            (($overallScore->ratingA * 100) / 5) +
-                                                            (($overallScore->ratingB * 100) / 5) +
-                                                            (($overallScore->ratingC * 100) / 5) +
-                                                            (($overallScore->ratingD * 100) / 5) +
-                                                            (($overallScore->ratingE * 100) / 5) +
-                                                            (($overallScore->ratingF * 100) / 5) +
-                                                            (($overallScore->ratingG * 100) / 5) + 
-                                                            (($overallScore->ratingH * 100) / 5) 
-                                                        ) / 8) / 100) * 0.8) * 100
-                                                    }}" class="formOverallInput" readonly></center>
+                                                    <center><input type="text" name="scoreP1AS" id="scoreP1AS" value="" class="formOverallInput" readonly></center>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -188,9 +177,9 @@
                                                     <center><input type="text" name="weightP2AS" value="0.2" step="0.1" class="formOverallInput" readonly></center>
                                                 </td>
                                                 <td>
-                                                    <center><input type="text" name="scoreP2AS" value="{{
-                                                        (($overallScore->intSubtotal / 100) * 0.8) * 100
-                                                    }}" class="formOverallInput" readonly></center>
+                                                    <center>
+                                                    <input type="hidden" id="intSubtotal" value="{{$overallScore->intSubtotal}}" >       
+                                                    <input type="text" name="scoreP2AS" value="" class="formOverallInput" id="formOverallInput" readonly></center>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -202,18 +191,9 @@
                                                     <center></center>
                                                 </td>
                                                 <td>
-                                                    <center><input type="text" name="totalScoreAS" value="{{
-                                                        (((((
-                                                            (($overallScore->ratingA * 100) / 5) +
-                                                            (($overallScore->ratingB * 100) / 5) +
-                                                            (($overallScore->ratingC * 100) / 5) +
-                                                            (($overallScore->ratingD * 100) / 5) +
-                                                            (($overallScore->ratingE * 100) / 5) +
-                                                            (($overallScore->ratingF * 100) / 5) +
-                                                            (($overallScore->ratingG * 100) / 5) + 
-                                                            (($overallScore->ratingH * 100) / 5) 
-                                                        ) / 8) / 100) * 0.8) * 100) + ((($overallScore->intSubtotal / 100) * 0.8) * 100)
-                                                    }}" step="0.1" class="formOverallInput" readonly></center>
+                                                    <center>
+                                                     
+                                                    <input type="text" name="totalScoreAS" id="totalScoreAS" value="" step="0.1" class="formOverallInput" readonly></center>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -293,67 +273,32 @@
                                     <div style="display: flex;">
                                         <div class="col-md-8">
                                             <label for="receivedBy">Received:</label>
-                                            <input type="text" name="receivedBy" id="receivedBy" class="form8InputBot" value="{{$overallScore->receivedBy}}">
-                                            @error('receivedBy')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror</td>
+                                            <h5>{{$overallScore->receivedBy}}</h5>
+                                            <input type="hidden" name="receivedBy" id="receivedBy" class="form8InputBot" value="{{$overallScore->receivedBy}}">
+                                            
                                         </div>
                                         <div class="col-md-4">
                                             <label for="whatDate">Date:</label>
-                                            <input type="date" name="whatDate" id="whatDate" class="form8InputBot" value="{{$overallScore->whatDate}}">
-                                            @error('whatDate')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror</td>
+                                            <h5>{{$overallScore->whatDate}}</h5>
+                                            <input type="hidden" name="whatDate" id="whatDate" class="form8InputBot" value="{{$overallScore->whatDate}}">
+                                            
                                         </div>
                                     </div>
                                     <br>
-                                    @if ($overallScore->overallId == false)
+                                    
                                     <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
-                                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalDraft">Save as Draft</button>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalSubmit">Save and Submit</button>
+                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
+                                            Save as Draft
+                                        </button>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                                            Submit for Approval
+                                        </button>
                                     </div>
-                                    @endif
+                                    
                                 </div>
                             </div>
 
-                            <div class="modal fade" id="exampleModalSubmit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <!-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <h5>Are you sure you want to submit?</h5>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                            <button type="submit" id="lnfpOverallForm-submit" class="btn btn-primary" name="action" value="submit">Yes</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal fade" id="exampleModalDraft" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <!-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <h5>Are you sure you want to save as draft?</h5>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                            <button type="submit" id="lnfpOverallForm-draft" class="btn btn-primary" name="action" value="draft">Yes</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                           
                             @endif
                         </form>
                     </div>
@@ -363,5 +308,13 @@
         </div>
     </div>
 </div>
-<script src="{{ asset('assets/js/autoGenerateInput.js') }}""></script>
+
+<script>
+    $(document).ready(function() {
+        OverAllScore();
+    });
+</script>
+
+@include('Modal.Draft');
+@include('Modal.Submit');
 @endsection

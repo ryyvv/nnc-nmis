@@ -1177,6 +1177,7 @@
                                 <option value="LGU" <?php echo ( old('Isource') == 'LGU' ? 'selected':'' )  ?>  >LGU</option>
                                 <option value="NGO" <?php echo ( old('Isource') == 'NGO' ? 'selected':'' )  ?> >NGO</option>
                                 <option value="Private" <?php echo ( old('Isource') == 'Private' ? 'selected':'' )  ?> >Private</option>
+                                <option value="NA" <?php echo ( old('Isource') == 'NA' ? 'selected':'' )  ?> >N/A</option>
                             </select> 
                              @error('Isource')
                             <div class="text-danger">{{ $message }}</div>
@@ -1184,10 +1185,12 @@
                         </div>
                         <div class="col">
                             <select id="loadProvince1" class="form-control" name="Iavailreceived">
-                            <option value="">Choose...</option> 
+                             <option value="">Choose...</option> 
                                 <option value="YES" <?php echo ( old('Iavailreceived') == 'YES' ? 'selected':'' )  ?> >YES</option>
                                 <option value="NO" <?php echo ( old('Iavailreceived') == 'NO' ? 'selected':'' )  ?> >NO</option>
-                            </select>  @error('Iavailreceived')
+                            </select>  
+ 
+                            @error('Iavailreceived')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -1249,6 +1252,7 @@
                                 <option value="LGU"  <?php echo ( old('IIAsource') == 'LGU' ? 'selected':'' )  ?> >LGU</option>
                                 <option value="NGO"  <?php echo ( old('IIAsource') == 'NGO' ? 'selected':'' )  ?> >NGO</option>
                                 <option value="Private"  <?php echo ( old('IIAsource') == 'Private' ? 'selected':'' )  ?> >Private</option>
+                                <option value="NA" <?php echo ( old('IIAsource') == 'NA' ? 'selected':'' )  ?> >N/A</option>
                             </select>  @error('IIAsource')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -1299,7 +1303,8 @@
                                 <option value="NGA" <?php echo ( old('IIBsource') == 'NGA' ? 'selected':'' )  ?> >NGA</option>
                                 <option value="LGU"  <?php echo ( old('IIBsource') == 'LGU' ? 'selected':'' )  ?> >LGU</option>
                                 <option value="NGO"  <?php echo ( old('IIBsource') == 'NGO' ? 'selected':'' )  ?> >NGO</option>
-                                <option value="Private"  <?php echo ( old('IIBsource') == 'Private' ? 'selected':'' )  ?> >Private</option> 
+                                <option value="Private"  <?php echo ( old('IIBsource') == 'Private' ? 'selected':'' )  ?> >Private</option>
+                                <option value="NA" <?php echo ( old('IIBsource') == 'NA' ? 'selected':'' )  ?> >N/A</option> 
                             </select>  
                             @error('IIBsource')
                             <div class="text-danger">{{ $message }}</div>
@@ -1376,6 +1381,7 @@
                                 <option value="LGU"  <?php echo ( old('IIIAsource') == 'LGU' ? 'selected':'' )  ?> >LGU</option>
                                 <option value="NGO"  <?php echo ( old('IIIAsource') == 'NGO' ? 'selected':'' )  ?> >NGO</option>
                                 <option value="Private"  <?php echo ( old('IIIAsource') == 'Private' ? 'selected':'' )  ?> >Private</option>
+                                <option value="NA" <?php echo ( old('IIIAsource') == 'NA' ? 'selected':'' )  ?> >N/A</option> 
                             </select>  
                               @error('IIIAsource')
                             <div class="text-danger">{{ $message }}</div>
@@ -1428,6 +1434,7 @@
                                 <option value="LGU"  <?php echo ( old('IIIBsource') == 'LGU' ? 'selected':'' )  ?> >LGU</option>
                                 <option value="NGO"  <?php echo ( old('IIIBsource') == 'NGO' ? 'selected':'' )  ?> >NGO</option>
                                 <option value="Private"  <?php echo ( old('IIIBsource') == 'Private' ? 'selected':'' )  ?> >Private</option>
+                                <option value="NA" <?php echo ( old('IIIBsource') == 'NA' ? 'selected':'' )  ?> >N/A</option> 
                             </select>  
                             @error('IIIBsource')
                             <div class="text-danger">{{ $message }}</div>
@@ -1480,6 +1487,7 @@
                                 <option value="LGU"  <?php echo ( old('IIICsource') == 'LGU' ? 'selected':'' )  ?> >LGU</option>
                                 <option value="NGO"  <?php echo ( old('IIICsource') == 'NGO' ? 'selected':'' )  ?> >NGO</option>
                                 <option value="Private"  <?php echo ( old('IIICsource') == 'Private' ? 'selected':'' )  ?> >Private</option>
+                                <option value="NA" <?php echo ( old('IIICsource') == 'NA' ? 'selected':'' )  ?> >N/A</option> 
                             </select>   
                             @error('IIICsource')
                             <div class="text-danger">{{ $message }}</div>
@@ -1531,6 +1539,7 @@
                                 <option value="LGU"  <?php echo ( old('IIIDsource') == 'LGU' ? 'selected':'' )  ?> >LGU</option>
                                 <option value="NGO"  <?php echo ( old('IIIDsource') == 'NGO' ? 'selected':'' )  ?> >NGO</option>
                                 <option value="Private"  <?php echo ( old('IIIDsource') == 'Private' ? 'selected':'' )  ?> >Private</option>
+                                <option value="NA" <?php echo ( old('IIIDsource') == 'NA' ? 'selected':'' )  ?> >N/A</option> 
                             </select>  
                              @error('IIIDsource')
                             <div class="text-danger">{{ $message }}</div>
@@ -1583,6 +1592,7 @@
                                 <option value="LGU"  <?php echo ( old('IIIEsource') == 'LGU' ? 'selected':'' )  ?> >LGU</option>
                                 <option value="NGO"  <?php echo ( old('IIIEsource') == 'NGO' ? 'selected':'' )  ?> >NGO</option>
                                 <option value="Private"  <?php echo ( old('IIIEsource') == 'Private' ? 'selected':'' )  ?> >Private</option>
+                                <option value="NA" <?php echo ( old('IIIEsource') == 'NA' ? 'selected':'' )  ?> >N/A</option> 
                             </select> 
                              @error('IIIEsource')
                             <div class="text-danger">{{ $message }}</div>
@@ -1635,6 +1645,7 @@
                                 <option value="LGU"  <?php echo ( old('IIIFsource') == 'LGU' ? 'selected':'' )  ?> >LGU</option>
                                 <option value="NGO"  <?php echo ( old('IIIFsource') == 'NGO' ? 'selected':'' )  ?> >NGO</option>
                                 <option value="Private"  <?php echo ( old('IIIFsource') == 'Private' ? 'selected':'' )  ?> >Private</option>
+                                <option value="NA" <?php echo ( old('IIIFsource') == 'NA' ? 'selected':'' )  ?> >N/A</option>
                             </select>  
                             @error('IIIFsource')
                             <div class="text-danger">{{ $message }}</div>
@@ -1702,7 +1713,14 @@
                                 salt<span style="color:red">*</span></label>
                         </div>
                         <div class="col">
-                            <label for="exampleFormControlInput1">Dropdown</label>
+                        <select id="loadProvince1" class="form-control" name="food_fortification">
+                            <option value="">Choose...</option> 
+                                <option value="Equipment" <?php echo ( old('food_fortification') == 'Equipment' ? 'selected':'' )  ?> >Equipment (WYD)</option>
+                                <option value="Saktong"  <?php echo ( old('food_fortification') == 'Saktong' ? 'selected':'' )  ?> >Saktong Iodine sa Asin (SISA)</option> 
+                            </select>  
+                            @error('food_fortification')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="col">
                             <select id="loadProvince1" class="form-control" name="IVAsource">
@@ -1710,7 +1728,8 @@
                                 <option value="NGA" <?php echo ( old('IVAsource') == 'NGA' ? 'selected':'' )  ?> >NGA</option>
                                 <option value="LGU"  <?php echo ( old('IVAsource') == 'LGU' ? 'selected':'' )  ?> >LGU</option>
                                 <option value="NGO"  <?php echo ( old('IVAsource') == 'NGO' ? 'selected':'' )  ?> >NGO</option>
-                                <option value="Private"  <?php echo ( old('IVAsource') == 'Private' ? 'selected':'' )  ?> >Private</option>
+                                <option value="Private"  <?php echo ( old('v') == 'Private' ? 'selected':'' )  ?> >Private</option>
+                                <option value="NA" <?php echo ( old('IVAsource') == 'NA' ? 'selected':'' )  ?> >N/A</option>
                             </select>  
                             @error('IVAsource')
                             <div class="text-danger">{{ $message }}</div>
@@ -1786,6 +1805,7 @@
                                 <option value="LGU"  <?php echo ( old('VAsource') == 'LGU' ? 'selected':'' )  ?> >LGU</option>
                                 <option value="NGO"  <?php echo ( old('VAsource') == 'NGO' ? 'selected':'' )  ?> >NGO</option>
                                 <option value="Private"  <?php echo ( old('VAsource') == 'Private' ? 'selected':'' )  ?> >Private</option>
+                                <option value="NA" <?php echo ( old('VAsource') == 'NA' ? 'selected':'' )  ?> >N/A</option>
                             </select>  @error('VAsource')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror

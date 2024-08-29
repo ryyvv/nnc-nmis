@@ -29,7 +29,7 @@
 @extends('layouts.app', [
 'class' => 'sidebar-mini ',
 'namePage' => 'Mellpi Pro for LGU Profile',
-'activePage' => 'NutritionPolicies',
+'activePage' => 'LNCManagement',
 'activeNav' => '',
 ])
 

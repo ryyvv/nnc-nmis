@@ -30,20 +30,22 @@
                         <div class="alert alert-success d-none" id="successAlert" role="alert">
                             Data deleted successfully!
                         </div>
-                        <div class="row-12">
+                        <!-- <div class="row-12">
                             <a href="{{ route('lnfpForm8Create') }}" class="btn btn-primary bolder">Create data</a>
-                        </div>
+                        </div> -->
 
                         <table class="display" id="form8myTable" width="100%">
                             <thead class="table-light" style="background-color:#508D4E;">
 
                                 <tr>
                                     <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">#</th>
-                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Officer</th>
+                                    <!-- <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Officer</th> -->
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Header</th>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Name of PNAO</th>
                                     <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Date of Monitoring</th>
                                     <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Period Covered</th>
-                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Name</th>
-                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Area of Assignment</th>
+                                    <!-- <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Name</th> -->
+                                    <!-- <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Area of Assignment</th> -->
                                     <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Status</th>
                                     <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center;width:10%;">Action</th>
 
@@ -54,24 +56,18 @@
                                 <?php $num = 1; ?>
                                 @foreach ($form8 as $form8)
                                 <tr>
+                                    <td>{{$num}}</td>
+                                    <td>{{$form8->header}}</td>
+                                    <td>{{$form8->nameofPnao}}</td>
                                     <td>
-                                        <center>{{$num}}</center>
+                                        <center>{{ $form8->dateMonitoring }}</center>
                                     </td>
                                     <td>
-                                        <center>{{$form8->lnfp_officer}}</center>
+                                        <center>{{ $form8->periodCovereda }}</center>
                                     </td>
-                                    <td>
-                                        <center>{{ $form8->dateMonitor }}</center>
-                                    </td>
-                                    <td>
-                                        <center>{{ $form8->forThePeriod }}</center>
-                                    </td>
-                                    <td>
-                                        <center>{{ $form8->nameOfPnao }}</center>
-                                    </td>
-                                    <td>
+                                    <!-- <td>
                                         <center>{{ $form8->areaOfAssign }}</center>
-                                    </td>
+                                    </td> -->
                                     
                                     <td>
                                         <center>
@@ -88,20 +84,17 @@
                                     <td>
                                         <ul class="list-inline m-0">
                                             <li class="list-inline-item">
-                                                @if( $form8->status == 0 )
                                                 <i onclick="LNFPmyFunction_form8('{{ $form8->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
-                                                <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
-                                                <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i>
-                                                <!-- <i class="fa fa-file-pdf-o fa-lg cursor " style="color:red;margin-right:7px;" aria-hidden="true"></i>  -->
-                                                @elseif( $form8->status == 1 )
+<!--                                                
+                                                
                                                 <i onclick="myFunctionLNFP_form8('{{ $form8->id }}', 'lncmanagement', 'edit')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
                                                 <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
-                                                <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i>
+                                                <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i> -->
                                                 <!-- <i class="fa fa-file-pdf-o fa-lg cursor " style="color:red;margin-right:7px;" aria-hidden="true"></i> -->
-                                                @elseif( $form8->status == 2 )
-                                                <i onclick="LNFPmyFunction_form8('{{ $form8->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                                @if( $form8->status == 2 )
+                                                <!-- <i onclick="LNFPmyFunction_form8('{{ $form8->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i> -->
                                                 <i onclick="myFunctionLNFP_form8('{{ $form8->id }}', 'lncmanagement', 'edit')" class="fa fa-edit fa-lg cursor" style="color:#FFB236;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Edit"></i>
-                                                <i onclick="LNFPopenModal_form8('{{ $form8->id }}')" class="fa fa-trash fa-lg cursor" style="color:red;margin-right:10px" title="Delete "></i>
+                                                <!-- <i onclick="LNFPopenModal_form8('{{ $form8->id }}')" class="fa fa-trash fa-lg cursor" style="color:red;margin-right:10px" title="Delete "></i> -->
                                                 <!-- <i class="fa fa-file-pdf-o fa-lg cursor " style="color:red;margin-right:7px;" aria-hidden="true"></i> -->
                                                 @endif
                                             </li>

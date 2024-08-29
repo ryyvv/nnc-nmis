@@ -1,17 +1,19 @@
 <!-- s -->
 <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"> -->
- <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
- 
- 
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+
+
 <style>
 .dt-control::before {
     /* content: '\f067'; FontAwesome plus icon */
     font-family: FontAwesome;
     cursor: pointer;
 }
+
 .shown .dt-control::before {
-    content: '\f068'; /* FontAwesome minus icon */
-    color:green;
+    content: '\f068';
+    /* FontAwesome minus icon */
+    color: green;
 }
 </style>
 
@@ -21,7 +23,7 @@
 'activePage' => 'LGUReport',
 'activeNav' => '',
 ])
- 
+
 
 @section('content')
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -47,26 +49,27 @@
                 @include('layouts.page_template.crud_alert_message')
 
                 <div class="row-12">
-                <table class="display" id="example1" width="100%">
+                    <table class="display" id="example1" width="100%">
                         <thead style="background-color:#508D4E;">
                             <tr>
-                                <th  class="tableheader">Area</th>
-                                <th  class="tableheader">Date Monitoring</th>
-                                <th  class="tableheader">Period Covered</th>
-                                <th  class="tableheader">Status</th>
-                                <th  class="tableheader">Action</th>
+                                <th class="tableheader">Area</th>
+                                <th class="tableheader">Date Monitoring</th>
+                                <th class="tableheader">Period Covered</th>
+                                <th class="tableheader">Status</th>
+                                <th class="tableheader">Action</th>
                                 <th></th>
                             </tr>
                         </thead>
                     </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
-</div>
 
 
-<div class="modal fade" id="ApprovedModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+<div class="modal fade" id="ApprovedModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -85,6 +88,6 @@
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script>  
-<script src="https://cdn.datatables.net/2.1.2/js/dataTables.js"></script>  
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdn.datatables.net/2.1.2/js/dataTables.js"></script>
 @endsection

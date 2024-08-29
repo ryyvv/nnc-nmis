@@ -5,7 +5,7 @@
 @extends('layouts.app', [
 'class' => 'sidebar-mini ',
 'namePage' => 'Mellpi Pro Form 8 Action Sheet',
-'activePage' => 'mellpi_pro_row',
+'activePage' => 'mellpi_pro_form8',
 'activeNav' => '',
 ])
 
@@ -16,6 +16,10 @@
         <div class="col flex">
             <div class="card">
                 <div class="card-header">
+                <div style="display: flex; align-items:center;">
+                        <a href="{{route('lnfpForm8Index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a>
+                        <h4>CREATE MELLPI PRO FOR LNFP FORM 8:</h4>
+                    </div>
                     @if(session('alert'))
                     <div class="alert alert-success" id="alert-message">
                         {{ session('alert') }}
@@ -26,30 +30,44 @@
                     @include('layouts.page_template.crud_alert_message')
 
                     <div>
-                        <form action="{{ route('MellpiProForLNFPUpdate.storeUpdateASForm8', $row->id) }}" method="post" id="lnfp-row-form" enctype="multipart/form-data">
+                        <form action="{{ route('MellpiProForLNFPUpdate.storeUpdateASForm8', $row->id) }}" method="post" id="form" enctype="multipart/form-data">
                             @csrf
 
                             @if ($row)
 
-                            <center><img src="https://nnc-nmis.moodlearners.com/assets/img/logo.png" alt="" class="imgLogo"></center><br>
+                            <!-- <center><img src="https://nnc-nmis.moodlearners.com/assets/img/logo.png" alt="" class="imgLogo"></center><br>
                             <center>
                                 <h5 class="title">{{__("MELLPI PRO FORM 8a: ACTION SHEET TO IMPROVE PERFORMANCE")}}</h5>
-                            </center><br>
-                            @include('layouts.page_template.location_header')
+                            </center><br> -->
+
+                            <!-- <div style="display:flex"> -->
+                            <div class="form-group col">
+                                <label for="nameOf"> HEADER:<span style="color:red">*</span> </label>
+                                <select class="form-control" name="header" id="header">
+                                    <option>Select</option>
+                                    <option value="MELLPI PRO FORM 8a: ACTION SHEET TO IMPROVE PERFORMANCE" <?php echo ( $row->header == 'MELLPI PRO FORM 8a: ACTION SHEET TO IMPROVE PERFORMANCE' ? 'selected':'' ) ?>  >MELLPI PRO FORM 8a: ACTION SHEET TO IMPROVE PERFORMANCE</option>
+                                    <option value="MELLPI PRO FORM 8b: ACTION SHEET TO IMPROVE PERFORMANCE" <?php echo ( $row->header == 'MELLPI PRO FORM 8b: ACTION SHEET TO IMPROVE PERFORMANCE' ? 'selected':'' ) ?>>MELLPI PRO FORM 8b: ACTION SHEET TO IMPROVE PERFORMANCE</option>
+                                    <option value="MELLPI PRO FORM 8c.1: ACTION SHEET TO IMPROVE PERFORMANCE" <?php echo ( $row->header == 'MELLPI PRO FORM 8c.1: ACTION SHEET TO IMPROVE PERFORMANCE' ? 'selected':'' ) ?> >MELLPI PRO FORM 8c.1: ACTION SHEET TO IMPROVE PERFORMANCE</option>
+                                    <option value="MELLPI PRO FORM 8c.2: ACTION SHEET TO IMPROVE PERFORMANCE" <?php echo ( $row->header == 'MELLPI PRO FORM 8c.2: ACTION SHEET TO IMPROVE PERFORMANCE' ? 'selected':'' ) ?> >MELLPI PRO FORM 8c.2: ACTION SHEET TO IMPROVE PERFORMANCE</option>
+                                    <option value="MELLPI PRO FORM 8d: ACTION SHEET TO IMPROVE PERFORMANCE" <?php echo ( $row->header == 'MELLPI PRO FORM 8d: ACTION SHEET TO IMPROVE PERFORMANCE' ? 'selected':'' ) ?>>MELLPI PRO FORM 8d: ACTION SHEET TO IMPROVE PERFORMANCE</option>
+                                   
+                                </select>
+                            </div>
+                            
                             <input type="hidden" name="lgu_id" value="{{$row->lnfp_lgu_id}}">
-                            <input type="hidden" name="submitStatus" value="1">
-                            <input type="hidden" name="DraftStatus" value="2">
+                            <input type="hidden" value="" name="status" id="status">
+                            <input type="hidden" value="draft" name="formrequest" id="formrequest" />
+                            <input type="hidden" value="{{ $row->id }}" name="id" id="id" />
+                            <input type="hidden" value="{{ $row->form5_id }}" name="form5_id" id="form5_id" />
 
                             <input type="hidden" id="action" name="action" value="">
 
                             <div class="formHeader">
                                 <div class="form-group col-md-6">
                                     <div class="form-group col-md-12">
-                                        <label for="nameOf">Name of PNAO:<span style="color:red">*</span> </label>
-                                        <input class="inputHeader" type="text" name="nameOf" id="nameOf" value="{{ $row->nameOfPnao }}">
-                                        @error('nameOf')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <label for="nameOf">Name of PNAO:
+                                        <h5>{{ $row->nameofPnao }}</h5>
+                                        
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label for="address">Area of Assignment:<span style="color:red">*</span> </label>
@@ -61,11 +79,9 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <div class="form-group col-md-12">
-                                        <label for="bday">Date of Monitoring:<span style="color:red">*</span> </label>
-                                        <input class="form-control" type="date" name="dateMonitor" id="dateMonitor" value="{{ $row->dateMonitoring }}">
-                                        @error('dateMonitoring')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <label for="bday">Date of Monitoring:
+                                            <h5>{{\Carbon\Carbon::parse($row->dateMonitoring)->format('F j y');}}</h5>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -158,7 +174,7 @@
                                                     <div class="text-danger">{{ $message }}</div>
                                                     @enderror
                                                 </td>
-                                                <td class="col-md-4"><input type="file" class="form8InputB" name="sigDate1">
+                                                <td class="col-md-4"><input type="file" class="form8InputB" name="sigDate1"  value="{{$row->sigDate1}}">
                                                     @if($row->sigDate1)
                                                     <img src="{{ Storage::url($row->sigDate1) }}" alt="Sig Date 1" style="width: 200px; height: 150px;">
                                                     @endif
@@ -178,7 +194,7 @@
                                                     <div class="text-danger">{{ $message }}</div>
                                                     @enderror
                                                 </td>
-                                                <td class="col-md-4"><input type="file" class="form8InputB" name="sigDate2">
+                                                <td class="col-md-4"><input type="file" class="form8InputB" name="sigDate2"  value="{{$row->sigDate2}}">
                                                     @if($row->sigDate2)
                                                     <img src="{{ Storage::url($row->sigDate2) }}" alt="Sig Date 2" style="width: 200px; height: 150px;">
                                                     @endif
@@ -227,102 +243,19 @@
                                         </div>
                                     </div>
 
-                                    @if ($row->status != 1)
+                                  
                                     <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
-                                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalDraft">Save as Draft</button>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalSubmit">Save and Submit</button>
+                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
+                                            Save as Draft
+                                        </button>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                                            Next Form
+                                        </button>
                                     </div>
-                                    @endif
+                                    
                                 </div>
                             </div>
-                            <!-- <div class="modal fade" id="exampleModalSubmit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <h5>Are you sure you want to submit?</h5>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                            <button type="submit" id="lnfprow-submit-with-id" class="btn btn-primary" name="action" value="submit">Yes</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
-                            <div class="modal fade" id="exampleModalSubmit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="center modal-body" style="padding-bottom:50px; padding-left:50px;padding-right:50px;">
-                                            <div>
-                                                <lord-icon
-                                                    src="https://cdn.lordicon.com/yqiuuheo.json"
-                                                    trigger="hover"
-                                                    colors="primary:#109121,secondary:#d1fad7"
-                                                    style="width:150px;height:150px">
-                                                </lord-icon>
-                                            </div>
-                                            <div class="bold" style="font-size: 25px;color:#59987e">
-                                                Confirm Submission?
-                                            </div>
-                                            <div style="padding-top: 10px;padding-bottom: 20px; font-size:15px">
-                                                Are you sure you want to save and submit this form? This process cannot be undone.
-                                            </div>
-                                            <div>
-                                                <button type="button" style="margin-right:5px" class="bold btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                                                <button type="submit" id="lnfpForm8-submit-with-id" name="action" value="submit" class="bold btn btn-danger" style="background-color:#59987e!important">YES</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- <div class="modal fade" id="exampleModalDraft" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <h5>Are you sure you want to save as draft?</h5>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                            <button type="submit" id="lgu-row-draft-with-id" class="btn btn-primary" name="action" value="draft">Yes</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
-                            <div class="modal fade" id="exampleModalDraft" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog " role="document">
-                                    <div class="modal-content">
-                                        <div class="center modal-body" style="padding-bottom:50px; padding-left:50px;padding-right:50px;">
-                                            <div>
-                                                <lord-icon
-                                                    src="https://cdn.lordicon.com/yqiuuheo.json"
-                                                    trigger="hover"
-                                                    colors="primary:#faf9d1,secondary:#ffbe55"
-                                                    style="width:150px;height:150px">
-                                                </lord-icon>
-                                            </div>
-                                            <div class="bold" style="font-size: 25px;color:#e88c30">
-                                                Save as draft?
-                                            </div>
-                                            <div style="padding-top: 10px;padding-bottom: 20px; font-size:15px">
-                                                Are you sure you want to save this as a draft?
-                                            </div>
-                                            <div>
-                                                <button type="button" style="margin-right:5px" class="bold btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                                                <button type="submit" class="bold btn btn-danger" id="lgu-form8-draft-with-id" name="action" value="draft" style="background-color:#ffbe55!important;color:white!important">YES</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                             @endif
                         </form>
                     </div>
@@ -331,4 +264,8 @@
         </div>
     </div>
 </div>
+
+@include('Modal.Draft');
+@include('Modal.Submit');
+
 @endsection

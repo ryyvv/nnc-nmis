@@ -25,10 +25,11 @@
                         <thead class="table-light" style="background-color:#508D4E;">
                             <tr>
                                 <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">#</th>
-                                <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Officer</th>
+                                <!-- <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Officer</th> -->
+                                <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Name of PNAO</th>
                                 <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Date Monitoring</th>
                                 <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Period Covered</th>
-                                <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Name</th>
+                                <!-- <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Name</th> -->
                                 <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Status</th>
                                 <!-- <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Date of Monitoring</th> -->
                                 <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Action</th>
@@ -38,23 +39,11 @@
                             <?php $num = 1; ?>
                             @foreach ($form6 as $form6)
                             <tr>
+                                <td>{{$num}}</td>
+                                <td>{{$form6->nameofPnao}}</td>
+                                <td>{{\Carbon\Carbon::parse($form6->dateMonitoring)->format('F j');}}</td>
+                                <td>{{$form6->periodCovereda}}</td>
                                 <td>
-                                    <center>{{$num}}</center>
-                                </td>
-                                <td>
-                                    <center>{{$form6->lnfp_officer}}</center>
-                                </td>
-                                <td>
-                                    <center>{{\Carbon\Carbon::parse($form6->dateMonitoring)->format('F j');}}</center>
-                                </td>
-                                <td>
-                                    <center>{{$form6->forThePeriod}}</center>
-                                </td>
-                                <td>
-                                    <center>{{$form6->nameofPnao}}</center>
-                                </td>
-                                <td>
-                                    <center>
                                         @if( $form6->status == 0 )
                                             <span class="statusApproved">APPROVED</span>
                                             @elseif( $form6->status == 1 )
@@ -62,13 +51,14 @@
                                             @elseif( $form6->status == 2 )
                                             <span class="statusDraft">DRAFT</span>
                                         @endif
-                                    </center>
                                 </td>
                                 <!-- <td>Date of Monitoring</td> -->
                                 <td>
-                                    <center>
-                                        <i onclick="LNFPmyFunction_form6('{{ $form6->id }}')" class="fa fa-eye cursor" style="color:#4bb5ff" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
-                                    </center>
+                                    
+                                <i onclick="LNFPmyFunction_form6('{{ $form6->id }}')"  class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                @if( $form6->status == 2 )
+                                <i onclick="LNFPmyFunction_form6('{{ $form6->id }}')" class="fa fa-edit fa-lg cursor" style="color:#FFB236;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Edit"></i>
+                               @endif
                                 </td>
                             </tr>
                             <?php $num++; ?>

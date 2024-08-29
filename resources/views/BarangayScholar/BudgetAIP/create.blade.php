@@ -111,117 +111,171 @@
                                 <td>(15)</td> 
                             </tr>
                         </thead>
-
-                      
                         <tbody>
-                            
-
                             <tr id="spacing">
                                 <td colspan="8"> 
                                     <b>TOTAL (Barangay)</b>
                                 </td>
                                 <td>
-                                    <input readonly class="inputstyleNone" type="text" name="PSbarangay" id="PSbarangay"  value="PSbarangayValue"/>
+                                    <input readonly class="inputstyleNone" type="text" name="SSPSbarangay" id="SSPSbarangay"  value="0"/>
                                 </td>
                                 <td>
-                                <input readonly class="inputstyleNone" type="text" name="PSbarangay" id="PSbarangay"  value="PSbarangayValue"/>
+                                <input readonly class="inputstyleNone" type="text" name="SSMObarangay" id="SSMObarangay"  value="SSMObarangay"/>
                                 </td>
                                 <td>
-                                <input readonly class="inputstyleNone" type="text" name="PSbarangay" id="PSbarangay"  value="PSbarangayValue"/>
+                                <input readonly class="inputstyleNone" type="text" name="SSCPbarangay" id="SSCPbarangay"  value="SSCPbarangayValue2"/>
                                 </td>
                                 <td>
-                                <input readonly class="inputstyleNone" type="text" name="PSbarangay" id="PSbarangay"  value="PSbarangayValue"/>
+                                <input readonly class="inputstyleNone" type="text" name="SSTLbarangay" id="SSTLbarangay"  value="SSTLbarangay"/>
                                 </td>
                                 <td>
-                                <input readonly class="inputstyleNone" type="text" name="PSbarangay" id="PSbarangay"  value="PSbarangayValue"/>
+                                <input readonly class="inputstyleNone" type="text" name="SSSbarangay" id="SSSbarangay"  value="SSSbarangay"/>
                                 </td>
                                 <td>
-                                <input readonly class="inputstyleNone" type="text" name="PSbarangay" id="PSbarangay"  value="PSbarangayValue"/>
+                                <input readonly class="inputstyleNone" type="text" name="SSNbarangay" id="SSNbarangay"  value="SSNbarangay"/>
                                 </td>
                                 <td>
-                                <input readonly class="inputstyleNone" type="text" name="PSbarangay" id="PSbarangay"  value="PSbarangayValue"/>
+                                <input readonly class="inputstyleNone" type="text" name="SSEMbarangay" id="SSEMbarangay"  value="SSEMbarangay"/>
                                 </td>
                                 <td>
-                                <input readonly class="inputstyleNone" type="text" name="PSbarangay" id="PSbarangay"  value="PSbarangayValue"/>
+                                <input readonly class="inputstyleNone" type="text" name="SSNTCbarangay" id="SSNTCbarangay"  value="SSNTCbarangay"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="8"><b>TOTAL (City/Municipality)</b></td>
                                 <td>
-                                <input readonly class="inputstyleNone" type="text" name="PSbarangay" id="PSbarangay"  value="PSbarangayValue"/>
+                                    <input readonly class="inputstyleNone" type="text" name="SSPSmunicipal" id="SSPSmunicipal"  value="0"/>
                                 </td>
                                 <td>
-                                <input readonly class="inputstyleNone" type="text" name="MOOEbarangay" id="MOOEbarangay"  value="MOOEbarangayValue"/>
+                                <input readonly class="inputstyleNone" type="text" name="SSMOmunicipal" id="SSMOmunicipal"  value="SSMOmunicipal"/>
                                 </td>
-                                <td>sdsdsdsdsd</td>
-                                <td>sdsdsdsdsd</td>
-                                <td>sdsdsdsdsd</td>
-                                <td>sdsdsdsdsd</td>
-                                <td>sdsdsdsdsd</td>
-                                <td>sdsdsdsdsd</td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSCPmunicipal" id="SSCPmunicipal"  value="SSCPmunicipalValue2"/>
+                                </td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSTLmunicipal" id="SSTLmunicipal"  value="SSTLmunicipal"/>
+                                </td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSSmunicipal" id="SSSmunicipal"  value="SSSmunicipal"/>
+                                </td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSNmunicipal" id="SSNmunicipal"  value="SSNmunicipal"/>
+                                </td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSEMmunicipal" id="SSEMmunicipal"  value="SSEMmunicipal"/>
+                                </td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSNTCmunicipal" id="SSNTCmunicipal"  value="SSNTCmunicipal"/>
+                                </td>
                             </tr>
                             <tr>
                                 <td colspan="8"><b>TOTAL (Provincial Government)</b></td>
                                 <td>
-                                <input readonly class="inputstyleNone" type="text" name="PSbarangay" id="PSbarangay"  value="PSbarangayValue"/>
+                                    <input readonly class="inputstyleNone" type="text" name="SSPSprovincial" id="SSPSprovincial"  value="0"/>
                                 </td>
                                 <td>
-                                <input readonly class="inputstyleNone" type="text" name="MOOEbarangay" id="MOOEbarangay"  value="MOOEbarangayValue"/>
+                                <input readonly class="inputstyleNone" type="text" name="SSMOprovincial" id="SSMOprovincial"  value="SSMOprovincial"/>
                                 </td>
-                                <td>sdsdsdsdsd</td>
-                                <td>sdsdsdsdsd</td>
-                                <td>sdsdsdsdsd</td>
-                                <td>sdsdsdsdsd</td>
-                                <td>sdsdsdsdsd</td>
-                                <td>sdsdsdsdsd</td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSCPprovincial" id="SSCPprovincial"  value="SSCPprovincialValue2"/>
+                                </td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSTLprovincial" id="SSTLprovincial"  value="SSTLprovincial"/>
+                                </td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSSprovincial" id="SSSprovincial"  value="SSSprovincial"/>
+                                </td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSNprovincial" id="SSNprovincial"  value="SSNprovincial"/>
+                                </td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSEMprovincial" id="SSEMprovincial"  value="SSEMprovincial"/>
+                                </td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSNTCprovincial" id="SSNTCprovincial"  value="SSNTCprovincial"/>
+                                </td>
                             </tr>
                             <tr>
                                 <td colspan="8"><b>TOTAL ( National)</b></td>
                                 <td>
-                                <input readonly class="inputstyleNone" type="text" name="PSbarangay" id="PSbarangay"  value="PSbarangayValue"/>
+                                    <input readonly class="inputstyleNone" type="text" name="SSPSnational" id="SSPSnational"  value="0"/>
                                 </td>
                                 <td>
-                                <input readonly class="inputstyleNone" type="text" name="MOOEbarangay" id="MOOEbarangay"  value="MOOEbarangayValue"/>
+                                <input readonly class="inputstyleNone" type="text" name="SSMOnational" id="SSMOnational"  value="SSMOnational"/>
                                 </td>
-                                <td>sdsdsdsdsd</td>
-                                <td>sdsdsdsdsd</td>
-                                <td>sdsdsdsdsd</td>
-                                <td>sdsdsdsdsd</td>
-                                <td>sdsdsdsdsd</td>
-                                <td>sdsdsdsdsd</td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSCPnational" id="SSCPnational"  value="SSCPnationalValue2"/>
+                                </td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSTLnational" id="SSTLnational"  value="SSTLnational"/>
+                                </td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSSnational" id="SSSnational"  value="SSSnational"/>
+                                </td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSNnational" id="SSNnational"  value="SSNnational"/>
+                                </td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSEMnational" id="SSEMnational"  value="SSEMnational"/>
+                                </td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSNTCnational" id="SSNTCnational"  value="SSNTCnational"/>
+                                </td>
                             </tr>
                             <tr>
                                 <td colspan="8"><b>TOTAL (External)</b></td>
                                 <td>
-                                <input readonly class="inputstyleNone" type="text" name="PSbarangay" id="PSbarangay"  value="PSbarangayValue"/>
+                                    <input readonly class="inputstyleNone" type="text" name="SSPSexternal" id="SSPSexternal"  value="0"/>
                                 </td>
                                 <td>
-                                <input readonly class="inputstyleNone" type="text" name="MOOEbarangay" id="MOOEbarangay"  value="MOOEbarangayValue"/>
+                                <input readonly class="inputstyleNone" type="text" name="SSMOexternal" id="SSMOexternal"  value="SSMOexternal"/>
                                 </td>
-                                <td>sdsdsdsdsd</td>
-                                <td>sdsdsdsdsd</td>
-                                <td>sdsdsdsdsd</td>
-                                <td>sdsdsdsdsd</td>
-                                <td>sdsdsdsdsd</td>
-                                <td>sdsdsdsdsd</td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSCPexternal" id="SSCPexternal"  value="SSCPexternalValue2"/>
+                                </td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSTLexternal" id="SSTLexternal"  value="SSTLexternal"/>
+                                </td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSSexternal" id="SSSexternal"  value="SSSexternal"/>
+                                </td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSNexternal" id="SSNexternal"  value="SSNexternal"/>
+                                </td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSEMexternal" id="SSEMexternal"  value="SSEMexternal"/>
+                                </td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSNTCexternal" id="SSNTCexternal"  value="SSNTCexternal"/>
+                                </td>
                             </tr>
                             <tr>
                                 <td colspan="8"><b>TOTAL SOCIAL SERVICES SECTOR</b></td>
                                 <td>
-                                <input readonly class="inputstyleNone" type="text" name="PSbarangay" id="PSbarangay"  value="PSbarangayValue"/>
+                                    <input readonly class="inputstyleNone" type="text" name="SSPSTSSS" id="SSPSTSSS"  value="0"/>
                                 </td>
                                 <td>
-                                <input readonly class="inputstyleNone" type="text" name="MOOEbarangay" id="MOOEbarangay"  value="MOOEbarangayValue"/>
+                                <input readonly class="inputstyleNone" type="text" name="SSMOTSSS" id="SSMOTSSS"  value="0"/>
                                 </td>
-                                <td>sdsdsdsdsd</td>
-                                <td>sdsdsdsdsd</td>
-                                <td>sdsdsdsdsd</td>
-                                <td>sdsdsdsdsd</td>
-                                <td>sdsdsdsdsd</td>
-                                <td>sdsdsdsdsd</td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSCPTSSS" id="SSCPTSSS"  value="0"/>
+                                </td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSTLTSSS" id="SSTLTSSS"  value="0"/>
+                                </td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSSTSSS" id="SSSTSSS"  value="0"/>
+                                </td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSNTSSS" id="SSNTSSS"  value="0"/>
+                                </td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSEMTSSS" id="SSEMTSSS"  value="0"/>
+                                </td>
+                                <td>
+                                <input readonly class="inputstyleNone" type="text" name="SSNTCTSSS" id="SSNTCTSSS"  value="0"/>
+                                </td>
                             </tr>
-
-
                         </tbody>
                     </table>
                 </div>

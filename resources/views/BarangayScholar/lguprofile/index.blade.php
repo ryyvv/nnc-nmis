@@ -58,6 +58,11 @@
                                     <span class="statusApproved cursor" title="Added to LGU Report">APPROVED</span>
                                     @elseif( $lguProfile->status == 1 )
                                     <span class="statusPending cursor" title="For Review">PENDING</span>
+                                    <lord-icon
+                                        src="https://cdn.lordicon.com/qvyppzqz.json"
+                                        trigger="click"
+                                        style="width:250px;height:250px">
+                                    </lord-icon>
                                     @elseif( $lguProfile->status == 2 )
                                     <span class="statusDraft cursor" title="Saved as draft">DRAFT</span>
                                     @elseif( $lguProfile->status == 3 )

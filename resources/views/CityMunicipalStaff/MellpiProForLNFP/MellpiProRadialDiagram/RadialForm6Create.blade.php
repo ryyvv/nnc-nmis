@@ -38,10 +38,6 @@
                             @csrf
 
                             @if($form6)
-
-                            <center><img src="https://nnc-nmis.moodlearners.com/assets/img/logo.png" alt="" class="imgLogo"></center><br>
-                            <center>
-                                <h5 class="title">{{__("MELLPI PRO FORM 6a: RADIAL DIEAGRAM FOR PROVINCIAL NUTRITION ACTION OFFICER MONITORING")}}</h5>
                                 <label for="period">For the period: </label>
                                 <select name="forTheperiod" id="forTheperiod" class="inputHeaderPeriod">
                                     <option selected>{{ $form6->periodCovereda }}</option>
@@ -54,7 +50,7 @@
                                     }
                                     ?>
                                 </select>
-                            </center><br>
+                            
 
                             <div class="formHeader">
                                 <div class="form-group col-md-6">

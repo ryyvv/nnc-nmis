@@ -206,6 +206,7 @@ return new class extends Migration
            $table->string('IVAavailreceived')->nullable();
            $table->date('IVAdatereceived')->nullable();
            $table->integer('IVAvolumepax')->nullable();
+           $table->string('food_fortification')->nullable();
            $table->string('IVAremarks')->nullable();
 
            $table->string('VAsource')->nullable();

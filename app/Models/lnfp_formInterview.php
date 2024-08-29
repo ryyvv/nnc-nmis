@@ -32,11 +32,8 @@ class lnfp_formInterview extends Model
         'periodCovereda',
         'dateMonitoring',
         'status',
-
-        'barangay_id',
-        'municipal_id',
-        'province_id',
-        'region_id',
+        'form8_id',
+        'header',
         'user_id'
     ];
 
