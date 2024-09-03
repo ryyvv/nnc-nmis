@@ -18,7 +18,7 @@
                 <div class="card-header">
                 <div style="display: flex; align-items:center;">
                         <a href="{{route('lnfpForm8Index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a>
-                        <h4>CREATE MELLPI PRO FOR LNFP FORM 8:</h4>
+                        <h4>VIEW MELLPI PRO FOR LNFP FORM 8:</h4>
                     </div>
                     @if(session('alert'))
                     <div class="alert alert-success" id="alert-message">
@@ -42,14 +42,14 @@
 
                             <!-- <div style="display:flex"> -->
                             <div class="form-group col">
-                                <label for="nameOf"> HEADER:<span style="color:red">*</span> </label>
+                                <label for="nameOf"> HEADER: </label>
                                 <select class="form-control" name="header" id="header">
                                     <option>Select</option>
-                                    <option value="MELLPI PRO FORM 8a: ACTION SHEET TO IMPROVE PERFORMANCE" <?php echo ( old('header',$row->header) == 'MELLPI PRO FORM 8a: ACTION SHEET TO IMPROVE PERFORMANCE' ? 'selected':'' ) ?>  >MELLPI PRO FORM 8a: ACTION SHEET TO IMPROVE PERFORMANCE</option>
-                                    <option value="MELLPI PRO FORM 8b: ACTION SHEET TO IMPROVE PERFORMANCE" <?php echo ( old('header',$row->header) == 'MELLPI PRO FORM 8b: ACTION SHEET TO IMPROVE PERFORMANCE' ? 'selected':'' ) ?>>MELLPI PRO FORM 8b: ACTION SHEET TO IMPROVE PERFORMANCE</option>
-                                    <option value="MELLPI PRO FORM 8c.1: ACTION SHEET TO IMPROVE PERFORMANCE" <?php echo ( old('header',$row->header) == 'MELLPI PRO FORM 8c.1: ACTION SHEET TO IMPROVE PERFORMANCE' ? 'selected':'' ) ?> >MELLPI PRO FORM 8c.1: ACTION SHEET TO IMPROVE PERFORMANCE</option>
-                                    <option value="MELLPI PRO FORM 8c.2: ACTION SHEET TO IMPROVE PERFORMANCE" <?php echo ( old('header',$row->header) == 'MELLPI PRO FORM 8c.2: ACTION SHEET TO IMPROVE PERFORMANCE' ? 'selected':'' ) ?> >MELLPI PRO FORM 8c.2: ACTION SHEET TO IMPROVE PERFORMANCE</option>
-                                    <option value="MELLPI PRO FORM 8d: ACTION SHEET TO IMPROVE PERFORMANCE" <?php echo ( old('header',$row->header) == 'MELLPI PRO FORM 8d: ACTION SHEET TO IMPROVE PERFORMANCE' ? 'selected':'' ) ?>>MELLPI PRO FORM 8d: ACTION SHEET TO IMPROVE PERFORMANCE</option>
+                                    <option value="MELLPI PRO FORM 8a: ACTION SHEET TO IMPROVE PERFORMANCE" <?php echo ( $row->header == 'MELLPI PRO FORM 8a: ACTION SHEET TO IMPROVE PERFORMANCE' ? 'selected':'' ) ?>  >MELLPI PRO FORM 8a: ACTION SHEET TO IMPROVE PERFORMANCE</option>
+                                    <option value="MELLPI PRO FORM 8b: ACTION SHEET TO IMPROVE PERFORMANCE" <?php echo ( $row->header == 'MELLPI PRO FORM 8b: ACTION SHEET TO IMPROVE PERFORMANCE' ? 'selected':'' ) ?>>MELLPI PRO FORM 8b: ACTION SHEET TO IMPROVE PERFORMANCE</option>
+                                    <option value="MELLPI PRO FORM 8c.1: ACTION SHEET TO IMPROVE PERFORMANCE" <?php echo ( $row->header == 'MELLPI PRO FORM 8c.1: ACTION SHEET TO IMPROVE PERFORMANCE' ? 'selected':'' ) ?> >MELLPI PRO FORM 8c.1: ACTION SHEET TO IMPROVE PERFORMANCE</option>
+                                    <option value="MELLPI PRO FORM 8c.2: ACTION SHEET TO IMPROVE PERFORMANCE" <?php echo ( $row->header == 'MELLPI PRO FORM 8c.2: ACTION SHEET TO IMPROVE PERFORMANCE' ? 'selected':'' ) ?> >MELLPI PRO FORM 8c.2: ACTION SHEET TO IMPROVE PERFORMANCE</option>
+                                    <option value="MELLPI PRO FORM 8d: ACTION SHEET TO IMPROVE PERFORMANCE" <?php echo ( $row->header == 'MELLPI PRO FORM 8d: ACTION SHEET TO IMPROVE PERFORMANCE' ? 'selected':'' ) ?>>MELLPI PRO FORM 8d: ACTION SHEET TO IMPROVE PERFORMANCE</option>
                                    
                                 </select>
                             </div>
@@ -70,9 +70,8 @@
                                         
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label for="address">Area of Assignment:</label>
-                                        <h5>{{ $row->area }}</h5>
-                                        <input class="inputHeader" type="hidden" name="areaAssign" id="areaAssign" value="{{ $row->area }}">
+                                        <label for="address">Area of Assignment: </label>
+                                        <input class="inputHeader" type="text" name="areaAssign" id="areaAssign" value="{{ $row->areaOfAssign }}">
                                         @error('areaAssign')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -153,13 +152,13 @@
                                         <thead>
                                             <tr>
                                                 <td class="col-md-4"><b>
-                                                        <center>Name of Team Member<span style="color:red">*</span></center>
+                                                        <center>Name of Team Member</center>
                                                     </b></td>
                                                 <td class="col-md-4"><b>
-                                                        <center>Designation and Office<span style="color:red">*</span></center>
+                                                        <center>Designation and Office</center>
                                                     </b></td>
                                                 <td class="col-md-4" colspan="2"><b>
-                                                        <center>Signature / Date<span style="color:red">*</span></center>
+                                                        <center>Signature / Date</center>
                                                     </b></td>
                                             </tr>
                                         </thead>
@@ -175,7 +174,7 @@
                                                     <div class="text-danger">{{ $message }}</div>
                                                     @enderror
                                                 </td>
-                                                <td class="col-md-4"><input type="file" class="form8InputB" name="sigDate1"  value="{{$row->sigDate1}}">
+                                                <td class="col-md-4">
                                                     @if($row->sigDate1)
                                                     <img src="{{ Storage::url($row->sigDate1) }}" alt="Sig Date 1" style="width: 200px; height: 150px;">
                                                     @endif
@@ -195,7 +194,7 @@
                                                     <div class="text-danger">{{ $message }}</div>
                                                     @enderror
                                                 </td>
-                                                <td class="col-md-4"><input type="file" class="form8InputB" name="sigDate2"  value="{{$row->sigDate2}}">
+                                                <td class="col-md-4">
                                                     @if($row->sigDate2)
                                                     <img src="{{ Storage::url($row->sigDate2) }}" alt="Sig Date 2" style="width: 200px; height: 150px;">
                                                     @endif
@@ -215,7 +214,7 @@
                                                     <div class="text-danger">{{ $message }}</div>
                                                     @enderror
                                                 </td>
-                                                <td class="col-md-4"><input type="file" class="form8InputB" name="sigDate3" value="{{$row->sigDate3}}">
+                                                <td class="col-md-4">
                                                     @if($row->sigDate3)
                                                     <img src="{{ Storage::url($row->sigDate3) }}" alt="Sig Date 3" style="width: 200px; height: 150px;">
                                                     @endif
@@ -229,14 +228,14 @@
                                     <br>
                                     <div style="display: flex;">
                                         <div class="col-md-8">
-                                            <label for="receivedBy">Received:<span style="color:red">*</span></label>
+                                            <label for="receivedBy">Received:</label>
                                             <input type="text" name="receivedBy" id="receivedBy" class="form8InputBot" value="{{ $row->receivedBy }}" placeholder="Enter receiver's name">
                                             @error('receivedBy')
                                             <div class="text-danger">{{ $message }}</div>
                                             @enderror</td>
                                         </div>
                                         <div class="col-md-4">
-                                            <label for="whatDate">Date:<span style="color:red">*</span></label>
+                                            <label for="whatDate">Date:</label>
                                             <input type="date" name="whatDate" id="whatDate" class="form8InputBot" value="{{ $row->whatDate }}">
                                             @error('whatDate')
                                             <div class="text-danger">{{ $message }}</div>
@@ -245,14 +244,18 @@
                                     </div>
 
                                   
-                                    <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
-                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
-                                            Save as Draft
-                                        </button>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                                            Next Form
-                                        </button>
-                                    </div>
+                                    <div class="d-flex bd-highlight mb-3" style="padding-top:10px;">
+                                          <div class="mr-auto p-2 bd-highlight">
+                                            <a href="{{ route('lguLnfpViewForm6', $row->form7_id) }}"> <i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Previous Form 6 and 7</a></div>
+                                          <div class="p-2 bd-highlight">
+                                            @if( $row->interview_status == 2 )
+                                            <a href="{{ route('editIntForm', $row->interview_id ) }}"> Next Interview Form <i class="fa fa-arrow-right" aria-hidden="true"></i></a> </div> 
+                                            @else
+                                            <a href="{{ route('viewIntForm', $row->interview_id ) }}"> Next Interview Form <i class="fa fa-arrow-right" aria-hidden="true"></i></a> </div> 
+                                            @endif
+                                        </div>
+
+                                     </div>
                                     
                                 </div>
                             </div>
@@ -265,8 +268,5 @@
         </div>
     </div>
 </div>
-
-@include('Modal.Draft');
-@include('Modal.Submit');
 
 @endsection

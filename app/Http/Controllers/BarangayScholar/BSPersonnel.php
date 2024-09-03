@@ -1,115 +1,36 @@
 <?php
 
-
 namespace App\Http\Controllers\BarangayScholar;
 
 use App\Http\Controllers\Controller;
-use App\Models\PersonnelDnaDirectoryModel;
-use App\Models\PersonnelDnaDirectoryNaoModel;
-use App\Models\PersonnelDnaDirectoryNpcModel;
+use Illuminate\Http\Request;
 use App\Models\PersonnelDnaDirectoryBnsModel;
+use App\Models\PersonnelDnaDirectoryModel;
 use App\Models\Region;
 use App\Models\Province;
 use App\Models\Municipal;
 use App\Models\Barangay;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
+use App\Models\PersonnelDnaDirectoryNaoModel;
+use App\Models\PersonnelDnaDirectoryNpcModel; 
 
-class BSPersonnelDnaDirectoryController extends Controller
+class BSPersonnel extends Controller
 {
-    // public function getProvinces()
-    // {
-    //     try {
-    //         $provinces = DB::connection('nnc_db')->table('provinces')->get();
-    //         return response()->json($provinces);
-    //     } catch (\Exception $e) {
-    //         return response()->json(['error' => $e->getMessage()]);
-    //     }
-    // }
-
-    // public function getRegions()
-    // {
-    //     try {
-    //         $regions = DB::connection('nnc_db')->table('regions')->get();
-    //         return response()->json($regions);
-    //     } catch (\Exception $e) {
-    //         return response()->json(['error' => $e->getMessage()]);
-    //     }
-    // }
-
-    // public function getCitys()
-    // {
-    //     try {
-    //         $citys = DB::connection('nnc_db')->table('citys')->get();
-    //         return response()->json($citys);
-    //     } catch (\Exception $e) {
-    //         return response()->json(['error' => $e->getMessage()]);
-    //     }
-    // }
- 
-    
-    public function getProvinces()
-    {
-        try {
-            $provinces = DB::connection('nnc_db')->table('provinces')->get(['id', 'province']);
-            return response()->json($provinces);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to fetch provinces data. Please try again later.'], 500);
-        }
-    }
-
-    public function getProvincesByRegion($regionId)
-    {
-        try {
-            $provinces = DB::connection('nnc_db')->table('provinces')->where('region_id', $regionId)->get(['provcode', 'province']);
-            return response()->json($provinces);
-        } catch (\Exception $e) { 
-            return response()->json(['error' => 'Failed to fetch provinces data. Please try again later.'], 500);
-        }
-    }
-
-    public function getCitiesByProvince($provcode)
-    {
-        try {
-            $cities = DB::connection('nnc_db')->table('cities')->where('provcode', $provcode)->get(['provcode', 'cityname']);
-            return response()->json($cities);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to fetch cities data. Please try again later.'], 500);
-        }
-    }
-
-    public function getRegions()
-    {
-        try {
-            $regions = DB::connection('nnc_db')->table('regions')->get(['id', 'region']);
-            return response()->json($regions);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to fetch regions data. Please try again later.'], 500);
-        }
-    }
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-     
     public function index()
     {
-        $naoPersonnel = PersonnelDnaDirectoryModel::with('NaoFuction')
-        ->get();
-        return view('personnel_dna_directory/create.personnelDnaDirectoryIndex', ['naosPersonnel' => $naoPersonnel]);
+        $naosPersonnel = PersonnelDnaDirectoryModel::all(); // Use `all()` for better readability when fetching all records
+        return view('BarangayScholar.PersonnelDirectory.index', compact('naosPersonnel'));
+        
     }
 
     public function create()
     {
-        $Regs = Region::get();       
+        $Regs = Region::all();       
         $Prov = Province::get();
         $Mun = Municipal::get();
 
         $Brgy = Barangay::get();
 
-        return view('personnel_dna_directory/create.personnelDnaDirectory', ['Regs' => $Regs, 'Prov' => $Prov, 'Mun' => $Mun, 'Brgy' => $Brgy]); 
+        return view('BarangayScholar.PersonnelDirectory.create', compact('Regs' , 'Prov'  , 'Mun'  , 'Brgy' )); 
     }
 
     public function storeNAO(Request $request) {

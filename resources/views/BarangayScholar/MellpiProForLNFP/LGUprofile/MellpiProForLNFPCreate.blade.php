@@ -1,6 +1,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/form5a.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/common.css') }}">
+<!-- <script src="{{ asset('assets') }}/js/Barangay.js"></script> -->
 <script src="https://cdn.lordicon.com/lordicon.js"></script>
 
 @extends('layouts.app', [
@@ -30,7 +31,7 @@
                     @include('layouts.page_template.crud_alert_message')
 
                     <div style="padding:25px">
-                        <form action="{{ route('MellpiProForLNFPSubmit.storeSubmit') }}" id="lnfp-profile-form" method="POST">
+                        <form action="{{ route('MellpiProForLNFPSubmit.storeSubmit') }}" id="form" method="POST">
                             @csrf
                             <!-- <center><img src="https://nnc-nmis.moodlearners.com/assets/img/logo.png" alt="" class="imgLogo"></center><br>
                             <center>
@@ -39,36 +40,11 @@
 
                             @include('layouts.page_template.location_header')
 
-                            <input type="hidden" name="submitStatus" value="1">
-                            <input type="hidden" name="DraftStatus" value="2">
+                            
+                            <input type="hidden" value="" name="status" id="status">
+                            <!-- <input type="hidden" value="" name="formrequest" id="formrequest" /> -->
 
-                            <input type="hidden" id="action" name="action" value="">
-
-
-                            <!-- <input type="hidden" name="dateCreated" value="05/19/2024">
-                            <input type="hidden" name="dateUpdates" value="05/19/2024"> -->
-
-                            <!-- header -->
-                            <!-- <div style="display:flex">
-                                <div class="form-group col">
-                                    <label for="exampleFormControlInput1">Barangay:<span style="color:red">*</span></label>
-                                    <input type="text" class="form-control" name="barangay_id" value="{{Auth()->user()->barangay}}">
-                                </div>
-                                <div class="form-group col">
-                                    <label for="exampleFormControlInput1">Municipality/City:<span style="color:red">*</span></label>
-                                    <input type="text" class="form-control" name="municipal_id" value="{{auth()->user()->city_municipal }}">
-                                </div>
-                                <div class="form-group col">
-                                    <label for="exampleFormControlInput1">Province:<span style="color:red">*</span></label>
-                                    <input type="text" class="form-control" name="province_id" value="{{auth()->user()->Province}}">
-                                
-                                </div>
-                                <div class="form-group col">
-                                    <label for="exampleFormControlInput1">Region:<span style="color:red">*</span></label>
-                                    <input type="test" class="form-control" name="region_id" value="{{auth()->user()->Region}}">
-                                </div>
-
-                            </div> -->
+                         
 
                             <!-- endheader -->
                             <br>
@@ -80,7 +56,7 @@
                                         <label for="exampleFormControlInput1">No. of Municipalities:<span style="color:red">*</span></label>
                                         <input type="number" min="1" placeholder="ex. 100" class="form-control" value="{{ old('numOfMun') }}" id="exampleFormControlInput1" name="numOfMun">
                                         @error('numOfMun')
-                                        <div class="text-danger">{{ $message }}</div>
+                                        <div class="text-danger" id="warning-mesg">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="form-group">
@@ -904,13 +880,13 @@
                                                 <label for="exampleFormControlInput1">Total No.:<span style="color:red">*</span> </label>
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" min="1" placeholder="ex. 100" value="{{ old('newBrgyScholar') }}" class="form-control" id="exampleFormControlInput1" name="newNutritionScholar">
+                                                <input type="number" min="1" placeholder="ex. 100" value="{{ old('newNutritionScholar') }}" class="form-control" id="exampleFormControlInput1" name="newNutritionScholar">
                                                 @error('newNutritionScholar')
                                                 <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                             <div class="form-group col" style="margin-left:10px">
-                                                <input type="number" min="1" placeholder="ex. 100" value="{{ old('oldBrgyScholar') }}" class="form-control" id="exampleFormControlInput1" name="oldNutritionScholar">
+                                                <input type="number" min="1" placeholder="ex. 100" value="{{ old('oldNutritionScholar') }}" class="form-control" id="exampleFormControlInput1" name="oldNutritionScholar">
                                                 @error('oldNutritionScholar')
                                                 <div class="text-danger">{{ $message }}</div>
                                                 @enderror
@@ -1024,23 +1000,12 @@
 
 
                             <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
-                                <!-- <button type="submit" class="btn btn-warning ">Save as draft</button> -->
-                                <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
-                                <!-- Button trigger modal -->
-                                <!-- <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
+                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
                                     Save as Draft
                                 </button>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                                    Save and Submit
-                                </button> -->
-
-                                <button type="button" style="margin-right:6px" class="bold btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
-                                Save as Draft
+                                <button type="button" class="btn btn-primary" data-toggle="modal" id="next-submit" data-target="#exampleModalCenter">
+                                    Next Form
                                 </button>
-                                <button type="button" class="bold btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                                Save and Submit
-                                </button>
-
                             </div>
 
                         </form>
@@ -1051,106 +1016,10 @@
     </div>
 </div>
 </div>
-<!-- Modal -->
-<!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <h5>Are you sure want to submit this form?</h5>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                <button type="submit" id="lnfplgu-submit" class="btn btn-primary">Yes</button>
-            </div>
-        </div>
-    </div>
-</div> -->
 
-<!-- Modal -->
-<!-- <div class="modal fade" id="exampleModalCenterDraft" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <h5>Save as Draft?</h5>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                <button type="submit" id="lnfplgu-draft" class="btn btn-primary">Yes</button>
-            </div>
-        </div>
-    </div>
-</div> -->
 
- <!-- alert Modal -->
- <div class="modal fade" id="exampleModalCenterDraft" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog " role="document">
-        <div class="modal-content"> 
-            <div class="center modal-body" style="padding-bottom:50px; padding-left:50px;padding-right:50px;">
-                <div  >
-                <!-- <lord-icon
-                    src="https://cdn.lordicon.com/yqiuuheo.json"
-                    trigger="loop"
-                    colors="primary:#918d10,secondary:#faf9d1"
-                    style="width:150px;height:150px">
-                </lord-icon> -->
-                <lord-icon
-                    src="https://cdn.lordicon.com/yqiuuheo.json"
-                    trigger="hover"
-                    colors="primary:#faf9d1,secondary:#ffbe55"
-                    style="width:150px;height:150px">
-                </lord-icon>
-                </div>
-                <div class="bold" style="font-size: 25px;color:#e88c30">
-                    Save as draft?
-                </div>
-                <div style="padding-top: 10px;padding-bottom: 20px; font-size:15px" >
-                    Are you sure you want to save this as a draft?
-                </div>
-                <div>
-                    <button type="button" style="margin-right:5px" class="bold btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                    <button type="button" class="bold btn btn-danger" id="lnfplgu-draft" style="background-color:#ffbe55!important;color:white!important" >YES</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- alert Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-        <div class="modal-content"> 
-            <div class="center modal-body" style="padding-bottom:50px; padding-left:50px;padding-right:50px;">
-                <div  >
-                <lord-icon
-                    src="https://cdn.lordicon.com/yqiuuheo.json"
-                    trigger="hover"
-                    colors="primary:#109121,secondary:#d1fad7"
-                    style="width:150px;height:150px">
-                </lord-icon>
-                </div>
-                <!-- <div class="bold" style="font-size: 25px;color:#109121"> -->
-                <div class="bold" style="font-size: 25px;color:#59987e">
-                    Confirm Submission?
-                </div>
-                <div style="padding-top: 10px;padding-bottom: 20px; font-size:15px" >
-                    Are you sure you want to save and submit this form? This process cannot be undone.
-                </div>
-                <div>
-                    <button type="button" style="margin-right:5px" class="bold btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                    <button type="button" id="lnfplgu-submit" class="bold btn btn-danger" style="background-color:#59987e!important"  >YES</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+@include('Modal.Draft')
+@include('Modal.Submit')
 
 @endsection

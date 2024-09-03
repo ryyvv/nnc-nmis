@@ -78,9 +78,9 @@ use App\Http\Controllers\CityMunicipalStaff\CMSMellpiProForLNFP_OverallScoreCont
 
 
 //BarangayScholar
-use App\Http\Controllers\CityMunicipalStaff\BSPersonnelDnaDirectoryController;
-use App\Http\Controllers\CityMunicipalStaff\BSEquipmentInventoryController;
-use App\Http\Controllers\CityMunicipalStaff\BSNutritionOfficesController;
+use App\Http\Controllers\BarangayScholar\BSPersonnel;
+use App\Http\Controllers\BarangayScholar\BSEquipmentInventoryController;
+use App\Http\Controllers\BarangayScholar\BSNutritionOfficesController;
 use App\Http\Controllers\BarangayScholar\BSDashboardController;
 use App\Http\Controllers\BarangayScholar\BSProfileController;
 use App\Http\Controllers\BarangayScholar\BSLGUprofileController;
@@ -145,10 +145,12 @@ Route::middleware('auth')->group(function () {
 
     // bulk upload - Ryan
     Route::get('/mellpi_pro_LGU',  [MellproLGUController::class, 'index'])->name('mellpi_pro_LGU.index');
-    Route::post('/mellpi_pro_LGU',  [MellproLGUController::class, 'Regionupload'])->name('mellpi_pro_LGU.Regionupload');
+    Route::post('/mellpi_pro_LGU/psgc',  [MellproLGUController::class, 'Psgcupload'])->name('mellpi_pro_LGU.Psgcupload');
+    Route::post('/mellpi_pro_LGU/region',  [MellproLGUController::class, 'Regionupload'])->name('mellpi_pro_LGU.Regionupload');
     Route::post('/mellpi_pro_LGU/province',  [MellproLGUController::class, 'Provinceupload'])->name('mellpi_pro_LGU.Provinceupload');
     Route::post('/mellpi_pro_LGU/city',  [MellproLGUController::class, 'Cityupload'])->name('mellpi_pro_LGU.Cityupload');
     Route::post('/mellpi_pro_LGU/mun',  [MellproLGUController::class, 'Munupload'])->name('mellpi_pro_LGU.Munupload');
+    Route::post('/mellpi_pro_LGU/submun',  [MellproLGUController::class, 'SubMunupload'])->name('mellpi_pro_LGU.SubMunupload');
     Route::post('/mellpi_pro_LGU/brgy',  [MellproLGUController::class, 'Barangayupload'])->name('mellpi_pro_LGU.Barangayupload');
 
     // Melpi Pro Controller
@@ -539,54 +541,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/budgetAIP/{id}/edit', [CMSBudgetAIPController::class, 'edit'])->name('CMSbudgetAIP.edit');
         Route::DELETE('/budgetAIP/{id}', [CMSBudgetAIPController::class, 'destroy'])->name('CMSbudgetAIP.destroy');
 
-
-        //Mellpi pro for LNFP
-        //LGU Profile
-        Route::get('/lguprofilelnfp', [CMSMellpiProForLNFP_barangayLGUController::class, 'index'])->name('BSLGUprofileLNFPIndex.index');
-        Route::get('/lguprofilelnfpCreate', [CMSMellpiProForLNFP_barangayLGUController::class, 'mellpiProLNFP_LGUcreate'])->name('MellpiProForLNFPCreate.create');
-        Route::post('/lguprofileLnfpSubmit', [CMSMellpiProForLNFP_barangayLGUController::class, 'storeSubmit'])->name('MellpiProForLNFPSubmit.storeSubmit');
-        Route::post('/lguprofileLnfpUpdate/{id}', [CMSMellpiProForLNFP_barangayLGUController::class, 'storeUpdate'])->name('MellpiProForLNFPUpdate.storeUpdate');
-        Route::get('/lguLnfpDeleteProfile/{id}', [CMSMellpiProForLNFP_barangayLGUController::class, 'deleteLNFP_lguprofile'])->name('lguLnfpDeleteProfile');
-        Route::get('/lguLnfpViewProfile/{id}/view', [CMSMellpiProForLNFP_barangayLGUController::class, 'viewLNFP_lguprofile'])->name('lguLnfpViewProfile');
-        Route::get('/lguLnfpEditprofile/{id}', [CMSMellpiProForLNFP_barangayLGUController::class, 'mellpiProLNFP_LGUedit'])->name('lguLnfpEditProfile');
-
-        //Form 5 Monitoring
-        Route::get('/lguform5Index', [CMSMellpiProForLNFP_barangayController::class, 'monitoringForm5'])->name('MellpiProMonitoringIndex.index');
-        Route::get('/lguform5Create', [CMSMellpiProForLNFP_barangayController::class, 'monitoringForm5create'])->name(('MellpiProMonitoringCreate.create'));
-        Route::post('/lguLnfpUpdate/{id}', [CMSMellpiProForLNFP_barangayController::class, 'editForm5a'])->name('lguLnfpUpdate');
-        Route::post('/lguLnfpUpdate', [CMSMellpiProForLNFP_barangayController::class, 'editForm5a'])->name('lguLnfpUpdates');
-        Route::put('/lguLnfpUpdate', [CMSMellpiProForLNFP_barangayController::class, 'editForm5a'])->name('lguLnfpUpdateRemarks');
-        Route::POST('/lguLnfpDelete', [CMSMellpiProForLNFP_barangayController::class, 'deleteForm5arr'])->name('lguLnfpDeleteForm5a');
-        Route::get('/lguLnfpEdit/{id}', [CMSMellpiProForLNFP_barangayController::class, 'monitoringForm5edit'])->name('lguLnfpEdit');
-        Route::get('/lguform5createdata', [CMSMellpiProForLNFP_barangayController::class, 'createdata'])->name('form5CreateData');
-        Route::get('/lguForm5addForm/{id}', [CMSMellpiProForLNFP_barangayController::class, 'addForm'])->name('lguForm5addForm');
-        //Form 6 Radial Diagram
-        Route::get('/lguform6Index', [CMSMellpiProForLNFP_form6Controller::class, 'radialForm6'])->name('MellpiProRadialIndex.index');
-        Route::get('lguform6Create', [CMSMellpiProForLNFP_form6Controller::class, 'radialForm6Create'])->name('MellpiProRadialCreate.create');
-        Route::get('/lguform6Edit/{id}', [CMSMellpiProForLNFP_form6Controller::class, 'radialForm6Create'])->name('lguLnfpEditForm6');
-        //   Route::post('/lguform7Update/{id}', [MellpiProForLNFP_form6Controller::class, 'storeform7'])->name('lnfpUpdateform7');
-        Route::post('BarangayScholar/lguform7Update/{id}', [CMSMellpiProForLNFP_form6Controller::class, 'storeform7'])->name('lnfpUpdateform7');
-        //Form 8 Action Sheet
-        Route::get('/lguform8Index', [CMSMellpiProForLNFP_form8Controller::class, 'ActionSheetForm8'])->name('lnfpForm8Index');
-        Route::get('/lguform8Create', [CMSMellpiProForLNFP_form8Controller::class, 'ActionSheetForm8Create'])->name('lnfpForm8Create');
-        Route::post('/lguform8Store', [CMSMellpiProForLNFP_form8Controller::class, 'storeASForm8'])->name('lnfpForm8Store');
-        Route::get('/lguLnfpDeleteForm8/{id}', [CMSMellpiProForLNFP_form8Controller::class, 'deleteForm8'])->name('deleteForm8');
-        Route::get('/lguLnfpEditForm8/{id}', [CMSMellpiProForLNFP_form8Controller::class, 'ActionSheetForm8Edit'])->name('editForm8');
-        Route::post('/lguLnfpUpdateForm8/{id}', [CMSMellpiProForLNFP_form8Controller::class, 'storeUpdateASForm8'])->name('MellpiProForLNFPUpdate.storeUpdateASForm8');
-        //Interview Form
-        Route::get('/lguformInterviewIndex', [CMSMellpiProForLNFP_InterviewController::class, 'InterviewFormLNFP'])->name('lnfpFormInterviewIndex');
-        Route::get('/lguformInterviewCreate', [CMSMellpiProForLNFP_InterviewController::class, 'InterviewFormLNFPCreate'])->name('lnfpFormInterviewCreate');
-        Route::post('/lguLnfpInterviewStore', [CMSMellpiProForLNFP_InterviewController::class, 'storeInterviewForm'])->name('lnfpInterviewStore');
-        Route::get('/lguLnfpDeleteInterview/{id}', [CMSMellpiProForLNFP_InterviewController::class, 'deleteIntForm'])->name('deleteIntForm');
-        Route::get('/lguLnfpEditInterview/{id}', [CMSMellpiProForLNFP_InterviewController::class, 'InterviewFormLNFPEdit'])->name('editIntForm');
-        Route::post('/lguLnfpUpdateInterview/{id}', [CMSMellpiProForLNFP_InterviewController::class, 'storeInterviewFormUpdate'])->name('MellpiProForLNFPUpdate.storeUpdateIntForm');
-        //Overall Score
-        Route::get('/lguformOverallScoreIndex', [CMSMellpiProForLNFP_OverallScoreController::class, 'OverallScoreFormLNFP'])->name('lnfpFormOverallScoreIndex');
-        Route::get('/lguLnfpOverallScoreCreate', [CMSMellpiProForLNFP_OverallScoreController::class, 'OverallScoreFormLNFPCreate'])->name('lnfpFormOverallScoreCreate');
-        Route::get('/lguLnfpEditOverall/{id}', [CMSMellpiProForLNFP_OverallScoreController::class, 'OverallScoreFormLNFPEdit'])->name('editOSForm');
-
-
-
         // Resources Link
         //Nutrition Office
         Route::get('/personnelDnaDirectoryIndex', [CMSPersonnelDnaDirectoryController::class, 'index'])->name('CMSpersonnelDnaDirectory.index');
@@ -724,17 +678,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/budgetAIP/{id}/edit', [BudgetAIPController::class, 'edit'])->name('budgetAIP.edit');
         Route::DELETE('/budgetAIP/{id}', [BudgetAIPController::class, 'destroy'])->name('budgetAIP.destroy');
 
-
-        //Mellpi pro for LNFP
-        //LGU Profile
-        Route::get('/lguprofilelnfp', [MellpiProForLNFP_barangayLGUController::class, 'index'])->name('BSLGUprofileLNFPIndex.index');
-        Route::get('/lguprofilelnfpCreate', [MellpiProForLNFP_barangayLGUController::class, 'mellpiProLNFP_LGUcreate'])->name('MellpiProForLNFPCreate.create');
-        Route::post('/lguprofileLnfpSubmit', [MellpiProForLNFP_barangayLGUController::class, 'storeSubmit'])->name('MellpiProForLNFPSubmit.storeSubmit');
-        Route::post('/lguprofileLnfpUpdate/{id}', [MellpiProForLNFP_barangayLGUController::class, 'storeUpdate'])->name('MellpiProForLNFPUpdate.storeUpdate');
-        Route::get('/lguLnfpDeleteProfile/{id}', [MellpiProForLNFP_barangayLGUController::class, 'deleteLNFP_lguprofile'])->name('lguLnfpDeleteProfile');
-        Route::get('/lguLnfpViewProfile/{id}/view', [MellpiProForLNFP_barangayLGUController::class, 'viewLNFP_lguprofile'])->name('lguLnfpViewProfile');
-        Route::get('/lguLnfpEditprofile/{id}', [MellpiProForLNFP_barangayLGUController::class, 'mellpiProLNFP_LGUedit'])->name('lguLnfpEditProfile');
-
         //Form 5 Monitoring
         Route::get('/lguform5Index', [MellpiProForLNFP_barangayController::class, 'monitoringForm5'])->name('MellpiProMonitoringIndex.index');
         Route::get('/lguform5Create', [MellpiProForLNFP_barangayController::class, 'monitoringForm5create'])->name(('MellpiProMonitoringCreate.create'));
@@ -742,13 +685,16 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/lguLnfpUpdate', [MellpiProForLNFP_barangayController::class, 'editForm5a'])->name('lguLnfpUpdates');
         Route::put('/lguLnfpUpdate', [MellpiProForLNFP_barangayController::class, 'editForm5a'])->name('lguLnfpUpdateRemarks');
         Route::POST('/lguLnfpDelete', [MellpiProForLNFP_barangayController::class, 'deleteForm5arr'])->name('lguLnfpDeleteForm5a');
-        Route::get('/lguLnfpEdit/{id}', [MellpiProForLNFP_barangayController::class, 'monitoringForm5edit'])->name('lguLnfpEdit');
+        Route::get('/lguLnfpEdit/{id}', [MellpiProForLNFP_barangayController::class, 'monitoringForm5edit'])->name('lguLnfpEditForm5');
         Route::get('/lguform5createdata', [MellpiProForLNFP_barangayController::class, 'createdata'])->name('form5CreateData');
         Route::get('/lguForm5addForm/{id}', [MellpiProForLNFP_barangayController::class, 'addForm'])->name('lguForm5addForm');
+        Route::get('/lguForm5ViewForm/{id}', [MellpiProForLNFP_barangayController::class, 'monitoringForm5view'])->name('lguForm5ViewForm');
+        
         //Form 6 Radial Diagram
         Route::get('/lguform6Index', [MellpiProForLNFP_form6Controller::class, 'radialForm6'])->name('MellpiProRadialIndex.index');
         Route::get('lguform6Create', [MellpiProForLNFP_form6Controller::class, 'radialForm6Create'])->name('MellpiProRadialCreate.create');
         Route::get('/lguform6Edit/{id}', [MellpiProForLNFP_form6Controller::class, 'radialForm6Create'])->name('lguLnfpEditForm6');
+        Route::get('/lguform6View/{id}', [MellpiProForLNFP_form6Controller::class, 'radialForm6View'])->name('lguLnfpViewForm6');
         //   Route::post('/lguform7Update/{id}', [MellpiProForLNFP_form6Controller::class, 'storeform7'])->name('lnfpUpdateform7');
         Route::post('BarangayScholar/lguform7Update/{id}', [MellpiProForLNFP_form6Controller::class, 'storeform7'])->name('lnfpUpdateform7');
         //Form 8 Action Sheet
@@ -757,6 +703,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/lguform8Store', [MellpiProForLNFP_form8Controller::class, 'storeASForm8'])->name('lnfpForm8Store');
         Route::get('/lguLnfpDeleteForm8/{id}', [MellpiProForLNFP_form8Controller::class, 'deleteForm8'])->name('deleteForm8');
         Route::get('/lguLnfpEditForm8/{id}', [MellpiProForLNFP_form8Controller::class, 'ActionSheetForm8Edit'])->name('editForm8');
+        Route::get('/lguLnfpViewForm8/{id}', [MellpiProForLNFP_form8Controller::class, 'ActionSheetForm8View'])->name('viewForm8');
         Route::post('/lguLnfpUpdateForm8/{id}', [MellpiProForLNFP_form8Controller::class, 'storeUpdateASForm8'])->name('MellpiProForLNFPUpdate.storeUpdateASForm8');
         //Interview Form
         Route::get('/lguformInterviewIndex', [MellpiProForLNFP_InterviewController::class, 'InterviewFormLNFP'])->name('lnfpFormInterviewIndex');
@@ -764,20 +711,38 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/lguLnfpInterviewStore', [MellpiProForLNFP_InterviewController::class, 'storeInterviewForm'])->name('lnfpInterviewStore');
         Route::get('/lguLnfpDeleteInterview/{id}', [MellpiProForLNFP_InterviewController::class, 'deleteIntForm'])->name('deleteIntForm');
         Route::get('/lguLnfpEditInterview/{id}', [MellpiProForLNFP_InterviewController::class, 'InterviewFormLNFPEdit'])->name('editIntForm');
+        Route::get('/lguLnfpViewInterview/{id}', [MellpiProForLNFP_InterviewController::class, 'InterviewFormLNFPView'])->name('viewIntForm');
         Route::post('/lguLnfpUpdateInterview/{id}', [MellpiProForLNFP_InterviewController::class, 'storeInterviewFormUpdate'])->name('MellpiProForLNFPUpdate.storeUpdateIntForm');
         //Overall Score
         Route::get('/lguformOverallScoreIndex', [MellpiProForLNFP_OverallScoreController::class, 'OverallScoreFormLNFP'])->name('lnfpFormOverallScoreIndex');
         Route::get('/lguLnfpOverallScoreCreate', [MellpiProForLNFP_OverallScoreController::class, 'OverallScoreFormLNFPCreate'])->name('lnfpFormOverallScoreCreate');
         Route::get('/lguLnfpEditOverall/{id}', [MellpiProForLNFP_OverallScoreController::class, 'OverallScoreFormLNFPEdit'])->name('editOSForm');
-    
+        Route::get('/lguLnfpViewOverall/{id}', [MellpiProForLNFP_OverallScoreController::class, 'OverallScoreFormLNFPView'])->name('viewOSForm');
+        Route::post('/lguLnfpUpdateOverall', [MellpiProForLNFP_OverallScoreController::class, 'update'])->name('updateOSForm');
+       
         // Equipment Inventory
         Route::get('/equipmentInventoryIndex', [BSEquipmentInventoryController::class, 'index'])->name('BSequipmentInventory.index');
         Route::get('/equipmentInventory', [BSEquipmentInventoryController::class, 'create'])->name('BSequipmentInventory.create');
         Route::post('/equipmentInventory', [BSEquipmentInventoryController::class, 'store'])->name('BSequipmentInventory.store');
     
-    
+        // Nutrition Offices
+        Route::get('/nutritionOfficesIndex', [BSNutritionOfficesController::class, 'index'])->name('BSnutritionOffices.index');
+        Route::get('/nutritionOffices', [BSNutritionOfficesController::class, 'create'])->name('BSnutritionOffices.create');
+        Route::post('/nutritionOffices', [BSNutritionOfficesController::class, 'store'])->name('BSnutritionOffices.store');
+        Route::get('/nutriOfficeIndex', [BSNutritionOfficesController::class, 'nutriOfficeIndex'])->name('nutriOfficeIndex');
+
+        //Nutrition Office
+        Route::get('/personnelDnaDirectory', [BSPersonnel::class, 'index'])->name('BSpersonnel.index');
+        // Route::post('/personnelDnaDirectory/nao', [BSPersonnel::class, 'storeNAO'])->name('BSpersonnel.storeNAO');
+        // Route::post('/personnelDnaDirectory/npc', [BSPersonnel::class, 'storeNPC'])->name('BSpersonnel.storeNPC');
+        // Route::post('/personnelDnaDirectory/bns', [BSPersonnel::class, 'storeBNS'])->name('BSpersonnel.storeBNS');
+        // Route::get('/personnelDnaDirectory', [BSPersonnel::class, 'create'])->name('BSpersonnel.create');
     
     });
+
+
+
+
 
     Route::prefix('PublicUser')->middleware(['auth', 'PublicUser'])->group(function () {
         // userProfile and history download only
@@ -790,6 +755,8 @@ Route::group(['middleware' => 'auth'], function () {
         // Route::get('/admin/{admin}', [AdminUserController::class, 'destroy'])->name('COadmin.destroy');
 
     });
+
+
 
     Route::prefix('UserUnderReview')->middleware(['auth', 'UserUnderReview'])->group(function () {
         Route::get('/dashboard', [UserReviewController::class, 'index'])->name('UURdashboard.index');
@@ -811,14 +778,17 @@ Route::prefix('admin')->group(function () {
 // Equipment Inventory
 Route::prefix('equipment')->group(function () {
     Route::get('/regions', [EquipmentInventoryController::class, 'getRegions'])->name('equipment.regions.get');
-    Route::get('/provinces/{region_code}', [EquipmentInventoryController::class, 'getProvinces'])->name('equipment.provinces.byRegion.get');
-    Route::get('/cities/{province_code}', [EquipmentInventoryController::class, 'getCities'])->name('equipment.cities.byProvince.get');
-    Route::get('/city-inventory/{psgc_code}', [EquipmentInventoryController::class, 'getCityWithEquipmentInventory'])->name('equipment.cityInventory.byPsgcCode.get');
-    Route::get('/cities-inventory/{province_code}', [EquipmentInventoryController::class, 'getCitiesWithEquipmentInventory'])->name('equipment.citiesInventory.byProvince.get');
-    Route::get('/cities-and-municipalities-inventory/{province_code}', [EquipmentInventoryController::class, 'getCitiesAndMunicipalitiesWithEquipmentInventory'])->name('equipment.citiesAndMunicipalitiesInventory.byProvince.get');
-    Route::get('/cities-and-municipalities/{province_code}', [EquipmentInventoryController::class, 'getCitiesAndMunicipalities'])->name('equipment.citiesAndMunicipalities.byProvince.get');
-    Route::get('/cities-and-municipalities-ncr/{region_code}', [EquipmentInventoryController::class, 'getCitiesAndMunicipalitiesInNCR'])->name('equipment.citiesAndMunicipalitiesInNCR.byRegion.get');
-    Route::get('/', [EquipmentInventoryController::class, 'index'])->name('equipmentInventoryIndex.index');
+    Route::get('/provinces', [EquipmentInventoryController::class, 'getProvinces'])->name('equipment.provinces.get');
+    Route::get('/cities', [EquipmentInventoryController::class, 'getCities'])->name('equipment.cities.get');
+    Route::get('/highly-urbanized-cities', [EquipmentInventoryController::class, 'getHighlyUrbanizedCities'])->name('equipment.highlyUrbanizedCities.get');
+    Route::get('/independent-component-cities', [EquipmentInventoryController::class, 'getIndependentComponentCities'])->name('equipment.independentComponentCities.get');
+    Route::get('/component-cities', [EquipmentInventoryController::class, 'getComponentCities'])->name('equipment.componentCities.get');
+    Route::get('/municipalities', [EquipmentInventoryController::class, 'getMunicipalities'])->name('equipment.municipalities.get');
+    Route::get('/sub-municipalities', [EquipmentInventoryController::class, 'getSubMunicipalities'])->name('equipment.subMunicipalities.get');
+    Route::get('/barangays', [EquipmentInventoryController::class, 'getBarangays'])->name('equipment.barangays.get');
+    Route::get('/cities-municipalities', [EquipmentInventoryController::class, 'getCitiesAndMunicipalities'])->name('equipment.citiesAndMunicipalities.get');
+    Route::get('/inventory/cities-municipalities', [EquipmentInventoryController::class, 'getCitiesAndMunicipalitiesInventory'])->name('equipment.citiesAndMunicipalitiesInventory.get');
+    Route::get('/test', [EquipmentInventoryController::class, 'test']);
 });
 
 // Mellpi
@@ -840,3 +810,14 @@ Route::prefix('mellpi')->group(function () {
 // Route::get('/barangays/{city}', [RegisterController::class, 'getBarangays'])->name('barangays.get');
 // Route::get('/cities/{provcode}', [RegisterController::class, 'getCitiesByProvince'])->name('cities.byProvince.get');
 // Route::get('/regions', [RegisterController::class, 'getRegions'])->name('regions.get');
+
+
+ //Mellpi pro for LNFP
+//LGU Profile
+Route::get('/lguprofilelnfp', [MellpiProForLNFP_barangayLGUController::class, 'index'])->name('BSLGUprofileLNFPIndex.index');
+Route::get('/lguprofilelnfpCreate', [MellpiProForLNFP_barangayLGUController::class, 'mellpiProLNFP_LGUcreate'])->name('MellpiProForLNFPCreate.create');
+Route::post('/lguprofileLnfpSubmit', [MellpiProForLNFP_barangayLGUController::class, 'storeSubmit'])->name('MellpiProForLNFPSubmit.storeSubmit');
+Route::post('/lguprofileLnfpUpdate/{id}', [MellpiProForLNFP_barangayLGUController::class, 'storeUpdate'])->name('MellpiProForLNFPUpdate.storeUpdate');
+Route::POST('/lguLnfpDeleteProfile', [MellpiProForLNFP_barangayLGUController::class, 'deleteLNFP_lguprofile'])->name('lguLnfpDeleteProfile');
+Route::get('/lguLnfpViewProfile/{id}/view', [MellpiProForLNFP_barangayLGUController::class, 'viewLNFP_lguprofile'])->name('lguLnfpViewProfile');
+Route::get('/lguLnfpEditprofile/{id}', [MellpiProForLNFP_barangayLGUController::class, 'mellpiProLNFP_LGUedit'])->name('lguLnfpEditProfile');

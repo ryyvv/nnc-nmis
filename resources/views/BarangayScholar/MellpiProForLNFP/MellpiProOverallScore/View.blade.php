@@ -57,7 +57,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <div class="form-group col-md-12">
-                                        <label for="bday">Date:<span style="color:red">*</span> </label>
+                                        <label for="bday">Date:</label>
                                         <input class="form-control" type="date" name="dateOS" id="dateOS" value="{{ $overallScore->dateOver }}">
                                         @error('dateOS')
                                         <div class="text-danger">{{ $message }}</div>
@@ -287,14 +287,12 @@
                                     </div>
                                     <br>
                                     
-                                    <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
-                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
-                                            Save as Draft
-                                        </button>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                                            Submit for Approval
-                                        </button>
-                                    </div>
+                                    <div class="d-flex bd-highlight mb-3" style="padding-top:10px;">
+                                          <div class="mr-auto p-2 bd-highlight">
+                                            <a href="{{ route('viewIntForm', $overallScore->interview_id) }}"> <i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Previous Interview Form</a></div>
+                                          <div class="p-2 bd-highlight">Subject for Approval</div>
+
+                                     </div>
                                     
                                 </div>
                             </div>
@@ -316,6 +314,4 @@
     });
 </script>
 
-@include('Modal.Draft');
-@include('Modal.Submit');
 @endsection

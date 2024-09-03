@@ -223,4 +223,7 @@ class LguProfile extends Model
 
     protected $guarded = ['id'];
     protected $table = 'lguprofilebarangay';
+
+    
+
 }

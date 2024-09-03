@@ -26,8 +26,7 @@
                     @include('layouts.page_template.crud_alert_message')
 
                     <div style="padding:25px">
-                        <form action="{{ route('MellpiProForLNFPUpdate.storeUpdateIntForm', $row->id) }}" method="post" id="form">
-                            @csrf
+                      
 
                             @if($row)
                             <!-- <center><img src="https://nnc-nmis.moodlearners.com/assets/img/logo.png" alt="" class="imgLogo"></center><br>
@@ -37,7 +36,7 @@
 
                             <div style="display:flex">
                             <div class="form-group col">
-                                <label for="nameOf"> HEADER:<span style="color:red">*</span> </label>
+                                <label for="nameOf"> HEADER:</label>
                                 <select class="form-control" name="header" id="header">
                                     <option>Select</option>
                                     <!-- For provincial staff -->
@@ -96,7 +95,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <div class="form-group col-md-12">
-                                        <label for="bday">Date of Interview:<span style="color:red">*</span> </label>
+                                        <label for="bday">Date of Interview: </label>
                                         <input class="form-control" type="date" name="dateInterview" id="dateInterview" value="{{ $row->dateOfInterview }}">
                                         @error('dateInterview')
                                         <div class="text-danger">{{ $message }}</div>
@@ -232,21 +231,25 @@
                                     </table>
                                     <br>
                                   
-                                    <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
-                                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
-                                                Save as Draft
-                                            </button>
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                                                Next Form
-                                            </button>
-                                    </div>
+                                    <div class="d-flex bd-highlight mb-3" style="padding-top:10px;">
+                                          <div class="mr-auto p-2 bd-highlight">
+                                            <a href="{{ route('viewForm8', $row->form8_id) }}"> <i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Previous Form 8</a></div>
+                                          <div class="p-2 bd-highlight">
+                                            @if( $row->overall_status == 2 )
+                                            <a href="{{ route('editOSForm', $row->overall_id ) }}"> Next Overall Score <i class="fa fa-arrow-right" aria-hidden="true"></i></a> </div> 
+                                            @else
+                                            <a href="{{ route('viewOSForm', $row->overall_id ) }}"> Next Overall Score <i class="fa fa-arrow-right" aria-hidden="true"></i></a> </div> 
+                                            @endif
+                                        </div>
+
+                                     </div>
                               
                                 </div>
                             </div>
 
                            
                             @endif
-                        </form>
+                       
                     </div>
 
                 </div>
@@ -254,9 +257,6 @@
         </div>
     </div>
 </div>
-
-@include('Modal.Draft');
-@include('Modal.Submit')
 
 
 @endsection

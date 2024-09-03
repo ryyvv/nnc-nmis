@@ -1,5 +1,5 @@
 <script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.8/datatables.min.js"></script>
-<script src="{{ asset('js/diether.js') }}"></script>
+<!-- <script src="{{ asset('js/diether.js') }}"></script> -->
 <script src="https://cdn.lordicon.com/lordicon.js"></script>
 
 @extends('layouts.app', [
@@ -34,7 +34,7 @@
                             <a href="{{route('MellpiProForLNFPCreate.create')}}" class="btn btn-primary bolder">Create data</a>
                         </div>
 
-                        <table class="display" id="LNFP_Profile_myTable" width="100%">
+                        <table class="display" id="LNFP_Profile_myTable" style="width:100%!important; max-width:inherit">
                             <thead class="table-light" style="background-color:#508D4E;">
 
                                 <tr>
@@ -77,13 +77,13 @@
                                             <li class="list-inline-item">
                                                 @if( $lnfpProfile->status == 1 || $lnfpProfile->status == 0 )
                                                 <i onclick="myFunctionLNFP_lguprofile_View('{{ $lnfpProfile->id }}', 'lncmanagement', 'edit')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
-                                                <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
-                                                <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i>
+                                                <!-- <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
+                                                <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i> -->
                                                 <!-- <i class="fa fa-file-pdf-o fa-lg cursor " style="color:red;margin-right:7px;" aria-hidden="true"></i> -->
                                                 @elseif( $lnfpProfile->status == 2 )
-                                                <i onclick="myFunctionLNFP_lguprofile_View('{{ $lnfpProfile->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                                <!-- <i onclick="myFunctionLNFP_lguprofile_View('{{ $lnfpProfile->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i> -->
                                                 <i onclick="myFunctionLNFP_lguprofile('{{ $lnfpProfile->id }}', 'lncmanagement', 'edit')" class="fa fa-edit fa-lg cursor" style="color:#FFB236;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Edit"></i>
-                                                <i onclick="LNFPopenModaLguProfilel('{{ $lnfpProfile->id }}')" class="fa fa-trash fa-lg cursor" style="color:red;margin-right:10px" title="Delete "></i>
+                                                <i onclick="openModalLNFP('{{ $lnfpProfile->id }}')" class="fa fa-trash fa-lg cursor" style="color:red;margin-right:10px" title="Delete "></i>
                                                 <!-- <i class="fa fa-file-pdf-o fa-lg cursor " style="color:red;margin-right:7px;" aria-hidden="true"></i> -->
                                                 @endif
                                             </li>
@@ -100,40 +100,8 @@
         </div>
     </div>
 </div>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('DOM fully loaded and parsed');
-        setTimeout(function() {
-            var alertMessage = document.getElementById('alert-message');
-            if (alertMessage) {
-                console.log('Alert message found, hiding now');
-                alertMessage.style.display = 'none';
-            } else {
-                console.log('Alert message not found');
-            }
-        }, 3000);
-    });
-</script>
+
+@include('Modal.DeleteLNFP')
 
 
-<!-- Delete -->
-<div class="modal fade" id="deleteModal_lguprofile" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to delete this data?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" onclick="confirmDeleteLNFP_Lguprofile()">Yes</button>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection

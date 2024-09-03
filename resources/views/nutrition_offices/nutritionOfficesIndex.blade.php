@@ -32,7 +32,7 @@
             <div class="card-header">
                 <h5 class="title">{{__("Nutrition Offices")}}</h5>
                 <div>
-                    <a class="btn btn-outline-primary" href="{{route('nutritionOffices')}}">Nutrition Offices</a>
+                    <a class="btn btn-outline-primary" href="{{route('BSnutritionOffices.create')}}">Nutrition Offices</a>
                 </div>
             </div>
         </div>

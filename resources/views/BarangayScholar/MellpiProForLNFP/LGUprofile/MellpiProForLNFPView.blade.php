@@ -1022,6 +1022,20 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
+                                
+                                                <div class="row">
+                                                  <div class="column"></div>
+                                                  <div class="column">
+                                                  @if( $row->form5_status == 2 )
+                                                  <a href="{{ route('lguLnfpEditForm5', $row->form5_id) }}" > Next Form 5 <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                                                  @else
+                                                  <a href="{{ route('lguForm5ViewForm', $row->form5_id) }}"> Next Form 5 <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                                                  @endif
+                                                </div>
+                                                </div> 
+                                        </div>
+
                                     </div>
                                 </div>
 

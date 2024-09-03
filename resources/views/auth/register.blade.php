@@ -1,9 +1,10 @@
     <head>
         <!-- Other head content -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+            integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     </head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     @extends('layouts.app', [
     'namePage' => 'NMIS',
@@ -21,34 +22,40 @@
 
                     <div class="card-body d-flex" style="align-items:center;justify-content:center!important">
                         <!-- left -->
-                        <div class="col-5" >
+                        <div class="col-5">
                             <div class="row" style="justify-content:center!important">
                                 <img src="/assets/img/logo.png" alt="NNC logo" height="300px" width="300px">
                             </div>
                             <div class="row" style="justify-content:center!important; margin-top:20px">
-                                <label style="font-size: 40px;color:#59987e" for="">Nutrition Management Nutrition System</label>
+                                <label style="font-size: 40px;color:#59987e" for="">Nutrition Management Nutrition
+                                    System</label>
                             </div>
                         </div>
 
                         <!-- right -->
                         <!-- style="padding-left:20px;border-left: 2px solid gray" -->
-                        <div class="col-7" >
+                        <div class="col-7">
                             <div class="card-header">
                                 <h4 class="bold card-title" style="color:#59987e">{{ __('Register') }}</h4>
                             </div>
                             <form method="POST" action="{{ route('register') }}">
-                                @csrf 
+                                @csrf
                                 <input type="hidden" name="status" value="pending">
                                 <input type="hidden" name="role" value="11">
 
                                 <div>
-                                    <div class="input-group  form-control-lg {{ $errors->has('Firstname') ? ' has-danger' : '' }}" style="border-radius:40px;  ">
+                                    <div class="input-group  form-control-lg {{ $errors->has('Firstname') ? ' has-danger' : '' }}"
+                                        style="border-radius:40px;  ">
                                         <span class="input-group-prepend">
                                             <div class="input-group-text">
                                                 <i class="now-ui-icons users_circle-08 text-dark"></i>
                                             </div>
                                         </span>
-                                        <input class="form-control text-dark {{ $errors->has('Firstname') ? ' is-invalid' : '' }}" placeholder="{{ __('Firstname') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;"  value="{{ old('Firstname') }}" name="Firstname" required autofocus>
+                                        <input
+                                            class="form-control text-dark {{ $errors->has('Firstname') ? ' is-invalid' : '' }}"
+                                            placeholder="{{ __('Firstname') }}"
+                                            style="border-top-right-radius:40px;border-bottom-right-radius:40px;"
+                                            value="{{ old('Firstname') }}" name="Firstname" required autofocus>
                                     </div>
                                     @if ($errors->has('Firstname'))
                                     <span class="invalid-feedback" style="display: block;" role="alert">
@@ -57,13 +64,18 @@
                                     @endif
 
 
-                                    <div class="input-group  form-control-lg {{ $errors->has('Middlename') ? ' has-danger' : '' }}" style="border-radius:40px;  ">
+                                    <div class="input-group  form-control-lg {{ $errors->has('Middlename') ? ' has-danger' : '' }}"
+                                        style="border-radius:40px;  ">
                                         <span class="input-group-prepend">
                                             <div class="input-group-text">
                                                 <i class="now-ui-icons users_circle-08 text-dark"></i>
                                             </div>
                                         </span>
-                                        <input class="form-control text-dark {{ $errors->has('Middlename') ? ' is-invalid' : '' }}" placeholder="{{ __('Middlename') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;"  value="{{ old('Middlename') }}"  name="Middlename" required autofocus>
+                                        <input
+                                            class="form-control text-dark {{ $errors->has('Middlename') ? ' is-invalid' : '' }}"
+                                            placeholder="{{ __('Middlename') }}"
+                                            style="border-top-right-radius:40px;border-bottom-right-radius:40px;"
+                                            value="{{ old('Middlename') }}" name="Middlename" required autofocus>
                                     </div>
                                     @if ($errors->has('Middlename'))
                                     <span class="invalid-feedback" style="display: block;" role="alert">
@@ -71,13 +83,18 @@
                                     </span>
                                     @endif
 
-                                    <div class="input-group  form-control-lg {{ $errors->has('Lastname') ? ' has-danger' : '' }}" style="border-radius:40px;  ">
+                                    <div class="input-group  form-control-lg {{ $errors->has('Lastname') ? ' has-danger' : '' }}"
+                                        style="border-radius:40px;  ">
                                         <span class="input-group-prepend">
                                             <div class="input-group-text">
                                                 <i class="now-ui-icons users_circle-08 text-dark"></i>
                                             </div>
                                         </span>
-                                        <input class="form-control text-dark {{ $errors->has('Lastname') ? ' is-invalid' : '' }}" placeholder="{{ __('Lastname') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;"   value="{{ old('Lastname') }}" name="Lastname" required autofocus>
+                                        <input
+                                            class="form-control text-dark {{ $errors->has('Lastname') ? ' is-invalid' : '' }}"
+                                            placeholder="{{ __('Lastname') }}"
+                                            style="border-top-right-radius:40px;border-bottom-right-radius:40px;"
+                                            value="{{ old('Lastname') }}" name="Lastname" required autofocus>
                                     </div>
                                     @if ($errors->has('Lastname'))
                                     <span class="invalid-feedback" style="display: block;" role="alert">
@@ -90,13 +107,18 @@
                                 <div>
                                     <div class="d-flex">
                                         <!-- Region -->
-                                        <div class="input-group form-control-lg {{ $errors->has('Region') ? 'has-danger' : '' }}" style="border-radius: 40px; margin-right:15px  ">
+                                        <div class="input-group form-control-lg {{ $errors->has('Region') ? 'has-danger' : '' }}"
+                                            style="border-radius: 40px; margin-right:15px  ">
                                             <span class="input-group-prepend">
-                                                <div class="input-group-text" style="border-top-left-radius: 40px; border-bottom-left-radius: 40px;">
+                                                <div class="input-group-text"
+                                                    style="border-top-left-radius: 40px; border-bottom-left-radius: 40px;">
                                                     <i class="now-ui-icons location_pin text-dark"></i>
                                                 </div>
                                             </span>
-                                            <select   class="form-control text-dark {{ $errors->has('Region') ? 'is-invalid' : '' }}" style="border-top-right-radius: 40px; border-bottom-right-radius: 40px;" name="Region" required>
+                                            <select
+                                                class="form-control text-dark {{ $errors->has('Region') ? 'is-invalid' : '' }}"
+                                                style="border-top-right-radius: 40px; border-bottom-right-radius: 40px;"
+                                                name="Region" id="region-dropdown" required>
                                                 <!-- <option value="">Select your Region</option>  -->
                                                 <option value="428" selected>Sample-Region 428</option>
                                             </select>
@@ -108,13 +130,18 @@
                                         @endif -->
 
                                         <!-- Province -->
-                                        <div class="input-group form-control-lg {{ $errors->has('Province') ? 'has-danger' : '' }}" style="border-radius: 40px;">
+                                        <div class="input-group form-control-lg {{ $errors->has('Province') ? 'has-danger' : '' }}"
+                                            style="border-radius: 40px;">
                                             <span class="input-group-prepend">
-                                                <div class="input-group-text" style="border-top-left-radius: 40px; border-bottom-left-radius: 40px;">
+                                                <div class="input-group-text"
+                                                    style="border-top-left-radius: 40px; border-bottom-left-radius: 40px;">
                                                     <i class="now-ui-icons location_pin text-dark"></i>
                                                 </div>
                                             </span>
-                                            <select   class="form-control text-dark {{ $errors->has('Province') ? 'is-invalid' : '' }}" style="border-top-right-radius: 40px; border-bottom-right-radius: 40px;" name="Province" required>
+                                            <select
+                                                class="form-control text-dark {{ $errors->has('Province') ? 'is-invalid' : '' }}"
+                                                style="border-top-right-radius: 40px; border-bottom-right-radius: 40px;"
+                                                name="Province" id="province-dropdown" required>
                                                 <!-- <option value="">Select your Province</option>  -->
                                                 <option value="1301" selected>Sample-Province 1301</option>
                                             </select>
@@ -128,13 +155,18 @@
 
                                     <div class="d-flex">
                                         <!-- Municipal -->
-                                        <div class="input-group form-control-lg {{ $errors->has('city_municipal') ? 'has-danger' : '' }}" style="border-radius: 40px;margin-right:15px  ">
+                                        <div class="input-group form-control-lg {{ $errors->has('city_municipal') ? 'has-danger' : '' }}"
+                                            style="border-radius: 40px;margin-right:15px  ">
                                             <span class="input-group-prepend">
-                                                <div class="input-group-text" style="border-top-left-radius: 40px; border-bottom-left-radius: 40px;">
+                                                <div class="input-group-text"
+                                                    style="border-top-left-radius: 40px; border-bottom-left-radius: 40px;">
                                                     <i class="now-ui-icons location_pin text-dark"></i>
                                                 </div>
                                             </span>
-                                            <select   class="form-control text-dark {{ $errors->has('city_municipal') ? 'is-invalid' : '' }}" style="border-top-right-radius: 40px; border-bottom-right-radius: 40px;" name="city_municipal" required>
+                                            <select
+                                                class="form-control text-dark {{ $errors->has('city_municipal') ? 'is-invalid' : '' }}"
+                                                style="border-top-right-radius: 40px; border-bottom-right-radius: 40px;"
+                                                name="city_municipal" id="city-dropdown" required>
                                                 <!-- <option value="">Select your City/Municipal</option>  -->
                                                 <option value="1923" selected>Sample-City/Municipality 1923</option>
                                             </select>
@@ -146,14 +178,19 @@
                                         @endif -->
 
                                         <!-- Barangay -->
-                                        <div class="input-group form-control-lg {{ $errors->has('barangay') ? 'has-danger' : '' }}" style="border-radius: 40px; ">
+                                        <div class="input-group form-control-lg {{ $errors->has('barangay') ? 'has-danger' : '' }}"
+                                            style="border-radius: 40px; ">
                                             <span class="input-group-prepend">
-                                                <div class="input-group-text" style="border-top-left-radius: 40px; border-bottom-left-radius: 40px;">
+                                                <div class="input-group-text"
+                                                    style="border-top-left-radius: 40px; border-bottom-left-radius: 40px;">
                                                     <i class="now-ui-icons location_pin text-dark"></i>
                                                 </div>
                                             </span>
-                                            <select  class="form-control text-dark {{ $errors->has('barangay') ? 'is-invalid' : '' }}" style="border-top-right-radius: 40px; border-bottom-right-radius: 40px;" value="{{ old('barangay') }}" name="barangay" >
-                                                <option value="Suyo">Sample-Barangay Suyo</option> 
+                                            <select
+                                                class="form-control text-dark {{ $errors->has('barangay') ? 'is-invalid' : '' }}"
+                                                style="border-top-right-radius: 40px; border-bottom-right-radius: 40px;"
+                                                value="{{ old('barangay') }}" name="barangay" id="barangay-dropdown">
+                                                <option value="Suyo">Sample-Barangay Suyo</option>
                                             </select>
                                         </div>
                                         <!-- @if ($errors->has('barangay'))
@@ -166,13 +203,19 @@
 
                                 <!-- workstation/designation -->
                                 <div>
-                                    <div class="input-group  form-control-lg {{ $errors->has('agency_office_lgu') ? 'is-invalid' : '' }}" style="border-radius:40px;  ">
+                                    <div class="input-group  form-control-lg {{ $errors->has('agency_office_lgu') ? 'is-invalid' : '' }}"
+                                        style="border-radius:40px;  ">
                                         <span class="input-group-prepend">
                                             <div class="input-group-text">
                                                 <i class="now-ui-icons business_badge text-dark"></i>
                                             </div>
                                         </span>
-                                        <input class="form-control text-dark {{ $errors->has('agency_office_lgu') ? ' is-invalid' : '' }}" placeholder="{{ __('Agency/Office/Unit') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;"    value="{{ old('agency_office_lgu') }}" name="agency_office_lgu" required autofocus>
+                                        <input
+                                            class="form-control text-dark {{ $errors->has('agency_office_lgu') ? ' is-invalid' : '' }}"
+                                            placeholder="{{ __('Agency/Office/Unit') }}"
+                                            style="border-top-right-radius:40px;border-bottom-right-radius:40px;"
+                                            value="{{ old('agency_office_lgu') }}" name="agency_office_lgu" required
+                                            autofocus>
                                     </div>
                                     @if ($errors->has('agency_office_lgu'))
                                     <span class="invalid-feedback" style="display: block;" role="alert">
@@ -180,13 +223,18 @@
                                     </span>
                                     @endif
 
-                                    <div class="input-group  form-control-lg {{ $errors->has('Division_unit') ? ' has-danger' : '' }}" style="border-radius:40px;  ">
+                                    <div class="input-group  form-control-lg {{ $errors->has('Division_unit') ? ' has-danger' : '' }}"
+                                        style="border-radius:40px;  ">
                                         <span class="input-group-prepend">
                                             <div class="input-group-text">
                                                 <i class="now-ui-icons business_badge text-dark"></i>
                                             </div>
                                         </span>
-                                        <input class="form-control text-dark {{ $errors->has('Division_unit') ? ' is-invalid' : '' }}" placeholder="{{ __('Division Unit ') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;"  value="{{ old('Division_unit') }}"  name="Division_unit" required autofocus>
+                                        <input
+                                            class="form-control text-dark {{ $errors->has('Division_unit') ? ' is-invalid' : '' }}"
+                                            placeholder="{{ __('Division Unit ') }}"
+                                            style="border-top-right-radius:40px;border-bottom-right-radius:40px;"
+                                            value="{{ old('Division_unit') }}" name="Division_unit" required autofocus>
                                     </div>
                                     @if ($errors->has('Division_unit'))
                                     <span class="invalid-feedback" style="display: block;" role="alert">
@@ -194,13 +242,18 @@
                                     </span>
                                     @endif
 
-                                    <div class="input-group  form-control-lg {{ $errors->has('designation') ? ' has-danger' : '' }}" style="border-radius:40px; ">
+                                    <div class="input-group  form-control-lg {{ $errors->has('designation') ? ' has-danger' : '' }}"
+                                        style="border-radius:40px; ">
                                         <span class="input-group-prepend">
                                             <div class="input-group-text">
                                                 <i class="now-ui-icons business_badge text-dark"></i>
                                             </div>
                                         </span>
-                                        <input class="form-control text-dark {{ $errors->has('designation') ? ' is-invalid' : '' }}" placeholder="{{ __('Designation/Position') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;" value="{{ old('designation') }}"  name="designation" required autofocus>
+                                        <input
+                                            class="form-control text-dark {{ $errors->has('designation') ? ' is-invalid' : '' }}"
+                                            placeholder="{{ __('Designation/Position') }}"
+                                            style="border-top-right-radius:40px;border-bottom-right-radius:40px;"
+                                            value="{{ old('designation') }}" name="designation" required autofocus>
                                     </div>
                                     @if ($errors->has('designation'))
                                     <span class="invalid-feedback" style="display: block;" role="alert">
@@ -211,13 +264,18 @@
 
                                 <!-- user email and password -->
                                 <div>
-                                    <div class="input-group  form-control-lg {{ $errors->has('email') ? ' has-danger' : '' }}" style="border-radius:40px;  ">
+                                    <div class="input-group  form-control-lg {{ $errors->has('email') ? ' has-danger' : '' }}"
+                                        style="border-radius:40px;  ">
                                         <span class="input-group-prepend">
                                             <div class="input-group-text">
                                                 <i class="now-ui-icons ui-1_email-85"></i>
                                             </div>
                                         </span>
-                                        <input class="form-control text-dark {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;" type="email"  value="{{ old('email') }}" name="email" required autofocus>
+                                        <input
+                                            class="form-control text-dark {{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                            placeholder="{{ __('Email') }}"
+                                            style="border-top-right-radius:40px;border-bottom-right-radius:40px;"
+                                            type="email" value="{{ old('email') }}" name="email" required autofocus>
                                     </div>
                                     @if ($errors->has('email'))
                                     <span class="invalid-feedback" style="display: block;" role="alert">
@@ -227,13 +285,18 @@
 
 
                                     <!-- password -->
-                                    <div class="input-group  form-control-lg {{ $errors->has('password') ? ' has-danger' : '' }}" style="border-radius:40px; margin-right:15px">
+                                    <div class="input-group  form-control-lg {{ $errors->has('password') ? ' has-danger' : '' }}"
+                                        style="border-radius:40px; margin-right:15px">
                                         <span class="input-group-prepend">
                                             <div class="input-group-text">
                                                 <i class="now-ui-icons objects_key-25"></i>
                                             </div>
                                         </span>
-                                        <input class="form-control text-dark {{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="{{ __('Password') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;" type="password" name="password" required autofocus>
+                                        <input
+                                            class="form-control text-dark {{ $errors->has('password') ? ' is-invalid' : '' }}"
+                                            placeholder="{{ __('Password') }}"
+                                            style="border-top-right-radius:40px;border-bottom-right-radius:40px;"
+                                            type="password" name="password" required autofocus>
                                     </div>
                                     @if ($errors->has('password'))
                                     <span class="invalid-feedback" style="display: block;" role="alert">
@@ -242,14 +305,16 @@
                                     @endif
 
                                     <!-- Confirm-password -->
-                                    <div class="input-group  form-control-lg {{ $errors->has('password') ? ' has-danger' : '' }}" style="border-radius:40px;  ">
+                                    <div class="input-group  form-control-lg {{ $errors->has('password') ? ' has-danger' : '' }}"
+                                        style="border-radius:40px;  ">
                                         <span class="input-group-prepend">
                                             <div class="input-group-text">
                                                 <i class="now-ui-icons objects_key-25"></i>
                                             </div>
                                         </span>
-                                        <input class="form-control" placeholder="{{ __('Confirm Password') }}" style="border-top-right-radius:40px;border-bottom-right-radius:40px;" type="password"
-                                            name="password_confirmation" required>
+                                        <input class="form-control" placeholder="{{ __('Confirm Password') }}"
+                                            style="border-top-right-radius:40px;border-bottom-right-radius:40px;"
+                                            type="password" name="password_confirmation" required>
                                     </div>
                                     <!-- @if ($errors->has('email'))
                                                 <span class="invalid-feedback" style="display: block;" role="alert">
@@ -268,10 +333,148 @@
                 </div>
             </div>
 
- 
+
             @include('layouts.footer')
             @endsection
 
             @push('js')
+            <script>
+            $(document).ready(function() {
+                // Region dropdown
+                $.get('{{ route("equipment.regions.get") }}')
+                    .done(function(data) {
+                        let regionDropdown = $('#region-dropdown');
+                        regionDropdown.empty().append(
+                            '<option value="" disabled selected>Select Region</option>');
+                        data.forEach(function(region) {
+                            regionDropdown.append('<option value="' + region.reg_code + '">' +
+                                region.name +
+                                '</option>');
+                        });
+                    })
+                    .fail(function() {
+                        alert('Failed to fetch regions.');
+                    });
 
+                // Region selection
+                $('#region-dropdown').change(function() {
+                    let regionCode = $(this).val();
+                    let ncrRegionCode = '13';
+
+                    $('#province-dropdown').empty().append(
+                        '<option value="" disabled selected>Select Province</option>').prop(
+                        'disabled', true);
+                    $('#city-dropdown').empty().append(
+                            '<option value="" disabled selected>Select City/Municipality</option>')
+                        .prop('disabled',
+                            true);
+                    $('#barangay-dropdown').empty().append(
+                            '<option value="" disabled selected>Select Barangay</option>')
+                        .prop('disabled',
+                            true);
+
+                    if (!regionCode) return;
+
+                    if (regionCode === ncrRegionCode) {
+                        $.get('{{ route("equipment.citiesAndMunicipalities.get") }}', {
+                                reg_code: regionCode
+                            })
+                            .done(function(data) {
+                                if (!data) return;
+
+                                let cityDropdown = $('#city-dropdown');
+                                cityDropdown.empty().append(
+                                    '<option value="" disabled selected>Select City/Municipality</option>'
+                                );
+                                data.forEach(function(city) {
+                                    cityDropdown.append('<option value="' + city
+                                        .citymun_code +
+                                        '">' + city.name + '</option>');
+                                });
+                                cityDropdown.prop('disabled', false);
+
+                            })
+                            .fail(function() {
+                                alert('Failed to fetch cities/municipalities for NCR.');
+                            });
+
+                    } else {
+                        $.get('{{ route("equipment.provinces.get") }}', {
+                                reg_code: regionCode
+                            })
+                            .done(function(data) {
+                                if (!data) return;
+
+                                let provinceDropdown = $('#province-dropdown');
+                                provinceDropdown.empty().append(
+                                    '<option value="" disabled selected>Select Province</option>'
+                                );
+                                data.forEach(function(province) {
+                                    provinceDropdown.append('<option value="' + province
+                                        .prov_code + '">' + province.name + '</option>');
+                                });
+                                provinceDropdown.prop('disabled', false);
+                            })
+                            .fail(function() {
+                                alert('Failed to fetch provinces.');
+                            });
+                    }
+                });
+
+                // Province selection
+                $('#province-dropdown').change(function() {
+                    let provinceCode = $(this).val();
+                    if (!provinceCode) return;
+
+                    $.get('{{ route("equipment.citiesAndMunicipalities.get") }}', {
+                            prov_code: provinceCode
+                        })
+                        .done(function(data) {
+                            if (!data) return;
+
+                            let cityDropdown = $('#city-dropdown');
+                            cityDropdown.empty().append(
+                                '<option value="" disabled selected>Select City/Municipality</option>'
+                            );
+                            data.forEach(function(city) {
+                                cityDropdown.append('<option value="' + city.citymun_code +
+                                    '">' +
+                                    city.name + '</option>');
+                            });
+                            cityDropdown.prop('disabled', false);
+                        })
+                        .fail(function() {
+                            alert('Failed to fetch cities/municipalities.');
+                        });
+
+                });
+
+                // City selection
+                $('#city-dropdown').change(function() {
+                    let citymunCode = $(this).val();
+                    if (!citymunCode) return;
+
+                    $.get('{{ route("equipment.barangays.get") }}', {
+                            citymun_code: citymunCode
+                        })
+                        .done(function(data) {
+                            if (!data) return;
+
+                            let barangayDropdown = $('#barangay-dropdown');
+                            barangayDropdown.empty().append(
+                                '<option value="" disabled selected>Select Barangay</option>'
+                            );
+                            data.forEach(function(city) {
+                                barangayDropdown.append('<option value="' + city.psgc_code +
+                                    '">' +
+                                    city.name + '</option>');
+                            });
+                            barangayDropdown.prop('disabled', false);
+                        })
+                        .fail(function() {
+                            alert('Failed to fetch barangays.');
+                        });
+                });
+            });
+            </script>
             @endpush

@@ -58,10 +58,10 @@ function LGUmyFunction(id){
 /////////
 
 // Submit Edit function Mellpi Pro For LNFP
-function myFunctionLNFP(id){
-    window.location.href = "lguLnfpEdit/"+ id;
+// function myFunctionLNFP(id){
+//     window.location.href = "lguLnfpEdit/"+ id;
 
-}
+// }
 
 function myFunctionLNFP_lguprofile_View(id){
     window.location.href = "lguLnfpViewProfile/"+ id +"/view";
@@ -125,34 +125,34 @@ function confirmDelete(url, action){
     }
 };
 
-//Mellpi Pro for LNFP Delete
-function confirmDeleteLNFP(){
+// //Mellpi Pro for LNFP Delete
+// function confirmDeleteLNFP(){
 
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+//     $.ajaxSetup({
+//         headers: {
+//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//         }
+//     });
 
-    // console.log(profileId);
-    if (LNFPid) { // Check if profileId has been set
-        $.ajax({
-            url: "lguLnfpDelete/" + LNFPid, // Ensure the URL is correct
-            type: 'GET',
-            success: function(result) {
-                setTimeout(function() {
-                    window.location.reload(); // Reload the page after a delay
-                }, 2000); // Delay before reload (2 seconds)
-                $('#successAlert').removeClass('d-none').fadeIn(); // Show success alert
+//     // console.log(profileId);
+//     if (profileId) { // Check if profileId has been set
+//         $.ajax({
+//             url: "lguLnfpDeleteProfile/" + profileId, // Ensure the URL is correct
+//             type: 'GET',
+//             success: function(result) {
+//                 setTimeout(function() {
+//                     window.location.reload(); // Reload the page after a delay
+//                 }, 2000); // Delay before reload (2 seconds)
+//                 $('#successAlert').removeClass('d-none').fadeIn(); // Show success alert
                
-            },
-            error: function(xhr) {
-                alert('Error deleting profile: ' + xhr.responseText);
-            }
-        });
-        $('#deleteModal').modal('hide'); // Hide the modal
-    }
-};
+//             },
+//             error: function(xhr) {
+//                 alert('Error deleting profile: ' + xhr.responseText);
+//             }
+//         });
+//         $('#deleteModal').modal('hide'); // Hide the modal
+//     }
+// };
 
 
 //Mellpi Pro For LNFP Tables

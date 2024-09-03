@@ -20,7 +20,7 @@
                 <div class="card-header">
                     <div style="display: flex; align-items:center;">
                         <a href="{{route('MellpiProMonitoringIndex.index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a>
-                        <h4>CREATE MELLPI PRO FOR LNFP FORM 5a:</h4>
+                        <h4>VIEW MELLPI PRO FOR LNFP FORM 5a:</h4>
                     </div>
 
                     <!-- @if(session('alert'))
@@ -32,24 +32,14 @@
                     @include('layouts.page_template.crud_alert_message')
 
                     <div>
-                        <form action="{{ route('lguLnfpUpdate', $row->id) }}" method="POST" id="form">
-                            @csrf
-
-
-                        
-                            <input type="hidden" name="lnfp_lgu_id" value="{{$row->lnfp_lgu_id}}">
-                            <input type="hidden" name="dateMonitoring" value="{{$row->dateMonitoring}}">
-                            <input type="hidden" value="{{ $row->status }}" name="status" id="status">
-                            <input type="hidden" value="draft" name="formrequest" id="formrequest" />
-                            <input type="hidden" value="{{ $row->id }}" name="id" id="id" />
-
-                         
+                   
+                          
 
                             <div style="display:flex">
                             <div class="form-group col">
-                                <label for="nameOf"> HEADER:<span style="color:red">*</span> </label>
+                                <label for="nameOf"> HEADER: </label>
                                 <select class="form-control" name="header" id="header">
-                                    <option value="">Select</option>
+                                    <option>Select</option>
                                     <!-- For provincial staff -->
                                     @if( auth()->user()->role == 7 )
                                     <option value="5a">MELLPI PRO FORM 5a: PROVINCIAL NUTRITION ACTION OFFICER MONITORING</option>
@@ -71,15 +61,15 @@
                            
                             <div style="display:flex">
                                 <div class="form-group col">
-                                    <label for="nameOf">Name of PNAO:<span style="color:red">*</span> </label>
-                                    <input class="form-control" type="text" name="nameOf" id="nameOf" value="{{ old('nameOf',$row->nameofPnao) }}">
+                                    <label for="nameOf">Name of PNAO: </label>
+                                    <input class="form-control" type="text" name="nameOf" id="nameOf" value="{{ $row->nameofPnao }}">
                                     @error('nameOf')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group col">
-                                    <label for="address">Address:<span style="color:red">*</span> </label>
-                                    <input class="form-control" type="text" name="address" id="address" value="{{ old('address',$row->address) }}">
+                                    <label for="address">Address: </label>
+                                    <input class="form-control" type="text" name="address" id="address" value="{{ $row->address }}">
                                     @error('address')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -87,16 +77,16 @@
                             </div>
                             <div style="display:flex">
                                 <div class="form-group col">
-                                    <label for="numYr">Number of Years PNAO:<span style="color:red">*</span> </label>
-                                    <input class="form-control" type="number" name="numYr" id="numYr" placeholder="0" min="1" max="100" value="{{ old('numYr',$row->numYearPnao) }}">
+                                    <label for="numYr">Number of Years PNAO: </label>
+                                    <input class="form-control" type="number" name="numYr" id="numYr" placeholder="0" min="1" max="100" value="{{ $row->numYearPnao }}">
                                     @error('numYr')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                 </div>
                                 <div class="form-group col">
-                                    <label for="fulltime">Full time:<span style="color:red">*</span> </label>
+                                    <label for="fulltime">Full time: </label>
                                     <select class="form-control" name="fulltime" id="fulltime">
-                                            <option {{ old('fulltime', $row->fulltime) == '' ? 'selected' : '' }} value="">Select</option>
+                                            <option {{ old('fulltime', $row->fulltime) == '' ? 'selected' : '' }}>Select</option>
                                             <option value="Yes" {{ old('fulltime', $row->fulltime) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                             <option value="No" {{ old('fulltime', $row->fulltime) == 'No' ? 'selected' : '' }}>No</option>
                                     </select>
@@ -107,9 +97,9 @@
                             </div>
                             <div style="display:flex">
                                 <div class="form-group col">
-                                    <label for="profAct">With continuing professional Activities?:<span style="color:red">*</span> </label>
+                                    <label for="profAct">With continuing professional Activities?: </label>
                                     <select class="form-control" name="profAct" id="profAct">
-                                            <option {{ old('profAct', $row->profAct) == '' ? 'selected' : '' }} value="">Select</option>
+                                            <option {{ old('profAct', $row->profAct) == '' ? 'selected' : '' }}>Select</option>
                                             <option value="Yes" {{ old('profAct', $row->profAct) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                             <option value="No" {{ old('profAct', $row->profAct) == 'No' ? 'selected' : '' }}>No</option>
                                         </select>
@@ -119,8 +109,8 @@
                                    
                                 </div>
                                 <div class="form-group col">
-                                        <label for="bday">Birthday:<span style="color:red">*</span> </label>
-                                        <input class="form-control" type="date" name="bday" id="bday" value="{{ old('bday',$row->bdate) }}">
+                                        <label for="bday">Birthday: </label>
+                                        <input class="form-control" type="date" name="bday" id="bday" value="{{ $row->bdate }}">
                                         @error('bday')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -128,9 +118,9 @@
                             </div>
                             <div style="display:flex">
                                 <div class="form-group col">
-                                    <label for="sex">Sex:<span style="color:red">*</span> </label>
+                                    <label for="sex">Sex: </label>
                                     <select class="form-control" name="sex" id="sex">
-                                            <option {{ old('sex', $row->sex) == '' ? 'selected' : '' }} value="">Select</option>
+                                            <option {{ old('sex', $row->sex) == '' ? 'selected' : '' }}>Select</option>
                                             <option value="Male" {{ old('sex', $row->sex) == 'Male' ? 'selected' : '' }}>Male</option>
                                             <option value="Female" {{ old('sex', $row->sex) == 'Female' ? 'selected' : '' }}>Female</option>
                                         </select>
@@ -139,8 +129,8 @@
                                         @enderror
                                 </div>
                                 <div class="form-group col">
-                                        <label for="dateDesig">Date of Designation:<span style="color:red">*</span> </label>
-                                        <input class="form-control" type="date" name="dateDesig" id="dateDesig" value="{{ old('dateDesig',$row->dateDesignation) }}">
+                                        <label for="dateDesig">Date of Designation: </label>
+                                        <input class="form-control" type="date" name="dateDesig" id="dateDesig" value="{{ $row->dateDesignation }}">
                                         @error('dateDesig')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -148,17 +138,17 @@
                             </div>
                             <div style="display:flex">
                                 <div class="form-group col">
-                                    <label for="seconded">Seconded from the Office of:<span style="color:red">*</span> </label>
-                                    <input class="form-control" type="text" name="seconded" id="seconded" value="{{ old('seconded',$row->secondedOffice) }}">
+                                    <label for="seconded">Seconded from the Office of: </label>
+                                    <input class="form-control" type="text" name="seconded" id="seconded" value="{{ $row->secondedOffice }}">
                                     @error('seconded')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                 </div>
                                 
                                 <div class="form-group col">
-                                <label for="periodCovereda">For Period:<span style="color:red">*</span></label>
+                                <label for="periodCovereda">For Period:</label>
                                 <select class="form-control" id="periodCovereda" name="periodCovereda" required>
-                                    <option value="" value="">Select</option>
+                                    <option value="">Select</option>
                                         <?php foreach ($years as $year) : ?>
                                             <option value="{{ $year }}" <?php echo old('periodCovereda') == $year || $row->periodCovereda == $year ? 'selected' : '' ?>>
                                                 {{ $year }}
@@ -173,24 +163,24 @@
                             </div>
                             <div style="display:flex">
                                 <div class="form-group col">
-                                    <label>Capacity development activities attended in the previous year:<span style="color:red">*</span> </label>
+                                    <label>Capacity development activities attended in the previous year: </label>
                                     <div class="form-group col-md-12">
                                         <label for="devAct">1</label>
-                                        <input class="form-control" type="text" id="devAct" name="num1" value="{{ old('num1',$row->devActnum1) }}">
+                                        <input class="form-control" type="text" id="devAct" name="num1" value="{{ $row->devActnum1 }}">
                                         @error('num1')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label for="devAct">2</label>
-                                        <input class="form-control" type="text" id="devAct" name="num2" value="{{ old('num2',$row->devActnum2) }}">
+                                        <input class="form-control" type="text" id="devAct" name="num2" value="{{ $row->devActnum2 }}">
                                         @error('num2')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label for="devAct">3</label>
-                                        <input class="form-control" type="text" id="devAct" name="num3" value="{{ old('num3',$row->devActnum3) }}">
+                                        <input class="form-control" type="text" id="devAct" name="num3" value="{{ $row->devActnum3 }}">
                                         @error('num3')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -258,28 +248,28 @@
                                                 </tr>
 
                                                 @endforeach
+
                                             </tbody>
                                         </table>
                                     </div>
                                     </div>
 
                 
-                        
-            
+                       
                     
-
-
-                            <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
-                              
-                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
-                                    Save as Draft
-                                </button>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                                    Next Form
-                                </button>
-                        
+                            <div class="d-flex bd-highlight mb-3">
+                              <div class="mr-auto p-2 bd-highlight">
+                                <a href="{{ route('lguLnfpViewProfile', $row->lnfp_lgu_id) }}"> <i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Previous LGU Profile</a></div>
+                              <div class="p-2 bd-highlight">
+                                @if( $row->form7_status == 2 )
+                                <a href="{{ route('lguLnfpEditForm6', $row->form7_id ) }}"> Next Form 6 and 7 <i class="fa fa-arrow-right" aria-hidden="true"></i></a> </div> 
+                                @else
+                                <a href="{{ route('lguLnfpViewForm6', $row->form7_id ) }}"> Next Form 6 and 7 <i class="fa fa-arrow-right" aria-hidden="true"></i></a> </div> 
+                                @endif
                             </div>
-                        </form>
+
+
+                      
                     </div>
 
                 </div>
@@ -288,8 +278,6 @@
     </div>
 </div>
 
-@include('Modal.Draft')
-@include('Modal.Submit')
 
 
 @endsection

@@ -28,6 +28,26 @@ class MellpiProForLNFP_InterviewController extends Controller
 
         return view('BarangayScholar/MellpiProForLNFP/MellpiProInterview/InterviewFormPNAOIndex', ['InterviewForm' => $InterviewForm]);
     }
+
+    public function InterviewFormLNFPView(Request $request)
+    {
+        $action = 'edit';
+
+        $row = DB::table('lnfp_interview_form')
+                ->leftjoin('lnfp_overall_score_form', 'lnfp_overall_score_form.formInterview_id', '=', 'lnfp_interview_form.id')
+                ->leftJoin('lnfp_form5a_rr', 'lnfp_form5a_rr.id', '=', 'lnfp_interview_form.form5_id')
+                ->select('lnfp_interview_form.*',
+                         'lnfp_form5a_rr.nameofPnao as nameofPnao', 
+                         'lnfp_form5a_rr.address as address', 
+                         'lnfp_form5a_rr.id as form5_id',
+                         'lnfp_overall_score_form.id as overall_id',
+                         'lnfp_overall_score_form.status as overall_status')
+                ->where('lnfp_interview_form.id', $request->id)
+                ->first();
+
+        return view('BarangayScholar/MellpiProForLNFP/MellpiProInterview/View', compact('row'));
+    }
+
     public function InterviewFormLNFPEdit(Request $request)
     {
         $action = 'edit';
@@ -224,19 +244,21 @@ class MellpiProForLNFP_InterviewController extends Controller
                             'q3Remarks' => $request->input('q3Remarks'),
                             'subtotalAScore' => $request->input('subASTot'),
                             'header'    => $request->header,
-                            'status' => 2,
+                            'status' => 1,
+                            'user_id' => auth()->user()->id,
                         ]);
 
 
-                        lnfp_formOverall::create([
+                        $lnfp_formOverall = lnfp_formOverall::create([
                             'lnfp_lgu_id'       => $request->lnfp_lgu_id,
                             'form5_id'          => $request->form5_id,
                             'form8_id'          => $request->form8_id,
                             'formInterview_id'  => $request->id,
                             'status'            => 1,
+                            'user_id' => auth()->user()->id,
                         ]);
 
-                    return redirect()->route('lnfpFormInterviewIndex')->with('success', 'Data Submitted Successfully!');
+                    return redirect()->route('editOSForm', $lnfp_formOverall->id )->with('success', 'Data stored successfully! You can now create Overall Score Form');
 
                 
                 
@@ -264,6 +286,7 @@ class MellpiProForLNFP_InterviewController extends Controller
                         'subtotalAScore' => $request->input('subASTot'),
                         'header'    => $request->header,
                         'status' => 2,
+                        'user_id' => auth()->user()->id,
                     ]);
 
                 return redirect()->route('lnfpFormInterviewIndex')->with('alert', 'Data Save as Draft Successfully!');

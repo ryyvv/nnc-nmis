@@ -46,7 +46,7 @@ class CMSMellpiProForLNFP_barangayController extends Controller
     public function monitoringForm5()
     {
         //
-        $form5a_rr = lnfp_form5a_rr::get();
+        $form5a_rr = lnfp_form5a_rr::where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();
 
 
         return view('CityMunicipalStaff/MellpiProForLNFP/MellpiProMonitoring.MonitoringForm5Index', ['form5a_rr' => $form5a_rr]);

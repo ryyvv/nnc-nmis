@@ -53,7 +53,7 @@ class BSNutritionOfficesController extends Controller
             $addNutritionOffices->income_class = $request->input('inputIncomeClass');
             $addNutritionOffices->nutritionOffice = $request->input('InputNutriOfice');
             $addNutritionOffices->separateNutritionBudget = $request->input('InputSeparateBudget');
-            if ($request->input('InputSeparateBudget')=='yes') {
+            if ($request->input('InputSeparateBudget') =='yes') {
                 # code...
                 $addNutritionOffices->separateNutritionBudgetAmount = $request->input('InputSeparateBudgetAmount');
             } else {

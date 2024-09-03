@@ -21,7 +21,7 @@
                         <a href="{{ route('MellpiProRadialCreate.create') }}" class="btn btn-primary bolder">Sample View</a>
                     </div> -->
 
-                    <table class="display" id="form6Table" width="100%">
+                    <table class="display" id="form6Table" style="width:100%!important; max-width:inherit">
                         <thead class="table-light" style="background-color:#508D4E;">
                             <tr>
                                 <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">#</th>
@@ -54,9 +54,9 @@
                                 </td>
                                 <!-- <td>Date of Monitoring</td> -->
                                 <td>
-                                    
-                                <i onclick="LNFPmyFunction_form6('{{ $form6->id }}')"  class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
-                                @if( $form6->status == 2 )
+                                @if( $form6->status == 1 )
+                                <i onclick="myLNFPmyFunction_form6('{{ $form6->id }}')"  class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                @elseif( $form6->status == 2 )
                                 <i onclick="LNFPmyFunction_form6('{{ $form6->id }}')" class="fa fa-edit fa-lg cursor" style="color:#FFB236;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Edit"></i>
                                @endif
                                 </td>

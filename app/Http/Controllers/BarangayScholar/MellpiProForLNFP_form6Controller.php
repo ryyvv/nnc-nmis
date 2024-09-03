@@ -27,6 +27,36 @@ class MellpiProForLNFP_form6Controller extends Controller
 
         return view('BarangayScholar/MellpiProForLNFP/MellpiProRadialDiagram.RadialForm6Index', ['form6' => $form6]);
     }
+
+    public function radialForm6View(Request $request)
+    {
+        $form6 = DB::table('lnfp_form7')
+        ->leftjoin('lnfp_form5a_rr', 'lnfp_form5a_rr.id', '=', 'lnfp_form7.form5_id')
+        ->leftjoin('lnfp_form8', 'lnfp_form8.form7_id', '=', 'lnfp_form7.id')
+        ->select('lnfp_form7.*', 
+                 'lnfp_form5a_rr.ratingA as ratingA' ,
+                 'lnfp_form5a_rr.ratingB as ratingB' ,
+                 'lnfp_form5a_rr.ratingB as ratingBB' ,
+                 'lnfp_form5a_rr.ratingC as ratingC' ,
+                 'lnfp_form5a_rr.ratingD as ratingD' ,
+                 'lnfp_form5a_rr.ratingE as ratingE' ,
+                 'lnfp_form5a_rr.ratingF as ratingF' ,
+                 'lnfp_form5a_rr.ratingG as ratingG' ,
+                 'lnfp_form5a_rr.ratingG as ratingGG' ,
+                 'lnfp_form5a_rr.ratingH as ratingH' ,
+                 'lnfp_form5a_rr.periodCovereda as periodCovereda',
+                 'lnfp_form5a_rr.nameofPnao as nameofPnao',
+                 'lnfp_form5a_rr.address as address',
+                 'lnfp_form5a_rr.dateMonitoring as dateMonitoring',
+                 'lnfp_form5a_rr.id as form5_id',
+                 'lnfp_form8.id as form8_id',
+                 'lnfp_form8.status as form8_status')
+        ->where('lnfp_form7.id', $request->id)
+        ->first();
+
+        return view('BarangayScholar/MellpiProForLNFP/MellpiProRadialDiagram.Form6View', ['form6' => $form6]);
+    }
+
     public function radialForm6Create(Request $request)
     {
         $form6 = DB::table('lnfp_form7')
@@ -93,6 +123,7 @@ class MellpiProForLNFP_form6Controller extends Controller
             'actionsG' => $request->input('ActionsG'),
             'actionsH' => $request->input('ActionsH'),
             'actionsI' => $request->input('ActionsI'),
+            'user_id' => auth()->user()->id,
         ];
 
         if( $request->formrequest == 'draft' ){
@@ -117,7 +148,7 @@ class MellpiProForLNFP_form6Controller extends Controller
 
         }
 
-        return redirect()->route('editForm8',  $lnfp_form8->id)->with('success', 'Data created successfully!');
+        return redirect()->route('editForm8',  $lnfp_form8->id)->with('success', 'Data stored successfully! You can now create Form 8');
 
 
         }

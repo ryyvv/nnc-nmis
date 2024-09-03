@@ -27,7 +27,7 @@
                 <div class="card-header">
                 <div style="display: flex; align-items:center;">
                         <a href="{{route('MellpiProRadialIndex.index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a>
-                        <h4>CREATE MELLPI PRO FOR LNFP FORM 6 and 7:</h4>
+                        <h4>VIEW MELLPI PRO FOR LNFP FORM 6 and 7:</h4>
                     </div>
                     <!-- @if(session('alert'))
                     <div class="alert alert-success" id="alert-message">
@@ -62,7 +62,7 @@
 
                             <div style="display:flex">
                             <div class="form-group col">
-                                <label for="nameOf"> HEADER:<span style="color:red">*</span> </label>
+                                <label for="nameOf"> HEADER:</label>
                                 <select class="form-control" name="header" id="header">
                                     <option>Select</option>
                                     <!-- For provincial staff -->
@@ -101,7 +101,7 @@
                                         <h5>{{ $form6->address }}</h5>
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label for="bday">Date of Monitoring:<span style="color:red">*</span></label>
+                                        <label for="bday">Date of Monitoring:</label>
                                         <h5>{{\Carbon\Carbon::parse($form6->dateMonitoring)->format('F j y');}}</h5>
                                     </div>
                                 </div>
@@ -299,9 +299,6 @@
                                     });
                                 </script>
                             </div>
-                        <!-- </form> -->
-                        <form action="{{ route('lnfpUpdateform7', $form6->id) }}" id="form" method="post">
-                            @csrf
                             <div class="form-row">
                                 <div class="col-md-12">
                                     <center>
@@ -399,38 +396,21 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
-                                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
-                                            Save as Draft
-                                        </button>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                                            Next Form
-                                        </button>
-                                        
-                                    </div>
-                                </div>
+                                    <div class="d-flex bd-highlight mb-3">
+                                          <div class="mr-auto p-2 bd-highlight">
+                                            <a href="{{ route('lguForm5ViewForm', $form6->form5_id) }}"> <i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Previous Form 5</a></div>
+                                          <div class="p-2 bd-highlight">
+                                            @if( $form6->form8_status == 2 )
+                                            <a href="{{ route('editForm8', $form6->form8_id ) }}"> Next Form 8 <i class="fa fa-arrow-right" aria-hidden="true"></i></a> </div> 
+                                            @else
+                                            <a href="{{ route('viewForm8', $form6->form8_id ) }}"> Next Form 8 <i class="fa fa-arrow-right" aria-hidden="true"></i></a> </div> 
+                                            @endif
+                                        </div>
+
+                                     </div>
                             </div>
                             @endif
-                            <!-- <div class="modal fade" id="exampleModalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <h5>Are you sure you want to submit DISCUSSION QUESTION FOR LEARNING AND ACTION?</h5>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                            <button type="submit" id="lgu-draft" class="btn btn-primary" name="action" value="updateResponse">Yes</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
-            
-                        </form>
+           
                     </div>
                 </div>
             </div>

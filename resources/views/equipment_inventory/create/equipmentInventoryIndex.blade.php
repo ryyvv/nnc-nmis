@@ -49,7 +49,7 @@ thead th {
             <div class="card-header">
                 <h5 class="title">{{__("Equipment Inventory")}}</h5>
                 <div>
-                    <a class="btn btn-outline-primary" href="{{route('CMSequipmentInventory.create')}}">Add Equipments</a>
+                    <a class="btn btn-outline-primary" href="{{route('BSequipmentInventory.create')}}">Add Equipments</a>
                 </div>
             </div>
         </div>

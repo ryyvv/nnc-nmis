@@ -48,4 +48,9 @@ class lnfp_form8 extends Model
     protected $guarded = ['id'];
 
     protected $table = 'lnfp_form8';
+
+    public static function updateStatus($lguId, $status = 1)
+    {
+    return self::where('lnfp_lgu_id', $lguId)->update(['status' => $status]);
+    }
 }

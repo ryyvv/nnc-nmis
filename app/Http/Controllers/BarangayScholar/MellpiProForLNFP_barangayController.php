@@ -20,6 +20,7 @@ use App\Models\lnfp_formInterview;
 use App\Models\lnfp_formOverall;
 use App\Models\lnfp_lguform5atracking;
 use App\Http\Controllers\LocationController;
+use App\Models\form5PNAObarangay;
 
 class MellpiProForLNFP_barangayController extends Controller
 {
@@ -31,7 +32,10 @@ class MellpiProForLNFP_barangayController extends Controller
     }
     public function addForm(Request $request)
     {
-        $form5a = lnfp_form5a::get();
+        $form5a = form5PNAObarangay::get();
+
+        // $form5a = DB::table('lnfp_form5a_rr')
+        // ->join('form5_fields_content_PNAO', )
 
         $lnfp = DB::table('lnfp_lguprofile')->where('id', $request->id)->first();
 
@@ -56,27 +60,37 @@ class MellpiProForLNFP_barangayController extends Controller
 
         return view('BarangayScholar/MellpiProForLNFP/MellpiProMonitoring.MonitoringForm5Index', ['form5a_rr' => $form5a_rr]);
     }
+
+    public function monitoringForm5view(Request $request)
+    {
+        $form5a = form5PNAObarangay::get();
+
+        $row = DB::table('lnfp_form5a_rr')
+                   ->leftjoin('lnfp_form7','lnfp_form7.form5_id', '=', 'lnfp_form5a_rr.id')
+                   ->select('lnfp_form5a_rr.*','lnfp_form7.id as form7_id','lnfp_form7.status as form7_status')
+                   ->where('lnfp_form5a_rr.id', $request->id)->first();
+        $years = range(date("Y"), 1900);
+
+        $action = 'edit';
+        return view('BarangayScholar/MellpiProForLNFP/MellpiProMonitoring.Form5View', compact('form5a', 'row','years'));
+    }
+
+
     public function monitoringForm5edit(Request $request)
     {
-        $form5a = lnfp_form5a::get();
+        $form5a = form5PNAObarangay::get();
 
         $row = DB::table('lnfp_form5a_rr')->where('id', $request->id)->first();
 
-        $action = 'edit';
-        $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
 
         $years = range(date("Y"), 1900);
 
-        return view('BarangayScholar/MellpiProForLNFP/MellpiProMonitoring.MonitoringForm5Edit', compact('form5a', 'row', 'prov', 'mun', 'city', 'brgy', 'years', 'action'));
+        return view('BarangayScholar/MellpiProForLNFP/MellpiProMonitoring.MonitoringForm5Edit', compact('form5a', 'row', 'years'));
     }
     public function monitoringForm5create()
     {
         //
-        $form5a = lnfp_form5a::get();
+        $form5a = form5PNAObarangay::get();
         $action = 'create';
         $location = new LocationController;
         $prov = $location->getLocationDataProvince(auth()->user()->Region);
@@ -142,6 +156,9 @@ class MellpiProForLNFP_barangayController extends Controller
                     'user_id' => auth()->user()->id,
             ];
             $lnfp_form5a_rr->update( $updateData + [ 'status' => 2,  ]);
+
+            return redirect()->route('MellpiProMonitoringIndex.index')->with('success', 'Data stored successfully!');
+
         }else{
 
             $rules = [
@@ -149,7 +166,7 @@ class MellpiProForLNFP_barangayController extends Controller
                 'dateMonitoring' => 'required',
                 'nameOf' => 'required',
                 'address' => 'required',
-                'numYr' => 'required',
+                'numYr' => 'required|integer|min:1|max:1000000',
                 'fulltime' => 'required',
                 'profAct' => 'required',
                 'bday' => 'required',
@@ -176,7 +193,8 @@ class MellpiProForLNFP_barangayController extends Controller
                 'integer' => 'The field is number.',
                 'string' => 'The field must be a string.',
                 'date' => 'The field must be a valid date.',
-                'max' => 'The field may not be greater than :max characters.',
+                'max' => 'The field may not be greater than :max.',
+                'min' => 'The field may not be greater than :min.',
             ]; 
     
             $validator = Validator::make($request->all() , $rules,$message);
@@ -236,20 +254,22 @@ class MellpiProForLNFP_barangayController extends Controller
 
             $lnfp_form5a_rr->update( $updateData + [ 'status' => 1,  ]);
 
-            $lnfp_form7 = lnfp_form7::where('form5_id', $request->id)->first();
+            // $lnfp_form7 = lnfp_form7::where('form5_id', $request->id)->first();
 
-            if( $lnfp_form7 == null ){
+            // if( $lnfp_form7 == null ){
                 // Add new data to Form7
-                lnfp_form7::create([
+                $lnfp_form7 = lnfp_form7::create([
                     'form5_id' => $request->id,
                     'lnfp_lgu_id' => $request->lnfp_lgu_id,
                     'status'      => 2,
                 ]);
-            }
+            // }
+
+            return redirect()->route('lguLnfpEditForm6', $lnfp_form7->id)->with('success', 'Data stored successfully! You can now create Form 6 and 7');
         }
         
 
-        return redirect()->back()->with('success', 'Update Successfully!');
+       
 
     }
     /**

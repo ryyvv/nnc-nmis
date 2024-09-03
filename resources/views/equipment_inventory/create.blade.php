@@ -19,7 +19,10 @@
                 <h5 class="title">{{__("Equipment Inventory")}}</h5>
             </div>
         </div>
-        <form action="{{ route('BSequipmentInventory.store') }}" method="POST">
+        <!-- alerts -->
+        @include('layouts.page_template.crud_alert_message')
+
+        <form action="{{ route('BSequipmentInventory.store') }}" id="form" method="POST">
             @csrf
             <hr>
             <div class="form-row">
@@ -56,7 +59,10 @@
                 <div class="form-group col-md-6">
                     <label for="inputtotalBarangay">Total No. of Barangay</label>
                     <input type="number" class="form-control" name="inputtotalBarangay" id="inputtotalBarangay"
-                        placeholder='0' onchange="totalHB()">
+                        value="{{ old('inputtotalBarangay') }}" placeholder='0' onchange="totalHB()">
+                    @error('inputtotalBarangay')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
             <hr>
@@ -68,46 +74,73 @@
                 <div class="form-group col-md-4" id="formHB" style="display:flex; border-right:1px solid;">
                     <div class="form-group col-md-6">
                         <label for="inputWHB">Wooden HB</label>
-                        <input type="number" class="form-control" name="inputWHB" id="inputWHB" placeholder="0"
-                            onchange="totalHB()">
+                        <input type="number" class="form-control" name="inputWHB" id="inputWHB"
+                            value="{{ old('inputWHB') }}" placeholder="0" onchange="totalHB()">
+                        @error('inputWHB')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                         <label for="inputNonWHB">Non-wooden HB</label>
-                        <input type="number" class="form-control" name="inputNonWHB" id="inputNonWHB" placeholder="0"
-                            onchange="totalHB()">
+                        <input type="number" class="form-control" name="inputNonWHB" id="inputNonWHB"
+                            value="{{ old('inputNonWHB') }}" placeholder="0" onchange="totalHB()">
+                        @error('inputNonWHB')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                         <label for="inputHBNonF">Defective/Non-functional</label>
-                        <input type="number" class="form-control" name="inputHBNonF" id="inputHBNonF" placeholder="0"
-                            onchange="totalHB()">
+                        <input type="number" class="form-control" name="inputHBNonF" id="inputHBNonF"
+                            value="{{ old('inputHBNonF') }}" placeholder="0" onchange="totalHB()">
+                        @error('inputHBNonF')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputTotalHB">Total HB</label>
-                        <input type="number" class="form-control" name="inputTotalHB" id="inputTotalHB" placeholder="0"
-                            readonly>
+                        <input type="number" class="form-control" name="inputTotalHB" id="inputTotalHB"
+                            value="{{ old('inputTotalHB') }}" placeholder="0" readonly>
+                        @error('inputTotalHB')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                         <label for="inputHBpercent">HB% Availability</label>
                         <input type="number" class="form-control" name="inputHBpercent" id="inputHBpercent"
-                            placeholder="0" readonly>
+                            value="{{ old('inputHBpercent') }}" placeholder="0" readonly>
+                        @error('inputHBpercent')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
                 <div class="form-group col-md-4" id="formHB" style="display:flex; border-right:1px solid;">
                     <div class="form-group col-md-4">
                         <label for="inputSteelRules">Steel Rules</label>
                         <input type="number" class="form-control" name="inputSteelRules" id="inputSteelRules"
-                            placeholder="0">
+                            value="{{ old('inputSteelRules') }}" placeholder="0">
+                        @error('inputSteelRules')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group col-md-4">
                         <label for="inputMicrotoise">Microtoise</label>
                         <input type="number" class="form-control" name="inputMicrotoise" id="inputMicrotoise"
-                            placeholder="0">
+                            value="{{ old('inputMicrotoise') }}" placeholder="0">
+                        @error('inputMicrotoise')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group col-md-4">
                         <label for="inputInfantometer">Infantometer</label>
                         <input type="number" class="form-control" name="inputInfantometer" id="inputInfantometer"
-                            placeholder="0">
+                            value="{{ old('inputInfantometer') }}" placeholder="0">
+                        @error('inputInfantometer')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
                 <div class="form-group col-md-4" id="formHB">
                     <div class="form-group col-md-12">
                         <label for="inputHBRemarks">Remarks</label>
                         <input type="text" class="form-control" name="inputHBRemarks" id="inputHBRemarks"
-                            placeholder="Remarks">
+                            value="{{ old('inputHBRemarks') }}" placeholder="Remarks">
+                        @error('inputHBRemarks')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
             </div>
@@ -121,37 +154,58 @@
                     <div class="form-group col-md-6">
                         <label for="inputWSHanging">Hanging-type</label>
                         <input type="number" class="form-control" name="inputWSHanging" id="inputWSHanging"
-                            placeholder="0" onchange="totalWS()">
+                            value="{{ old('inputWSHanging') }}" placeholder="0" onchange="totalWS()">
+                        @error('inputWSHanging')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                         <label for="inputWSNonF">Defective/Non-functional</label>
-                        <input type="number" class="form-control" name="inputWSNonF" id="inputWSNonF" placeholder="0"
-                            onchange="totalWS()">
+                        <input type="number" class="form-control" name="inputWSNonF" id="inputWSNonF"
+                            value="{{ old('inputWSNonF') }}" placeholder="0" onchange="totalWS()">
+                        @error('inputWSNonF')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputTotalWS">Total WS</label>
-                        <input type="text" class="form-control" name="inputTotalWS" id="inputTotalWS" placeholder="0"
-                            readonly>
+                        <input type="text" class="form-control" name="inputTotalWS" id="inputTotalWS"
+                            value="{{ old('inputTotalWS') }}" placeholder="0" readonly>
+                        @error('inputTotalWS')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                         <label for="inputWSpercent">WS% Availability</label>
                         <input type="text" class="form-control" name="inputWSpercent" id="inputWSpercent"
-                            placeholder="0" readonly>
+                            value="{{ old('inputWSpercent') }}" placeholder="0" readonly>
+                        @error('inputWSpercent')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
                 <div class="form-group col-md-4" id="formHB" style="display:flex; border-right:1px solid;">
                     <div class="form-group col-md-6">
                         <label for="inputInfantScale">Infant Scale</label>
                         <input type="text" class="form-control" name="inputInfantScale" id="inputInfantScale"
-                            placeholder="0">
+                            value="{{ old('inputInfantScale') }}" placeholder="0">
+                        @error('inputInfantScale')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputBeamBalance">Beam Balance</label>
                         <input type="text" class="form-control" name="inputBeamBalance" id="inputBeamBalance"
-                            placeholder="0">
+                            value="{{ old('inputBeamBalance') }}" placeholder="0">
+                        @error('inputBeamBalance')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
                 <div class="form-group col-md-4" id="formHB">
                     <div class="form-group col-md-12">
                         <label for="inputWSRemarks">Remarks</label>
                         <input type="text" class="form-control" name="inputWSRemarks" id="inputWSRemarks"
-                            placeholder="Remarks">
+                            value="{{ old('inputWSRemarks') }}" placeholder="Remarks">
+                        @error('inputWSRemarks')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
             </div>
@@ -164,44 +218,71 @@
                 <div class="form-group col-md-4" id="formMUAC" style="display:flex; border-right:1px solid;">
                     <div class="form-group col-md-6">
                         <label for="inputMChild">Child</label>
-                        <input type="number" class="form-control" name="inputMChild" id="inputMChild" placeholder="0"
-                            onchange="muac_child()">
+                        <input type="number" class="form-control" name="inputMChild" id="inputMChild"
+                            value="{{ old('inputMChild') }}" placeholder="0" onchange="muac_child()">
+                        @error('inputMChild')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                         <label for="inputMNonFChild">Defective/Non-functional</label>
                         <input type="number" class="form-control" name="inputMNonFChild" id="inputMNonFChild"
-                            placeholder="0" onchange="muac_child()">
+                            value="{{ old('inputMNonFChild') }}" placeholder="0" onchange="muac_child()">
+                        @error('inputMNonFChild')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputTotalChild">Total (Child)</label>
                         <input type="number" class="form-control" name="inputTotalChild" id="inputTotalChild"
-                            placeholder="0" readonly>
+                            value="{{ old('inputTotalChild') }}" placeholder="0" readonly>
+                        @error('inputTotalChild')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                         <label for="inputChildpercent">% Availability (Child)</label>
                         <input type="number" class="form-control" name="inputChildpercent" id="inputChildpercent"
-                            placeholder="0" readonly>
+                            value="{{ old('inputChildpercent') }}" placeholder="0" readonly>
+                        @error('inputChildpercent')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
                 <div class="form-group col-md-4" id="formHB" style="display:flex; border-right:1px solid;">
                     <div class="form-group col-md-6">
                         <label for="inputMAdult">Adult</label>
-                        <input type="number" class="form-control" name="inputMAdult" id="inputMAdult" placeholder="0"
-                            onchange="muac_adult()">
+                        <input type="number" class="form-control" name="inputMAdult" id="inputMAdult"
+                            value="{{ old('inputMAdult') }}" placeholder="0" onchange="muac_adult()">
+                        @error('inputMAdult')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                         <label for="inputMNonFAdult">Defective/Non-functional</label>
                         <input type="number" class="form-control" name="inputMNonFAdult" id="inputMNonFAdult"
-                            placeholder="0" onchange="muac_adult()">
+                            value="{{ old('inputMNonFAdult') }}" placeholder="0" onchange="muac_adult()">
+                        @error('inputMNonFAdult')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputTotalAdult">Total (Adult)</label>
                         <input type="number" class="form-control" name="inputTotalAdult" id="inputTotalAdult"
-                            placeholder="0" readonly>
+                            value="{{ old('inputTotalAdult') }}" placeholder="0" readonly>
+                        @error('inputTotalAdult')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                         <label for="inputAdultpercent">% Availability (Adult)</label>
                         <input type="number" class="form-control" name="inputAdultpercent" id="inputAdultpercent"
-                            placeholder="0" readonly>
+                            value="{{ old('inputAdultpercent') }}" placeholder="0" readonly>
+                        @error('inputAdultpercent')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
                 <div class="form-group col-md-4" id="formHB">
                     <div class="form-group col-md-12">
                         <label for="inputMRemarks">Remarks</label>
                         <input type="text" class="form-control" name="inputMRemarks" id="inputMRemarks"
-                            placeholder="Remarks">
+                            value="{{ old('inputMRemarks') }}" placeholder="Remarks">
+                        @error('inputMRemarks')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
             </div>
@@ -217,10 +298,23 @@
                 </div>
             </div> -->
             <div class="form-group col-md-12" style="display:flex;">
-                <button type="submit" name="addEquipmentInventory" class="btn btn-outline-primary">Add Equipment
-                    Inventory</button>
+                <button type="button" name="addEquipmentInventory" class="btn btn-outline-primary" data-toggle="modal"
+                    data-target="#exampleModalCenter">
+                    Add Equipment Inventory
+                </button>
             </div>
         </form>
     </div>
 </div>
+<!-- alert Modal -->
+@include('Modal.Submit')
+
 @endsection
+
+<script>
+$(document).ready(function() {
+    $('#submit').on('click', function() {
+        $('#form').submit();
+    });
+});
+</script>

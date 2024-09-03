@@ -182,6 +182,11 @@ function myFunctionLNFP_lguprofile(id){
 }
 
 
+function myFunctionLNFP_Form5View(id){
+    window.location.href = "lguForm5ViewForm/"+ id;
+
+}
+
 
 function myFunctionLNFP(id){
     window.location.href = "lguLnfpEdit/"+ id;
@@ -198,18 +203,28 @@ function LNFPmyFunction_form8(id){
     window.location.href = "lguLnfpEditForm8/"+ id;
 
 }
+function myLNFPmyFunction_form8(id){
+    window.location.href = "lguLnfpViewForm8/"+ id;
+
+}
+
 
 function myFunctionLNFP_InterviewForm(id){
     window.location.href = "lguLnfpEditInterview/"+ id;
 
 }
 function LNFPmyFunction_InterviewForm(id){
-    window.location.href = "lguLnfpEditInterview/"+ id;
+    window.location.href = "lguLnfpViewInterview/"+ id;
 
 }
 
 function LNFPmyFunction_overallScore(id){
     window.location.href = "lguLnfpEditOverall/"+ id;
+
+}
+
+function myLNFPmyFunction_overallScore(id){
+    window.location.href = "lguLnfpViewOverall/"+ id;
 
 }
 
@@ -225,40 +240,45 @@ function LNFPmyFunction_form6(id){
     window.location.href = "lguform6Edit/"+id;
 }
 
+function myLNFPmyFunction_form6(id){
+    window.location.href = "lguform6View/"+id;
+}
+
+
 //Delete Entry for MellpiPro for LNFP
 function LNFPopenModaLguProfilel(id) {
     LNFP_profile_id = id; // Store the ID
     $('#deleteModal_lguprofile').modal('show'); // Show the modal
 }
 
-//Mellpi Pro for LNFP Delete
-function confirmDeleteLNFP_Lguprofile(){
+// //Mellpi Pro for LNFP Delete
+// function confirmDeleteLNFP_Lguprofile(){
 
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+//     $.ajaxSetup({
+//         headers: {
+//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//         }
+//     });
 
-    // console.log(profileId);
-    if (LNFP_profile_id) { // Check if profileId has been set
-        $.ajax({
-            url: "lguLnfpDeleteProfile/" + LNFP_profile_id, // Ensure the URL is correct
-            type: 'GET',
-            success: function(result) {
-                setTimeout(function() {
-                    window.location.reload(); // Reload the page after a delay
-                }, 2000); // Delay before reload (2 seconds)
-                $('#successAlert').removeClass('d-none').fadeIn(); // Show success alert
+//     // console.log(profileId);
+//     if (LNFP_profile_id) { // Check if profileId has been set
+//         $.ajax({
+//             url: "lguLnfpDeleteProfile/" + LNFP_profile_id, // Ensure the URL is correct
+//             type: 'GET',
+//             success: function(result) {
+//                 setTimeout(function() {
+//                     window.location.reload(); // Reload the page after a delay
+//                 }, 2000); // Delay before reload (2 seconds)
+//                 $('#successAlert').removeClass('d-none').fadeIn(); // Show success alert
                
-            },
-            error: function(xhr) {
-                alert('Error deleting profile: ' + xhr.responseText);
-            }
-        });
-        $('#deleteModal_lguprofile').modal('hide'); // Hide the modal
-    }
-};
+//             },
+//             error: function(xhr) {
+//                 alert('Error deleting profile: ' + xhr.responseText);
+//             }
+//         });
+//         $('#deleteModal_lguprofile').modal('hide'); // Hide the modal
+//     }
+// };
 
 // function LNFPopenModal(id) {
 //     LNFP_form_id = id; // Store the ID
@@ -532,4 +552,4 @@ new DataTable('#form6Table');
 new DataTable('#form8myTable');
 new DataTable('#InterviewFormmyTable');
 new DataTable('#overallScoremyTable');
-new DataTable('nutriOffice');
+new DataTable('#nutriOffice');

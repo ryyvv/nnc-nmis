@@ -643,12 +643,7 @@
                   <p> {{ __("INTERVIEW") }} </p>
                 </a>
               </li>
-              <!-- <li class="@if ($activePage == 'mellpi_pro_summary1b') active @endif">
-                <a href="#">
-                  <i class="now-ui-icons files_paper"></i>
-                  <p> {{ __("WRITTEN EXAM COMPUTATION") }} </p>
-                </a>
-              </li> -->
+   
               <li class="@if ($activePage == 'mellpi_pro_overallScore') active @endif">
                 <a href="{{ route('lnfpFormOverallScoreIndex') }}">
                   <i class="now-ui-icons files_paper"></i>
@@ -672,26 +667,27 @@
           <div class="collapse @if ($namePage == 'LGU Profile LNFP' || in_array($activePage, $activeLNFPPages) ) show @endif" " id="Resources">
             <ul class="nav">
               <li class="@if ($activePage == 'NutritionOffice') active @endif">
-                <!-- <a href="{{ route('BSLGUprofileLNFPIndex.index') }}"> -->
-                <a href="#">
+              <a href="{{ route('BSequipmentInventory.index') }}">
                   <i class="now-ui-icons files_paper"></i>
                   <p> {{ __("Nutrition Offices") }} </p>
                 </a>
               </li>
-              <li class="@if ($activePage == 'PersonnelDirectory') active @endif">
-                <!-- <a href="{{ route('MellpiProMonitoringIndex.index') }}"> -->
-                <a href="#">
-                  <i class="now-ui-icons files_paper"></i>
-                  <p> {{ __("Personnel Directory") }} </p>
-                </a>
-              </li>
+  
               <li class="@if ($activePage == 'EquipmentInventory') active @endif">
-                <!-- <a href="{{ route('MellpiProRadialIndex.index') }}"> -->
-                <a href="#">
+                <a href="{{ route('BSequipmentInventory.index') }}">
                   <i class="now-ui-icons files_paper"></i>
                   <p> {{ __("Equipment Inventory") }} </p>
                 </a>
               </li> 
+         
+              <li class="@if ($activePage == 'PersonnelDirectory') active @endif">
+                <a href="{{ route('BSpersonnel.index') }}">
+                  <i class="now-ui-icons files_paper"></i>
+                  <p> {{ __("Personnel DNA Directory ") }} </p>
+                </a>
+              </li> 
+        
+
             </ul>
           </div>
         </li>

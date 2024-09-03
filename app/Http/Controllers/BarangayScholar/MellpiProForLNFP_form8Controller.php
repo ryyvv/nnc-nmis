@@ -31,6 +31,30 @@ class MellpiProForLNFP_form8Controller extends Controller
        ->get();
         return view('BarangayScholar/MellpiProForLNFP/MellpiProActionSheet/ActionSheetForm8Index', ['form8' => $form8]);
     }
+
+    public function ActionSheetForm8View(Request $request)
+    {
+        $action = 'edit';
+
+        $row = DB::table('lnfp_form8')
+        ->leftjoin('lnfp_interview_form', 'lnfp_interview_form.form8_id', '=', 'lnfp_form8.id')
+        ->leftjoin('lnfp_form7', 'lnfp_form8.form7_id', '=', 'lnfp_form7.id')
+        ->leftjoin('lnfp_form5a_rr', 'lnfp_form7.form5_id', '=', 'lnfp_form5a_rr.id')
+        ->select('lnfp_form8.*', 
+                 'lnfp_form5a_rr.periodCovereda as periodCovereda',
+                 'lnfp_form5a_rr.nameofPnao as nameofPnao',
+                 'lnfp_form5a_rr.dateMonitoring as dateMonitoring',
+                 'lnfp_form5a_rr.id as form5_id',
+                 'lnfp_form5a_rr.address as area',
+                 'lnfp_interview_form.id as interview_id',
+                 'lnfp_interview_form.status as interview_status')
+        ->where('lnfp_form8.id', $request->id)->first();
+
+        return view('BarangayScholar/MellpiProForLNFP/MellpiProActionSheet/Form8View',compact('row', 'action'));
+    }
+
+
+
     public function ActionSheetForm8Edit(Request $request)
     {
         $action = 'edit';
@@ -42,6 +66,7 @@ class MellpiProForLNFP_form8Controller extends Controller
                  'lnfp_form5a_rr.periodCovereda as periodCovereda',
                  'lnfp_form5a_rr.nameofPnao as nameofPnao',
                  'lnfp_form5a_rr.dateMonitoring as dateMonitoring',
+                 'lnfp_form5a_rr.address as area',
                  'lnfp_form5a_rr.id as form5_id')
         ->where('lnfp_form8.id', $request->id)->first();
 
@@ -296,12 +321,12 @@ class MellpiProForLNFP_form8Controller extends Controller
                     'recoLNC_F' => 'required|string',
                     'recoLNC_G' => 'required|string',
                     'recoLNC_H' => 'required|string',
-                    // 'nameTM1' => 'required|string',
-                    // 'nameTM2' => 'required|string',
-                    // 'nameTM3' => 'required|string',
-                    // 'desigOffice1' => 'required|string',
-                    // 'desigOffice2' => 'required|string',
-                    // 'desigOffice3' => 'required|string',
+                    'nameTM1' => 'required|string',
+                    'nameTM2' => 'required|string',
+                    'nameTM3' => 'required|string',
+                    'desigOffice1' => 'required|string',
+                    'desigOffice2' => 'required|string',
+                    'desigOffice3' => 'required|string',
                     'sigDate1' => 'file|mimes:jpg,jpeg,png|max:2048',
                     'sigDate2' => 'file|mimes:jpg,jpeg,png|max:2048',
                     'sigDate3' => 'file|mimes:jpg,jpeg,png|max:2048',
@@ -391,11 +416,12 @@ class MellpiProForLNFP_form8Controller extends Controller
                         'form5_id' => $request->form5_id,
                         'status'   => 2,
                         'lnfp_lgu_id' => $request->lgu_id,
+                        'user_id' => auth()->user()->id,
                     ]);
 
                 }
                 
-                return redirect()->route('editIntForm',  $lnfp_formInterview->id)->with('success', 'Data created successfully!');
+                return redirect()->route('editIntForm',  $lnfp_formInterview->id)->with('success', 'Data stored successfully! You can now create Interview Form');
                 // return redirect()->route('lnfpForm8Index')->with('alert', 'Data Submitted Successfully!');
 
                 
@@ -445,6 +471,7 @@ class MellpiProForLNFP_form8Controller extends Controller
                     'whatDate' => $request->input('whatDate'),
                     'header'    => $request->header,
                     'status' => 2,
+                    'user_id' => auth()->user()->id,
                 ]);
         
                 return redirect()->route('lnfpForm8Index')->with('alert', 'Data Saved as Draft Successfully!');

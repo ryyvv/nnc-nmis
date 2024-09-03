@@ -44,6 +44,11 @@ function openModal(id) {
     $('#deleteModal').modal('show'); // Show the modal
 }
 
+function openModalLNFP(id) {
+    profileId = id; // Store the ID
+    $('#deleteModal').modal('show'); // Show the modal
+}
+
 
 // Mellpi Pro For LGU  delete
 function confirmDelete(url, action) {
@@ -84,11 +89,12 @@ function confirmDeleteLNFP() {
         }
     });
 
-    // console.log(profileId);
-    if (LNFPid) { // Check if profileId has been set
+    //console.log(profileId);
+    if (profileId) { // Check if profileId has been set
         $.ajax({
-            url: "lguLnfpDelete/" + LNFPid, // Ensure the URL is correct
-            type: 'GET',
+            url: "lguLnfpDeleteProfile", // Ensure the URL is correct
+            data: { id: profileId },
+            type: 'POST',
             success: function (result) {
                 setTimeout(function () {
                     window.location.reload(); // Reload the page after a delay

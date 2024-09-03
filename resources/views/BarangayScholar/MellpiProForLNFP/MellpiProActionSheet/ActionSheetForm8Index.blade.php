@@ -34,7 +34,7 @@
                             <a href="{{ route('lnfpForm8Create') }}" class="btn btn-primary bolder">Create data</a>
                         </div> -->
 
-                        <table class="display" id="form8myTable" width="100%">
+                        <table class="display" id="form8myTable" style="width:100%!important; max-width:inherit">
                             <thead class="table-light" style="background-color:#508D4E;">
 
                                 <tr>
@@ -84,14 +84,11 @@
                                     <td>
                                         <ul class="list-inline m-0">
                                             <li class="list-inline-item">
-                                                <i onclick="LNFPmyFunction_form8('{{ $form8->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
-<!--                                                
-                                                
-                                                <i onclick="myFunctionLNFP_form8('{{ $form8->id }}', 'lncmanagement', 'edit')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
-                                                <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
-                                                <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i> -->
-                                                <!-- <i class="fa fa-file-pdf-o fa-lg cursor " style="color:red;margin-right:7px;" aria-hidden="true"></i> -->
-                                                @if( $form8->status == 2 )
+
+                                                @if( $form8->status == 1 )
+                                                <i onclick="myLNFPmyFunction_form8('{{ $form8->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+
+                                                @elseif( $form8->status == 2 )
                                                 <!-- <i onclick="LNFPmyFunction_form8('{{ $form8->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i> -->
                                                 <i onclick="myFunctionLNFP_form8('{{ $form8->id }}', 'lncmanagement', 'edit')" class="fa fa-edit fa-lg cursor" style="color:#FFB236;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Edit"></i>
                                                 <!-- <i onclick="LNFPopenModal_form8('{{ $form8->id }}')" class="fa fa-trash fa-lg cursor" style="color:red;margin-right:10px" title="Delete "></i> -->

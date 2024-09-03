@@ -31,7 +31,7 @@
                             <a href="{{ route('lnfpFormInterviewCreate') }}" class="btn btn-primary bolder">Create data</a>
                         </div> -->
 
-                        <table class="display" id="InterviewFormmyTable" width="100%">
+                        <table class="display" id="InterviewFormmyTable" style="width:100%!important; max-width:inherit">
                             <thead class="table-light" style="background-color:#508D4E;">
 
                                 <tr>
@@ -69,18 +69,13 @@
                                     <td>
                                         <ul class="list-inline m-0">
                                             <li class="list-inline-item">
-                                                @if( $InterviewForm->status == 0 )
-                                                <i onclick="LNFPmyFunction_InterviewForm('{{ $InterviewForm->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
-                                                <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
-                                                <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i>
-                                                <!-- <i class="fa fa-file-pdf-o fa-lg cursor " style="color:red;margin-right:7px;" aria-hidden="true"></i>  -->
-                                                @elseif( $InterviewForm->status == 1 )
-                                                <i onclick="myFunctionLNFP_InterviewForm('{{ $InterviewForm->id }}', 'lncmanagement', 'edit')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
-                                                <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
-                                                <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i>
+                                                @if( $InterviewForm->status == 1 )
+                                                <i onclick="LNFPmyFunction_InterviewForm('{{ $InterviewForm->id }}', 'lncmanagement', 'edit')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                                <!-- <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
+                                                <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i> -->
                                                 <!-- <i class="fa fa-file-pdf-o fa-lg cursor " style="color:red;margin-right:7px;" aria-hidden="true"></i> -->
                                                 @elseif( $InterviewForm->status == 2 )
-                                                <i onclick="LNFPmyFunction_InterviewForm('{{ $InterviewForm->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                                <!-- <i onclick="LNFPmyFunction_InterviewForm('{{ $InterviewForm->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i> -->
                                                 <i onclick="myFunctionLNFP_InterviewForm('{{ $InterviewForm->id }}', 'lncmanagement', 'edit')" class="fa fa-edit fa-lg cursor" style="color:#FFB236;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Edit"></i>
                                                 <!-- <i onclick="LNFPopenModal_InterviewForm('{{ $InterviewForm->id }}')" class="fa fa-trash fa-lg cursor" style="color:red;margin-right:10px" title="Delete "></i> -->
                                                 <!-- <i class="fa fa-file-pdf-o fa-lg cursor " style="color:red;margin-right:7px;" aria-hidden="true"></i> -->
@@ -100,39 +95,5 @@
         </div>
     </div>
 </div>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('DOM fully loaded and parsed');
-        setTimeout(function() {
-            var alertMessage = document.getElementById('alert-message');
-            if (alertMessage) {
-                console.log('Alert message found, hiding now');
-                alertMessage.style.display = 'none';
-            } else {
-                console.log('Alert message not found');
-            }
-        }, 3000);
-    });
-</script>
 
-<!-- Delete -->
-<div class="modal fade" id="deleteModal_InterviewForm" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to delete this data?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" onclick="confirmDeleteLNFP_IntForm()">Yes</button>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection

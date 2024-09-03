@@ -19,13 +19,32 @@
             </div>
             <div>
                 @include('alerts.success')
+                <form action="{{ route('mellpi_pro_LGU.Psgcupload') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+
+                    <div class="input-group mb-3">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="inputcsvfilePsgc" id="inputcsvfilePsgc"
+                                accept=".csv" accept=".csv" required>
+                            <label class="custom-file-label" aria-describedby="inputGroupFileAddon02">Upload Psgc
+                                file</label>
+                        </div>
+
+                        <div class="input-group-append" style="margin-left:5px">
+                            <button class="btn btn-outline-primary" style="margin:0px; margin-left:0px" id="checkData"
+                                type="submit">Check data</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div>
                 <form action="{{ route('mellpi_pro_LGU.Regionupload') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="input-group mb-3">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" name="inputcsvfileRegion"
-                                id="inputcsvfileRegion" required>
+                                id="inputcsvfileRegion" accept=".csv" required>
                             <label class="custom-file-label" aria-describedby="inputGroupFileAddon02">Upload Region
                                 file</label>
                         </div>
@@ -43,9 +62,9 @@
                     <div class="input-group mb-3">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" name="inputcsvfileProvince"
-                                id="inputcsvfileProvince" required>
+                                id="inputcsvfileProvince" accept=".csv" required>
                             <label class="custom-file-label" aria-describedby="inputGroupFileAddon02">Upload Province
-                                file</label> 
+                                file</label>
                         </div>
 
                         <div class="input-group-append" sty413 Request Entity Too Large nginx/1.18.0
@@ -62,7 +81,7 @@
                     <div class="input-group mb-3">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" name="inputcsvfileCity" id="inputcsvfileCity"
-                                required>
+                                accept=".csv" required>
                             <label class="custom-file-label" aria-describedby="inputGroupFileAddon02">Upload City
                                 file</label>
                         </div>
@@ -78,8 +97,25 @@
                     <div class="input-group mb-3">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" name="inputcsvfileMun" id="inputcsvfileMun"
-                                required>
+                                accept=".csv" required>
                             <label class="custom-file-label" aria-describedby="inputGroupFileAddon02">Upload Municipal
+                                file</label>
+                        </div>
+
+                        <div class="input-group-append" style="margin-left:5px">
+                            <button class="btn btn-outline-primary" style="margin:0px; margin-left:0px" id="checkData"
+                                type="submit">Check data</button>
+                        </div>
+                    </div>
+                </form>
+                <form action="{{ route('mellpi_pro_LGU.SubMunupload') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="input-group mb-3">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="inputcsvfileSubMun"
+                                id="inputcsvfileSubMun" accept=".csv" required>
+                            <label class="custom-file-label" aria-describedby="inputGroupFileAddon02">Upload Sub
+                                Municipal
                                 file</label>
                         </div>
 
@@ -94,7 +130,7 @@
                     <div class="input-group mb-3">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" name="inputcsvfileBarangay"
-                                id="inputcsvfileBarangay" required>
+                                id="inputcsvfileBarangay" accept=".csv" required>
                             <label class="custom-file-label" aria-describedby="inputGroupFileAddon02">Upload Barangay
                                 file</label>
                         </div>
