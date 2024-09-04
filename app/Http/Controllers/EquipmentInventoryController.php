@@ -306,46 +306,57 @@ class EquipmentInventoryController extends Controller
     
     public function getCitiesAndMunicipalities(Request $request)
     {
-
         $citiesQuery = PsgcCity::query();
         $municipalitiesQuery = PsgcMunicipality::query();
-
+        $excludeProvincialAreas = $request->has('excludeProvincialAreas') && $request->boolean('excludeProvincialAreas');
+        
         if ($request->has('psgc_code')) {
             $citiesQuery->where('psgc_code', $request->input('psgc_code'));
             $municipalitiesQuery->where('psgc_code', $request->input('psgc_code'));
         }
-
+    
         if ($request->has('name')) {
             $citiesQuery->where('name', 'like', '%' . $request->input('name') . '%');
             $municipalitiesQuery->where('name', 'like', '%' . $request->input('name') . '%');
         }
-
+    
         if ($request->has('correspondence_code')) {
             $citiesQuery->where('correspondence_code', $request->input('correspondence_code'));
             $municipalitiesQuery->where('correspondence_code', $request->input('correspondence_code'));
         }
-
+    
         if ($request->has('reg_code')) {
             $citiesQuery->where('reg_code', $request->input('reg_code'));
             $municipalitiesQuery->where('reg_code', $request->input('reg_code'));
         }
-
+    
         if ($request->has('prov_code')) {
             $citiesQuery->where('prov_code', $request->input('prov_code'));
             $municipalitiesQuery->where('prov_code', $request->input('prov_code'));
         }
-
+    
         if ($request->has('citymun_code')) {
             $citiesQuery->where('citymun_code', $request->input('citymun_code'));
             $municipalitiesQuery->where('citymun_code', $request->input('citymun_code'));
         }
-
+        
+        if ($excludeProvincialAreas) {
+            $citiesQuery->whereNotIn('prov_code', function ($query) {
+                $query->select('prov_code')
+                      ->from('psgc_provinces');
+            });
+    
+            $municipalitiesQuery->whereNotIn('prov_code', function ($query) {
+                $query->select('prov_code')
+                      ->from('psgc_provinces');
+            });
+        }
+    
         $cities = $citiesQuery->get();
         $municipalities = $municipalitiesQuery->get();
-
-        
-        $combinedData = $cities->merge($municipalities);
-
+    
+        $combinedData = $cities->concat($municipalities);
+    
         return response()->json($combinedData);
     }
     
@@ -372,7 +383,7 @@ class EquipmentInventoryController extends Controller
         if ($request->has('reg_code')) {
             $cities = PsgcCity::where('reg_code', $request->input('reg_code'))->get();
             $municipalities = PsgcMunicipality::where('reg_code', $request->input('reg_code'))->get();
-            $combined = $cities->merge($municipalities);
+            $combined = $cities->concat($municipalities);
             
             // Ensure inventory data exists for all locations in the region
             foreach ($combined as $location) {

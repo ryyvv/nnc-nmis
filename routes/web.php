@@ -15,93 +15,100 @@ use App\Http\Controllers\EquipmentInventoryController;
 
 use App\Http\Controllers\PersonnelDnaDirectoryController;
 
+
+
+
 // added
-use App\Http\Controllers\CentralAdmin\PermissionController;
-use App\Http\Controllers\CentralAdmin\RolesController;
-use App\Http\Controllers\CentralAdmin\ProfileController;
-use App\Http\Controllers\CentralAdmin\AdminUserController;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\CentralAdmin\CADashboardController;
-use App\Http\Controllers\CentralAdmin\FormsBuilderController;
+use App\Http\Controllers\Admin\User\DashboardController;
 
-use App\Http\Controllers\CentralAdmin\FormFieldController;
+use App\Http\Controllers\Admin\CentralAdmin\PermissionController;
+use App\Http\Controllers\Admin\CentralAdmin\RolesController;
+use App\Http\Controllers\Admin\CentralAdmin\ProfileController;
+use App\Http\Controllers\Admin\CentralAdmin\AdminUserController;
+use App\Http\Controllers\Admin\Auth\RegisterController;
+use App\Http\Controllers\Admin\CentralAdmin\CADashboardController;
+use App\Http\Controllers\Admin\CentralAdmin\FormsBuilderController;
+
+use App\Http\Controllers\Admin\CentralAdmin\FormFieldController;
 
 
-use App\Http\Controllers\CentralOfficer\CODashboardController;
+use App\Http\Controllers\Admin\CentralOfficer\CODashboardController;
 
-use App\Http\Controllers\CentralStaff\CSDashboardController;
+use App\Http\Controllers\Admin\CentralStaff\CSDashboardController;
 
-use App\Http\Controllers\RegionalOfficer\RODashboardController;
+use App\Http\Controllers\Admin\RegionalOfficer\RODashboardController;
 
-use App\Http\Controllers\RegionalStaff\RSDashboardController;
+use App\Http\Controllers\Admin\RegionalStaff\RSDashboardController;
 
-use App\Http\Controllers\ProvincialOfficer\PODashboardController;
+use App\Http\Controllers\Admin\ProvincialOfficer\PODashboardController;
 
-use App\Http\Controllers\ProvincialStaff\PSDashboardController;
+use App\Http\Controllers\Admin\ProvincialStaff\PSDashboardController;
 
 // City-Municipal Officer
-use App\Http\Controllers\CityMunicipalOfficer\CMODashboardController;
-use App\Http\Controllers\CityMunicipalOfficer\CMOMellpiLGUProfileBarangayController;
-use App\Http\Controllers\CityMunicipalOfficer\CMOMellpiLGUProfileBarangayBudgetAIPController;
-use App\Http\Controllers\CityMunicipalOfficer\CMOMellpiLGUProfileBarangayChangeNSController;
-use App\Http\Controllers\CityMunicipalOfficer\CMOMellpiLGUProfileBarangayDiscussionQuestionController;
-use App\Http\Controllers\CityMunicipalOfficer\CMOMellpiLGUProfileBarangayGovernanceController;
-use App\Http\Controllers\CityMunicipalOfficer\CMOMellpiLGUProfileBarangayLNCManagementController;
-use App\Http\Controllers\CityMunicipalOfficer\CMOMellpiLGUProfileBarangayNutritionPoliciesController;
-use App\Http\Controllers\CityMunicipalOfficer\CMOMellpiLGUProfileBarangayVisionMissionController;
+use App\Http\Controllers\Admin\CityMunicipalOfficer\CMODashboardController;
+use App\Http\Controllers\Admin\CityMunicipalOfficer\CMOMellpiLGUProfileBarangayController;
+use App\Http\Controllers\Admin\CityMunicipalOfficer\CMOMellpiLGUProfileBarangayBudgetAIPController;
+use App\Http\Controllers\Admin\CityMunicipalOfficer\CMOMellpiLGUProfileBarangayChangeNSController;
+use App\Http\Controllers\Admin\CityMunicipalOfficer\CMOMellpiLGUProfileBarangayDiscussionQuestionController;
+use App\Http\Controllers\Admin\CityMunicipalOfficer\CMOMellpiLGUProfileBarangayGovernanceController;
+use App\Http\Controllers\Admin\CityMunicipalOfficer\CMOMellpiLGUProfileBarangayLNCManagementController;
+use App\Http\Controllers\Admin\CityMunicipalOfficer\CMOMellpiLGUProfileBarangayNutritionPoliciesController;
+use App\Http\Controllers\Admin\CityMunicipalOfficer\CMOMellpiLGUProfileBarangayVisionMissionController;
 
 
 
 // City-Municipal Staff
-use App\Http\Controllers\CityMunicipalStaff\CMSPersonnelDnaDirectoryController;
-use App\Http\Controllers\CityMunicipalStaff\CMSEquipmentInventoryController;
-use App\Http\Controllers\CityMunicipalStaff\CMSNutritionOfficesController;
-use App\Http\Controllers\CityMunicipalStaff\CMSDashboardController;
-use App\Http\Controllers\CityMunicipalStaff\CMSProfileController;
-use App\Http\Controllers\CityMunicipalStaff\CMSLGUprofileController;
-use App\Http\Controllers\CityMunicipalStaff\CMSVisionMissionController;
-use App\Http\Controllers\CityMunicipalStaff\CMSNutritionPoliciesController;
-use App\Http\Controllers\CityMunicipalStaff\CMSGovernanceController;
-use App\Http\Controllers\CityMunicipalStaff\CMSNutritionServiceController;
-use App\Http\Controllers\CityMunicipalStaff\CMSChangeNSController;
-use App\Http\Controllers\CityMunicipalStaff\CMSDiscussionQuestionController;
-use App\Http\Controllers\CityMunicipalStaff\CMSBudgetAIPController;
-use App\Http\Controllers\CityMunicipalStaff\CMSLNCManagementBarangayController;
+use App\Http\Controllers\Admin\CityMunicipalStaff\CMSPersonnelDnaDirectoryController;
+use App\Http\Controllers\Admin\CityMunicipalStaff\CMSEquipmentInventoryController;
+use App\Http\Controllers\Admin\CityMunicipalStaff\CMSNutritionOfficesController;
+use App\Http\Controllers\Admin\CityMunicipalStaff\CMSDashboardController;
+use App\Http\Controllers\Admin\CityMunicipalStaff\CMSProfileController;
+use App\Http\Controllers\Admin\CityMunicipalStaff\CMSLGUprofileController;
+use App\Http\Controllers\Admin\CityMunicipalStaff\CMSVisionMissionController;
+use App\Http\Controllers\Admin\CityMunicipalStaff\CMSNutritionPoliciesController;
+use App\Http\Controllers\Admin\CityMunicipalStaff\CMSGovernanceController;
+use App\Http\Controllers\Admin\CityMunicipalStaff\CMSNutritionServiceController;
+use App\Http\Controllers\Admin\CityMunicipalStaff\CMSChangeNSController;
+use App\Http\Controllers\Admin\CityMunicipalStaff\CMSDiscussionQuestionController;
+use App\Http\Controllers\Admin\CityMunicipalStaff\CMSBudgetAIPController;
+use App\Http\Controllers\Admin\CityMunicipalStaff\CMSLNCManagementBarangayController;
 
-use App\Http\Controllers\CityMunicipalStaff\CMSMellpiProForLNFP_barangayController;
-use App\Http\Controllers\CityMunicipalStaff\CMSMellpiProForLNFP_barangayLGUController;
-use App\Http\Controllers\CityMunicipalStaff\CMSMellpiProForLNFP_form6Controller;
-use App\Http\Controllers\CityMunicipalStaff\CMSMellpiProForLNFP_form8Controller;
-use App\Http\Controllers\CityMunicipalStaff\CMSMellpiProForLNFP_InterviewController;
-use App\Http\Controllers\CityMunicipalStaff\CMSMellpiProForLNFP_OverallScoreController;
+use App\Http\Controllers\Admin\CityMunicipalStaff\CMSMellpiProForLNFP_barangayController;
+use App\Http\Controllers\Admin\CityMunicipalStaff\CMSMellpiProForLNFP_barangayLGUController;
+use App\Http\Controllers\Admin\CityMunicipalStaff\CMSMellpiProForLNFP_form6Controller;
+use App\Http\Controllers\Admin\CityMunicipalStaff\CMSMellpiProForLNFP_form8Controller;
+use App\Http\Controllers\Admin\CityMunicipalStaff\CMSMellpiProForLNFP_InterviewController;
+use App\Http\Controllers\Admin\CityMunicipalStaff\CMSMellpiProForLNFP_OverallScoreController;
 
 
 
 //BarangayScholar
-use App\Http\Controllers\BarangayScholar\BSPersonnel;
-use App\Http\Controllers\BarangayScholar\BSEquipmentInventoryController;
-use App\Http\Controllers\BarangayScholar\BSNutritionOfficesController;
-use App\Http\Controllers\BarangayScholar\BSDashboardController;
-use App\Http\Controllers\BarangayScholar\BSProfileController;
-use App\Http\Controllers\BarangayScholar\BSLGUprofileController;
-use App\Http\Controllers\BarangayScholar\VisionMissionController;
-use App\Http\Controllers\BarangayScholar\NutritionPoliciesController;
-use App\Http\Controllers\BarangayScholar\GovernanceController;
-use App\Http\Controllers\BarangayScholar\NutritionServiceController;
-use App\Http\Controllers\BarangayScholar\ChangeNSController;
-use App\Http\Controllers\BarangayScholar\DiscussionQuestionController;
-use App\Http\Controllers\BarangayScholar\BudgetAIPController;
-use App\Http\Controllers\BarangayScholar\LNCManagementBarangayController;
+use App\Http\Controllers\Admin\BarangayScholar\BSPersonnel;
+use App\Http\Controllers\Admin\BarangayScholar\BSEquipmentInventoryController;
+use App\Http\Controllers\Admin\BarangayScholar\BSNutritionOfficesController;
+use App\Http\Controllers\Admin\BarangayScholar\BSDashboardController;
+use App\Http\Controllers\Admin\BarangayScholar\BSProfileController;
+use App\Http\Controllers\Admin\BarangayScholar\BSLGUprofileController;
+use App\Http\Controllers\Admin\BarangayScholar\VisionMissionController;
+use App\Http\Controllers\Admin\BarangayScholar\NutritionPoliciesController;
+use App\Http\Controllers\Admin\BarangayScholar\GovernanceController;
+use App\Http\Controllers\Admin\BarangayScholar\NutritionServiceController;
+use App\Http\Controllers\Admin\BarangayScholar\ChangeNSController;
+use App\Http\Controllers\Admin\BarangayScholar\DiscussionQuestionController;
+use App\Http\Controllers\Admin\BarangayScholar\BudgetAIPController;
+use App\Http\Controllers\Admin\BarangayScholar\LNCManagementBarangayController;
 
-use App\Http\Controllers\BarangayScholar\MellpiProForLNFP_barangayController;
-use App\Http\Controllers\BarangayScholar\MellpiProForLNFP_barangayLGUController;
-use App\Http\Controllers\BarangayScholar\MellpiProForLNFP_form6Controller;
-use App\Http\Controllers\BarangayScholar\MellpiProForLNFP_form8Controller;
-use App\Http\Controllers\BarangayScholar\MellpiProForLNFP_InterviewController;
-use App\Http\Controllers\BarangayScholar\MellpiProForLNFP_OverallScoreController;
+use App\Http\Controllers\Admin\BarangayScholar\MellpiProForLNFP_barangayController;
+use App\Http\Controllers\Admin\BarangayScholar\MellpiProForLNFP_barangayLGUController;
+use App\Http\Controllers\Admin\BarangayScholar\MellpiProForLNFP_form6Controller;
+use App\Http\Controllers\Admin\BarangayScholar\MellpiProForLNFP_form8Controller;
+use App\Http\Controllers\Admin\BarangayScholar\MellpiProForLNFP_InterviewController;
+use App\Http\Controllers\Admin\BarangayScholar\MellpiProForLNFP_OverallScoreController;
+
+
 use App\Http\Controllers\FormController;
-use App\Http\Controllers\FormSubmissionController;
-use App\Http\Controllers\UserController\UserReviewController as UserControllerUserReviewController;
+use App\Http\Controllers\FormSubmissionController; 
+// use App\Http\Controllers\UserController\UserReviewController as UserControllerUserReviewController;
 use Faker\Guesser\Name;
 
 use App\Http\Controllers\UserUnderReview\UserReviewController;
@@ -135,6 +142,14 @@ Route::get('/dashboard', function () {
 // For review
 Route::middleware('auth')->group(function () {
 
+    Route::get('/lguprofilelnfp', [MellpiProForLNFP_barangayLGUController::class, 'index'])->name('BSLGUprofileLNFPIndex.index');
+    Route::get('/lguprofilelnfpCreate', [MellpiProForLNFP_barangayLGUController::class, 'mellpiProLNFP_LGUcreate'])->name('MellpiProForLNFPCreate.create');
+    Route::post('/lguprofileLnfpSubmit', [MellpiProForLNFP_barangayLGUController::class, 'storeSubmit'])->name('MellpiProForLNFPSubmit.storeSubmit');
+    Route::post('/lguprofileLnfpUpdate/{id}', [MellpiProForLNFP_barangayLGUController::class, 'storeUpdate'])->name('MellpiProForLNFPUpdate.storeUpdate');
+    Route::POST('/lguLnfpDeleteProfile', [MellpiProForLNFP_barangayLGUController::class, 'deleteLNFP_lguprofile'])->name('lguLnfpDeleteProfile');
+    Route::get('/lguLnfpViewProfile/{id}/view', [MellpiProForLNFP_barangayLGUController::class, 'viewLNFP_lguprofile'])->name('lguLnfpViewProfile');
+    Route::get('/lguLnfpEditprofile/{id}', [MellpiProForLNFP_barangayLGUController::class, 'mellpiProLNFP_LGUedit'])->name('lguLnfpEditProfile');
+
     // Forms samples
     Route::resource('forms', FormController::class);
     Route::post('forms/{form}/submissions', [FormSubmissionController::class, 'store'])->name('form-submissions.store');
@@ -154,12 +169,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/mellpi_pro_LGU/brgy',  [MellproLGUController::class, 'Barangayupload'])->name('mellpi_pro_LGU.Barangayupload');
 
     // Melpi Pro Controller
-    Route::get('/mellpi_pro', [MellpiProController::class, 'index'])->name('mellpi_pro.view');
-    Route::post('/mellpi_pro',  [MellpiProController::class, 'upload'])->name('mellpi_pro.upload');
-    Route::post('/mellpi_pro_create', [MellpiProController::class, 'create'])->name('mellpi_pro.create');
-    Route::get('/mellpi_pro_summary1b', [MellpiProController::class, 'summary1b'])->name('mellpi_pro.summary1b');
-    Route::get('/mellpi_pro_summary2b', [MellpiProController::class, 'summary2b'])->name('mellpi_pro.summary2b');
-    Route::post('/mellpi_pro_store', [MellpiProController::class, 'store'])->name('mellpi_pro.store');
+    // Route::get('/mellpi_pro', [MellpiProController::class, 'index'])->name('mellpi_pro.view');
+    // Route::post('/mellpi_pro',  [MellpiProController::class, 'upload'])->name('mellpi_pro.upload');
+    // Route::post('/mellpi_pro_create', [MellpiProController::class, 'create'])->name('mellpi_pro.create');
+    // Route::get('/mellpi_pro_summary1b', [MellpiProController::class, 'summary1b'])->name('mellpi_pro.summary1b');
+    // Route::get('/mellpi_pro_summary2b', [MellpiProController::class, 'summary2b'])->name('mellpi_pro.summary2b');
+    // Route::post('/mellpi_pro_store', [MellpiProController::class, 'store'])->name('mellpi_pro.store');
 
     //Route::get('/lncFunction' ,  [LNCController::class, 'index' ]->name('LNCIndex.view'));
     Route::resource('/lncFunction', LNCController::class);
@@ -183,257 +198,87 @@ require __DIR__ . '/auth.php';
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
+    // Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 
- 
-    Route::prefix('CentralAdmin')->middleware(['auth', 'CentralAdmin'])->group(function () {
+    Route::middleware(['auth', 'Admin'])->group(function () {
 
-        //=======================================================================================================================================================
-        // Roles
-        Route::GET('/roles', [RolesController::class, 'index'])->name('roles.index');
-        Route::POST('/roles', [RolesController::class, 'store'])->name('roles.store');
-        Route::GET('/roles/{id}/give-permission', [RolesController::class, 'addPermissionToRole'])->name('roles.addPermissionToRole');
-        Route::PUT('/roles/{id}/give-permission', [RolesController::class, 'givePermissionToRole'])->name('roles.givePermissionToRole');
-        Route::PUT('/roles/{id}', [RolesController::class, 'update'])->name('roles.update');
-        Route::GET('/roles/{id}/edit', [RolesController::class, 'edit'])->name('roles.edit');
-        Route::DELETE('/roles/{id}', [RolesController::class, 'destroy'])->name('roles.destroy');
+        //==========================================================================================================================================
+            // UserDashboard
+            //DashboardController
+            Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+            Route::POST('/dashboard', [DashboardController::class, 'store'])->name('dashboard.store');
+            Route::get('/dashboard/create', [DashboardController::class, 'create'])->name('dashboard.create');
+            Route::get('/dashboard/{admin}', [DashboardController::class, 'update'])->name('dashboard.update');
+            Route::get('/dashboard/{admin}/edit', [DashboardController::class, 'create'])->name('dashboard.edit');
+            Route::DELETE('/dashboard/{admin}', [DashboardController::class, 'destroy'])->name('dashboard.destroy');
 
-        // Permission 
-        Route::GET('/permissions', [PermissionController::class, 'index'])->name('permission.index');
-        Route::POST('/permissions', [PermissionController::class, 'store'])->name('permission.store');
-        Route::PUT('/permissions/{permission}', [PermissionController::class, 'update'])->name('permission.update');
-        Route::GET('/permissions/{permission}/edit', [PermissionController::class, 'edit'])->name('permission.edit');
-        Route::DELETE('/permissions/{permission}', [PermissionController::class, 'destroy'])->name('permission.destroy');
+            // // Userprofile
+            // Route::get('/profile', [BSProfileController::class, 'index'])->name('BSprofile.index');
+            // Route::get('/profile/{profile}', [BSProfileController::class, 'update'])->name('BSprofile.update');
+            // Route::get('/profile/{profile}/edit', [BSProfileController::class, 'edit'])->name('BSprofile.edit');
+            // Route::PUT('/profile/password', [BSProfileController::class, 'password'])->name('BSprofile.password');
+
+
+
+         //==========================================================================================================================================
+                //AdminUser List Controller
+                Route::get('/admin', [AdminUserController::class, 'index'])->name('CAadmin.index');
+                Route::POST('/admin', [AdminUserController::class, 'store'])->name('CAadmin.store');
+                Route::get('/admin/create', [AdminUserController::class, 'create'])->name('CAadmin.create');
+                Route::get('/admin/{id}', [AdminUserController::class, 'update'])->name('CAadmin.update');
+                Route::get('/admin/{id}/show', [AdminUserController::class, 'show'])->name('CAadmin.show');
+                Route::get('/admin/{id}/edit', [AdminUserController::class, 'create'])->name('CAadmin.edit');
+                Route::get('/admin/{id}', [AdminUserController::class, 'destroy'])->name('CAadmin.destroy');
+                Route::PUT('/admin/{id}/userstatus', [AdminUserController::class, 'changeuserstatus'])->name('CAadmin.userstatusupdate');
+                Route::PUT('/admin/{id}/changepassword', [AdminUserController::class, 'changepassword'])->name('CAadmin.changepassword');
+        
+        
+                // // Userprofile
+                Route::get('/profile', [ProfileController::class, 'index'])->name('CAprofile.index');
+                Route::get('/profile/{profile}', [ProfileController::class, 'update'])->name('CAprofile.update');
+                Route::get('/profile/{profile}/edit', [ProfileController::class, 'edit'])->name('CAprofile.edit');
+                Route::PUT('/profile/password', [ProfileController::class, 'password'])->name('CAprofile.password');
+        
+                // forms Creator A
+                Route::get('/formsb', [FormsBuilderController::class, 'index'])->name('formsb.index');
+                Route::POST('/formsb', [FormsBuilderController::class, 'store'])->name('formsb.store');
+                Route::get('/formsb/create', [FormsBuilderController::class, 'create'])->name('formsb.create');
+                Route::PUT('/formsb/{id}', [FormsBuilderController::class, 'updateA'])->name('formsb.update');
+                Route::get('/formsb/{id}/edit', [FormsBuilderController::class, 'edit'])->name('formsb.edit');
+                Route::get('/formsb/{id}', [FormsBuilderController::class, 'destroy'])->name('formsb.destroy');
+        
+                // forms Creator B
+                Route::get('/formsb/{id}/formslist', [FormsBuilderController::class, 'formIndex'])->name('formsb.formList');
+                Route::get('/formsb/{id}/createForms', [FormsBuilderController::class, 'createForms'])->name('formsb.createForms');
+                Route::POST('/formsb/{id}storeForm', [FormsBuilderController::class, 'storeFormB'])->name('formsb.storeFormB');
+                Route::DELETE('/formsb/{id}/formslist/{idb}', [FormsBuilderController::class, 'destroyFormB'])->name('formsb.destroyFormB');
+        
+                // forms Creator C
+                Route::get('/formsb/{id}/formslist/{idb}', [FormsBuilderController::class, 'ViewFields'])->name('formsb.fieldList');
+                Route::get('/formsb/{id}/formslist/{idb}/createFormFields', [FormsBuilderController::class, 'createFormsFields'])->name('formsb.createFormsFields');
+        
+                Route::POST('/formsb/{id}storeForm/{idb}/formC', [FormsBuilderController::class, 'storeFormC'])->name('formsb.storeFormC');
+                Route::DELETE('/formsb/{id}/formslist/{idb}', [FormsBuilderController::class, 'destroyFormB'])->name('formsb.destroyFormB');
+
+                       // Roles
+                Route::GET('/roles', [RolesController::class, 'index'])->name('roles.index');
+                Route::POST('/roles', [RolesController::class, 'store'])->name('roles.store');
+                Route::GET('/roles/{id}/give-permission', [RolesController::class, 'addPermissionToRole'])->name('roles.addPermissionToRole');
+                Route::PUT('/roles/{id}/give-permission', [RolesController::class, 'givePermissionToRole'])->name('roles.givePermissionToRole');
+                Route::PUT('/roles/{id}', [RolesController::class, 'update'])->name('roles.update');
+                Route::GET('/roles/{id}/edit', [RolesController::class, 'edit'])->name('roles.edit');
+                Route::DELETE('/roles/{id}', [RolesController::class, 'destroy'])->name('roles.destroy');
+
+                // Permission 
+                Route::GET('/permissions', [PermissionController::class, 'index'])->name('permission.index');
+                Route::POST('/permissions', [PermissionController::class, 'store'])->name('permission.store');
+                Route::PUT('/permissions/{permission}', [PermissionController::class, 'update'])->name('permission.update');
+                Route::GET('/permissions/{permission}/edit', [PermissionController::class, 'edit'])->name('permission.edit');
+                Route::DELETE('/permissions/{permission}', [PermissionController::class, 'destroy'])->name('permission.destroy');
 
         //==========================================================================================================================================
 
-        //AdminUser List Controller
-        Route::get('/admin', [AdminUserController::class, 'index'])->name('CAadmin.index');
-        Route::POST('/admin', [AdminUserController::class, 'store'])->name('CAadmin.store');
-        Route::get('/admin/create', [AdminUserController::class, 'create'])->name('CAadmin.create');
-        Route::get('/admin/{id}', [AdminUserController::class, 'update'])->name('CAadmin.update');
-        Route::get('/admin/{id}/show', [AdminUserController::class, 'show'])->name('CAadmin.show');
-        Route::get('/admin/{id}/edit', [AdminUserController::class, 'create'])->name('CAadmin.edit');
-        Route::get('/admin/{id}', [AdminUserController::class, 'destroy'])->name('CAadmin.destroy');
-        Route::PUT('/admin/{id}/userstatus', [AdminUserController::class, 'changeuserstatus'])->name('CAadmin.userstatusupdate');
-        Route::PUT('/admin/{id}/changepassword', [AdminUserController::class, 'changepassword'])->name('CAadmin.changepassword');
-
-        //DashboardController
-        Route::get('/dashboard', [CADashboardController::class, 'index'])->name('CAdashboard.index');
-        Route::POST('/dashboard', [CADashboardController::class, 'store'])->name('CAdashboard.store');
-        Route::get('/dashboard/create', [CADashboardController::class, 'create'])->name('CAdashboard.create');
-        Route::get('/dashboard/{admin}', [CADashboardController::class, 'update'])->name('CAdashboard.update');
-        Route::get('/dashboard/{admin}/edit', [CADashboardController::class, 'edit'])->name('CAdashboard.edit');
-        Route::DELETE('/dashboard/{admin}', [CADashboardController::class, 'destroy'])->name('CAdashboard.destroy');
-
-        // // Userprofile
-        Route::get('/profile', [ProfileController::class, 'index'])->name('CAprofile.index');
-        Route::get('/profile/{profile}', [ProfileController::class, 'update'])->name('CAprofile.update');
-        Route::get('/profile/{profile}/edit', [ProfileController::class, 'edit'])->name('CAprofile.edit');
-        Route::PUT('/profile/password', [ProfileController::class, 'password'])->name('CAprofile.password');
-
-        // forms Creator A
-        Route::get('/formsb', [FormsBuilderController::class, 'index'])->name('formsb.index');
-        Route::POST('/formsb', [FormsBuilderController::class, 'store'])->name('formsb.store');
-        Route::get('/formsb/create', [FormsBuilderController::class, 'create'])->name('formsb.create');
-        Route::PUT('/formsb/{id}', [FormsBuilderController::class, 'updateA'])->name('formsb.update');
-        Route::get('/formsb/{id}/edit', [FormsBuilderController::class, 'edit'])->name('formsb.edit');
-        Route::get('/formsb/{id}', [FormsBuilderController::class, 'destroy'])->name('formsb.destroy');
-
-        // forms Creator B
-        Route::get('/formsb/{id}/formslist', [FormsBuilderController::class, 'formIndex'])->name('formsb.formList');
-        Route::get('/formsb/{id}/createForms', [FormsBuilderController::class, 'createForms'])->name('formsb.createForms');
-        Route::POST('/formsb/{id}storeForm', [FormsBuilderController::class, 'storeFormB'])->name('formsb.storeFormB');
-        Route::DELETE('/formsb/{id}/formslist/{idb}', [FormsBuilderController::class, 'destroyFormB'])->name('formsb.destroyFormB');
-
-        // forms Creator C
-        Route::get('/formsb/{id}/formslist/{idb}', [FormsBuilderController::class, 'ViewFields'])->name('formsb.fieldList');
-        Route::get('/formsb/{id}/formslist/{idb}/createFormFields', [FormsBuilderController::class, 'createFormsFields'])->name('formsb.createFormsFields');
-
-        Route::POST('/formsb/{id}storeForm/{idb}/formC', [FormsBuilderController::class, 'storeFormC'])->name('formsb.storeFormC');
-        Route::DELETE('/formsb/{id}/formslist/{idb}', [FormsBuilderController::class, 'destroyFormB'])->name('formsb.destroyFormB');
-    });
-
-    Route::prefix('CentralOfficer')->middleware(['auth', 'CentralOfficer'])->group(function () {
-        //UserProfile
-        //DashboardController
-        Route::get('/dashboard', [CODashboardController::class, 'index'])->name('COdashboard.index');
-        Route::POST('/dashboard', [CODashboardController::class, 'store'])->name('COdashboard.store');
-        Route::get('/dashboard/create', [CODashboardController::class, 'create'])->name('COdashboard.create');
-        Route::get('/dashboard/{admin}', [CODashboardController::class, 'update'])->name('COdashboard.update');
-        Route::get('/dashboard/{admin}/edit', [CODashboardController::class, 'create'])->name('COdashboard.edit');
-        Route::DELETE('/dashboard/{admin}', [CODashboardController::class, 'destroy'])->name('COdashboard.destroy');
-
-        //AdminUserController
-        Route::get('/admin', [AdminUserController::class, 'index'])->name('COadmin.index');
-        Route::POST('/admin', [AdminUserController::class, 'store'])->name('COadmin.store');
-        Route::get('/admin/create', [AdminUserController::class, 'create'])->name('COadmin.create');
-        Route::get('/admin/{admin}', [AdminUserController::class, 'update'])->name('COadmin.update');
-        Route::get('/admin/{admin}/edit', [AdminUserController::class, 'create'])->name('COadmin.edit');
-        Route::get('/admin/{admin}', [AdminUserController::class, 'destroy'])->name('COadmin.destroy');
-    });
-
-    Route::prefix('CentralStaff')->middleware(['auth', 'CentralStaff'])->group(function () {
-        //UserProfile
-        //DashboardController 
-        Route::get('/dashboard', [CSDashboardController::class, 'index'])->name('CSdashboard.index');
-        Route::POST('/dashboard', [CSDashboardController::class, 'store'])->name('CSdashboard.store');
-        Route::get('/dashboard/create', [CSDashboardController::class, 'create'])->name('CSdashboard.create');
-        Route::get('/dashboard/{admin}', [CSDashboardController::class, 'update'])->name('CSdashboard.update');
-        Route::get('/dashboard/{admin}/edit', [CSDashboardController::class, 'create'])->name('CSdashboard.edit');
-        Route::DELETE('/dashboard/{admin}', [CSDashboardController::class, 'destroy'])->name('CSdashboard.destroy');
-    });
-
-    Route::prefix('RegionalOfficer')->middleware(['auth', 'RegionalOfficer'])->group(function () {
-
-        //DashboardController
-        Route::get('/dashboard', [RODashboardController::class, 'index'])->name('ROdashboard.index');
-        Route::POST('/dashboard', [RODashboardController::class, 'store'])->name('ROdashboard.store');
-        Route::get('/dashboard/create', [RODashboardController::class, 'create'])->name('ROdashboard.create');
-        Route::get('/dashboard/{admin}', [RODashboardController::class, 'update'])->name('ROdashboard.update');
-        Route::get('/dashboard/{admin}/edit', [RODashboardController::class, 'create'])->name('ROdashboard.edit');
-        Route::DELETE('/dashboard/{admin}', [RODashboardController::class, 'destroy'])->name('ROdashboard.destroy');
-    });
-
-    Route::prefix('RegionalStaff')->middleware(['auth', 'RegionalStaff'])->group(function () {
-
-        //DashboardController
-        Route::get('/dashboard', [RSDashboardController::class, 'index'])->name('RSdashboard.index');
-        Route::POST('/dashboard', [RSDashboardController::class, 'store'])->name('RSdashboard.store');
-        Route::get('/dashboard/create', [RSDashboardController::class, 'create'])->name('RSdashboard.create');
-        Route::get('/dashboard/{admin}', [RSDashboardController::class, 'update'])->name('RSdashboard.update');
-        Route::get('/dashboard/{admin}/edit', [RSDashboardController::class, 'create'])->name('RSdashboard.edit');
-        Route::DELETE('/dashboard/{admin}', [RSDashboardController::class, 'destroy'])->name('RSdashboard.destroy');
-
-        //AdminUserController
-        // Route::get('/admin', [AdminUserController::class, 'index'])->name('admin.index');
-        // Route::POST('/admin', [AdminUserController::class, 'store'])->name('admin.store');
-        // Route::get('/admin/create', [AdminUserController::class, 'create'])->name('admin.create');
-        // Route::get('/admin/{admin}', [AdminUserController::class, 'update'])->name('admin.update');
-        // Route::get('/admin/{admin}/edit', [AdminUserController::class, 'create'])->name('admin.edit');
-        // Route::get('/admin/{admin}', [AdminUserController::class, 'destroy'])->name('admin.destroy');
-
-    });
-
-    Route::prefix('ProvincialOfficer')->middleware(['auth', 'ProvincialOfficer'])->group(function () {
-
-        //DashboardController
-        Route::get('/dashboard', [PODashboardController::class, 'index'])->name('POdashboard.index');
-        Route::POST('/dashboard', [PODashboardController::class, 'store'])->name('POdashboard.store');
-        Route::get('/dashboard/create', [PODashboardController::class, 'create'])->name('POdashboard.create');
-        Route::get('/dashboard/{admin}', [PODashboardController::class, 'update'])->name('POdashboard.update');
-        Route::get('/dashboard/{admin}/edit', [PODashboardController::class, 'create'])->name('POdashboard.edit');
-        Route::DELETE('/dashboard/{admin}', [PODashboardController::class, 'destroy'])->name('POdashboard.destroy');
-
-        //AdminUserController
-        // Route::get('/admin', [AdminUserController::class, 'index'])->name('admin.index');
-        // Route::POST('/admin', [AdminUserController::class, 'store'])->name('admin.store');
-        // Route::get('/admin/create', [AdminUserController::class, 'create'])->name('admin.create');
-        // Route::get('/admin/{admin}', [AdminUserController::class, 'update'])->name('admin.update');
-        // Route::get('/admin/{admin}/edit', [AdminUserController::class, 'create'])->name('admin.edit');
-        // Route::get('/admin/{admin}', [AdminUserController::class, 'destroy'])->name('admin.destroy');
-
-    });
-
-    Route::prefix('ProvincialStaff')->middleware(['auth', 'ProvincialStaff'])->group(function () {
-
-        //DashboardController
-        Route::get('/dashboard', [PSDashboardController::class, 'index'])->name('PSdashboard.index');
-        Route::POST('/dashboard', [PSDashboardController::class, 'store'])->name('PSdashboard.store');
-        Route::get('/dashboard/create', [PSDashboardController::class, 'create'])->name('PSdashboard.create');
-        Route::get('/dashboard/{admin}', [PSDashboardController::class, 'update'])->name('PSdashboard.update');
-        Route::get('/dashboard/{admin}/edit', [PSDashboardController::class, 'create'])->name('PSdashboard.edit');
-        Route::DELETE('/dashboard/{admin}', [PSDashboardController::class, 'destroy'])->name('PSdashboard.destroy');
-
-        //AdminUserController
-        // Route::get('/admin', [AdminUserController::class, 'index'])->name('admin.index');
-        // Route::POST('/admin', [AdminUserController::class, 'store'])->name('admin.store');
-        // Route::get('/admin/create', [AdminUserController::class, 'create'])->name('admin.create');
-        // Route::get('/admin/{admin}', [AdminUserController::class, 'update'])->name('admin.update');
-        // Route::get('/admin/{admin}/edit', [AdminUserController::class, 'create'])->name('admin.edit');
-        // Route::get('/admin/{admin}', [AdminUserController::class, 'destroy'])->name('admin.destroy');
-
-    });
-
-    Route::prefix('CityMunicipalOfficer')->middleware(['auth', 'CityMunicipalOfficer'])->group(function () {
-
-        // DashBoard
-        Route::get('/dashboard', [CMODashboardController::class, 'index'])->name('CMOdashboard.index');
-
-        //LGUProfileController
-        Route::get('/lguProfile/fetchreport', [CMOMellpiLGUProfileBarangayController::class, 'fetchReport'])->name('CMOLGUprofile.fetch');
-        Route::get('/lguProfile/report', [CMOMellpiLGUProfileBarangayController::class, 'report'])->name('CMOLGUprofile.report');
-        Route::get('/lguProfile', [CMOMellpiLGUProfileBarangayController::class, 'index'])->name('CMOLGUprofile.index');
-        Route::get('/lguProfile/{id}/show', [CMOMellpiLGUProfileBarangayController::class, 'show'])->name('CMOLGUprofile.show');
-        Route::get('/lguProfile/create', [CMOMellpiLGUProfileBarangayController::class, 'create'])->name('CMOLGUprofile.create');
-        Route::POST('/lguProfile/approved', [CMOMellpiLGUProfileBarangayController::class, 'approvedReport'])->name('CMOLGUprofile.approved');
-        Route::POST('/lguProfile/declined', [CMOMellpiLGUProfileBarangayController::class, 'Declined'])->name('CMOLGUprofile.declined');
-
-        //VisionMissionController
-        Route::get('/visionmission/fetchreport', [CMOMellpiLGUProfileBarangayVisionMissionController::class, 'fetchReport'])->name('CMOvisionmission.fetch');
-        Route::get('/visionmission/report', [CMOMellpiLGUProfileBarangayVisionMissionController::class, 'report'])->name('CMOvisionmission.report');
-        Route::get('/visionmission', [CMOMellpiLGUProfileBarangayVisionMissionController::class, 'index'])->name('CMOvisionmission.index');
-        Route::POST('/visionmission', [CMOMellpiLGUProfileBarangayVisionMissionController::class, 'store'])->name('CMOvisionmission.store');
-        Route::get('/visionmission/create', [CMOMellpiLGUProfileBarangayVisionMissionController::class, 'create'])->name('CMOvisionmission.create');
-        Route::get('/visionmission/{id}/show', [CMOMellpiLGUProfileBarangayVisionMissionController::class, 'show'])->name('CMOvisionmission.show');
-        Route::POST('/visionmission/approved', [CMOMellpiLGUProfileBarangayVisionMissionController::class, 'approvedReport'])->name('CMOvisionmission.approved');
-        Route::POST('/visionmission/declined', [CMOMellpiLGUProfileBarangayVisionMissionController::class, 'Declined'])->name('CMOvisionmission.declined');
-
-        //NutritionPoliciesController
-        Route::get('/nutritionpolicies/fetchreport', [CMOMellpiLGUProfileBarangayNutritionPoliciesController::class, 'fetchReport'])->name('CMOnutritionpolicies.fetch');
-        Route::get('/nutritionpolicies/report', [CMOMellpiLGUProfileBarangayNutritionPoliciesController::class, 'report'])->name('CMOnutritionpolicies.report');
-        Route::get('/nutritionpolicies', [CMOMellpiLGUProfileBarangayNutritionPoliciesController::class, 'index'])->name('CMOnutritionpolicies.index');
-        Route::POST('/nutritionpolicies', [CMOMellpiLGUProfileBarangayNutritionPoliciesController::class, 'store'])->name('CMOnutritionpolicies.store');
-        Route::get('/nutritionpolicies/create', [CMOMellpiLGUProfileBarangayNutritionPoliciesController::class, 'create'])->name('CMOnutritionpolicies.create');
-        Route::get('/nutritionpolicies/{id}/show', [CMOMellpiLGUProfileBarangayNutritionPoliciesController::class, 'show'])->name('CMOnutritionpolicies.show');
-        Route::POST('/nutritionpolicies/approved', [CMOMellpiLGUProfileBarangayNutritionPoliciesController::class, 'approvedReport'])->name('CMOnutritionpolicies.approved');
-        Route::POST('/nutritionpolicies/declined', [CMOMellpiLGUProfileBarangayNutritionPoliciesController::class, 'Declined'])->name('CMOnutritionpolicies.declined');
-
-        //GovernanceController
-        Route::get('/governance/fetchreport', [CMOMellpiLGUProfileBarangayGovernanceController::class, 'fetchReport'])->name('CMOgovernance.fetch');
-        Route::get('/governance/report', [CMOMellpiLGUProfileBarangayGovernanceController::class, 'report'])->name('CMOgovernance.report');
-        Route::get('/governance', [CMOMellpiLGUProfileBarangayGovernanceController::class, 'index'])->name('CMOgovernance.index');
-        Route::POST('/governance', [CMOMellpiLGUProfileBarangayGovernanceController::class, 'store'])->name('CMOgovernance.store');
-        Route::get('/governance/create', [CMOMellpiLGUProfileBarangayGovernanceController::class, 'create'])->name('CMOgovernance.create');
-        Route::get('/governance/{id}/show', [CMOMellpiLGUProfileBarangayGovernanceController::class, 'show'])->name('CMOgovernance.show');
-        Route::POST('/governance/approved', [CMOMellpiLGUProfileBarangayGovernanceController::class, 'approvedReport'])->name('CMOgovernance.approved');
-        Route::POST('/governance/declined', [CMOMellpiLGUProfileBarangayGovernanceController::class, 'Declined'])->name('CMOgovernance.declined');
-
-        //LNCManagementController
-        Route::get('/lncmanagement/fetchreport', [CMOMellpiLGUProfileBarangayLNCManagementController::class, 'fetchReport'])->name('CMOlncmanagement.fetch');
-        Route::get('/lncmanagement/report', [CMOMellpiLGUProfileBarangayLNCManagementController::class, 'report'])->name('CMOlncmanagement.report');
-        Route::get('/lncmanagement', [CMOMellpiLGUProfileBarangayLNCManagementController::class, 'index'])->name('CMOlncmanagement.index');
-        Route::POST('/lncmanagement', [CMOMellpiLGUProfileBarangayLNCManagementController::class, 'store'])->name('CMOlncmanagement.store');
-        Route::get('/lncmanagement/create', [CMOMellpiLGUProfileBarangayLNCManagementController::class, 'create'])->name('CMOlncmanagement.create');
-        Route::get('/lncmanagement/{id}/show', [CMOMellpiLGUProfileBarangayLNCManagementController::class, 'show'])->name('CMOlncmanagement.show');
-        Route::POST('/lncmanagement/approved', [CMOMellpiLGUProfileBarangayLNCManagementController::class, 'approvedReport'])->name('CMOlncmanagement.approved');
-        Route::POST('/lncmanagement/declined', [CMOMellpiLGUProfileBarangayLNCManagementController::class, 'Declined'])->name('CMOlncmanagement.declined');
-
-        //NutritionServiceController
-        Route::get('/nutritionservice/fetchreport', [CMOMellpiLGUProfileBarangayNutritionPoliciesController::class, 'fetchReport'])->name('CMOnutritionservice.fetch');
-        Route::get('/nutritionservice/report', [CMOMellpiLGUProfileBarangayNutritionPoliciesController::class, 'report'])->name('CMOnutritionservice.report');
-        Route::get('/nutritionservice', [CMOMellpiLGUProfileBarangayNutritionPoliciesController::class, 'index'])->name('CMOnutritionservice.index');
-        Route::POST('/nutritionservice', [CMOMellpiLGUProfileBarangayNutritionPoliciesController::class, 'store'])->name('CMOnutritionservice.store');
-        Route::get('/nutritionservice/create', [CMOMellpiLGUProfileBarangayNutritionPoliciesController::class, 'create'])->name('CMOnutritionservice.create');
-        Route::get('/nutritionservice/{id}/show', [CMOMellpiLGUProfileBarangayNutritionPoliciesController::class, 'show'])->name('CMOnutritionservice.show');
-        Route::POST('/nutritionservice/approved', [CMOMellpiLGUProfileBarangayNutritionPoliciesController::class, 'approvedReport'])->name('CMOnutritionservice.approved');
-        Route::POST('/nutritionservice/declined', [CMOMellpiLGUProfileBarangayNutritionPoliciesController::class, 'Declined'])->name('CMOnutritionservice.declined');
-
-        //ChangeNSController
-        Route::get('/changeNS/fetchreport', [CMOMellpiLGUProfileBarangayNutritionPoliciesController::class, 'fetchReport'])->name('CMOchangeNS.fetch');
-        Route::get('/changeNS/report', [CMOMellpiLGUProfileBarangayNutritionPoliciesController::class, 'report'])->name('CMOchangeNS.report');
-        Route::get('/changeNS', [CMOMellpiLGUProfileBarangayNutritionPoliciesController::class, 'index'])->name('CMOchangeNS.index');
-        Route::POST('/changeNS', [CMOMellpiLGUProfileBarangayNutritionPoliciesController::class, 'store'])->name('CMOchangeNS.store');
-        Route::get('/changeNS/create', [CMOMellpiLGUProfileBarangayNutritionPoliciesController::class, 'create'])->name('CMOchangeNS.create');
-        Route::get('/changeNS/{id}/show', [CMOMellpiLGUProfileBarangayNutritionPoliciesController::class, 'show'])->name('CMOchangeNS.show');
-        Route::POST('/changeNS/approved', [CMOMellpiLGUProfileBarangayNutritionPoliciesController::class, 'approvedReport'])->name('CMOchangeNS.approved');
-        Route::POST('/changeNS/declined', [CMOMellpiLGUProfileBarangayNutritionPoliciesController::class, 'Declined'])->name('CMOchangeNS.declined');
-    });
-
-
-    Route::prefix('CityMunicipalStaff')->middleware(['auth', 'CityMunicipalStaff'])->group(function () {
-
-        //DashboardController
+    //   //DashboardController
         Route::get('/dashboard', [CMSDashboardController::class, 'index'])->name('CMSdashboard.index');
         Route::POST('/dashboard', [CMSDashboardController::class, 'store'])->name('CMSdashboard.store');
         Route::get('/dashboard/create', [CMSDashboardController::class, 'create'])->name('CMSdashboard.create');
@@ -441,15 +286,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/dashboard/{admin}/edit', [CMSDashboardController::class, 'create'])->name('CMSdashboard.edit');
         Route::DELETE('/dashboard/{admin}', [CMSDashboardController::class, 'destroy'])->name('CMSdashboard.destroy');
 
-        // Userprofile
+    //     // Userprofile
         Route::get('/profile', [CMSProfileController::class, 'index'])->name('CMSprofile.index');
         Route::get('/profile/{profile}', [CMSProfileController::class, 'update'])->name('CMSprofile.update');
         Route::get('/profile/{profile}/edit', [CMSProfileController::class, 'edit'])->name('CMSprofile.edit');
         Route::PUT('/profile/password', [CMSProfileController::class, 'password'])->name('CMSprofile.password');
 
         //LGUProfileController
-        Route::get('/lguprofile', [CMSLGUprofileController::class, 'index'])->name('CMSLGUprofile.index');
-        //Route::POST('/lguprofile', [CMSLGUprofileController::class, 'storeDraft'])->name('CMSLGUprofile.storeDraft');
+        Route::get('/lguprofile', [CMSLGUprofileController::class, 'index'])->name('CMSLGUprofile.index'); 
         Route::get('/lguprofile/{id}/show', [CMSLGUprofileController::class, 'show'])->name('CMSLGUprofile.show');
         Route::POST('/lguprofile', [CMSLGUprofileController::class, 'storeSubmit'])->name('CMSLGUprofilest.storeSubmit');
         Route::get('/lguprofile/create', [CMSLGUprofileController::class, 'create'])->name('CMSLGUprofile.create');
@@ -566,25 +410,15 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/provinces/{region}', [CMSPersonnelDnaDirectoryController::class, 'getProvincesByRegion'])->name('personneldnadirectory.provinces.byRegion.get');
         Route::get('/cities/{provcode}', [CMSPersonnelDnaDirectoryController::class, 'getCitiesByProvince'])->name('personneldnadirectory.cities.byProvince.get');
         Route::get('/regions', [CMSPersonnelDnaDirectoryController::class, 'getRegions'])->name('personneldnadirectory.regions.get');
-    });
 
-    Route::prefix('BarangayScholar')->middleware(['auth', 'BarangayScholar'])->group(function () {
 
-        //DashboardController
-        Route::get('/dashboard', [BSDashboardController::class, 'index'])->name('BSdashboard.index');
-        Route::POST('/dashboard', [BSDashboardController::class, 'store'])->name('BSdashboard.store');
-        Route::get('/dashboard/create', [BSDashboardController::class, 'create'])->name('BSdashboard.create');
-        Route::get('/dashboard/{admin}', [BSDashboardController::class, 'update'])->name('BSdashboard.update');
-        Route::get('/dashboard/{admin}/edit', [BSDashboardController::class, 'create'])->name('BSdashboard.edit');
-        Route::DELETE('/dashboard/{admin}', [BSDashboardController::class, 'destroy'])->name('BSdashboard.destroy');
 
-        // // Userprofile
-        Route::get('/profile', [BSProfileController::class, 'index'])->name('BSprofile.index');
-        Route::get('/profile/{profile}', [BSProfileController::class, 'update'])->name('BSprofile.update');
-        Route::get('/profile/{profile}/edit', [BSProfileController::class, 'edit'])->name('BSprofile.edit');
-        Route::PUT('/profile/password', [BSProfileController::class, 'password'])->name('BSprofile.password');
 
-        //LGUProfileController
+
+
+
+        //MellpiPro LGUProfile  ============================================================================================================================================================
+        //LGUProfile
         Route::get('/lguprofile', [BSLGUprofileController::class, 'index'])->name('BSLGUprofile.index');
         //Route::POST('/lguprofile', [BSLGUprofileController::class, 'storeDraft'])->name('BSLGUprofile.storeDraft');
         Route::get('/lguprofile/{id}/show', [BSLGUprofileController::class, 'show'])->name('BSLGUprofile.show');
@@ -592,10 +426,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/lguprofile/create', [BSLGUprofileController::class, 'create'])->name('BSLGUprofile.create');
         Route::put('/lguprofile/{id}', [BSLGUprofileController::class, 'update'])->name('BSLGUprofile.update');
         Route::get('/lguprofile/{id}/edit', [BSLGUprofileController::class, 'edit'])->name('BSLGUprofile.edit');
-        Route::POST('/lguprofile/delete', [BSLGUprofileController::class, 'destroy'])->name('BSLGUprofile.destroy');
-        //LGU Profile Downloadable
+        Route::POST('/lguprofile/delete', [BSLGUprofileController::class, 'destroy'])->name('BSLGUprofile.destroy'); 
         Route::POST('/lguprofile/{id}/download-pdf', [BSLGUprofileController::class, 'downloads'])->name('BSLGUprofile.download');
-
 
         //VisionMissionController
         Route::get('/visionmission', [VisionMissionController::class, 'index'])->name('visionmission.index');
@@ -607,7 +439,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/visionmission/{id}/show', [VisionMissionController::class, 'show'])->name('visionmission.show');
         Route::POST('/visionmission/{id}/download-pdf', [VisionMissionController::class, 'downloads'])->name('visionmission.download');
 
-
         //NutritionPoliciesController
         Route::get('/nutritionpolicies', [NutritionPoliciesController::class, 'index'])->name('nutritionpolicies.index');
         Route::POST('/nutritionpolicies', [NutritionPoliciesController::class, 'store'])->name('nutritionpolicies.store');
@@ -617,7 +448,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::POST('/nutritionpolicies/delete', [NutritionPoliciesController::class, 'destroy'])->name('nutritionpolicies.destroy');
         Route::get('/nutritionpolicies/{id}/show', [NutritionPoliciesController::class, 'show'])->name('nutritionpolicies.show');
         Route::POST('/nutritionpolicies/{id}/download-pdf', [NutritionPoliciesController::class, 'downloads'])->name('nutritionpolicies.download');
-
 
         //GovernanceController
         Route::get('/governance', [GovernanceController::class, 'index'])->name('governance.index');
@@ -638,7 +468,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::POST('/lncmanagement/delete', [LNCManagementBarangayController::class, 'destroy'])->name('lncmanagement.destroy');
         Route::get('/lncmanagement/{id}/show', [LNCManagementBarangayController::class, 'show'])->name('lncmanagement.show');
         Route::POST('/lncmanagement/{id}/download-pdf', [LNCManagementBarangayController::class, 'downloads'])->name('lncmanagement.download');
-
 
         //NutritionServicesController
         Route::get('/nutritionservice', [NutritionServiceController::class, 'index'])->name('nutritionservice.index');
@@ -669,7 +498,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::POST('/discussionquestion/delete', [DiscussionQuestionController::class, 'destroy'])->name('discussionquestion.destroy');
         Route::get('/discussionquestion/{id}/show', [DiscussionQuestionController::class, 'show'])->name('discussionquestion.show');
 
-
         //BudgetController
         Route::get('/budgetAIP', [BudgetAIPController::class, 'index'])->name('budgetAIP.index');
         Route::POST('/budgetAIP', [BudgetAIPController::class, 'store'])->name('budgetAIP.store');
@@ -678,6 +506,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/budgetAIP/{id}/edit', [BudgetAIPController::class, 'edit'])->name('budgetAIP.edit');
         Route::DELETE('/budgetAIP/{id}', [BudgetAIPController::class, 'destroy'])->name('budgetAIP.destroy');
 
+
+        //MellpiPro LNFP  ============================================================================================================================================================
         //Form 5 Monitoring
         Route::get('/lguform5Index', [MellpiProForLNFP_barangayController::class, 'monitoringForm5'])->name('MellpiProMonitoringIndex.index');
         Route::get('/lguform5Create', [MellpiProForLNFP_barangayController::class, 'monitoringForm5create'])->name(('MellpiProMonitoringCreate.create'));
@@ -697,6 +527,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/lguform6View/{id}', [MellpiProForLNFP_form6Controller::class, 'radialForm6View'])->name('lguLnfpViewForm6');
         //   Route::post('/lguform7Update/{id}', [MellpiProForLNFP_form6Controller::class, 'storeform7'])->name('lnfpUpdateform7');
         Route::post('BarangayScholar/lguform7Update/{id}', [MellpiProForLNFP_form6Controller::class, 'storeform7'])->name('lnfpUpdateform7');
+        
         //Form 8 Action Sheet
         Route::get('/lguform8Index', [MellpiProForLNFP_form8Controller::class, 'ActionSheetForm8'])->name('lnfpForm8Index');
         Route::get('/lguform8Create', [MellpiProForLNFP_form8Controller::class, 'ActionSheetForm8Create'])->name('lnfpForm8Create');
@@ -705,6 +536,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/lguLnfpEditForm8/{id}', [MellpiProForLNFP_form8Controller::class, 'ActionSheetForm8Edit'])->name('editForm8');
         Route::get('/lguLnfpViewForm8/{id}', [MellpiProForLNFP_form8Controller::class, 'ActionSheetForm8View'])->name('viewForm8');
         Route::post('/lguLnfpUpdateForm8/{id}', [MellpiProForLNFP_form8Controller::class, 'storeUpdateASForm8'])->name('MellpiProForLNFPUpdate.storeUpdateASForm8');
+        
         //Interview Form
         Route::get('/lguformInterviewIndex', [MellpiProForLNFP_InterviewController::class, 'InterviewFormLNFP'])->name('lnfpFormInterviewIndex');
         Route::get('/lguformInterviewCreate', [MellpiProForLNFP_InterviewController::class, 'InterviewFormLNFPCreate'])->name('lnfpFormInterviewCreate');
@@ -713,6 +545,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/lguLnfpEditInterview/{id}', [MellpiProForLNFP_InterviewController::class, 'InterviewFormLNFPEdit'])->name('editIntForm');
         Route::get('/lguLnfpViewInterview/{id}', [MellpiProForLNFP_InterviewController::class, 'InterviewFormLNFPView'])->name('viewIntForm');
         Route::post('/lguLnfpUpdateInterview/{id}', [MellpiProForLNFP_InterviewController::class, 'storeInterviewFormUpdate'])->name('MellpiProForLNFPUpdate.storeUpdateIntForm');
+        
         //Overall Score
         Route::get('/lguformOverallScoreIndex', [MellpiProForLNFP_OverallScoreController::class, 'OverallScoreFormLNFP'])->name('lnfpFormOverallScoreIndex');
         Route::get('/lguLnfpOverallScoreCreate', [MellpiProForLNFP_OverallScoreController::class, 'OverallScoreFormLNFPCreate'])->name('lnfpFormOverallScoreCreate');
@@ -720,12 +553,15 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/lguLnfpViewOverall/{id}', [MellpiProForLNFP_OverallScoreController::class, 'OverallScoreFormLNFPView'])->name('viewOSForm');
         Route::post('/lguLnfpUpdateOverall', [MellpiProForLNFP_OverallScoreController::class, 'update'])->name('updateOSForm');
        
+
+
+        //Resources  ============================================================================================================================================================
         // Equipment Inventory
         Route::get('/equipmentInventoryIndex', [BSEquipmentInventoryController::class, 'index'])->name('BSequipmentInventory.index');
         Route::get('/equipmentInventory', [BSEquipmentInventoryController::class, 'create'])->name('BSequipmentInventory.create');
         Route::post('/equipmentInventory', [BSEquipmentInventoryController::class, 'store'])->name('BSequipmentInventory.store');
     
-        // Nutrition Offices
+        //Nutrition Offices
         Route::get('/nutritionOfficesIndex', [BSNutritionOfficesController::class, 'index'])->name('BSnutritionOffices.index');
         Route::get('/nutritionOffices', [BSNutritionOfficesController::class, 'create'])->name('BSnutritionOffices.create');
         Route::post('/nutritionOffices', [BSNutritionOfficesController::class, 'store'])->name('BSnutritionOffices.store');
@@ -733,34 +569,26 @@ Route::group(['middleware' => 'auth'], function () {
 
         //Nutrition Office
         Route::get('/personnelDnaDirectory', [BSPersonnel::class, 'index'])->name('BSpersonnel.index');
-        // Route::post('/personnelDnaDirectory/nao', [BSPersonnel::class, 'storeNAO'])->name('BSpersonnel.storeNAO');
-        // Route::post('/personnelDnaDirectory/npc', [BSPersonnel::class, 'storeNPC'])->name('BSpersonnel.storeNPC');
-        // Route::post('/personnelDnaDirectory/bns', [BSPersonnel::class, 'storeBNS'])->name('BSpersonnel.storeBNS');
-        // Route::get('/personnelDnaDirectory', [BSPersonnel::class, 'create'])->name('BSpersonnel.create');
-    
+
     });
 
 
-
-
-
-    Route::prefix('PublicUser')->middleware(['auth', 'PublicUser'])->group(function () {
-        // userProfile and history download only
-        //AdminUserController
-        // Route::get('/admin', [AdminUserController::class, 'index'])->name('COadmin.index');
-        // Route::POST('/admin', [AdminUserController::class, 'store'])->name('COadmin.store');
-        // Route::get('/admin/create', [AdminUserController::class, 'create'])->name('COadmin.create');
-        // Route::get('/admin/{admin}', [AdminUserController::class, 'update'])->name('COadmin.update');
-        // Route::get('/admin/{admin}/edit', [AdminUserController::class, 'create'])->name('COadmin.edit');
-        // Route::get('/admin/{admin}', [AdminUserController::class, 'destroy'])->name('COadmin.destroy');
+    //userRequestReview
+    Route::middleware(['auth', 'PublicUser'])->group(function () {
 
     });
 
 
 
+    //userRequestReview
     Route::prefix('UserUnderReview')->middleware(['auth', 'UserUnderReview'])->group(function () {
         Route::get('/dashboard', [UserReviewController::class, 'index'])->name('UURdashboard.index');
     });
+
+
+
+ 
+ 
 });
 
 // Route::get('/UserDashboard',[DashboardController::class,'index'])->name('accountDashboard');
@@ -791,33 +619,4 @@ Route::prefix('equipment')->group(function () {
     Route::get('/test', [EquipmentInventoryController::class, 'test']);
 });
 
-// Mellpi
-Route::prefix('mellpi')->group(function () {
-    Route::get('/regions', [MellpiProController::class, 'getRegions'])->name('mellpi.regions.get');
-    Route::get('/provinces/{region}', [MellpiProController::class, 'getProvinces'])->name('mellpi.provinces.get');
-    Route::get('/cities/{province}', [MellpiProController::class, 'getCities'])->name('mellpi.cities.get');
-});
-
-// // Personnel DNA Directory
-// Route::prefix('personneldnadirectory')->group(function () {
-//     Route::get('/provinces/{region}', [PersonnelDnaDirectoryController::class, 'getProvincesByRegion'])->name('personneldnadirectory.provinces.byRegion.get');
-//     Route::get('/cities/{provcode}', [PersonnelDnaDirectoryController::class, 'getCitiesByProvince'])->name('personneldnadirectory.cities.byProvince.get');
-//     Route::get('/regions', [PersonnelDnaDirectoryController::class, 'getRegions'])->name('personneldnadirectory.regions.get');
-// });
-
-// Register
-// Route::get('/provinces/{region}', [RegisterController::class, 'getProvincesByRegion'])->name('provinces.byRegion.get');
-// Route::get('/barangays/{city}', [RegisterController::class, 'getBarangays'])->name('barangays.get');
-// Route::get('/cities/{provcode}', [RegisterController::class, 'getCitiesByProvince'])->name('cities.byProvince.get');
-// Route::get('/regions', [RegisterController::class, 'getRegions'])->name('regions.get');
-
-
- //Mellpi pro for LNFP
-//LGU Profile
-Route::get('/lguprofilelnfp', [MellpiProForLNFP_barangayLGUController::class, 'index'])->name('BSLGUprofileLNFPIndex.index');
-Route::get('/lguprofilelnfpCreate', [MellpiProForLNFP_barangayLGUController::class, 'mellpiProLNFP_LGUcreate'])->name('MellpiProForLNFPCreate.create');
-Route::post('/lguprofileLnfpSubmit', [MellpiProForLNFP_barangayLGUController::class, 'storeSubmit'])->name('MellpiProForLNFPSubmit.storeSubmit');
-Route::post('/lguprofileLnfpUpdate/{id}', [MellpiProForLNFP_barangayLGUController::class, 'storeUpdate'])->name('MellpiProForLNFPUpdate.storeUpdate');
-Route::POST('/lguLnfpDeleteProfile', [MellpiProForLNFP_barangayLGUController::class, 'deleteLNFP_lguprofile'])->name('lguLnfpDeleteProfile');
-Route::get('/lguLnfpViewProfile/{id}/view', [MellpiProForLNFP_barangayLGUController::class, 'viewLNFP_lguprofile'])->name('lguLnfpViewProfile');
-Route::get('/lguLnfpEditprofile/{id}', [MellpiProForLNFP_barangayLGUController::class, 'mellpiProLNFP_LGUedit'])->name('lguLnfpEditProfile');
+ 

@@ -672,18 +672,22 @@
                   <p> {{ __("Nutrition Offices") }} </p>
                 </a>
               </li>
-              <li class="@if ($activePage == 'PersonnelDirectory') active @endif">
-                <a href="{{ route('BSpersonnelDirectory.index') }}">  
-                  <i class="now-ui-icons files_paper"></i>
-                  <p> {{ __("Personnel Directory") }} </p>
-                </a>
-              </li>
+  
               <li class="@if ($activePage == 'EquipmentInventory') active @endif">
                 <a href="{{ route('BSequipmentInventory.index') }}">
                   <i class="now-ui-icons files_paper"></i>
                   <p> {{ __("Equipment Inventory") }} </p>
                 </a>
               </li> 
+         
+              <li class="@if ($activePage == 'PersonnelDirectory') active @endif">
+                <a href="{{ route('BSpersonnel.index') }}">
+                  <i class="now-ui-icons files_paper"></i>
+                  <p> {{ __("Personnel DNA Directory ") }} </p>
+                </a>
+              </li> 
+        
+
             </ul>
           </div>
         </li>

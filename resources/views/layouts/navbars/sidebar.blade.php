@@ -49,139 +49,28 @@
     <ul class="nav">
 
       <!-- Central Admin -->
-      @if(auth()->user()->role == 1 )
-      <li class="@if ($activePage == 'dashboard') active @endif">
-        <a href="{{ route('CAdashboard.index') }}">
-          <i class="now-ui-icons users_single-02"></i>
-          <p> {{ __("Dashboard") }} </p>
-        </a>
-      </li>
-
+      @if(auth()->user()->otherrole == 1 )
  
-
-
-      <!-- for LNFPs -->
-      <li class="@if ($activePage == 'notifications') active @endif">
-        <a data-toggle="collapse" href="#LNFP">
-          <p>
-            {{ __('MellPi Pro FOR LNFP') }}
-            <b class="caret"></b>
-          </p>
-        </a>
-        <div class="collapse " id="LNFP">
-          <ul class="nav">
-            <li class="@if ($activePage == '') active @endif">
-              <a href="#">
-                <i class="now-ui-icons files_paper"></i>
-                <p> {{ __("Empty") }} </p>
-              </a>
-            </li>
-            <li class="@if ($activePage == '') active @endif">
-              <a href="#">
-                <i class="now-ui-icons files_paper"></i>
-                <p> {{ __("Empty") }} </p>
-              </a>
-            </li>
-            <li class="@if ($activePage == '') active @endif">
-              <a href="#">
-                <i class="now-ui-icons files_paper"></i>
-                <p> {{ __("Empty") }} </p>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </li>
-
  
-
-      <li>
-        <a data-toggle="collapse" href="#UserManagement"> 
-          <p> {{ __("User Management") }} <b class="caret"></b> </p>
-        </a>
-        <div class="collapse " id="UserManagement">
-          <ul class="nav">
-            <li class="@if ($activePage == 'profile') active @endif">
-              <a href="{{ route('CAprofile.index') }}">
-                <i class="now-ui-icons users_single-02"></i>
-                <p> {{ __("User Profile") }} </p>
-              </a>
-            </li>
-            <li class="@if ($activePage == 'Users') active @endif">
-              <a href="{{ route('CAadmin.index') }}">
-                <i class="now-ui-icons design_bullet-list-67"></i>
-                <p> {{ __("List of Users") }} </p>
-              </a>
-            </li>
-            <li class="@if ($activePage == 'Roles') active @endif">
-              <a href="{{ route('roles.index') }}">
-                <i class="now-ui-icons design_bullet-list-67"></i>
-                <p> {{ __("List of Roles") }} </p>
-              </a>
-            </li>
-            <li class="@if ($activePage == 'Permissions') active @endif">
-              <a href="{{ route('permission.index') }}">
-                <i class="now-ui-icons design_bullet-list-67"></i>
-                <p> {{ __("List of Permission") }} </p>
-              </a>
-            </li>
-            <li class="@if ($activePage == 'mellpi_pro_LGU') active @endif">
-              <a href="{{ route('mellpi_pro_LGU.index') }}">
-                <i class="now-ui-icons files_paper"></i>
-                <p> {{ __("PSGC Data -Bulk Upload") }} </p>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </li>
-      <li>
-        <a data-toggle="collapse" href="#FormManagement">
-          <!-- <i class="now-ui-icons files_paper"></i> -->
-          <p>
-            {{ __("Form Management") }}
-            <b class="caret"></b>
-          </p>
-        </a>
-        <div class="collapse " id="FormManagement">
-          <ul class="nav">
-            <li class="@if ($activePage == 'forms') active @endif">
-              <a href="{{ route('forms.index') }}">
-                <i class="now-ui-icons users_single-02"></i>
-                <p> {{ __("Forms1") }} </p>
-              </a>
-            </li>
-            <li class="@if ($activePage == 'forms2') active @endif">
-              <a href="{{ route('formsb.index') }}">
-                <i class="now-ui-icons users_single-02"></i>
-                <p> {{ __("Forms2") }} </p>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </li>
-      <li class="@if ($activePage == 'bsuserprofile') active @endif">
-        <a href="#">
-          <i class="now-ui-icons users_single-02"></i>
-          <p> {{ __("User Profile") }} </p>
-        </a>
-      </li>
+ 
 
       <!-- Central Officer -->
-      @elseif(auth()->user()->role == 2 )
+      @elseif(auth()->user()->otherrole == 2 )
 
       <!-- Central Staff -->
-      @elseif(auth()->user()->role == 3 )
+      @elseif(auth()->user()->otherrole == 3 )
 
       <!-- Regional Officer -->
-      @elseif(auth()->user()->role == 4 )
+      @elseif(auth()->user()->otherrole == 4 )
 
       <!-- Regional Staff -->
-      @elseif(auth()->user()->role == 5 )
+      @elseif(auth()->user()->otherrole == 5 )
 
       <!-- Provincial Officer -->
-      @elseif(auth()->user()->role == 6 )
+      @elseif(auth()->user()->otherrole == 6 )
 
       <!-- Provincial Staff -->
-      @elseif(auth()->user()->role == 7 )
+      @elseif(auth()->user()->otherrole == 7 )
         <a href="#">
             <i class="now-ui-icons users_single-02"></i>
             <p> {{ __("Dashboard") }} </p>
@@ -205,8 +94,7 @@
                 </a>
               </li>
               <li class="@if ($activePage == 'LGUPROFILE') active @endif">
-                <a href="{{route('CMSLGUprofile.index')}}">
-
+                <a href="{{route('CMSLGUprofile.index')}}"> 
                   <p> <i class="now-ui-icons files_paper"></i>{{ __("LGU PROFILE") }} </p>
                 </a>
               </li>
@@ -263,7 +151,7 @@
         </li>
 
         <!-- Municipal Officer section -->
-        @elseif(auth()->user()->role == 8 )
+        @elseif(auth()->user()->otherrole == 8 )
         <li class="@if ($activePage == 'dashboard') active @endif">
           <a href="#">
             <i class="now-ui-icons users_single-02"></i>
@@ -348,7 +236,7 @@
 
 
        <!-- Municipal Staff section -->
-      @elseif(auth()->user()->role == 9 )
+      @elseif(auth()->user()->otherrole == 9 )
         <li class="@if ($activePage == 'dashboard') active @endif">
           <a href="{{ route('CMSdashboard.index') }}">
             <i class="now-ui-icons users_single-02"></i>
@@ -368,8 +256,7 @@
           <div class="collapse @if ($namePage == 'MELLPI PRO For LGU Profile' || in_array($activePage, $activeLGUPages) ) show @endif" id="MellpiPro">
             <ul class="nav">
               <li class="@if ($activePage == 'LGUPROFILE') active @endif">
-                <a href="{{ route('CMSLGUprofile.index') }}">
-
+                <a href="{{ route('CMSLGUprofile.index') }}"> 
                   <p> <i class="now-ui-icons files_paper"></i>{{ __("LGU PROFILE") }} </p>
                 </a>
               </li>
@@ -524,9 +411,9 @@
       
       
         <!-- Barangay section -->
-      @elseif(auth()->user()->role == 10 )
+      @elseif(auth()->user()->otherrole == 10 )
         <li class="@if ($activePage == 'dashboard') active @endif">
-          <a href="{{ route('BSdashboard.index') }}">
+          <a href="{{ route('dashboard.index') }}">
             <i class="now-ui-icons users_single-02"></i>
             <p> {{ __("Dashboard") }} </p>
           </a>
@@ -691,14 +578,7 @@
             </ul>
           </div>
         </li>
-
-
-        <li class="@if ($activePage == 'dashboards') active @endif">
-          <a href="{{ route('BSprofile.index') }}">
-            <i class="now-ui-icons users_single-02"></i>
-            <p> {{ __("User Profile") }} </p>
-          </a>
-        </li>
+ 
       @endif
     </ul>
   </div>

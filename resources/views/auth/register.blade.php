@@ -120,7 +120,7 @@
                                                 style="border-top-right-radius: 40px; border-bottom-right-radius: 40px;"
                                                 name="Region" id="region-dropdown" required>
                                                 <!-- <option value="">Select your Region</option>  -->
-                                                <option value="428" selected>Sample-Region 428</option>
+                                                <option value="428" selected>Select Region</option>
                                             </select>
                                         </div>
                                         <!-- @if ($errors->has('Region'))
@@ -143,7 +143,7 @@
                                                 style="border-top-right-radius: 40px; border-bottom-right-radius: 40px;"
                                                 name="Province" id="province-dropdown" required>
                                                 <!-- <option value="">Select your Province</option>  -->
-                                                <option value="1301" selected>Sample-Province 1301</option>
+                                                <option value="1301" selected>Select Province</option>
                                             </select>
                                         </div>
                                         <!-- @if ($errors->has('Province'))
@@ -168,7 +168,7 @@
                                                 style="border-top-right-radius: 40px; border-bottom-right-radius: 40px;"
                                                 name="city_municipal" id="city-dropdown" required>
                                                 <!-- <option value="">Select your City/Municipal</option>  -->
-                                                <option value="1923" selected>Sample-City/Municipality 1923</option>
+                                                <option selected>Select City/Municipality</option>
                                             </select>
                                         </div>
                                         <!-- @if ($errors->has('city_municipal'))
@@ -190,7 +190,7 @@
                                                 class="form-control text-dark {{ $errors->has('barangay') ? 'is-invalid' : '' }}"
                                                 style="border-top-right-radius: 40px; border-bottom-right-radius: 40px;"
                                                 value="{{ old('barangay') }}" name="barangay" id="barangay-dropdown">
-                                                <option value="Suyo">Sample-Barangay Suyo</option>
+                                                <option>Select Barangay</option>
                                             </select>
                                         </div>
                                         <!-- @if ($errors->has('barangay'))
@@ -340,140 +340,102 @@
             @push('js')
             <script>
             $(document).ready(function() {
-                // Region dropdown
-                $.get('{{ route("equipment.regions.get") }}')
-                    .done(function(data) {
-                        let regionDropdown = $('#region-dropdown');
-                        regionDropdown.empty().append(
-                            '<option value="" disabled selected>Select Region</option>');
-                        data.forEach(function(region) {
-                            regionDropdown.append('<option value="' + region.reg_code + '">' +
-                                region.name +
-                                '</option>');
+                const routes = {
+                    getRegions: '{{ route("equipment.regions.get") }}',
+                    getProvinces: '{{ route("equipment.provinces.get") }}',
+                    getCitiesAndMunicipalities: '{{ route("equipment.citiesAndMunicipalities.get") }}',
+                    getBarangays: '{{ route("equipment.barangays.get") }}',
+                };
+
+                const dropdowns = {
+                    region: $('#region-dropdown'),
+                    province: $('#province-dropdown'),
+                    city: $('#city-dropdown'),
+                    barangay: $('#barangay-dropdown'),
+                };
+
+                const clearAndDisableDropdown = (dropdown, placeholder) => {
+                    dropdown.empty().append(
+                            `<option value="" disabled selected>Select ${placeholder}</option>`)
+                        .prop('disabled', true);
+                };
+
+                const populateDropdown = (dropdown, data, valueKey, textKey, placeholder) => {
+                    dropdown.empty().append(
+                        `<option value="" disabled selected>Select ${placeholder}</option>`);
+                    data.forEach(item => {
+                        dropdown.append(
+                            `<option value="${item[valueKey]}">${item[textKey]}</option>`);
+                    });
+                    dropdown.prop('disabled', false);
+                };
+
+                const fetchDataAndPopulate = (url, params, dropdown, valueKey, textKey, placeholder) => {
+                    $.get(url, params)
+                        .done(function(data) {
+                            if (!data || data.length === 0) {
+                                clearAndDisableDropdown(dropdown, placeholder);
+                                return;
+                            }
+                            populateDropdown(dropdown, data, valueKey, textKey, placeholder);
+                        })
+                        .fail(function() {
+                            alert(`Failed to fetch ${placeholder.toLowerCase()}.`);
                         });
+                };
+
+                $.get(routes.getRegions)
+                    .done(function(data) {
+                        clearAndDisableDropdown(dropdowns.province, 'Province');
+                        clearAndDisableDropdown(dropdowns.city, 'City/Municipality');
+                        clearAndDisableDropdown(dropdowns.barangay, 'Barangay');
+                        populateDropdown(dropdowns.region, data, 'reg_code', 'name', 'Region');
                     })
                     .fail(function() {
                         alert('Failed to fetch regions.');
                     });
 
-                // Region selection
-                $('#region-dropdown').change(function() {
-                    let regionCode = $(this).val();
-                    let ncrRegionCode = '13';
+                dropdowns.region.change(function() {
+                    const regionCode = $(this).val();
+                    const ncrRegionCode = '13';
 
-                    $('#province-dropdown').empty().append(
-                        '<option value="" disabled selected>Select Province</option>').prop(
-                        'disabled', true);
-                    $('#city-dropdown').empty().append(
-                            '<option value="" disabled selected>Select City/Municipality</option>')
-                        .prop('disabled',
-                            true);
-                    $('#barangay-dropdown').empty().append(
-                            '<option value="" disabled selected>Select Barangay</option>')
-                        .prop('disabled',
-                            true);
+                    clearAndDisableDropdown(dropdowns.province, 'Province');
+                    clearAndDisableDropdown(dropdowns.barangay, 'Barangay');
 
                     if (!regionCode) return;
 
                     if (regionCode === ncrRegionCode) {
-                        $.get('{{ route("equipment.citiesAndMunicipalities.get") }}', {
-                                reg_code: regionCode
-                            })
-                            .done(function(data) {
-                                if (!data) return;
-
-                                let cityDropdown = $('#city-dropdown');
-                                cityDropdown.empty().append(
-                                    '<option value="" disabled selected>Select City/Municipality</option>'
-                                );
-                                data.forEach(function(city) {
-                                    cityDropdown.append('<option value="' + city
-                                        .citymun_code +
-                                        '">' + city.name + '</option>');
-                                });
-                                cityDropdown.prop('disabled', false);
-
-                            })
-                            .fail(function() {
-                                alert('Failed to fetch cities/municipalities for NCR.');
-                            });
-
-                    } else {
-                        $.get('{{ route("equipment.provinces.get") }}', {
-                                reg_code: regionCode
-                            })
-                            .done(function(data) {
-                                if (!data) return;
-
-                                let provinceDropdown = $('#province-dropdown');
-                                provinceDropdown.empty().append(
-                                    '<option value="" disabled selected>Select Province</option>'
-                                );
-                                data.forEach(function(province) {
-                                    provinceDropdown.append('<option value="' + province
-                                        .prov_code + '">' + province.name + '</option>');
-                                });
-                                provinceDropdown.prop('disabled', false);
-                            })
-                            .fail(function() {
-                                alert('Failed to fetch provinces.');
-                            });
+                        fetchDataAndPopulate(routes.getCitiesAndMunicipalities, {
+                            reg_code: regionCode
+                        }, dropdowns.city, 'citymun_code', 'name', 'City/Municipality');
+                        return;
                     }
+
+                    fetchDataAndPopulate(routes.getProvinces, {
+                        reg_code: regionCode
+                    }, dropdowns.province, 'prov_code', 'name', 'Province');
+                    fetchDataAndPopulate(routes.getCitiesAndMunicipalities, {
+                        reg_code: regionCode,
+                        excludeProvincialAreas: true
+                    }, dropdowns.city, 'citymun_code', 'name', 'City/Municipality');
                 });
 
-                // Province selection
-                $('#province-dropdown').change(function() {
-                    let provinceCode = $(this).val();
+                dropdowns.province.change(function() {
+                    const provinceCode = $(this).val();
                     if (!provinceCode) return;
 
-                    $.get('{{ route("equipment.citiesAndMunicipalities.get") }}', {
-                            prov_code: provinceCode
-                        })
-                        .done(function(data) {
-                            if (!data) return;
-
-                            let cityDropdown = $('#city-dropdown');
-                            cityDropdown.empty().append(
-                                '<option value="" disabled selected>Select City/Municipality</option>'
-                            );
-                            data.forEach(function(city) {
-                                cityDropdown.append('<option value="' + city.citymun_code +
-                                    '">' +
-                                    city.name + '</option>');
-                            });
-                            cityDropdown.prop('disabled', false);
-                        })
-                        .fail(function() {
-                            alert('Failed to fetch cities/municipalities.');
-                        });
-
+                    fetchDataAndPopulate(routes.getCitiesAndMunicipalities, {
+                        prov_code: provinceCode
+                    }, dropdowns.city, 'citymun_code', 'name', 'City/Municipality');
                 });
 
-                // City selection
-                $('#city-dropdown').change(function() {
-                    let citymunCode = $(this).val();
+                dropdowns.city.change(function() {
+                    const citymunCode = $(this).val();
                     if (!citymunCode) return;
 
-                    $.get('{{ route("equipment.barangays.get") }}', {
-                            citymun_code: citymunCode
-                        })
-                        .done(function(data) {
-                            if (!data) return;
-
-                            let barangayDropdown = $('#barangay-dropdown');
-                            barangayDropdown.empty().append(
-                                '<option value="" disabled selected>Select Barangay</option>'
-                            );
-                            data.forEach(function(city) {
-                                barangayDropdown.append('<option value="' + city.psgc_code +
-                                    '">' +
-                                    city.name + '</option>');
-                            });
-                            barangayDropdown.prop('disabled', false);
-                        })
-                        .fail(function() {
-                            alert('Failed to fetch barangays.');
-                        });
+                    fetchDataAndPopulate(routes.getBarangays, {
+                        citymun_code: citymunCode
+                    }, dropdowns.barangay, 'psgc_code', 'name', 'Barangay');
                 });
             });
             </script>

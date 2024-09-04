@@ -105,69 +105,16 @@ class RolesAndPermissionSeeder extends Seeder
         // create roles and assign created permissions
         $role = Role::create([
             'name' => 'Central Admin',
-            'codename' => 'is_centraladmin'
+            'codename' => 'is_admin'
         ]);
         $role->givePermissionTo(Permission::all());
 
         $role = Role::create([
-            'name' => 'Central Officer',
-            'codename' => 'is_centralofficer'
+            'name' => 'Public Users',
+            'codename' => 'is_publicusers'
         ]);
         $role->givePermissionTo(Permission::all());
-        // $role->givePermissionTo([
-        //     'create user_account', 'edit user_account' ,'delete user_account',  'update user_account', 'view user_account',
-        //     'create lguPerformance', 'edit lguPerformance' ,'delete lguPerformance',  'update lguPerformance', 'view lguPerformance'
-        // ]);
-
-        $role = Role::create([
-            'name' => 'Central Staff',
-            'codename' => 'is_centralstaff'
-        ]);
-        $role->givePermissionTo(Permission::all());
-
-        $role = Role::create([
-            'name' => 'Regional Officer',
-            'codename' => 'is_regionalofficer'
-        ]);
-        $role->givePermissionTo(Permission::all());
-
-        $role = Role::create([
-            'name' => 'Regional Staff', 
-            'codename' => 'is_regionalstaff'
-        ]);
-        $role->givePermissionTo(Permission::all());
-
-        $role = Role::create([
-            'name' => 'Provincial Officer',
-            'codename' => 'is_provincialofficer'
-        ]);
-        $role->givePermissionTo(Permission::all());
-
-        $role = Role::create([
-            'name' => 'Provincial Staff',
-            'codename' => 'is_provincialstaff'
-        ]);
-        $role->givePermissionTo(Permission::all());
-
-        $role = Role::create([
-            'name' => 'City Municipal Officer',
-            'codename' => 'is_citymunicipalofficer'
-        ]);
-        $role->givePermissionTo(Permission::all());
-
-        $role = Role::create([
-            'name' => 'CityMunicipal Staff',
-            'codename' => 'is_citymunicipalstaff'
-        ]);
-        $role->givePermissionTo(Permission::all());
-
-
-        $role = Role::create([
-            'name' => 'Barangay Scholar',
-            'codename' => 'is_barangayscholar'
-        ]);
-        $role->givePermissionTo(Permission::all());
-
+ 
         $role = Role::create([
             'name' => 'User Under Review',
             'codename' => 'is_UserUnderReview'

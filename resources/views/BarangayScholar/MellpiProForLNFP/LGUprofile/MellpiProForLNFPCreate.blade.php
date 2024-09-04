@@ -38,7 +38,7 @@
                                 <h5 class="title">{{__("Mellpi Pro PNAO Form: Provincial Profile Form")}}</h5>
                             </center><br> -->
 
-                            @include('layouts.page_template.location_header')
+                            @include('layouts.page_template.location_header_lnfp')
 
                             
                             <input type="hidden" value="" name="status" id="status">
@@ -52,6 +52,27 @@
                             <div style="display:flex">
                                 <!-- Div1 -->
                                 <div class="col col-4 col-2">
+
+
+                                    <!-- FOR CITY AND MUNICIPALITY -->
+                                    @if( auth()->user()->role != 10 )
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">Income Class:<span style="color:red">*</span></label>
+                                        <select class="form-control" name="income-class">
+                                            <option value="">Select</option>
+                                            <option value="1">1st</option>
+                                            <option value="2">2nd</option>
+                                            <option value="3">3rd</option>
+                                            <option value="4">4th</option>
+                                            <option value="5">5th</option> 
+                                        </select>
+                                        @error('income-class')
+                                        <div class="text-danger" id="warning-mesg">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    @endif                        
+
+
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">No. of Municipalities:<span style="color:red">*</span></label>
                                         <input type="number" min="1" placeholder="ex. 100" class="form-control" value="{{ old('numOfMun') }}" id="exampleFormControlInput1" name="numOfMun">

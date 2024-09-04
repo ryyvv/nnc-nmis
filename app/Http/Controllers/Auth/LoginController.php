@@ -39,48 +39,24 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-
+ 
     protected function authenticated(Request $request, $user)
     {
 
-        
          $roles = DB::table('roles')->where('id',Auth()->user()->role)->first();
         // dd(Auth()->user(), $roles->name);
         //$users  = Auth()->user()->role;
         //dd($roles->name);
-        if ($roles->name == 'Central Admin' ) {
-            return redirect()->route('CAdashboard.index');
-        } elseif ($roles->name == 'Central Officer') {
-            return redirect()->route('COdashboard.index');
-        }
-        elseif ($roles->name == 'Central Staff') {
-            return redirect()->route('CSdashboard.index');
-        }
-        elseif ($roles->name == 'Regional Officer') {
-            return redirect()->route('ROdashboard.index');
-        }
-        elseif ($roles->name == 'Regional Staff') {
-            return redirect()->route('RSdashboard.index');
-        }
-        elseif ($roles->name == 'Provincial Officer') {
-            return redirect()->route('POdashboard.index');
-        }
-        elseif ($roles->name == 'Provincial Staff') {
-            return redirect()->route('PSdashboard.index');
-        }
-        elseif ($roles->name == 'CityMunicipal Officer') {
-            return redirect()->route('CMOdashboard.index');
-        }
-        elseif ($roles->name == 'CityMunicipal Staff') {
-            return redirect()->route('CMSdashboard.index');
-        }
-        elseif ($roles->name == 'Barangay Scholar') {
-            return redirect()->route('BSdashboard.index');
-        }
-        elseif ($roles->name == 'User Under Review') {
+
+
+        
+        if ($roles->name == 'Admin' ) {
+            return redirect()->route('dashboard.index');
+        } elseif ($roles->name == 'Public Users') {
+            return redirect()->route('publicuser.index');
+        }elseif ($roles->name == 'User Under Review') {
             return redirect()->route('UURdashboard.index');
         }
-
 
         return redirect()->route('home');
     }

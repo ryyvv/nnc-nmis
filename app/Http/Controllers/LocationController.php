@@ -376,7 +376,7 @@ class LocationController extends Controller
         $municipalities = $municipalitiesQuery->get();
 
         
-        $combinedData = $cities->merge($municipalities);
+        $combinedData = $cities->concat($municipalities);
 
         return response()->json($combinedData);
     }

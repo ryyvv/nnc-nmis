@@ -18,7 +18,7 @@ class UserUnderReview
     public function handle(Request $request, Closure $next): Response
     {
         $roles = DB::table('roles')->where('id',Auth::user()->role)->first();
-        if (Auth::check() && Auth::user()->role == '11' ||  Auth::user()->name == 'User Under Review' ) {
+        if (Auth::check() && Auth::user()->role == '3' ||  Auth::user()->name == 'User Under Review' ) {
             return $next($request);
         }
 
