@@ -1,7 +1,7 @@
 <!-- header -->
 @if( $action == 'create')
 <!-- FOR BARANGAY ROLE -->
-@if( auth()->user()->role == 10 )
+@if( auth()->user()->otherrole == 10 )
 <input type="hidden" name="formrequest" id="formrequest" />
 <div style="display:flex">
     <div class="form-group col">
@@ -42,7 +42,7 @@
 </div>
 
 <!-- FOR CITY/MUNICIPALITY ROLE -->
-@elseif( auth()->user()->role == 9 )
+@elseif( auth()->user()->otherrole == 9 )
 <input type="hidden" name="formrequest" id="formrequest" />
 <input type="hidden" name="barangay_id" value="{{ auth()->user()->barangay_id }}" />
 <div style="display:flex">

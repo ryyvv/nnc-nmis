@@ -206,18 +206,14 @@ Route::group(['middleware' => 'auth'], function () {
             // UserDashboard
             //DashboardController
             Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-            Route::POST('/dashboard', [DashboardController::class, 'store'])->name('dashboard.store');
+            Route::post('/dashboard', [DashboardController::class, 'store'])->name('dashboard.store');
             Route::get('/dashboard/create', [DashboardController::class, 'create'])->name('dashboard.create');
             Route::get('/dashboard/{admin}', [DashboardController::class, 'update'])->name('dashboard.update');
             Route::get('/dashboard/{admin}/edit', [DashboardController::class, 'create'])->name('dashboard.edit');
             Route::DELETE('/dashboard/{admin}', [DashboardController::class, 'destroy'])->name('dashboard.destroy');
 
-            // // Userprofile
-            // Route::get('/profile', [BSProfileController::class, 'index'])->name('BSprofile.index');
-            // Route::get('/profile/{profile}', [BSProfileController::class, 'update'])->name('BSprofile.update');
-            // Route::get('/profile/{profile}/edit', [BSProfileController::class, 'edit'])->name('BSprofile.edit');
-            // Route::PUT('/profile/password', [BSProfileController::class, 'password'])->name('BSprofile.password');
-
+ 
+ 
 
 
          //==========================================================================================================================================
@@ -225,7 +221,8 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/admin', [AdminUserController::class, 'index'])->name('CAadmin.index');
                 Route::POST('/admin', [AdminUserController::class, 'store'])->name('CAadmin.store');
                 Route::get('/admin/create', [AdminUserController::class, 'create'])->name('CAadmin.create');
-                Route::get('/admin/{id}', [AdminUserController::class, 'update'])->name('CAadmin.update');
+                // Route::put('/admin/{id}', [AdminUserController::class, 'update'])->name('CAadmin.update');
+                Route::get('/admin/{id}', [AdminUserController::class, 'update'])->name('CAadmin.update');  //ajax request check
                 Route::get('/admin/{id}/show', [AdminUserController::class, 'show'])->name('CAadmin.show');
                 Route::get('/admin/{id}/edit', [AdminUserController::class, 'create'])->name('CAadmin.edit');
                 Route::get('/admin/{id}', [AdminUserController::class, 'destroy'])->name('CAadmin.destroy');
@@ -235,7 +232,7 @@ Route::group(['middleware' => 'auth'], function () {
         
                 // // Userprofile
                 Route::get('/profile', [ProfileController::class, 'index'])->name('CAprofile.index');
-                Route::get('/profile/{profile}', [ProfileController::class, 'update'])->name('CAprofile.update');
+                Route::get('/profile/{profile}', [ProfileController::class, 'update'])->name('CAprofile.update');  //ajax request check
                 Route::get('/profile/{profile}/edit', [ProfileController::class, 'edit'])->name('CAprofile.edit');
                 Route::PUT('/profile/password', [ProfileController::class, 'password'])->name('CAprofile.password');
         
@@ -278,13 +275,13 @@ Route::group(['middleware' => 'auth'], function () {
 
         //==========================================================================================================================================
 
-    //   //DashboardController
-        Route::get('/dashboard', [CMSDashboardController::class, 'index'])->name('CMSdashboard.index');
-        Route::POST('/dashboard', [CMSDashboardController::class, 'store'])->name('CMSdashboard.store');
-        Route::get('/dashboard/create', [CMSDashboardController::class, 'create'])->name('CMSdashboard.create');
-        Route::get('/dashboard/{admin}', [CMSDashboardController::class, 'update'])->name('CMSdashboard.update');
-        Route::get('/dashboard/{admin}/edit', [CMSDashboardController::class, 'create'])->name('CMSdashboard.edit');
-        Route::DELETE('/dashboard/{admin}', [CMSDashboardController::class, 'destroy'])->name('CMSdashboard.destroy');
+        //   //DashboardController
+            Route::get('/cmsdashboard', [CMSDashboardController::class, 'index'])->name('CMSdashboard.index');
+            Route::POST('/dashboard', [CMSDashboardController::class, 'store'])->name('CMSdashboard.store');
+            Route::get('/dashboard/create', [CMSDashboardController::class, 'create'])->name('CMSdashboard.create');
+            Route::get('/dashboard/{admin}', [CMSDashboardController::class, 'update'])->name('CMSdashboard.update');
+            Route::get('/dashboard/{admin}/edit', [CMSDashboardController::class, 'create'])->name('CMSdashboard.edit');
+            Route::DELETE('/dashboard/{admin}', [CMSDashboardController::class, 'destroy'])->name('CMSdashboard.destroy');
 
     //     // Userprofile
         Route::get('/profile', [CMSProfileController::class, 'index'])->name('CMSprofile.index');
@@ -292,98 +289,99 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/profile/{profile}/edit', [CMSProfileController::class, 'edit'])->name('CMSprofile.edit');
         Route::PUT('/profile/password', [CMSProfileController::class, 'password'])->name('CMSprofile.password');
 
+        // /CityMunicipal/lguprofile
         //LGUProfileController
-        Route::get('/lguprofile', [CMSLGUprofileController::class, 'index'])->name('CMSLGUprofile.index'); 
-        Route::get('/lguprofile/{id}/show', [CMSLGUprofileController::class, 'show'])->name('CMSLGUprofile.show');
-        Route::POST('/lguprofile', [CMSLGUprofileController::class, 'storeSubmit'])->name('CMSLGUprofilest.storeSubmit');
-        Route::get('/lguprofile/create', [CMSLGUprofileController::class, 'create'])->name('CMSLGUprofile.create');
-        Route::put('/lguprofile/{id}', [CMSLGUprofileController::class, 'update'])->name('CMSLGUprofile.update');
-        Route::get('/lguprofile/{id}/edit', [CMSLGUprofileController::class, 'edit'])->name('CMSLGUprofile.edit');
-        Route::POST('/lguprofile/delete', [CMSLGUprofileController::class, 'destroy'])->name('CMSLGUprofile.destroy');
+        Route::get('/CityMunicipal/lguprofile', [CMSLGUprofileController::class, 'index'])->name('CMSLGUprofile.index'); 
+        Route::get('/CityMunicipal/lguprofile/{id}/show', [CMSLGUprofileController::class, 'show'])->name('CMSLGUprofile.show');
+        Route::POST('/CityMunicipal/lguprofile', [CMSLGUprofileController::class, 'storeSubmit'])->name('CMSLGUprofilest.storeSubmit');
+        Route::get('/CityMunicipal/lguprofile/create', [CMSLGUprofileController::class, 'create'])->name('CMSLGUprofile.create');
+        Route::put('/CityMunicipal/lguprofile/{id}', [CMSLGUprofileController::class, 'update'])->name('CMSLGUprofile.update');
+        Route::get('/CityMunicipal/lguprofile/{id}/edit', [CMSLGUprofileController::class, 'edit'])->name('CMSLGUprofile.edit');
+        Route::POST('/CityMunicipal/lguprofile/delete', [CMSLGUprofileController::class, 'destroy'])->name('CMSLGUprofile.destroy');
         //LGU Profile Downloadable
-        Route::POST('/lguprofile/{id}/download-pdf', [CMSLGUprofileController::class, 'downloads'])->name('CMSLGUprofile.download');
+        Route::POST('/CityMunicipal/lguprofile/{id}/download-pdf', [CMSLGUprofileController::class, 'downloads'])->name('CMSLGUprofile.download');
 
 
         //VisionMissionController
-        Route::get('/visionmission', [CMSVisionMissionController::class, 'index'])->name('CMSvisionmission.index');
-        Route::POST('/visionmission', [CMSVisionMissionController::class, 'store'])->name('CMSvisionmission.store');
-        Route::get('/visionmission/create', [CMSVisionMissionController::class, 'create'])->name('CMSvisionmission.create');
-        Route::put('/visionmission/{id}', [CMSVisionMissionController::class, 'update'])->name('CMSvisionmission.update');
-        Route::get('/visionmission/{id}/edit', [CMSVisionMissionController::class, 'edit'])->name('CMSvisionmission.edit');
-        Route::post('/visionmission/delete', [CMSVisionMissionController::class, 'destroy'])->name('CMSvisionmission.destroy');
-        Route::get('/visionmission/{id}/show', [CMSVisionMissionController::class, 'show'])->name('CMSvisionmission.show');
-        Route::POST('/visionmission/{id}/download-pdf', [CMSVisionMissionController::class, 'downloads'])->name('CMSvisionmission.download');
+        Route::get('/CityMunicipal/visionmission', [CMSVisionMissionController::class, 'index'])->name('CMSvisionmission.index');
+        Route::POST('/CityMunicipal/visionmission', [CMSVisionMissionController::class, 'store'])->name('CMSvisionmission.store');
+        Route::get('/CityMunicipal/visionmission/create', [CMSVisionMissionController::class, 'create'])->name('CMSvisionmission.create');
+        Route::put('/CityMunicipal/visionmission/{id}', [CMSVisionMissionController::class, 'update'])->name('CMSvisionmission.update');
+        Route::get('/CityMunicipal/visionmission/{id}/edit', [CMSVisionMissionController::class, 'edit'])->name('CMSvisionmission.edit');
+        Route::post('/CityMunicipal/visionmission/delete', [CMSVisionMissionController::class, 'destroy'])->name('CMSvisionmission.destroy');
+        Route::get('/CityMunicipal/visionmission/{id}/show', [CMSVisionMissionController::class, 'show'])->name('CMSvisionmission.show');
+        Route::POST('/CityMunicipal/visionmission/{id}/download-pdf', [CMSVisionMissionController::class, 'downloads'])->name('CMSvisionmission.download');
 
 
         //NutritionPoliciesController
-        Route::get('/nutritionpolicies', [CMSNutritionPoliciesController::class, 'index'])->name('CMSnutritionpolicies.index');
-        Route::POST('/nutritionpolicies', [CMSNutritionPoliciesController::class, 'store'])->name('CMSnutritionpolicies.store');
-        Route::get('/nutritionpolicies/create', [CMSNutritionPoliciesController::class, 'create'])->name('CMSnutritionpolicies.create');
-        Route::put('/nutritionpolicies/{id}', [CMSNutritionPoliciesController::class, 'update'])->name('CMSnutritionpolicies.update');
-        Route::get('/nutritionpolicies/{id}/edit', [CMSNutritionPoliciesController::class, 'edit'])->name('CMSnutritionpolicies.edit');
-        Route::POST('/nutritionpolicies/delete', [CMSNutritionPoliciesController::class, 'destroy'])->name('CMSnutritionpolicies.destroy');
-        Route::get('/nutritionpolicies/{id}/show', [CMSNutritionPoliciesController::class, 'show'])->name('CMSnutritionpolicies.show');
-        Route::POST('/nutritionpolicies/{id}/download-pdf', [CMSNutritionPoliciesController::class, 'downloads'])->name('CMSnutritionpolicies.download');
+        Route::get('/CityMunicipal/nutritionpolicies', [CMSNutritionPoliciesController::class, 'index'])->name('CMSnutritionpolicies.index');
+        Route::POST('/CityMunicipal/nutritionpolicies', [CMSNutritionPoliciesController::class, 'store'])->name('CMSnutritionpolicies.store');
+        Route::get('/CityMunicipal/nutritionpolicies/create', [CMSNutritionPoliciesController::class, 'create'])->name('CMSnutritionpolicies.create');
+        Route::put('/CityMunicipal/nutritionpolicies/{id}', [CMSNutritionPoliciesController::class, 'update'])->name('CMSnutritionpolicies.update');
+        Route::get('/CityMunicipal/nutritionpolicies/{id}/edit', [CMSNutritionPoliciesController::class, 'edit'])->name('CMSnutritionpolicies.edit');
+        Route::POST('/CityMunicipal/nutritionpolicies/delete', [CMSNutritionPoliciesController::class, 'destroy'])->name('CMSnutritionpolicies.destroy');
+        Route::get('/CityMunicipal/nutritionpolicies/{id}/show', [CMSNutritionPoliciesController::class, 'show'])->name('CMSnutritionpolicies.show');
+        Route::POST('/CityMunicipal/nutritionpolicies/{id}/download-pdf', [CMSNutritionPoliciesController::class, 'downloads'])->name('CMSnutritionpolicies.download');
 
 
         //GovernanceController
-        Route::get('/governance', [CMSGovernanceController::class, 'index'])->name('CMSgovernance.index');
-        Route::POST('/governance', [CMSGovernanceController::class, 'store'])->name('CMSgovernance.store');
-        Route::get('/governance/create', [CMSGovernanceController::class, 'create'])->name('CMSgovernance.create');
-        Route::put('/governance/{id}', [CMSGovernanceController::class, 'update'])->name('CMSgovernance.update');
-        Route::get('/governance/{id}/edit', [CMSGovernanceController::class, 'edit'])->name('CMSgovernance.edit');
-        Route::POST('/governance/delete', [CMSGovernanceController::class, 'destroy'])->name('CMSgovernance.destroy');
-        Route::get('/governance/{id}/show', [CMSGovernanceController::class, 'show'])->name('CMSgovernance.show');
-        Route::POST('/governance/{id}/download-pdf', [CMSGovernanceController::class, 'downloads'])->name('CMSgovernance.download');
+        Route::get('/CityMunicipal/governance', [CMSGovernanceController::class, 'index'])->name('CMSgovernance.index');
+        Route::POST('/CityMunicipal/governance', [CMSGovernanceController::class, 'store'])->name('CMSgovernance.store');
+        Route::get('/CityMunicipal/governance/create', [CMSGovernanceController::class, 'create'])->name('CMSgovernance.create');
+        Route::put('/CityMunicipal/governance/{id}', [CMSGovernanceController::class, 'update'])->name('CMSgovernance.update');
+        Route::get('/CityMunicipal/governance/{id}/edit', [CMSGovernanceController::class, 'edit'])->name('CMSgovernance.edit');
+        Route::POST('/CityMunicipal/governance/delete', [CMSGovernanceController::class, 'destroy'])->name('CMSgovernance.destroy');
+        Route::get('/CityMunicipal/governance/{id}/show', [CMSGovernanceController::class, 'show'])->name('CMSgovernance.show');
+        Route::POST('/CityMunicipal/governance/{id}/download-pdf', [CMSGovernanceController::class, 'downloads'])->name('CMSgovernance.download');
 
         //NutritionServicesController
-        Route::get('/lncmanagement', [CMSLNCManagementBarangayController::class, 'index'])->name('CMSlncmanagement.index');
-        Route::POST('/lncmanagement', [CMSLNCManagementBarangayController::class, 'store'])->name('CMSlncmanagement.store');
-        Route::get('/lncmanagement/create', [CMSLNCManagementBarangayController::class, 'create'])->name('CMSlncmanagement.create');
-        Route::put('/lncmanagement/{id}', [CMSLNCManagementBarangayController::class, 'update'])->name('CMSlncmanagement.update');
-        Route::get('/lncmanagement/{id}/edit', [CMSLNCManagementBarangayController::class, 'edit'])->name('CMSlncmanagement.edit');
-        Route::POST('/lncmanagement/delete', [CMSLNCManagementBarangayController::class, 'destroy'])->name('CMSlncmanagement.destroy');
-        Route::get('/lncmanagement/{id}/show', [CMSLNCManagementBarangayController::class, 'show'])->name('CMSlncmanagement.show');
-        Route::POST('/lncmanagement/{id}/download-pdf', [CMSLNCManagementBarangayController::class, 'downloads'])->name('CMSlncmanagement.download');
+        Route::get('/CityMunicipal/lncmanagement', [CMSLNCManagementBarangayController::class, 'index'])->name('CMSlncmanagement.index');
+        Route::POST('/CityMunicipal/lncmanagement', [CMSLNCManagementBarangayController::class, 'store'])->name('CMSlncmanagement.store');
+        Route::get('/CityMunicipal/lncmanagement/create', [CMSLNCManagementBarangayController::class, 'create'])->name('CMSlncmanagement.create');
+        Route::put('/CityMunicipal/lncmanagement/{id}', [CMSLNCManagementBarangayController::class, 'update'])->name('CMSlncmanagement.update');
+        Route::get('/CityMunicipal/lncmanagement/{id}/edit', [CMSLNCManagementBarangayController::class, 'edit'])->name('CMSlncmanagement.edit');
+        Route::POST('/CityMunicipal/lncmanagement/delete', [CMSLNCManagementBarangayController::class, 'destroy'])->name('CMSlncmanagement.destroy');
+        Route::get('/CityMunicipal/lncmanagement/{id}/show', [CMSLNCManagementBarangayController::class, 'show'])->name('CMSlncmanagement.show');
+        Route::POST('/CityMunicipal/lncmanagement/{id}/download-pdf', [CMSLNCManagementBarangayController::class, 'downloads'])->name('CMSlncmanagement.download');
 
 
         //NutritionServicesController
-        Route::get('/nutritionservice', [CMSNutritionServiceController::class, 'index'])->name('CMSnutritionservice.index');
-        Route::POST('/nutritionservice', [CMSNutritionServiceController::class, 'store'])->name('CMSnutritionservice.store');
-        Route::get('/nutritionservice/create', [CMSNutritionServiceController::class, 'create'])->name('CMSnutritionservice.create');
-        Route::put('/nutritionservice/{id}', [CMSNutritionServiceController::class, 'update'])->name('CMSnutritionservice.update');
-        Route::get('/nutritionservice/{id}/edit', [CMSNutritionServiceController::class, 'edit'])->name('CMSnutritionservice.edit');
-        Route::POST('/nutritionservice/delete', [CMSNutritionServiceController::class, 'destroy'])->name('CMSnutritionservice.destroy');
-        Route::get('/nutritionservice/{id}/show', [CMSNutritionServiceController::class, 'show'])->name('CMSnutritionservice.show');
-        Route::POST('/nutritionservice/{id}/download-pdf', [CMSNutritionServiceController::class, 'downloads'])->name('CMSnutritionservice.download');
+        Route::get('/CityMunicipal/nutritionservice', [CMSNutritionServiceController::class, 'index'])->name('CMSnutritionservice.index');
+        Route::POST('/CityMunicipal/nutritionservice', [CMSNutritionServiceController::class, 'store'])->name('CMSnutritionservice.store');
+        Route::get('/CityMunicipal/nutritionservice/create', [CMSNutritionServiceController::class, 'create'])->name('CMSnutritionservice.create');
+        Route::put('/CityMunicipal/nutritionservice/{id}', [CMSNutritionServiceController::class, 'update'])->name('CMSnutritionservice.update');
+        Route::get('/CityMunicipal/nutritionservice/{id}/edit', [CMSNutritionServiceController::class, 'edit'])->name('CMSnutritionservice.edit');
+        Route::POST('/CityMunicipal/nutritionservice/delete', [CMSNutritionServiceController::class, 'destroy'])->name('CMSnutritionservice.destroy');
+        Route::get('/CityMunicipal/nutritionservice/{id}/show', [CMSNutritionServiceController::class, 'show'])->name('CMSnutritionservice.show');
+        Route::POST('/CityMunicipal/nutritionservice/{id}/download-pdf', [CMSNutritionServiceController::class, 'downloads'])->name('CMSnutritionservice.download');
 
         //ChangeNSController
-        Route::get('/changeNS', [CMSChangeNSController::class, 'index'])->name('CMSchangeNS.index');
-        Route::POST('/changeNS', [CMSChangeNSController::class, 'store'])->name('CMSchangeNS.store');
-        Route::get('/changeNS/create', [CMSChangeNSController::class, 'create'])->name('CMSchangeNS.create');
-        Route::put('/changeNS/{id}', [CMSChangeNSController::class, 'update'])->name('CMSchangeNS.update');
-        Route::get('/changeNS/{id}/edit', [CMSChangeNSController::class, 'edit'])->name('CMSchangeNS.edit');
-        Route::POST('/changeNS/delete', [CMSChangeNSController::class, 'destroy'])->name('CMSchangeNS.destroy');
-        Route::get('/changeNS/{id}/show', [CMSChangeNSController::class, 'show'])->name('CMSchangeNS.show');
-        Route::POST('/changeNS/{id}/download-pdf', [CMSChangeNSController::class, 'downloads'])->name('CMSchangeNS.download');
+        Route::get('/CityMunicipal/changeNS', [CMSChangeNSController::class, 'index'])->name('CMSchangeNS.index');
+        Route::POST('/CityMunicipal/changeNS', [CMSChangeNSController::class, 'store'])->name('CMSchangeNS.store');
+        Route::get('/CityMunicipal/changeNS/create', [CMSChangeNSController::class, 'create'])->name('CMSchangeNS.create');
+        Route::put('/CityMunicipal/changeNS/{id}', [CMSChangeNSController::class, 'update'])->name('CMSchangeNS.update');
+        Route::get('/CityMunicipal/changeNS/{id}/edit', [CMSChangeNSController::class, 'edit'])->name('CMSchangeNS.edit');
+        Route::POST('/CityMunicipal/changeNS/delete', [CMSChangeNSController::class, 'destroy'])->name('CMSchangeNS.destroy');
+        Route::get('/CityMunicipal/changeNS/{id}/show', [CMSChangeNSController::class, 'show'])->name('CMSchangeNS.show');
+        Route::POST('/CityMunicipal/changeNS/{id}/download-pdf', [CMSChangeNSController::class, 'downloads'])->name('CMSchangeNS.download');
 
         //DiscussionQuestionController
-        Route::get('/discussionquestion', [CMSDiscussionQuestionController::class, 'index'])->name('CMSdiscussionquestion.index');
-        Route::POST('/discussionquestion', [CMSDiscussionQuestionController::class, 'store'])->name('CMSdiscussionquestion.store');
-        Route::get('/discussionquestion/create', [CMSDiscussionQuestionController::class, 'create'])->name('CMSdiscussionquestion.create');
-        Route::put('/discussionquestion/{id}', [CMSDiscussionQuestionController::class, 'update'])->name('CMSdiscussionquestion.update');
-        Route::get('/discussionquestion/{id}/edit', [CMSDiscussionQuestionController::class, 'edit'])->name('CMSdiscussionquestion.edit');
-        Route::POST('/discussionquestion/delete', [CMSDiscussionQuestionController::class, 'destroy'])->name('CMSdiscussionquestion.destroy');
-        Route::get('/discussionquestion/{id}/show', [CMSDiscussionQuestionController::class, 'show'])->name('CMSdiscussionquestion.show');
+        Route::get('/CityMunicipal/discussionquestion', [CMSDiscussionQuestionController::class, 'index'])->name('CMSdiscussionquestion.index');
+        Route::POST('/CityMunicipal/discussionquestion', [CMSDiscussionQuestionController::class, 'store'])->name('CMSdiscussionquestion.store');
+        Route::get('/CityMunicipal/discussionquestion/create', [CMSDiscussionQuestionController::class, 'create'])->name('CMSdiscussionquestion.create');
+        Route::put('/CityMunicipal/discussionquestion/{id}', [CMSDiscussionQuestionController::class, 'update'])->name('CMSdiscussionquestion.update');
+        Route::get('/CityMunicipal/discussionquestion/{id}/edit', [CMSDiscussionQuestionController::class, 'edit'])->name('CMSdiscussionquestion.edit');
+        Route::POST('/CityMunicipal/discussionquestion/delete', [CMSDiscussionQuestionController::class, 'destroy'])->name('CMSdiscussionquestion.destroy');
+        Route::get('/CityMunicipal/discussionquestion/{id}/show', [CMSDiscussionQuestionController::class, 'show'])->name('CMSdiscussionquestion.show');
 
 
         //BudgetController
-        Route::get('/budgetAIP', [CMSBudgetAIPController::class, 'index'])->name('CMSbudgetAIP.index');
-        Route::POST('/budgetAIP', [CMSBudgetAIPController::class, 'store'])->name('CMSbudgetAIP.store');
-        Route::get('/budgetAIP/create', [CMSBudgetAIPController::class, 'create'])->name('CMSbudgetAIP.create');
-        Route::put('/budgetAIP/{id}', [CMSBudgetAIPController::class, 'update'])->name('CMSbudgetAIP.update');
-        Route::get('/budgetAIP/{id}/edit', [CMSBudgetAIPController::class, 'edit'])->name('CMSbudgetAIP.edit');
-        Route::DELETE('/budgetAIP/{id}', [CMSBudgetAIPController::class, 'destroy'])->name('CMSbudgetAIP.destroy');
+        Route::get('/CityMunicipal/budgetAIP', [CMSBudgetAIPController::class, 'index'])->name('CMSbudgetAIP.index');
+        Route::POST('/CityMunicipal/budgetAIP', [CMSBudgetAIPController::class, 'store'])->name('CMSbudgetAIP.store');
+        Route::get('/CityMunicipal/budgetAIP/create', [CMSBudgetAIPController::class, 'create'])->name('CMSbudgetAIP.create');
+        Route::put('/CityMunicipal/budgetAIP/{id}', [CMSBudgetAIPController::class, 'update'])->name('CMSbudgetAIP.update');
+        Route::get('/CityMunicipal/budgetAIP/{id}/edit', [CMSBudgetAIPController::class, 'edit'])->name('CMSbudgetAIP.edit');
+        Route::DELETE('/CityMunicipal/budgetAIP/{id}', [CMSBudgetAIPController::class, 'destroy'])->name('CMSbudgetAIP.destroy');
 
         // Resources Link
         //Nutrition Office
@@ -393,14 +391,21 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/personnelDnaDirectory/npc', [CMSPersonnelDnaDirectoryController::class, 'storeNPC'])->name('CMSpersonnelDnaDirectory.storeNPC');
         Route::post('/personnelDnaDirectory/bns', [CMSPersonnelDnaDirectoryController::class, 'storeBNS'])->name('CMSpersonnelDnaDirectory.storeBNS');
 
-        Route::get('/nutritionOfficesIndex', [CMSNutritionOfficesController::class, 'index'])->name('nutritionOffices.index');
-        Route::get('/nutritionOffices', [CMSNutritionOfficesController::class, 'create'])->name('nutritionOffices');
-        Route::post('/nutritionOffices', [CMSNutritionOfficesController::class, 'store'])->name('nutritionOffices.store');
-        Route::get('/nutriOfficeIndex', [CMSNutritionOfficesController::class, 'nutriOfficeIndex'])->name('nutriOfficeIndex');
+       
+        // Route::get('/nutritionOfficesIndex', [App\Http\Controllers\Admin\CityMunicipalStaff\CMSNutritionOfficesController::class, 'index'])->name('nutrition.index');
+        Route::get('/nutritionOfficesC', [CMSNutritionOfficesController::class, 'create'])->name('CMSnutritionOffices.create');
+        Route::get('/nutriOfficeIndexC', [CMSNutritionOfficesController::class, 'nutriOfficeIndex'])->name('CMSnutritionOffices.nutriOfficeIndex');
+        Route::get('/nutritionOfficesIndexC', [CMSNutritionOfficesController::class, 'create'])->name('nutrition');
 
-        Route::get('/equipmentInventoryIndex', [CMSEquipmentInventoryController::class, 'index'])->name('CMSequipmentInventory.index');
-        Route::get('/equipmentInventory', [CMSEquipmentInventoryController::class, 'create'])->name('CMSequipmentInventory.create');
-        Route::post('/equipmentInventory', [CMSEquipmentInventoryController::class, 'store'])->name('CMSequipmentInventory.store');
+
+        Route::get('/nutritioffices', [CMSNutritionOfficesController::class, 'Index'])->name('CMSnutritionffices.indexB');
+        Route::get('/nutritioffices/create', [CMSNutritionOfficesController::class, 'create'])->name('CMSnutritionffices.create');
+        Route::post('/nutritioffices/store', [CMSNutritionOfficesController::class, 'store'])->name('CMSnutritionffices.store');
+        Route::get('/nutritiofficesIndex', [CMSNutritionOfficesController::class, 'nutriOfficeIndex'])->name('CMSnutritionffices.indexA');
+        
+        Route::get('/equipmentInventoryIndexC', [CMSEquipmentInventoryController::class, 'index'])->name('CMSequipmentInventory.index');
+        Route::get('/equipmentInventoryC', [CMSEquipmentInventoryController::class, 'create'])->name('CMSequipmentInventory.create');
+        Route::post('/equipmentInventoryC', [CMSEquipmentInventoryController::class, 'store'])->name('CMSequipmentInventory.store');
 
         //    Review
         Route::get('/provinces/{region}', [CMSEquipmentInventoryController::class, 'getProvincesByRegion'])->name('equipment.provinces.byRegion.get');
@@ -568,7 +573,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/nutriOfficeIndex', [BSNutritionOfficesController::class, 'nutriOfficeIndex'])->name('nutriOfficeIndex');
 
         //Nutrition Office
-        Route::get('/personnelDnaDirectory', [BSPersonnel::class, 'index'])->name('BSpersonnel.index');
+        Route::get('/bspersonnelDnaDirectory', [BSPersonnel::class, 'index'])->name('BSpersonnel.index');
 
     });
 
@@ -582,7 +587,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //userRequestReview
     Route::prefix('UserUnderReview')->middleware(['auth', 'UserUnderReview'])->group(function () {
-        Route::get('/dashboard', [UserReviewController::class, 'index'])->name('UURdashboard.index');
+        Route::get('/requestdashboard', [UserReviewController::class, 'index'])->name('UURdashboard.index');
     });
 
 

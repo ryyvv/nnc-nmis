@@ -13,7 +13,7 @@ use PhpParser\Node\Stmt\TryCatch;
 
 class CMSNutritionOfficesController extends Controller
 {
-    //
+    
     public function __construct()
     {
         $this->middleware('auth');

@@ -274,6 +274,7 @@ class EquipmentInventoryController extends Controller
     public function getBarangays(Request $request)
     {
         $query = PsgcBarangay::query();
+        $cityOfManilaCode = '1380600';
 
         if ($request->has('psgc_code')) {
             $query->where('psgc_code', $request->input('psgc_code'));
@@ -296,7 +297,12 @@ class EquipmentInventoryController extends Controller
         }
 
         if ($request->has('citymun_code')) {
-            $query->where('citymun_code', $request->input('citymun_code'));
+            $citymunCode = $request->input('citymun_code');
+            if( $citymunCode === $cityOfManilaCode) {
+                $query->where( 'citymun_code', 'like', '13806%');
+            } else {
+                $query->where('citymun_code', $request->input('citymun_code'));
+            }
         }
 
         $barangays = $query->get();

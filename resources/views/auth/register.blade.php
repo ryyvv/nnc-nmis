@@ -141,7 +141,7 @@
                                             <select
                                                 class="form-control text-dark {{ $errors->has('Province') ? 'is-invalid' : '' }}"
                                                 style="border-top-right-radius: 40px; border-bottom-right-radius: 40px;"
-                                                name="Province" id="province-dropdown" required>
+                                                name="Province" id="province-dropdown">
                                                 <!-- <option value="">Select your Province</option>  -->
                                                 <option value="1301" selected>Select Province</option>
                                             </select>
@@ -431,6 +431,7 @@
 
                 dropdowns.city.change(function() {
                     const citymunCode = $(this).val();
+                    const cityOfManilaCode = '1380600';
                     if (!citymunCode) return;
 
                     fetchDataAndPopulate(routes.getBarangays, {

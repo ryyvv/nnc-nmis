@@ -104,7 +104,8 @@ class RegisterController extends Controller
             'Middlename' => 'required|string|max:255',
             'Lastname' => 'required|string|max:255',
             'Region' => 'required|string|max:255',
-            'Province' => 'required|string|max:255',
+            'Province' => 'string|max:255',
+            // 'Province' => 'required|string|max:255',
             'city_municipal' => 'required|string|max:255',
             'barangay' => 'string|max:255',
             // 'barangay' => 'required|string|max:255',
@@ -126,6 +127,9 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {   
+        if (empty($data['Province'])) {
+            $data['Province'] = substr($data['city_municipal'], 0, 5);
+        }
         return User::create([ 
             'Firstname' => $data['Firstname'],
             'Middlename' => $data['Middlename'],
