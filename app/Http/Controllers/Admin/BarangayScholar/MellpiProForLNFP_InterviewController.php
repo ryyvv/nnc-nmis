@@ -52,7 +52,7 @@ class MellpiProForLNFP_InterviewController extends Controller
     public function InterviewFormLNFPEdit(Request $request)
     {
         $action = 'edit';
-
+        
         $row = DB::table('lnfp_interview_form')
                 ->leftJoin('lnfp_form5a_rr', 'lnfp_form5a_rr.id', '=', 'lnfp_interview_form.form5_id')
                 ->select('lnfp_interview_form.*',
@@ -194,6 +194,10 @@ class MellpiProForLNFP_InterviewController extends Controller
     public function storeInterviewFormUpdate(Request $request, $id)
     {
         $action = $request->formrequest;
+<<<<<<< HEAD
+=======
+        $fields = $this->access_fields($request);
+>>>>>>> eddd7cd (123)
         if ($action == 'submit') {
             # code...
             try {
@@ -222,6 +226,7 @@ class MellpiProForLNFP_InterviewController extends Controller
                 } else {
                     //code...
                     lnfp_formInterview::where('id', $request->id)
+<<<<<<< HEAD
                         ->update([
                             'dateOfInterview' => $request->input('dateInterview'),
                             'question1' => $request->input('question1'),
@@ -238,6 +243,9 @@ class MellpiProForLNFP_InterviewController extends Controller
                             'status' => 1,
                             'user_id' => auth()->user()->id,
                         ]);
+=======
+                        ->update( $fields + [ 'status' => 1 ]);
+>>>>>>> eddd7cd (123)
 
 
                         $lnfp_formOverall = lnfp_formOverall::create([
@@ -263,6 +271,7 @@ class MellpiProForLNFP_InterviewController extends Controller
             try {
                 //code...
                 lnfp_formInterview::where('id', $request->id)
+<<<<<<< HEAD
                     ->update([
                         'dateOfInterview' => $request->input('dateInterview'),
                         'question1' => $request->input('question1'),
@@ -279,6 +288,9 @@ class MellpiProForLNFP_InterviewController extends Controller
                         'status' => 2,
                         'user_id' => auth()->user()->id,
                     ]);
+=======
+                    ->update( $fields + [ 'status' => 2 ]);
+>>>>>>> eddd7cd (123)
 
                 return redirect()->route('lnfpFormInterviewIndex')->with('alert', 'Data Save as Draft Successfully!');
             } catch (\Throwable $th) {
@@ -344,6 +356,7 @@ class MellpiProForLNFP_InterviewController extends Controller
         $userLevel = auth()->user()->otherrole;
 
         switch ($userLevel) {
+<<<<<<< HEAD
             case 9:
                 $availableForms = [
                     'NAO' => 'MELLPI PRO FORM 6b: RADIAL DIAGRAM FOR CITY/MUNICIPAL NUTRITION ACTION OFFICER MONITORING',
@@ -365,6 +378,43 @@ class MellpiProForLNFP_InterviewController extends Controller
                     'NAO' => 'MELLPI PRO FORM 6b: RADIAL DIAGRAM FOR CITY/MUNICIPAL NUTRITION ACTION OFFICER MONITORING',
                     'CMNPC' => 'MELLPI PRO FORM 6c.2: RADIAL DIAGRAM FOR CITY/MUNICIPAL NUTRITION PROGRAM COORDINATOR MONITORING',
                     'BNS' => 'MELLPI PRO FORM 6d: RADIAL DIAGRAM FOR BARANGAY NUTRITION SCHOLAR MONITORING',
+=======
+            // Municipal Level
+            case 9:
+                $availableForms = [
+                    'NOCMNAO' => 'NATIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION ACTION OFFICER',
+                    'ROCMNAO' => 'REGIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION ACTION OFFICER',
+                    'POCMNAO' => 'PROVINCIAL OUTSTANDING CITY/MUNICIPALITY NUTRITION ACTION OFFICER',
+                    'NOCMNPC' => 'NATIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION PROGRAM COORDINATOR',
+                    'ROCMNPC' => 'REGIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION PROGRAM COORDINATOR',
+                    'POCMNPC' => 'REGIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION PROGRAM COORDINATOR',
+                ];
+                break;
+            // Barangay Level
+            case 10:
+                $availableForms = [
+                    'NOBNS' => 'NATIONAL OUTSTANDING BARANGAY NUTRITION SCHOLAR',
+                    'ROBNS' => 'REGIONAL OUTSTANDING BARANGAY NUTRITION SCHOLAR',
+                    'POBNS' => 'PROVINCIAL/CITY OUTSTANDING BARANGAY NUTRITION SCHOLAR',
+                ];
+                break;
+            // Provincial Level
+            case 7:
+                $availableForms = [
+                    'NOPNCO' => 'NATIONAL OUTSTANDING PROVINCIAL NUTRITION ACTION OFFICER',
+                    'ROPNAO' => 'REGIONAL OUTSTANDING PROVINCIAL NUTRITION ACTION OFFICER',
+                    'NODNPC' => 'NATIONAL OUTSTANDING DISTRICT NUTRITION PROGRAM COORDINATOR',
+                    'RODNPC' => 'REGIONAL OUTSTANDING DISTRICT NUTRITION PROGRAM COORDINATOR',
+                    'NOCMNAO' => 'NATIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION ACTION OFFICER',
+                    'ROCMNAO' => 'REGIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION ACTION OFFICER',
+                    'POCMNAO' => 'PROVINCIAL OUTSTANDING CITY/MUNICIPALITY NUTRITION ACTION OFFICER',
+                    'NOCMNPC' => 'NATIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION PROGRAM COORDINATOR',
+                    'ROCMNPC' => 'REGIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION PROGRAM COORDINATOR',
+                    'POCMNPC' => 'REGIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION PROGRAM COORDINATOR',
+                    'NOBNS' => 'NATIONAL OUTSTANDING BARANGAY NUTRITION SCHOLAR',
+                    'ROBNS' => 'REGIONAL OUTSTANDING BARANGAY NUTRITION SCHOLAR',
+                    'POBNS' => 'PROVINCIAL/CITY OUTSTANDING BARANGAY NUTRITION SCHOLAR',
+>>>>>>> eddd7cd (123)
                 ];
                 break;
     
