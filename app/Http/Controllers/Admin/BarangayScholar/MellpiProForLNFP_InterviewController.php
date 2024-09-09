@@ -194,6 +194,7 @@ class MellpiProForLNFP_InterviewController extends Controller
     public function storeInterviewFormUpdate(Request $request, $id)
     {
         $action = $request->formrequest;
+        $fields = $this->access_fields($request);
         if ($action == 'submit') {
             # code...
             try {
@@ -222,22 +223,7 @@ class MellpiProForLNFP_InterviewController extends Controller
                 } else {
                     //code...
                     lnfp_formInterview::where('id', $request->id)
-                        ->update([
-                            'dateOfInterview' => $request->input('dateInterview'),
-                            'question1' => $request->input('question1'),
-                            'question2' => $request->input('question2'),
-                            'question3' => $request->input('question3'),
-                            'q1AScore' => $request->input('actualScore1'),
-                            'q2AScore' => $request->input('actualScore2'),
-                            'q3AScore' => $request->input('actualScore3'),
-                            'q1Remarks' => $request->input('q1Remarks'),
-                            'q2Remarks' => $request->input('q2Remarks'),
-                            'q3Remarks' => $request->input('q3Remarks'),
-                            'subtotalAScore' => $request->input('subASTot'),
-                            'header'    => $request->header,
-                            'status' => 1,
-                            'user_id' => auth()->user()->id,
-                        ]);
+                        ->update( $fields + [ 'status' => 1 ]);
 
 
                         $lnfp_formOverall = lnfp_formOverall::create([
@@ -263,22 +249,7 @@ class MellpiProForLNFP_InterviewController extends Controller
             try {
                 //code...
                 lnfp_formInterview::where('id', $request->id)
-                    ->update([
-                        'dateOfInterview' => $request->input('dateInterview'),
-                        'question1' => $request->input('question1'),
-                        'question2' => $request->input('question2'),
-                        'question3' => $request->input('question3'),
-                        'q1AScore' => $request->input('actualScore1'),
-                        'q2AScore' => $request->input('actualScore2'),
-                        'q3AScore' => $request->input('actualScore3'),
-                        'q1Remarks' => $request->input('q1Remarks'),
-                        'q2Remarks' => $request->input('q2Remarks'),
-                        'q3Remarks' => $request->input('q3Remarks'),
-                        'subtotalAScore' => $request->input('subASTot'),
-                        'header'    => $request->header,
-                        'status' => 2,
-                        'user_id' => auth()->user()->id,
-                    ]);
+                    ->update( $fields + [ 'status' => 2 ]);
 
                 return redirect()->route('lnfpFormInterviewIndex')->with('alert', 'Data Save as Draft Successfully!');
             } catch (\Throwable $th) {
@@ -344,27 +315,41 @@ class MellpiProForLNFP_InterviewController extends Controller
         $userLevel = auth()->user()->otherrole;
 
         switch ($userLevel) {
+            // Municipal Level
             case 9:
                 $availableForms = [
-                    'NAO' => 'MELLPI PRO FORM 6b: RADIAL DIAGRAM FOR CITY/MUNICIPAL NUTRITION ACTION OFFICER MONITORING',
-                    'CMNPC' => 'MELLPI PRO FORM 6c.2: RADIAL DIAGRAM FOR CITY/MUNICIPAL NUTRITION PROGRAM COORDINATOR MONITORING',
-                    'BNS' => 'MELLPI PRO FORM 6d: RADIAL DIAGRAM FOR BARANGAY NUTRITION SCHOLAR MONITORING',
+                    'NOCMNAO' => 'NATIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION ACTION OFFICER',
+                    'ROCMNAO' => 'REGIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION ACTION OFFICER',
+                    'POCMNAO' => 'PROVINCIAL OUTSTANDING CITY/MUNICIPALITY NUTRITION ACTION OFFICER',
+                    'NOCMNPC' => 'NATIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION PROGRAM COORDINATOR',
+                    'ROCMNPC' => 'REGIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION PROGRAM COORDINATOR',
+                    'POCMNPC' => 'REGIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION PROGRAM COORDINATOR',
                 ];
                 break;
-    
+            // Barangay Level
             case 10:
                 $availableForms = [
-                    'BNS' => 'MELLPI PRO FORM 6d: RADIAL DIAGRAM FOR BARANGAY NUTRITION SCHOLAR MONITORING',
+                    'NOBNS' => 'NATIONAL OUTSTANDING BARANGAY NUTRITION SCHOLAR',
+                    'ROBNS' => 'REGIONAL OUTSTANDING BARANGAY NUTRITION SCHOLAR',
+                    'POBNS' => 'PROVINCIAL/CITY OUTSTANDING BARANGAY NUTRITION SCHOLAR',
                 ];
                 break;
-    
+            // Provincial Level
             case 7:
                 $availableForms = [
-                    'PNAO' => 'MELLPI PRO FORM 6a: RADIAL DIAGRAM FOR PROVINCIAL NUTRITION ACTION OFFICER MONITORING',
-                    'DNPC' => 'MELLPI PRO FORM 6c.1: RADIAL DIAGRAM FOR DISTRICT NUTRITION PROGRAM COORDINATOR MONITORING',
-                    'NAO' => 'MELLPI PRO FORM 6b: RADIAL DIAGRAM FOR CITY/MUNICIPAL NUTRITION ACTION OFFICER MONITORING',
-                    'CMNPC' => 'MELLPI PRO FORM 6c.2: RADIAL DIAGRAM FOR CITY/MUNICIPAL NUTRITION PROGRAM COORDINATOR MONITORING',
-                    'BNS' => 'MELLPI PRO FORM 6d: RADIAL DIAGRAM FOR BARANGAY NUTRITION SCHOLAR MONITORING',
+                    'NOPNCO' => 'NATIONAL OUTSTANDING PROVINCIAL NUTRITION ACTION OFFICER',
+                    'ROPNAO' => 'REGIONAL OUTSTANDING PROVINCIAL NUTRITION ACTION OFFICER',
+                    'NODNPC' => 'NATIONAL OUTSTANDING DISTRICT NUTRITION PROGRAM COORDINATOR',
+                    'RODNPC' => 'REGIONAL OUTSTANDING DISTRICT NUTRITION PROGRAM COORDINATOR',
+                    'NOCMNAO' => 'NATIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION ACTION OFFICER',
+                    'ROCMNAO' => 'REGIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION ACTION OFFICER',
+                    'POCMNAO' => 'PROVINCIAL OUTSTANDING CITY/MUNICIPALITY NUTRITION ACTION OFFICER',
+                    'NOCMNPC' => 'NATIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION PROGRAM COORDINATOR',
+                    'ROCMNPC' => 'REGIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION PROGRAM COORDINATOR',
+                    'POCMNPC' => 'REGIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION PROGRAM COORDINATOR',
+                    'NOBNS' => 'NATIONAL OUTSTANDING BARANGAY NUTRITION SCHOLAR',
+                    'ROBNS' => 'REGIONAL OUTSTANDING BARANGAY NUTRITION SCHOLAR',
+                    'POBNS' => 'PROVINCIAL/CITY OUTSTANDING BARANGAY NUTRITION SCHOLAR',
                 ];
                 break;
     
