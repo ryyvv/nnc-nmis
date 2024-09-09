@@ -41,18 +41,20 @@
                             </center><br> -->
 
                             <!-- <div style="display:flex"> -->
+                            <div style="display:flex">
                             <div class="form-group col">
-                                <label for="nameOf"> HEADER: </label>
-                                <select class="form-control" name="header" id="header">
-                                    <option>Select</option>
-                                    <option value="MELLPI PRO FORM 8a: ACTION SHEET TO IMPROVE PERFORMANCE" <?php echo ( $row->header == 'MELLPI PRO FORM 8a: ACTION SHEET TO IMPROVE PERFORMANCE' ? 'selected':'' ) ?>  >MELLPI PRO FORM 8a: ACTION SHEET TO IMPROVE PERFORMANCE</option>
-                                    <option value="MELLPI PRO FORM 8b: ACTION SHEET TO IMPROVE PERFORMANCE" <?php echo ( $row->header == 'MELLPI PRO FORM 8b: ACTION SHEET TO IMPROVE PERFORMANCE' ? 'selected':'' ) ?>>MELLPI PRO FORM 8b: ACTION SHEET TO IMPROVE PERFORMANCE</option>
-                                    <option value="MELLPI PRO FORM 8c.1: ACTION SHEET TO IMPROVE PERFORMANCE" <?php echo ( $row->header == 'MELLPI PRO FORM 8c.1: ACTION SHEET TO IMPROVE PERFORMANCE' ? 'selected':'' ) ?> >MELLPI PRO FORM 8c.1: ACTION SHEET TO IMPROVE PERFORMANCE</option>
-                                    <option value="MELLPI PRO FORM 8c.2: ACTION SHEET TO IMPROVE PERFORMANCE" <?php echo ( $row->header == 'MELLPI PRO FORM 8c.2: ACTION SHEET TO IMPROVE PERFORMANCE' ? 'selected':'' ) ?> >MELLPI PRO FORM 8c.2: ACTION SHEET TO IMPROVE PERFORMANCE</option>
-                                    <option value="MELLPI PRO FORM 8d: ACTION SHEET TO IMPROVE PERFORMANCE" <?php echo ( $row->header == 'MELLPI PRO FORM 8d: ACTION SHEET TO IMPROVE PERFORMANCE' ? 'selected':'' ) ?>>MELLPI PRO FORM 8d: ACTION SHEET TO IMPROVE PERFORMANCE</option>
-                                   
+                                <input type="hidden" name="header" value="{{ $row->form6_header }}" />
+                                <label for="nameOf"> HEADER:</label>
+                                <select id="header_view" class="form-control" name="header" disabled>
+                                    <option value="" > Select </option>
+                                    @foreach ($availableForms as $formKey => $formName)
+                                        <option value="{{ $formKey }}" <?php echo $row->form6_header == $formKey ? 'selected':'' ?> >{{ $formName }}</option>
+                                    @endforeach
                                 </select>
                             </div>
+                            
+                            </div>
+                            
                             
                             <input type="hidden" name="lgu_id" value="{{$row->lnfp_lgu_id}}">
                             <input type="hidden" value="" name="status" id="status">

@@ -50,6 +50,8 @@ class lnfp_form7 extends Model
         'actionsI',
         'lnfp_lgu_id',
         'status',
+        'user_id',
+        'header6',
     ];
 
     protected $guarded = ['id'];

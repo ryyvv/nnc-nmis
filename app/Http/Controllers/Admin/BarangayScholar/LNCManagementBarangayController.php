@@ -27,10 +27,12 @@ class LNCManagementBarangayController extends Controller
         // return view('BarangayScholar.LNCManagement.index', ['lnclocation' => $lnclocation ]);
 
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
 
         $barangay = auth()->user()->barangay;
 
@@ -41,7 +43,7 @@ class LNCManagementBarangayController extends Controller
         ->get();
 
 
-        return view('BarangayScholar.LNCManagement.index', compact('lnclocation', 'prov', 'mun', 'city', 'brgy'));
+        return view('BarangayScholar.LNCManagement.index', compact('lnclocation', 'provinces', 'cities_municipalities', 'barangays'));
     }
 
     /**
@@ -51,14 +53,16 @@ class LNCManagementBarangayController extends Controller
     {
         $action = "create";
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
         
         $years = range(date("Y"), 1900);
 
-        return view('BarangayScholar.LNCManagement.create', compact('prov', 'mun', 'city', 'brgy','years', 'action'));
+        return view('BarangayScholar.LNCManagement.create', compact('provinces', 'cities_municipalities', 'barangays','years', 'action'));
     }
 
     /**
@@ -189,14 +193,16 @@ class LNCManagementBarangayController extends Controller
     {
         $action = "edit";
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
         
         $years = range(date("Y"), 1900);
         $row = DB::table('mplgubrgylncmanagement')->where('id', $request->id)->first();
-        return view('BarangayScholar.LNCManagement.show', compact('row','prov', 'mun', 'city', 'brgy','years', 'action'));
+        return view('BarangayScholar.LNCManagement.show', compact('row','provinces', 'cities_municipalities', 'barangays','years', 'action'));
     }
 
     /**
@@ -206,14 +212,16 @@ class LNCManagementBarangayController extends Controller
     {
         $action = "edit";
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
         
         $years = range(date("Y"), 1900);
         $row = DB::table('mplgubrgylncmanagement')->where('id', $request->id)->first();
-        return view('BarangayScholar.LNCManagement.edit', compact('row','prov', 'mun', 'city', 'brgy','years', 'action'));
+        return view('BarangayScholar.LNCManagement.edit', compact('row','provinces', 'cities_municipalities', 'barangays','years', 'action'));
     }
 
     /**

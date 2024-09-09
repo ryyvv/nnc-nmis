@@ -93,6 +93,51 @@ function OverAllScore(){
 }
 
 
+function updateDisplayBasedOnHeader(header) {
+    // Reset all blocks to default hidden state
+    let blocks = ['numYrBlock', 'dateDesigBlock', 'dateAppointBlock', 'pro_activitiesBlock', 'assign_taskBlock', 'secondedBlock', 'profActBlock'];
+    blocks.forEach(block => document.getElementById(block).style.display = 'none');
+
+    // Set specific configurations based on the header value
+    if (header === 'NAO') {
+        document.getElementById('numYr').innerHTML = 'Number of years as NAO';
+        document.getElementById('numYrBlock').style.display = 'block';
+        document.getElementById('dateDesigBlock').style.display = 'block';
+        document.getElementById('pro_activitiesBlock').style.display = 'block';
+    } else if (header === 'DNPC') {
+        document.getElementById('numYr').innerHTML = 'Number of years as DNPC';
+        document.getElementById('numYrBlock').style.display = 'block';
+        document.getElementById('dateAppointBlock').style.display = 'block';
+        document.getElementById('assign_taskBlock').style.display = 'block';
+    } else if (header === 'CMNPC') {
+        document.getElementById('numYr').innerHTML = 'Number of years as CMNPC';
+        document.getElementById('numYrBlock').style.display = 'block';
+        document.getElementById('dateAppointBlock').style.display = 'block';
+    } else if (header === 'BNS') {
+        document.getElementById('numYr').innerHTML = 'Number of years as BNS';
+        document.getElementById('numYrBlock').style.display = 'block';
+        document.getElementById('dateAppointBlock').style.display = 'block';
+    }
+}
+
+
+document.getElementById('header').addEventListener('change', function() {
+    let header = this.value;
+    updateDisplayBasedOnHeader(header);
+});
+
+// Check for saved header value on page load
+document.addEventListener('DOMContentLoaded', function() {
+    let savedHeader = document.getElementById('header').value; // Retrieve the saved header value, for example, from a hidden input field, or localStorage
+    if (savedHeader) {
+        updateDisplayBasedOnHeader(savedHeader);
+    }
+});
+
+
+
+
+
 
 
 new DataTable('#InterviewFormmyTable');

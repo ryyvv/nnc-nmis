@@ -105,17 +105,15 @@ class RegisterController extends Controller
             'Lastname' => 'required|string|max:255',
             'Region' => 'required|string|max:255',
             'Province' => 'string|max:255',
-            // 'Province' => 'required|string|max:255',
             'city_municipal' => 'required|string|max:255',
             'barangay' => 'string|max:255',
-            // 'barangay' => 'required|string|max:255',
+            'barangay' => 'required|string|max:255',
             'agency_office_lgu' => 'required|string|max:255',
             'Division_unit' => 'required|string|max:255',
             'role' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email',
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'status' => 'required|string|max:255',
-          
         ]);
     }
 
@@ -126,23 +124,23 @@ class RegisterController extends Controller
      * @return \App\Models\User
      */
     protected function create(array $data)
-    {   
-        if (empty($data['Province'])) {
-            $data['Province'] = substr($data['city_municipal'], 0, 5);
-        }
+    {     
         return User::create([ 
             'Firstname' => $data['Firstname'],
             'Middlename' => $data['Middlename'],
             'Lastname' => $data['Lastname'],
             'Region' => $data['Region'],
-            'Province' => $data['Province'],
+            'Province' => !empty($data['Province']) ? $data['Province'] : substr($data['city_municipal'], 0, 5),
             'city_municipal' => $data['city_municipal'],
             'barangay' => $data['barangay'],
             'agency_office_lgu' => $data['agency_office_lgu'],
             'Division_unit' => $data['Division_unit'],
+            'designation' => $data['designation'],
             'role' => $data['role'],
+            'otherrole' =>$data['otherrole'],
             'email' => $data['email'], 
             'status' =>$data['status'],
+            'userstatus' =>$data['userstatus'],
             'password' => Hash::make($data['password']),
         ]);
     }

@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;  
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class AdminUserController extends Controller
 {
@@ -78,21 +79,25 @@ class AdminUserController extends Controller
 
     public function store(Request $request)
     {
-        //dd($request);
+ 
         $request->validate([
             
             'Firstname' => 'required|string|max:255',
             'Middlename' => 'required|string|max:255',
             'Lastname' => 'required|string|max:255',
-            'inputRegionNAO' => 'required|string|max:255',
-            'inputProvinceNAO' => 'required|string|max:255',
-            'inputCityNAO' => 'required|string|max:255',
+            'Region' => 'required|string|max:255',
+            'Province' => 'required|string|max:255',
+            'city_municipal' => 'required|string|max:255',
             'agency_office_lgu' => 'required|string|max:255',
             'Division_unit' => 'required|string|max:255',
             'role' => 'required|string|max:255',
+            'barangay' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|max:20', 
-            'status' => 'required|string|max:255',
+            'designation' => 'required|string ', 
+            'userstatus' => 'required|integer ', 
+            'status' => 'required|integer',
+            'otherrole' => 'required|integer',
         ]);
 
         $user = User::create([
@@ -108,6 +113,9 @@ class AdminUserController extends Controller
                         'email' => $request->email,
                         'password' => Hash::make($request->password),
                         'status' => $request->status,
+                        'designation' => $request->designation,
+                        'userstatus' => $request->userstatus,
+                        'otherrole' => $request->otherrole,
                     ]);
         
         //query fo r permissions
@@ -115,7 +123,7 @@ class AdminUserController extends Controller
         // dd($roles);
         $user->syncRoles($roles->name);
 
-        return redirect('/adminusers')->with('status','User created successfully with roles');
+        return redirect('CentralAdmin/Admin')->with('status','User created successfully with roles');
     }
 
     public function edit(Request $request)
@@ -133,6 +141,18 @@ class AdminUserController extends Controller
             'users' => $users,
             'roles' => $roles
          ]);
+
+         
+    }
+
+    public function show(Request $request)
+    {   
+        $userrequeststatus = DB::table('userrequeststatus')->get();
+        $userstatus = DB::table('userstatus')->get();
+        $role = Role::get();
+        $users = User::findOrFail($request->id); 
+        //$userRoles = $user->roles->pluck('name','name')->all();
+        return view('CentralAdmin.role-permission.user.show',  compact('users','role', 'userrequeststatus','userstatus'));
     }
 
     public function update(Request $request, User $user)
@@ -178,10 +198,54 @@ class AdminUserController extends Controller
         $roles = DB::table('roles')->where('id', $request->role)->first();
         $user->syncRoles($roles->name); 
 
-        return redirect('/adminusers')->with('status','User Updated Successfully with roles');
+        return redirect('CentralAdmin/Admin')->with('status','User Updated Successfully with roles');
     }
 
-    public function destroy($userId)
+    public function destroy(Request $request)
+    {
+        $user = User::findOrFail($request->id);
+
+    
+        return redirect('CentralAdmin/Admin')->with('status','User Delete Successfully');
+    }
+
+
+    public function changeuserstatus(Request $request)
+    {
+        $user = User::findOrFail($request->request);
+ 
+
+        $rules = [
+            'role' => 'required|string',
+            'userstatus' => 'required|string',
+            'designation' => 'required|string',  
+            'otherrole' => 'required|string',
+            'userstatus' => 'required|string',
+        ];
+        $messages = [ 
+            'required' => 'The :attribute field is required.',
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()->with('error', 'Something went wrong! Please try again.');
+        }
+
+        
+        // Update the password
+        $user->update([ 
+            'role' => $request->role,
+            'designation' =>   $request->designation,
+            'otherrole' =>   $request->otherrole,
+            'userstatus' =>   $request->userstatus,
+        ]);
+
+        return redirect('CentralAdmin/Admin')->with('success','User Status Updated Successfully');
+    }
+
+    public function changepassword($userId)
     {
         $user = User::findOrFail($userId);
         $user->delete();

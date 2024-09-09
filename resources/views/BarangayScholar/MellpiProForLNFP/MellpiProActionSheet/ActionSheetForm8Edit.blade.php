@@ -41,17 +41,18 @@
                             </center><br> -->
 
                             <!-- <div style="display:flex"> -->
+                            <div style="display:flex">
                             <div class="form-group col">
-                                <label for="nameOf"> HEADER:<span style="color:red">*</span> </label>
-                                <select class="form-control" name="header" id="header">
-                                    <option>Select</option>
-                                    <option value="MELLPI PRO FORM 8a: ACTION SHEET TO IMPROVE PERFORMANCE" <?php echo ( old('header',$row->header) == 'MELLPI PRO FORM 8a: ACTION SHEET TO IMPROVE PERFORMANCE' ? 'selected':'' ) ?>  >MELLPI PRO FORM 8a: ACTION SHEET TO IMPROVE PERFORMANCE</option>
-                                    <option value="MELLPI PRO FORM 8b: ACTION SHEET TO IMPROVE PERFORMANCE" <?php echo ( old('header',$row->header) == 'MELLPI PRO FORM 8b: ACTION SHEET TO IMPROVE PERFORMANCE' ? 'selected':'' ) ?>>MELLPI PRO FORM 8b: ACTION SHEET TO IMPROVE PERFORMANCE</option>
-                                    <option value="MELLPI PRO FORM 8c.1: ACTION SHEET TO IMPROVE PERFORMANCE" <?php echo ( old('header',$row->header) == 'MELLPI PRO FORM 8c.1: ACTION SHEET TO IMPROVE PERFORMANCE' ? 'selected':'' ) ?> >MELLPI PRO FORM 8c.1: ACTION SHEET TO IMPROVE PERFORMANCE</option>
-                                    <option value="MELLPI PRO FORM 8c.2: ACTION SHEET TO IMPROVE PERFORMANCE" <?php echo ( old('header',$row->header) == 'MELLPI PRO FORM 8c.2: ACTION SHEET TO IMPROVE PERFORMANCE' ? 'selected':'' ) ?> >MELLPI PRO FORM 8c.2: ACTION SHEET TO IMPROVE PERFORMANCE</option>
-                                    <option value="MELLPI PRO FORM 8d: ACTION SHEET TO IMPROVE PERFORMANCE" <?php echo ( old('header',$row->header) == 'MELLPI PRO FORM 8d: ACTION SHEET TO IMPROVE PERFORMANCE' ? 'selected':'' ) ?>>MELLPI PRO FORM 8d: ACTION SHEET TO IMPROVE PERFORMANCE</option>
-                                   
+                                <input type="hidden" name="header" value="{{ $row->form6_header }}" />
+                                <label for="nameOf"> HEADER:</label>
+                                <select id="header_view" class="form-control" name="header" disabled>
+                                    <option value="" > Select </option>
+                                    @foreach ($availableForms as $formKey => $formName)
+                                        <option value="{{ $formKey }}" <?php echo $row->form6_header == $formKey ? 'selected':'' ?> >{{ $formName }}</option>
+                                    @endforeach
                                 </select>
+                            </div>
+                            
                             </div>
                             
                             <input type="hidden" name="lgu_id" value="{{$row->lnfp_lgu_id}}">
@@ -109,7 +110,13 @@
                                             <tr>
                                                 <td class="col-md-4"><input type="text" class="form8InputS" value="A. Coordination" readonly></td>
                                                 <td class="col-md-4"><textarea type="text" class="form8Input" name="recoPNAO_A" placeholder="Enter your text here...">{{ $row->recoPNAO_A }}</textarea></td>
+                                                @error('recoPNAO_A')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror
                                                 <td class="col-md-4"><textarea type="text" class="form8Input" name="recoLNC_A" placeholder="Enter your text here...">{{ $row->recoLNC_A }}</textarea></td>
+                                                @error('recoLNC_A')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror
                                             </tr>
                                             <tr>
                                                 <td class="col-md-4"><input type="text" class="form8InputS" value="B. Orientation, Promotion and Advocacy" readonly></td>

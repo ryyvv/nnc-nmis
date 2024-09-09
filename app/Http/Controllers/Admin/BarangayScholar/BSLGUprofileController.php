@@ -18,23 +18,13 @@ class BSLGUprofileController extends Controller
 
     public function index()
     {
-
-        $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
-
-        $barangay = auth()->user()->barangay;
-        //$lguprofile = DB::table('lguprofilebarangay')->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();
-
         $lguprofile = DB::table('users')
             ->join('lguprofilebarangay', 'users.id', '=', 'lguprofilebarangay.user_id')
             ->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')
             ->select('users.Firstname as firstname', 'users.Middlename as middlename', 'users.Lastname as lastname', 'lguprofilebarangay.*')
             ->get();
 
-        return view('BarangayScholar.lguprofile.index', compact('lguprofile', 'prov', 'mun', 'city', 'brgy'));
+        return view('BarangayScholar.lguprofile.index', compact('lguprofile'));
     }
 
 
@@ -42,51 +32,52 @@ class BSLGUprofileController extends Controller
     {
         $action = 'edit';
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
 
         $years = range(date("Y"), 1900);
 
-        //dd($request->id);
         $row = DB::table('lguprofilebarangay')->where('user_id', auth()->user()->id)->first();
-        //dd($lguProfile);
 
-
-        return view('BarangayScholar.lguprofile.edit', compact('row', 'prov', 'mun', 'city', 'brgy', 'years', 'action'));
+        return view('BarangayScholar.lguprofile.edit', compact('row', 'provinces', 'cities_municipalities', 'barangays', 'years', 'action'));
     }
 
     public function show(Request $request, $id)
     {
         $action = 'edit';
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
 
         $years = range(date("Y"), 1900);
 
         $row = DB::table('lguprofilebarangay')->where('id', $id)->first();
      
-        return view('BarangayScholar.lguprofile.show', compact('row', 'prov', 'mun', 'city', 'brgy', 'years', 'action'));
+        return view('BarangayScholar.lguprofile.show', compact('row', 'provinces', 'cities_municipalities', 'barangays', 'years', 'action'));
     }
 
     public function create(Request $request)
     {
-
-
         $action = 'create';
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
-
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
+        
         $years = range(date("Y"), 1900);
 
-        return view('BarangayScholar.lguprofile.create', compact('prov', 'mun', 'city', 'brgy', 'years', 'action'));
+        return view('BarangayScholar.lguprofile.create', compact('provinces', 'cities_municipalities', 'barangays', 'years', 'action'));
     }
 
     public function storeSubmit(Request $request)
@@ -312,7 +303,7 @@ class BSLGUprofileController extends Controller
                 'user_id' => $request->user_id
             ]);
 
-            return redirect('BarangayScholar/lguprofile')->with('success', 'Data stored as Draft!'); 
+            return redirect('BarangayScholar/lguprofile')->with('success', 'Data stored as Draft!');
         }
         else {
             $rules = [

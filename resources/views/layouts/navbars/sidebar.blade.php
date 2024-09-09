@@ -73,7 +73,7 @@
         @elseif( Auth::check() && auth()->user()->otherrole == 9 )
           @include('layouts.navbars.MunicipalStaff-sidebar')
         @elseif( Auth::check() && auth()->user()->otherrole == 10 )
-          @include('layouts.navbars.barangayscholar-sidebar') 
+          @include('layouts.navbars.BarangayScholar-sidebar') 
         @endif
     </ul>
   </div>

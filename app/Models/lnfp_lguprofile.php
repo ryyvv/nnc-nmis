@@ -154,7 +154,8 @@ class lnfp_lguprofile extends Model
         'municipal_id',
         'province_id',
         'region_id',
-        'user_id'
+        'user_id',
+        'income_class'
 
     ];
 

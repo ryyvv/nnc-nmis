@@ -55,18 +55,18 @@
 
 
                                     <!-- FOR CITY AND MUNICIPALITY -->
-                                    @if( auth()->user()->role != 10 )
+                                    @if( auth()->user()->otherrole != 10 )
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">Income Class:<span style="color:red">*</span></label>
-                                        <select class="form-control" name="income-class">
+                                        <select class="form-control" name="income_class">
                                             <option value="">Select</option>
-                                            <option value="1">1st</option>
-                                            <option value="2">2nd</option>
-                                            <option value="3">3rd</option>
-                                            <option value="4">4th</option>
-                                            <option value="5">5th</option> 
+                                            <option value="1st" <?php echo ( old('income_class') == '1st' ? 'selected':'' ) ?> >1st</option>
+                                            <option value="2nd" <?php echo ( old('income_class') == '2nd' ? 'selected':'' ) ?> >2nd</option>
+                                            <option value="3rd" <?php echo ( old('income_class') == '3rd' ? 'selected':'' ) ?> >3rd</option>
+                                            <option value="4th" <?php echo ( old('income_class') == '4th' ? 'selected':'' ) ?> >4th</option>
+                                            <option value="5th" <?php echo ( old('income_class') == '5th' ? 'selected':'' ) ?> >5th</option> 
                                         </select>
-                                        @error('income-class')
+                                        @error('income_class')
                                         <div class="text-danger" id="warning-mesg">{{ $message }}</div>
                                         @enderror
                                     </div>

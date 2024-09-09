@@ -24,6 +24,7 @@ class MellpiProForLNFP_InterviewController extends Controller
                  'lnfp_form5a_rr.nameofPnao as nameofPnao', 
                  'lnfp_form5a_rr.address as periodCovereda',
                  'lnfp_form5a_rr.id as form5_id')
+        ->where('lnfp_interview_form.user_id', auth()->user()->id)
         ->get();
 
         return view('BarangayScholar/MellpiProForLNFP/MellpiProInterview/InterviewFormPNAOIndex', ['InterviewForm' => $InterviewForm]);
@@ -189,25 +190,15 @@ class MellpiProForLNFP_InterviewController extends Controller
             }
         }
     }
+
     public function storeInterviewFormUpdate(Request $request, $id)
     {
         $action = $request->formrequest;
         if ($action == 'submit') {
             # code...
             try {
-                $rules = [
-                    'dateInterview' => 'nullable',
-                    'question2' => 'required',
-                    'question3' => 'required',
-                    'actualScore1' => 'required',
-                    'actualScore2' => 'required',
-                    'actualScore3' => 'required',
-                    'q1Remarks' => 'nullable',
-                    'q2Remarks' => 'nullable',
-                    'q3Remarks' => 'nullable',
-                    'subASTot' => 'required',
-                    'header'   => 'required'
-                ];
+               
+                $rules = $this->access_rules();
 
                 $message = [
                     'required' => 'The field is required.',
@@ -302,5 +293,87 @@ class MellpiProForLNFP_InterviewController extends Controller
         $lnfp_interview->delete();
 
         return redirect()->route('lnfpForm8Index')->with('alert', 'Deleted Successfully!');
+    }
+
+
+    public static function access_rules(){
+
+        $rules = [
+            'dateInterview' => 'nullable',
+            'question2' => 'required',
+            'question3' => 'required',
+            'actualScore1' => 'required',
+            'actualScore2' => 'required',
+            'actualScore3' => 'required',
+            'q1Remarks' => 'nullable',
+            'q2Remarks' => 'nullable',
+            'q3Remarks' => 'nullable',
+            'subASTot' => 'required',
+            'header'   => 'required'
+        ];
+
+        return $rules;
+
+    }
+
+    public static function access_fields( $request ){
+
+        $updateData = [
+            'dateOfInterview' => $request->input('dateInterview'),
+            'question1' => $request->input('question1'),
+            'question2' => $request->input('question2'),
+            'question3' => $request->input('question3'),
+            'q1AScore' => $request->input('actualScore1'),
+            'q2AScore' => $request->input('actualScore2'),
+            'q3AScore' => $request->input('actualScore3'),
+            'q1Remarks' => $request->input('q1Remarks'),
+            'q2Remarks' => $request->input('q2Remarks'),
+            'q3Remarks' => $request->input('q3Remarks'),
+            'subtotalAScore' => $request->input('subASTot'),
+            'header'    => $request->header,
+            'status' => 1,
+            'user_id' => auth()->user()->id,
+        ];
+
+        return $updateData;
+
+    }
+
+    public static function access_header(){
+
+        $userLevel = auth()->user()->otherrole;
+
+        switch ($userLevel) {
+            case 9:
+                $availableForms = [
+                    'NAO' => 'MELLPI PRO FORM 6b: RADIAL DIAGRAM FOR CITY/MUNICIPAL NUTRITION ACTION OFFICER MONITORING',
+                    'CMNPC' => 'MELLPI PRO FORM 6c.2: RADIAL DIAGRAM FOR CITY/MUNICIPAL NUTRITION PROGRAM COORDINATOR MONITORING',
+                    'BNS' => 'MELLPI PRO FORM 6d: RADIAL DIAGRAM FOR BARANGAY NUTRITION SCHOLAR MONITORING',
+                ];
+                break;
+    
+            case 10:
+                $availableForms = [
+                    'BNS' => 'MELLPI PRO FORM 6d: RADIAL DIAGRAM FOR BARANGAY NUTRITION SCHOLAR MONITORING',
+                ];
+                break;
+    
+            case 7:
+                $availableForms = [
+                    'PNAO' => 'MELLPI PRO FORM 6a: RADIAL DIAGRAM FOR PROVINCIAL NUTRITION ACTION OFFICER MONITORING',
+                    'DNPC' => 'MELLPI PRO FORM 6c.1: RADIAL DIAGRAM FOR DISTRICT NUTRITION PROGRAM COORDINATOR MONITORING',
+                    'NAO' => 'MELLPI PRO FORM 6b: RADIAL DIAGRAM FOR CITY/MUNICIPAL NUTRITION ACTION OFFICER MONITORING',
+                    'CMNPC' => 'MELLPI PRO FORM 6c.2: RADIAL DIAGRAM FOR CITY/MUNICIPAL NUTRITION PROGRAM COORDINATOR MONITORING',
+                    'BNS' => 'MELLPI PRO FORM 6d: RADIAL DIAGRAM FOR BARANGAY NUTRITION SCHOLAR MONITORING',
+                ];
+                break;
+    
+            default:
+                $availableForms = [];
+                break;
+        }
+
+        return $availableForms;
+
     }
 }

@@ -43,40 +43,14 @@
 
                             @if($form6)
 
-                            <!-- <center><img src="https://nnc-nmis.moodlearners.com/assets/img/logo.png" alt="" class="imgLogo"></center><br>
-                            <center>
-                                <h5 class="title">{{__("MELLPI PRO FORM 6a: RADIAL DIEAGRAM FOR PROVINCIAL NUTRITION ACTION OFFICER MONITORING")}}</h5>
-                                <label for="period">For the period: </label>
-                                <select name="forTheperiod" id="forTheperiod" class="inputHeaderPeriod">
-                                    <option selected>{{ $form6->periodCovereda }}</option>
-                                    <?php
-                                    // $currentYear = date('Y');
-                                    // $startYear = 1900;
-                                    // $endYear = $currentYear;
-                                    // for ($year = $startYear; $year <= $endYear; $year++) {
-                                    //     echo "<option value=\"$year\">$year</option>";
-                                    // }
-                                    ?>
-                                </select>
-                            </center><br> -->
-
                             <div style="display:flex">
                             <div class="form-group col">
-                                <label for="nameOf"> HEADER:</label>
-                                <select class="form-control" name="header" id="header">
-                                    <option>Select</option>
-                                    <!-- For provincial staff -->
-                                    @if( auth()->user()->role == 7 )
-                                    <option value="MELLPI PRO FORM 6a: RADIAL DIAGRAM FOR PROVINCIAL NUTRITION ACTION OFFICER MONITORING">MELLPI PRO FORM 6a: RADIAL DIAGRAM FOR PROVINCIAL NUTRITION ACTION OFFICER MONITORING</option>
-                                    <!-- For City Municipal staff -->
-                                    @elseif( auth()->user()->role == 7 || auth()->user()->role == 9 )
-                                    <option value="MELLPI PRO FORM 6b: RADIAL DIAGRAM FOR CITY/MUNICIPAL NUTRITION ACTION OFFICER MONITORING">MELLPI PRO FORM 6b: RADIAL DIAGRAM FOR CITY/MUNICIPAL NUTRITION ACTION OFFICER MONITORING</option>
-                                    <option value="MELLPI PRO FORM 6c.1: RADIAL DIAGRAM FOR DISTRICT NUTRITION PROGRAM COORDINATOR MONITORING">MELLPI PRO FORM 6c.1: RADIAL DIAGRAM FOR DISTRICT NUTRITION PROGRAM COORDINATOR MONITORING</option>
-                                    <option value="MELLPI PRO FORM 6c.2: RADIAL DIAGRAM FOR CITY/MUNICIPAL NUTRITION PROGRAM COORDINATOR MONITORING">MELLPI PRO FORM 6c.2: RADIAL DIAGRAM FOR CITY/MUNICIPAL NUTRITION PROGRAM COORDINATOR MONITORING</option>
-                                    <!-- For barangay staff -->
-                                    @elseif( auth()->user()->role == 7 || auth()->user()->role == 10 )
-                                    <option value="MELLPI PRO FORM 6d: RADIAL DIAGRAM FOR BARANGAY NUTRITION SCHOLAR MONITORING" selected >MELLPI PRO FORM 6d: RADIAL DIAGRAM FOR BARANGAY NUTRITION SCHOLAR MONITORING</option>
-                                    @endif
+                                <label for="nameOf"> HEADER:<span style="color:red">*</span> </label>
+                                <select id="header" class="form-control" name="header">
+                                    <option value="" > Select </option>
+                                    @foreach ($availableForms as $formKey => $formName)
+                                        <option value="{{ $formKey }}" <?php echo $form6->header6 == $formKey ? 'selected':'' ?> >{{ $formName }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             
@@ -400,6 +374,7 @@
                                           <div class="mr-auto p-2 bd-highlight">
                                             <a href="{{ route('lguForm5ViewForm', $form6->form5_id) }}"> <i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Previous Form 5</a></div>
                                           <div class="p-2 bd-highlight">
+                                            
                                             @if( $form6->form8_status == 2 )
                                             <a href="{{ route('editForm8', $form6->form8_id ) }}"> Next Form 8 <i class="fa fa-arrow-right" aria-hidden="true"></i></a> </div> 
                                             @else

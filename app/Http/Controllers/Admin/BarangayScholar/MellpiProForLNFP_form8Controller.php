@@ -28,14 +28,15 @@ class MellpiProForLNFP_form8Controller extends Controller
                  'lnfp_form5a_rr.nameofPnao as nameofPnao',
                  'lnfp_form5a_rr.dateMonitoring as dateMonitoring',
                  'lnfp_form5a_rr.id as form5_id')
-       ->get();
+        ->where('lnfp_form8.user_id', auth()->user()->id)
+        ->get();
         return view('BarangayScholar/MellpiProForLNFP/MellpiProActionSheet/ActionSheetForm8Index', ['form8' => $form8]);
     }
 
     public function ActionSheetForm8View(Request $request)
     {
         $action = 'edit';
-
+        $availableForms = $this->access_header();
         $row = DB::table('lnfp_form8')
         ->leftjoin('lnfp_interview_form', 'lnfp_interview_form.form8_id', '=', 'lnfp_form8.id')
         ->leftjoin('lnfp_form7', 'lnfp_form8.form7_id', '=', 'lnfp_form7.id')
@@ -47,10 +48,11 @@ class MellpiProForLNFP_form8Controller extends Controller
                  'lnfp_form5a_rr.id as form5_id',
                  'lnfp_form5a_rr.address as area',
                  'lnfp_interview_form.id as interview_id',
-                 'lnfp_interview_form.status as interview_status')
+                 'lnfp_interview_form.status as interview_status',
+                 'lnfp_form7.header6 as form6_header')
         ->where('lnfp_form8.id', $request->id)->first();
 
-        return view('BarangayScholar/MellpiProForLNFP/MellpiProActionSheet/Form8View',compact('row', 'action'));
+        return view('BarangayScholar/MellpiProForLNFP/MellpiProActionSheet/Form8View',compact('row', 'action', 'availableForms'));
     }
 
 
@@ -58,7 +60,7 @@ class MellpiProForLNFP_form8Controller extends Controller
     public function ActionSheetForm8Edit(Request $request)
     {
         $action = 'edit';
-
+        $availableForms = $this->access_header();
         $row = DB::table('lnfp_form8')
         ->join('lnfp_form7', 'lnfp_form8.form7_id', '=', 'lnfp_form7.id')
         ->join('lnfp_form5a_rr', 'lnfp_form7.form5_id', '=', 'lnfp_form5a_rr.id')
@@ -67,10 +69,11 @@ class MellpiProForLNFP_form8Controller extends Controller
                  'lnfp_form5a_rr.nameofPnao as nameofPnao',
                  'lnfp_form5a_rr.dateMonitoring as dateMonitoring',
                  'lnfp_form5a_rr.address as area',
-                 'lnfp_form5a_rr.id as form5_id')
+                 'lnfp_form5a_rr.id as form5_id',
+                 'lnfp_form7.header6 as form6_header')
         ->where('lnfp_form8.id', $request->id)->first();
 
-        return view('BarangayScholar/MellpiProForLNFP/MellpiProActionSheet/ActionSheetForm8Edit',compact('row', 'action'));
+        return view('BarangayScholar/MellpiProForLNFP/MellpiProActionSheet/ActionSheetForm8Edit',compact('row', 'action', 'availableForms'));
     }
     public function ActionSheetForm8Create()
     {
@@ -85,6 +88,7 @@ class MellpiProForLNFP_form8Controller extends Controller
 
         return view('BarangayScholar/MellpiProForLNFP/MellpiProActionSheet/ActionSheetForm8Create', compact('prov', 'mun', 'city', 'brgy', 'years', 'action'));
     }
+
     public function storeASForm8(Request $request)
     {
         $action = $request->input('action');
@@ -296,6 +300,8 @@ class MellpiProForLNFP_form8Controller extends Controller
             }
         }
     }
+
+
     public function storeUpdateASForm8(Request $request, $id)
     {
         $action = $request->input('action');
@@ -304,37 +310,8 @@ class MellpiProForLNFP_form8Controller extends Controller
             # code...
             // dd($action);
             // try {
-                $rules = [
-                    'recoPNAO_A' => 'required|string',
-                    'recoPNAO_B' => 'required|string',
-                    'recoPNAO_C' => 'required|string',
-                    'recoPNAO_D' => 'required|string',
-                    'recoPNAO_E' => 'required|string',
-                    'recoPNAO_F' => 'required|string',
-                    'recoPNAO_G' => 'required|string',
-                    'recoPNAO_H' => 'required|string',
-                    'recoLNC_A' => 'required|string',
-                    'recoLNC_B' => 'required|string',
-                    'recoLNC_C' => 'required|string',
-                    'recoLNC_D' => 'required|string',
-                    'recoLNC_E' => 'required|string',
-                    'recoLNC_F' => 'required|string',
-                    'recoLNC_G' => 'required|string',
-                    'recoLNC_H' => 'required|string',
-                    'nameTM1' => 'required|string',
-                    'nameTM2' => 'required|string',
-                    'nameTM3' => 'required|string',
-                    'desigOffice1' => 'required|string',
-                    'desigOffice2' => 'required|string',
-                    'desigOffice3' => 'required|string',
-                    'sigDate1' => 'file|mimes:jpg,jpeg,png|max:2048',
-                    'sigDate2' => 'file|mimes:jpg,jpeg,png|max:2048',
-                    'sigDate3' => 'file|mimes:jpg,jpeg,png|max:2048',
-                    'receivedBy' => 'required|string',
-                    'whatDate' => 'required|date',
-                    'header'   => 'required',
-                ];
-        
+                $rules = $this->access_rules();
+
                 $messages = [
                     'required' => 'The :attribute field is required.',
                     'integer' => 'The :attribute field must be an integer.',
@@ -355,49 +332,16 @@ class MellpiProForLNFP_form8Controller extends Controller
                         ->withErrors($validator)
                         ->withInput()
                         ->with('error', 'Something went wrong! Please try again.');
-                }
+                }else{
         
                 $LNFPForm8AS = lnfp_form8::findOrFail($id);
         
                 $sigDate1 = $this->handleFileUpload($request, 'sigDate1', $LNFPForm8AS->sigDate1);
                 $sigDate2 = $this->handleFileUpload($request, 'sigDate2', $LNFPForm8AS->sigDate2);
                 $sigDate3 = $this->handleFileUpload($request, 'sigDate3', $LNFPForm8AS->sigDate3);
-        
-                $LNFPForm8AS->update([
-                    'areaOfAssign' => $request->input('areaAssign'),
-                    'recoPNAO_A' => $request->input('recoPNAO_A'),
-                    'recoPNAO_B' => $request->input('recoPNAO_B'),
-                    'recoPNAO_C' => $request->input('recoPNAO_C'),
-                    'recoPNAO_D' => $request->input('recoPNAO_D'),
-                    'recoPNAO_E' => $request->input('recoPNAO_E'),
-                    'recoPNAO_F' => $request->input('recoPNAO_F'),
-                    'recoPNAO_G' => $request->input('recoPNAO_G'),
-                    'recoPNAO_H' => $request->input('recoPNAO_H'),
-                    'recoLNC_A' => $request->input('recoLNC_A'),
-                    'recoLNC_B' => $request->input('recoLNC_B'),
-                    'recoLNC_C' => $request->input('recoLNC_C'),
-                    'recoLNC_D' => $request->input('recoLNC_D'),
-                    'recoLNC_E' => $request->input('recoLNC_E'),
-                    'recoLNC_F' => $request->input('recoLNC_F'),
-                    'recoLNC_G' => $request->input('recoLNC_G'),
-                    'recoLNC_H' => $request->input('recoLNC_H'),
-                    'nameTM1' => $request->input('nameTM1'),
-                    'nameTM2' => $request->input('nameTM2'),
-                    'nameTM3' => $request->input('nameTM3'),
-                    'desigOffice1' => $request->input('desigOffice1'),
-                    'desigOffice2' => $request->input('desigOffice2'),
-                    'desigOffice3' => $request->input('desigOffice3'),
-                    'sigDate1' => $sigDate1,
-                    'sigDate2' => $sigDate2,
-                    'sigDate3' => $sigDate3,
-                    'receivedBy' => $request->input('receivedBy'),
-                    'whatDate' => $request->input('whatDate'),
-                    'hedaer'    => $request->header,
-                    'status' => 1,
-                    'user_id' => auth()->user()->id,
-                ]);
-
-                if ($LNFPForm8AS) {
+                
+                $fields = $this->access_fields($request, $sigDate1, $sigDate2, $sigDate3);
+                $LNFPForm8AS->update( $fields +  ['status' => 1 ]);
                     # code...
                     lnfp_lguform8tracking::create([
                         'lnfp_form8_id' => $request->id,
@@ -406,11 +350,8 @@ class MellpiProForLNFP_form8Controller extends Controller
                         'municipal_id' => auth()->user()->city_municipal,
                         'user_id' => auth()->user()->id,
                     ]);
-                }
 
-                $lnfp_formInterview = lnfp_formInterview::where('form8_id', $id)->first();
-
-                if( $lnfp_formInterview == null ){
+               
                     $lnfp_formInterview = lnfp_formInterview::create([
                         'form8_id' => $id,
                         'form5_id' => $request->form5_id,
@@ -418,70 +359,29 @@ class MellpiProForLNFP_form8Controller extends Controller
                         'lnfp_lgu_id' => $request->lgu_id,
                         'user_id' => auth()->user()->id,
                     ]);
-
-                }
+               
+         
                 
                 return redirect()->route('editIntForm',  $lnfp_formInterview->id)->with('success', 'Data stored successfully! You can now create Interview Form');
-                // return redirect()->route('lnfpForm8Index')->with('alert', 'Data Submitted Successfully!');
+                }    
 
-                
-            // } catch (\Throwable $th) {
-            //     Log::error('An error occurred: ' . $th->getMessage());
-            //     return redirect()->back()->with('error', 'An error occurred. Please try again.');
-            // }
         } elseif ($request->formrequest == 'draft') {
-            # code...
-            // dd($action);
-            try {
-                //code...
+           
                 $LNFPForm8AS = lnfp_form8::findOrFail($id);
         
                 $sigDate1 = $this->handleFileUpload($request, 'sigDate1', $LNFPForm8AS->sigDate1);
                 $sigDate2 = $this->handleFileUpload($request, 'sigDate2', $LNFPForm8AS->sigDate2);
                 $sigDate3 = $this->handleFileUpload($request, 'sigDate3', $LNFPForm8AS->sigDate3);
-        
-                $LNFPForm8AS->update([
-                    'areaOfAssign' => $request->input('areaAssign'),
-                    'recoPNAO_A' => $request->input('recoPNAO_A'),
-                    'recoPNAO_B' => $request->input('recoPNAO_B'),
-                    'recoPNAO_C' => $request->input('recoPNAO_C'),
-                    'recoPNAO_D' => $request->input('recoPNAO_D'),
-                    'recoPNAO_E' => $request->input('recoPNAO_E'),
-                    'recoPNAO_F' => $request->input('recoPNAO_F'),
-                    'recoPNAO_G' => $request->input('recoPNAO_G'),
-                    'recoPNAO_H' => $request->input('recoPNAO_H'),
-                    'recoLNC_A' => $request->input('recoLNC_A'),
-                    'recoLNC_B' => $request->input('recoLNC_B'),
-                    'recoLNC_C' => $request->input('recoLNC_C'),
-                    'recoLNC_D' => $request->input('recoLNC_D'),
-                    'recoLNC_E' => $request->input('recoLNC_E'),
-                    'recoLNC_F' => $request->input('recoLNC_F'),
-                    'recoLNC_G' => $request->input('recoLNC_G'),
-                    'recoLNC_H' => $request->input('recoLNC_H'),
-                    'nameTM1' => $request->input('nameTM1'),
-                    'nameTM2' => $request->input('nameTM2'),
-                    'nameTM3' => $request->input('nameTM3'),
-                    'desigOffice1' => $request->input('desigOffice1'),
-                    'desigOffice2' => $request->input('desigOffice2'),
-                    'desigOffice3' => $request->input('desigOffice3'),
-                    'sigDate1' => $sigDate1,
-                    'sigDate2' => $sigDate2,
-                    'sigDate3' => $sigDate3,
-                    'receivedBy' => $request->input('receivedBy'),
-                    'whatDate' => $request->input('whatDate'),
-                    'header'    => $request->header,
-                    'status' => 2,
-                    'user_id' => auth()->user()->id,
-                ]);
-        
+                $fields = $this->access_fields($request, $sigDate1, $sigDate2, $sigDate3);
+                $LNFPForm8AS->update( $fields + [ 'status' => 2 ]);
+
                 return redirect()->route('lnfpForm8Index')->with('alert', 'Data Saved as Draft Successfully!');
-            } catch (\Throwable $th) {
-                //throw $th;
-                Log::error('An error occurred: ' . $th->getMessage());
-                return redirect()->back()->with('error', 'An error occurred. Please try again.');
-            }
         }
     }
+
+
+
+
     private function handleFileUpload($request, $fieldName, $existingFilePath = null) {
         if ($request->hasFile($fieldName)) {
             if ($existingFilePath) {
@@ -503,4 +403,122 @@ class MellpiProForLNFP_form8Controller extends Controller
 
         return redirect()->route('lnfpForm8Index')->with('alert', 'Deleted Successfully!');
     }
+
+    public static function access_rules(){
+
+        $rules = [
+            'recoPNAO_A' => 'required|string',
+            'recoPNAO_B' => 'required|string',
+            'recoPNAO_C' => 'required|string',
+            'recoPNAO_D' => 'required|string',
+            'recoPNAO_E' => 'required|string',
+            'recoPNAO_F' => 'required|string',
+            'recoPNAO_G' => 'required|string',
+            'recoPNAO_H' => 'required|string',
+            'recoLNC_A' => 'required|string',
+            'recoLNC_B' => 'required|string',
+            'recoLNC_C' => 'required|string',
+            'recoLNC_D' => 'required|string',
+            'recoLNC_E' => 'required|string',
+            'recoLNC_F' => 'required|string',
+            'recoLNC_G' => 'required|string',
+            'recoLNC_H' => 'required|string',
+            'nameTM1' => 'required|string',
+            'nameTM2' => 'required|string',
+            'nameTM3' => 'required|string',
+            'desigOffice1' => 'required|string',
+            'desigOffice2' => 'required|string',
+            'desigOffice3' => 'required|string',
+            'sigDate1' => 'file|mimes:jpg,jpeg,png|max:2048',
+            'sigDate2' => 'file|mimes:jpg,jpeg,png|max:2048',
+            'sigDate3' => 'file|mimes:jpg,jpeg,png|max:2048',
+            'receivedBy' => 'required|string',
+            'whatDate' => 'required|date',
+            // 'header'   => 'required',
+        ];
+
+        return $rules;
+
+
+    }
+
+    public static function access_fields($request, $sigDate1, $sigDate2, $sigDate3 ){
+
+        $updateData = [
+            'areaOfAssign' => $request->input('areaAssign'),
+            'recoPNAO_A' => $request->input('recoPNAO_A'),
+            'recoPNAO_B' => $request->input('recoPNAO_B'),
+            'recoPNAO_C' => $request->input('recoPNAO_C'),
+            'recoPNAO_D' => $request->input('recoPNAO_D'),
+            'recoPNAO_E' => $request->input('recoPNAO_E'),
+            'recoPNAO_F' => $request->input('recoPNAO_F'),
+            'recoPNAO_G' => $request->input('recoPNAO_G'),
+            'recoPNAO_H' => $request->input('recoPNAO_H'),
+            'recoLNC_A' => $request->input('recoLNC_A'),
+            'recoLNC_B' => $request->input('recoLNC_B'),
+            'recoLNC_C' => $request->input('recoLNC_C'),
+            'recoLNC_D' => $request->input('recoLNC_D'),
+            'recoLNC_E' => $request->input('recoLNC_E'),
+            'recoLNC_F' => $request->input('recoLNC_F'),
+            'recoLNC_G' => $request->input('recoLNC_G'),
+            'recoLNC_H' => $request->input('recoLNC_H'),
+            'nameTM1' => $request->input('nameTM1'),
+            'nameTM2' => $request->input('nameTM2'),
+            'nameTM3' => $request->input('nameTM3'),
+            'desigOffice1' => $request->input('desigOffice1'),
+            'desigOffice2' => $request->input('desigOffice2'),
+            'desigOffice3' => $request->input('desigOffice3'),
+            'sigDate1' => $sigDate1,
+            'sigDate2' => $sigDate2,
+            'sigDate3' => $sigDate3,
+            'receivedBy' => $request->input('receivedBy'),
+            'whatDate' => $request->input('whatDate'),
+            'header'    => $request->header,
+            'user_id' => auth()->user()->id,
+        ];
+
+        return $updateData;
+
+    }
+
+    public static function access_header(){
+
+        $userLevel = auth()->user()->otherrole;
+
+        switch ($userLevel) {
+            case 9:
+                $availableForms = [
+                    'NAO' => 'MELLPI PRO FORM 6b: RADIAL DIAGRAM FOR CITY/MUNICIPAL NUTRITION ACTION OFFICER MONITORING',
+                    'CMNPC' => 'MELLPI PRO FORM 6c.2: RADIAL DIAGRAM FOR CITY/MUNICIPAL NUTRITION PROGRAM COORDINATOR MONITORING',
+                    'BNS' => 'MELLPI PRO FORM 6d: RADIAL DIAGRAM FOR BARANGAY NUTRITION SCHOLAR MONITORING',
+                ];
+                break;
+    
+            case 10:
+                $availableForms = [
+                    'BNS' => 'MELLPI PRO FORM 6d: RADIAL DIAGRAM FOR BARANGAY NUTRITION SCHOLAR MONITORING',
+                ];
+                break;
+    
+            case 7:
+                $availableForms = [
+                    'PNAO' => 'MELLPI PRO FORM 6a: RADIAL DIAGRAM FOR PROVINCIAL NUTRITION ACTION OFFICER MONITORING',
+                    'DNPC' => 'MELLPI PRO FORM 6c.1: RADIAL DIAGRAM FOR DISTRICT NUTRITION PROGRAM COORDINATOR MONITORING',
+                    'NAO' => 'MELLPI PRO FORM 6b: RADIAL DIAGRAM FOR CITY/MUNICIPAL NUTRITION ACTION OFFICER MONITORING',
+                    'CMNPC' => 'MELLPI PRO FORM 6c.2: RADIAL DIAGRAM FOR CITY/MUNICIPAL NUTRITION PROGRAM COORDINATOR MONITORING',
+                    'BNS' => 'MELLPI PRO FORM 6d: RADIAL DIAGRAM FOR BARANGAY NUTRITION SCHOLAR MONITORING',
+                ];
+                break;
+    
+            default:
+                $availableForms = [];
+                break;
+        }
+
+        return $availableForms;
+
+    }
+
+
+
 }

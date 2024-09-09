@@ -212,29 +212,26 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/dashboard/{admin}/edit', [DashboardController::class, 'create'])->name('dashboard.edit');
             Route::DELETE('/dashboard/{admin}', [DashboardController::class, 'destroy'])->name('dashboard.destroy');
 
- 
- 
-
 
          //==========================================================================================================================================
                 //AdminUser List Controller
-                Route::get('/admin', [AdminUserController::class, 'index'])->name('CAadmin.index');
-                Route::POST('/admin', [AdminUserController::class, 'store'])->name('CAadmin.store');
-                Route::get('/admin/create', [AdminUserController::class, 'create'])->name('CAadmin.create');
+                Route::get('CentralAdmin/admin', [AdminUserController::class, 'index'])->name('CAadmin.index');
+                Route::POST('CentralAdmin/admin', [AdminUserController::class, 'store'])->name('CAadmin.store');
+                Route::get('CentralAdmin/admin/create', [AdminUserController::class, 'create'])->name('CAadmin.create');
                 // Route::put('/admin/{id}', [AdminUserController::class, 'update'])->name('CAadmin.update');
-                Route::get('/admin/{id}', [AdminUserController::class, 'update'])->name('CAadmin.update');  //ajax request check
-                Route::get('/admin/{id}/show', [AdminUserController::class, 'show'])->name('CAadmin.show');
-                Route::get('/admin/{id}/edit', [AdminUserController::class, 'create'])->name('CAadmin.edit');
-                Route::get('/admin/{id}', [AdminUserController::class, 'destroy'])->name('CAadmin.destroy');
-                Route::PUT('/admin/{id}/userstatus', [AdminUserController::class, 'changeuserstatus'])->name('CAadmin.userstatusupdate');
-                Route::PUT('/admin/{id}/changepassword', [AdminUserController::class, 'changepassword'])->name('CAadmin.changepassword');
+                Route::get('CentralAdmin/admin/{id}', [AdminUserController::class, 'update'])->name('CAadmin.update');  //ajax request check
+                Route::get('CentralAdmin/admin/{id}/show', [AdminUserController::class, 'show'])->name('CAadmin.show');
+                Route::get('CentralAdmin/admin/{id}/edit', [AdminUserController::class, 'create'])->name('CAadmin.edit');
+                Route::get('CentralAdmin/admin/{id}', [AdminUserController::class, 'destroy'])->name('CAadmin.destroy');
+                Route::PUT('CentralAdmin/admin/{id}/userstatus', [AdminUserController::class, 'changeuserstatus'])->name('CAadmin.userstatusupdate');
+                Route::PUT('CentralAdmin/admin/{id}/changepassword', [AdminUserController::class, 'changepassword'])->name('CAadmin.changepassword');
         
         
                 // // Userprofile
-                Route::get('/profile', [ProfileController::class, 'index'])->name('CAprofile.index');
-                Route::get('/profile/{profile}', [ProfileController::class, 'update'])->name('CAprofile.update');  //ajax request check
-                Route::get('/profile/{profile}/edit', [ProfileController::class, 'edit'])->name('CAprofile.edit');
-                Route::PUT('/profile/password', [ProfileController::class, 'password'])->name('CAprofile.password');
+                Route::get('CentralAdmin/profile', [ProfileController::class, 'index'])->name('CAprofile.index');
+                Route::get('CentralAdmin/profile/{profile}', [ProfileController::class, 'update'])->name('CAprofile.update');  //ajax request check
+                Route::get('CentralAdmin/profile/{profile}/edit', [ProfileController::class, 'edit'])->name('CAprofile.edit');
+                Route::PUT('CentralAdmin/profile/password', [ProfileController::class, 'password'])->name('CAprofile.password');
         
                 // forms Creator A
                 Route::get('/formsb', [FormsBuilderController::class, 'index'])->name('formsb.index');
@@ -402,6 +399,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/nutritioffices/create', [CMSNutritionOfficesController::class, 'create'])->name('CMSnutritionffices.create');
         Route::post('/nutritioffices/store', [CMSNutritionOfficesController::class, 'store'])->name('CMSnutritionffices.store');
         Route::get('/nutritiofficesIndex', [CMSNutritionOfficesController::class, 'nutriOfficeIndex'])->name('CMSnutritionffices.indexA');
+
+        Route::get('CityMunicipal/nutritioffices', [CMSNutritionOfficesController::class, 'Index'])->name('CMEnutritionffices.indexB');
         
         Route::get('/equipmentInventoryIndexC', [CMSEquipmentInventoryController::class, 'index'])->name('CMSequipmentInventory.index');
         Route::get('/equipmentInventoryC', [CMSEquipmentInventoryController::class, 'create'])->name('CMSequipmentInventory.create');

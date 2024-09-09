@@ -51,333 +51,356 @@ class LocationController extends Controller
         return $data;
     }
 
-    public function getRegions(Request $request)
+    public function getRegions(array $request)
     {
         $query = PsgcRegion::query();
-
-        if ($request->has('psgc_code')) {
-            $query->where('psgc_code', $request->input('psgc_code'));
+    
+        if (isset($request['psgc_code'])) {
+            $query->where('psgc_code', $request['psgc_code']);
         }
-
-        if ($request->has('name')) {
-            $query->where('name', 'like', '%' . $request->input('name') . '%');
+    
+        if (isset($request['name'])) {
+            $query->where('name', 'like', '%' . $request['name'] . '%');
         }
-
-        if ($request->has('correspondence_code')) {
-            $query->where('correspondence_code', $request->input('correspondence_code'));
+    
+        if (isset($request['correspondence_code'])) {
+            $query->where('correspondence_code', $request['correspondence_code']);
         }
-
-        if ($request->has('reg_code')) {
-            $query->where('reg_code', $request->input('reg_code'));
+    
+        if (isset($request['reg_code'])) {
+            $query->where('reg_code', $request['reg_code']);
         }
-
+    
         $regions = $query->get();
-
-        return response()->json($regions);
-    }
-
-    public function getProvinces(Request $request)
-    {
-        $query = PsgcProvince::query();
-
-        if ($request->has('psgc_code')) {
-            $query->where('psgc_code', $request->input('psgc_code'));
-        }
-
-        if ($request->has('name')) {
-            $query->where('name', 'like', '%' . $request->input('name') . '%');
-        }
-
-        if ($request->has('correspondence_code')) {
-            $query->where('correspondence_code', $request->input('correspondence_code'));
-        }
-
-        if ($request->has('reg_code')) {
-            $query->where('reg_code', $request->input('reg_code'));
-        }
-
-        if ($request->has('prov_code')) {
-            $query->where('prov_code', $request->input('prov_code'));
-        }
-
-        $provinces = $query->get();
-
-        return response()->json($provinces);
-    }
-
-    public function getCities(Request $request)
-    {
-        $query = PsgcCity::query();
-
-        if ($request->has('psgc_code')) {
-            $query->where('psgc_code', $request->input('psgc_code'));
-        }
-
-        if ($request->has('name')) {
-            $query->where('name', 'like', '%' . $request->input('name') . '%');
-        }
-
-        if ($request->has('correspondence_code')) {
-            $query->where('correspondence_code', $request->input('correspondence_code'));
-        }
-
-        if ($request->has('reg_code')) {
-            $query->where('reg_code', $request->input('reg_code'));
-        }
-
-        if ($request->has('prov_code')) {
-            $query->where('prov_code', $request->input('prov_code'));
-        }
-
-        if ($request->has('citymun_code')) {
-            $query->where('citymun_code', $request->input('citymun_code'));
-        }
-
-        $cities = $query->get();
-
-        return response()->json($cities);
-    }
-
-    public function getHighlyUrbanizedCities(Request $request)
-    {
-        $query = PsgcHighlyUrbanizedCity::query();
-
-        if ($request->has('psgc_code')) {
-            $query->where('psgc_code', $request->input('psgc_code'));
-        }
-
-        if ($request->has('name')) {
-            $query->where('name', 'like', '%' . $request->input('name') . '%');
-        }
-
-        if ($request->has('correspondence_code')) {
-            $query->where('correspondence_code', $request->input('correspondence_code'));
-        }
-
-        if ($request->has('reg_code')) {
-            $query->where('reg_code', $request->input('reg_code'));
-        }
-
-        if ($request->has('prov_code')) {
-            $query->where('prov_code', $request->input('prov_code'));
-        }
-
-        if ($request->has('citymun_code')) {
-            $query->where('citymun_code', $request->input('citymun_code'));
-        }
-
-        $highlyUrbanizedCities = $query->get();
-
-        return response()->json($highlyUrbanizedCities);
-    }
-
-    public function getIndependentComponentCities(Request $request)
-    {
-        $query = PsgcIndependentComponentCity::query();
-
-        if ($request->has('psgc_code')) {
-            $query->where('psgc_code', $request->input('psgc_code'));
-        }
-
-        if ($request->has('name')) {
-            $query->where('name', 'like', '%' . $request->input('name') . '%');
-        }
-
-        if ($request->has('correspondence_code')) {
-            $query->where('correspondence_code', $request->input('correspondence_code'));
-        }
-
-        if ($request->has('reg_code')) {
-            $query->where('reg_code', $request->input('reg_code'));
-        }
-
-        if ($request->has('prov_code')) {
-            $query->where('prov_code', $request->input('prov_code'));
-        }
-
-        if ($request->has('citymun_code')) {
-            $query->where('citymun_code', $request->input('citymun_code'));
-        }
-
-        $independentComponentCities = $query->get();
-
-        return response()->json($independentComponentCities);
-    }
-
-    public function getComponentCities(Request $request)
-    {
-        $query = PsgcComponentCity::query();
-
-        if ($request->has('psgc_code')) {
-            $query->where('psgc_code', $request->input('psgc_code'));
-        }
-
-        if ($request->has('name')) {
-            $query->where('name', 'like', '%' . $request->input('name') . '%');
-        }
-
-        if ($request->has('correspondence_code')) {
-            $query->where('correspondence_code', $request->input('correspondence_code'));
-        }
-
-        if ($request->has('reg_code')) {
-            $query->where('reg_code', $request->input('reg_code'));
-        }
-
-        if ($request->has('prov_code')) {
-            $query->where('prov_code', $request->input('prov_code'));
-        }
-
-        if ($request->has('citymun_code')) {
-            $query->where('citymun_code', $request->input('citymun_code'));
-        }
-
-        $componentCities = $query->get();
-
-        return response()->json($componentCities);
-    }
-
-    public function getMunicipalities(Request $request)
-    {
-        $query = PsgcMunicipality::query();
-
-        if ($request->has('psgc_code')) {
-            $query->where('psgc_code', $request->input('psgc_code'));
-        }
-
-        if ($request->has('name')) {
-            $query->where('name', 'like', '%' . $request->input('name') . '%');
-        }
-
-        if ($request->has('correspondence_code')) {
-            $query->where('correspondence_code', $request->input('correspondence_code'));
-        }
-
-        if ($request->has('reg_code')) {
-            $query->where('reg_code', $request->input('reg_code'));
-        }
-
-        if ($request->has('prov_code')) {
-            $query->where('prov_code', $request->input('prov_code'));
-        }
-
-        if ($request->has('citymun_code')) {
-            $query->where('citymun_code', $request->input('citymun_code'));
-        }
-
-        $municipalities = $query->get();
-
-        return response()->json($municipalities);
-    }
-
-    public function getSubMunicipalities(Request $request)
-    {
-        $query = PsgcSubMunicipality::query();
-
-        if ($request->has('psgc_code')) {
-            $query->where('psgc_code', $request->input('psgc_code'));
-        }
-
-        if ($request->has('name')) {
-            $query->where('name', 'like', '%' . $request->input('name') . '%');
-        }
-
-        if ($request->has('correspondence_code')) {
-            $query->where('correspondence_code', $request->input('correspondence_code'));
-        }
-
-        if ($request->has('reg_code')) {
-            $query->where('reg_code', $request->input('reg_code'));
-        }
-
-        if ($request->has('prov_code')) {
-            $query->where('prov_code', $request->input('prov_code'));
-        }
-
-        if ($request->has('citymun_code')) {
-            $query->where('citymun_code', $request->input('citymun_code'));
-        }
-
-        $subMunicipalities = $query->get();
-
-        return response()->json($subMunicipalities);
-    }
-
-    public function getBarangays(Request $request)
-    {
-        $query = PsgcBarangay::query();
-
-        if ($request->has('psgc_code')) {
-            $query->where('psgc_code', $request->input('psgc_code'));
-        }
-
-        if ($request->has('name')) {
-            $query->where('name', 'like', '%' . $request->input('name') . '%');
-        }
-
-        if ($request->has('correspondence_code')) {
-            $query->where('correspondence_code', $request->input('correspondence_code'));
-        }
-
-        if ($request->has('reg_code')) {
-            $query->where('reg_code', $request->input('reg_code'));
-        }
-
-        if ($request->has('prov_code')) {
-            $query->where('prov_code', $request->input('prov_code'));
-        }
-
-        if ($request->has('citymun_code')) {
-            $query->where('citymun_code', $request->input('citymun_code'));
-        }
-
-        $barangays = $query->get();
-
-        return response()->json($barangays);
+    
+        return $regions;
     }
     
-    public function getCitiesAndMunicipalities(Request $request)
+    public function getProvinces(array $request)
     {
-
+        $query = PsgcProvince::query();
+    
+        if (isset($request['psgc_code'])) {
+            $query->where('psgc_code', $request['psgc_code']);
+        }
+    
+        if (isset($request['name'])) {
+            $query->where('name', 'like', '%' . $request['name'] . '%');
+        }
+    
+        if (isset($request['correspondence_code'])) {
+            $query->where('correspondence_code', $request['correspondence_code']);
+        }
+    
+        if (isset($request['reg_code'])) {
+            $query->where('reg_code', $request['reg_code']);
+        }
+    
+        if (isset($request['prov_code'])) {
+            $query->where('prov_code', $request['prov_code']);
+        }
+    
+        $provinces = $query->get();
+    
+        return $provinces;
+    }
+    
+    public function getCities(array $request)
+    {
+        $query = PsgcCity::query();
+    
+        if (isset($request['psgc_code'])) {
+            $query->where('psgc_code', $request['psgc_code']);
+        }
+    
+        if (isset($request['name'])) {
+            $query->where('name', 'like', '%' . $request['name'] . '%');
+        }
+    
+        if (isset($request['correspondence_code'])) {
+            $query->where('correspondence_code', $request['correspondence_code']);
+        }
+    
+        if (isset($request['reg_code'])) {
+            $query->where('reg_code', $request['reg_code']);
+        }
+    
+        if (isset($request['prov_code'])) {
+            $query->where('prov_code', $request['prov_code']);
+        }
+    
+        if (isset($request['citymun_code'])) {
+            $query->where('citymun_code', $request['citymun_code']);
+        }
+    
+        $cities = $query->get();
+    
+        return $cities;
+    }
+    
+    public function getHighlyUrbanizedCities(array $request)
+    {
+        $query = PsgcHighlyUrbanizedCity::query();
+    
+        if (isset($request['psgc_code'])) {
+            $query->where('psgc_code', $request['psgc_code']);
+        }
+    
+        if (isset($request['name'])) {
+            $query->where('name', 'like', '%' . $request['name'] . '%');
+        }
+    
+        if (isset($request['correspondence_code'])) {
+            $query->where('correspondence_code', $request['correspondence_code']);
+        }
+    
+        if (isset($request['reg_code'])) {
+            $query->where('reg_code', $request['reg_code']);
+        }
+    
+        if (isset($request['prov_code'])) {
+            $query->where('prov_code', $request['prov_code']);
+        }
+    
+        if (isset($request['citymun_code'])) {
+            $query->where('citymun_code', $request['citymun_code']);
+        }
+    
+        $highlyUrbanizedCities = $query->get();
+    
+        return $highlyUrbanizedCities;
+    }
+    
+    public function getIndependentComponentCities(array $request)
+    {
+        $query = PsgcIndependentComponentCity::query();
+    
+        if (isset($request['psgc_code'])) {
+            $query->where('psgc_code', $request['psgc_code']);
+        }
+    
+        if (isset($request['name'])) {
+            $query->where('name', 'like', '%' . $request['name'] . '%');
+        }
+    
+        if (isset($request['correspondence_code'])) {
+            $query->where('correspondence_code', $request['correspondence_code']);
+        }
+    
+        if (isset($request['reg_code'])) {
+            $query->where('reg_code', $request['reg_code']);
+        }
+    
+        if (isset($request['prov_code'])) {
+            $query->where('prov_code', $request['prov_code']);
+        }
+    
+        if (isset($request['citymun_code'])) {
+            $query->where('citymun_code', $request['citymun_code']);
+        }
+    
+        $independentComponentCities = $query->get();
+    
+        return $independentComponentCities;
+    }
+    
+    public function getComponentCities(array $request)
+    {
+        $query = PsgcComponentCity::query();
+    
+        if (isset($request['psgc_code'])) {
+            $query->where('psgc_code', $request['psgc_code']);
+        }
+    
+        if (isset($request['name'])) {
+            $query->where('name', 'like', '%' . $request['name'] . '%');
+        }
+    
+        if (isset($request['correspondence_code'])) {
+            $query->where('correspondence_code', $request['correspondence_code']);
+        }
+    
+        if (isset($request['reg_code'])) {
+            $query->where('reg_code', $request['reg_code']);
+        }
+    
+        if (isset($request['prov_code'])) {
+            $query->where('prov_code', $request['prov_code']);
+        }
+    
+        if (isset($request['citymun_code'])) {
+            $query->where('citymun_code', $request['citymun_code']);
+        }
+    
+        $componentCities = $query->get();
+    
+        return $componentCities;
+    }
+    
+    public function getMunicipalities(array $request)
+    {
+        $query = PsgcMunicipality::query();
+    
+        if (isset($request['psgc_code'])) {
+            $query->where('psgc_code', $request['psgc_code']);
+        }
+    
+        if (isset($request['name'])) {
+            $query->where('name', 'like', '%' . $request['name'] . '%');
+        }
+    
+        if (isset($request['correspondence_code'])) {
+            $query->where('correspondence_code', $request['correspondence_code']);
+        }
+    
+        if (isset($request['reg_code'])) {
+            $query->where('reg_code', $request['reg_code']);
+        }
+    
+        if (isset($request['prov_code'])) {
+            $query->where('prov_code', $request['prov_code']);
+        }
+    
+        if (isset($request['citymun_code'])) {
+            $query->where('citymun_code', $request['citymun_code']);
+        }
+    
+        $municipalities = $query->get();
+    
+        return $municipalities;
+    }
+    
+    public function getSubMunicipalities(array $request)
+    {
+        $query = PsgcSubMunicipality::query();
+    
+        if (isset($request['psgc_code'])) {
+            $query->where('psgc_code', $request['psgc_code']);
+        }
+    
+        if (isset($request['name'])) {
+            $query->where('name', 'like', '%' . $request['name'] . '%');
+        }
+    
+        if (isset($request['correspondence_code'])) {
+            $query->where('correspondence_code', $request['correspondence_code']);
+        }
+    
+        if (isset($request['reg_code'])) {
+            $query->where('reg_code', $request['reg_code']);
+        }
+    
+        if (isset($request['prov_code'])) {
+            $query->where('prov_code', $request['prov_code']);
+        }
+    
+        if (isset($request['citymun_code'])) {
+            $query->where('citymun_code', $request['citymun_code']);
+        }
+    
+        $subMunicipalities = $query->get();
+    
+        return $subMunicipalities;
+    }
+    
+    public function getBarangays(array $request)
+    {
+        $query = PsgcBarangay::query();
+        $cityOfManilaCode = '1380600';
+    
+        if (isset($request['psgc_code'])) {
+            $query->where('psgc_code', $request['psgc_code']);
+        }
+    
+        if (isset($request['name'])) {
+            $query->where('name', 'like', '%' . $request['name'] . '%');
+        }
+    
+        if (isset($request['correspondence_code'])) {
+            $query->where('correspondence_code', $request['correspondence_code']);
+        }
+    
+        if (isset($request['reg_code'])) {
+            $query->where('reg_code', $request['reg_code']);
+        }
+    
+        if (isset($request['prov_code'])) {
+            $query->where('prov_code', $request['prov_code']);
+        }
+    
+        if (isset($request['citymun_code'])) {
+            $citymunCode = $request['citymun_code'];
+            if ($citymunCode === $cityOfManilaCode) {
+                $query->where('citymun_code', 'like', '13806%');
+            } else {
+                $query->where('citymun_code', $request['citymun_code']);
+            }
+        }
+    
+        $barangays = $query->get();
+    
+        return $barangays;
+    }
+    
+    public function getCitiesAndMunicipalities(array $request)
+    {
         $citiesQuery = PsgcCity::query();
         $municipalitiesQuery = PsgcMunicipality::query();
-
-        if ($request->has('psgc_code')) {
-            $citiesQuery->where('psgc_code', $request->input('psgc_code'));
-            $municipalitiesQuery->where('psgc_code', $request->input('psgc_code'));
+        $excludeProvincialAreas = isset($request['excludeProvincialAreas']) && filter_var($request['excludeProvincialAreas'], FILTER_VALIDATE_BOOLEAN);
+        
+        if (isset($request['psgc_code'])) {
+            $psgcCode = $request['psgc_code'];
+            $citiesQuery->where('psgc_code', $psgcCode);
+            $municipalitiesQuery->where('psgc_code', $psgcCode);
         }
-
-        if ($request->has('name')) {
-            $citiesQuery->where('name', 'like', '%' . $request->input('name') . '%');
-            $municipalitiesQuery->where('name', 'like', '%' . $request->input('name') . '%');
+    
+        if (isset($request['name'])) {
+            $name = $request['name'];
+            $citiesQuery->where('name', 'like', '%' . $name . '%');
+            $municipalitiesQuery->where('name', 'like', '%' . $name . '%');
         }
-
-        if ($request->has('correspondence_code')) {
-            $citiesQuery->where('correspondence_code', $request->input('correspondence_code'));
-            $municipalitiesQuery->where('correspondence_code', $request->input('correspondence_code'));
+    
+        if (isset($request['correspondence_code'])) {
+            $correspondenceCode = $request['correspondence_code'];
+            $citiesQuery->where('correspondence_code', $correspondenceCode);
+            $municipalitiesQuery->where('correspondence_code', $correspondenceCode);
         }
-
-        if ($request->has('reg_code')) {
-            $citiesQuery->where('reg_code', $request->input('reg_code'));
-            $municipalitiesQuery->where('reg_code', $request->input('reg_code'));
+    
+        if (isset($request['reg_code'])) {
+            $regCode = $request['reg_code'];
+            $citiesQuery->where('reg_code', $regCode);
+            $municipalitiesQuery->where('reg_code', $regCode);
         }
-
-        if ($request->has('prov_code')) {
-            $citiesQuery->where('prov_code', $request->input('prov_code'));
-            $municipalitiesQuery->where('prov_code', $request->input('prov_code'));
+    
+        if (isset($request['prov_code'])) {
+            $provCode = $request['prov_code'];
+            $citiesQuery->where('prov_code', $provCode);
+            $municipalitiesQuery->where('prov_code', $provCode);
         }
-
-        if ($request->has('citymun_code')) {
-            $citiesQuery->where('citymun_code', $request->input('citymun_code'));
-            $municipalitiesQuery->where('citymun_code', $request->input('citymun_code'));
+    
+        if (isset($request['citymun_code'])) {
+            $citymunCode = $request['citymun_code'];
+            $citiesQuery->where('citymun_code', $citymunCode);
+            $municipalitiesQuery->where('citymun_code', $citymunCode);
         }
-
+        
+        if ($excludeProvincialAreas) {
+            $citiesQuery->whereNotIn('prov_code', function ($query) {
+                $query->select('prov_code')
+                      ->from('psgc_provinces');
+            });
+    
+            $municipalitiesQuery->whereNotIn('prov_code', function ($query) {
+                $query->select('prov_code')
+                      ->from('psgc_provinces');
+            });
+        }
+    
         $cities = $citiesQuery->get();
         $municipalities = $municipalitiesQuery->get();
-
-        
+    
         $combinedData = $cities->concat($municipalities);
-
-        return response()->json($combinedData);
+    
+        return $combinedData;
     }
 }

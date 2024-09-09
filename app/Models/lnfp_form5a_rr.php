@@ -49,7 +49,12 @@ class lnfp_form5a_rr extends Model
         'remarksH',
         'status',
         'header',
-        'user_id'
+        'user_id',
+        'dateappointment',
+        'education',
+        'assign_task',
+        'cont_education',
+        'brgy_service'
     ];
 
     protected $guarded = ['id'];

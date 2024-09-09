@@ -40,8 +40,16 @@
                             </div>
                             <form method="POST" action="{{ route('register') }}">
                                 @csrf
-                                <input type="hidden" name="status" value="pending">
-                                <input type="hidden" name="role" value="11">
+
+                                <!-- //set as underReview -->
+                                <input type="hidden" name="role" value="3"> 
+                                <!-- //set as active -->
+                                <input type="hidden" name="userstatus" value="1">  
+                                <!-- //userRoles set as dropdown to admin  approve -->
+                                <input type="hidden" name="otherrole" value="1"> 
+                                <!-- //set as pending  -->
+                                <input type="hidden" name="status" value="3"> 
+                                
 
                                 <div>
                                     <div class="input-group  form-control-lg {{ $errors->has('Firstname') ? ' has-danger' : '' }}"
@@ -189,7 +197,8 @@
                                             <select
                                                 class="form-control text-dark {{ $errors->has('barangay') ? 'is-invalid' : '' }}"
                                                 style="border-top-right-radius: 40px; border-bottom-right-radius: 40px;"
-                                                value="{{ old('barangay') }}" name="barangay" id="barangay-dropdown">
+                                                value="{{ old('barangay') }}" name="barangay" id="barangay-dropdown"
+                                                required>
                                                 <option>Select Barangay</option>
                                             </select>
                                         </div>

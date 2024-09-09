@@ -852,7 +852,7 @@ $(document).ready(function () {
             <td><input readonly class="inputstyleNone" type="text" name="expected_output[]" value="${formData[1]?.expected_output || ""}" required></td>
             <td>
                 
-                <select  readonly  id="dropselect" class="inputstyleNone" type="text" id="sourceoffund[]" name="sourceoffund[]" readonly> 
+                <select  readonly  id="dropselect" class="inputstyleNone" type="text" name="sourceoffund[]" readonly> 
                 <option value="barangay" ${formData[1]?.sourceoffund === "barangay" ? "selected" : ""}>Local</option>
                 <option value="provincial" ${formData[1]?.sourceoffund === "provincial" ? "selected" : ""}>Provincial Government</option>
                 <option value="national" ${formData[1]?.sourceoffund === "national" ? "selected" : ""}>National</option>
@@ -905,7 +905,7 @@ $(document).ready(function () {
                 <input type="text" class="form-control" id="edit_nutrition_topology_code" required>
             </div>
         </div>
-        <div class="form     // saveModalPageData(); // Ensure the last page's data is savedgroup">
+        <div class="form-group">
             <label for="edit_program" class="bold">Program/Project/Activity Description</label>
             <textarea class="form-control" style="width:100%;border-radius:5px;border: 1px solid #888;max-height:130px;height:130px"  id="edit_program"></textarea>
         </div>
@@ -934,11 +934,11 @@ $(document).ready(function () {
              <label for="edit_implementing_agency" class="bold">Source of Funds</label> 
                 
              <select class="form-control" name="sourceoffund[]" id="edit_sourceoffund">
-                <option value="barangay">local</option>
-                <option value="province">Provincial Government</option>
-                <option value="national">National</option>
-                <option value="external">External</option>
-                <option value="municipal">City/Municipal</option>
+                <option value="local">local</option>
+                <option value="Provincial Government">Provincial Government</option>
+                <option value="National">National</option>
+                <option value="External">External</option>
+                <option value="City/Municipal">City/Municipal</option>
             </select>
 
 
@@ -1000,8 +1000,6 @@ $(document).ready(function () {
         $("#editModal").modal("show");
     }
 
- 
-
     function saveModalPageData() {
         modalData.aipcode = $("#edit_aipcode").val() || modalData.aipcode;
         modalData.nutrition_topology_code = $("#edit_nutrition_topology_code").val() || modalData.nutrition_topology_code;
@@ -1010,7 +1008,7 @@ $(document).ready(function () {
         modalData.startdate = $("#edit_startdate").val() || modalData.startdate;
         modalData.completiondate = $("#edit_completiondate").val() || modalData.completiondate;
         modalData.expected_output = $("#edit_expected_output").val() || modalData.expected_output;
-        modalData.sourceoffund = $("#edit_sourceoffund").val() || modalData.sourceoffund;// Ensure correct value is saved
+        modalData.sourceoffund = $("#edit_sourceoffund").val() || modalData.sourceoffund;
         modalData.personel_service = $("#edit_personel_service").val() || modalData.personel_service;
         modalData.mooe = $("#edit_mooe").val() || modalData.mooe;
         modalData.capital_outlay = $("#edit_capital_outlay").val() || modalData.capital_outlay;
@@ -1019,7 +1017,27 @@ $(document).ready(function () {
         modalData.indirect_nutrition_specific = $("#edit_indirect_nutrition_specific").val() || modalData.indirect_nutrition_specific;
         modalData.enabling_mechanism = $("#edit_enabling_mechanism").val() || modalData.enabling_mechanism;
 
+        console.log('Selected data::',$("#edit_sourceoffund").val()  );
+
     }
+
+    // function saveModalPageData() {
+    //     modalData.aipcode = $("#edit_aipcode").val() || modalData.aipcode;
+    //     modalData.nutrition_topology_code = $("#edit_nutrition_topology_code").val() || modalData.nutrition_topology_code;
+    //     modalData.program = $("#edit_program").val() || modalData.program;
+    //     modalData.implementing_agency = $("#edit_implementing_agency").val() || modalData.implementing_agency;
+    //     modalData.startdate = $("#edit_startdate").val() || modalData.startdate;
+    //     modalData.completiondate = $("#edit_completiondate").val() || modalData.completiondate;
+    //     modalData.expected_output = $("#edit_expected_output").val() || modalData.expected_output;
+    //     modalData.sourceoffund = $("#edit_sourceoffund").val() || modalData.sourceoffund; // Ensure correct value is saved
+    //     modalData.personel_service = $("#edit_personel_service").val() || modalData.personel_service;
+    //     modalData.mooe = $("#edit_mooe").val() || modalData.mooe;
+    //     modalData.capital_outlay = $("#edit_capital_outlay").val() || modalData.capital_outlay;
+    //     modalData.total = $("#edit_total").val() || modalData.total;
+    //     modalData.direct_nutrition_specific = $("#edit_direct_nutrition_specific").val() || modalData.direct_nutrition_specific;
+    //     modalData.indirect_nutrition_specific = $("#edit_indirect_nutrition_specific").val() || modalData.indirect_nutrition_specific;
+    //     modalData.enabling_mechanism = $("#edit_enabling_mechanism").val() || modalData.enabling_mechanism;
+    // }
     
 
      function updateEditModalContent() {
@@ -1028,6 +1046,11 @@ $(document).ready(function () {
          // Populate fields with modal data
          $.each(modalData, function (key, value) {
              $(`#edit_${key}`).val(value);
+             if(key ==="sourceoffund"){
+                 console.log('UpdateEditModalContent::Source of fund::edit mode:');
+                 console.log('Found key: ', key, ' value: ', value);
+             }
+
          });
 
          $("#pageIndicatorEdit").text(`Page ${currentPageedit + 1} of ${pages.length}`);
@@ -1035,11 +1058,65 @@ $(document).ready(function () {
          $("#nextPageEdit").prop("disabled", currentPageedit === pages.length - 1);
      }
 
+    // function updateEditModalContent() {
+    //     $("#editModalContent").html(pages[currentPageedit]);
+    
+    //     $.each(modalData, function (key, value) {
+    //         if (key === "sourceoffund") {
+    //             console.log('UpdateEditModalContent::Source of fund::edit mode:', value);
+    
+    //             // Temporarily enable the select element to set the value
+    //             const sourceSelect = $(`#edit_${key}`);
+    //             sourceSelect.prop('disabled', false);  // Enable the select element
+    
+    //             if (value) {
+    //                 sourceSelect.val(value).trigger('change');  // Update its value and trigger the change event
+    //             }
+    
+    //             sourceSelect.prop('disabled', true);  // Disable it again if necessary
+    //         } else {
+    //             $(`#edit_${key}`).val(value);  // Set value for other input fields
+    //         }
+    //     });
+    
+    //     $("#pageIndicatorEdit").text(`Page ${currentPageedit + 1} of ${pages.length}`);
+    //     $("#prevPageEdit").prop("disabled", currentPageedit === 0);
+    //     $("#nextPageEdit").prop("disabled", currentPageedit === pages.length - 1);
+    // }
+    
+    
+    
 
+    // $("#dataTable").on("click", ".editBtn", function () {
+    //     const index = $(this).closest("tr").data("index");
+
+    //     // Load existing data into modalData for editing
+    //     const row = $(`#dataTable tbody tr[data-index="${index}"]`);
+    //     modalData = {
+    //         aipcode: row.find('input[name="aipcode[]"]').val(),
+    //         nutrition_topology_code: row.find('input[name="nutrition_topology_code[]"]').val(),
+    //         program: row.find('input[name="program[]"]').val(),
+    //         implementing_agency: row.find('input[name="implementing_agency[]"]').val(),
+    //         startdate: row.find('input[name="startdate[]"]').val(),
+    //         completiondate: row.find('input[name="completiondate[]"]').val(),
+    //         expected_output: row.find('input[name="expected_output[]"]').val(),
+    //         sourceoffund: row.find('select[name="sourceoffund[]"]').val(),
+    //         //sourceoffund: row.find('#sourceoffund').val(),
+    //         personel_service: row.find('input[name="personel_service[]"]').val(),
+    //         mooe: row.find('input[name="mooe[]"]').val(),
+    //         capital_outlay: row.find('input[name="capital_outlay[]"]').val(),
+    //         total: row.find('input[name="total[]"]').val(),
+    //         direct_nutrition_specific: row.find('input[name="direct_nutrition_specific[]"]').val(),
+    //         indirect_nutrition_specific: row.find('input[name="indirect_nutrition_specific[]"]').val(),
+    //         enabling_mechanism: row.find('input[name="enabling_mechanism[]"]').val(),
+    //     };
+    //     console.log('upon edit button clicked:: key: sourceoffund, value: ',row.find('select[name="sourceoffund[]"]').val())
+    //     showEditModal(index);
+    // });
 
     $("#dataTable").on("click", ".editBtn", function () {
         const index = $(this).closest("tr").data("index");
-
+    
         // Load existing data into modalData for editing
         const row = $(`#dataTable tbody tr[data-index="${index}"]`);
         modalData = {
@@ -1059,11 +1136,11 @@ $(document).ready(function () {
             indirect_nutrition_specific: row.find('input[name="indirect_nutrition_specific[]"]').val(),
             enabling_mechanism: row.find('input[name="enabling_mechanism[]"]').val(),
         };
-        console.log('upon edit button clicked:: key: sourceoffund, value: ',row.find('select[name="sourceoffund[]"]').val())
+        //console.log('upon edit button clicked:: key: sourceoffund, value: ', row.find('select[name="sourceoffund[]"]').val());
+        console.log('upon edit button clicked:: key: sourceoffund, element:', row.find('select[name="sourceoffund[]"]'));
         showEditModal(index);
     });
-
-     
+    
 
     $("#prevPageEdit").click(function () {
         if (currentPageedit > 0) {
@@ -1088,6 +1165,7 @@ $(document).ready(function () {
         $.each(modalData, function (key, value) {
             if (key === 'sourceoffund') {
                 row.find(`select[name="${key}[]"]`).val(value).trigger('change'); // Ensure dropdown value is set
+                console.log(row.find(`select[name="${key}[]"]`).val(value));
             } else {
                 row.find(`input[name="${key}[]"]`).val(value); // Set other input fields
             }

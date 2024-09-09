@@ -26,7 +26,7 @@ class MellpiProForLNFP_barangayController extends Controller
 {
     public function createdata()
     {
-        $lnfp = lnfp_lguprofile::get();
+        $lnfp = lnfp_lguprofile::where('user_id', auth()->user()->id)->get();
 
         return view('BarangayScholar/MellpiProForLNFP/MellpiProMonitoring.MonitoringForm5CreateData', ['lnfp' => $lnfp]);
     }
@@ -55,6 +55,7 @@ class MellpiProForLNFP_barangayController extends Controller
         $form5a_rr = DB::table('lnfp_form5a_rr')
                 ->leftJoin('lnfp_form7', 'lnfp_form5a_rr.id', '=', 'lnfp_form7.form5_id')
                 ->select('lnfp_form5a_rr.*', 'lnfp_form7.id as form7_id')
+                ->where('lnfp_form5a_rr.user_id',auth()->user()->id )
                 ->get();
 
 
@@ -70,9 +71,9 @@ class MellpiProForLNFP_barangayController extends Controller
                    ->select('lnfp_form5a_rr.*','lnfp_form7.id as form7_id','lnfp_form7.status as form7_status')
                    ->where('lnfp_form5a_rr.id', $request->id)->first();
         $years = range(date("Y"), 1900);
-
+        $availableForms = $this->access_header();
         $action = 'edit';
-        return view('BarangayScholar/MellpiProForLNFP/MellpiProMonitoring.Form5View', compact('form5a', 'row','years'));
+        return view('BarangayScholar/MellpiProForLNFP/MellpiProMonitoring.Form5View', compact('form5a', 'row','years','availableForms'));
     }
 
 
@@ -82,11 +83,16 @@ class MellpiProForLNFP_barangayController extends Controller
 
         $row = DB::table('lnfp_form5a_rr')->where('id', $request->id)->first();
 
+        $availableForms = $this->access_header();
 
         $years = range(date("Y"), 1900);
 
-        return view('BarangayScholar/MellpiProForLNFP/MellpiProMonitoring.MonitoringForm5Edit', compact('form5a', 'row', 'years'));
+        return view('BarangayScholar/MellpiProForLNFP/MellpiProMonitoring.MonitoringForm5Edit', compact('form5a', 'row', 'years','availableForms'));
     }
+
+
+
+
     public function monitoringForm5create()
     {
         //
@@ -107,216 +113,67 @@ class MellpiProForLNFP_barangayController extends Controller
         //dd($request);
 
         //$lnfp_form5a_rr->update($updateData);
+        $fields = $this->access_fields($request);
+        $lnfp_form5a_rr = lnfp_form5a_rr::find($request->id);
 
         if( $request->formrequest == 'draft' ){
-            $lnfp_form5a_rr = lnfp_form5a_rr::find($request->id);
 
-            $updateData = [
-                'periodCovereda' => $request->input('periodCovereda'),
-                    'dateMonitoring' => $request->input('dateMonitoring'),
-                    'nameofPnao' => $request->input('nameOf'),
-                    'address' => $request->input('address'),
-                    'provDeploy' => $request->input('provDev'),
-                    'numYearPnao' => $request->input('numYr'),
-                    'fulltime' => $request->input('fulltime'),
-                    'profAct' => $request->input('profAct'),
-                    'bdate' => $request->input('bday'),
-                    'sex' => $request->input('sex'),
-                    'dateDesignation' => $request->input('dateDesig'),
-                    'secondedOffice' => $request->input('seconded'),
-                    'devActnum1' => $request->input('num1'),
-                    'devActnum2' => $request->input('num2'),
-                    'devActnum3' => $request->input('num3'),
-                    'ratingA' => $request->input('ratingA'),
-                    'ratingB' => $request->input('ratingB'),
-                    'ratingBB' => $request->input('ratingBB'),
-                    'ratingC' => $request->input('ratingC'),
-                    'ratingD' => $request->input('ratingD'),
-                    'ratingE' => $request->input('ratingE'),
-                    'ratingF' => $request->input('ratingF'),
-                    'ratingG' => $request->input('ratingG'),
-                    'ratingGG' => $request->input('ratingGG'),
-                    'ratingH' => $request->input('ratingH'),
-                    'remarksA' => $request->input('remarksA'),
-                    'remarksB' => $request->input('remarksB'),
-                    'remarksBB' => $request->input('remarksBB'),
-                    'remarksC' => $request->input('remarksC'),
-                    'remarksD' => $request->input('remarksD'),
-                    'remarksE' => $request->input('remarksE'),
-                    'remarksF' => $request->input('remarksF'),
-                    'remarksG' => $request->input('remarksG'),
-                    'remarksGG' => $request->input('remarksGG'),
-                    'remarksH' => $request->input('remarksH'),
-                    'header'   => $request->input('header'),
-                    // 'status'   => $request->input('status'),
-                    // 'barangay_id' => $request->barangay_id,
-                    // 'municipal_id' => $request->municipal_id,
-                    // 'province_id' => $request->province_id,
-                    // 'region_id' => $request->region_id,
-                    'user_id' => auth()->user()->id,
-            ];
-            $lnfp_form5a_rr->update( $updateData + [ 'status' => 2,  ]);
+            $lnfp_form5a_rr->update( $fields + [ 'status' => 2,  ]);
 
             return redirect()->route('MellpiProMonitoringIndex.index')->with('success', 'Data stored successfully!');
 
         }else{
+            
 
-            $rules = [
-                'periodCovereda' => 'required',
-                'dateMonitoring' => 'required',
-                'nameOf' => 'required',
-                'address' => 'required',
-                'numYr' => 'required|integer|min:1|max:1000000',
-                'fulltime' => 'required',
-                'profAct' => 'required',
-                'bday' => 'required',
-                'sex' => 'required',
-                'dateDesig' => 'required',
-                'seconded' => 'required',
-                'num1' => 'required',
-                'num2' => 'required',
-                'num3' => 'required',
-                'ratingA' => 'required',
-                'ratingB' => 'required',
-                'ratingBB' => 'required',
-                'ratingC' => 'required',
-                'ratingD' => 'required',
-                'ratingE' => 'required',
-                'ratingF' => 'required',
-                'ratingG' => 'required',
-                'ratingGG' => 'required',
-                'ratingH' => 'required',
-            ];
-    
-            $message = [ 
+            $rules = $this->access_rules();
+
+            $message = [
                 'required' => 'The field is required.',
-                'integer' => 'The field is number.',
+                'integer' => 'The field must be a whole number.',
                 'string' => 'The field must be a string.',
                 'date' => 'The field must be a valid date.',
                 'max' => 'The field may not be greater than :max.',
                 'min' => 'The field may not be greater than :min.',
-            ]; 
-    
-            $validator = Validator::make($request->all() , $rules,$message);
-    
-            if($validator->fails()){
-                return redirect()->back()
-                ->withErrors($validator)
-                ->withInput()->with('error', 'Something went wrong! Please try again.');
-            }
-
-            $lnfp_form5a_rr = lnfp_form5a_rr::find($request->id);
-
-            $updateData = [
-                'periodCovereda' => $request->input('periodCovereda'),
-                    'dateMonitoring' => $request->input('dateMonitoring'),
-                    'nameofPnao' => $request->input('nameOf'),
-                    'address' => $request->input('address'),
-                    'provDeploy' => $request->input('provDev'),
-                    'numYearPnao' => $request->input('numYr'),
-                    'fulltime' => $request->input('fulltime'),
-                    'profAct' => $request->input('profAct'),
-                    'bdate' => $request->input('bday'),
-                    'sex' => $request->input('sex'),
-                    'dateDesignation' => $request->input('dateDesig'),
-                    'secondedOffice' => $request->input('seconded'),
-                    'devActnum1' => $request->input('num1'),
-                    'devActnum2' => $request->input('num2'),
-                    'devActnum3' => $request->input('num3'),
-                    'ratingA' => $request->input('ratingA'),
-                    'ratingB' => $request->input('ratingB'),
-                    'ratingBB' => $request->input('ratingBB'),
-                    'ratingC' => $request->input('ratingC'),
-                    'ratingD' => $request->input('ratingD'),
-                    'ratingE' => $request->input('ratingE'),
-                    'ratingF' => $request->input('ratingF'),
-                    'ratingG' => $request->input('ratingG'),
-                    'ratingGG' => $request->input('ratingGG'),
-                    'ratingH' => $request->input('ratingH'),
-                    'remarksA' => $request->input('remarksA'),
-                    'remarksB' => $request->input('remarksB'),
-                    'remarksBB' => $request->input('remarksBB'),
-                    'remarksC' => $request->input('remarksC'),
-                    'remarksD' => $request->input('remarksD'),
-                    'remarksE' => $request->input('remarksE'),
-                    'remarksF' => $request->input('remarksF'),
-                    'remarksG' => $request->input('remarksG'),
-                    'remarksGG' => $request->input('remarksGG'),
-                    'remarksH' => $request->input('remarksH'),
-                    'header'   => $request->input('header'),
-                    // 'status'   => $request->input('status'),
-                    // 'barangay_id' => $request->barangay_id,
-                    // 'municipal_id' => $request->municipal_id,
-                    // 'province_id' => $request->province_id,
-                    // 'region_id' => $request->region_id,
-                    'user_id' => auth()->user()->id,
             ];
 
-            $lnfp_form5a_rr->update( $updateData + [ 'status' => 1,  ]);
+            // $validator = Validator::make($request->all(), $rules, $message);
 
-            // $lnfp_form7 = lnfp_form7::where('form5_id', $request->id)->first();
+            $input = $request->all();
+            // $input = array_map('trim', $input);
 
-            // if( $lnfp_form7 == null ){
-                // Add new data to Form7
-                $lnfp_form7 = lnfp_form7::create([
-                    'form5_id' => $request->id,
-                    'lnfp_lgu_id' => $request->lnfp_lgu_id,
-                    'status'      => 2,
-                ]);
-            // }
+            $validator = Validator::make($input, $rules, $message);
 
-            return redirect()->route('lguLnfpEditForm6', $lnfp_form7->id)->with('success', 'Data stored successfully! You can now create Form 6 and 7');
-        }
+            if ($validator->fails()) {
+                Log::error($validator->errors());
+                return redirect()->back()
+                    ->withErrors($validator)
+                    ->withInput()
+                    ->with('error', 'Something went wrong! Please try again.');
+            }else{
+  
+                        $lnfp_form5a_rr->update( $fields + [ 'status' => 1,  ]);
+
+                        // $lnfp_form7 = lnfp_form7::where('form5_id', $request->id)->first();
+
+                        // if( $lnfp_form7 == null ){
+                            // Add new data to Form7
+                            $lnfp_form7 = lnfp_form7::create([
+                                'form5_id' => $request->id,
+                                'lnfp_lgu_id' => $request->lnfp_lgu_id,
+                                'status'      => 2,
+                                'user_id'     => auth()->user()->id,
+                            ]);
+                        // }
+
+                        return redirect()->route('lguLnfpEditForm6', $lnfp_form7->id)->with('success', 'Data stored successfully! You can now create Form 6 and 7');
+                }
+            }
         
 
        
 
     }
-    /**
-     * Show the form for creating a new resource.
-     */
-    // public function create()
-    // {
-    //     //
-
-    // }
-
-    // /**
-    //  * Store a newly created resource in storage.
-    //  */
-    // public function store(Request $request)
-    // {
-    //     //
-    // }
-
-    // /**
-    //  * Display the specified resource.
-    //  */
-    // public function show(MellpiProForLNFP $mellpiProForLNFP)
-    // {
-    //     //
-    // }
-
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  */
-    // public function edit(MellpiProForLNFP $mellpiProForLNFP)
-    // {
-    //     //
-    // }
-    // /**
-    //  * Update the specified resource in storage.
-    //  */
-    // public function update(Request $request, MellpiProForLNFP $mellpiProForLNFP)
-    // {
-    //     //
-    // }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function deleteForm5arr(Request $request, $id)
-    {
+    public function deleteForm5arr(Request $request, $id){
 
         DB::table('lnfp_lguform5atracking')->where('lnfp_lguform5_id', $request->id)->delete();
         
@@ -326,21 +183,132 @@ class MellpiProForLNFP_barangayController extends Controller
         return redirect()->back()->with('alert', 'Deleted Successfully!');
     }
 
-    // public function deleteForm5arr($id)
-    // {
-    //     //
-    //     // $deleted = DB::table('lnfp_form5a_rr')->where('id', $request->id)->delete();
-    //     // $deleted = lnfp_form5a_rr::where('id', $request->id)->delete();
-    //     $deleted = lnfp_form5a_rr::find($id);
-    //     // dd($deleted);
+    public static function access_rules(){
 
-    //     if ($deleted) {
-    //         $deleted->delete();
-    //         // Redirect back with success message if record was deleted
-    //         return redirect()->back()->with('alert', 'Deleted Successfully!');
-    //     } else {
-    //         // Redirect back with error message if record not found
-    //         return redirect()->back()->with('alert', 'Record not found!');
-    //     }
-    // }
+
+        $rules = [
+            'periodCovereda' => 'required',
+            'dateMonitoring' => 'required',
+            'nameOf' => 'required',
+            'address' => 'required',
+            'numYr' => 'required|integer|min:1|max:1000000',
+            'fulltime' => 'required',
+            'profAct' => 'required',
+            'bday' => 'required',
+            'sex' => 'required',
+            'dateDesig' => 'required',
+            'seconded' => 'required',
+            'num1' => 'required',
+            'num2' => 'required',
+            'num3' => 'required',
+            'ratingA' => 'required',
+            'ratingB' => 'required',
+            'ratingBB' => 'required',
+            'ratingC' => 'required',
+            'ratingD' => 'required',
+            'ratingE' => 'required',
+            'ratingF' => 'required',
+            'ratingG' => 'required',
+            'ratingGG' => 'required',
+            'ratingH' => 'required',
+        ];
+
+        return $rules;
+    }
+
+   public static function access_fields($request){
+
+    $updateData = [
+        'periodCovereda' => $request->periodCovereda,
+            'dateMonitoring' => $request->dateMonitoring,
+            'nameofPnao' => $request->nameOf,
+            'address' => $request->address,
+            'provDeploy' => $request->provDev,
+            'numYearPnao' => $request->numYr,
+            'fulltime' => $request->fulltime,
+            'profAct' => $request->profAct,
+            'bdate' => $request->bday,
+            'sex' => $request->sex,
+            'dateDesignation' => $request->dateDesig,
+            'secondedOffice' => $request->seconded,
+            'devActnum1' => $request->num1,
+            'devActnum2' => $request->num2,
+            'devActnum3' => $request->num3,
+            'ratingA' => $request->ratingA,
+            'ratingB' => $request->ratingB,
+            'ratingBB' => $request->ratingBB,
+            'ratingC' => $request->ratingC,
+            'ratingD' => $request->ratingD,
+            'ratingE' => $request->ratingE,
+            'ratingF' => $request->ratingF,
+            'ratingG' => $request->ratingG,
+            'ratingGG' => $request->ratingGG,
+            'ratingH' => $request->ratingH,
+            'remarksA' => $request->remarksA,
+            'remarksB' => $request->remarksB,
+            'remarksBB' => $request->remarksBB,
+            'remarksC' => $request->remarksC,
+            'remarksD' => $request->remarksD,
+            'remarksE' => $request->remarksE,
+            'remarksF' => $request->remarksF,
+            'remarksG' => $request->remarksG,
+            'remarksGG' => $request->remarksGG,
+            'remarksH' => $request->remarksH,
+            'header'   => $request->header,
+            'assign_task'   => $request->assign_task,
+            'brgy_service'   => $request->brgy_service,
+            'cont_education' => $request->cont_education,
+            'education' => $request->education,
+            'dateappointment' =>$request->dateAppoint,
+            // 'status'   => $request->status'),
+            // 'barangay_id' => $request->barangay_id,
+            // 'municipal_id' => $request->municipal_id,
+            // 'province_id' => $request->province_id,
+            // 'region_id' => $request->region_id,
+            'user_id' => auth()->user()->id,
+    ];
+
+        return $updateData;
+   }
+
+   public static function access_header(){
+
+
+
+    $userLevel = auth()->user()->otherrole;
+
+    switch ($userLevel) {
+        case 9:
+            $availableForms = [
+                'NAO' => 'MELLPI PRO FORM 5b: CITY/MUNICIPAL NUTRITION ACTION OFFICER MONITORING',
+                'CMNPC' => 'MELLPI PRO FORM 5c.2: CITY/MUNICIPAL NUTRITION PROGRAM COORDINATOR MONITORING',
+                'BNS' => 'MELLPI PRO FORM 5d: BARANGAY NUTRITION SCHOLAR MONITORING',
+            ];
+            break;
+
+        case 10:
+            $availableForms = [
+                'BNS' => 'MELLPI PRO FORM 5d: BARANGAY NUTRITION SCHOLAR MONITORING',
+            ];
+            break;
+
+        case 7:
+            $availableForms = [
+                'PNAO' => 'MELLPI PRO FORM 5a: PROVINCIAL NUTRITION ACTION OFFICER MONITORING',
+                'DNPC' => 'MELLPI PRO FORM 5c.1: DISTRICT NUTRITION PROGRAM COORDINATOR MONITORING',
+                'NAO' => 'MELLPI PRO FORM 5b: CITY/MUNICIPAL NUTRITION ACTION OFFICER MONITORING',
+                'CMNPC' => 'MELLPI PRO FORM 5c.2: CITY/MUNICIPAL NUTRITION PROGRAM COORDINATOR MONITORING',
+                'BNS' => 'MELLPI PRO FORM 5d: BARANGAY NUTRITION SCHOLAR MONITORING',
+            ];
+            break;
+
+        default:
+            $availableForms = [];
+            break;
+    }
+
+    return $availableForms;
+
+
+   }
 }

@@ -42,7 +42,7 @@
                                     <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Officer</th>
                                     <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Date Monitoring</th>
                                     <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Period Covered</th>
-                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Form Status</th>
+                                    <!-- <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Form Status</th> -->
                                     <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Status</th>
                                     <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center;width:10%;">Action</th>
 
@@ -58,9 +58,9 @@
                                     </td>
                                     <!-- <td>{{$lnfpProfile->dateMonitoring}}</td> -->
                                     <td>{{\Carbon\Carbon::parse($lnfpProfile->dateMonitoring)->format('F j, Y');}}
-                                    <td>{{$lnfpProfile->periodCovereda}}
+                                    <td><center>{{$lnfpProfile->periodCovereda}}</center>
                                     </td>
-                                    <td>&nbsp;</td>
+                                    <!-- <td>&nbsp;</td> -->
                                 
                                     <td>
                                             @if( $lnfpProfile->status == 0 )

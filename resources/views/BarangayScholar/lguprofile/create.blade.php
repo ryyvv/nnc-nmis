@@ -53,7 +53,7 @@
             <form action="{{ route('BSLGUprofilest.storeSubmit') }}" id="form" method="POST">
                 @csrf
 
-                <input type="hidden" name="status" id="status">
+                <input type="hidden" name="status" id="status" value="{{ auth()->user()->status }}">
                 <!-- header -->
                 @include('layouts.page_template.location_header')
 

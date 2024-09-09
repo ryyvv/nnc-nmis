@@ -42,7 +42,7 @@
                                 <h5 class="title">{{__("Mellpi Pro PNAO Form: Provincial Profile Forms")}}</h5>
                             </center><br> -->
 
-                            @include('layouts.page_template.location_header')
+                            @include('layouts.page_template.location_header_lnfp')
 
                             <input type="hidden" name="submitStatus" value="1">
                             <input type="hidden" name="DraftStatus" value="2">
@@ -51,33 +51,34 @@
 
                             <input type="hidden" name="user_name" value="{{ $row->lnfp_officer }}">
 
-                            <!-- header -->
-                            <!-- <div style="display:flex">
-                                <div class="form-group col">
-                                    <label for="exampleFormControlInput1">Barangay: </label>
-                                    <input type="text" class="form-control" name="barangay_id" placeholder="ex. 100" value="{{Auth()->user()->barangay}}">
-                                </div>
-                                <div class="form-group col">
-                                    <label for="exampleFormControlInput1">Municipality/City: </label>
-                                    <input type="text" class="form-control" name="municipal_id" placeholder="ex. 100" value="{{auth()->user()->city_municipal }}">
-                                </div>
-                                <div class="form-group col">
-                                    <label for="exampleFormControlInput1">Province: </label>
-                                    <input type="text" class="form-control" name="province_id" placeholder="ex. 100" value="{{auth()->user()->Province}}">
-                                    
-                                </div>
-                                <div class="form-group col">
-                                    <label for="exampleFormControlInput1">Region: </label>
-                                    <input type="test" class="form-control" name="region_id" placeholder="ex. 100" value="{{auth()->user()->Region}}">
-                                </div>
-
-                            </div> -->
                             <br>
                             
 
                             <div style="display:flex">
                                 <!-- Div1 -->
                                 <div class="col col-4 col-2">
+
+                                   <!-- FOR CITY AND MUNICIPALITY -->
+                                   @if( auth()->user()->otherrole != 10 )
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">Income Class:<span style="color:red">*</span></label>
+                                        <select class="form-control" name="income_class">
+                                            <option value="">Select</option>
+                                            <option value="1st" <?php echo ( old('income_class', $row->income_class ) == '1st' ? 'selected':'' ) ?> >1st</option>
+                                            <option value="2nd" <?php echo ( old('income_class', $row->income_class ) == '2nd' ? 'selected':'' ) ?> >2nd</option>
+                                            <option value="3rd" <?php echo ( old('income_class', $row->income_class ) == '3rd' ? 'selected':'' ) ?> >3rd</option>
+                                            <option value="4th" <?php echo ( old('income_class', $row->income_class ) == '4th' ? 'selected':'' ) ?> >4th</option>
+                                            <option value="5th" <?php echo ( old('income_class', $row->income_class ) == '5th' ? 'selected':'' ) ?> >5th</option> 
+                                        </select>
+                                        @error('income_class')
+                                        <div class="text-danger" id="warning-mesg">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    @endif    
+
+
+
+
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">No. of Municipalities: </label>
                                         <input type="text" placeholder="ex. 100" class="form-control" id="exampleFormControlInput1" name="numOfMun" value="{{ $row->numOfMuni }}">

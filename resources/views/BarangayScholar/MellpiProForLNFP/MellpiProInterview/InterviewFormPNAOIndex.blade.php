@@ -37,7 +37,7 @@
                                 <tr>
                                     <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">#</th>
                                     <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Header</th>
-                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Name of PNAO</th>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Name</th>
                                     <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Area of Assignment</th>
                                     <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Date of Interview</th>
 
