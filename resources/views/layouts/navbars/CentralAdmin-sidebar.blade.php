@@ -236,7 +236,7 @@
         <div class="collapse " id="UserManagement">
           <ul class="nav">
             <li class="@if ($activePage == 'profile') active @endif">
-              <a href="{{ route('CAprofile.index') }}">
+              <a href="">
                 <i class="now-ui-icons users_single-02"></i>
                 <p> {{ __("User Profile") }} </p>
               </a>
@@ -288,6 +288,49 @@
               <a href="{{ route('formsb.index') }}">
                 <i class="now-ui-icons users_single-02"></i>
                 <p> {{ __("Forms2") }} </p>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <a data-toggle="collapse" href="#BulkManagement">
+          <!-- <i class="now-ui-icons files_paper"></i> -->
+          <p>
+            {{ __("Bulk Management") }}
+            <b class="caret"></b>
+          </p>
+        </a>
+        <div class="collapse " id="BulkManagement">
+          <ul class="nav">
+            <li class="@if ($activePage == 'forms') active @endif">
+              <a href="#">
+                <i class="now-ui-icons users_single-02"></i>
+                <p> {{ __("PSGS Region") }} </p>
+              </a>
+            </li>
+            <li class="@if ($activePage == 'forms') active @endif">
+              <a href="#">
+                <i class="now-ui-icons users_single-02"></i>
+                <p> {{ __("PSGS Province") }} </p>
+              </a>
+            </li>
+            <li class="@if ($activePage == 'forms2') active @endif">
+              <a href="#">
+                <i class="now-ui-icons users_single-02"></i>
+                <p> {{ __("PSGS Municipal") }} </p>
+              </a>
+            </li>
+            <li class="@if ($activePage == 'forms2') active @endif">
+              <a href="#">
+                <i class="now-ui-icons users_single-02"></i>
+                <p> {{ __("PSGS City") }} </p>
+              </a>
+            </li>
+            <li class="@if ($activePage == 'forms2') active @endif">
+              <a href="#">
+                <i class="now-ui-icons users_single-02"></i>
+                <p> {{ __("PSGS Barangay") }} </p>
               </a>
             </li>
           </ul>

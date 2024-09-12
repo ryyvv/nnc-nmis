@@ -106,14 +106,16 @@ class RegisterController extends Controller
             'Region' => 'required|string|max:255',
             'Province' => 'string|max:255',
             'city_municipal' => 'required|string|max:255',
-            'barangay' => 'string|max:255',
             'barangay' => 'required|string|max:255',
             'agency_office_lgu' => 'required|string|max:255',
             'Division_unit' => 'required|string|max:255',
+            'designation' => 'required|string|max:255',
             'role' => 'required|string|max:255',
+            'otherrole' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email',
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'status' => 'required|string|max:255',
+            'userstatus' => 'required|string|max:255',
         ]);
     }
 

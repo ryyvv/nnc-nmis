@@ -23,10 +23,13 @@ class CMSDiscussionQuestionController extends Controller
         // return view('CityMunicipalStaff.DiscussionQuestion.index', ['dqlocation' => $dqlocation]);
 
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
+
 
         $barangay = auth()->user()->barangay;
         
@@ -36,7 +39,7 @@ class CMSDiscussionQuestionController extends Controller
             ->select('users.Firstname as firstname', 'users.Middlename as middlename', 'users.Lastname as lastname', 'mplgubrgydiscussionquestion.*')
             ->get();
  
-        return view('CityMunicipalStaff.DiscussionQuestion.index', compact('dqlocation', 'prov', 'mun', 'city', 'brgy'));
+        return view('CityMunicipalStaff.DiscussionQuestion.index', compact('dqlocation', 'provinces', 'cities_municipalities', 'barangays'));
     }
 
     /**
@@ -46,14 +49,17 @@ class CMSDiscussionQuestionController extends Controller
     {
         $action = 'create';
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
+
         
         $years = range(date('Y'), 1900);
 
-        return view('CityMunicipalStaff.DiscussionQuestion.create', compact('prov', 'mun', 'city', 'brgy', 'years', 'action' ));
+        return view('CityMunicipalStaff.DiscussionQuestion.create', compact('provinces', 'cities_municipalities', 'barangays', 'years', 'action' ));
     }
 
     /**
@@ -218,16 +224,19 @@ class CMSDiscussionQuestionController extends Controller
 
         $action = 'edit';
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
+
         
         $years = range(date('Y'), 1900);
 
 
         $row = DB::table('mplgubrgydiscussionquestion')->where('id', $request->id)->first();
-        return view('CityMunicipalStaff.DiscussionQuestion.show', compact('prov', 'mun', 'city', 'brgy', 'years', 'action', 'row'));
+        return view('CityMunicipalStaff.DiscussionQuestion.show', compact('provinces', 'cities_municipalities', 'barangays', 'years', 'action', 'row'));
 
     }
 
@@ -238,10 +247,13 @@ class CMSDiscussionQuestionController extends Controller
     {
         $action = 'edit';
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
+
 
         $years = range(date("Y"), 1900);
 
@@ -250,7 +262,7 @@ class CMSDiscussionQuestionController extends Controller
         //dd($lguProfile);
 
 
-        return view('CityMunicipalStaff.DiscussionQuestion.edit', compact('row', 'prov', 'mun', 'city', 'brgy', 'years', 'action'));
+        return view('CityMunicipalStaff.DiscussionQuestion.edit', compact('row', 'provinces', 'cities_municipalities', 'barangays', 'years', 'action'));
     }
 
     /**

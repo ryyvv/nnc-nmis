@@ -104,6 +104,7 @@ use App\Http\Controllers\Admin\BarangayScholar\MellpiProForLNFP_form6Controller;
 use App\Http\Controllers\Admin\BarangayScholar\MellpiProForLNFP_form8Controller;
 use App\Http\Controllers\Admin\BarangayScholar\MellpiProForLNFP_InterviewController;
 use App\Http\Controllers\Admin\BarangayScholar\MellpiProForLNFP_OverallScoreController;
+use App\Http\Controllers\Admin\BarangayScholar\MellpiProForLNFP_SummaryController;
 
 
 use App\Http\Controllers\FormController;
@@ -154,9 +155,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('forms', FormController::class);
     Route::post('forms/{form}/submissions', [FormSubmissionController::class, 'store'])->name('form-submissions.store');
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // bulk upload - Ryan
     Route::get('/mellpi_pro_LGU',  [MellproLGUController::class, 'index'])->name('mellpi_pro_LGU.index');
@@ -227,11 +228,11 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::PUT('CentralAdmin/admin/{id}/changepassword', [AdminUserController::class, 'changepassword'])->name('CAadmin.changepassword');
         
         
-                // // Userprofile
-                Route::get('CentralAdmin/profile', [ProfileController::class, 'index'])->name('CAprofile.index');
-                Route::get('CentralAdmin/profile/{profile}', [ProfileController::class, 'update'])->name('CAprofile.update');  //ajax request check
-                Route::get('CentralAdmin/profile/{profile}/edit', [ProfileController::class, 'edit'])->name('CAprofile.edit');
-                Route::PUT('CentralAdmin/profile/password', [ProfileController::class, 'password'])->name('CAprofile.password');
+                // // // Userprofile
+                // Route::get('CentralAdmin/profile', [ProfileController::class, 'index'])->name('CAprofile.index');
+                // Route::get('CentralAdmin/profile/{profile}', [ProfileController::class, 'update'])->name('CAprofile.update');  //ajax request check
+                // Route::get('CentralAdmin/profile/{profile}/edit', [ProfileController::class, 'edit'])->name('CAprofile.edit');
+                // Route::PUT('CentralAdmin/profile/password', [ProfileController::class, 'password'])->name('CAprofile.password');
         
                 // forms Creator A
                 Route::get('/formsb', [FormsBuilderController::class, 'index'])->name('formsb.index');
@@ -557,12 +558,15 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/lguLnfpViewOverall/{id}', [MellpiProForLNFP_OverallScoreController::class, 'OverallScoreFormLNFPView'])->name('viewOSForm');
         Route::post('/lguLnfpUpdateOverall', [MellpiProForLNFP_OverallScoreController::class, 'update'])->name('updateOSForm');
        
-
+        //Summary
+        Route::get('/mellpi-pro-lnfp-summary', [MellpiProForLNFP_SummaryController::class, 'index'])->name('MellpiProLNFPSummary.index');
 
         //Resources  ============================================================================================================================================================
         // Equipment Inventory
         Route::get('/equipmentInventoryIndex', [BSEquipmentInventoryController::class, 'index'])->name('BSequipmentInventory.index');
-        Route::get('/equipmentInventory', [BSEquipmentInventoryController::class, 'create'])->name('BSequipmentInventory.create');
+        Route::get('/equipmentInventory/create', [BSEquipmentInventoryController::class, 'create'])->name('BSequipmentInventory.create');
+        Route::get('/equipmentInventory/edit', [BSEquipmentInventoryController::class, 'edit'])->name('BSequipmentInventory.edit');
+        Route::put('/equipmentInventory/update', [BSEquipmentInventoryController::class, 'update'])->name('BSequipmentInventory.update');
         Route::post('/equipmentInventory', [BSEquipmentInventoryController::class, 'store'])->name('BSequipmentInventory.store');
     
         //Nutrition Offices

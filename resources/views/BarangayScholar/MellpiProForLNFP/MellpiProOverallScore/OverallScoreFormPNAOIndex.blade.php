@@ -36,7 +36,7 @@
 
                                 <tr>
                                     <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">#</th>
-                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Name of PNAO</th>
+                                    <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Name</th>
                                     <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Date</th>
                                     <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center">Status</th>
                                     <th scope="col" style="font-weight:bold;font-size:16px!important;color:white;text-align:center;width:10%;">Action</th>

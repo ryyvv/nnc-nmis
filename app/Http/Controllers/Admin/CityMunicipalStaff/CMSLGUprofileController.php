@@ -20,10 +20,12 @@ class CMSLGUprofileController extends Controller
     {
 
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
 
         $barangay = auth()->user()->barangay;
         //$lguprofile = DB::table('lguprofilebarangay')->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();
@@ -34,7 +36,7 @@ class CMSLGUprofileController extends Controller
             ->select('users.Firstname as firstname', 'users.Middlename as middlename', 'users.Lastname as lastname', 'lguprofilebarangay.*')
             ->get();
 
-        return view('CityMunicipalStaff.lguprofile.index', compact('lguprofile', 'prov', 'mun', 'city', 'brgy'));
+        return view('CityMunicipalStaff.lguprofile.index', compact('lguprofile', 'provinces', 'cities_municipalities', 'barangays'));
     }
 
 
@@ -43,10 +45,12 @@ class CMSLGUprofileController extends Controller
         
         $action = 'edit';
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
 
         $years = range(date("Y"), 1900);
 
@@ -55,24 +59,26 @@ class CMSLGUprofileController extends Controller
         //dd($lguProfile);
         dd($row);
 
-        return view('CityMunicipalStaff.lguprofile.edit', compact('row', 'prov', 'mun', 'city', 'brgy', 'years', 'action'));
+        return view('CityMunicipalStaff.lguprofile.edit', compact('row', 'provinces', 'cities_municipalities', 'barangays', 'years', 'action'));
     }
 
     public function show(Request $request, $id)
     {
         $action = 'edit';
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
 
         $years = range(date("Y"), 1900);
 
         $row = DB::table('lguprofilebarangay')->where('id', $id)->first();
      
        
-        return view('CityMunicipalStaff.lguprofile.show', compact('row', 'prov', 'mun', 'city', 'brgy', 'years', 'action'));
+        return view('CityMunicipalStaff.lguprofile.show', compact('row', 'provinces', 'cities_municipalities', 'barangays', 'years', 'action'));
     }
 
     public function create(Request $request)
@@ -81,14 +87,16 @@ class CMSLGUprofileController extends Controller
 
         $action = 'create';
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
 
         $years = range(date("Y"), 1900);
 
-        return view('CityMunicipalStaff.lguprofile.create', compact('prov', 'mun', 'city', 'brgy', 'years', 'action'));
+        return view('CityMunicipalStaff.lguprofile.create', compact('provinces', 'cities_municipalities', 'barangays', 'years', 'action'));
     }
 
     public function storeSubmit(Request $request)

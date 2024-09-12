@@ -5,22 +5,22 @@
     <div class="form-group col">
         <label for="exampleFormControlInput1">Barangay:</label>
         <select name="barangay_id" class="form-control">
-            @foreach($brgy as $brgys)
-            <option value="{{ $brgys->id }}" <?php echo auth()->user()->barangay == $brgys->id  ? "selected" : "" ?>>
-                {{ $brgys->barangay }}</option>
-
+            @foreach($barangays as $barangay)
+            <option value="{{ $barangay->psgc_code }}"
+                {{ auth()->user()->barangay === $barangay->psgc_code ? 'selected' : '' }}>
+                {{ $barangay->name }}
+            </option>
             @endforeach
         </select>
-        <!-- <input type="text" class="form-control" name="barangay_id" value="{{Auth()->user()->barangay}}"> -->
     </div>
     <div class="form-group col">
         <label for="exampleFormControlInput1">Municipality/City:</label>
         <select name="municipal_id2" class="form-control" style="font-weight:bolder!important;color:black" disabled>
-            @foreach($mun as $muns)
-            <option value="{{ $muns->id }}"
-                <?php echo auth()->user()->city_municipal == $muns->id  ? "selected" : "" ?>>{{ $muns->municipal }}
+            @foreach($cities_municipalities as $city_municipality)
+            <option value="{{ $city_municipality->citymun_code }}"
+                {{ auth()->user()->city_municipal === $city_municipality->citymun_code ? 'selected' : '' }}>
+                {{ $city_municipality->name }}
             </option>
-
             @endforeach
         </select>
         <input type="hidden" name="municipal_id" value="{{ auth()->user()->city_municipal }}">
@@ -29,9 +29,11 @@
         <label for="exampleFormControlInput1">Province:</label>
 
         <select name="province_id2" class="form-control" disabled style="font-weight:bolder!important;color:black">
-            @foreach($prov as $provs)
-            <option value="{{ $provs->id }}" <?php echo auth()->user()->Province == $provs->id  ? "selected" : "" ?>>
-                {{ $provs->province }}</option>
+            @foreach($provinces as $province)
+            <option value="{{ $province->prov_code }}"
+                {{ auth()->user()->Province === $province->prov_code ? 'selected' : '' }}>
+                {{ $province->name }}
+            </option>
             @endforeach
         </select>
         <input type="hidden" name="province_id" value="{{ auth()->user()->Province }}">
@@ -51,11 +53,11 @@
     <div class="form-group col">
         <label for="exampleFormControlInput1">Municipality/City:</label>
         <select name="municipal_id2" class="form-control" style="font-weight:bolder!important;color:black" disabled>
-            @foreach($mun as $muns)
-            <option value="{{ $muns->id }}"
-                <?php echo auth()->user()->city_municipal == $muns->id  ? "selected" : "" ?>>{{ $muns->municipal }}
+            @foreach($cities_municipalities as $city_municipality)
+            <option value="{{ $city_municipality->citymun_code }}"
+                {{ auth()->user()->city_municipal === $city_municipality->citymun_code ? 'selected' : '' }}>
+                {{ $city_municipality->name }}
             </option>
-
             @endforeach
         </select>
         <input type="hidden" name="municipal_id" value="{{ auth()->user()->city_municipal }}">
@@ -64,9 +66,49 @@
         <label for="exampleFormControlInput1">Province:</label>
 
         <select name="province_id2" class="form-control" disabled style="font-weight:bolder!important;color:black">
-            @foreach($prov as $provs)
-            <option value="{{ $provs->id }}" <?php echo auth()->user()->Province == $provs->id  ? "selected" : "" ?>>
-                {{ $provs->province }}</option>
+            @foreach($provinces as $province)
+            <option value="{{ $province->prov_code }}"
+                {{ auth()->user()->Province === $province->prov_code ? 'selected' : '' }}>
+                {{ $province->name }}
+            </option>
+            @endforeach
+        </select>
+        <input type="hidden" name="province_id" value="{{ auth()->user()->Province }}">
+        <!-- <input type="text" class="form-control" name="province_id" value="{{auth()->user()->Province}}"> -->
+        <input type="hidden" class="form-control" name="region_id" value="{{auth()->user()->Region}}">
+        <input type="hidden" class="form-control" name="user_id" value="{{auth()->user()->id}}">
+
+    </div>
+
+</div>
+
+
+<!-- FOR PROVINCIAL ROLE -->
+@elseif( auth()->user()->otherrole == 7 )
+<input type="hidden" name="formrequest" id="formrequest" />
+<input type="hidden" name="barangay_id" value="{{ auth()->user()->barangay }}" />
+<div style="display:flex">
+    <div class="form-group col">
+        <label for="exampleFormControlInput1">Municipality/City:</label>
+        <select name="municipal_id2" class="form-control" style="font-weight:bolder!important;color:black" disabled>
+            @foreach($cities_municipalities as $city_municipality)
+            <option value="{{ $city_municipality->citymun_code }}"
+                {{ auth()->user()->city_municipal === $city_municipality->citymun_code ? 'selected' : '' }}>
+                {{ $city_municipality->name }}
+            </option>
+            @endforeach
+        </select>
+        <input type="hidden" name="municipal_id" value="{{ auth()->user()->city_municipal }}">
+    </div>
+    <div class="form-group col">
+        <label for="exampleFormControlInput1">Province:</label>
+
+        <select name="province_id2" class="form-control" disabled style="font-weight:bolder!important;color:black">
+            @foreach($provinces as $province)
+            <option value="{{ $province->prov_code }}"
+                {{ auth()->user()->Province === $province->prov_code ? 'selected' : '' }}>
+                {{ $province->name }}
+            </option>
             @endforeach
         </select>
         <input type="hidden" name="province_id" value="{{ auth()->user()->Province }}">

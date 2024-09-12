@@ -104,20 +104,27 @@ function updateDisplayBasedOnHeader(header) {
         document.getElementById('numYrBlock').style.display = 'block';
         document.getElementById('dateDesigBlock').style.display = 'block';
         document.getElementById('pro_activitiesBlock').style.display = 'block';
+        document.getElementById('province').style.display = 'block';
     } else if (header === 'DNPC') {
         document.getElementById('numYr').innerHTML = 'Number of years as DNPC';
         document.getElementById('numYrBlock').style.display = 'block';
         document.getElementById('dateAppointBlock').style.display = 'block';
         document.getElementById('assign_taskBlock').style.display = 'block';
+        document.getElementById('province').style.display = 'none';
     } else if (header === 'CMNPC') {
         document.getElementById('numYr').innerHTML = 'Number of years as CMNPC';
         document.getElementById('numYrBlock').style.display = 'block';
         document.getElementById('dateAppointBlock').style.display = 'block';
+        document.getElementById('province').style.display = 'block';
     } else if (header === 'BNS') {
         document.getElementById('numYr').innerHTML = 'Number of years as BNS';
         document.getElementById('numYrBlock').style.display = 'block';
         document.getElementById('dateAppointBlock').style.display = 'block';
+        document.getElementById('province').style.display = 'none';
+    } else if (header === 'PNAO') {
+        document.getElementById('province').style.display = 'none';
     }
+
 }
 
 

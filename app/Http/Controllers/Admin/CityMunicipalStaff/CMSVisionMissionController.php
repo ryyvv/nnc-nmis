@@ -31,15 +31,17 @@ class CMSVisionMissionController extends Controller
     {
         $action = 'create';
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
         
         $years = range(date('Y'), 1900);
 
 
-        return view('CityMunicipalStaff.VisionMission.create', compact('prov', 'mun', 'city', 'brgy', 'years', 'action'));
+        return view('CityMunicipalStaff.VisionMission.create', compact('provinces', 'cities_municipalities', 'barangays', 'years', 'action'));
     }
 
     /**
@@ -149,16 +151,18 @@ class CMSVisionMissionController extends Controller
        
         $action = 'edit';
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
         
         $years = range(date('Y'), 1900);
 
 
         $row = DB::table('mplgubrgyvisionmissions')->where('id', $request->id)->first();
-        return view('CityMunicipalStaff.VisionMission.show', compact('prov', 'mun', 'city', 'brgy', 'years', 'action', 'row'));
+        return view('CityMunicipalStaff.VisionMission.show', compact('provinces', 'cities_municipalities', 'barangays', 'years', 'action', 'row'));
 
     }
 
@@ -169,16 +173,18 @@ class CMSVisionMissionController extends Controller
     {
         $action = 'edit';
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
         
         $years = range(date('Y'), 1900);
 
 
         $row = DB::table('mplgubrgyvisionmissions')->where('id', $request->id)->first();
-        return view('CityMunicipalStaff.VisionMission.edit', compact('prov', 'mun', 'city', 'brgy', 'years', 'action', 'row'));
+        return view('CityMunicipalStaff.VisionMission.edit', compact('provinces', 'cities_municipalities', 'barangays', 'years', 'action', 'row'));
  
     }
 

@@ -36,29 +36,12 @@
 
                             <div style="display:flex">
                             <div class="form-group col">
-                                <label for="nameOf"> HEADER:</label>
-                                <select class="form-control" name="header" id="header">
-                                    <option>Select</option>
-                                    <!-- For provincial staff -->
-                                    @if( auth()->user()->role == 7 )
-                                    <option value="NATIONAL OUTSTANDING PROVINCIAL NUTRITION ACTION OFFICER" <?php echo $row->header == 'NATIONAL OUTSTANDING PROVINCIAL NUTRITION ACTION OFFICER' ? 'selected':''  ?> >NATIONAL OUTSTANDING PROVINCIAL NUTRITION ACTION OFFICER</option>
-                                    <option value="REGIONAL OUTSTANDING PROVINCIAL NUTRITION ACTION OFFICER" <?php echo $row->header == 'REGIONAL OUTSTANDING PROVINCIAL NUTRITION ACTION OFFICER' ? 'selected':''  ?> >REGIONAL OUTSTANDING PROVINCIAL NUTRITION ACTION OFFICER</option>
-                                    <option value="NATIONAL OUTSTANDING DISTRICT NUTRITION PROGRAM COORDINATOR" <?php echo $row->header == 'NATIONAL OUTSTANDING DISTRICT NUTRITION PROGRAM COORDINATOR' ? 'selected':''  ?> >NATIONAL OUTSTANDING DISTRICT NUTRITION PROGRAM COORDINATOR</option>
-                                    <option value="REGIONAL OUTSTANDING DISTRICT NUTRITION PROGRAM COORDINATOR" <?php echo $row->header == 'REGIONAL OUTSTANDING DISTRICT NUTRITION PROGRAM COORDINATOR' ? 'selected':''  ?> >REGIONAL OUTSTANDING DISTRICT NUTRITION PROGRAM COORDINATOR</option>
-                                    <!-- For City Municipal staff -->
-                                    @elseif( auth()->user()->role == 7 || auth()->user()->role == 9 )
-                                    <option value="NATIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION ACTION OFFICER" <?php echo $row->header == 'NATIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION ACTION OFFICER' ? 'selected':''  ?>  >NATIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION ACTION OFFICER</option>
-                                    <option value="REGIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION ACTION OFFICER" <?php echo $row->header == 'REGIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION ACTION OFFICER' ? 'selected':''  ?> >REGIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION ACTION OFFICER</option>
-                                    <option value="PROVINCIAL OUTSTANDING CITY/MUNICIPALITY NUTRITION ACTION OFFICER" <?php echo $row->header == 'PROVINCIAL OUTSTANDING CITY/MUNICIPALITY NUTRITION ACTION OFFICER' ? 'selected':''  ?>  >PROVINCIAL OUTSTANDING CITY/MUNICIPALITY NUTRITION ACTION OFFICER</option>
-                                    <option value="NATIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION PROGRAM COORDINATOR" <?php echo $row->header == 'NATIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION PROGRAM COORDINATOR' ? 'selected':''  ?>  >NATIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION PROGRAM COORDINATOR</option>
-                                    <option value="REGIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION PROGRAM COORDINATOR" <?php echo $row->header == 'REGIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION PROGRAM COORDINATOR' ? 'selected':''  ?>  >REGIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION PROGRAM COORDINATOR</option>
-                                    <option value="PROVINCIAL OUTSTANDING CITY/MUNICIPALITY NUTRITION PROGRAM COORDINATOR" <?php echo $row->header == 'PROVINCIAL OUTSTANDING CITY/MUNICIPALITY NUTRITION PROGRAM COORDINATOR' ? 'selected':''  ?>  >PROVINCIAL OUTSTANDING CITY/MUNICIPALITY NUTRITION PROGRAM COORDINATOR</option>
-                                    <!-- For barangay staff -->
-                                    @elseif( auth()->user()->role == 7 || auth()->user()->role == 10 )
-                                    <option value="NATIONAL OUTSTANDING BARANGAY NUTRITION SCHOLAR" <?php echo $row->header == 'NATIONAL OUTSTANDING BARANGAY NUTRITION SCHOLAR' ? 'selected':''  ?>  >NATIONAL OUTSTANDING BARANGAY NUTRITION SCHOLAR</option>
-                                    <option value="REGIONAL OUTSTANDING BARANGAY NUTRITION SCHOLAR" <?php echo $row->header == 'REGIONAL OUTSTANDING BARANGAY NUTRITION SCHOLAR' ? 'selected':''  ?> >REGIONAL OUTSTANDING BARANGAY NUTRITION SCHOLAR</option>
-                                    <option value="PROVINCIAL/CITY OUTSTANDING BARANGAY NUTRITION SCHOLAR" <?php echo $row->header == 'PROVINCIAL/CITY OUTSTANDING BARANGAY NUTRITION SCHOLAR' ? 'selected':''  ?> >PROVINCIAL/CITY OUTSTANDING BARANGAY NUTRITION SCHOLAR</option>
-                                    @endif
+                                <label for="nameOf"> HEADER:<span style="color:red">*</span> </label>
+                                <select id="header" class="form-control" name="header">
+                                    <option value="" > Select </option>
+                                    @foreach ($availableForms as $formKey => $formName)
+                                        <option value="{{ $formKey }}" <?php echo $row->header == $formKey ? 'selected':'' ?> >{{ $formName }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             

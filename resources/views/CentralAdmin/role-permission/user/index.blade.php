@@ -2,7 +2,7 @@
 <script src="https://cdn.lordicon.com/lordicon.js"></script>
 @extends('layouts.app', [
 'class' => 'sidebar-mini ',
-'namePage' => 'Users',
+'namePage' => 'User Management',
 'activePage' => 'Users',
 'activeNav' => '',
 ])
@@ -42,7 +42,7 @@
 
             <div style="display:flex;align-items:center">
                 <!-- <a href="{{route('formsb.index')}}"> -->
-                <h5 class="title">{{__("List of Mellpi Pro for LGU Profile Sheet (Barangay)")}}</h5>
+                <h5 class="title">{{__("List of Users")}}</h5>
                 <!-- </a> -->
 
             </div>
@@ -53,7 +53,7 @@
             <div class="content" id="deleteAlert" style="margin:30px;">
 
                 <div class="row-12">
-                    <a href="{{route('CAadmin.create')}}" class="btn btn-primary">Add new Account </a>
+                    <a href="{{route('CAadmin.create')}}" class="bold btn btn-primary">Add new Account </a>
                 </div>
                 <div class="row-12">
                     <table class="display" id="myTable" width="100%">

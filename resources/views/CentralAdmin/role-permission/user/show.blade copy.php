@@ -69,12 +69,7 @@
                         <div style="margin-bottom:10px">
                             <span>Address:<br></span>
                             <label style="font-size:18px">
-                            {{$barangay->name ?? '' }},
-                            {{$submunicipal->name ?? '' }}
-                            {{$municipal->name ?? '' }}
-                            {{$city->name ?? ''  }}
-                            {{$province->name ?? '' }}
-                            {{$region->name ?? '' }}
+                         
                             </label>
                         </div>
                         <div style="margin-bottom:10px">
@@ -100,7 +95,7 @@
                         <div style="margin-bottom:10px">
                             <span>User Status:<br></span>
                            <label style="font-size:18px">
-                            {{$userstatusActive->status}}
+                            {{$userstatusActive->name}}
                             </label>
                         </div>
                        </div>
@@ -152,21 +147,20 @@
                     <div class="form-group">
                         <label for="userrequest">Request Status:</label>
                         <select class="form-control" id="userrequest" name="userrequest" disabled required>
-                            @foreach($userstatus as $userstatus)
-                            <option value="{{ $userstatus->id }}" {{ old('status', $users->status) == $userstatus->id ? 'selected' : '' }}>{{ $userstatus->requeststatus }}</option>
+                            @foreach($userrequeststatus as $userrequeststatus)
+                            <option value="{{ $userrequeststatus->id }}" {{ old('status', $users->status) == $userrequeststatus->id ? 'selected' : '' }}>{{ $userrequeststatus->requeststatus }}</option>
                             @endforeach
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label for="userstatus">User Status:</label>
-                        <input type="hidden" name="useractivestatus" value="1"> 
                         <select class="form-control" id="userstatus" name="userstatus" disabled required>
-                            @foreach($userActivestatus as $userActivestatus)
-                            <option value="{{ $userActivestatus->id }}" {{ old('userstatus', $users->useractivestatus) == $userActivestatus->id ? 'selected' : '' }}>{{ $userActivestatus->status }}</option>
+                            @foreach($userstatus as $userstatus)
+                            <option value="{{ $userstatus->id }}" {{ old('userstatus', $users->role) == $userstatus->id ? 'selected' : '' }}>{{ $userstatus->status }}</option>
                             @endforeach
                         </select>
-                        <input id="hiddenuserstatus" name="hiddenuserstatus" type="hidden" value="" />
+                        <input id="hiddenuserstatus" name="hiddenuserstatus" type="hidden" value="{{$users->userstatus}}" />
                     </div>
 
                     <button id="updateAccountStatusBtn" disabled type="button" class="bold btn btn-primary" data-toggle="modal" data-target="#exampleModalSaveChanges">

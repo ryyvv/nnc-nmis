@@ -29,9 +29,23 @@
 
                             @if ($overallScore)
                             <!-- <center><img src="https://nnc-nmis.moodlearners.com/assets/img/logo.png" alt="" class="imgLogo"></center><br> -->
-                            <center>
-                                <h5 class="title">{{ $overallScore->interview_header }}</h5>
-                            </center><br>
+                            <div style="display:flex">
+                            <div class="form-group col">
+                                <label for="nameOf"> HEADER:</label>
+                                <select id="header" class="form-control" name="header" disabled>
+                                    <option value="" > Select </option>
+                                    @foreach ($availableForms as $formKey => $formName)
+                                        <option value="{{ $formKey }}" <?php echo $overallScore->interview_header == $formKey ? 'selected':'' ?> >{{ $formName }}</option>
+                                    @endforeach
+                                </select>
+                                @error('header')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                            </div>
+                            
+                            </div>
+
+                            <br />
 
                             <input type="hidden" name="lnfp_lgu_id" value="{{$overallScore->lnfp_lgu_id}}">
                             <input type="hidden" value="" name="status" id="status">

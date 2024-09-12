@@ -14,6 +14,7 @@ use App\Models\lnfp_form8;
 use App\Models\lnfp_formInterview;
 use App\Models\lnfp_lguprofile;
 use App\Services\StatusUpdateService;
+use App\Http\Controllers\Admin\BarangayScholar\MellpiProForLNFP_InterviewController;
 
 
 class MellpiProForLNFP_OverallScoreController extends Controller
@@ -39,12 +40,16 @@ class MellpiProForLNFP_OverallScoreController extends Controller
             'lnfp_form5a_rr.nameofPnao as pnaoName',
             'lnfp_interview_form.header as interview_header'
         )
+        ->where('lnfp_overall_score_form.user_id', auth()->user()->id )
         ->get();
         return view('BarangayScholar/MellpiProForLNFP/MellpiProOverallScore/OverallScoreFormPNAOIndex', ['overallScore' => $overallScore]);
     }
 
     public function OverallScoreFormLNFPView(Request $request)
     {
+
+        $header = new MellpiProForLNFP_InterviewController;
+        $availableForms = $header->access_header();
         $overallScore = DB::table('lnfp_overall_score_form')
         ->join('lnfp_form5a_rr', 'lnfp_overall_score_form.form5_id', '=', 'lnfp_form5a_rr.id')
         ->join('lnfp_interview_form', 'lnfp_overall_score_form.formInterview_id', '=', 'lnfp_interview_form.id')
@@ -73,12 +78,14 @@ class MellpiProForLNFP_OverallScoreController extends Controller
         ->first();
         // dd($overallScore);
 
-        return view('BarangayScholar/MellpiProForLNFP/MellpiProOverallScore/View', ['overallScore' => $overallScore]);
+        return view('BarangayScholar/MellpiProForLNFP/MellpiProOverallScore/View', ['overallScore' => $overallScore, 'availableForms' => $availableForms]);
     }
 
 
     public function OverallScoreFormLNFPEdit(Request $request)
     {
+        $header = new MellpiProForLNFP_InterviewController;
+        $availableForms = $header->access_header();
         $overallScore = DB::table('lnfp_overall_score_form')
         ->join('lnfp_form5a_rr', 'lnfp_overall_score_form.form5_id', '=', 'lnfp_form5a_rr.id')
         ->join('lnfp_interview_form', 'lnfp_overall_score_form.formInterview_id', '=', 'lnfp_interview_form.id')
@@ -106,16 +113,17 @@ class MellpiProForLNFP_OverallScoreController extends Controller
         ->first();
         // dd($overallScore);
 
-        return view('BarangayScholar/MellpiProForLNFP/MellpiProOverallScore/OverallScoreFormPNAOEdit', ['overallScore' => $overallScore]);
+        return view('BarangayScholar/MellpiProForLNFP/MellpiProOverallScore/OverallScoreFormPNAOEdit', ['overallScore' => $overallScore, 'availableForms' => $availableForms]);
     }
+
     public function update(Request $request)
     {
+        $fields = $this->access_fields($request);
 
         if( $request->formrequest == 'submit' ){
         try {
-            $rules = [
-                'dateOS' => 'required',
-            ];
+           
+            $rules = $this->access_rules();
 
             $message = [
                 'required' => 'The field is required.',
@@ -134,30 +142,10 @@ class MellpiProForLNFP_OverallScoreController extends Controller
                     ->with('error', 'Something went wrong! Please try again.');
             } else {
                 
-                lnfp_formOverall::where('id', $request->id)->update([
-                    'name' => $request->nameOf,
-                    'areaOfAssign' => $request->areaAssign,
-                    'date'  => $request->dateOS,
-                    'pointsP1AS' => $request->pointsP1AS,
-                    'pointsP2AS' => $request->pointsP2AS,
-                    'scoreP1AS' => $request->scoreP1AS,
-                    'scoreP2AS' => $request->scoreP2AS,
-                    'totalScoreAS' => $request->totalScoreAS,
-                    'nameTM1' => $request->nameTM1,
-                    'nameTM2' => $request->nameTM2,
-                    'nameTM3' => $request->nameTM3,
-                    'desigOffice1' => $request->desigOffice1,
-                    'desigOffice2' => $request->desigOffice2,
-                    'desigOffice3' => $request->desigOffice3,
-                    'receivedBy' => $request->receivedBy,
-                    'whatDate' => $request->whatDate,
-                    'status' => 1,
-                    'user_id' => auth()->user()->id,
-
-                ]);
+                lnfp_formOverall::where('id', $request->id)->update( $fields + [ 'status' => 1 ]);
 
                // Call the service to update statuses
-              $this->statusUpdateService->updateStatuses($request->lnfp_lgu_id);
+               $this->statusUpdateService->updateStatuses($request->lnfp_lgu_id);
             
                 return redirect()->route('lnfpFormOverallScoreIndex')->with('success', 'Data Submitted successfully!');
             
@@ -171,7 +159,25 @@ class MellpiProForLNFP_OverallScoreController extends Controller
     
         }else{
 
-            lnfp_formOverall::where('id', $request->id)->update([
+            lnfp_formOverall::where('id', $request->id)->update( $fields + [ 'status' => 2 ]);
+
+
+            return redirect()->back()->with('success', 'Data Updated Successfully!');
+
+        }
+    
+    }
+
+    public static function access_rules(){
+        $rules = [
+            'dateOS' => 'required',
+        ];
+
+        return $rules;
+    }
+
+    public static function access_fields($request){
+            $updateData = [
                 'name' => $request->nameOf,
                 'areaOfAssign' => $request->areaAssign,
                 'date'  => $request->dateOS,
@@ -188,15 +194,9 @@ class MellpiProForLNFP_OverallScoreController extends Controller
                 'desigOffice3' => $request->desigOffice3,
                 'receivedBy' => $request->receivedBy,
                 'whatDate' => $request->whatDate,
-                'status' => 2,
                 'user_id' => auth()->user()->id,
+            ];
 
-            ]);
-
-
-            return redirect()->back()->with('success', 'Data Updated Successfully!');
-
-        }
-    
+            return $updateData;
     }
 }

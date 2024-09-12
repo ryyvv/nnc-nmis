@@ -24,10 +24,12 @@ class CMSChangeNSController extends Controller
     public function index()
     {
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
 
         $barangay = auth()->user()->barangay;
 
@@ -38,7 +40,7 @@ class CMSChangeNSController extends Controller
         ->get();
 
 
-        return view('CityMunicipalStaff.ChangeinNS.index', compact('cnlocation', 'prov', 'mun', 'city', 'brgy'));
+        return view('CityMunicipalStaff.ChangeinNS.index', compact('cnlocation', 'provinces', 'cities_municipalities', 'barangays'));
     }
 
     /**
@@ -48,13 +50,15 @@ class CMSChangeNSController extends Controller
     {
         $action = 'create';
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
         
         $years = range(date("Y"), 1900);
-        return view('CityMunicipalStaff.ChangeinNS.create', compact('prov', 'mun', 'city', 'brgy','years','action'));
+        return view('CityMunicipalStaff.ChangeinNS.create', compact('provinces', 'cities_municipalities', 'barangays','years','action'));
     }
 
     /**
@@ -195,16 +199,18 @@ class CMSChangeNSController extends Controller
     {
         $action = 'edit';
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
         
         $years = range(date('Y'), 1900);
 
 
         $row = DB::table('mplgubrgychangeNS')->where('id', $request->id)->first();
-        return view('CityMunicipalStaff.ChangeinNS.show', compact('prov', 'mun', 'city', 'brgy', 'years', 'action', 'row'));
+        return view('CityMunicipalStaff.ChangeinNS.show', compact('provinces', 'cities_municipalities', 'barangays', 'years', 'action', 'row'));
     }
 
     /**
@@ -214,17 +220,19 @@ class CMSChangeNSController extends Controller
     {   
         $action = 'edit';
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
         
         $years = range(date('Y'), 1900);
 
         
         $row = DB::table('mplgubrgychangeNS')->where('user_id', auth()->user()->id)->first();
         
-       return view('CityMunicipalStaff.ChangeinNS.edit', compact('row', 'prov', 'mun', 'city', 'brgy', 'years', 'action'));  
+       return view('CityMunicipalStaff.ChangeinNS.edit', compact('row', 'provinces', 'cities_municipalities', 'barangays', 'years', 'action'));  
     }
 
     /**

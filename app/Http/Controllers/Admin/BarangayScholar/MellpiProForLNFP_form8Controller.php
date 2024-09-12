@@ -79,14 +79,16 @@ class MellpiProForLNFP_form8Controller extends Controller
     {
         $action = 'create';
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
 
         $years = range(date("Y"), 1900);
 
-        return view('BarangayScholar/MellpiProForLNFP/MellpiProActionSheet/ActionSheetForm8Create', compact('prov', 'mun', 'city', 'brgy', 'years', 'action'));
+        return view('BarangayScholar/MellpiProForLNFP/MellpiProActionSheet/ActionSheetForm8Create', compact('provinces', 'cities_municipalities', 'barangays', 'years', 'action'));
     }
 
     public function storeASForm8(Request $request)
@@ -343,13 +345,13 @@ class MellpiProForLNFP_form8Controller extends Controller
                 $fields = $this->access_fields($request, $sigDate1, $sigDate2, $sigDate3);
                 $LNFPForm8AS->update( $fields +  ['status' => 1 ]);
                     # code...
-                    lnfp_lguform8tracking::create([
-                        'lnfp_form8_id' => $request->id,
-                        'status' => 1,
-                        'barangay_id' => auth()->user()->barangay,
-                        'municipal_id' => auth()->user()->city_municipal,
-                        'user_id' => auth()->user()->id,
-                    ]);
+                    // lnfp_lguform8tracking::create([
+                    //     'lnfp_form8_id' => $request->id,
+                    //     'status' => 1,
+                    //     'barangay_id' => auth()->user()->barangay,
+                    //     'municipal_id' => auth()->user()->city_municipal,
+                    //     'user_id' => auth()->user()->id,
+                    // ]);
 
                
                     $lnfp_formInterview = lnfp_formInterview::create([

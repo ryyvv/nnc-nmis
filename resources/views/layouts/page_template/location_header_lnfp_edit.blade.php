@@ -5,8 +5,11 @@
     <div class="form-group col">
         <label for="exampleFormControlInput1">Barangay:</label>
         <select name="barangay_id" class="form-control">
-            @foreach($brgy as $brgys)
-            <option value="{{ $brgys->id }}" <?php echo $row->barangay_id == $brgys->id  ? "selected" : "" ?>>{{ $brgys->barangay }}</option>
+            @foreach($barangays as $barangay)
+            <option value="{{ $barangay->psgc_code }}"
+                {{ auth()->user()->barangay === $barangay->psgc_code ? 'selected' : '' }}>
+                {{ $barangay->name }}
+            </option>
             @endforeach
         </select>
         <!-- <input type="text" class="form-control" name="barangay_id" value="{{Auth()->user()->barangay}}"> -->
@@ -14,8 +17,11 @@
     <div class="form-group col">
         <label for="exampleFormControlInput1">Municipality/City:</label>
         <select name="municipal_id2" class="form-control" disabled style="font-weight:bolder!important;color:black">
-            @foreach($mun as $muns)
-            <option value="{{ $muns->id }}" <?php echo $row->municipal_id == $muns->id  ? "selected" : "" ?>>{{ $muns->municipal }}</option>
+            @foreach($cities_municipalities as $city_municipality)
+            <option value="{{ $city_municipality->citymun_code }}"
+                {{ auth()->user()->city_municipal === $city_municipality->citymun_code ? 'selected' : '' }}>
+                {{ $city_municipality->name }}
+            </option>
             @endforeach
         </select>
         <input type="hidden" name="municipal_id" value="{{ auth()->user()->city_municipal }}">
@@ -24,9 +30,11 @@
         <label for="exampleFormControlInput1">Province:</label>
 
         <select name="province_id2" class="form-control" disabled style="font-weight:bolder!important;color:black">
-            @foreach($prov as $provs)
-            <option value="{{ $provs->id }}" <?php echo $row->municipal_id == $provs->id  ? "selected" : "" ?>>{{ $provs->province }}</option>
-
+            @foreach($provinces as $province)
+            <option value="{{ $province->prov_code }}"
+                {{ auth()->user()->Province === $province->prov_code ? 'selected' : '' }}>
+                {{ $province->name }}
+            </option>
             @endforeach
         </select>
         <input type="hidden" name="province_id" value="{{ auth()->user()->Province }}">
@@ -43,7 +51,8 @@
 
     <div class="form-group col">
         <label for="dateMonitoring">Date of Monitoring:<span style="color:red">*</span></label>
-        <input type="date" class="form-control" id="dateMonitoring" name="dateMonitoring" value="{{$row->dateMonitoring}}">
+        <input type="date" class="form-control" id="dateMonitoring" name="dateMonitoring"
+            value="{{$row->dateMonitoring}}">
         @error('dateMonitoring')
         <div class="text-danger">{{ $message }}</div>
         @enderror
@@ -53,9 +62,9 @@
         <select class="form-control" id="periodCovereda" name="periodCovereda">
             <option value="">Select</option>
             <?php foreach ($years as $year) : ?>
-                <option value="{{ $year }}" <?php echo $row->periodCovereda == $year ? 'selected' : '' ?>>
-                    {{ $year }}
-                </option>
+            <option value="{{ $year }}" <?php echo $row->periodCovereda == $year ? 'selected' : '' ?>>
+                {{ $year }}
+            </option>
             <?php endforeach; ?>
         </select>
         @error('periodCovereda')
@@ -75,8 +84,11 @@
     <div class="form-group col">
         <label for="exampleFormControlInput1">Municipality/City:</label>
         <select name="municipal_id2" class="form-control" disabled style="font-weight:bolder!important;color:black">
-            @foreach($mun as $muns)
-            <option value="{{ $muns->id }}" <?php echo $row->municipal_id == $muns->id  ? "selected" : "" ?>>{{ $muns->municipal }}</option>
+            @foreach($cities_municipalities as $city_municipality)
+            <option value="{{ $city_municipality->citymun_code }}"
+                {{ auth()->user()->city_municipal === $city_municipality->citymun_code ? 'selected' : '' }}>
+                {{ $city_municipality->name }}
+            </option>
             @endforeach
         </select>
         <input type="hidden" name="municipal_id" value="{{ auth()->user()->city_municipal }}">
@@ -85,9 +97,11 @@
         <label for="exampleFormControlInput1">Province:</label>
 
         <select name="province_id2" class="form-control" disabled style="font-weight:bolder!important;color:black">
-            @foreach($prov as $provs)
-            <option value="{{ $provs->id }}" <?php echo $row->municipal_id == $provs->id  ? "selected" : "" ?>>{{ $provs->province }}</option>
-
+            @foreach($provinces as $province)
+            <option value="{{ $province->prov_code }}"
+                {{ auth()->user()->Province === $province->prov_code ? 'selected' : '' }}>
+                {{ $province->name }}
+            </option>
             @endforeach
         </select>
         <input type="hidden" name="province_id" value="{{ auth()->user()->Province }}">
@@ -104,7 +118,8 @@
 
     <div class="form-group col">
         <label for="dateMonitoring">Date of Monitoring:<span style="color:red">*</span></label>
-        <input type="date" class="form-control" id="dateMonitoring" name="dateMonitoring" value="{{$row->dateMonitoring}}">
+        <input type="date" class="form-control" id="dateMonitoring" name="dateMonitoring"
+            value="{{$row->dateMonitoring}}">
         @error('dateMonitoring')
         <div class="text-danger">{{ $message }}</div>
         @enderror
@@ -114,9 +129,9 @@
         <select class="form-control" id="periodCovereda" name="periodCovereda">
             <option value="">Select</option>
             <?php foreach ($years as $year) : ?>
-                <option value="{{ $year }}" <?php echo $row->periodCovereda == $year ? 'selected' : '' ?>>
-                    {{ $year }}
-                </option>
+            <option value="{{ $year }}" <?php echo $row->periodCovereda == $year ? 'selected' : '' ?>>
+                {{ $year }}
+            </option>
             <?php endforeach; ?>
         </select>
         @error('periodCovereda')

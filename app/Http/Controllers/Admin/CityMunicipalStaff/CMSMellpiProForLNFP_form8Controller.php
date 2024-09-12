@@ -26,29 +26,33 @@ class CMSMellpiProForLNFP_form8Controller extends Controller
     {
         $action = 'edit';
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
 
         $years = range(date("Y"), 1900);
 
         $row = DB::table('lnfp_form8')->where('id', $request->id)->first();
 
-        return view('CityMunicipalStaff/MellpiProForLNFP/MellpiProActionSheet/ActionSheetForm8Edit',compact('row', 'prov', 'mun', 'city', 'brgy', 'years', 'action'));
+        return view('CityMunicipalStaff/MellpiProForLNFP/MellpiProActionSheet/ActionSheetForm8Edit',compact('row', 'provinces', 'cities_municipalities', 'barangays', 'years', 'action'));
     }
     public function ActionSheetForm8Create()
     {
         $action = 'create';
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
 
         $years = range(date("Y"), 1900);
 
-        return view('CityMunicipalStaff/MellpiProForLNFP/MellpiProActionSheet/ActionSheetForm8Create', compact('prov', 'mun', 'city', 'brgy', 'years', 'action'));
+        return view('CityMunicipalStaff/MellpiProForLNFP/MellpiProActionSheet/ActionSheetForm8Create', compact('provinces', 'cities_municipalities', 'barangays', 'years', 'action'));
     }
     public function storeASForm8(Request $request)
     {

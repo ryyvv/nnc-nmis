@@ -171,6 +171,7 @@ $(document).ready(function () {
             $('#hiddenuserstatus').val('2');
             $('#userstatus').val('2');
             $('#userstatus').attr('disabled', 'disabled');
+            // $('#userrole').val('12'); set role to user under review
         }
     });
 
@@ -181,6 +182,8 @@ $(document).ready(function () {
             $('#hiddenuserstatus').val('1');
         }else {
             $('#hiddenuserstatus').val('2');
+        
+            
         }
     });
 

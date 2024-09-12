@@ -73,15 +73,15 @@ class AdminUserController extends Controller
     public function create()
     {
         $roles = Role::get();
-        return view('CentralAdmin.role-permission.user.create', ['roles' => $roles]);
-        //return view('CentralAdmin.role-permission.user.create');
+        $userrole = DB::table('userroles')->get();
+        return view('CentralAdmin.role-permission.user.create', compact('roles', 'userrole'));
+        
     }
 
     public function store(Request $request)
     {
  
-        $request->validate([
-            
+        $rules = [
             'Firstname' => 'required|string|max:255',
             'Middlename' => 'required|string|max:255',
             'Lastname' => 'required|string|max:255',
@@ -97,16 +97,27 @@ class AdminUserController extends Controller
             'designation' => 'required|string ', 
             'userstatus' => 'required|integer ', 
             'status' => 'required|integer',
+            'useractivestatus'=>'required|integer',
             'otherrole' => 'required|integer',
-        ]);
+        ];
+
+        $validator = Validator::make($request->all() , $rules);
+    
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()->with('error', 'Something went wrong! Please try again.');
+        }
+    
 
         $user = User::create([
                         'Firstname' => $request->Firstname,
                         'Middlename' => $request->Middlename,
                         'Lastname' => $request->Lastname,
-                        'Region' => $request->inputRegionNAO,
-                        'Province' => $request->inputProvinceNAO,
-                        'city_municipal' => $request->inputCityNAO,
+                        'Region' => $request->Region,
+                        'Province' => $request->Province,
+                        'barangay' => $request->barangay,
+                        'city_municipal' => $request->city_municipal,
                         'agency_office_lgu' => $request->agency_office_lgu,
                         'Division_unit' => $request->Division_unit,
                         'role' => $request->role,
@@ -115,6 +126,7 @@ class AdminUserController extends Controller
                         'status' => $request->status,
                         'designation' => $request->designation,
                         'userstatus' => $request->userstatus,
+                        'useractivestatus' => $request->useractivestatus,
                         'otherrole' => $request->otherrole,
                     ]);
         
@@ -123,7 +135,7 @@ class AdminUserController extends Controller
         // dd($roles);
         $user->syncRoles($roles->name);
 
-        return redirect('CentralAdmin/Admin')->with('status','User created successfully with roles');
+        return redirect('CentralAdmin/admin')->with('status','User created successfully with roles');
     }
 
     public function edit(Request $request)
@@ -147,29 +159,89 @@ class AdminUserController extends Controller
 
     public function show(Request $request)
     {   
+     
         $userrequeststatus = DB::table('userrequeststatus')->get();
         $userstatus = DB::table('userstatus')->get();
-        $role = Role::get();
+
+        $user = User::find($request->id);
+        // Barangay
+        $barangay = DB::table('psgc_barangays')
+        ->where('psgc_code', $user->barangay)
+        ->select('psgc_barangays.name as name')
+        ->first();
+        //dd($barangay);
+
+        // City
+        $city = DB::table('psgc_cities')
+        ->where('citymun_code', $user->city_municipal)
+        ->select('psgc_cities.name as name')
+        ->first();
+
+        $municipal = DB::table('psgc_municipalities')
+        ->where('citymun_code', $user->city_municipal)
+        ->select('psgc_municipalities.name as name')
+        ->first();
+
+        $submunicipal = DB::table('psgc_sub_municipalities')
+        ->where('citymun_code', $user->city_municipal)
+        ->select('psgc_sub_municipalities.name as name')
+        ->first();
+        //dd($city);
+
+        //Province
+        $province = DB::table('psgc_provinces')
+        ->where('prov_code', $user->Province)
+        ->select('psgc_provinces.name as name')
+        ->first();
+        // dd($province);
+
+        //Region
+        $region = DB::table('psgc_regions')
+        ->where('reg_code', $user->Region)
+        ->select('psgc_regions.name as name')
+        ->first();
+
         $users = User::findOrFail($request->id); 
+
+        $userroles = DB::table('userroles')
+        ->where('id', $user->otherrole)
+        ->select('userroles.userrole as name')
+        ->first(); 
+
+        $userstatusActive = DB::table('userstatus')
+        ->where('id', $user->useractivestatus)
+        ->select('userstatus.status as status')
+        ->first(); 
+     
+        $userrole = DB::table('userroles')->get();
+        $userstatus = DB::table('userrequeststatus')->get();
+        $userActivestatus = DB::table('userstatus')->get();
+
         //$userRoles = $user->roles->pluck('name','name')->all();
-        return view('CentralAdmin.role-permission.user.show',  compact('users','role', 'userrequeststatus','userstatus'));
+        return view('CentralAdmin.role-permission.user.show',  compact('barangay','city','submunicipal','municipal','province','region','users','userrole', 'userroles','userrequeststatus','userstatus','userstatusActive','userActivestatus'));
     }
 
     public function update(Request $request, User $user)
     {
+       
         $request->validate([
             'Firstname' => 'required|string|max:255',
             'Middlename' => 'required|string|max:255',
             'Lastname' => 'required|string|max:255',
             'Region' => 'required|string|max:255',
             'Province' => 'required|string|max:255',
+            'barangay' => 'required|string|max:255',
             'city_municipal' => 'required|string|max:255',
             'agency_office_lgu' => 'required|string|max:255',
             'Division_unit' => 'required|string|max:255',
+            'designation' => 'required|string|max:255',
             'role' => 'required|string|max:255',
+            'otherrole' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|max:20', 
             'status' => 'required|string|max:255',
+            'useractivestatus' => 'required|integer',
+            'userstatus' => 'required|string|max:255',
         ]);
 
                 $data = [
@@ -178,13 +250,18 @@ class AdminUserController extends Controller
                         'Lastname' => $request->Lastname,
                         'Region' => $request->Region,
                         'Province' => $request->Province,
+                        'barangay' => $request->barangay,
                         'city_municipal' => $request->city_municipal,
                         'agency_office_lgu' => $request->agency_office_lgu,
                         'Division_unit' => $request->Division_unit,
+                        'designation' => $request->designation,
                         'role' => $request->role,
+                        'otherrole' => $request->otherrole,
                         'email' => $request->email,
                         'password' => Hash::make($request->password),
                         'status' => $request->status,
+                        'useractivestatus' => $request->useractivestatus,
+                        'userstatus' => $request->userstatus,
                 ];
 
         if(!empty($request->password)){
@@ -195,10 +272,10 @@ class AdminUserController extends Controller
 
         $user->update($data);
 
-        $roles = DB::table('roles')->where('id', $request->role)->first();
+        $roles = DB::table('otherrole')->where('id', $request->otherrole)->first();
         $user->syncRoles($roles->name); 
 
-        return redirect('CentralAdmin/Admin')->with('status','User Updated Successfully with roles');
+        return redirect('CentralAdmin/admin')->with('status','User Updated Successfully with roles');
     }
 
     public function destroy(Request $request)
@@ -206,21 +283,20 @@ class AdminUserController extends Controller
         $user = User::findOrFail($request->id);
 
     
-        return redirect('CentralAdmin/Admin')->with('status','User Delete Successfully');
+        return redirect('CentralAdmin/admin')->with('status','User Delete Successfully');
     }
 
 
     public function changeuserstatus(Request $request)
     {
-        $user = User::findOrFail($request->request);
+        $user = User::findOrFail($request->id);
  
 
         $rules = [
-            'role' => 'required|string',
-            'userstatus' => 'required|string',
-            'designation' => 'required|string',  
             'otherrole' => 'required|string',
-            'userstatus' => 'required|string',
+            'designation' => 'required|string',  
+            'userrequest' => 'required|string',
+            'hiddenuserstatus' => 'required|string', 
         ];
         $messages = [ 
             'required' => 'The :attribute field is required.',
@@ -236,20 +312,28 @@ class AdminUserController extends Controller
         
         // Update the password
         $user->update([ 
-            'role' => $request->role,
+            'otherrole' => $request->otherrole,
             'designation' =>   $request->designation,
-            'otherrole' =>   $request->otherrole,
-            'userstatus' =>   $request->userstatus,
+            'status' =>   $request->userrequest,
+            'useractivestatus' =>   $request->hiddenuserstatus, 
         ]);
 
-        return redirect('CentralAdmin/Admin')->with('success','User Status Updated Successfully');
+        return redirect('CentralAdmin/admin')->with('success','User Status Updated Successfully');
+
     }
 
-    public function changepassword($userId)
+    public function changepassword(Request $request)
     {
-        $user = User::findOrFail($userId);
-        $user->delete();
 
-        return redirect('/adminusers')->with('status','User Delete Successfully');
+        $user = User::findOrFail($request->id);
+
+        $request->validate([
+            'password' => ['required','confirmed'], 
+        ]);
+        $user->update([
+            'password' => Hash::make($request->password),
+        ]);
+    
+        return redirect('CentralAdmin/admin')->with('success','User Delete Successfully');
     }
 }

@@ -75,16 +75,21 @@
                                         @enderror
                                 </div>
 
-                                <!-- For Barangay Level -->
-                                @if( auth()->user()->otherrole == 9 )
-                                <div class="form-group col">
+                                <!-- For Municipal Level -->
+                                @if( auth()->user()->otherrole != 10 )
+                                <div class="form-group col" id="province" style="display: none;" >
                                     <label for="address">Province of Deployment:<span style="color:red">*</span> </label>
-                                    <input class="form-control" type="text" name="address" id="address" value="{{ old('address',$row->address) }}">
-                                    @error('address')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                    <select name="municipal_id2" class="form-control" style="font-weight:bolder!important;color:black" disabled>
+                                        @foreach($cities_municipalities as $city_municipality)
+                                        <option value="{{ $city_municipality->citymun_code }}"
+                                            {{ auth()->user()->city_municipal === $city_municipality->citymun_code ? 'selected' : '' }}>
+                                            {{ $city_municipality->name }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                    <input type="hidden" name="address" value="{{ auth()->user()->city_municipal }}">
                                 </div>
-                                <!-- For Municipality Level -->
+                                <!-- For Barangay Level -->
                                 @elseif( auth()->user()->otherrole == 10 )
                                 <div class="form-group col">
                                     <label for="education">Educational Attainment:<span style="color:red">*</span> </label>

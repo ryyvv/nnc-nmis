@@ -42,14 +42,15 @@
                                 @csrf
 
                                 <!-- //set as underReview -->
-                                <input type="hidden" name="role" value="3"> 
+                                <input type="hidden" name="role" value="3">
                                 <!-- //set as active -->
-                                <input type="hidden" name="userstatus" value="1">  
+                                <input type="hidden" name="userstatus" value="1">
                                 <!-- //userRoles set as dropdown to admin  approve -->
-                                <input type="hidden" name="otherrole" value="1"> 
+                                <input type="hidden" name="otherrole" value="1">
                                 <!-- //set as pending  -->
-                                <input type="hidden" name="status" value="3"> 
-                                
+                                <input type="hidden" name="status" value="3">
+                                <input type="hidden" name="useractivestatus" value="2">
+
 
                                 <div>
                                     <div class="input-group  form-control-lg {{ $errors->has('Firstname') ? ' has-danger' : '' }}"
@@ -440,7 +441,6 @@
 
                 dropdowns.city.change(function() {
                     const citymunCode = $(this).val();
-                    const cityOfManilaCode = '1380600';
                     if (!citymunCode) return;
 
                     fetchDataAndPopulate(routes.getBarangays, {

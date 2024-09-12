@@ -20,10 +20,12 @@ class CMOMellpiLGUProfileBarangayLNCManagementController extends Controller
      public function report()
      {
          $location = new LocationController;
-         $prov = $location->getLocationDataProvince(auth()->user()->Region);
-         $mun = $location->getLocationDataMuni(auth()->user()->Province);
-         $city = $location->getLocationDataCity(auth()->user()->Region);
-         $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+         $regCode = auth()->user()->Region;
+         $provCode = auth()->user()->Province;
+         $citymunCode = auth()->user()->city_municipal;
+         $provinces = $location->getProvinces(['reg_code' => $regCode]);
+         $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+         $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
  
          $barangay = auth()->user()->barangay;
          $lguProfile = DB::table('mplgubrgylncmanagement')->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();
@@ -40,10 +42,12 @@ class CMOMellpiLGUProfileBarangayLNCManagementController extends Controller
 
     public function fetchReport() {
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
 
  
             $data  = DB::table('vmbarangayreport')
@@ -63,10 +67,12 @@ class CMOMellpiLGUProfileBarangayLNCManagementController extends Controller
     public function index()
     {
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
 
         $barangay = auth()->user()->barangay;
         $lguProfile = DB::table('mplgubrgylncmanagement')->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();
@@ -102,16 +108,18 @@ class CMOMellpiLGUProfileBarangayLNCManagementController extends Controller
     {
         $action = 'edit'; 
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
 
         $years = range(date("Y"), 1900); 
 
         $row = DB::table('mplgubrgylncmanagement')->where('id', $id)->first();
 
-        return view('CityMunicipalOfficer.MellpiLGUBarangayLNCManagement.show',compact('row','prov', 'mun', 'city', 'brgy', 'years', 'action'));
+        return view('CityMunicipalOfficer.MellpiLGUBarangayLNCManagement.show',compact('row','provinces', 'cities_municipalities', 'barangays', 'years', 'action'));
     }
 
     /**

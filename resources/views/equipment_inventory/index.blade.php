@@ -55,6 +55,8 @@ thead th {
                 <div>
                     <a class="btn btn-outline-primary" href="{{route('BSequipmentInventory.create')}}">Add
                         Equipments</a>
+                    <a class="btn btn-outline-primary" href="{{route('BSequipmentInventory.edit')}}">Edit
+                        Equipments</a>
                 </div>
             </div>
         </div>
@@ -116,7 +118,7 @@ thead th {
                         </thead>
                         <tbody id="hb-city-details">
                         </tbody>
-                        <tfoot id="hb-grandtotals">
+                        <tfoot id="hb-totals">
                         </tfoot>
                     </table>
                 </div>
@@ -144,7 +146,7 @@ thead th {
                         </thead>
                         <tbody id="ws-city-details">
                         </tbody>
-                        <tfoot id="ws-grandtotals">
+                        <tfoot id="ws-totals">
                         </tfoot>
                     </table>
                 </div>
@@ -172,7 +174,7 @@ thead th {
 
                         <tbody id="muac-city-details">
                         </tbody>
-                        <tfoot id="muac-grandtotals">
+                        <tfoot id="muac-totals">
                         </tfoot>
                     </table>
                 </div>
@@ -188,18 +190,18 @@ $(document).ready(function() {
         if (!data) return;
 
         let hbCityDetails = $('#hb-city-details');
-        let hbGrandTotals = $('#hb-grandtotals');
+        let hbTotals = $('#hb-totals');
         let wsCityDetails = $('#ws-city-details');
-        let wsGrandTotals = $('#ws-grandtotals');
+        let wsTotals = $('#ws-totals');
         let muacCityDetails = $('#muac-city-details');
-        let muacGrandTotals = $('#muac-grandtotals');
+        let muacTotals = $('#muac-totals');
 
         hbCityDetails.empty()
-        hbGrandTotals.empty()
+        hbTotals.empty()
         wsCityDetails.empty()
-        wsGrandTotals.empty()
+        wsTotals.empty()
         muacCityDetails.empty()
-        muacGrandTotals.empty()
+        muacTotals.empty()
 
         data.citiesAndMunicipalities.forEach(function(city) {
             hbCityDetails.append(
@@ -215,7 +217,7 @@ $(document).ready(function() {
                 <td>${city.steel_rules}</td>
                 <td>${city.microtoise}</td>
                 <td>${city.infantometer}</td>
-                <td>${city.remarks_hb}</td>
+                <td>${city.remarks_hb || ''}</td>
                 </tr>`
             );
             // TODO: UPDATE infat to infant_scale in db
@@ -230,7 +232,7 @@ $(document).ready(function() {
                 <td>${city.availability_ws}</td>
                 <td>${city.infat_scale}</td> 
                 <td>${city.beam_balance}</td>
-                <td>${city.remarks_ws}</td>
+                <td>${city.remarks_ws || ''}</td>
                 </tr>`
             );
 
@@ -247,15 +249,19 @@ $(document).ready(function() {
                 <td>${city.defective_muac_adults}</td>
                 <td>${city.total_muac_adults}</td>
                 <td>${city.availability_muac_adults}</td>
-                <td>${city.remarks_muac}</td>
+                <td>${city.remarks_muac || ''}</td>
                 </tr>`
             );
         });
 
         data.totals.forEach(function(totals, index) {
-
+            let provinceDropdown = $('#province-dropdown');
+            let cityDropdown = $('#city-dropdown');
             let label = index === 0 ? "Sub Total" : "Grand Total";
-            hbGrandTotals.append(
+
+            if ((provinceDropdown.val() || cityDropdown.val()) && index === 1) return;
+
+            hbTotals.append(
                 `<tr>
                 <td><b></b></td>
                 <td><b>${label}</b></td>
@@ -272,7 +278,7 @@ $(document).ready(function() {
                 </tr>`
             );
 
-            wsGrandTotals.append(
+            wsTotals.append(
                 `<tr>
                 <td><b></b></td>
                 <td><b>${label}</b></td>
@@ -287,7 +293,7 @@ $(document).ready(function() {
                 </tr>`
             );
 
-            muacGrandTotals.append(
+            muacTotals.append(
                 `<tr>
                 <td><b></b></td>
                 <td><b>${label}</b></td>

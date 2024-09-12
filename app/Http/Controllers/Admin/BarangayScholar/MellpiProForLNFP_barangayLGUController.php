@@ -20,10 +20,12 @@ class MellpiProForLNFP_barangayLGUController extends Controller
     public function index()
     {
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
 
         $barangay = auth()->user()->barangay;
 
@@ -33,17 +35,20 @@ class MellpiProForLNFP_barangayLGUController extends Controller
             ->select('users.Firstname as firstname', 'users.Middlename as middlename', 'users.Lastname as lastname', 'lnfp_lguprofile.*')
             ->get();
 
-        return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPIndex', compact('lnfpProfile', 'prov', 'mun', 'city', 'brgy'));
+        return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPIndex', compact('lnfpProfile', 'provinces', 'cities_municipalities', 'barangays'));
         // return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPIndex');
     }
     public function mellpiProLNFP_LGUedit(Request $request, $id)
     {
         $action = 'edit';
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
+
 
         $years = range(date("Y"), 1900);
 
@@ -53,7 +58,7 @@ class MellpiProForLNFP_barangayLGUController extends Controller
         //dd($lguProfile);
 
 
-        return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPEdit', compact('row', 'prov', 'mun', 'city', 'brgy', 'years', 'action'));
+        return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPEdit', compact('row', 'provinces', 'cities_municipalities', 'barangays', 'years', 'action'));
         
     }
     public function mellpiProLNFP_LGUcreate()
@@ -61,14 +66,16 @@ class MellpiProForLNFP_barangayLGUController extends Controller
         //
         $action = 'create';
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
 
         $years = range(date("Y"), 1900);
 
-        return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPCreate', compact('prov', 'mun', 'city', 'brgy', 'years', 'action'));
+        return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPCreate', compact('provinces', 'cities_municipalities', 'barangays', 'years', 'action'));
 
         // return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPCreate');
     }
@@ -78,17 +85,19 @@ class MellpiProForLNFP_barangayLGUController extends Controller
         //
         $action = 'edit';
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
 
         $years = range(date("Y"), 1900);
         $row = DB::table('lnfp_lguprofile')
                 ->leftjoin('lnfp_form5a_rr', 'lnfp_form5a_rr.lnfp_lgu_id','=','lnfp_lguprofile.id' )
                 ->select('lnfp_lguprofile.*','lnfp_form5a_rr.id as form5_id', 'lnfp_form5a_rr.status as form5_status')
                 ->where('lnfp_lguprofile.id', $request->id)->first();
-        return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPView', compact('row','prov', 'mun', 'city', 'brgy', 'years', 'action'));
+        return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPView', compact('row','provinces', 'cities_municipalities', 'barangays', 'years', 'action'));
 
         // return view('BarangayScholar/MellpiProForLNFP/LGUprofile.MellpiProForLNFPCreate');
     }

@@ -14,6 +14,12 @@
 
 <div class="content" style="margin-top:50px;padding:2%">
     <div class="card">
+        <div style="display:flex;align-items:center">
+            <a href="{{route('BSequipmentInventory.index')}}" style="margin-right:15px"><i
+                    class="now-ui-icons arrows-1_minimal-left"
+                    style="font-size:18px!important;font-weight:bolder!important"></i></a>
+            <h5 class="title" style='margin-top:18px;'>{{__("Equipment Inventory")}}</h5>
+        </div>
         <div class="row row-12" style="display:inline-block">
             <div class="card-header">
                 <h5 class="title">{{__("Equipment Inventory")}}</h5>
@@ -22,8 +28,9 @@
         <!-- alerts -->
         @include('layouts.page_template.crud_alert_message')
 
-        <form action="{{ route('BSequipmentInventory.store') }}" id="form" method="POST">
+        <form action="{{ route('BSequipmentInventory.update') }}" id="form" method="POST">
             @csrf
+            @method('PUT')
             <hr>
             <div class="form-row">
                 <div class="form-group col-md-3">
@@ -398,17 +405,43 @@ $(document).ready(function() {
         const citymunCode = $(this).val();
         if (!citymunCode) return;
 
-        $.get(routes.getBarangays, {
+        $.get(routes.getCitiesAndMunicipalitiesInventory, {
                 citymun_code: citymunCode,
-                count: true
             })
             .done(function(data) {
                 if (!data || data.length === 0) return;
-                $('#inputtotalBarangay').val(data);
-                $('#inputtotalBarangay').trigger('change');
+
+                data.citiesAndMunicipalities.forEach((data) => {
+                    $('#inputtotalBarangay').val(data.total_barangay).change();
+                    $('#inputWHB').val(data.wooden_hb).change();
+                    $('#inputNonWHB').val(data.non_wooden_hb).change();
+                    $('#inputHBNonF').val(data.defective_hb).change();
+                    $('#inputTotalHB').val(data.total_hb).change();
+                    $('#inputHBpercent').val(data.availability_hb).change();
+                    $('#inputSteelRules').val(data.steel_rules).change();
+                    $('#inputMicrotoise').val(data.microtoise).change();
+                    $('#inputInfantometer').val(data.infantometer).change();
+                    $('#inputHBRemarks').val(data.remarks_hb).change();
+                    $('#inputWSHanging').val(data.hanging_type).change();
+                    $('#inputWSNonF').val(data.defective_ws).change();
+                    $('#inputTotalWS').val(data.total_ws).change();
+                    $('#inputWSpercent').val(data.availability_ws).change();
+                    $('#inputInfantScale').val(data.infat_scale).change();
+                    $('#inputBeamBalance').val(data.beam_balance).change();
+                    $('#inputWSRemarks').val(data.remarks_ws).change();
+                    $('#inputMChild').val(data.child).change();
+                    $('#inputMNonFChild').val(data.defective_muac_child).change();
+                    $('#inputTotalChild').val(data.total_muac_child).change();
+                    $('#inputChildpercent').val(data.availability_muac_child).change();
+                    $('#inputMAdult').val(data.adults).change();
+                    $('#inputMNonFAdult').val(data.defective_muac_adults).change();
+                    $('#inputTotalAdult').val(data.total_muac_adults).change();
+                    $('#inputAdultpercent').val(data.availability_muac_adults).change();
+                    $('#inputMRemarks').val(data.remarks_muac).change();
+                })
             })
             .fail(function() {
-                alert(`Failed to fetch Barangay Count.`);
+                alert(`Failed to fetch Cities and Municipalities Inventory.`);
             });
     });
 });

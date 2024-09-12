@@ -66,14 +66,21 @@ class MellpiProForLNFP_barangayController extends Controller
     {
         $form5a = form5PNAObarangay::get();
 
+        $location = new LocationController;
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+
         $row = DB::table('lnfp_form5a_rr')
                    ->leftjoin('lnfp_form7','lnfp_form7.form5_id', '=', 'lnfp_form5a_rr.id')
                    ->select('lnfp_form5a_rr.*','lnfp_form7.id as form7_id','lnfp_form7.status as form7_status')
                    ->where('lnfp_form5a_rr.id', $request->id)->first();
         $years = range(date("Y"), 1900);
+        
         $availableForms = $this->access_header();
         $action = 'edit';
-        return view('BarangayScholar/MellpiProForLNFP/MellpiProMonitoring.Form5View', compact('form5a', 'row','years','availableForms'));
+        return view('BarangayScholar/MellpiProForLNFP/MellpiProMonitoring.Form5View', compact('form5a', 'row','years','availableForms','cities_municipalities'));
     }
 
 
@@ -85,9 +92,14 @@ class MellpiProForLNFP_barangayController extends Controller
 
         $availableForms = $this->access_header();
 
+        $location = new LocationController;
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
         $years = range(date("Y"), 1900);
 
-        return view('BarangayScholar/MellpiProForLNFP/MellpiProMonitoring.MonitoringForm5Edit', compact('form5a', 'row', 'years','availableForms'));
+        return view('BarangayScholar/MellpiProForLNFP/MellpiProMonitoring.MonitoringForm5Edit', compact('form5a', 'row', 'years','availableForms','cities_municipalities'));
     }
 
 
@@ -99,15 +111,18 @@ class MellpiProForLNFP_barangayController extends Controller
         $form5a = form5PNAObarangay::get();
         $action = 'create';
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
 
         $years = range(date("Y"), 1900);
 
-        return view('BarangayScholar/MellpiProForLNFP/MellpiProMonitoring.MonitoringForm5Create', compact('form5a', 'prov', 'mun', 'city', 'brgy', 'years', 'action'));
+        return view('BarangayScholar/MellpiProForLNFP/MellpiProMonitoring.MonitoringForm5Create', compact('form5a', 'provinces', 'cities_municipalities', 'barangays', 'years', 'action'));
     }
+
     public function editForm5a(Request $request, $id)
     {
         //dd($request);
@@ -125,7 +140,7 @@ class MellpiProForLNFP_barangayController extends Controller
         }else{
             
 
-            $rules = $this->access_rules();
+            $rules = $this->access_rules($request);
 
             $message = [
                 'required' => 'The field is required.',
@@ -183,21 +198,21 @@ class MellpiProForLNFP_barangayController extends Controller
         return redirect()->back()->with('alert', 'Deleted Successfully!');
     }
 
-    public static function access_rules(){
+    public static function access_rules($request){
 
 
         $rules = [
             'periodCovereda' => 'required',
             'dateMonitoring' => 'required',
             'nameOf' => 'required',
-            'address' => 'required',
+            // 'address' => 'required',
             'numYr' => 'required|integer|min:1|max:1000000',
             'fulltime' => 'required',
-            'profAct' => 'required',
+            // 'profAct' => 'required',
             'bday' => 'required',
             'sex' => 'required',
-            'dateDesig' => 'required',
-            'seconded' => 'required',
+            // 'dateDesig' => 'required',
+            // 'seconded' => 'required',
             'num1' => 'required',
             'num2' => 'required',
             'num3' => 'required',
@@ -211,7 +226,52 @@ class MellpiProForLNFP_barangayController extends Controller
             'ratingG' => 'required',
             'ratingGG' => 'required',
             'ratingH' => 'required',
+            'header'   => 'required',
         ];
+
+        if( $request->header != 'NAO' ){
+
+            $rules += [
+                
+                'dateAppoint' => 'required',
+
+            ];
+
+        }
+
+        if( $request->header == 'NAO' ){
+
+            $rules += [
+                'profAct' => 'required',
+                'dateDesig' => 'required',
+
+            ];
+
+        }
+
+        if( $request->header == 'DNPC' ){
+
+            $rules += [
+                'assign_task' => 'required',
+
+            ];
+
+        }
+
+        if( auth()->user()->otherrole == 10 ){
+
+            $rules += [
+                'education' => 'required',
+                'brgy_service' => 'required',
+            ];
+        }
+
+        if( auth()->user()->otherrole == 9 ){
+
+            $rules += [
+                'address' => 'required',
+            ];
+        }
 
         return $rules;
     }

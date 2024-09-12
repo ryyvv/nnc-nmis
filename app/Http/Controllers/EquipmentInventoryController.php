@@ -275,6 +275,7 @@ class EquipmentInventoryController extends Controller
     {
         $query = PsgcBarangay::query();
         $cityOfManilaCode = '1380600';
+        $count = $request->has('count') && $request->input('count') == 'true';
 
         if ($request->has('psgc_code')) {
             $query->where('psgc_code', $request->input('psgc_code'));
@@ -303,6 +304,11 @@ class EquipmentInventoryController extends Controller
             } else {
                 $query->where('citymun_code', $request->input('citymun_code'));
             }
+        }
+
+        if ($count) {
+            $count = $query->count();
+            return response()->json($count);
         }
 
         $barangays = $query->get();
@@ -387,6 +393,105 @@ class EquipmentInventoryController extends Controller
         }
 
         if ($request->has('reg_code')) {
+            $EquipmentInventoryQuery->where('reg_code', $request->input('reg_code'));
+            $subTotalsQuery->where('reg_code', $request->input('reg_code'));
+        }
+
+        if ($request->has('prov_code')) {
+            $EquipmentInventoryQuery->where('prov_code', $request->input('prov_code'));
+            $subTotalsQuery->where('prov_code', $request->input('prov_code'));
+        }
+
+        if ($request->has('citymun_code')) {
+            $EquipmentInventoryQuery->where('citymun_code', $request->input('citymun_code'));
+            $subTotalsQuery->where('citymun_code', $request->input('citymun_code'));
+        }
+
+        $citiesAndMunicipalities = $EquipmentInventoryQuery->get();
+
+        $subTotals = $subTotalsQuery->selectRaw('
+            SUM(total_barangay) as total_barangays,
+            SUM(wooden_hb) as wooden_hb,
+            SUM(non_wooden_hb) as non_wooden_hb,
+            SUM(defective_hb) as defective_hb,
+            SUM(total_hb) as total_hb,
+            SUM(availability_hb) as availability_hb,
+            SUM(steel_rules) as steel_rules,
+            SUM(microtoise) as microtoise,
+            SUM(infantometer) as infantometer,
+            SUM(hanging_type) as hanging_type,
+            SUM(defective_ws) as defective_ws,
+            SUM(total_ws) as total_ws,
+            SUM(availability_ws) as availability_ws,
+            SUM(infat_scale) as infat_scale,
+            SUM(beam_balance) as beam_balance,
+            SUM(child) as child,
+            SUM(defective_muac_child) as defective_muac_child,
+            SUM(total_muac_child) as total_muac_child,
+            SUM(availability_muac_child) as availability_muac_child,
+            SUM(adults) as adults,
+            SUM(defective_muac_adults) as defective_muac_adults,
+            SUM(total_muac_adults) as total_muac_adults,
+            SUM(availability_muac_adults) as availability_muac_adults
+        ')
+        ->first();
+
+        $grandTotals =  PsgcEquipmentInventory::selectRaw('
+            SUM(total_barangay) as total_barangays,
+            SUM(wooden_hb) as wooden_hb,
+            SUM(non_wooden_hb) as non_wooden_hb,
+            SUM(defective_hb) as defective_hb,
+            SUM(total_hb) as total_hb,
+            SUM(availability_hb) as availability_hb,
+            SUM(steel_rules) as steel_rules,
+            SUM(microtoise) as microtoise,
+            SUM(infantometer) as infantometer,
+            SUM(hanging_type) as hanging_type,
+            SUM(defective_ws) as defective_ws,
+            SUM(total_ws) as total_ws,
+            SUM(availability_ws) as availability_ws,
+            SUM(infat_scale) as infat_scale,
+            SUM(beam_balance) as beam_balance,
+            SUM(child) as child,
+            SUM(defective_muac_child) as defective_muac_child,
+            SUM(total_muac_child) as total_muac_child,
+            SUM(availability_muac_child) as availability_muac_child,
+            SUM(adults) as adults,
+            SUM(defective_muac_adults) as defective_muac_adults,
+            SUM(total_muac_adults) as total_muac_adults,
+            SUM(availability_muac_adults) as availability_muac_adults
+        ')
+        ->first();
+        
+        return response()->json([
+            'citiesAndMunicipalities' => $citiesAndMunicipalities,
+            'totals' => [
+                $subTotals,
+                $grandTotals,
+            ]
+        ]);
+    }
+    public function getCitiesAndMunicipalitiesInventoryCreate(Request $request)
+    {
+        $EquipmentInventoryQuery = PsgcEquipmentInventory::query();
+        $subTotalsQuery = PsgcEquipmentInventory::query();
+
+        if ($request->has('psgc_code')) {
+            $EquipmentInventoryQuery->where('psgc_code', $request->input('psgc_code'));
+            $subTotalsQuery->where('psgc_code', $request->input('psgc_code'));
+        }
+
+        if ($request->has('name')) {
+            $EquipmentInventoryQuery->where('name', 'like', '%' . $request->input('name') . '%');
+            $subTotalsQuery->where('name', 'like', '%' . $request->input('name') . '%');
+        }
+
+        if ($request->has('correspondence_code')) {
+            $EquipmentInventoryQuery->where('correspondence_code', $request->input('correspondence_code'));
+            $subTotalsQuery->where('correspondence_code', $request->input('correspondence_code'));
+        }
+
+        if ($request->has('reg_code')) {
             $cities = PsgcCity::where('reg_code', $request->input('reg_code'))->get();
             $municipalities = PsgcMunicipality::where('reg_code', $request->input('reg_code'))->get();
             $combined = $cities->concat($municipalities);
@@ -420,8 +525,8 @@ class EquipmentInventoryController extends Controller
                         'total_barangay' => $totalBarangays,
                         'wooden_hb' => 0,
                         'non_wooden_hb' => 0,
-                        'defective_hb' => 0.00,
-                        'total_hb' => 0.00,
+                        'defective_hb' => 0,
+                        'total_hb' => 0,
                         'availability_hb' => 0.00,
                         'steel_rules' => 0,
                         'microtoise' => 0,
@@ -429,18 +534,18 @@ class EquipmentInventoryController extends Controller
                         'remarks_hb' => '',
                         'hanging_type' => 0,
                         'defective_ws' => 0,
-                        'total_ws' => 0.00,
+                        'total_ws' => 0,
                         'availability_ws' => 0.00,
                         'infat_scale' => 0,
                         'beam_balance' => 0,
                         'remarks_ws' => '',
                         'child' => 0,
                         'defective_muac_child' => 0,
-                        'total_muac_child' => 0.00,
+                        'total_muac_child' => 0,
                         'availability_muac_child' => 0.00,
                         'adults' => 0,
                         'defective_muac_adults' => 0,
-                        'total_muac_adults' => 0.00,
+                        'total_muac_adults' => 0,
                         'availability_muac_adults' => 0.00,
                         'remarks_muac' => '',
                         'created_at' => now(),

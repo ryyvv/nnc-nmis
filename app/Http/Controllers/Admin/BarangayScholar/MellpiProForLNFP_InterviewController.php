@@ -33,7 +33,7 @@ class MellpiProForLNFP_InterviewController extends Controller
     public function InterviewFormLNFPView(Request $request)
     {
         $action = 'edit';
-
+        $availableForms = $this->access_header();
         $row = DB::table('lnfp_interview_form')
                 ->leftjoin('lnfp_overall_score_form', 'lnfp_overall_score_form.formInterview_id', '=', 'lnfp_interview_form.id')
                 ->leftJoin('lnfp_form5a_rr', 'lnfp_form5a_rr.id', '=', 'lnfp_interview_form.form5_id')
@@ -46,13 +46,13 @@ class MellpiProForLNFP_InterviewController extends Controller
                 ->where('lnfp_interview_form.id', $request->id)
                 ->first();
 
-        return view('BarangayScholar/MellpiProForLNFP/MellpiProInterview/View', compact('row'));
+        return view('BarangayScholar/MellpiProForLNFP/MellpiProInterview/View', compact('row', 'availableForms'));
     }
 
     public function InterviewFormLNFPEdit(Request $request)
     {
         $action = 'edit';
-
+        $availableForms = $this->access_header();
         $row = DB::table('lnfp_interview_form')
                 ->leftJoin('lnfp_form5a_rr', 'lnfp_form5a_rr.id', '=', 'lnfp_interview_form.form5_id')
                 ->select('lnfp_interview_form.*',
@@ -62,20 +62,22 @@ class MellpiProForLNFP_InterviewController extends Controller
                 ->where('lnfp_interview_form.id', $request->id)
                 ->first();
 
-        return view('BarangayScholar/MellpiProForLNFP/MellpiProInterview/InterviewFormPNAOEdit', compact('row'));
+        return view('BarangayScholar/MellpiProForLNFP/MellpiProInterview/InterviewFormPNAOEdit', compact('row','availableForms'));
     }
     public function InterviewFormLNFPCreate()
     {
         $action = 'create';
         $location = new LocationController;
-        $prov = $location->getLocationDataProvince(auth()->user()->Region);
-        $mun = $location->getLocationDataMuni(auth()->user()->Province);
-        $city = $location->getLocationDataCity(auth()->user()->Region);
-        $brgy = $location->getLocationDataBrgy(auth()->user()->city_municipal);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
 
         $years = range(date("Y"), 1900);
 
-        return view('BarangayScholar/MellpiProForLNFP/MellpiProInterview/InterviewFormPNAOCreate', compact('prov', 'mun', 'city', 'brgy', 'years', 'action'));
+        return view('BarangayScholar/MellpiProForLNFP/MellpiProInterview/InterviewFormPNAOCreate', compact('provinces', 'cities_municipalities', 'barangays', 'years', 'action'));
     }
     public function storeInterviewForm(Request $request)
     {
@@ -142,16 +144,16 @@ class MellpiProForLNFP_InterviewController extends Controller
                     ]);
                     // dd($lnfpInterviewForm);
 
-                    if ($lnfpInterviewForm) {
-                        # code...
-                        lnfp_lguInterviewtracking::create([
-                            'lnfp_overallScore_id' => $lnfpInterviewForm->id,
-                            'status' => $request->input('submitStatus'),
-                            'barangay_id' => auth()->user()->barangay,
-                            'municipal_id' => auth()->user()->city_municipal,
-                            'user_id' => auth()->user()->id,
-                        ]);
-                    }
+                    // if ($lnfpInterviewForm) {
+                    //     # code...
+                    //     lnfp_lguInterviewtracking::create([
+                    //         'lnfp_overallScore_id' => $lnfpInterviewForm->id,
+                    //         'status' => $request->input('submitStatus'),
+                    //         'barangay_id' => auth()->user()->barangay,
+                    //         'municipal_id' => auth()->user()->city_municipal,
+                    //         'user_id' => auth()->user()->id,
+                    //     ]);
+                    // }
 
                     return redirect()->route('lnfpFormInterviewIndex')->with('alert', 'Data Submitted Successfully!');
                 }
@@ -231,7 +233,7 @@ class MellpiProForLNFP_InterviewController extends Controller
                             'form5_id'          => $request->form5_id,
                             'form8_id'          => $request->form8_id,
                             'formInterview_id'  => $request->id,
-                            'status'            => 1,
+                            'status'            => 2,
                             'user_id' => auth()->user()->id,
                         ]);
 
@@ -324,6 +326,9 @@ class MellpiProForLNFP_InterviewController extends Controller
                     'NOCMNPC' => 'NATIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION PROGRAM COORDINATOR',
                     'ROCMNPC' => 'REGIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION PROGRAM COORDINATOR',
                     'POCMNPC' => 'REGIONAL OUTSTANDING CITY/MUNICIPALITY NUTRITION PROGRAM COORDINATOR',
+                    'NOBNS' => 'NATIONAL OUTSTANDING BARANGAY NUTRITION SCHOLAR',
+                    'ROBNS' => 'REGIONAL OUTSTANDING BARANGAY NUTRITION SCHOLAR',
+                    'POBNS' => 'PROVINCIAL/CITY OUTSTANDING BARANGAY NUTRITION SCHOLAR',
                 ];
                 break;
             // Barangay Level

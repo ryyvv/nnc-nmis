@@ -69,10 +69,14 @@
                                 @if( auth()->user()->otherrole == 9 )
                                 <div class="form-group col">
                                     <label for="address">Province of Deployment: </label>
-                                    <input class="form-control" type="text" name="address" id="address" value="{{ old('address',$row->address) }}">
-                                    @error('address')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                    <select name="municipal_id2" class="form-control" style="font-weight:bolder!important;color:black" disabled>
+                                        @foreach($cities_municipalities as $city_municipality)
+                                        <option value="{{ $city_municipality->citymun_code }}"
+                                            {{ $row->address === $city_municipality->citymun_code ? 'selected' : '' }}>
+                                            {{ $city_municipality->name }}
+                                        </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <!-- For Municipality Level -->
                                 @elseif( auth()->user()->otherrole == 10 )
