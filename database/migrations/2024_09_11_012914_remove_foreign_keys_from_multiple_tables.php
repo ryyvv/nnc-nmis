@@ -26,10 +26,7 @@ return new class extends Migration
             'mplgubrgybudgetaipTracking',
             'lgubarangayreport',
             'lnfp_lguinterviewtracking',
-            'lnfp_overall_stracking'
-        ];
-        
-        $otherTables = [
+            'lnfp_overall_stracking',
             'lguprofilebarangay',
             'lnfp_lguprofile',
             'lnfp_lguprofiletracking',
@@ -89,10 +86,7 @@ return new class extends Migration
             'mplgubrgybudgetaipTracking',
             'lgubarangayreport',
             'lnfp_lguinterviewtracking',
-            'lnfp_overall_stracking'
-        ];
-
-        $otherTables = [
+            'lnfp_overall_stracking',
             'lguprofilebarangay',
             'lnfp_lguprofile',
             'lnfp_lguprofiletracking',
