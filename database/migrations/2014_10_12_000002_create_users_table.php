@@ -24,6 +24,9 @@ return new class extends Migration
             $table->string('barangay');
             $table->string('designation');
             $table->string('role'); //user role
+            $table->string('userstatus'); //user role
+            $table->string('useractivestatus'); //user role
+            $table->string('otherrole'); //user role
             $table->string('status'); //approved or pending 
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();

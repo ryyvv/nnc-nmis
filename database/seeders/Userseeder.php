@@ -16,18 +16,14 @@ class Userseeder extends Seeder
      */
     public function run(): void
     {
-       User::create(
-    [
-            'name' => 'Ryan James J. Pascual',
-            'email' =>   'ryy@gmail.com',
+ 
+        DB::table('users')->insert([
+            'name' => 'ryy',
+            'email' => 'admin@nowui.com',
+            'email_verified_at' => now(),
             'password' => Hash::make('11111111'),
-            ], [
-            'name' => 'Diether',
-            'email' =>   'diethersumido@gmail.com',
-            'password' => Hash::make('@M00dlearning'),
-            ],
-
-
-        );
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
     }
 }
