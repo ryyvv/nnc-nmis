@@ -41,7 +41,7 @@
                             <tr>
                                 <td>{{$num}}</td>
                                 <td>{{$form6->nameofPnao}}</td>
-                                <td>{{\Carbon\Carbon::parse($form6->dateMonitoring)->format('F j');}}</td>
+                                <td>{{\Carbon\Carbon::parse($form6->dateMonitoring)->format('F j, Y');}}</td>
                                 <td>{{$form6->periodCovereda}}</td>
                                 <td>
                                         @if( $form6->status == 0 )
@@ -50,11 +50,13 @@
                                             <span class="statusPending">PENDING</span>
                                             @elseif( $form6->status == 2 )
                                             <span class="statusDraft">DRAFT</span>
+                                            @else
+                                            <span class="statusApproved">Submitted</span>
                                         @endif
                                 </td>
                                 <!-- <td>Date of Monitoring</td> -->
                                 <td>
-                                @if( $form6->status == 1 )
+                                @if( $form6->status == 1 || $form6->status == 3 )
                                 <i onclick="myLNFPmyFunction_form6('{{ $form6->id }}')"  class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
                                 @elseif( $form6->status == 2 )
                                 <i onclick="LNFPmyFunction_form6('{{ $form6->id }}')" class="fa fa-edit fa-lg cursor" style="color:#FFB236;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Edit"></i>

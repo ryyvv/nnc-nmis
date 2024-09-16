@@ -1,7 +1,4 @@
 
- 
-
-
 // For Economic Service
 $(document).ready(function () {
 
@@ -16,7 +13,7 @@ $(document).ready(function () {
 
     // Trigger calculation when any of the inputs are changed
     $("#dataTableES").on("input", 'input[name="ESsourceoffund[]"], input[name="ESpersonel_service[]"], input[name="ESmooe[]"], input[name="EScapital_outlay[]"],  input[name="ESdirect_nutrition_specific[]"],  input[name="ESindirect_nutrition_specific[]"], input[name="ESenabling_mechanism[]"]', function () {
-        const row = $(this).closest('tr');    
+        const row = $(this).closest('tr');
         ESSocialcalculateRowTotal(row);
         ESupdateCategoryTotals(row);
     });
@@ -166,7 +163,7 @@ $(document).ready(function () {
 
     }
 
-    const contentES = [
+    const content = [
         // page1
         '<div class="row">' +
         '<div class="col form-group">' +
@@ -294,7 +291,7 @@ $(document).ready(function () {
     }
 
     function ESupdateContent() {
-        $("#modalContentES").html(contentES[EScurrentPage]);
+        $("#modalContentES").html(content[EScurrentPage]);
 
         // Populate fields with existing form data
         if (ESformData[EScurrentPage]) {
@@ -305,10 +302,10 @@ $(document).ready(function () {
         }
 
         $("#pageIndicatorES").text(
-            `Page ${EScurrentPage + 1} of ${contentES.length}`,
+            `Page ${EScurrentPage + 1} of ${content.length}`,
         );
         $("#prevPageES").prop("disabled", EScurrentPage === 0);
-        $("#nextPageES").prop("disabled", EScurrentPage === contentES.length - 1);
+        $("#nextPageES").prop("disabled", EScurrentPage === content.length - 1);
     }
 
     $("#prevPageES").on("click", function () {
@@ -321,7 +318,7 @@ $(document).ready(function () {
 
     $("#nextPageES").on("click", function () {
         ESsaveFormData();
-        if (EScurrentPage < contentES.length - 1) {
+        if (EScurrentPage < content.length - 1) {
             EScurrentPage++;
             ESupdateContent();
         }
@@ -339,7 +336,7 @@ $(document).ready(function () {
         let newRow = `<tr data-index="${rowIndex}">
             <td>
               <div class="d-flex">
-              <i class="fa fa-edit fa-lg cursor editBtnES " style="color:#FFB236;margin-right:10px" title="Edit Disabled"></i>
+              <i class="fa fa-edit fa-lg cursor editBtn" style="color:#FFB236;margin-right:10px" title="Edit Disabled"></i>
                <i class="fa fa-trash fa-lg cursor deleteBtn" style="color:RED;margin-right:10px" title="Delete "></i>
               <div> 
             </td>
@@ -389,16 +386,16 @@ $(document).ready(function () {
         ESrecalculateAllRows();
     });
 
-    let editingRowIndexeditES = null;
-    let currentPageeditES = 0;
+    let editingRowIndexedit = null;
+    let currentPageedit = 0;
 
 
-    const pagesES = [
-        // Page 1 contentES
+    const pages = [
+        // Page 1 content
         `<div class="row">
             <div class="col form-group">
                 <label for="edit_ESaipcode" class="bold">AIP Ref. Code</label>
-                <input type="text" class="form-control" id="edit_ESaipcode" required>
+                <input type="text" class="form-control" id="edit_aipcode" required>
             </div>
             <div class="col form-group">
                 <label for="edit_ESnutrition_topology_code" class="bold">Nutrition Typology Code</label>
@@ -442,7 +439,7 @@ $(document).ready(function () {
             </div>
         </div>`,
 
-        // Page 2 contentES
+        // Page 2 content
         `<label class='bold label1' for='field2'>Amount (P'000)</label>
         <div class="col form-group">
              <span class="bold" style="font-size:12px;color:gray">Personnel Service</span>
@@ -457,7 +454,7 @@ $(document).ready(function () {
             <input type="text" class="form-control" id="edit_EScapital_outlay" required>
         </div>`,
 
-        // Page 3 contentES
+        // Page 3 content
         `<label class='bold label1' for='field2'>Governance and Organizational</label>
         <div class="col form-group">
             <span class="bold" style="font-size:12px;color:gray">Direct Nutrition Specific</span>
@@ -474,7 +471,7 @@ $(document).ready(function () {
     ];
 
 
-    let modalDataES = {
+    let modalData = {
         ESaipcode: '',
         ESnutrition_topology_code: '',
         ESprogram: '',
@@ -491,49 +488,49 @@ $(document).ready(function () {
         ESenabling_mechanism: ''
     };
 
-    function showEditModalES(index) {
-        editingRowIndexeditES = index;
-        updateEditModalContentES();
-        $("#editModalES").modal("show");
+    function showEditModal(index) {
+        editingRowIndexedit = index;
+        updateEditModalContent();
+        $("#editModal").modal("show");
     }
 
     function ESsaveModalPageData() {
-        modalDataES.ESaipcode = $("#edit_ESaipcode").val() || modalDataES.ESaipcode;
-        modalDataES.ESnutrition_topology_code = $("#edit_ESnutrition_topology_code").val() || modalDataES.ESnutrition_topology_code;
-        modalDataES.ESprogram = $("#edit_ESprogram").val() || modalDataES.ESprogram;
-        modalDataES.ESimplementing_agency = $("#edit_ESimplementing_agency").val() || modalDataES.ESimplementing_agency;
-        modalDataES.ESstartdate = $("#edit_ESstartdate").val() || modalDataES.ESstartdate;
-        modalDataES.EScompletiondate = $("#edit_EScompletiondate").val() || modalDataES.EScompletiondate;
-        modalDataES.ESexpected_output = $("#edit_ESexpected_output").val() || modalDataES.ESexpected_output;
-        modalDataES.ESsourceoffund = $("#edit_ESsourceoffund").val() || modalDataES.ESsourceoffund;
-        modalDataES.ESpersonel_service = $("#edit_ESpersonel_service").val() || modalDataES.ESpersonel_service;
-        modalDataES.ESmooe = $("#edit_ESmooe").val() || modalDataES.ESmooe;
-        modalDataES.EScapital_outlay = $("#edit_EScapital_outlay").val() || modalDataES.EScapital_outlay;
-        modalDataES.total = $("#edit_total").val() || modalDataES.total;
-        modalDataES.ESdirect_nutrition_specific = $("#edit_ESdirect_nutrition_specific").val() || modalDataES.ESdirect_nutrition_specific;
-        modalDataES.ESindirect_nutrition_specific = $("#edit_ESindirect_nutrition_specific").val() || modalDataES.ESindirect_nutrition_specific;
-        modalDataES.ESenabling_mechanism = $("#edit_ESenabling_mechanism").val() || modalDataES.ESenabling_mechanism;
+        modalData.ESaipcode = $("#edit_ESaipcode").val() || modalData.ESaipcode;
+        modalData.ESnutrition_topology_code = $("#edit_ESnutrition_topology_code").val() || modalData.ESnutrition_topology_code;
+        modalData.ESprogram = $("#edit_ESprogram").val() || modalData.ESprogram;
+        modalData.ESimplementing_agency = $("#edit_ESimplementing_agency").val() || modalData.ESimplementing_agency;
+        modalData.ESstartdate = $("#edit_ESstartdate").val() || modalData.ESstartdate;
+        modalData.EScompletiondate = $("#edit_EScompletiondate").val() || modalData.EScompletiondate;
+        modalData.ESexpected_output = $("#edit_ESexpected_output").val() || modalData.ESexpected_output;
+        modalData.ESsourceoffund = $("#edit_ESsourceoffund").val() || modalData.ESsourceoffund;
+        modalData.ESpersonel_service = $("#edit_ESpersonel_service").val() || modalData.ESpersonel_service;
+        modalData.ESmooe = $("#edit_ESmooe").val() || modalData.ESmooe;
+        modalData.EScapital_outlay = $("#edit_EScapital_outlay").val() || modalData.EScapital_outlay;
+        modalData.total = $("#edit_total").val() || modalData.total;
+        modalData.ESdirect_nutrition_specific = $("#edit_ESdirect_nutrition_specific").val() || modalData.ESdirect_nutrition_specific;
+        modalData.ESindirect_nutrition_specific = $("#edit_ESindirect_nutrition_specific").val() || modalData.ESindirect_nutrition_specific;
+        modalData.ESenabling_mechanism = $("#edit_ESenabling_mechanism").val() || modalData.ESenabling_mechanism;
     }
 
-    function updateEditModalContentES() {
-        $("#editModalContentES").html(pagesES[currentPageeditES]);
+    function updateEditModalContent() {
+        $("#editModalContent").html(pages[currentPageedit]);
 
         // Populate fields with modal data 
-        $.each(modalDataES, function (key, value) {
+        $.each(modalData, function (key, value) {
             $(`#edit_${key}`).val(value);
         });
 
-        $("#pageIndicatorEditES").text(`Page ${currentPageeditES + 1} of ${pagesES.length}`);
-        $("#prevPageEditES").prop("disabled", currentPageeditES === 0);
-        $("#nextPageEditES").prop("disabled", currentPageeditES === pagesES.length - 1);
+        $("#pageIndicatorEdi t").text(`Page ${currentPageedit + 1} of ${pages.length}`);
+        $("#prevPageEdit").prop("disabled", currentPageedit === 0);
+        $("#nextPageEdit").prop("disabled", currentPageedit === pages.length - 1);
     }
 
-    $("#dataTableES").on("click", ".editBtnES ", function () {
+    $("#dataTableES").on("click", ".editBtn", function () {
         const index = $(this).closest("tr").data("index");
 
-        // Load existing data into modalDataES for editing
+        // Load existing data into modalData for editing
         const row = $(`#dataTableES tbody tr[data-index="${index}"]`);
-        modalDataES = {
+        modalData = {
             ESaipcode: row.find('input[name="ESaipcode[]"]').val(),
             ESnutrition_topology_code: row.find('input[name="ESnutrition_topology_code[]"]').val(),
             ESprogram: row.find('input[name="ESprogram[]"]').val(),
@@ -551,30 +548,30 @@ $(document).ready(function () {
             ESenabling_mechanism: row.find('input[name="ESenabling_mechanism[]"]').val(),
         };
 
-        showEditModalES(index);
+        showEditModal(index);
     });
 
-    $("#prevPageEditES").click(function () {
-        if (currentPageeditES > 0) {
+    $("#prevPageEdit").click(function () {
+        if (currentPageedit > 0) {
             ESsaveModalPageData();
-            currentPageeditES--;
-            updateEditModalContentES();
+            currentPageedit--;
+            updateEditModalContent();
         }
     });
 
-    $("#nextPageEditES").click(function () {
-        if (currentPageeditES < pagesES.length - 1) {
+    $("#nextPageEdit").click(function () {
+        if (currentPageedit < pages.length - 1) {
             ESsaveModalPageData();
-            currentPageeditES++;
-            updateEditModalContentES();
+            currentPageedit++;
+            updateEditModalContent();
         }
     });
 
     $("#saveChanges").click(function () {
         ESsaveModalPageData(); // Ensure the last page's data is saved
 
-        const row = $(`#dataTableES tbody tr[data-index="${editingRowIndexeditES}"]`);
-        $.each(modalDataES, function (key, value) {
+        const row = $(`#dataTableES tbody tr[data-index="${editingRowIndexedit}"]`);
+        $.each(modalData, function (key, value) {
             row.find(`input[name="${key}[]"]`).val(value);
         });
 
@@ -583,3 +580,5 @@ $(document).ready(function () {
         ESrecalculateAllRows();
     });
 });
+
+

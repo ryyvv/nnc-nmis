@@ -142,7 +142,7 @@ class MellpiProForLNFP_OverallScoreController extends Controller
                     ->with('error', 'Something went wrong! Please try again.');
             } else {
                 
-                lnfp_formOverall::where('id', $request->id)->update( $fields + [ 'status' => 1 ]);
+                lnfp_formOverall::where('id', $request->id)->update( $fields + [ 'status' => 3 ]);
 
                // Call the service to update statuses
                $this->statusUpdateService->updateStatuses($request->lnfp_lgu_id);

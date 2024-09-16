@@ -357,7 +357,7 @@ $(document).ready(function () {
 
   let table = new DataTable('#example1', {
     ajax: {
-       url: "https://nnc-nmis.moodlearners.com/CityMunicipalOfficer/lguProfile/fetchreport",
+       url: "https://nnc-nmis.moodlearners.com/lguProfile/fetchreport",
       type: 'GET',
       dataSrc: 'data',
     },

@@ -60,6 +60,10 @@ thead th {
                 </div>
             </div>
         </div>
+
+        <!-- alerts -->
+        @include('layouts.page_template.crud_alert_message')
+
         <form action="#" method="POST">
             <div class="form-row">
                 <div class="form-group col-md-3">
@@ -76,7 +80,7 @@ thead th {
                 </div>
                 <div class="form-group col-md-3">
                     <label for="inputCM">City/Municipality</label>
-                    <select id="city-dropdown" disabled class="form-control" name="inputCity">
+                    <select id="city-dropdown" disabled class="form-control" name="inputCM">
                         <option selected>Select City/Municipality</option>
                     </select>
                 </div>
@@ -259,7 +263,10 @@ $(document).ready(function() {
             let cityDropdown = $('#city-dropdown');
             let label = index === 0 ? "Sub Total" : "Grand Total";
 
+            // Skip processing if the province or city dropdown
             if ((provinceDropdown.val() || cityDropdown.val()) && index === 1) return;
+
+            if (!Object.values(totals).some(value => value)) return;
 
             hbTotals.append(
                 `<tr>
@@ -381,7 +388,7 @@ $(document).ready(function() {
                 });
         }
 
-        $.get('{{ route("equipment.citiesAndMunicipalitiesInventory.get") }}', {
+        $.get('{{ route("BSequipmentInventory.CMInventory.get") }}', {
                 reg_code: regionCode
             })
             .done(handleTableData)
@@ -415,7 +422,7 @@ $(document).ready(function() {
                 alert('Failed to fetch cities/municipalities.');
             });
 
-        $.get('{{ route("equipment.citiesAndMunicipalitiesInventory.get") }}', {
+        $.get('{{ route("BSequipmentInventory.CMInventory.get") }}', {
                 prov_code: provinceCode
             })
             .done(handleTableData)
@@ -430,7 +437,7 @@ $(document).ready(function() {
         let psgcCode = $(this).val();
         if (!psgcCode) return;
 
-        $.get('{{ route("equipment.citiesAndMunicipalitiesInventory.get") }}', {
+        $.get('{{ route("BSequipmentInventory.CMInventory.get") }}', {
                 psgc_code: psgcCode
             })
             .done(handleTableData)

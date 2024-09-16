@@ -17,6 +17,7 @@ use App\Models\LocationPivot;
 use App\Models\Barangay as ModelsBarangay;
 use App\Models\PsgcBarangay;
 use App\Models\PsgcCity;
+use App\Models\PsgcEquipmentInventory;
 use App\Models\PsgcMunicipality;
 use App\Models\PsgcProvince;
 use App\Models\PsgcRegion;
@@ -240,7 +241,7 @@ class MellproLGUController extends Controller
             }
         }
 
-        return redirect('/mellpi_pro_LGU')->withStatus(__('LGU Profile successfully added.'));
+        return redirect('/mellpi_pro_LGU')->withStatus(__('Psgc successfully added.'));
     }
 
     public function Regionupload(Request $request)
@@ -277,7 +278,7 @@ class MellproLGUController extends Controller
             ]);
         }
         
-        return redirect('/mellpi_pro_LGU')->withStatus(__('LGU Profile successfully added.'));
+        return redirect('/mellpi_pro_LGU')->withStatus(__('Region successfully added.'));
     }
     
     public function Provinceupload(Request $request)
@@ -320,7 +321,7 @@ class MellproLGUController extends Controller
             ]);
         }
         
-        return redirect('/mellpi_pro_LGU')->withStatus(__('LGU Profile successfully added.'));
+        return redirect('/mellpi_pro_LGU')->withStatus(__('Province successfully added.'));
     }
     
     public function Cityupload(Request $request)
@@ -369,7 +370,7 @@ class MellproLGUController extends Controller
             ]);
         }
         
-        return redirect('/mellpi_pro_LGU')->withStatus(__('LGU Profile successfully added.'));
+        return redirect('/mellpi_pro_LGU')->withStatus(__('City successfully added.'));
     }
     
     public function Munupload(Request $request)
@@ -416,7 +417,7 @@ class MellproLGUController extends Controller
             ]);
         }
         
-        return redirect('/mellpi_pro_LGU')->withStatus(__('LGU Profile successfully added.'));
+        return redirect('/mellpi_pro_LGU')->withStatus(__('Municipality successfully added.'));
     }
     
     public function SubMunupload(Request $request)
@@ -458,7 +459,7 @@ class MellproLGUController extends Controller
             ]);
         }
         
-        return redirect('/mellpi_pro_LGU')->withStatus(__('LGU Profile successfully added.'));
+        return redirect('/mellpi_pro_LGU')->withStatus(__('Sub municipality successfully added.'));
     }
     
     public function Barangayupload(Request $request)
@@ -505,7 +506,108 @@ class MellproLGUController extends Controller
             ]);
         }
         
-        return redirect('/mellpi_pro_LGU')->withStatus(__('LGU Profile successfully added.'));
+        return redirect('/mellpi_pro_LGU')->withStatus(__('Barangay successfully added.'));
+    }
+
+    public function EquipmentInventoryupload(Request $request)
+    {
+        $request->validate([
+            'inputcsvfileEquipmentInventory' => 'required|mimes:csv'
+        ]);
+        $csv = Reader::createFromPath($request->file('inputcsvfileEquipmentInventory')->getRealPath());
+        $csv->setHeaderOffset(0);
+    
+        $records = Statement::create()->process($csv);
+    
+        foreach ($records as $record) {
+            if (empty(trim($record['PSGC']))) {
+                continue;
+            }
+            
+            $psgc_code = trim($record['PSGC']);
+            $name = trim($record['City/ Municipality']);
+            $reg_code = trim(substr($psgc_code, 0, 2));
+            $prov_code = trim(substr($psgc_code, 0, 5));
+            $citymun_code = trim(substr($psgc_code, 0, 7));
+            $totalBarangaysFromDB = $this->getTotalBarangaysFromDB($citymun_code);
+            
+            $data = [
+                'total_barangay' => $totalBarangaysFromDB,
+                'wooden_hb' => $this->convertToInt(trim($record['Wooden HB'] ?? '')),
+                'non_wooden_hb' => $this->convertToInt(trim($record['Non-wooden HB'] ?? '')),
+                'defective_hb' => $this->convertToInt(trim($record['Defective/ Non-functional HB'] ?? '')),
+                'total_hb' => $this->convertToInt(trim($record['Total HB'] ?? '')),
+                'availability_hb' => $this->convertToFloat(trim($record['HB % Availability'] ?? '')),
+                'steel_rules' => $this->convertToInt(trim($record['Steel Rules'] ?? '')),
+                'microtoise' => $this->convertToInt(trim($record['Microtoise'] ?? '')),
+                'infantometer' => $this->convertToInt(trim($record['Infantometer'] ?? '')),
+                'remarks_hb' => trim($record['Remarks HB'] ?? ''),
+                'hanging_type' => $this->convertToInt(trim($record['Hanging-type'] ?? '')),
+                'defective_ws' => $this->convertToInt(trim($record['Defective/ Non-functional WS'] ?? '')),
+                'total_ws' => $this->convertToInt(trim($record['Total WS'] ?? '')),
+                'availability_ws' => $this->convertToFloat(trim($record['WS % Availability'] ?? '')),
+                'infat_scale' => $this->convertToInt(trim($record['Infant Scale'] ?? '')),
+                'beam_balance' => $this->convertToInt(trim($record['Beam Balance'] ?? '')),
+                'remarks_ws' => trim($record['Remarks WS'] ?? ''),
+                'child' => $this->convertToInt(trim($record['Child'] ?? '')),
+                'defective_muac_child' => $this->convertToInt(trim($record['Defective/ Non-functional Child'] ?? '')),
+                'total_muac_child' => $this->convertToInt(trim($record['Total Child'] ?? '')),
+                'availability_muac_child' => $this->convertToFloat(trim($record['% Availability Child'] ?? '')),
+                'adults' => $this->convertToInt(trim($record['Adult'] ?? '')),
+                'defective_muac_adults' => $this->convertToInt(trim($record['Defective/ Non-functional Adult'] ?? '')),
+                'total_muac_adults' => $this->convertToInt(trim($record['Total Adult'] ?? '')),
+                'availability_muac_adults' => $this->convertToFloat(trim($record['% Availability Adult'] ?? '')),
+                'remarks_muac' => trim($record['Remarks MUAC'] ?? ''),
+            ];
+
+            $citymunExists = PsgcCity::where('psgc_code', $psgc_code)->exists() ||
+            PsgcMunicipality::where('psgc_code', $psgc_code)->exists();
+
+            if (!$citymunExists) {
+                return redirect()->back()->with('error', 'Invalid 10-Digit PSGC code.');
+            }
+
+            $equipmentInventory = PsgcEquipmentInventory::where('citymun_code', $citymun_code)->first();
+    
+            if ($equipmentInventory) {
+                $equipmentInventory->update($data);
+            } else {
+                PsgcEquipmentInventory::create(array_merge($data, [
+                    'psgc_code' => $psgc_code,
+                    'name' => $name,
+                    'reg_code' => $reg_code,
+                    'prov_code' => $prov_code,
+                    'citymun_code' => $citymun_code,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]));
+            }
+            
+        }
+        
+        return redirect('/mellpi_pro_LGU')->withStatus(__('Equipment Inventory successfully added.'));
+    }
+
+    private function getTotalBarangaysFromDB(string $citymun_code): int
+    {
+        $cityOfManilaCode = '1380600';
+        $query = PsgcBarangay::query();
+
+        if ($citymun_code === $cityOfManilaCode) {
+            $query->where('citymun_code', 'like', '13806%');
+            return $query->count();
+        }
+        
+        $query->where('citymun_code', $citymun_code);
+        return $query->count() ?? 0;
+    }
+    
+    private function convertToInt($value) {
+        return is_numeric($value) ? (int)$value : 0;
+    }
+    
+    private function convertToFloat($value) {
+        return is_numeric($value) ? (float)$value : 0.00;
     }
     
     // public function upload(Request $request)

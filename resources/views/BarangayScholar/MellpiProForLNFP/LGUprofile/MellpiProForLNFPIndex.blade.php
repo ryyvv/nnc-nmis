@@ -9,6 +9,8 @@
 'activeNav' => '',
 ])
 
+
+
 @section('content')
 <!-- <div class="panel-header panel-header-sm"></div> -->
 <div class="content" style="margin-top:90px;">
@@ -69,13 +71,15 @@
                                             <span class="statusPending">PENDING</span>
                                             @elseif( $lnfpProfile->status == 2 )
                                             <span class="statusDraft">DRAFT</span>
+                                            @else
+                                            <span class="statusApproved">Submitted</span>
                                             @endif
                                     </td>
 
                                     <td>
                                         <ul class="list-inline m-0">
                                             <li class="list-inline-item">
-                                                @if( $lnfpProfile->status == 1 || $lnfpProfile->status == 0 )
+                                                @if( $lnfpProfile->status == 1 || $lnfpProfile->status == 0 || $lnfpProfile->status == 3 )
                                                 <i onclick="myFunctionLNFP_lguprofile_View('{{ $lnfpProfile->id }}', 'lncmanagement', 'edit')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
                                                 <!-- <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
                                                 <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i> -->

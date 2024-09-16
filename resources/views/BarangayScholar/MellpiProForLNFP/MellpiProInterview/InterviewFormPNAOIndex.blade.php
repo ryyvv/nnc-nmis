@@ -55,7 +55,7 @@
                                     <td>{{ $InterviewForm->header  }}</td>
                                     <td>{{ $InterviewForm->nameofPnao  }}</td>
                                     <td>{{ $InterviewForm->periodCovereda }}</td>
-                                    <td>{{ $InterviewForm->dateOfInterview }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($InterviewForm->dateOfInterview)->format('F j, Y') }}</td>
                                     <td>
                                         @if( $InterviewForm->status == 0 )
                                         <span class="statusApproved">APPROVED</span>
@@ -63,13 +63,15 @@
                                         <span class="statusPending">PENDING</span>
                                         @elseif( $InterviewForm->status == 2 )
                                         <span class="statusDraft">DRAFT</span>
+                                        @else
+                                        <span class="statusApproved">Submitted</span>
                                         @endif
                                     </td>
 
                                     <td>
                                         <ul class="list-inline m-0">
                                             <li class="list-inline-item">
-                                                @if( $InterviewForm->status == 1 )
+                                                @if( $InterviewForm->status == 1 || $InterviewForm->status == 3 )
                                                 <i onclick="LNFPmyFunction_InterviewForm('{{ $InterviewForm->id }}', 'lncmanagement', 'edit')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
                                                 <!-- <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
                                                 <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i> -->

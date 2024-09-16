@@ -9,6 +9,8 @@ use App\Models\PsgcBarangay;
 use App\Models\PsgcCity;
 use App\Models\PsgcEquipmentInventory;
 use App\Models\PsgcMunicipality;
+use App\Models\PsgcProvince;
+use App\Models\PsgcRegion;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -34,12 +36,12 @@ class BSEquipmentInventoryController extends Controller
     }
 
     public function edit() 
-    {  
+    {    
         return view('equipment_inventory.edit'); 
     }
 
     public function update(Request $request) 
-    {   
+    {           
         $rules = [
             'inputtotalBarangay' => 'required|integer',
             'inputWHB' => 'required|integer',
@@ -69,7 +71,7 @@ class BSEquipmentInventoryController extends Controller
             'inputMRemarks' => 'nullable|string',
             'inputRegion' => 'required|string',
             'inputProvince' => 'required|string',
-            'inputCity' => 'required|string',
+            'inputCM' => 'required|string',
         ];
         
         if ($request->input('inputRegion') === '13') {
@@ -102,11 +104,11 @@ class BSEquipmentInventoryController extends Controller
             'inputAdultpercent.required' => 'MUAC Adult Availability percentage is required.',
             'inputRegion.required' => 'Region is required.',
             'inputProvince.required' => 'Province is required.',
-            'inputCity.required' => 'City/Municipal is required.',
+            'inputCM.required' => 'City/Municipal is required.',
         ];
 
         $request->merge([
-            'inputProvince' => !empty($request->input('inputProvince')) ? $request->input('inputProvince') : substr($request->input('inputCity'), 0, 5),
+            'inputProvince' => !empty($request->input('inputProvince')) ? $request->input('inputProvince') : substr($request->input('inputCM'), 0, 5),
         ]);
 
         $validator = Validator::make($request->all(), $rules, $message);
@@ -119,7 +121,7 @@ class BSEquipmentInventoryController extends Controller
         
         $validatedData = $validator->validated();
 
-        $equipmentInventory = PsgcEquipmentInventory::where('citymun_code', $validatedData['inputCity']);
+        $equipmentInventory = PsgcEquipmentInventory::where('citymun_code', $validatedData['inputCM']);
 
         if (!$equipmentInventory) {
             return redirect()->back()->with('error', 'Record not found.');
@@ -158,7 +160,7 @@ class BSEquipmentInventoryController extends Controller
             return redirect()->back()->with('error', 'Failed to update Equipment Inventory. Please try again.');
         }
 
-        return redirect()->back()->with('success', 'Equipment Inventory added successfully.');
+        return redirect()->route('BSequipmentInventory.index')->with('success', 'Equipment Inventory added successfully.');
     }
 
     public function store(Request $request) 
@@ -192,7 +194,7 @@ class BSEquipmentInventoryController extends Controller
             'inputMRemarks' => 'nullable|string',
             'inputRegion' => 'required|string',
             'inputProvince' => 'required|string',
-            'inputCity' => 'required|string',
+            'inputCM' => 'required|string',
         ];
         
         if ($request->input('inputRegion') === '13') {
@@ -225,11 +227,11 @@ class BSEquipmentInventoryController extends Controller
             'inputAdultpercent.required' => 'MUAC Adult Availability percentage is required.',
             'inputRegion.required' => 'Region required.',
             'inputProvince.required' => 'Province required.',
-            'inputCity.required' => 'City/Municipal required.',
+            'inputCM.required' => 'City/Municipal required.',
         ];
 
         $request->merge([
-            'inputProvince' => !empty($request->input('inputProvince')) ? $request->input('inputProvince') : substr($request->input('inputCity'), 0, 5),
+            'inputProvince' => !empty($request->input('inputProvince')) ? $request->input('inputProvince') : substr($request->input('inputCM'), 0, 5),
         ]);
         
         $validator = Validator::make($request->all(), $rules, $message);
@@ -242,11 +244,8 @@ class BSEquipmentInventoryController extends Controller
         
         $validatedData = $validator->validated();
 
-        $cities = PsgcCity::where('citymun_code', $validatedData['inputCity'])->first();
-        $municipalities = PsgcMunicipality::where('citymun_code', $validatedData['inputCity'])->first();
-        
-        $citymun = $cities ?? $municipalities;
-
+        $citymun = PsgcCity::where('citymun_code', $validatedData['inputCM'])->first()
+        ?? PsgcMunicipality::where('citymun_code', $validatedData['inputCM'])->first();
         
         if (!$citymun) {
             return redirect()->back()->with('error', 'City or municipality not found.');
@@ -299,6 +298,149 @@ class BSEquipmentInventoryController extends Controller
             return redirect()->back()->with('error', 'Failed to add Equipment Inventory. Please try again.');
         }
         
-        return redirect()->back()->with('success', 'Equipment Inventory added successfully.');
+        return redirect()->route('BSequipmentInventory.index')->with('success', 'Equipment Inventory added successfully.');
+    }
+
+    public function getCitiesAndMunicipalitiesInventory(Request $request)
+    {
+        $EquipmentInventoryQuery = PsgcEquipmentInventory::query();
+        $subTotalsQuery = PsgcEquipmentInventory::query();
+
+        if ($request->has('psgc_code')) {
+            $EquipmentInventoryQuery->where('psgc_code', $request->input('psgc_code'));
+            $subTotalsQuery->where('psgc_code', $request->input('psgc_code'));
+        }
+
+        if ($request->has('name')) {
+            $EquipmentInventoryQuery->where('name', 'like', '%' . $request->input('name') . '%');
+            $subTotalsQuery->where('name', 'like', '%' . $request->input('name') . '%');
+        }
+
+        if ($request->has('correspondence_code')) {
+            $EquipmentInventoryQuery->where('correspondence_code', $request->input('correspondence_code'));
+            $subTotalsQuery->where('correspondence_code', $request->input('correspondence_code'));
+        }
+
+        if ($request->has('reg_code')) {
+            $EquipmentInventoryQuery->where('reg_code', $request->input('reg_code'));
+            $subTotalsQuery->where('reg_code', $request->input('reg_code'));
+        }
+
+        if ($request->has('prov_code')) {
+            $EquipmentInventoryQuery->where('prov_code', $request->input('prov_code'));
+            $subTotalsQuery->where('prov_code', $request->input('prov_code'));
+        }
+
+        if ($request->has('citymun_code')) {
+            $EquipmentInventoryQuery->where('citymun_code', $request->input('citymun_code'));
+            $subTotalsQuery->where('citymun_code', $request->input('citymun_code'));
+        }
+
+        $citiesAndMunicipalities = $EquipmentInventoryQuery->get();
+
+        $subTotals = $subTotalsQuery->selectRaw('
+            SUM(total_barangay) as total_barangays,
+            SUM(wooden_hb) as wooden_hb,
+            SUM(non_wooden_hb) as non_wooden_hb,
+            SUM(defective_hb) as defective_hb,
+            SUM(total_hb) as total_hb,
+            SUM(availability_hb) as availability_hb,
+            SUM(steel_rules) as steel_rules,
+            SUM(microtoise) as microtoise,
+            SUM(infantometer) as infantometer,
+            SUM(hanging_type) as hanging_type,
+            SUM(defective_ws) as defective_ws,
+            SUM(total_ws) as total_ws,
+            SUM(availability_ws) as availability_ws,
+            SUM(infat_scale) as infat_scale,
+            SUM(beam_balance) as beam_balance,
+            SUM(child) as child,
+            SUM(defective_muac_child) as defective_muac_child,
+            SUM(total_muac_child) as total_muac_child,
+            SUM(availability_muac_child) as availability_muac_child,
+            SUM(adults) as adults,
+            SUM(defective_muac_adults) as defective_muac_adults,
+            SUM(total_muac_adults) as total_muac_adults,
+            SUM(availability_muac_adults) as availability_muac_adults
+        ')
+        ->first();
+
+        $grandTotals =  PsgcEquipmentInventory::selectRaw('
+            SUM(total_barangay) as total_barangays,
+            SUM(wooden_hb) as wooden_hb,
+            SUM(non_wooden_hb) as non_wooden_hb,
+            SUM(defective_hb) as defective_hb,
+            SUM(total_hb) as total_hb,
+            SUM(availability_hb) as availability_hb,
+            SUM(steel_rules) as steel_rules,
+            SUM(microtoise) as microtoise,
+            SUM(infantometer) as infantometer,
+            SUM(hanging_type) as hanging_type,
+            SUM(defective_ws) as defective_ws,
+            SUM(total_ws) as total_ws,
+            SUM(availability_ws) as availability_ws,
+            SUM(infat_scale) as infat_scale,
+            SUM(beam_balance) as beam_balance,
+            SUM(child) as child,
+            SUM(defective_muac_child) as defective_muac_child,
+            SUM(total_muac_child) as total_muac_child,
+            SUM(availability_muac_child) as availability_muac_child,
+            SUM(adults) as adults,
+            SUM(defective_muac_adults) as defective_muac_adults,
+            SUM(total_muac_adults) as total_muac_adults,
+            SUM(availability_muac_adults) as availability_muac_adults
+        ')
+        ->first();
+        
+        return response()->json([
+            'citiesAndMunicipalities' => $citiesAndMunicipalities,
+            'totals' => [
+                $subTotals,
+                $grandTotals,
+            ]
+        ]);
+    }
+
+    public function destroy(Request $request)
+    {
+        $rules = [
+            'inputRegion' => 'required|string',
+            'inputProvince' => 'required|string',
+            'inputCM' => 'required|string',
+        ];
+        
+        if ($request->input('inputRegion') === '13') {
+            $rules['inputProvince'] = 'nullable|string';
+        }
+        
+        $message = [
+            'inputRegion.required' => 'Region required.',
+            'inputProvince.required' => 'Province required.',
+            'inputCM.required' => 'City/Municipal required.',
+        ];
+
+        $request->merge([
+            'inputProvince' => !empty($request->input('inputProvince')) ? $request->input('inputProvince') : substr($request->input('inputCM'), 0, 5),
+        ]);
+        
+        $validator = Validator::make($request->all(), $rules, $message);
+        
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()->with('error', 'Something went wrong! Please try again.');
+        }
+        
+        $validatedData = $validator->validated();
+        
+        $equipmentInventory = PsgcEquipmentInventory::where('citymun_code', $validatedData['inputCM'])->first();
+
+        if (!$equipmentInventory) {
+            return redirect()->back()->with('error', 'Record not found.');
+        }
+
+        $equipmentInventory->delete();
+        
+        return redirect()->route('BSequipmentInventory.index')->with('success', 'Equipment Inventory deleted successfully.');
     }
 }

@@ -28,7 +28,7 @@ use App\Http\Controllers\Admin\CentralAdmin\AdminUserController;
 use App\Http\Controllers\Admin\Auth\RegisterController;
 use App\Http\Controllers\Admin\CentralAdmin\CADashboardController;
 use App\Http\Controllers\Admin\CentralAdmin\FormsBuilderController;
-
+use App\Http\Controllers\Admin\CentralAdmin\Form5PNAOBuilderController;
 use App\Http\Controllers\Admin\CentralAdmin\FormFieldController;
 
 
@@ -168,6 +168,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/mellpi_pro_LGU/mun',  [MellproLGUController::class, 'Munupload'])->name('mellpi_pro_LGU.Munupload');
     Route::post('/mellpi_pro_LGU/submun',  [MellproLGUController::class, 'SubMunupload'])->name('mellpi_pro_LGU.SubMunupload');
     Route::post('/mellpi_pro_LGU/brgy',  [MellproLGUController::class, 'Barangayupload'])->name('mellpi_pro_LGU.Barangayupload');
+    Route::post('/mellpi_pro_LGU/equipmentInventory',  [MellproLGUController::class, 'EquipmentInventoryupload'])->name('mellpi_pro_LGU.EquipmentInventoryupload');
 
     // Melpi Pro Controller
     // Route::get('/mellpi_pro', [MellpiProController::class, 'index'])->name('mellpi_pro.view');
@@ -234,7 +235,12 @@ Route::group(['middleware' => 'auth'], function () {
                 // Route::get('CentralAdmin/profile/{profile}/edit', [ProfileController::class, 'edit'])->name('CAprofile.edit');
                 // Route::PUT('CentralAdmin/profile/password', [ProfileController::class, 'password'])->name('CAprofile.password');
         
-                // forms Creator A
+                // forms 5 
+                Route::get('/form5', [Form5PNAOBuilderController::class, 'index'])->name('form5.index');
+                Route::get('/form5edit/{id}', [Form5PNAOBuilderController::class, 'edit'])->name('form5.edit');
+                Route::post('/form5update/{id}', [Form5PNAOBuilderController::class, 'update'])->name('form5.update');
+                
+                // formb
                 Route::get('/formsb', [FormsBuilderController::class, 'index'])->name('formsb.index');
                 Route::POST('/formsb', [FormsBuilderController::class, 'store'])->name('formsb.store');
                 Route::get('/formsb/create', [FormsBuilderController::class, 'create'])->name('formsb.create');
@@ -272,22 +278,27 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::DELETE('/permissions/{permission}', [PermissionController::class, 'destroy'])->name('permission.destroy');
 
         //==========================================================================================================================================
+        
+        Route::get('/lguProfile/fetchreport', [CMOMellpiLGUProfileBarangayController::class, 'fetchReport'])->name('CMOLGUprofile.fetch');
 
-        //   //DashboardController
-            Route::get('/cmsdashboard', [CMSDashboardController::class, 'index'])->name('CMSdashboard.index');
-            Route::POST('/dashboard', [CMSDashboardController::class, 'store'])->name('CMSdashboard.store');
-            Route::get('/dashboard/create', [CMSDashboardController::class, 'create'])->name('CMSdashboard.create');
-            Route::get('/dashboard/{admin}', [CMSDashboardController::class, 'update'])->name('CMSdashboard.update');
-            Route::get('/dashboard/{admin}/edit', [CMSDashboardController::class, 'create'])->name('CMSdashboard.edit');
-            Route::DELETE('/dashboard/{admin}', [CMSDashboardController::class, 'destroy'])->name('CMSdashboard.destroy');
 
-    //     // Userprofile
+        //DashboardController
+        Route::get('/cmsdashboard', [CMSDashboardController::class, 'index'])->name('CMSdashboard.index');
+        Route::POST('/dashboard', [CMSDashboardController::class, 'store'])->name('CMSdashboard.store');
+        Route::get('/dashboard/create', [CMSDashboardController::class, 'create'])->name('CMSdashboard.create');
+        Route::get('/dashboard/{admin}', [CMSDashboardController::class, 'update'])->name('CMSdashboard.update');
+        Route::get('/dashboard/{admin}/edit', [CMSDashboardController::class, 'create'])->name('CMSdashboard.edit');
+        Route::DELETE('/dashboard/{admin}', [CMSDashboardController::class, 'destroy'])->name('CMSdashboard.destroy');
+
+        //Userprofile
         Route::get('/profile', [CMSProfileController::class, 'index'])->name('CMSprofile.index');
         Route::get('/profile/{profile}', [CMSProfileController::class, 'update'])->name('CMSprofile.update');
         Route::get('/profile/{profile}/edit', [CMSProfileController::class, 'edit'])->name('CMSprofile.edit');
         Route::PUT('/profile/password', [CMSProfileController::class, 'password'])->name('CMSprofile.password');
 
-        // /CityMunicipal/lguprofile
+    
+        //==========================================================================================================================================
+        //CityMunicipal/lguprofile
         //LGUProfileController
         Route::get('/CityMunicipal/lguprofile', [CMSLGUprofileController::class, 'index'])->name('CMSLGUprofile.index'); 
         Route::get('/CityMunicipal/lguprofile/{id}/show', [CMSLGUprofileController::class, 'show'])->name('CMSLGUprofile.show');
@@ -421,95 +432,96 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 
-
-        //MellpiPro LGUProfile  ============================================================================================================================================================
-        //LGUProfile
-        Route::get('/lguprofile', [BSLGUprofileController::class, 'index'])->name('BSLGUprofile.index');
+        //BarangayScholar
+        //============================================================================================================================================================
+        //MellpiPro LGUProfile  
+        //LGUProfile 
+        Route::get('BarangayScholar/lguprofile', [BSLGUprofileController::class, 'index'])->name('BSLGUprofile.index');
         //Route::POST('/lguprofile', [BSLGUprofileController::class, 'storeDraft'])->name('BSLGUprofile.storeDraft');
-        Route::get('/lguprofile/{id}/show', [BSLGUprofileController::class, 'show'])->name('BSLGUprofile.show');
-        Route::POST('/lguprofile', [BSLGUprofileController::class, 'storeSubmit'])->name('BSLGUprofilest.storeSubmit');
-        Route::get('/lguprofile/create', [BSLGUprofileController::class, 'create'])->name('BSLGUprofile.create');
-        Route::put('/lguprofile/{id}', [BSLGUprofileController::class, 'update'])->name('BSLGUprofile.update');
-        Route::get('/lguprofile/{id}/edit', [BSLGUprofileController::class, 'edit'])->name('BSLGUprofile.edit');
-        Route::POST('/lguprofile/delete', [BSLGUprofileController::class, 'destroy'])->name('BSLGUprofile.destroy'); 
-        Route::POST('/lguprofile/{id}/download-pdf', [BSLGUprofileController::class, 'downloads'])->name('BSLGUprofile.download');
+        Route::get('BarangayScholar/lguprofile/{id}/show', [BSLGUprofileController::class, 'show'])->name('BSLGUprofile.show');
+        Route::POST('BarangayScholar/lguprofile', [BSLGUprofileController::class, 'storeSubmit'])->name('BSLGUprofilest.storeSubmit');
+        Route::get('BarangayScholar/lguprofile/create', [BSLGUprofileController::class, 'create'])->name('BSLGUprofile.create');
+        Route::put('BarangayScholar/lguprofile/{id}', [BSLGUprofileController::class, 'update'])->name('BSLGUprofile.update');
+        Route::get('BarangayScholar/lguprofile/{id}/edit', [BSLGUprofileController::class, 'edit'])->name('BSLGUprofile.edit');
+        Route::POST('BarangayScholar/lguprofile/delete', [BSLGUprofileController::class, 'destroy'])->name('BSLGUprofile.destroy'); 
+        Route::POST('BarangayScholar/lguprofile/{id}/download-pdf', [BSLGUprofileController::class, 'downloads'])->name('BSLGUprofile.download');
 
         //VisionMissionController
-        Route::get('/visionmission', [VisionMissionController::class, 'index'])->name('visionmission.index');
-        Route::POST('/visionmission', [VisionMissionController::class, 'store'])->name('visionmission.store');
-        Route::get('/visionmission/create', [VisionMissionController::class, 'create'])->name('visionmission.create');
-        Route::put('/visionmission/{id}', [VisionMissionController::class, 'update'])->name('visionmission.update');
-        Route::get('/visionmission/{id}/edit', [VisionMissionController::class, 'edit'])->name('visionmission.edit');
-        Route::post('/visionmission/delete', [VisionMissionController::class, 'destroy'])->name('visionmission.destroy');
-        Route::get('/visionmission/{id}/show', [VisionMissionController::class, 'show'])->name('visionmission.show');
-        Route::POST('/visionmission/{id}/download-pdf', [VisionMissionController::class, 'downloads'])->name('visionmission.download');
+        Route::get('BarangayScholar/visionmission', [VisionMissionController::class, 'index'])->name('visionmission.index');
+        Route::POST('BarangayScholar/visionmission', [VisionMissionController::class, 'store'])->name('visionmission.store');
+        Route::get('BarangayScholar/visionmission/create', [VisionMissionController::class, 'create'])->name('visionmission.create');
+        Route::put('BarangayScholar/visionmission/{id}', [VisionMissionController::class, 'update'])->name('visionmission.update');
+        Route::get('BarangayScholar/visionmission/{id}/edit', [VisionMissionController::class, 'edit'])->name('visionmission.edit');
+        Route::post('BarangayScholar/visionmission/delete', [VisionMissionController::class, 'destroy'])->name('visionmission.destroy');
+        Route::get('BarangayScholar/visionmission/{id}/show', [VisionMissionController::class, 'show'])->name('visionmission.show');
+        Route::POST('BarangayScholar/visionmission/{id}/download-pdf', [VisionMissionController::class, 'downloads'])->name('visionmission.download');
 
         //NutritionPoliciesController
-        Route::get('/nutritionpolicies', [NutritionPoliciesController::class, 'index'])->name('nutritionpolicies.index');
-        Route::POST('/nutritionpolicies', [NutritionPoliciesController::class, 'store'])->name('nutritionpolicies.store');
-        Route::get('/nutritionpolicies/create', [NutritionPoliciesController::class, 'create'])->name('nutritionpolicies.create');
-        Route::put('/nutritionpolicies/{id}', [NutritionPoliciesController::class, 'update'])->name('nutritionpolicies.update');
-        Route::get('/nutritionpolicies/{id}/edit', [NutritionPoliciesController::class, 'edit'])->name('nutritionpolicies.edit');
-        Route::POST('/nutritionpolicies/delete', [NutritionPoliciesController::class, 'destroy'])->name('nutritionpolicies.destroy');
-        Route::get('/nutritionpolicies/{id}/show', [NutritionPoliciesController::class, 'show'])->name('nutritionpolicies.show');
-        Route::POST('/nutritionpolicies/{id}/download-pdf', [NutritionPoliciesController::class, 'downloads'])->name('nutritionpolicies.download');
+        Route::get('BarangayScholar/nutritionpolicies', [NutritionPoliciesController::class, 'index'])->name('nutritionpolicies.index');
+        Route::POST('BarangayScholar/nutritionpolicies', [NutritionPoliciesController::class, 'store'])->name('nutritionpolicies.store');
+        Route::get('BarangayScholar/nutritionpolicies/create', [NutritionPoliciesController::class, 'create'])->name('nutritionpolicies.create');
+        Route::put('BarangayScholar/nutritionpolicies/{id}', [NutritionPoliciesController::class, 'update'])->name('nutritionpolicies.update');
+        Route::get('BarangayScholar/nutritionpolicies/{id}/edit', [NutritionPoliciesController::class, 'edit'])->name('nutritionpolicies.edit');
+        Route::POST('BarangayScholar/nutritionpolicies/delete', [NutritionPoliciesController::class, 'destroy'])->name('nutritionpolicies.destroy');
+        Route::get('BarangayScholar/nutritionpolicies/{id}/show', [NutritionPoliciesController::class, 'show'])->name('nutritionpolicies.show');
+        Route::POST('BarangayScholar/nutritionpolicies/{id}/download-pdf', [NutritionPoliciesController::class, 'downloads'])->name('nutritionpolicies.download');
 
         //GovernanceController
-        Route::get('/governance', [GovernanceController::class, 'index'])->name('governance.index');
-        Route::POST('/governance', [GovernanceController::class, 'store'])->name('governance.store');
-        Route::get('/governance/create', [GovernanceController::class, 'create'])->name('governance.create');
-        Route::put('/governance/{id}', [GovernanceController::class, 'update'])->name('governance.update');
-        Route::get('/governance/{id}/edit', [GovernanceController::class, 'edit'])->name('governance.edit');
-        Route::POST('/governance/delete', [GovernanceController::class, 'destroy'])->name('governance.destroy');
-        Route::get('/governance/{id}/show', [GovernanceController::class, 'show'])->name('governance.show');
-        Route::POST('/governance/{id}/download-pdf', [GovernanceController::class, 'downloads'])->name('governance.download');
+        Route::get('BarangayScholar/governance', [GovernanceController::class, 'index'])->name('governance.index');
+        Route::POST('BarangayScholar/governance', [GovernanceController::class, 'store'])->name('governance.store');
+        Route::get('BarangayScholar/governance/create', [GovernanceController::class, 'create'])->name('governance.create');
+        Route::put('BarangayScholar/governance/{id}', [GovernanceController::class, 'update'])->name('governance.update');
+        Route::get('BarangayScholar/governance/{id}/edit', [GovernanceController::class, 'edit'])->name('governance.edit');
+        Route::POST('BarangayScholar/governance/delete', [GovernanceController::class, 'destroy'])->name('governance.destroy');
+        Route::get('BarangayScholar/governance/{id}/show', [GovernanceController::class, 'show'])->name('governance.show');
+        Route::POST('BarangayScholar/governance/{id}/download-pdf', [GovernanceController::class, 'downloads'])->name('governance.download');
 
         //NutritionServicesController
-        Route::get('/lncmanagement', [LNCManagementBarangayController::class, 'index'])->name('lncmanagement.index');
-        Route::POST('/lncmanagement', [LNCManagementBarangayController::class, 'store'])->name('lncmanagement.store');
-        Route::get('/lncmanagement/create', [LNCManagementBarangayController::class, 'create'])->name('lncmanagement.create');
-        Route::put('/lncmanagement/{id}', [LNCManagementBarangayController::class, 'update'])->name('lncmanagement.update');
-        Route::get('/lncmanagement/{id}/edit', [LNCManagementBarangayController::class, 'edit'])->name('lncmanagement.edit');
-        Route::POST('/lncmanagement/delete', [LNCManagementBarangayController::class, 'destroy'])->name('lncmanagement.destroy');
-        Route::get('/lncmanagement/{id}/show', [LNCManagementBarangayController::class, 'show'])->name('lncmanagement.show');
-        Route::POST('/lncmanagement/{id}/download-pdf', [LNCManagementBarangayController::class, 'downloads'])->name('lncmanagement.download');
+        Route::get('BarangayScholar/lncmanagement', [LNCManagementBarangayController::class, 'index'])->name('lncmanagement.index');
+        Route::POST('BarangayScholar/lncmanagement', [LNCManagementBarangayController::class, 'store'])->name('lncmanagement.store');
+        Route::get('BarangayScholar/lncmanagement/create', [LNCManagementBarangayController::class, 'create'])->name('lncmanagement.create');
+        Route::put('BarangayScholar/lncmanagement/{id}', [LNCManagementBarangayController::class, 'update'])->name('lncmanagement.update');
+        Route::get('BarangayScholar/lncmanagement/{id}/edit', [LNCManagementBarangayController::class, 'edit'])->name('lncmanagement.edit');
+        Route::POST('BarangayScholar/lncmanagement/delete', [LNCManagementBarangayController::class, 'destroy'])->name('lncmanagement.destroy');
+        Route::get('BarangayScholar/lncmanagement/{id}/show', [LNCManagementBarangayController::class, 'show'])->name('lncmanagement.show');
+        Route::POST('BarangayScholar/lncmanagement/{id}/download-pdf', [LNCManagementBarangayController::class, 'downloads'])->name('lncmanagement.download');
 
         //NutritionServicesController
-        Route::get('/nutritionservice', [NutritionServiceController::class, 'index'])->name('nutritionservice.index');
-        Route::POST('/nutritionservice', [NutritionServiceController::class, 'store'])->name('nutritionservice.store');
-        Route::get('/nutritionservice/create', [NutritionServiceController::class, 'create'])->name('nutritionservice.create');
-        Route::put('/nutritionservice/{id}', [NutritionServiceController::class, 'update'])->name('nutritionservice.update');
-        Route::get('/nutritionservice/{id}/edit', [NutritionServiceController::class, 'edit'])->name('nutritionservice.edit');
-        Route::POST('/nutritionservice/delete', [NutritionServiceController::class, 'destroy'])->name('nutritionservice.destroy');
-        Route::get('/nutritionservice/{id}/show', [NutritionServiceController::class, 'show'])->name('nutritionservice.show');
-        Route::POST('/nutritionservice/{id}/download-pdf', [NutritionServiceController::class, 'downloads'])->name('nutritionservice.download');
+        Route::get('BarangayScholar/nutritionservice', [NutritionServiceController::class, 'index'])->name('nutritionservice.index');
+        Route::POST('BarangayScholar/nutritionservice', [NutritionServiceController::class, 'store'])->name('nutritionservice.store');
+        Route::get('BarangayScholar/nutritionservice/create', [NutritionServiceController::class, 'create'])->name('nutritionservice.create');
+        Route::put('BarangayScholar/nutritionservice/{id}', [NutritionServiceController::class, 'update'])->name('nutritionservice.update');
+        Route::get('BarangayScholar/nutritionservice/{id}/edit', [NutritionServiceController::class, 'edit'])->name('nutritionservice.edit');
+        Route::POST('BarangayScholar/nutritionservice/delete', [NutritionServiceController::class, 'destroy'])->name('nutritionservice.destroy');
+        Route::get('BarangayScholar/nutritionservice/{id}/show', [NutritionServiceController::class, 'show'])->name('nutritionservice.show');
+        Route::POST('BarangayScholar/nutritionservice/{id}/download-pdf', [NutritionServiceController::class, 'downloads'])->name('nutritionservice.download');
 
         //ChangeNSController
-        Route::get('/changeNS', [ChangeNSController::class, 'index'])->name('changeNS.index');
-        Route::POST('/changeNS', [ChangeNSController::class, 'store'])->name('changeNS.store');
-        Route::get('/changeNS/create', [ChangeNSController::class, 'create'])->name('changeNS.create');
-        Route::put('/changeNS/{id}', [ChangeNSController::class, 'update'])->name('changeNS.update');
-        Route::get('/changeNS/{id}/edit', [ChangeNSController::class, 'edit'])->name('changeNS.edit');
-        Route::POST('/changeNS/delete', [ChangeNSController::class, 'destroy'])->name('changeNS.destroy');
-        Route::get('/changeNS/{id}/show', [ChangeNSController::class, 'show'])->name('changeNS.show');
-        Route::POST('/changeNS/{id}/download-pdf', [ChangeNSController::class, 'downloads'])->name('changeNS.download');
+        Route::get('BarangayScholar/changeNS', [ChangeNSController::class, 'index'])->name('changeNS.index');
+        Route::POST('BarangayScholar/changeNS', [ChangeNSController::class, 'store'])->name('changeNS.store');
+        Route::get('BarangayScholar/changeNS/create', [ChangeNSController::class, 'create'])->name('changeNS.create');
+        Route::put('BarangayScholar/changeNS/{id}', [ChangeNSController::class, 'update'])->name('changeNS.update');
+        Route::get('BarangayScholar/changeNS/{id}/edit', [ChangeNSController::class, 'edit'])->name('changeNS.edit');
+        Route::POST('BarangayScholar/changeNS/delete', [ChangeNSController::class, 'destroy'])->name('changeNS.destroy');
+        Route::get('BarangayScholar/changeNS/{id}/show', [ChangeNSController::class, 'show'])->name('changeNS.show');
+        Route::POST('BarangayScholar/changeNS/{id}/download-pdf', [ChangeNSController::class, 'downloads'])->name('changeNS.download');
 
         //DiscussionQuestionController
-        Route::get('/discussionquestion', [DiscussionQuestionController::class, 'index'])->name('discussionquestion.index');
-        Route::POST('/discussionquestion', [DiscussionQuestionController::class, 'store'])->name('discussionquestion.store');
-        Route::get('/discussionquestion/create', [DiscussionQuestionController::class, 'create'])->name('discussionquestion.create');
-        Route::put('/discussionquestion/{id}', [DiscussionQuestionController::class, 'update'])->name('discussionquestion.update');
-        Route::get('/discussionquestion/{id}/edit', [DiscussionQuestionController::class, 'edit'])->name('discussionquestion.edit');
-        Route::POST('/discussionquestion/delete', [DiscussionQuestionController::class, 'destroy'])->name('discussionquestion.destroy');
-        Route::get('/discussionquestion/{id}/show', [DiscussionQuestionController::class, 'show'])->name('discussionquestion.show');
+        Route::get('BarangayScholar/discussionquestion', [DiscussionQuestionController::class, 'index'])->name('discussionquestion.index');
+        Route::POST('BarangayScholar/discussionquestion', [DiscussionQuestionController::class, 'store'])->name('discussionquestion.store');
+        Route::get('BarangayScholar/discussionquestion/create', [DiscussionQuestionController::class, 'create'])->name('discussionquestion.create');
+        Route::put('BarangayScholar/discussionquestion/{id}', [DiscussionQuestionController::class, 'update'])->name('discussionquestion.update');
+        Route::get('BarangayScholar/discussionquestion/{id}/edit', [DiscussionQuestionController::class, 'edit'])->name('discussionquestion.edit');
+        Route::POST('BarangayScholar/discussionquestion/delete', [DiscussionQuestionController::class, 'destroy'])->name('discussionquestion.destroy');
+        Route::get('BarangayScholar/discussionquestion/{id}/show', [DiscussionQuestionController::class, 'show'])->name('discussionquestion.show');
 
         //BudgetController
-        Route::get('/budgetAIP', [BudgetAIPController::class, 'index'])->name('budgetAIP.index');
-        Route::POST('/budgetAIP', [BudgetAIPController::class, 'store'])->name('budgetAIP.store');
-        Route::get('/budgetAIP/create', [BudgetAIPController::class, 'create'])->name('budgetAIP.create');
-        Route::put('/budgetAIP/{id}', [BudgetAIPController::class, 'update'])->name('budgetAIP.update');
-        Route::get('/budgetAIP/{id}/edit', [BudgetAIPController::class, 'edit'])->name('budgetAIP.edit');
-        Route::DELETE('/budgetAIP/{id}', [BudgetAIPController::class, 'destroy'])->name('budgetAIP.destroy');
+        Route::get('BarangayScholar/budgetAIP', [BudgetAIPController::class, 'index'])->name('budgetAIP.index');
+        Route::POST('BarangayScholar/budgetAIP', [BudgetAIPController::class, 'store'])->name('budgetAIP.store');
+        Route::get('BarangayScholar/budgetAIP/create', [BudgetAIPController::class, 'create'])->name('budgetAIP.create');
+        Route::put('BarangayScholar/budgetAIP/{id}', [BudgetAIPController::class, 'update'])->name('budgetAIP.update');
+        Route::get('BarangayScholar/budgetAIP/{id}/edit', [BudgetAIPController::class, 'edit'])->name('budgetAIP.edit');
+        Route::DELETE('BarangayScholar/budgetAIP/{id}', [BudgetAIPController::class, 'destroy'])->name('budgetAIP.destroy');
 
 
         //MellpiPro LNFP  ============================================================================================================================================================
@@ -567,7 +579,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/equipmentInventory/create', [BSEquipmentInventoryController::class, 'create'])->name('BSequipmentInventory.create');
         Route::get('/equipmentInventory/edit', [BSEquipmentInventoryController::class, 'edit'])->name('BSequipmentInventory.edit');
         Route::put('/equipmentInventory/update', [BSEquipmentInventoryController::class, 'update'])->name('BSequipmentInventory.update');
+        Route::delete('/equipmentInventory/delete', [BSEquipmentInventoryController::class, 'destroy'])->name('BSequipmentInventory.delete');
         Route::post('/equipmentInventory', [BSEquipmentInventoryController::class, 'store'])->name('BSequipmentInventory.store');
+        Route::get('/equipmentInventory/cities-municipalities', [BSEquipmentInventoryController::class, 'getCitiesAndMunicipalitiesInventory'])->name('BSequipmentInventory.CMInventory.get');
     
         //Nutrition Offices
         Route::get('/nutritionOfficesIndex', [BSNutritionOfficesController::class, 'index'])->name('BSnutritionOffices.index');
@@ -623,8 +637,6 @@ Route::prefix('equipment')->group(function () {
     Route::get('/sub-municipalities', [EquipmentInventoryController::class, 'getSubMunicipalities'])->name('equipment.subMunicipalities.get');
     Route::get('/barangays', [EquipmentInventoryController::class, 'getBarangays'])->name('equipment.barangays.get');
     Route::get('/cities-municipalities', [EquipmentInventoryController::class, 'getCitiesAndMunicipalities'])->name('equipment.citiesAndMunicipalities.get');
-    Route::get('/inventory/cities-municipalities', [EquipmentInventoryController::class, 'getCitiesAndMunicipalitiesInventory'])->name('equipment.citiesAndMunicipalitiesInventory.get');
-    Route::get('/test', [EquipmentInventoryController::class, 'test']);
 });
 
  

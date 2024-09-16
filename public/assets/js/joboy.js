@@ -542,6 +542,14 @@ function confirmDeleteLNC(){
 
 
 
+// Form 5 Edit function
+function myForm5Edit(id){
+    window.location.href = "form5edit/"+ id;
+
+}
+
+
+
 
 new DataTable('#myTable');
 
@@ -553,3 +561,5 @@ new DataTable('#form8myTable');
 new DataTable('#InterviewFormmyTable');
 new DataTable('#overallScoremyTable');
 new DataTable('#nutriOffice');
+new DataTable('#myTableLnfp');
+new DataTable('#myTableForm5');

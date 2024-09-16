@@ -60,7 +60,7 @@
                                     <td>{{$form8->header}}</td>
                                     <td>{{$form8->nameofPnao}}</td>
                                     <td>
-                                        <center>{{ $form8->dateMonitoring }}</center>
+                                        <center>{{ \Carbon\Carbon::parse($form8->dateMonitoring )->format('F j, Y') }}</center>
                                     </td>
                                     <td>
                                         <center>{{ $form8->periodCovereda }}</center>
@@ -77,6 +77,8 @@
                                         <span class="statusPending">PENDING</span>
                                         @elseif( $form8->status == 2 )
                                         <span class="statusDraft">DRAFT</span>
+                                        @else
+                                        <span class="statusApproved">Submitted</span>
                                         @endif
                                         </center>
                                     </td>
@@ -85,7 +87,7 @@
                                         <ul class="list-inline m-0">
                                             <li class="list-inline-item">
 
-                                                @if( $form8->status == 1 )
+                                                @if( $form8->status == 1 || $form8->status == 3 )
                                                 <i onclick="myLNFPmyFunction_form8('{{ $form8->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
 
                                                 @elseif( $form8->status == 2 )

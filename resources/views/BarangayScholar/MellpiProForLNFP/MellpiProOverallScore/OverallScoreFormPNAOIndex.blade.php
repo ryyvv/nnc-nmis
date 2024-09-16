@@ -52,8 +52,7 @@
                                     </td>
                                     <td>{{ $overallScore->pnaoName }}
                                     </td>
-                                    <td>{{ $overallScore->dateOver }}
-                                    </td>
+                                    <td>{{ \Carbon\Carbon::parse($overallScore->dateOver)->format('F j, Y') }}
                                     <td>
                                         <center>
                                         @if( $overallScore->status == 0 )
@@ -62,6 +61,8 @@
                                         <span class="statusPending">Submitted</span>
                                         @elseif( $overallScore->status == 2 )
                                         <span class="statusDraft">DRAFT</span>
+                                        @else
+                                        <span class="statusApproved">Submitted</span>
                                         @endif
                                         </center>
                                     </td>
@@ -70,7 +71,7 @@
                                         <ul class="list-inline m-0">
                                             <li class="list-inline-item">
      
-                                                @if( $overallScore->status == 1 )
+                                                @if( $overallScore->status == 3 || $overallScore->status == 1 )
                                                 <i onclick="myLNFPmyFunction_overallScore('{{ $overallScore->overallId }}', 'lncmanagement', 'edit')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
                                                 <!-- <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i> -->
                                                 <!-- <i class="fa fa-trash fa-lg cursor" style="color:gray;margin-right:10px" title="Delete "></i> -->

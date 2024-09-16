@@ -20,7 +20,7 @@ class StatusUpdateService
         \App\Models\lnfp_form8::class => 'lnfp_lgu_id',
     ];
 
-    public function updateStatuses($lguId, $status = 1)
+    public function updateStatuses($lguId, $status = 3)
     {
         foreach ($this->models as $model) {
             $fieldName = $this->fieldNames[$model] ?? 'lnfp_lgu_id';

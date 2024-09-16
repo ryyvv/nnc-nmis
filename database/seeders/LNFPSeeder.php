@@ -262,7 +262,7 @@ class LNFPSeeder extends Seeder
             ],
 
             [
-                'survey_id' => 8,  // Reference to survey ID
+                'survey_id' => 9,  // Reference to survey ID
                 'column1' => ' ',
                 'column2' => 'Technical Assistance',
                 'column3' => 'PNAO facilitates provision
@@ -299,7 +299,7 @@ class LNFPSeeder extends Seeder
             ],
 
             [
-                'survey_id' => 8,  // Reference to survey ID
+                'survey_id' => 10,  // Reference to survey ID
                 'column1' => 'H',
                 'column2' => 'Documentation and record-keeping',
                 'column3' => 'PNAO ensures inclusion

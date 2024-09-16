@@ -19,6 +19,8 @@
             </div>
             <div>
                 @include('alerts.success')
+                <!-- alerts -->
+                @include('layouts.page_template.crud_alert_message')
                 <form action="{{ route('mellpi_pro_LGU.Psgcupload') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
@@ -132,6 +134,24 @@
                             <input type="file" class="custom-file-input" name="inputcsvfileBarangay"
                                 id="inputcsvfileBarangay" accept=".csv" required>
                             <label class="custom-file-label" aria-describedby="inputGroupFileAddon02">Upload Barangay
+                                file</label>
+                        </div>
+
+                        <div class="input-group-append" style="margin-left:5px">
+                            <button class="btn btn-outline-primary" style="margin:0px; margin-left:0px" id="checkData"
+                                type="submit">Check data</button>
+                        </div>
+                    </div>
+                </form>
+                <form action="{{ route('mellpi_pro_LGU.EquipmentInventoryupload') }}" method="POST"
+                    enctype="multipart/form-data">
+                    @csrf
+                    <div class="input-group mb-3">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="inputcsvfileEquipmentInventory"
+                                id="inputcsvfileEquipmentInventory" accept=".csv" required>
+                            <label class="custom-file-label" aria-describedby="inputGroupFileAddon02">Upload EQ
+                                Inventory
                                 file</label>
                         </div>
 

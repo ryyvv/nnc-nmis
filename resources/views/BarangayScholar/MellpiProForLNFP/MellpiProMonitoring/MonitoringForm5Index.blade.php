@@ -62,7 +62,7 @@
                                     <td>{{$form5a_rr->nameofPnao}}
                                     </td>
                                     
-                                    <td>{{\Carbon\Carbon::parse($form5a_rr->dateMonitoring)->format('F j');}}
+                                    <td>{{\Carbon\Carbon::parse($form5a_rr->dateMonitoring)->format('F j, Y');}}
                                     </td>
                                     <td>{{$form5a_rr->periodCovereda}}</td>
                                     <!-- <td>
@@ -76,6 +76,8 @@
                                         <span class="statusPending">PENDING</span>
                                         @elseif( $form5a_rr->status == 2 )
                                         <span class="statusDraft">DRAFT</span>
+                                        @else
+                                        <span class="statusApproved">Submitted</span>
                                         @endif
                                         </center>
                                     </td>
@@ -85,7 +87,7 @@
                                         <ul class="list-inline m-0">
                                             <li class="list-inline-item">
 
-                                                @if( $form5a_rr->status == 1 )
+                                                @if( $form5a_rr->status == 1 || $form5a_rr->status == 3 || $form5a_rr->status == 0 )
                                                 <i onclick="myFunctionLNFP_Form5View('{{ $form5a_rr->id }}')" class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
                                                 @elseif( $form5a_rr->status == 2 )
                                                 <i onclick="myFunctionLNFP('{{ $form5a_rr->id }}', 'lncmanagement', 'edit')" class="fa fa-edit fa-lg cursor" style="color:#FFB236;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Edit"></i>

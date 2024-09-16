@@ -19,6 +19,7 @@
                 <h5 class="title">{{__("Equipment Inventory")}}</h5>
             </div>
         </div>
+
         <!-- alerts -->
         @include('layouts.page_template.crud_alert_message')
 
@@ -46,10 +47,10 @@
                 </div>
                 <div class="form-group col-md-3">
                     <label for="inputCM">City/Municipality</label>
-                    <select id="city-dropdown" disabled class="form-control" name="inputCity">
+                    <select id="city-dropdown" disabled class="form-control" name="inputCM">
                         <option selected>Select City/Municipality</option>
                     </select>
-                    @error('inputCity')
+                    @error('inputCM')
                     <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
@@ -307,12 +308,18 @@ $(document).ready(function() {
         $('#form').submit();
     });
 
+    const oldValues = {
+        region: '{{ old("inputRegion") }}',
+        province: '{{ old("inputProvince") }}',
+        city: '{{ old("inputCM") }}'
+    };
+
     const routes = {
         getRegions: '{{ route("equipment.regions.get") }}',
         getProvinces: '{{ route("equipment.provinces.get") }}',
         getCitiesAndMunicipalities: '{{ route("equipment.citiesAndMunicipalities.get") }}',
         getBarangays: '{{ route("equipment.barangays.get") }}',
-        getCitiesAndMunicipalitiesInventory: '{{ route("equipment.citiesAndMunicipalitiesInventory.get") }}'
+        getCitiesAndMunicipalitiesInventory: '{{ route("BSequipmentInventory.CMInventory.get") }}'
     };
 
     const dropdowns = {
@@ -337,7 +344,8 @@ $(document).ready(function() {
         dropdown.prop('disabled', false);
     };
 
-    const fetchDataAndPopulate = (url, params, dropdown, valueKey, textKey, placeholder) => {
+    const fetchDataAndPopulate = (url, params, dropdown, valueKey, textKey, placeholder, oldValue =
+        '') => {
         $.get(url, params)
             .done(function(data) {
                 if (!data || data.length === 0) {
@@ -345,6 +353,11 @@ $(document).ready(function() {
                     return;
                 }
                 populateDropdown(dropdown, data, valueKey, textKey, placeholder);
+
+                dropdown.val(oldValue).change();
+                if (dropdown.val() !== oldValue) {
+                    dropdown.val('').change(); // Reset to default select
+                }
             })
             .fail(function() {
                 alert(`Failed to fetch ${placeholder.toLowerCase()}.`);
@@ -356,6 +369,10 @@ $(document).ready(function() {
             clearAndDisableDropdown(dropdowns.province, 'Province');
             clearAndDisableDropdown(dropdowns.city, 'City/Municipality');
             populateDropdown(dropdowns.region, data, 'reg_code', 'name', 'Region');
+
+            if (oldValues.region) {
+                dropdowns.region.val(oldValues.region).change();
+            }
         })
         .fail(function() {
             alert('Failed to fetch regions.');
@@ -372,17 +389,17 @@ $(document).ready(function() {
         if (regionCode === ncrRegionCode) {
             fetchDataAndPopulate(routes.getCitiesAndMunicipalities, {
                 reg_code: regionCode
-            }, dropdowns.city, 'citymun_code', 'name', 'City/Municipality');
+            }, dropdowns.city, 'citymun_code', 'name', 'City/Municipality', oldValues.city);
             return;
         }
 
         fetchDataAndPopulate(routes.getProvinces, {
             reg_code: regionCode
-        }, dropdowns.province, 'prov_code', 'name', 'Province');
+        }, dropdowns.province, 'prov_code', 'name', 'Province', oldValues.province);
         fetchDataAndPopulate(routes.getCitiesAndMunicipalities, {
             reg_code: regionCode,
             excludeProvincialAreas: true
-        }, dropdowns.city, 'citymun_code', 'name', 'City/Municipality');
+        }, dropdowns.city, 'citymun_code', 'name', 'City/Municipality', oldValues.city);
     });
 
     dropdowns.province.change(function() {
@@ -391,7 +408,7 @@ $(document).ready(function() {
 
         fetchDataAndPopulate(routes.getCitiesAndMunicipalities, {
             prov_code: provinceCode
-        }, dropdowns.city, 'citymun_code', 'name', 'City/Municipality');
+        }, dropdowns.city, 'citymun_code', 'name', 'City/Municipality', oldValues.city);
     });
 
     dropdowns.city.change(function() {
@@ -405,7 +422,7 @@ $(document).ready(function() {
             .done(function(data) {
                 if (!data || data.length === 0) return;
                 $('#inputtotalBarangay').val(data);
-                $('#inputtotalBarangay').trigger('change');
+                $('#inputtotalBarangay').change();
             })
             .fail(function() {
                 alert(`Failed to fetch Barangay Count.`);

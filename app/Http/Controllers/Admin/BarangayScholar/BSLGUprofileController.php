@@ -41,7 +41,8 @@ class BSLGUprofileController extends Controller
 
         $years = range(date("Y"), 1900);
 
-        $row = DB::table('lguprofilebarangay')->where('user_id', auth()->user()->id)->first();
+        $row = DB::table('lguprofilebarangay')->where('user_id', auth()->user()->id)->first();        
+        
 
         return view('BarangayScholar.lguprofile.edit', compact('row', 'provinces', 'cities_municipalities', 'barangays', 'years', 'action'));
     }
@@ -1413,8 +1414,7 @@ class BSLGUprofileController extends Controller
      
     }
 
-    public function destroy(Request $request)
-    {
+    public function destroy(Request $request){
  
         DB::table('barangaytracking')->where('lguprofilebarangay_id', $request->id)->delete();
         $lguprofile = LguProfile::find($request->id);

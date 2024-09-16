@@ -14,23 +14,19 @@
 
 <div class="content" style="margin-top:50px;padding:2%">
     <div class="card">
-        <div style="display:flex;align-items:center">
-            <a href="{{route('BSequipmentInventory.index')}}" style="margin-right:15px"><i
-                    class="now-ui-icons arrows-1_minimal-left"
-                    style="font-size:18px!important;font-weight:bolder!important"></i></a>
-            <h5 class="title" style='margin-top:18px;'>{{__("Equipment Inventory")}}</h5>
-        </div>
         <div class="row row-12" style="display:inline-block">
             <div class="card-header">
                 <h5 class="title">{{__("Equipment Inventory")}}</h5>
             </div>
         </div>
+
         <!-- alerts -->
         @include('layouts.page_template.crud_alert_message')
 
-        <form action="{{ route('BSequipmentInventory.update') }}" id="form" method="POST">
+        <form action="" id="form" method="POST">
             @csrf
-            @method('PUT')
+            <input type="hidden" name="_method" id="methodField" value="PUT">
+
             <hr>
             <div class="form-row">
                 <div class="form-group col-md-3">
@@ -53,10 +49,10 @@
                 </div>
                 <div class="form-group col-md-3">
                     <label for="inputCM">City/Municipality</label>
-                    <select id="city-dropdown" disabled class="form-control" name="inputCity">
+                    <select id="city-dropdown" disabled class="form-control" name="inputCM">
                         <option selected>Select City/Municipality</option>
                     </select>
-                    @error('inputCity')
+                    @error('inputCM')
                     <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
@@ -294,10 +290,14 @@
                 </div>
             </div>
             <hr>
-            <div class="form-group col-md-12" style="display:flex;">
-                <button type="button" name="addEquipmentInventory" class="btn btn-outline-primary" data-toggle="modal"
-                    data-target="#exampleModalCenter">
-                    Add Equipment Inventory
+            <div class="form-group col-md-12 d-flex gap-3">
+                <button type="button" id="updateButton" name="addEquipmentInventory" class="btn btn-outline-primary"
+                    data-toggle="modal" data-target="#exampleModalCenter">
+                    Update Equipment Inventory
+                </button>
+                <button type="button" id="deleteButton" name="deleteEquipmentInventory" class="btn btn-outline-primary"
+                    data-toggle="modal" data-target="#deleteModal">
+                    Delete Equipment Inventory
                 </button>
             </div>
         </form>
@@ -305,21 +305,70 @@
 </div>
 <!-- alert Modal -->
 @include('Modal.Submit')
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="center modal-body" style="padding-bottom:50px; padding-left:50px;padding-right:50px;">
+                <div>
+                    <lord-icon src="https://cdn.lordicon.com/hjbrplwk.json" trigger="loop"
+                        colors="primary:#646e78,secondary:#ee6d66,tertiary:#ebe6ef,quaternary:#3a3347"
+                        style="width:150px;height:150px">
+                    </lord-icon>
+                </div>
+                <div class="bold" style="font-size: 25px;color:gray">
+                    Are you sure?
+                </div>
+                <div style="padding-top: 10px;padding-bottom: 20px; font-size:15px">
+                    Do you really want to delete these record? This process cannot be undone.
+                </div>
+                <div>
+                    <button type="button" style="margin-right:5px" class="bold btn btn-secondary"
+                        data-dismiss="modal">CANCEL</button>
+                    <button type="button" id='delete' class="bold btn btn-danger"
+                        style="background-color:#ee6d66!important">YES</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @endsection
 
 <script>
 $(document).ready(function() {
+
+    $('#updateButton').on('click', function() {
+        $('#form').attr('action', "{{ route('BSequipmentInventory.update') }}");
+        $('#methodField').val('PUT');
+    });
+
+    $('#deleteButton').on('click', function() {
+        $('#form').attr('action', "{{ route('BSequipmentInventory.delete') }}");
+        $('#methodField').val('DELETE');
+    });
+
     $('#submit').on('click', function() {
         $('#form').submit();
     });
+
+    $('#delete').on('click', function() {
+        $('#form').submit();
+    });
+
+    const oldValues = {
+        region: '{{ old("inputRegion") }}',
+        province: '{{ old("inputProvince") }}',
+        city: '{{ old("inputCM") }}'
+    };
 
     const routes = {
         getRegions: '{{ route("equipment.regions.get") }}',
         getProvinces: '{{ route("equipment.provinces.get") }}',
         getCitiesAndMunicipalities: '{{ route("equipment.citiesAndMunicipalities.get") }}',
         getBarangays: '{{ route("equipment.barangays.get") }}',
-        getCitiesAndMunicipalitiesInventory: '{{ route("equipment.citiesAndMunicipalitiesInventory.get") }}'
+        getCitiesAndMunicipalitiesInventory: '{{ route("BSequipmentInventory.CMInventory.get") }}'
     };
 
     const dropdowns = {
@@ -344,7 +393,8 @@ $(document).ready(function() {
         dropdown.prop('disabled', false);
     };
 
-    const fetchDataAndPopulate = (url, params, dropdown, valueKey, textKey, placeholder) => {
+    const fetchDataAndPopulate = (url, params, dropdown, valueKey, textKey, placeholder, oldValue =
+        '') => {
         $.get(url, params)
             .done(function(data) {
                 if (!data || data.length === 0) {
@@ -352,6 +402,11 @@ $(document).ready(function() {
                     return;
                 }
                 populateDropdown(dropdown, data, valueKey, textKey, placeholder);
+
+                dropdown.val(oldValue).change();
+                if (dropdown.val() !== oldValue) {
+                    dropdown.val('').change(); // Reset to default select
+                }
             })
             .fail(function() {
                 alert(`Failed to fetch ${placeholder.toLowerCase()}.`);
@@ -363,6 +418,10 @@ $(document).ready(function() {
             clearAndDisableDropdown(dropdowns.province, 'Province');
             clearAndDisableDropdown(dropdowns.city, 'City/Municipality');
             populateDropdown(dropdowns.region, data, 'reg_code', 'name', 'Region');
+
+            if (oldValues.region) {
+                dropdowns.region.val(oldValues.region).change();
+            }
         })
         .fail(function() {
             alert('Failed to fetch regions.');
@@ -379,17 +438,18 @@ $(document).ready(function() {
         if (regionCode === ncrRegionCode) {
             fetchDataAndPopulate(routes.getCitiesAndMunicipalities, {
                 reg_code: regionCode
-            }, dropdowns.city, 'citymun_code', 'name', 'City/Municipality');
+            }, dropdowns.city, 'citymun_code', 'name', 'City/Municipality', oldValues.city);
             return;
         }
 
         fetchDataAndPopulate(routes.getProvinces, {
             reg_code: regionCode
-        }, dropdowns.province, 'prov_code', 'name', 'Province');
+        }, dropdowns.province, 'prov_code', 'name', 'Province', oldValues.province);
+
         fetchDataAndPopulate(routes.getCitiesAndMunicipalities, {
             reg_code: regionCode,
             excludeProvincialAreas: true
-        }, dropdowns.city, 'citymun_code', 'name', 'City/Municipality');
+        }, dropdowns.city, 'citymun_code', 'name', 'City/Municipality', oldValues.city);
     });
 
     dropdowns.province.change(function() {
@@ -398,7 +458,7 @@ $(document).ready(function() {
 
         fetchDataAndPopulate(routes.getCitiesAndMunicipalities, {
             prov_code: provinceCode
-        }, dropdowns.city, 'citymun_code', 'name', 'City/Municipality');
+        }, dropdowns.city, 'citymun_code', 'name', 'City/Municipality', oldValues.city);
     });
 
     dropdowns.city.change(function() {
@@ -406,7 +466,7 @@ $(document).ready(function() {
         if (!citymunCode) return;
 
         $.get(routes.getCitiesAndMunicipalitiesInventory, {
-                citymun_code: citymunCode,
+                citymun_code: citymunCode
             })
             .done(function(data) {
                 if (!data || data.length === 0) return;
@@ -438,7 +498,7 @@ $(document).ready(function() {
                     $('#inputTotalAdult').val(data.total_muac_adults).change();
                     $('#inputAdultpercent').val(data.availability_muac_adults).change();
                     $('#inputMRemarks').val(data.remarks_muac).change();
-                })
+                });
             })
             .fail(function() {
                 alert(`Failed to fetch Cities and Municipalities Inventory.`);

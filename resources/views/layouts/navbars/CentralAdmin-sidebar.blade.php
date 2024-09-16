@@ -278,14 +278,14 @@
         </a>
         <div class="collapse " id="FormManagement">
           <ul class="nav">
-            <li class="@if ($activePage == 'forms') active @endif">
-              <a href="{{ route('forms.index') }}">
+            <li class="@if ($activePage == 'form5a') active @endif">
+              <a href="{{ route('form5.index') }}">
                 <i class="now-ui-icons users_single-02"></i>
-                <p> {{ __("Forms1") }} </p>
+                <p> {{ __("Form 5 ") }} </p>
               </a>
             </li>
             <li class="@if ($activePage == 'forms2') active @endif">
-              <a href="{{ route('formsb.index') }}">
+              <a href="">
                 <i class="now-ui-icons users_single-02"></i>
                 <p> {{ __("Forms2") }} </p>
               </a>
