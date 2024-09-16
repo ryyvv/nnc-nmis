@@ -1,0 +1,6 @@
+user table:
+    #migration file
+    terminal run:  php artisan migrate --path=/database/migrations/2014_10_12_000002_create_users_table
+    #seeder file
+    terminal run:  php artisan db:seed --class=Userseeder
+
