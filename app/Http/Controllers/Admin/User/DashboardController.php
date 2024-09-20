@@ -21,7 +21,7 @@ class DashboardController extends Controller
         $barangay = auth()->user()->barangay;
         $lguProfile = DB::table('lguprofilebarangay')->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();
         
-        $data = DB::table('lgubarangayreport')
+        $datas = DB::table('lgubarangayreport')
             ->leftJoin('lguprofilebarangay', 'lgubarangayreport.lguprofilebarangay_id', '=', 'lguprofilebarangay.id')
             ->leftJoin('mplgubrgyvisionmissions', 'lgubarangayreport.mplgubrgyvisionmissions_id', '=', 'mplgubrgyvisionmissions.id')
             ->leftJoin('mellpiprobarangaynationalpolicies', 'lgubarangayreport.mellpiprobarangaynationalpolicies_id', '=', 'mellpiprobarangaynationalpolicies.id')
@@ -51,14 +51,12 @@ class DashboardController extends Controller
                 'psgc_cities.name as name'
             )
             ->get();
-
-         
  
-        return view('users.MunicipalStaff', ['data' => $data]);
+        return view('users.dashboard', ['datas' => $datas]);
         
     }
 
-    public function fetchReport() {
+    public function rep() {
         $location = new LocationController;
         $regCode = auth()->user()->Region;
         $provCode = auth()->user()->Province;

@@ -1,4 +1,6 @@
- 
+<!-- <script src="https://code.jquery.com/jquery-3.7.1.js"></script> -->
+<script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.8/datatables.min.js"></script>
+
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <div class="content" style="margin-top:50px;padding:2%">
     <div class="card" style="border-radius:10px;padding-left:2rem!important;padding-right:1rem!important">
@@ -16,7 +18,7 @@
             @include('layouts.page_template.crud_alert_message')
 
 
-            <div class="content" style="margin:30px;">
+            <div class="content" >
 
                 <!-- alerts -->
                 @include('layouts.page_template.crud_alert_message')
@@ -61,4 +63,12 @@
         </div>
     </div>
 </div>
- 
+<script>
+
+$(document).ready(function () {
+
+
+    run_report();
+
+});
+ </script>

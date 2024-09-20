@@ -560,6 +560,8 @@ new DataTable('#overallScoremyTable');
 new DataTable('#nutriOffice');
 new DataTable('#myTableLnfp');
 new DataTable('#example1');
+new DataTable('#lguReport');
+new DataTable('#lnfpReport');
 new DataTable('#myTableForm5', {
     responsive: true
 });

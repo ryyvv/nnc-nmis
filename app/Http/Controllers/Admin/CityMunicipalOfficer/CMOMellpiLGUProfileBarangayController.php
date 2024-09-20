@@ -61,6 +61,7 @@ class CMOMellpiLGUProfileBarangayController  extends Controller
             )
             ->get();
  
+ 
         return view('CityMunicipalOfficer.LGUReport', ['data' => $data]);
         
     }
@@ -76,19 +77,7 @@ class CMOMellpiLGUProfileBarangayController  extends Controller
         $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
 
 
-        //  $data = DB::table('lgubarangayreport')
-        //     ->leftJoin('psgc_municipalities', DB::raw('CAST(lguprofilebarangay.municipal_id AS VARCHAR)'), '=', 'psgc_municipalities.citymun_code')
-        //     ->leftJoin('psgc_cities', DB::raw('CAST(lguprofilebarangay.municipal_id AS VARCHAR)'), '=', 'psgc_cities.citymun_code')
-        //     // ->where('lgubarangayreport.status', 1)
-        //     ->where(function($query) {
-        //         $query->whereNotNull('psgc_municipalities.citymun_code')
-        //             ->orWhereNotNull('psgc_cities.citymun_code');
-        //     })
-        //     ->select('lgubarangayreport.*')
-        //     ->get();
-
-
-            $data = DB::table('lgubarangayreport')
+        $data = DB::table('lgubarangayreport')
             ->leftJoin('users', 'lgubarangayreport.user_id', '=', 'users.id')
             ->leftJoin('lguprofilebarangay', 'lgubarangayreport.lguprofilebarangay_id', '=', 'lguprofilebarangay.id')
             ->leftJoin('mplgubrgyvisionmissions', 'lgubarangayreport.mplgubrgyvisionmissions_id', '=', 'mplgubrgyvisionmissions.id')
@@ -98,8 +87,6 @@ class CMOMellpiLGUProfileBarangayController  extends Controller
             ->leftJoin('mplgubrgynutritionservice', 'lgubarangayreport.mplgubrgynutritionservice_id', '=', 'mplgubrgynutritionservice.id')
             ->leftJoin('mplgubrgychangeNS', 'lgubarangayreport.mplgubrgychangeNS_id', '=', 'mplgubrgychangeNS.id')
             ->leftJoin('mplgubrgydiscussionquestion', 'lgubarangayreport.mplgubrgydiscussionquestion_id', '=', 'mplgubrgydiscussionquestion.id')
-
-
             ->leftJoin('psgc_municipalities', DB::raw('CAST(lgubarangayreport.municipal_id AS VARCHAR)'), '=', 'psgc_municipalities.citymun_code')
             ->leftJoin('psgc_cities', DB::raw('CAST(lgubarangayreport.municipal_id AS VARCHAR)'), '=', 'psgc_cities.citymun_code')
             // ->where('lgubarangayreport.status', 1)

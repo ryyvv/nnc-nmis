@@ -209,7 +209,7 @@ Route::group(['middleware' => 'auth'], function () {
             // UserDashboard
             //DashboardController
             Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index'); 
-            Route::get('CMSDashboard/fetchreport', [DashboardController::class, 'fetchReport'])->name('CMSDashboard.fetchreport'); 
+            Route::get('CMSDashboard/fetchreport', [DashboardController::class, 'rep'])->name('CMSDashboard.rep'); 
 
 
             Route::post('/dashboard', [DashboardController::class, 'store'])->name('dashboard.store');

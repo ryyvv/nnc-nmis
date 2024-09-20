@@ -185,12 +185,10 @@ $(document).ready(function () {
 
     //LNCStatus
     let LNCStatus;
-    let LNCLabel;
-    let LNCLabel;
+    let LNCLabel; 
     if (d.mplgubrgylncmanagement_id) { // Check if the value is not empty, null, or undefined
       console.log('LNC Id', d.mplgubrgylncmanagement_id);
-      let dataApprovedlnc = 'Invalid Date';
-      let govName = `${d.Firstname} ${d.Middlename} ${d.Lastname}`;
+      let dataApprovedlnc = 'Invalid Date'; 
       if (!isNaN(Date.parse(d.lncapproveddate))) {
         let date = new Date(d.lncapproveddate);
         let options = { year: 'numeric', month: 'long', day: 'numeric' };

@@ -1,11 +1,9 @@
 
 
 //Fetch Report function LGU report
-$(document).ready(function () {
+function run_report(){  
 
-
-
-  function format(d) {
+  function format_report(d) {
  
     let dateMonitoringLabel;
     if (d.count === 9) {
@@ -283,7 +281,7 @@ $(document).ready(function () {
     );
   }
 
-  let table = new DataTable('#lguReport', {
+  let table = new DataTable('#lnfpReport', {
     ajax: {
       url: "https://nnc-nmis.moodlearners.com/CMSDashboard/fetchreport",
       type: 'GET',
@@ -358,10 +356,10 @@ $(document).ready(function () {
       row.child.hide();
       tr.removeClass('shown');
     } else {
-      row.child(format(row.data())).show();
+      row.child(format_report(row.data())).show();
       tr.addClass('shown');
     }
   });
 
  
-});
+}
