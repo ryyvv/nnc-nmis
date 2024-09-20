@@ -525,14 +525,8 @@ class MellproLGUController extends Controller
             }
             
             $psgc_code = trim($record['PSGC']);
-            $name = trim($record['City/ Municipality']);
-            $reg_code = trim(substr($psgc_code, 0, 2));
-            $prov_code = trim(substr($psgc_code, 0, 5));
-            $citymun_code = trim(substr($psgc_code, 0, 7));
-            $totalBarangaysFromDB = $this->getTotalBarangaysFromDB($citymun_code);
-            
+        
             $data = [
-                'total_barangay' => $totalBarangaysFromDB,
                 'wooden_hb' => $this->convertToInt(trim($record['Wooden HB'] ?? '')),
                 'non_wooden_hb' => $this->convertToInt(trim($record['Non-wooden HB'] ?? '')),
                 'defective_hb' => $this->convertToInt(trim($record['Defective/ Non-functional HB'] ?? '')),
@@ -560,24 +554,55 @@ class MellproLGUController extends Controller
                 'remarks_muac' => trim($record['Remarks MUAC'] ?? ''),
             ];
 
-            $citymunExists = PsgcCity::where('psgc_code', $psgc_code)->exists() ||
-            PsgcMunicipality::where('psgc_code', $psgc_code)->exists();
+            $citymunExists = PsgcCity::where('psgc_code', $psgc_code)->first() ??
+            PsgcMunicipality::where('psgc_code', $psgc_code)->first();
 
             if (!$citymunExists) {
-                return redirect()->back()->with('error', 'Invalid 10-Digit PSGC code.');
+                // return redirect()->back()->with('error', 'Invalid 10-Digit PSGC code.' . $psgc_code);
+                
+                $correspondenceExists = PsgcCity::where('correspondence_code', $psgc_code)->first() ??
+                PsgcMunicipality::where('correspondence_code', $psgc_code)->first();
+                
+                if (!$correspondenceExists) {
+                    // return redirect()->back()->with('error', 'Invalid Correspondence code PSGC code.');
+                    return redirect()->back()->with('error', 'Invalid 10-Digit PSGC code.' . $psgc_code);
+                }
+
+                $equipmentInventory = PsgcEquipmentInventory::where('citymun_code', $correspondenceExists->citymun_code)->first();
+                $totalBarangaysFromDB = $this->getTotalBarangaysFromDB($correspondenceExists->citymun_code);
+    
+                if ($equipmentInventory) {
+                    $equipmentInventory->update($data);
+                } else {
+                    PsgcEquipmentInventory::create(array_merge($data, [
+                        'total_barangay' => $totalBarangaysFromDB,
+                        'psgc_code' => $correspondenceExists->psgc_code,
+                        'name' => $correspondenceExists->name,
+                        'correspondence_code' => $$correspondenceExists->correspondence_code,
+                        'reg_code' => $correspondenceExists->reg_code,
+                        'prov_code' => $correspondenceExists->prov_code,
+                        'citymun_code' => $correspondenceExists->citymun_code,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]));
+                }
+                continue;
             }
 
-            $equipmentInventory = PsgcEquipmentInventory::where('citymun_code', $citymun_code)->first();
+            $equipmentInventory = PsgcEquipmentInventory::where('citymun_code', $citymunExists->citymun_code)->first();
+            $totalBarangaysFromDB = $this->getTotalBarangaysFromDB($citymunExists->citymun_code);
     
             if ($equipmentInventory) {
                 $equipmentInventory->update($data);
             } else {
                 PsgcEquipmentInventory::create(array_merge($data, [
-                    'psgc_code' => $psgc_code,
-                    'name' => $name,
-                    'reg_code' => $reg_code,
-                    'prov_code' => $prov_code,
-                    'citymun_code' => $citymun_code,
+                    'total_barangay' => $totalBarangaysFromDB,
+                    'psgc_code' => $citymunExists->psgc_code,
+                    'name' => $citymunExists->name,
+                    'correspondence_code' => $citymunExists->correspondence_code,
+                    'reg_code' => $citymunExists->reg_code,
+                    'prov_code' => $citymunExists->prov_code,
+                    'citymun_code' => $citymunExists->citymun_code,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]));

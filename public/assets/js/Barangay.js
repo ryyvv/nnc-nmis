@@ -22,6 +22,16 @@ $(function () {
     });
 
 
+    $("#otherrole").on("change", function (e) {
+        let rolevalue = $("#otherrole").val();
+        alert(rolevalue)
+        if(rolevalue >= 0 && rolevalue <=10){
+            $("#role").val(1);
+        }else{
+            $("#role").val(2);
+        }
+    });
+
 
 
 

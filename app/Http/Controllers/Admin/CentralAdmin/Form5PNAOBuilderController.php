@@ -14,7 +14,7 @@ class Form5PNAOBuilderController extends Controller
 {
     public function index()
     {
-        $forms = form5PNAObarangay::get();
+        $forms = form5PNAObarangay::where('belongTo', 1)->orderBy('id', 'ASC')->get();
         return view('CentralAdmin.Form5.index', ['forms' => $forms]);
     }
 

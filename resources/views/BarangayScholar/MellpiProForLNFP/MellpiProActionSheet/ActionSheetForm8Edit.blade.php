@@ -82,7 +82,7 @@
                                 <div class="form-group col-md-6">
                                     <div class="form-group col-md-12">
                                         <label for="bday">Date of Monitoring:
-                                            <h5>{{\Carbon\Carbon::parse($row->dateMonitoring)->format('F j y');}}</h5>
+                                            <h5>{{\Carbon\Carbon::parse($row->dateMonitoring)->format('F j, Y');}}</h5>
                                         
                                     </div>
                                 </div>

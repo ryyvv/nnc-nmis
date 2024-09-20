@@ -319,132 +319,118 @@ $(document).ready(function() {
         });
     }
 
-    // Region dropdown
-    $.get('{{ route("equipment.regions.get") }}')
-        .done(function(data) {
-            let regionDropdown = $('#region-dropdown');
-            regionDropdown.empty().append('<option value="" disabled selected>Select Region</option>');
-            data.forEach(function(region) {
-                regionDropdown.append('<option value="' + region.reg_code + '">' + region.name +
-                    '</option>');
-            });
-        })
-        .fail(function() {
-            alert('Failed to fetch regions.');
+    const oldValues = {
+        region: '{{ old("inputRegion") }}',
+        province: '{{ old("inputProvince") }}',
+        city: '{{ old("inputCM") }}'
+    };
+
+    const routes = {
+        getRegions: '{{ route("location.regions.get") }}',
+        getProvinces: '{{ route("location.provinces.get") }}',
+        getCitiesAndMunicipalities: '{{ route("location.citiesAndMunicipalities.get") }}',
+        getInventory: '{{ route("BSequipmentInventory.CMInventory.get") }}'
+    };
+
+    const dropdowns = {
+        region: $('#region-dropdown'),
+        province: $('#province-dropdown'),
+        city: $('#city-dropdown')
+    };
+
+    const clearAndDisableDropdown = (dropdown, placeholder) => {
+        dropdown.empty().append(
+            `<option value="" disabled selected>Select ${placeholder}</option>`
+        ).prop('disabled', true);
+    };
+
+    const populateDropdown = (dropdown, data, valueKey, textKey, placeholder) => {
+        dropdown.empty().append(
+            `<option value="" disabled selected>Select ${placeholder}</option>`
+        );
+        data.forEach(item => {
+            dropdown.append(
+                `<option value="${item[valueKey]}">${item[textKey]}</option>`
+            );
         });
+        dropdown.prop('disabled', false);
+    };
+
+    const fetchDataAndPopulate = (url, params, dropdown, valueKey, textKey, placeholder) => {
+        $.get(url, params)
+            .done(data => {
+                if (!data || data.length === 0) {
+                    clearAndDisableDropdown(dropdown, placeholder);
+                    return;
+                }
+                populateDropdown(dropdown, data, valueKey, textKey, placeholder);
+            })
+            .fail(() => {
+                alert(`Failed to fetch ${placeholder.toLowerCase()}.`);
+            });
+    };
+
+    fetchDataAndPopulate(routes.getRegions, {}, dropdowns.region, 'reg_code', 'name', 'Region');
 
     // Region selection
-    $('#region-dropdown').change(function() {
-        let regionCode = $(this).val();
-        let ncrRegionCode = '13';
+    dropdowns.region.change(function() {
+        const regionCode = $(this).val();
+        const ncrRegionCode = '13';
 
-        $('#province-dropdown').empty().append(
-            '<option value="" disabled selected>Select Province</option>').prop('disabled', true);
-        $('#city-dropdown').empty().append(
-            '<option value="" disabled selected>Select City/Municipality</option>').prop('disabled',
-            true);
+        clearAndDisableDropdown(dropdowns.province, 'Province');
+        clearAndDisableDropdown(dropdowns.city, 'City/Municipality');
 
         if (!regionCode) return;
 
+        // Handle NCR region
         if (regionCode === ncrRegionCode) {
-            $.get('{{ route("equipment.citiesAndMunicipalities.get") }}', {
-                    reg_code: regionCode
-                })
-                .done(function(data) {
-                    if (!data) return;
-
-                    let cityDropdown = $('#city-dropdown');
-                    cityDropdown.empty().append(
-                        '<option value="" disabled selected>Select City/Municipality</option>'
-                    );
-                    data.forEach(function(city) {
-                        cityDropdown.append('<option value="' + city.psgc_code +
-                            '">' + city.name + '</option>');
-                    });
-                    cityDropdown.prop('disabled', false);
-
-                })
-                .fail(function() {
-                    alert('Failed to fetch cities/municipalities for NCR.');
-                });
-        } else {
-            $.get('{{ route("equipment.provinces.get") }}', {
-                    reg_code: regionCode
-                })
-                .done(function(data) {
-                    if (!data) return;
-
-                    let provinceDropdown = $('#province-dropdown');
-                    provinceDropdown.empty().append(
-                        '<option value="" disabled selected>Select Province</option>');
-                    data.forEach(function(province) {
-                        provinceDropdown.append('<option value="' + province
-                            .prov_code + '">' + province.name + '</option>');
-                    });
-                    provinceDropdown.prop('disabled', false);
-                })
-                .fail(function() {
-                    alert('Failed to fetch provinces.');
-                });
+            fetchDataAndPopulate(routes.getCitiesAndMunicipalities, {
+                reg_code: regionCode
+            }, dropdowns.city, 'psgc_code', 'name', 'City/Municipality');
+            $.get(routes.getInventory, {
+                reg_code: regionCode
+            }).done(handleTableData).fail(() => alert('Failed to fetch city details.'));
+            return;
         }
 
-        $.get('{{ route("BSequipmentInventory.CMInventory.get") }}', {
-                reg_code: regionCode
-            })
-            .done(handleTableData)
-            .fail(function() {
-                alert('Failed to fetch city details.');
-            });
+        fetchDataAndPopulate(routes.getProvinces, {
+            reg_code: regionCode
+        }, dropdowns.province, 'prov_code', 'name', 'Province');
+        fetchDataAndPopulate(routes.getCitiesAndMunicipalities, {
+            reg_code: regionCode,
+            excludeProvincialAreas: true
+        }, dropdowns.city, 'psgc_code', 'name', 'City/Municipality');
+
+        // Fetch inventory details
+        $.get(routes.getInventory, {
+            reg_code: regionCode
+        }).done(handleTableData).fail(() => alert('Failed to fetch city details.'));
     });
 
     // Province selection
-    $('#province-dropdown').change(function() {
-        let provinceCode = $(this).val();
+    dropdowns.province.change(function() {
+        const provinceCode = $(this).val();
         if (!provinceCode) return;
 
-        $.get('{{ route("equipment.citiesAndMunicipalities.get") }}', {
-                prov_code: provinceCode
-            })
-            .done(function(data) {
-                if (!data) return;
+        fetchDataAndPopulate(routes.getCitiesAndMunicipalities, {
+            prov_code: provinceCode
+        }, dropdowns.city, 'psgc_code', 'name', 'City/Municipality');
 
-                let cityDropdown = $('#city-dropdown');
-                cityDropdown.empty().append(
-                    '<option value="" disabled selected>Select City/Municipality</option>'
-                );
-                data.forEach(function(city) {
-                    cityDropdown.append('<option value="' + city.psgc_code + '">' +
-                        city.name + '</option>');
-                });
-                cityDropdown.prop('disabled', false);
-            })
-            .fail(function() {
-                alert('Failed to fetch cities/municipalities.');
-            });
-
-        $.get('{{ route("BSequipmentInventory.CMInventory.get") }}', {
-                prov_code: provinceCode
-            })
-            .done(handleTableData)
-            .fail(function() {
-                alert('Failed to fetch city details.');
-            });
-
+        // Fetch inventory details
+        $.get(routes.getInventory, {
+            prov_code: provinceCode
+        }).done(handleTableData).fail(() => alert('Failed to fetch city details.'));
     });
 
     // City selection
-    $('#city-dropdown').change(function() {
-        let psgcCode = $(this).val();
+    dropdowns.city.change(function() {
+        const psgcCode = $(this).val();
         if (!psgcCode) return;
 
-        $.get('{{ route("BSequipmentInventory.CMInventory.get") }}', {
-                psgc_code: psgcCode
-            })
-            .done(handleTableData)
-            .fail(function() {
-                alert('Failed to fetch city details.');
-            });
+        // Fetch inventory details
+        $.get(routes.getInventory, {
+            psgc_code: psgcCode
+        }).done(handleTableData).fail(() => alert('Failed to fetch city details.'));
     });
-
 });
 </script>

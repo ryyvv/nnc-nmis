@@ -6,124 +6,53 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
+     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('lnfp_form5a', function (Blueprint $table) {
+        Schema::create('lnfp_form5a_rr', function (Blueprint $table) {
             $table->id();
-            $table->string('YearPeriod', 999)->nullable();
-            $table->string('namePNAO', 999)->nullable();
-            $table->string('address', 999)->nullable();
-            $table->string('provOfDeployment', 999)->nullable();
-            $table->string('numOfYears_as', 999)->nullable();
-            $table->string('position', 999)->nullable();
-            $table->string('fulltime', 999)->nullable();
-            $table->string('withContProfAct', 999)->nullable();
-
-            $table->string('capDevAct', 999)->nullable();
-
-            $table->string('trainingAttended', 999)->nullable();
-
-            $table->string('birthday', 999)->nullable();
-            $table->string('sex', 999)->nullable();
-            $table->string('dateOfDesignation', 999)->nullable();
-
-            $table->string('dateOfAppointment', 999)->nullable();
-
-            $table->string('educationAttainment', 999)->nullable();
-            $table->string('secondedFromTheOffice', 999)->nullable();
-
-            $table->string('elementsA', 999)->nullable();
-            $table->string('performanceA1', 999)->nullable();
-            $table->string('performanceA2', 999)->nullable();
-            $table->string('performanceA3', 999)->nullable();
-            $table->string('performanceA4', 999)->nullable();
-            $table->string('performanceA5', 999)->nullable();
-            $table->string('documentSourceA', 999)->nullable();
-
-            $table->string('elementsB', 999)->nullable();
-            $table->string('performanceB1', 999)->nullable();
-            $table->string('performanceB2', 999)->nullable();
-            $table->string('performanceB3', 999)->nullable();
-            $table->string('performanceB4', 999)->nullable();
-            $table->string('performanceB5', 999)->nullable();
-            $table->string('documentSourceB', 999)->nullable();
-
-            $table->string('elementsBB', 999)->nullable();
-            $table->string('performanceBB1', 999)->nullable();
-            $table->string('performanceBB2', 999)->nullable();
-            $table->string('performanceBB3', 999)->nullable();
-            $table->string('performanceBB4', 999)->nullable();
-            $table->string('performanceBB5', 999)->nullable();
-            $table->string('documentSourceBB', 999)->nullable();
-
-            $table->string('elementsC', 999)->nullable();
-            $table->string('performanceC1', 999)->nullable();
-            $table->string('performanceC2', 999)->nullable();
-            $table->string('performancec3', 999)->nullable();
-            $table->string('performanceC4', 999)->nullable();
-            $table->string('performanceC5', 999)->nullable();
-            $table->string('documentSourceC', 999)->nullable();
-
-            $table->string('elementsD', 999)->nullable();
-            $table->string('performanceD1', 999)->nullable();
-            $table->string('performanceD2', 999)->nullable();
-            $table->string('performanceD3', 999)->nullable();
-            $table->string('performanceD4', 999)->nullable();
-            $table->string('performanceD5', 999)->nullable();
-            $table->string('documentSourceD', 999)->nullable();
-
-            $table->string('elementsE', 999)->nullable();
-            $table->string('performanceE1', 999)->nullable();
-            $table->string('performanceE2', 999)->nullable();
-            $table->string('performanceE3', 999)->nullable();
-            $table->string('performanceE4', 999)->nullable();
-            $table->string('performanceE5', 999)->nullable();
-            $table->string('documentSourceE', 999)->nullable();
-
-            $table->string('elementsF', 999)->nullable();
-            $table->string('performanceF1', 999)->nullable();
-            $table->string('performanceF2', 999)->nullable();
-            $table->string('performanceF3', 999)->nullable();
-            $table->string('performanceF4', 999)->nullable();
-            $table->string('performanceF5', 999)->nullable();
-            $table->string('documentSourceF', 999)->nullable();
-
-            $table->string('elementsG', 999)->nullable();
-            $table->string('performanceG1', 999)->nullable();
-            $table->string('performanceG2', 999)->nullable();
-            $table->string('performanceG3', 999)->nullable();
-            $table->string('performanceG4', 999)->nullable();
-            $table->string('performanceG5', 999)->nullable();
-            $table->string('documentSourceG', 999)->nullable();
-
-            $table->string('elementsGG', 999)->nullable();
-            $table->string('performanceGG1', 999)->nullable();
-            $table->string('performanceGG2', 999)->nullable();
-            $table->string('performanceGG3', 999)->nullable();
-            $table->string('performanceGG4', 999)->nullable();
-            $table->string('performanceGG5', 999)->nullable();
-            $table->string('documentSourceGG', 999)->nullable();
-
-            $table->string('elementsH', 999)->nullable();
-            $table->string('performanceH1', 999)->nullable();
-            $table->string('performanceH2', 999)->nullable();
-            $table->string('performanceH3', 999)->nullable();
-            $table->string('performanceH4', 999)->nullable();
-            $table->string('performanceH5', 999)->nullable();
-            $table->string('documentSourceH', 999)->nullable();
-
+            $table->integer('lnfp_lgu_id')->nullable();
+            $table->string('lnfp_officer')->nullable();
+            $table->date('dateMonitoring')->nullable();
+            $table->string('periodCovereda')->nullable();
+            $table->string('nameofPnao')->nullable();
+            $table->text('address')->nullable();
+            $table->string('provDeploy')->nullable();
+            $table->integer('numYearPnao')->nullable();
+            $table->string('fulltime',255)->nullable();
+            $table->string('profAct')->nullable();
+            $table->date('bdate')->nullable();
+            $table->string('sex')->nullable();
+            $table->date('dateDesignation')->nullable();
+            $table->string('secondedOffice')->nullable();
+            $table->string('devActnum1', 255)->nullable();
+            $table->string('devActnum2', 255)->nullable();
+            $table->string('devActnum3', 255)->nullable();
+            $table->integer('status')->default(0);
+            $table->string('header')->nullable();
+            $table->integer('user_id')->nullable();
+            $table->date('dateappointment')->nullable();
+            $table->string('education')->nullable();
+            $table->text('assign_task')->nullable();
+            $table->text('cont_education')->nullable();
+            $table->text('brgy_service')->nullable();
+            $table->string('belongTo')->nullable();
+            
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('lnfp_form5a');
+        Schema::dropIfExists('lnfp_form5a_rr');
     }
 };

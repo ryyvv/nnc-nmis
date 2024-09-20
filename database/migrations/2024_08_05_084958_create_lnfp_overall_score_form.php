@@ -16,46 +16,32 @@ return new class extends Migration
             $table->integer('lnfp_lgu_id')->nullable();
             $table->integer('form5_id')->nullable();
             $table->integer('form8_id')->nullable();
-            $table->integer('formInterview_id')->nullable();
-            $table->string('lnfp_officer', 255)->nullable();
-            
-            $table->text('name')->nullable();
-            $table->text('areaOfAssign')->nullable();
+            $table->string('lnfp_officer')->nullable();
+            $table->string('name')->nullable();
+            $table->string('areaOfAssign')->nullable();
             $table->date('date')->nullable();
-            $table->integer('pointsP1AS')->nullable();
-            $table->integer('pointsP2AS')->nullable();
-            $table->double('weightP1AS')->nullable();
-            $table->double('weightP2AS')->nullable();
-            $table->integer('scoreP1AS')->nullable();
-            $table->integer('scoreP2AS')->nullable();
-            $table->double('totalScoreAS')->nullable();
-            $table->text('nameTM1')->nullable();
-            $table->text('nameTM2')->nullable();
-            $table->text('nameTM3')->nullable();
-            $table->text('desigOffice1')->nullable();
-            $table->text('desigOffice2')->nullable();
-            $table->text('desigOffice3')->nullable();
+            $table->decimal('pointsP1AS', 8, 2)->nullable();
+            $table->decimal('pointsP2AS', 8, 2)->nullable();
+            $table->decimal('weightP1AS', 8, 2)->nullable();
+            $table->decimal('weightP2AS', 8, 2)->nullable();
+            $table->decimal('scoreP1AS', 8, 2)->nullable();
+            $table->decimal('scoreP2AS', 8, 2)->nullable();
+            $table->decimal('totalScoreAS', 8, 2)->nullable();
+            $table->string('nameTM1')->nullable();
+            $table->string('nameTM2')->nullable();
+            $table->string('nameTM3')->nullable();
+            $table->string('desigOffice1')->nullable();
+            $table->string('desigOffice2')->nullable();
+            $table->string('desigOffice3')->nullable();
             $table->string('sigDate1_filePath')->nullable();
             $table->string('sigDate2_filePath')->nullable();
             $table->string('sigDate3_filePath')->nullable();
-            $table->text('receivedBy')->nullable();
+            $table->string('receivedBy')->nullable();
             $table->date('whatDate')->nullable();
-            $table->integer('status')->nullable();
-
-            $table->bigInteger('user_id')->unsigned()->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->nullable();
-
-           $table->integer('barangay_id')->unsigned()->nullable();
-           $table->foreign('barangay_id')->references('id')->on('barangays')->nullable(); 
-
-           $table->integer('municipal_id')->unsigned()->nullable(); 
-           $table->foreign('municipal_id')->references('id')->on('municipals')->nullable();
-
-           $table->integer('province_id')->unsigned()->nullable(); 
-           $table->foreign('province_id')->references('id')->on('provinces')->nullable();
-
-           $table->integer('region_id')->unsigned()->nullable(); 
-           $table->foreign('region_id')->references('id')->on('regions')->nullable();
+            $table->integer('status')->default(1);
+            $table->string('header')->nullable();
+            $table->unsignedBigInteger('formInterview_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
         });
     }

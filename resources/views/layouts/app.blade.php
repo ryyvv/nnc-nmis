@@ -74,6 +74,7 @@
   <script src="{{ asset('assets') }}/js/diether.js"></script>
   <script src="{{ asset('assets') }}/js/Location.js"></script>
   <script src="{{ asset('assets') }}/js/custom.js"></script>
+  <script src="{{ asset('assets') }}/js/MunicipalStaff.js"></script>
   
   <!-- Stock -->
   <!-- Bootstrap v4.2.1 (https://getbootstrap.com/) -->
@@ -111,6 +112,9 @@
   @stack('js')
 
   <!-- Theme@docs:https://demos.creative-tim.com/now-ui-dashboard/docs/1.0/getting-started/introduction.html -->
+
+
+
 </body>
 
 </html>

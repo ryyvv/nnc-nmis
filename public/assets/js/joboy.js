@@ -416,9 +416,6 @@ function confirmDeleteLNFP_IntForm(){
     }
 };
 
- /////
-
- 
 
 
 // Mellpi Pro For LGU  delete
@@ -562,4 +559,7 @@ new DataTable('#InterviewFormmyTable');
 new DataTable('#overallScoremyTable');
 new DataTable('#nutriOffice');
 new DataTable('#myTableLnfp');
-new DataTable('#myTableForm5');
+new DataTable('#example1');
+new DataTable('#myTableForm5', {
+    responsive: true
+});

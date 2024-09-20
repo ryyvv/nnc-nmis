@@ -290,7 +290,9 @@
                                                     <td>&nbsp;</td>
                                                     <td>&nbsp;</td>
                                                 </tr>
-                                                @foreach ($form5a as $form5a)
+                                                @foreach ($form5a as $key => $form5a)
+                                                
+                                               
                                                 <tr>
 
                                                     <td>{{$form5a->column1}}</td>
@@ -304,22 +306,24 @@
                                                     <td>
 
                                                     
-                                                            <select id="loadProvince1" class="form-control" name="{{$form5a->rating}}">
+                                                            <select id="loadProvince1" class="form-control" name="ratings[{{ $key }}]">
                                                                 <!-- <option value="">Select</option> -->
                                                                 <option value="">Select</option>
-                                                                <option value="1" {{ old($form5a->rating, $row->{$form5a->rating}) == 1 ? 'selected' : '' }}>1</option>
-                                                                <option value="2" {{ old($form5a->rating, $row->{$form5a->rating}) == 2 ? 'selected' : '' }}>2</option>
-                                                                <option value="3" {{ old($form5a->rating, $row->{$form5a->rating})== 3 ? 'selected' : '' }}>3</option>
-                                                                <option value="4" {{ old($form5a->rating, $row->{$form5a->rating}) == 4 ? 'selected' : '' }}>4</option>
-                                                                <option value="5" {{ old($form5a->rating, $row->{$form5a->rating}) == 5 ? 'selected' : '' }}>5</option>
+                                                                <option value="1" <?php echo old('ratings.' . $key, $form5a->form5_rating) == 1 ? 'selected' : '' ?> >1</option>
+                                                                <option value="2" <?php echo old('ratings.' . $key, $form5a->form5_rating) == 2 ? 'selected' : '' ?> >2</option>
+                                                                <option value="3" <?php echo old('ratings.' . $key, $form5a->form5_rating) == 3 ? 'selected' : '' ?> >3</option>
+                                                                <option value="4" <?php echo old('ratings.' . $key, $form5a->form5_rating) == 4 ? 'selected' : '' ?> >4</option>
+                                                                <option value="5" <?php echo old('ratings.' . $key, $form5a->form5_rating) == 5 ? 'selected' : '' ?> >5</option>
                                                             </select>
-                                                            @error($form5a->rating)  
+                                                            <input type="hidden" name="ratingname[{{ $key }}]" value="{{ $form5a->rating }}" />
+                                                           
+                                                            @error('ratings.' . $key)  
                                                             <div class="text-danger">{{ $message }}</div>
                                                             @enderror
                                                     </td>
-                                                    <td><textarea name="{{ $form5a->remarks }}" placeholder="Your remarks" class="form-control">{{ $row->{$form5a->remarks} }}</textarea></td>
+                                                    <td><textarea name="remarks[{{ $key }}]" placeholder="Your remarks" class="form-control">{{ $form5a->form5_remarks }}</textarea></td>
                                                 </tr>
-
+                                                
                                                 @endforeach
 
                                             </tbody>

@@ -141,16 +141,7 @@
 
                                     <br>
 
-                                                    <input type="hidden" id="ratingA" value="{{ $overallScore->ratingA }}">
-                                                    <input type="hidden" id="ratingBB" value="{{ $overallScore->ratingBB }}">
-                                                    <input type="hidden" id="ratingB" value="{{ $overallScore->ratingB }}">
-                                                    <input type="hidden" id="ratingC" value="{{ $overallScore->ratingC }}">
-                                                    <input type="hidden" id="ratingD" value="{{ $overallScore->ratingD }}">
-                                                    <input type="hidden" id="ratingE" value="{{ $overallScore->ratingE }}">
-                                                    <input type="hidden" id="ratingF" value="{{ $overallScore->ratingF }}">
-                                                    <input type="hidden" id="ratingG" value="{{ $overallScore->ratingG }}">
-                                                    <input type="hidden" id="ratingGG" value="{{ $overallScore->ratingGG }}">
-                                                    <input type="hidden" id="ratingH" value="{{ $overallScore->ratingH }}">  
+                                    <input type="hidden" id="dataRating" value="{{$graph_rating}}">          
 
                                     <label for="lnfp_OverallScore2_form">ACTUAL SCORE</label>
                                     <table id="lnfp_OverallScore2_form" class="table table-striped table-bordered" style="width: 100%;">
@@ -294,7 +285,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label for="whatDate">Date:</label>
-                                            <h5>{{$overallScore->whatDate}}</h5>
+                                            <h5>{{\Carbon\Carbon::parse($overallScore->whatDate)->format('F j, Y');}}</h5>
                                             <input type="hidden" name="whatDate" id="whatDate" class="form8InputBot" value="{{$overallScore->whatDate}}">
                                             
                                         </div>
@@ -326,9 +317,11 @@
 
 <script>
     $(document).ready(function() {
-        OverAllScore();
+        const columnData = JSON.parse($('#dataRating').val());
+        OverAllScore(columnData);
     });
 </script>
+
 
 @include('Modal.Draft');
 @include('Modal.Submit');

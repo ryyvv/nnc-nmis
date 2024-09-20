@@ -85,10 +85,10 @@ return new class extends Migration
             $table->integer('user_id')->unsigned();
             
             $table->foreign('user_id')->references('id')->on('users'); 
-            $table->foreign('province_id')->references('id')->on('provinces'); 
-            $table->foreign('region_id')->references('id')->on('regions'); 
-            $table->foreign('municipal_id')->references('id')->on('municipals');
-            $table->foreign('barangay_id')->references('id')->on('barangays'); 
+            $table->foreign('province_id')->references('id')->on('psgc_provinces'); 
+            $table->foreign('region_id')->references('id')->on('psgc_regions'); 
+            $table->foreign('municipal_id')->references('id')->on('psgc_municipalities');
+            $table->foreign('barangay_id')->references('id')->on('psgc_barangays'); 
             $table->timestamps();
         });
 
@@ -100,8 +100,8 @@ return new class extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('mplgubrgynutritionservice_id')->unsigned(); 
             $table->foreign('mplgubrgynutritionservice_id')->references('id')->on('mplgubrgynutritionservice');
-            $table->foreign('municipal_id')->references('id')->on('municipals');
-            $table->foreign('barangay_id')->references('id')->on('barangays'); 
+            $table->foreign('municipal_id')->references('id')->on('psgc_municipalities');
+            $table->foreign('barangay_id')->references('id')->on('psgc_barangays'); 
             $table->foreign('user_id')->references('id')->on('users'); 
             $table->timestamps();
         });

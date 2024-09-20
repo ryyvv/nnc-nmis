@@ -1,11 +1,11 @@
 function openApproved(id) {
   profileId = id; // Store the ID
-  $('#ApprovedModal').modal('show'); // Show the modal
+  $('#approved').modal('show'); // Show the modal
 }
 
 function openDeclined(id) {
   profileId = id; // Store the ID
-  $('#DeclinedModal').modal('show'); // Show the modal
+  $('#warning').modal('show'); // Show the modal
 }
 
 
@@ -80,7 +80,7 @@ function confirmDeclined() {
 };
 
 
-//Fetch Report function
+//Fetch Report function LGU report
 $(document).ready(function () {
   function format(d) {
 
@@ -91,31 +91,18 @@ $(document).ready(function () {
           //dateMonitoringLabel = '<span class="statusApproved cursor">${dataapproved}</span>';
             break;
         case 1:
-          dateMonitoringLabel = dataApproved;
-          //dateMonitoringLabel = '<span class="statusNA cursor" title="For Review">N/A</span>';
+          // dateMonitoringLabel = dataApproved;
+          dateMonitoringLabel = '<span class="statusNA cursor" title="For Review">N /A</span>';
             break;
         default:
           dateMonitoringLabel = '<span class="statusUnknown cursor" title="Unknown Status">Unknown status</span>';
             break;
     }
 
-
-
-    switch (d.status) {
-        case 0:
-           c
-            break;
-        case 1:
-            statusLabel = '<span class="statusPending cursor" title="For Review">Uploaded</span>';
-            break;
-        default:
-            statusLabel = '<span class="statusUnknown cursor" title="Unknown Status">Unknown</span>';
-            break;
-    }
-
     //LGUStatus
     let LGUStatus;
     let lguLabel;
+
     if (d.lguprofilebarangay_id) { // Check if the value is not empty, null, or undefined
 
       let dataApprovedlgu = 'Invalid Date';
@@ -258,6 +245,7 @@ $(document).ready(function () {
     DiscussionQuestionServiceLabel = '<span class="statusApproved cursor" title="Added to LGU Report">Uploaded</span>';
     DiscussionQuestionServiceStatus = dataApproveddq;
   } else {
+
     DiscussionQuestionServiceStatus = '<span class="statusNA cursor">N/A</span>';
     DiscussionQuestionServiceLabel = '<span class="statusPending cursor" title="Added to LGU Report">Waiting</span>';
   }
@@ -366,7 +354,7 @@ $(document).ready(function () {
 
   let table = new DataTable('#example1', {
     ajax: {
-      url: "https://nnc-nmis.moodlearners.com/CityMunicipalStaff/lguProfile/fetchreport",
+       url: "https://nnc-nmis.moodlearners.com/BarangayScholar/lguProfile/fetchreport",
       type: 'GET',
       dataSrc: 'data',
     },
@@ -374,7 +362,7 @@ $(document).ready(function () {
 
 
       {
-        data: "barangay",
+        data: "name",
         render: function (data, type, row) {
           // Example of adding a suffix
           return `${data}`;
@@ -444,3 +432,4 @@ $(document).ready(function () {
     }
   });
 });
+ 

@@ -41,7 +41,22 @@ class BSEquipmentInventoryController extends Controller
     }
 
     public function update(Request $request) 
-    {           
+    {   
+        $defaults = [
+            'inputSteelRules' => 0,
+            'inputMicrotoise' => 0,
+            'inputInfantometer' => 0,
+            'inputInfantScale' => 0,
+            'inputBeamBalance' => 0,
+        ];
+    
+        foreach ($defaults as $key => $value) {
+            if (!$request->has($key) || is_null($request->input($key))) {
+                $request->merge([$key => $value]);
+            }
+        }
+        
+
         $rules = [
             'inputtotalBarangay' => 'required|integer',
             'inputWHB' => 'required|integer',
@@ -165,6 +180,20 @@ class BSEquipmentInventoryController extends Controller
 
     public function store(Request $request) 
     {   
+        $defaults = [
+            'inputSteelRules' => 0,
+            'inputMicrotoise' => 0,
+            'inputInfantometer' => 0,
+            'inputInfantScale' => 0,
+            'inputBeamBalance' => 0,
+        ];
+    
+        foreach ($defaults as $key => $value) {
+            if (!$request->has($key) || is_null($request->input($key))) {
+                $request->merge([$key => $value]);
+            }
+        }
+        
         $rules = [
             'inputtotalBarangay' => 'required|integer',
             'inputWHB' => 'required|integer',
@@ -256,11 +285,11 @@ class BSEquipmentInventoryController extends Controller
         if ($equipmentInventory) {
             return redirect()->back()->with('error', 'Records already exist.');
         }
-        
         $equipmentInventory = PsgcEquipmentInventory::create([
             'psgc_code' => $citymun->psgc_code,
             'name' => $citymun->name,
             'correspondence_code' => $citymun->correspondence_code,
+            'city_class' => $citymun->city_class,
             'reg_code' =>  $citymun->reg_code,
             'prov_code' => $citymun->prov_code,
             'citymun_code' => $citymun->citymun_code,
@@ -336,7 +365,7 @@ class BSEquipmentInventoryController extends Controller
             $subTotalsQuery->where('citymun_code', $request->input('citymun_code'));
         }
 
-        $citiesAndMunicipalities = $EquipmentInventoryQuery->get();
+        $citiesAndMunicipalities = $EquipmentInventoryQuery->orderBy('name', 'asc')->get();
 
         $subTotals = $subTotalsQuery->selectRaw('
             SUM(total_barangay) as total_barangays,
@@ -344,53 +373,52 @@ class BSEquipmentInventoryController extends Controller
             SUM(non_wooden_hb) as non_wooden_hb,
             SUM(defective_hb) as defective_hb,
             SUM(total_hb) as total_hb,
-            SUM(availability_hb) as availability_hb,
+            (SUM(total_hb) / SUM(total_barangay)) * 100 as availability_hb,
             SUM(steel_rules) as steel_rules,
             SUM(microtoise) as microtoise,
             SUM(infantometer) as infantometer,
             SUM(hanging_type) as hanging_type,
             SUM(defective_ws) as defective_ws,
             SUM(total_ws) as total_ws,
-            SUM(availability_ws) as availability_ws,
+            (SUM(total_ws) / SUM(total_barangay)) * 100 as availability_ws,
             SUM(infat_scale) as infat_scale,
             SUM(beam_balance) as beam_balance,
             SUM(child) as child,
             SUM(defective_muac_child) as defective_muac_child,
             SUM(total_muac_child) as total_muac_child,
-            SUM(availability_muac_child) as availability_muac_child,
+            (SUM(total_muac_child) / SUM(total_barangay)) * 100 as availability_muac_child,
             SUM(adults) as adults,
             SUM(defective_muac_adults) as defective_muac_adults,
             SUM(total_muac_adults) as total_muac_adults,
-            SUM(availability_muac_adults) as availability_muac_adults
-        ')
-        ->first();
-
-        $grandTotals =  PsgcEquipmentInventory::selectRaw('
+            (SUM(total_muac_adults) / SUM(total_barangay)) * 100 as availability_muac_adults
+        ')->first();
+    
+        $grandTotals = PsgcEquipmentInventory::selectRaw('
             SUM(total_barangay) as total_barangays,
             SUM(wooden_hb) as wooden_hb,
             SUM(non_wooden_hb) as non_wooden_hb,
             SUM(defective_hb) as defective_hb,
             SUM(total_hb) as total_hb,
-            SUM(availability_hb) as availability_hb,
+            (SUM(total_hb) / SUM(total_barangay)) * 100 as availability_hb,
             SUM(steel_rules) as steel_rules,
             SUM(microtoise) as microtoise,
             SUM(infantometer) as infantometer,
             SUM(hanging_type) as hanging_type,
             SUM(defective_ws) as defective_ws,
             SUM(total_ws) as total_ws,
-            SUM(availability_ws) as availability_ws,
+            (SUM(total_ws) / SUM(total_barangay)) * 100 as availability_ws,
             SUM(infat_scale) as infat_scale,
             SUM(beam_balance) as beam_balance,
             SUM(child) as child,
             SUM(defective_muac_child) as defective_muac_child,
             SUM(total_muac_child) as total_muac_child,
-            SUM(availability_muac_child) as availability_muac_child,
+            (SUM(total_muac_child) / SUM(total_barangay)) * 100 as availability_muac_child,
             SUM(adults) as adults,
             SUM(defective_muac_adults) as defective_muac_adults,
             SUM(total_muac_adults) as total_muac_adults,
-            SUM(availability_muac_adults) as availability_muac_adults
-        ')
-        ->first();
+            (SUM(total_muac_adults) / SUM(total_barangay)) * 100 as availability_muac_adults
+        ')->first();
+    
         
         return response()->json([
             'citiesAndMunicipalities' => $citiesAndMunicipalities,

@@ -11,63 +11,63 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('regions', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('region', 100);
-            $table->string('regclass', 100);
-            $table->integer('regnumber');
+        // Schema::create('regions', function (Blueprint $table) {
+        //     $table->increments('id');
+        //     $table->string('region', 100);
+        //     $table->string('regclass', 100);
+        //     $table->integer('regnumber');
             
-            $table->integer('psgccode_id')->unsigned(); 
-            $table->foreign('psgccode_id')->references('id')->on('psgcs');
-            $table->timestamps();
-        }); 
+        //     $table->integer('psgccode_id')->unsigned(); 
+        //     $table->foreign('psgccode_id')->references('id')->on('psgcs');
+        //     $table->timestamps();
+        // }); 
 
-        Schema::create('provinces', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('province', 100);
-            $table->string('proclass', 100);
-            $table->integer('provnumber');
+        // Schema::create('provinces', function (Blueprint $table) {
+        //     $table->increments('id');
+        //     $table->string('province', 100);
+        //     $table->string('proclass', 100);
+        //     $table->integer('provnumber');
 
-            $table->integer('psgccode_id')->unsigned(); 
-            $table->foreign('psgccode_id')->references('id')->on('psgcs');
+        //     $table->integer('psgccode_id')->unsigned(); 
+        //     $table->foreign('psgccode_id')->references('id')->on('psgcs');
 
-            $table->integer('region_id')->unsigned(); 
-            $table->foreign('region_id')->references('id')->on('regions'); 
-            $table->timestamps();
+        //     $table->integer('region_id')->unsigned(); 
+        //     $table->foreign('region_id')->references('id')->on('regions'); 
+        //     $table->timestamps();
 
-        }); 
+        // }); 
 
-        Schema::create('municipals', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('municipal', 100);
-            $table->string('munclass', 100);
-            $table->integer('munnumber');
+        // Schema::create('municipals', function (Blueprint $table) {
+        //     $table->increments('id');
+        //     $table->string('municipal', 100);
+        //     $table->string('munclass', 100);
+        //     $table->integer('munnumber');
 
-            $table->integer('psgccode_id')->unsigned(); 
-            $table->foreign('psgccode_id')->references('id')->on('psgcs');
+        //     $table->integer('psgccode_id')->unsigned(); 
+        //     $table->foreign('psgccode_id')->references('id')->on('psgcs');
 
-            $table->integer('province_id')->unsigned(); 
-            $table->foreign('province_id')->references('id')->on('provinces'); 
-            $table->timestamps();
+        //     $table->integer('province_id')->unsigned(); 
+        //     $table->foreign('province_id')->references('id')->on('provinces'); 
+        //     $table->timestamps();
 
-        }); 
+        // }); 
 
-        Schema::create('barangays', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('barangay', 100);
-            $table->string('brgytype', 100);
-            $table->integer('brgynumber');   //urban/rural
+        // Schema::create('barangays', function (Blueprint $table) {
+        //     $table->increments('id');
+        //     $table->string('barangay', 100);
+        //     $table->string('brgytype', 100);
+        //     $table->integer('brgynumber');   //urban/rural
 
-            $table->integer('municipal_id')->unsigned(); 
-            $table->foreign('municipal_id')->references('id')->on('municipals');
+        //     $table->integer('municipal_id')->unsigned(); 
+        //     $table->foreign('municipal_id')->references('id')->on('municipals');
 
-            $table->integer('city_id')->unsigned(); 
-            $table->foreign('city_id')->references('id')->on('citys');
+        //     $table->integer('city_id')->unsigned(); 
+        //     $table->foreign('city_id')->references('id')->on('citys');
             
-            $table->integer('psgccode_id')->unsigned(); 
-            $table->foreign('psgccode_id')->references('id')->on('psgcs');
-            $table->timestamps();
-        }); 
+        //     $table->integer('psgccode_id')->unsigned(); 
+        //     $table->foreign('psgccode_id')->references('id')->on('psgcs');
+        //     $table->timestamps();
+        // }); 
 
         // Forms&Rating
         Schema::create('visionmissions' , function (Blueprint $table) {

@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('lnfp_form7', function (Blueprint $table) {
             $table->id();
             $table->integer('form5_id')->nullable();
+            $table->integer('lnfp_lgu_id')->nullable();
+            
+            // Accomplishments
             $table->text('accomplishmentA')->nullable();
             $table->text('accomplishmentB')->nullable();
             $table->text('accomplishmentC')->nullable();
@@ -23,6 +26,8 @@ return new class extends Migration
             $table->text('accomplishmentG')->nullable();
             $table->text('accomplishmentH')->nullable();
             $table->text('accomplishmentI')->nullable();
+            
+            // Good Practices
             $table->text('goodPracA')->nullable();
             $table->text('goodPracB')->nullable();
             $table->text('goodPracC')->nullable();
@@ -32,6 +37,8 @@ return new class extends Migration
             $table->text('goodPracG')->nullable();
             $table->text('goodPracH')->nullable();
             $table->text('goodPracI')->nullable();
+            
+            // Issues
             $table->text('issuesA')->nullable();
             $table->text('issuesB')->nullable();
             $table->text('issuesC')->nullable();
@@ -41,6 +48,8 @@ return new class extends Migration
             $table->text('issuesG')->nullable();
             $table->text('issuesH')->nullable();
             $table->text('issuesI')->nullable();
+            
+            // Actions
             $table->text('actionsA')->nullable();
             $table->text('actionsB')->nullable();
             $table->text('actionsC')->nullable();
@@ -50,6 +59,11 @@ return new class extends Migration
             $table->text('actionsG')->nullable();
             $table->text('actionsH')->nullable();
             $table->text('actionsI')->nullable();
+            
+            $table->integer('status')->default(0);
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('header6')->nullable();
+            
             $table->timestamps();
         });
     }
@@ -57,7 +71,7 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('lnfp_form7');
     }

@@ -49,14 +49,14 @@
                 @include('layouts.page_template.crud_alert_message')
 
                 <div class="row-12">
-                    <table class="display" id="example1" width="100%">
+                    <table class="display" id="lguReport" width="100%">
                         <thead style="background-color:#508D4E;">
                             <tr>
                                 <th class="tableheader">Area</th>
                                 <th class="tableheader">Date Monitoring</th>
                                 <th class="tableheader">Period Covered</th>
                                 <th class="tableheader">Status</th>
-                                <th class="tableheader">Action</th>
+                                <th class="tableheader">Form/s Uploaded</th>
                                 <th></th>
                             </tr>
                         </thead>

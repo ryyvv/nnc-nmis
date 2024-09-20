@@ -3,6 +3,8 @@
 <!-- <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/form5a.css') }}"> -->
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/common.css') }}">
 <script src="https://cdn.lordicon.com/lordicon.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
     .divChart {
@@ -97,7 +99,7 @@
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label for="bday">Date of Monitoring:<span style="color:red">*</span></label>
-                                        <h5>{{\Carbon\Carbon::parse($form6->dateMonitoring)->format('F j y');}}</h5>
+                                        <h5>{{\Carbon\Carbon::parse($form6->dateMonitoring)->format('F j Y');}}</h5>
                                     </div>
                                 </div>
                             </div>
@@ -119,80 +121,26 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td class="col-md-2">
-                                                    <center><b>A</b></center>
-                                                </td>
-                                                <td class="col-md-6"><input type="text" class="form6InputS" value="Coordination" readonly></td>
-                                                <td class="col-md-2"><span><center>100%</center></span></td>
-                                                <input type="hidden" class="form6InputA" id="form6InputA" value="{{$form6->ratingA}}" >
-                                                <td class="col-md-2"><input type="text" class="form6Input" id="form6InputAveA" value="" readonly></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-md-2">
-                                                    <center><b>B</b></center>
-                                                </td>
-                                                <td class="col-md-6"><input type="text" class="form6InputS" value="Orientation, Promotion and Advocacy" readonly></td>
-                                                <td class="col-md-2"><span><center>100%</center></span></td>
-                                                <input type="hidden" class="form6InputA" id="form6InputB" value="{{$form6->ratingB}}" >
-                                                <input type="hidden" class="form6InputA" id="form6InputBB" value="{{$form6->ratingBB}}" >
-                                                <td class="col-md-2"><input type="text" class="form6Input" id="form6InputAveB" value="" readonly></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-md-2">
-                                                    <center><b>C</b></center>
-                                                </td>
-                                                <td class="col-md-6"><input type="text" class="form6InputS" value="Planning" readonly></td>
-                                                <td class="col-md-2"><span><center>100%</center></span></td>
-                                                <input type="hidden" class="form6InputA" id="form6InputC" value="{{$form6->ratingC}}" >
-                                                <td class="col-md-2"><input type="text" class="form6Input" id="form6InputAveC" value="" readonly></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-md-2">
-                                                    <center><b>D</b></center>
-                                                </td>
-                                                <td class="col-md-6"><input type="text" class="form6InputS" value="Implementation" readonly></td>
-                                                <td class="col-md-2"><span><center>100%</center></span></td>
-                                                <input type="hidden" class="form6InputA" id="form6InputD" value="{{$form6->ratingD}}" >
-                                                <td class="col-md-2"><input type="text" class="form6Input" id="form6InputAveD" value="" readonly></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-md-2">
-                                                    <center><b>E</b></center>
-                                                </td>
-                                                <td class="col-md-6"><input type="text" class="form6InputS" value="Monitoring and Evaluation" readonly></td>
-                                                <td class="col-md-2"><span><center>100%</center></span></td>
-                                                <input type="hidden" class="form6InputA" id="form6InputE" value="{{$form6->ratingE}}" >
-                                                <td class="col-md-2"><input type="text" class="form6Input" id="form6InputAveE" value="" readonly></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-md-2">
-                                                    <center><b>F</b></center>
-                                                </td>
-                                                <td class="col-md-6"><input type="text" class="form6InputS" value="Resource Generation" readonly></td>
-                                                <td class="col-md-2"><span><center>100%</center></span></td>
-                                                <input type="hidden" class="form6InputA" id="form6InputF" value="{{$form6->ratingF}}" >
-                                                <td class="col-md-2"><input type="text" class="form6Input" id="form6InputAveF" value="" readonly></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-md-2">
-                                                    <center><b>G</b></center>
-                                                </td>
-                                                <td class="col-md-6"><input type="text" class="form6InputS" value="Capacity Development" readonly></td>
-                                                <td class="col-md-2"><span><center>100%</center></span></td>
-                                                <input type="hidden" class="form6InputA" id="form6InputG" value="{{$form6->ratingG}}" >
-                                                <input type="hidden" class="form6InputA" id="form6InputGG" value="{{$form6->ratingGG}}" >
-                                                <td class="col-md-2"><input type="text" class="form6Input" id="form6InputAveG" value="" readonly></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-md-2">
-                                                    <center><b>H</b></center>
-                                                </td>
-                                                <td class="col-md-6"><input type="text" class="form6InputS" value="Documentation and record-keeping" readonly></td>
-                                                <td class="col-md-2"><span><center>100%</center></span></td>
-                                                <input type="hidden" class="form6InputA" id="form6InputH" value="{{$form6->ratingH}}" >
-                                                <td class="col-md-2"><input type="text" class="form6Input" id="form6InputAveH" value="" readonly></td>
-                                            </tr>
+
+                                        <input type="hidden" id="dataRating" value="{{$form5_rating}}">
+                                            @foreach($form5_rating as $rating)
+                                                <tr>
+                                                    <td class="col-md-2">
+                                                        <center><b>{{$rating->column1}}</b></center>
+                                                    </td>
+                                                    <td class="col-md-6">
+                                                    <h6>{{ $rating->column2 }}</h6>
+                                                    </td>
+                                                    <td class="col-md-2"><span><center>100%</center></span></td>
+                                                    <input type="hidden" class="form6InputA" id="rating{{ $rating->column1 }}" value="{{$rating->rate}}" >
+                                                    
+                                                    <!-- TOTAL -->
+
+                                                    <td class="col-md-2" id="inputContainer">
+                                                        <input type="text" class="form6Input user-input" data-id="rating{{ $rating->column1 }}" value="" readonly>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
                                             <tr>
                                                 <td class="col-md-2">&nbsp;</td>
                                                 <td class="col-md-6">&nbsp;</td>
@@ -201,16 +149,6 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <!-- <input type="text" value="{{
-                                        ((($form6->ratingA * 100) / 5) +
-                                        (($form6->ratingB * 100) / 5) +
-                                        (($form6->ratingC * 100) / 5) +
-                                        (($form6->ratingD * 100) / 5) +
-                                        (($form6->ratingE * 100) / 5) +
-                                        (($form6->ratingF * 100) / 5) +
-                                        (($form6->ratingG * 100) / 5) +
-                                        (($form6->ratingH * 100) / 5))/8
-                                    }}"> -->
                                 </div>
                             </div>
                             <br />
@@ -220,81 +158,38 @@
                                 <h5 class="title">{{__("Diagram for Changes in Nutritional Status")}}</h5>
                             </center>
                             </div>
-                            <div class="divChart">
-                                <canvas id="myRadarChart" width="400" height="400"></canvas>
-                                <script>
-                                    const ctx = document.getElementById('myRadarChart').getContext('2d');
 
-                                    const data = {
-                                        labels: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],
-                                        datasets: [{
-                                                label: 'TARGET RATING',
-                                                data: [100, 100, 100, 100, 100, 100, 100, 100],
-                                                fill: true,
-                                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                                                borderColor: 'rgb(54, 162, 235)',
-                                                pointBackgroundColor: 'rgb(54, 162, 235)',
-                                                pointBorderColor: '#fff',
-                                                pointHoverBackgroundColor: '#fff',
-                                                pointHoverBorderColor: 'rgb(54, 162, 235)'
-                                            },
-                                            {
-                                                label: 'PERFORMANCE RATING',
-                                                data: [
-                                                    "{{ ($form6->ratingA / 5) * 100 }}",
-                                                    "{{ ($form6->ratingB / 5) * 100 }}",
-                                                    "{{ ($form6->ratingC / 5) * 100 }}",
-                                                    "{{ ($form6->ratingD / 5) * 100 }}",
-                                                    "{{ ($form6->ratingE / 5) * 100 }}",
-                                                    "{{ ($form6->ratingF / 5) * 100 }}",
-                                                    "{{ ($form6->ratingG / 5) * 100 }}",
-                                                    "{{ ($form6->ratingH / 5) * 100 }}"
-                                                ],
-                                                fill: true,
-                                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                                                borderColor: 'rgb(255, 99, 132)',
-                                                pointBackgroundColor: 'rgb(255, 99, 132)',
-                                                pointBorderColor: '#fff',
-                                                pointHoverBackgroundColor: '#fff',
-                                                pointHoverBorderColor: 'rgb(255, 99, 132)'
-                                            }
-                                        ]
-                                    };
 
-                                    const options = {
-                                        scale: {
-                                            angleLines: {
-                                                display: true
-                                            },
-                                            ticks: {
-                                                suggestedMin: 0,
-                                                suggestedMax: 120,
-                                                stepSize: 20,
-                                                callback: function(value) {
-                                                    return value + '%'; // Add percentage symbol to ticks
-                                                }
-                                            }
-                                        },
-                                        plugins: {
-                                            legend: {
-                                                display: true,
-                                                position: 'right'
-                                            }
-                                        },
-                                        title: {
-                                            display: true,
-                                            text: 'Provincial Nutrition Action Officer Monitoring Radial Diagram'
-                                        }
-                                    };
 
-                                    const myRadarChart = new Chart(ctx, {
-                                        type: 'radar',
-                                        data: data,
-                                        options: options
-                                    });
-                                </script>
+                            @php
+                                // Ensure $ratingCount is available and valid
+                                $ratingCount = $ratingCount ?? 0; // Default to 0 if not set
+
+                                // Perform calculations for performance data
+                                $performanceData = $graph_rating->map(function($rating) use ($ratingCount) {
+                                    // Prevent division by zero
+                                    $value = $rating->graph_rating > 0 ? ($rating->graph_rating / 5 )  * 100 : 0;
+                                    return number_format($value, 1, '.', '');
+                                })->toArray();
+
+                                // Convert titles to an array
+                                $labels = $graph_rating->pluck('title')->toArray();
+                            @endphp
+
+                            <div id="chart-data" 
+                                 data-labels='@json($labels)' 
+                                 data-performance='@json($performanceData)'>
                             </div>
+
+
+
+                            <canvas id="myRadarChart"></canvas>
+                           
+                                       
+
+
                         <!-- </form> -->
+                        <br />
                         
                             <div class="form-row">
                                 <div class="col-md-12">
@@ -435,8 +330,14 @@
 
 <script>
     $(document).ready(function() {
-        computePR();
+        // Retrieve the JSON data from the hidden input field
+        const columnData = JSON.parse($('#dataRating').val());
+   
+        // Pass the data to the computePR function
+        computePR(columnData);  
+        radialDiagram();
     });
+ 
 </script>
 
 @include('Modal.Draft');

@@ -30,13 +30,13 @@ return new class extends Migration
             $table->string('telephonenumber', 100)->nullable();
 
             $table->integer('cities_id')->unsigned();
-            $table->foreign('cities_id')->references('id')->on('cities');
+            // $table->foreign('cities_id')->references('id')->on('cities');
             
             $table->integer('region_id')->unsigned(); 
             $table->integer('province_id')->unsigned(); 
 
-            $table->foreign('region_id')->references('id')->on('regions'); 
-            $table->foreign('province_id')->references('id')->on('provinces'); 
+            // $table->foreign('region_id')->references('id')->on('regions'); 
+            // $table->foreign('province_id')->references('id')->on('provinces'); 
 
             $table->timestamps();
         });

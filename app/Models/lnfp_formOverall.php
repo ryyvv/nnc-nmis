@@ -38,6 +38,7 @@ class lnfp_formOverall extends Model
         'status',
         'header',
         'formInterview_id',
+        'user_id'
     ];
 
     protected $guarded = ['id'];

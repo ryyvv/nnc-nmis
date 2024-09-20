@@ -26,6 +26,7 @@ class MellpiProForLNFP_form6Controller extends Controller
                  'lnfp_form5a_rr.dateMonitoring as dateMonitoring',
                  'lnfp_form5a_rr.id as form5_id')
         ->where('lnfp_form7.user_id', auth()->user()->id)
+        ->orderBy('lnfp_form7.updated_at','DESC')
         ->get();
 
         return view('BarangayScholar/MellpiProForLNFP/MellpiProRadialDiagram.RadialForm6Index', ['form6' => $form6]);
@@ -39,16 +40,6 @@ class MellpiProForLNFP_form6Controller extends Controller
         ->leftjoin('lnfp_form5a_rr', 'lnfp_form5a_rr.id', '=', 'lnfp_form7.form5_id')
         ->leftjoin('lnfp_form8', 'lnfp_form8.form7_id', '=', 'lnfp_form7.id')
         ->select('lnfp_form7.*', 
-                 'lnfp_form5a_rr.ratingA as ratingA' ,
-                 'lnfp_form5a_rr.ratingB as ratingB' ,
-                 'lnfp_form5a_rr.ratingB as ratingBB' ,
-                 'lnfp_form5a_rr.ratingC as ratingC' ,
-                 'lnfp_form5a_rr.ratingD as ratingD' ,
-                 'lnfp_form5a_rr.ratingE as ratingE' ,
-                 'lnfp_form5a_rr.ratingF as ratingF' ,
-                 'lnfp_form5a_rr.ratingG as ratingG' ,
-                 'lnfp_form5a_rr.ratingG as ratingGG' ,
-                 'lnfp_form5a_rr.ratingH as ratingH' ,
                  'lnfp_form5a_rr.periodCovereda as periodCovereda',
                  'lnfp_form5a_rr.nameofPnao as nameofPnao',
                  'lnfp_form5a_rr.address as address',
@@ -59,7 +50,25 @@ class MellpiProForLNFP_form6Controller extends Controller
         ->where('lnfp_form7.id', $request->id)
         ->first();
 
-        return view('BarangayScholar/MellpiProForLNFP/MellpiProRadialDiagram.Form6View', ['form6' => $form6, 'availableForms' => $availableForms ]);
+        $form5_rating = DB::table('form5_fields_content_PNAO')
+                            ->Join('lnfp_form5_rating','lnfp_form5_rating.form_content_id', '=', 'form5_fields_content_PNAO.id') 
+                            // ->Where('form5_fields_content_PNAO.belongTo','=',2)
+                            ->Where('lnfp_form5_rating.form5_id', '=', $form6->form5_id)
+                            ->select('form5_fields_content_PNAO.*','lnfp_form5_rating.rating as rate')
+                            ->get();
+
+        $graph_rating = DB::table('lnfp_form5_rating') 
+                            ->leftJoin('form5_fields_content_PNAO','lnfp_form5_rating.form_content_id', '=', 'form5_fields_content_PNAO.id')
+                            ->Where('lnfp_form5_rating.form5_id','=',$form6->form5_id) 
+                            ->select('lnfp_form5_rating.rating as graph_rating','form5_fields_content_PNAO.column1 as title' )
+                            ->get();
+
+        $ratingCount = DB::table('lnfp_form5_rating')
+                            ->where('lnfp_form5_rating.form5_id', '=', $form6->form5_id)
+                            ->count();
+
+
+        return view('BarangayScholar/MellpiProForLNFP/MellpiProRadialDiagram.Form6View', ['form6' => $form6, 'availableForms' => $availableForms, 'form5_rating' => $form5_rating , 'graph_rating' => $graph_rating, 'ratingCount' => $ratingCount ]);
     }
 
     public function radialForm6Create(Request $request)
@@ -70,16 +79,6 @@ class MellpiProForLNFP_form6Controller extends Controller
         $form6 = DB::table('lnfp_form7')
         ->join('lnfp_form5a_rr', 'lnfp_form5a_rr.id', '=', 'lnfp_form7.form5_id')
         ->select('lnfp_form7.*', 
-                 'lnfp_form5a_rr.ratingA as ratingA' ,
-                 'lnfp_form5a_rr.ratingB as ratingB' ,
-                 'lnfp_form5a_rr.ratingB as ratingBB' ,
-                 'lnfp_form5a_rr.ratingC as ratingC' ,
-                 'lnfp_form5a_rr.ratingD as ratingD' ,
-                 'lnfp_form5a_rr.ratingE as ratingE' ,
-                 'lnfp_form5a_rr.ratingF as ratingF' ,
-                 'lnfp_form5a_rr.ratingG as ratingG' ,
-                 'lnfp_form5a_rr.ratingG as ratingGG' ,
-                 'lnfp_form5a_rr.ratingH as ratingH' ,
                  'lnfp_form5a_rr.periodCovereda as periodCovereda',
                  'lnfp_form5a_rr.nameofPnao as nameofPnao',
                  'lnfp_form5a_rr.address as address',
@@ -87,8 +86,31 @@ class MellpiProForLNFP_form6Controller extends Controller
                  'lnfp_form5a_rr.id as form5_id')
         ->where('lnfp_form7.id', $request->id)
         ->first();
+    
 
-        return view('BarangayScholar/MellpiProForLNFP/MellpiProRadialDiagram.RadialForm6Create', ['form6' => $form6, 'availableForms' => $availableForms]);
+        $form5_rating = DB::table('form5_fields_content_PNAO')
+                            ->Join('lnfp_form5_rating','lnfp_form5_rating.form_content_id', '=', 'form5_fields_content_PNAO.id') 
+                            // ->Where('form5_fields_content_PNAO.belongTo','=',2)
+                            ->Where('lnfp_form5_rating.form5_id', '=', $form6->form5_id)
+                            ->select('form5_fields_content_PNAO.*','lnfp_form5_rating.rating as rate')
+                            ->orderBy('form5_fields_content_PNAO.id', 'ASC')
+                            ->get();
+
+        $graph_rating = DB::table('lnfp_form5_rating') 
+                            ->leftJoin('form5_fields_content_PNAO','lnfp_form5_rating.form_content_id', '=', 'form5_fields_content_PNAO.id')
+                            ->Where('lnfp_form5_rating.form5_id','=',$form6->form5_id) 
+                            ->select('lnfp_form5_rating.rating as graph_rating','form5_fields_content_PNAO.column1 as title' )
+                            ->orderBy('form5_fields_content_PNAO.id', 'ASC')
+                            ->get();
+
+        $ratingCount = DB::table('lnfp_form5_rating')
+                            ->where('lnfp_form5_rating.form5_id', '=', $form6->form5_id)
+                            ->count();
+
+       
+        
+
+        return view('BarangayScholar/MellpiProForLNFP/MellpiProRadialDiagram.RadialForm6Create', ['form6' => $form6, 'availableForms' => $availableForms, 'form5_rating' => $form5_rating , 'graph_rating' => $graph_rating, 'ratingCount' => $ratingCount]);
     }
 
     

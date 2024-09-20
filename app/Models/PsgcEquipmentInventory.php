@@ -40,6 +40,7 @@ class PsgcEquipmentInventory extends Model
         'psgc_code',
         'name',
         'correspondence_code',
+        'city_class',
         'reg_code',
         'prov_code',
         'citymun_code'
@@ -71,6 +72,7 @@ class PsgcEquipmentInventory extends Model
         'psgc_code' => 'string',
         'name' => 'string',
         'correspondence_code' => 'string',
+        'city_class' => 'string',
         'reg_code' => 'string',
         'prov_code' => 'string',
         'citymun_code' => 'string',

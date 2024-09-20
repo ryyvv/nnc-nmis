@@ -51,7 +51,7 @@
                         <div class="col">
                          <label for="sex">1<span style="color:red">*</span> </label>
                          <textarea name="column3" class="form-control">{{ $form->column3 }}</textarea>
-                         @error('column3')
+                             @error('column3')
                                  <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>

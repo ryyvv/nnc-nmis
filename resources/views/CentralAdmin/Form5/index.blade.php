@@ -1,6 +1,5 @@
 <script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.8/datatables.min.js"></script>
 
-
 @extends('layouts.app', [
 'class' => 'sidebar-mini ',
 'namePage' => 'Form5 PNAO',
@@ -27,19 +26,19 @@
 
             @include('layouts.page_template.crud_alert_message')
             
-            <div class="row-12" >
+            <div class="content" >
                 <table class="display" id="myTableForm5" style="width:100%!important; max-width:inherit" >
-                    <thead style="background-color:#508D4E;">
+                    <thead class="table-light" style="background-color:#508D4E;">
                         <tr>
-                            <th scope="col">Action</th>
-                            <th scope="col">&nbsp;</th>
-                            <th scope="col">Elements</th>
-                            <th scope="col">1</th>
-                            <th scope="col">2</th>
-                            <th scope="col">3</th>
-                            <th scope="col">4</th>
-                            <th scope="col">5</th>
-                            <th scope="col">Document Source</th>
+                            <th scope="col"  class="custom-thead">Action</th>
+                            <th scope="col"  class="custom-thead">&nbsp;</th>
+                            <th scope="col"  class="custom-thead">Elements</th>
+                            <th scope="col"  class="custom-thead">1</th>
+                            <th scope="col"  class="custom-thead">2</th>
+                            <th scope="col"  class="custom-thead">3</th>
+                            <th scope="col"  class="custom-thead">4</th>
+                            <th scope="col"  class="custom-thead">5</th>
+                            <th scope="col"  class="custom-thead">Document Source</th>
                         </tr>
                     </thead>
                     <tbody>

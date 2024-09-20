@@ -217,16 +217,16 @@ return new class extends Migration
            
             $table->integer('status')->nullable(); 
 
-            $table->integer('barangay_id')->unsigned(); 
-            $table->integer('user_id')->unsigned(); 
-            $table->integer('municipal_id')->unsigned(); 
-            $table->integer('province_id')->unsigned(); 
-            $table->integer('region_id')->unsigned(); 
+            $table->unsignedBigInteger('barangay_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('municipal_id')->nullable();
+            $table->unsignedBigInteger('province_id')->nullable();
+            $table->unsignedBigInteger('region_id')->nullable(); 
             $table->foreign('user_id')->references('id')->on('users'); 
-            $table->foreign('region_id')->references('id')->on('regions'); 
-            $table->foreign('province_id')->references('id')->on('provinces'); 
-            $table->foreign('municipal_id')->references('id')->on('municipals');
-            $table->foreign('barangay_id')->references('id')->on('barangays'); 
+            $table->foreign('region_id')->references('id')->on('psgc_regions'); 
+            $table->foreign('province_id')->references('id')->on('psgc_provinces'); 
+            $table->foreign('municipal_id')->references('id')->on('psgc_municipalities');
+            $table->foreign('barangay_id')->references('id')->on('psgc_barangays'); 
             $table->timestamps();
         });
 
@@ -240,8 +240,8 @@ return new class extends Migration
             
             $table->integer('lguprofilebarangay_id')->unsigned(); 
             $table->foreign('lguprofilebarangay_id')->references('id')->on('lguprofilebarangay');
-            $table->foreign('municipal_id')->references('id')->on('municipals');
-            $table->foreign('barangay_id')->references('id')->on('barangays'); 
+            $table->foreign('municipal_id')->references('id')->on('psgc_municipalities');
+            $table->foreign('barangay_id')->references('id')->on('psgc_barangays'); 
             $table->foreign('user_id')->references('id')->on('users'); 
             $table->timestamps();
         });

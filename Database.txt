@@ -1,6 +1,47 @@
 user table:
     #migration file
-    terminal run:  php artisan migrate --path=/database/migrations/2014_10_12_000002_create_users_table
-    #seeder file
-    terminal run:  php artisan db:seed --class=Userseeder
+    terminal run:  php artisan migrate --path=/database/migrations/2014_10_12_000002_create_users_table.php
+    terminal run:  php artisan migrate --path=/database/migrations/2014_10_12_000002_create_users_table.php
+    terminal run:  php artisan migrate --path=/database/migrations/2014_10_12_000002_create_users_table.php
+    terminal run:  php artisan migrate --path=/database/migrations/2024_09_16_074103_roles.php
+    terminal run:  php artisan migrate --path=/database/migrations/2024_09_16_105730_userrequeststatus.php
+    terminal run:  php artisan migrate --path=/database/migrations/2024_09_16_110335_userstatus.php
 
+    #seeder file User table
+    terminal run:  php artisan db:seed --class=Userseeder
+    terminal run:  php artisan db:seed --class=UserstatusSeeder
+    terminal run:  php artisan db:seed --class=RoleSeeder 
+    terminal run:  php artisan db:seed --class=UserRequestStatusSeeder
+    terminal run:  php artisan db:seed --class=UserActivestatusSeeder
+
+    #PSGC
+    terminal run:  php artisan migrate --path=/database/migrations/2024_08_26_053549_create_psgc_independent_component_cities_table.php
+    terminal run:  php artisan migrate --path=/database/migrations/2024_08_26_072156_create_psgc_barangays_table.php
+    terminal run:  php artisan migrate --path=/database/migrations/2024_08_26_124021_create_psgc_cities_table.php
+    terminal run:  php artisan migrate --path=/database/migrations/2024_08_26_130919_create_psgc_component_cities_table.php
+    terminal run:  php artisan migrate --path=/database/migrations/2024_08_26_234316_create_psgc_highly_urbanized_cities_table.php
+    terminal run:  php artisan migrate --path=/database/migrations/2024_08_27_000815_create_psgc_municipalities_table.php
+    terminal run:  php artisan migrate --path=/database/migrations/2024_08_27_021214_create_psgc_provinces_table.php
+    terminal run:  php artisan migrate --path=/database/migrations/2024_08_27_022545_create_psgc_regions_table.php
+    terminal run:  php artisan migrate --path=/database/migrations/2024_08_27_023659_create_psgc_sub_municipalities_table.php
+
+    #Resources
+    terminal run:  php artisan migrate --path=/database/migrations/2024_08_28_040713_create_psgc_equipment_inventory_table.php
+    
+    #LNFPdata
+    terminal run:  php artisan migrate --path=/database/migrations/2024_08_27_025038_create_psgc_summary_table.php
+    terminal run:  php artisan migrate --path=/database/migrations/2024_09_02_055347_form5_fields_content_PNAO.php
+ 
+    #lguprofile
+    php artisan migrate --path=/database/migrations/2024_07_29_082115_lgubarangay_report.php
+    php artisan migrate --path=/database/migrations/2024_05_22_060463_create_lguprofile.php
+    php artisan migrate --path=/database/migrations/2024_06_26_034710_mellpiprolgubarangay_vision_mission.php
+    php artisan migrate --path=/database/migrations/2024_06_27_002327_create_mellpiprobarangaynationalpolicies_table.php
+    php artisan migrate --path=/database/migrations/2024_06_28_021419_mellpiprobarangay_governance.php
+    php artisan migrate --path=/database/migrations/2024_06_28_053012_mellpiprolncmanagement.php
+    php artisan migrate --path=/database/migrations/2024_06_28_075706_mellpipronutritionservice.php 
+    php artisan migrate --path=/database/migrations/2024_07_01_030644_mellpiprochange_n_s.php
+    php artisan migrate --path=/database/migrations/2024_07_04_072428_mellpiprobarangaydiscussionquestion.php
+    php artisan migrate --path=/database/migrations/2024_08_09_092612_budgetaipdata.php
+
+ 

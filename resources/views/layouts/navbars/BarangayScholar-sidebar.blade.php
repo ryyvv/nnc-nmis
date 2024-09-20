@@ -9,6 +9,11 @@
           </a>
           <div class="collapse @if ($namePage == 'MELLPI PRO For LGU Profile' || in_array($activePage, $activeLGUPages) ) show @endif" id="MellpiPro">
             <ul class="nav">
+              <li class="@if ($activePage == 'LGUPROFILESummary') active @endif">
+                <a href="{{ route('CMOLGUprofile.fetch') }}"> 
+                  <p> <i class="now-ui-icons files_paper"></i>{{ __("LGU PROFILE Summary") }} </p>
+                </a>
+              </li>
               <li class="@if ($activePage == 'LGUPROFILE') active @endif">
                 <a href="{{ route('BSLGUprofile.index') }}"> 
                   <p> <i class="now-ui-icons files_paper"></i>{{ __("LGU PROFILE") }} </p>

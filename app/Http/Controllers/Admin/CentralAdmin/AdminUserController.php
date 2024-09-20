@@ -81,6 +81,7 @@ class AdminUserController extends Controller
     public function store(Request $request)
     {
  
+ 
         $rules = [
             'Firstname' => 'required|string|max:255',
             'Middlename' => 'required|string|max:255',
@@ -131,9 +132,9 @@ class AdminUserController extends Controller
                     ]);
         
         //query fo r permissions
-         $roles = DB::table('roles')->where('id', $request->role)->first();
+         //$roles = DB::table('roles')->where('id', $request->role)->first();
         // dd($roles);
-        $user->syncRoles($roles->name);
+        //$user->syncRoles($roles->name);
 
         return redirect('CentralAdmin/admin')->with('status','User created successfully with roles');
     }
@@ -212,7 +213,8 @@ class AdminUserController extends Controller
         ->where('id', $user->useractivestatus)
         ->select('userstatus.status as status')
         ->first(); 
-     
+
+        // 1-11
         $userrole = DB::table('userroles')->get();
         $userstatus = DB::table('userrequeststatus')->get();
         $userActivestatus = DB::table('userstatus')->get();

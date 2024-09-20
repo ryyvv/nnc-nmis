@@ -105,7 +105,7 @@
                     @enderror
                   </td>
                   <td  >
-                    <textarea class="form-control"  style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks1a">{{ old('remarks1a') }}</textarea>
+                    <textarea class="form-control textArea"   name="remarks1a">{{ old('remarks1a') }}</textarea>
                     @error('remarks1a')
                       <div class="text-danger">{{ $message }}</div>
                     @enderror
@@ -134,7 +134,7 @@
                     @enderror
                   </td>
                   <td>
-                    <textarea class="form-control"  style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks1b">{{ old('remarks1b') }}</textarea>
+                    <textarea class="form-control textArea"    name="remarks1b">{{ old('remarks1b') }}</textarea>
                     @error('remarks1b')
                       <div class="text-danger">{{ $message }}</div>
                     @enderror
@@ -163,7 +163,7 @@
                     @enderror
                   </td>
                   <td>
-                    <textarea class="form-control" style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks1c">{{ old('remarks1c') }}</textarea>
+                    <textarea class="form-control textArea"  name="remarks1c">{{ old('remarks1c') }}</textarea>
                     @error('remarks1c')
                       <div class="text-danger">{{ $message }}</div>
                     @enderror

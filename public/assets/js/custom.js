@@ -15,70 +15,49 @@
 
 
 // FORM 6 Computation
-function computePR(){
+function computePR(columnData){
+
+    // const dataString = JSON.stringify(columnData, null, 2); 
+
+    // const names = columnData.map(dataString => dataString.name);
+    // console.log(names);
 
     let totalAverage = 0; // Initialize total average
-    let count = 8; //Initialize Count
-    // Calculate individual averages for A, C, D, E, F, H
-    ['form6InputA', 'form6InputC', 'form6InputD', 'form6InputE', 'form6InputF', 'form6InputH'].forEach((id) => {
-        let rating = parseFloat(document.getElementById(id).value) || 0;
-        let average = (rating / 5) * 100;
-        document.getElementById(id.replace('Input', 'InputAve')).value = average;
-        totalAverage += average; // Add to total
+    let count = 0;
+
+    count = columnData.length;
+    columnData.forEach(function(user) {
+        // Find the input with the corresponding data-id attribute
+        let average = (user.rate / 5) * 100;
+        $('.user-input[data-id="rating' + user.column1 + '"]').val(parseFloat(average).toFixed(1));
+        totalAverage += average;
         // count++;
     });
 
-    // Calculate average for BB and B
-    let sumB = ['form6InputBB', 'form6InputB'].reduce((total, id) => total + (parseFloat(document.getElementById(id).value) || 0), 0);
-    let aveB = (sumB / 10) * 100;
-    document.getElementById('form6InputAveB').value = aveB;
-    totalAverage += aveB; // Add to total
-    // count++;
+    total = totalAverage/count;
 
-    // Calculate average for GG and G
-    let sumG = ['form6InputGG', 'form6InputG'].reduce((total, id) => total + (parseFloat(document.getElementById(id).value) || 0), 0);
-    let aveG = (sumG / 10) * 100;
-    document.getElementById('form6InputAveG').value = aveG;
-    totalAverage += aveG; // Add to total
-    // count++;
-
-    let points = totalAverage / 8;
-
-    document.getElementById('form6InputScore').value = points;
+    document.getElementById('form6InputScore').value = parseFloat(total).toFixed(1);
 
 }
 
 // OverAllScore Computation
-function OverAllScore(){
+function OverAllScore(columnData){
 
     let totalAverage = 0; // Initialize total average
-    let count = 8; //Initialize Count
-    // Calculate individual averages for A, C, D, E, F, H
-    ['ratingA', 'ratingC', 'ratingD', 'ratingE', 'ratingF', 'ratingH'].forEach((id) => {
-        let rating = parseFloat(document.getElementById(id).value) || 0;
-        let average = (rating / 5) * 100;
-        totalAverage += average; // Add to total
+    count = columnData.length;
+    columnData.forEach(function(user) {
+        // Find the input with the corresponding data-id attribute
+        let average = (user.rate / 5) * 100;
+        totalAverage += average;
         // count++;
     });
 
-    // Calculate average for BB and B
-    let sumB = ['ratingBB', 'ratingB'].reduce((total, id) => total + (parseFloat(document.getElementById(id).value) || 0), 0);
-    let aveB = (sumB / 10) * 100;
-    totalAverage += aveB; // Add to total
-    // count++;
-
-    // Calculate average for GG and G
-    let sumG = ['ratingGG', 'ratingG'].reduce((total, id) => total + (parseFloat(document.getElementById(id).value) || 0), 0);
-    let aveG = (sumG / 10) * 100;
-    totalAverage += aveG; // Add to total
-    // count++;
-
-    // Computation for Mellpi Pro
-    let points = totalAverage / 8;
+    let points = totalAverage/count;
     let scoreP1AS = ( points * 0.8);
-
-    document.getElementById('pointsP1AS').value = points;
+    
+    document.getElementById('pointsP1AS').value = parseFloat(points).toFixed(1);
     document.getElementById('scoreP1AS').value = scoreP1AS;
+   
 
 
     // Computation for Interview
@@ -95,7 +74,7 @@ function OverAllScore(){
 
 function updateDisplayBasedOnHeader(header) {
     // Reset all blocks to default hidden state
-    let blocks = ['numYrBlock', 'dateDesigBlock', 'dateAppointBlock', 'pro_activitiesBlock', 'assign_taskBlock', 'secondedBlock', 'profActBlock'];
+    let blocks = ['numYrBlock', 'dateDesigBlock', 'dateAppointBlock', 'pro_activitiesBlock', 'assign_taskBlock', 'secondedBlock'];
     blocks.forEach(block => document.getElementById(block).style.display = 'none');
 
     // Set specific configurations based on the header value
@@ -120,7 +99,7 @@ function updateDisplayBasedOnHeader(header) {
         document.getElementById('numYr').innerHTML = 'Number of years as BNS';
         document.getElementById('numYrBlock').style.display = 'block';
         document.getElementById('dateAppointBlock').style.display = 'block';
-        document.getElementById('province').style.display = 'none';
+        // document.getElementById('province').style.display = 'none';
     } else if (header === 'PNAO') {
         document.getElementById('province').style.display = 'none';
     }
@@ -131,6 +110,7 @@ function updateDisplayBasedOnHeader(header) {
 document.getElementById('header').addEventListener('change', function() {
     let header = this.value;
     updateDisplayBasedOnHeader(header);
+    fetchData(header);
 });
 
 // Check for saved header value on page load
@@ -138,10 +118,153 @@ document.addEventListener('DOMContentLoaded', function() {
     let savedHeader = document.getElementById('header').value; // Retrieve the saved header value, for example, from a hidden input field, or localStorage
     if (savedHeader) {
         updateDisplayBasedOnHeader(savedHeader);
+        fetchData(savedHeader);
     }
 });
 
 
+function radialDiagram(){
+    const labels = JSON.parse($('#chart-data').attr('data-labels'));
+    const performanceData = JSON.parse($('#chart-data').attr('data-performance'));
+
+    const ctx = document.getElementById('myRadarChart').getContext('2d');
+
+    const data = {
+        labels: labels, // Use dynamic labels from data
+        datasets: [{
+            label: 'TARGET RATING',
+            data: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100], // Example static data, replace if needed
+            fill: true,
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgb(54, 162, 235)',
+            pointBackgroundColor: 'rgb(54, 162, 235)',
+            pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: 'rgb(54, 162, 235)'
+        }, {
+            label: 'PERFORMANCE RATING',
+            data: performanceData,
+            fill: true,
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgb(255, 99, 132)',
+            pointBackgroundColor: 'rgb(255, 99, 132)',
+            pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: 'rgb(255, 99, 132)'
+        }]
+    };
+
+    const options = {
+        scale: {
+            angleLines: {
+                display: true
+            },
+            ticks: {
+                suggestedMin: 0,
+                suggestedMax: 120,
+                stepSize: 20,
+                callback: function(value) {
+                    return value + '%'; // Add percentage symbol to ticks
+                }
+            }
+        },
+        plugins: {
+            legend: {
+                display: true,
+                position: 'right'
+            }
+        },
+        title: {
+            display: true,
+            text: 'Provincial Nutrition Action Officer Monitoring Radial Diagram'
+        }
+    };
+
+    const myRadarChart = new Chart(ctx, {
+        type: 'radar',
+        data: data,
+        options: options
+    });
+}
+
+
+function fetchData(header){
+        // var selectedValue = $(this).val(); // Get selected value from dropdown
+        var form5_id = $('#id').val;
+       
+       var valueMap = {
+            'CMNAO': 2,
+            'PNAO': 1,
+            'BNS': 1,
+            'DNPC': 3,
+            'ROBNC': 4,
+            'CMNPC': 5
+        };
+
+        selectedValue = valueMap[header] || header; 
+    //    alert(selectedValue);
+        // Retrieve and parse data from the element with ID 'dataform'
+        var dataJson = document.getElementById('dataform').value;
+        var data = JSON.parse(dataJson); // Convert JSON string to JavaScript object
+        
+
+        var tableBody = $('#datas');
+        tableBody.empty(); // Clear previous data
+        
+        var initialRow = '<tr>';
+        initialRow += '<td>&nbsp;</td>';
+        initialRow += '<td>&nbsp;</td>';
+        initialRow += '<td class="bold text-center">1</td>';
+        initialRow += '<td class="bold text-center">2</td>';
+        initialRow += '<td class="bold text-center">3</td>';
+        initialRow += '<td class="bold text-center">4</td>';
+        initialRow += '<td class="bold text-center">5</td>';
+        initialRow += '<td>&nbsp;</td>';
+        initialRow += '<td>&nbsp;</td>';
+        initialRow += '<td>&nbsp;</td>';
+        initialRow += '</tr>';
+        tableBody.append(initialRow); 
+
+        $.each(data, function(index, item) {
+            
+            // Check if the item belongs to the selected value
+            if (item.belongTo === selectedValue  ) {
+                    var remarks =  item.form_remarks === undefined ? '':item.form_remarks;
+                    var row = '<tr>';
+
+                // Only append the column1 data
+                if (item.column1 !== undefined) {
+                    row += '<td>' + item.column1 + '</td>'; // Display column1 data
+                    row += '<td>' + item.column2 + '</td>';
+                    row += '<td>' + item.column3 + '</td>';
+                    row += '<td>' + item.column4 + '</td>';
+                    row += '<td>' + item.column5 + '</td>';
+                    row += '<td>' + item.column6 + '</td>';
+                    row += '<td>' + item.column7 + '</td>';
+                    row += '<td>' + item.column8 + '</td>';
+
+                    row += '<td>';
+                    row += '<select id="loadProvince' + index + '" class="form-control" name="ratings[' + index + ']">';
+                    row += '<option value="">Select</option>';
+                        for (var i = 1; i <= 5; i++) {
+                            var selected = (item.rate == i) ? 'selected' : '';
+                            row += '<option value="' + i + '" ' + selected + '>' + i + '</option>';
+                        }
+                    row += '</select>';
+                    row += '</td>';
+                    
+                    row +='<input type="hidden" name="ratingname['+ index +']" value="'+ item.rating +'" />';
+                    row +='<input type="hidden" name="content_id['+ index +']" value="'+ item.id +'" />';
+                    row +='<td><textarea name="remarks['+ index +']" placeholder="Your remarks" class="textArea">'+ remarks +'</textarea></td>';
+                }
+
+                row += '</tr>';
+             
+            }
+            tableBody.append(row); // Append the row to the table body
+        });
+
+    }
 
 
 

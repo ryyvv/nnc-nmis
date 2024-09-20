@@ -5,14 +5,18 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str; 
 
-class Userroles extends Seeder
+class otherroleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
+ 
+
         DB::table('userroles')->insert([
             [ 
                 'id' => '1',
@@ -58,7 +62,7 @@ class Userroles extends Seeder
                 'id' => '9',
                 'userrole' => 'City/Municipal Staff',
                 'usercode' => 'City/Municipal', 
-            ],
+            ], 
             [ 
                 'id' => '10',
                 'userrole' => 'Barangay Scholar',
@@ -71,6 +75,7 @@ class Userroles extends Seeder
             ],
 
         ]);
+
 
     }
 }

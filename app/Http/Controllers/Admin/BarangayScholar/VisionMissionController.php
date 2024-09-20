@@ -137,6 +137,20 @@ class VisionMissionController extends Controller
                     'municipal_id' => auth()->user()->city_municipal,
                     'user_id' => auth()->user()->id,
                 ]);
+
+                DB::table('lgubarangayreport')->insert([
+                    'mplgubrgyvisionmissions_id' => $vmBarangay->id, 
+                    'barangay_id' => $request->barangay_id,
+                    'municipal_id' => $request->municipal_id,   
+                    'dateMonitoring' => $request->dateMonitoring,
+                    'periodCovereda' => $request->periodCovereda,
+                    'status' => $request->status,
+                    'user_id' => $request->user_id,
+                    'count' =>  1,
+                    'created_at' => now(), // Optional
+                    'updated_at' => now(), // Optional
+                ]);
+    
             }
     
             return redirect('BarangayScholar/visionmission')->with('success', 'Data created successfully!');

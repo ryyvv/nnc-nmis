@@ -47,6 +47,7 @@ use App\Http\Controllers\Admin\ProvincialStaff\PSDashboardController;
 // City-Municipal Officer
 use App\Http\Controllers\Admin\CityMunicipalOfficer\CMODashboardController;
 use App\Http\Controllers\Admin\CityMunicipalOfficer\CMOMellpiLGUProfileBarangayController;
+use App\Http\Controllers\Admin\CityMunicipalOfficer\CMOMellpiLGUProfileSummaryBarangayController;
 use App\Http\Controllers\Admin\CityMunicipalOfficer\CMOMellpiLGUProfileBarangayBudgetAIPController;
 use App\Http\Controllers\Admin\CityMunicipalOfficer\CMOMellpiLGUProfileBarangayChangeNSController;
 use App\Http\Controllers\Admin\CityMunicipalOfficer\CMOMellpiLGUProfileBarangayDiscussionQuestionController;
@@ -207,14 +208,17 @@ Route::group(['middleware' => 'auth'], function () {
         //==========================================================================================================================================
             // UserDashboard
             //DashboardController
-            Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+            Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index'); 
+            Route::get('CMSDashboard/fetchreport', [DashboardController::class, 'fetchReport'])->name('CMSDashboard.fetchreport'); 
+
+
             Route::post('/dashboard', [DashboardController::class, 'store'])->name('dashboard.store');
             Route::get('/dashboard/create', [DashboardController::class, 'create'])->name('dashboard.create');
             Route::get('/dashboard/{admin}', [DashboardController::class, 'update'])->name('dashboard.update');
             Route::get('/dashboard/{admin}/edit', [DashboardController::class, 'create'])->name('dashboard.edit');
             Route::DELETE('/dashboard/{admin}', [DashboardController::class, 'destroy'])->name('dashboard.destroy');
 
-
+           
          //==========================================================================================================================================
                 //AdminUser List Controller
                 Route::get('CentralAdmin/admin', [AdminUserController::class, 'index'])->name('CAadmin.index');
@@ -279,14 +283,16 @@ Route::group(['middleware' => 'auth'], function () {
 
         //==========================================================================================================================================
         
-        Route::get('/lguProfile/fetchreport', [CMOMellpiLGUProfileBarangayController::class, 'fetchReport'])->name('CMOLGUprofile.fetch');
+        Route::get('BarangayScholar/lguProfile/report', [CMOMellpiLGUProfileBarangayController::class, 'report'])->name('CMOLGUprofile.fetch');
+        Route::get('BarangayScholar/lguProfile/fetchreport', [CMOMellpiLGUProfileBarangayController::class, 'fetchReport'])->name('CMOLGUprofile.fetchreport');
+        // Route::get('BarangayScholar/lguProfile/fetchreport', [CMOMellpiLGUProfileSummaryBarangayController::class, 'fetchReport'])->name('CMOLGUprofilesummary.fetchreport');
 
 
         //DashboardController
         Route::get('/cmsdashboard', [CMSDashboardController::class, 'index'])->name('CMSdashboard.index');
         Route::POST('/dashboard', [CMSDashboardController::class, 'store'])->name('CMSdashboard.store');
         Route::get('/dashboard/create', [CMSDashboardController::class, 'create'])->name('CMSdashboard.create');
-        Route::get('/dashboard/{admin}', [CMSDashboardController::class, 'update'])->name('CMSdashboard.update');
+        Route::get('/dashboard/{admin}', [CMSDashboardController::class, 'update'])->name('CMSdashboard.update'); 
         Route::get('/dashboard/{admin}/edit', [CMSDashboardController::class, 'create'])->name('CMSdashboard.edit');
         Route::DELETE('/dashboard/{admin}', [CMSDashboardController::class, 'destroy'])->name('CMSdashboard.destroy');
 
@@ -299,6 +305,9 @@ Route::group(['middleware' => 'auth'], function () {
     
         //==========================================================================================================================================
         //CityMunicipal/lguprofile
+
+      
+
         //LGUProfileController
         Route::get('/CityMunicipal/lguprofile', [CMSLGUprofileController::class, 'index'])->name('CMSLGUprofile.index'); 
         Route::get('/CityMunicipal/lguprofile/{id}/show', [CMSLGUprofileController::class, 'show'])->name('CMSLGUprofile.show');
@@ -536,6 +545,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/lguform5createdata', [MellpiProForLNFP_barangayController::class, 'createdata'])->name('form5CreateData');
         Route::get('/lguForm5addForm/{id}', [MellpiProForLNFP_barangayController::class, 'addForm'])->name('lguForm5addForm');
         Route::get('/lguForm5ViewForm/{id}', [MellpiProForLNFP_barangayController::class, 'monitoringForm5view'])->name('lguForm5ViewForm');
+        Route::post('/toggle-switch', [MellpiProForLNFP_barangayController::class, 'handleSwitch'])->name('toggle.switch');
+
+
+        //Form 5 dynamic forms
+        // Route::post('/fetch-form-data', [MellpiProForLNFP_barangayController::class, 'fetchFormData'])->name('fetch.form.data'); 
         
         //Form 6 Radial Diagram
         Route::get('/lguform6Index', [MellpiProForLNFP_form6Controller::class, 'radialForm6'])->name('MellpiProRadialIndex.index');
@@ -591,7 +605,10 @@ Route::group(['middleware' => 'auth'], function () {
 
         //Nutrition Office
         Route::get('/bspersonnelDnaDirectory', [BSPersonnel::class, 'index'])->name('BSpersonnel.index');
-
+        Route::get('/bspersonnelDnaDirectory/create', [BSPersonnel::class, 'create'])->name('BSpersonnel.create');
+        Route::post('/bspersonnelDnaDirectory/nao', [BSPersonnel::class, 'storeNAO'])->name('BSpersonnel.storeNAO');
+        Route::post('/bspersonnelDnaDirectory/npc', [BSPersonnel::class, 'storeNPC'])->name('BSpersonnel.storeNPC');
+        Route::post('/bspersonnelDnaDirectory/bns', [BSPersonnel::class, 'storeBNS'])->name('BSpersonnel.storeBNS');
     });
 
 
@@ -625,18 +642,18 @@ Route::prefix('admin')->group(function () {
     Route::get('/regions', [AdminUserController::class, 'getRegions'])->name('admin.regions.get');
 });
 
-// Equipment Inventory
-Route::prefix('equipment')->group(function () {
-    Route::get('/regions', [EquipmentInventoryController::class, 'getRegions'])->name('equipment.regions.get');
-    Route::get('/provinces', [EquipmentInventoryController::class, 'getProvinces'])->name('equipment.provinces.get');
-    Route::get('/cities', [EquipmentInventoryController::class, 'getCities'])->name('equipment.cities.get');
-    Route::get('/highly-urbanized-cities', [EquipmentInventoryController::class, 'getHighlyUrbanizedCities'])->name('equipment.highlyUrbanizedCities.get');
-    Route::get('/independent-component-cities', [EquipmentInventoryController::class, 'getIndependentComponentCities'])->name('equipment.independentComponentCities.get');
-    Route::get('/component-cities', [EquipmentInventoryController::class, 'getComponentCities'])->name('equipment.componentCities.get');
-    Route::get('/municipalities', [EquipmentInventoryController::class, 'getMunicipalities'])->name('equipment.municipalities.get');
-    Route::get('/sub-municipalities', [EquipmentInventoryController::class, 'getSubMunicipalities'])->name('equipment.subMunicipalities.get');
-    Route::get('/barangays', [EquipmentInventoryController::class, 'getBarangays'])->name('equipment.barangays.get');
-    Route::get('/cities-municipalities', [EquipmentInventoryController::class, 'getCitiesAndMunicipalities'])->name('equipment.citiesAndMunicipalities.get');
+// Location
+Route::prefix('location')->group(function () {
+    Route::get('/regions', [EquipmentInventoryController::class, 'getRegions'])->name('location.regions.get');
+    Route::get('/provinces', [EquipmentInventoryController::class, 'getProvinces'])->name('location.provinces.get');
+    Route::get('/cities', [EquipmentInventoryController::class, 'getCities'])->name('location.cities.get');
+    Route::get('/highly-urbanized-cities', [EquipmentInventoryController::class, 'getHighlyUrbanizedCities'])->name('location.highlyUrbanizedCities.get');
+    Route::get('/independent-component-cities', [EquipmentInventoryController::class, 'getIndependentComponentCities'])->name('location.independentComponentCities.get');
+    Route::get('/component-cities', [EquipmentInventoryController::class, 'getComponentCities'])->name('location.componentCities.get');
+    Route::get('/municipalities', [EquipmentInventoryController::class, 'getMunicipalities'])->name('location.municipalities.get');
+    Route::get('/sub-municipalities', [EquipmentInventoryController::class, 'getSubMunicipalities'])->name('location.subMunicipalities.get');
+    Route::get('/barangays', [EquipmentInventoryController::class, 'getBarangays'])->name('location.barangays.get');
+    Route::get('/cities-municipalities', [EquipmentInventoryController::class, 'getCitiesAndMunicipalities'])->name('location.citiesAndMunicipalities.get');
 });
 
  

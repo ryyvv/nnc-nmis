@@ -107,4 +107,9 @@
     cursor:pointer
 }
 
- 
+ .textArea {
+    width:inherit;
+    height:300px!important;
+    max-height:1050px!important;
+    line-height:1.5!important;
+ }

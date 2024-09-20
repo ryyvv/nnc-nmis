@@ -16,7 +16,7 @@
     <div class="card">
         <div class="row row-12" style="display:inline-block">
             <div class="card-header">
-                <h5 class="title">{{__("Equipment Inventory")}}</h5>
+                <h5 class="title">{{__("Edit Equipment Inventory")}}</h5>
             </div>
         </div>
 
@@ -364,10 +364,10 @@ $(document).ready(function() {
     };
 
     const routes = {
-        getRegions: '{{ route("equipment.regions.get") }}',
-        getProvinces: '{{ route("equipment.provinces.get") }}',
-        getCitiesAndMunicipalities: '{{ route("equipment.citiesAndMunicipalities.get") }}',
-        getBarangays: '{{ route("equipment.barangays.get") }}',
+        getRegions: '{{ route("location.regions.get") }}',
+        getProvinces: '{{ route("location.provinces.get") }}',
+        getCitiesAndMunicipalities: '{{ route("location.citiesAndMunicipalities.get") }}',
+        getBarangays: '{{ route("location.barangays.get") }}',
         getCitiesAndMunicipalitiesInventory: '{{ route("BSequipmentInventory.CMInventory.get") }}'
     };
 

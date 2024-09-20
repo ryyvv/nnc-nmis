@@ -130,7 +130,11 @@
                                 </div>
                                 <div class="form-group col" id="pro_activitiesBlock" style="display: none;">
                                         <label for="profAct">With continuing professional activities?<span style="color:red">*</span> </label>
-                                        <input class="form-control" type="text" name="profAct" id="profAct" value="{{ old('profAct', $row->profAct) }}">
+                                        <select class="form-control" name="profAct" id="profAct">
+                                            <option {{ old('profAct', $row->profAct) == '' ? 'selected' : '' }} value="">Select</option>
+                                            <option value="Yes" {{ old('profAct', $row->profAct) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                            <option value="No" {{ old('profAct', $row->profAct) == 'No' ? 'selected' : '' }}>No</option>
+                                        </select>
                                         @error('profAct')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -160,18 +164,7 @@
                                 </div>
                             </div>
                             <div style="display:flex">
-                                <div class="form-group col" id="profActBlock" style="display: block;" >
-                                    <label for="profAct">With continuing professional Activities?:<span style="color:red">*</span> </label>
-                                    <select class="form-control" name="profAct" id="profAct">
-                                            <option {{ old('profAct', $row->profAct) == '' ? 'selected' : '' }} value="">Select</option>
-                                            <option value="Yes" {{ old('profAct', $row->profAct) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                            <option value="No" {{ old('profAct', $row->profAct) == 'No' ? 'selected' : '' }}>No</option>
-                                        </select>
-                                        @error('profAct')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                   
-                                </div>
+                  
                                 <div class="form-group col">
                                         <label for="bday">Birthday:<span style="color:red">*</span> </label>
                                         <input class="form-control" type="date" name="bday" id="bday" value="{{ old('bday',$row->bdate) }}">
@@ -262,7 +255,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group col" id="assign_taskBlock" style="display: none;" > 
-                                    <label>Assigned tasks:<span style="color:red">*</span> </label>
+                                    <label>Assigned tasks: </label>
                                     <br />
                                      <span><input type="radio" name="assign_task" <?php echo $row->assign_task == 'BNS' ? 'selected':'' ?> value="BNS">&nbsp;&nbsp;BNS supervisor</span>
                                      <br />
@@ -275,12 +268,13 @@
                             </div>
 
 
+                            <input type="hidden" value="{{ $form5a }}" id="dataform" />
                             <div class="form5">
                                 <!-- endtablehearder -->
                                 <div class="row" style="border-radius:10px;padding-left:2rem!important;padding-right:1rem!important">
 
                                     <div class="row table-responsive" style="display:flex;padding:10px;">
-                                        <table class="table table-striped table-hover">
+                                        <table class="table table-striped table-hover" id="data-table">
                                             <thead style="background-color:#508D4E;">
                                                 <th class="text-center">&nbsp;</th>
                                                 <th class="tableheader">Elements</th>
@@ -289,10 +283,10 @@
                                                 <th class="tableheader" style="padding-left:20px;padding-right:20px">Rating</th>
                                                 <th class="tableheader">Remarks</th>
                                             </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>&nbsp;</td>
-                                                    <td>&nbsp;</td>
+                                            <tbody id="datas"> 
+                                            <tr>
+                                                    <td colspan="10" class="bold text-center">Select Header to view form content</td>
+                                                    <!-- <td>&nbsp;</td>
                                                     <td class="bold text-center">1</td>
                                                     <td class="bold text-center">2</td>
                                                     <td class="bold text-center">3</td>
@@ -300,42 +294,15 @@
                                                     <td class="bold text-center">5</td>
                                                     <td>&nbsp;</td>
                                                     <td>&nbsp;</td>
-                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td> -->
                                                 </tr>
-                                                @foreach ($form5a as $form5a)
-                                                <tr>
-
-                                                    <td>{{$form5a->column1}}</td>
-                                                    <td>{{$form5a->column2}}</td>
-                                                    <td>{{$form5a->column3}}</td>
-                                                    <td>{{$form5a->column4}}</td>
-                                                    <td>{{$form5a->column5}}</td>
-                                                    <td>{{$form5a->column6}}</td>
-                                                    <td>{{$form5a->column7}}</td>
-                                                    <td>{{$form5a->column8}}</td>
-                                                    <td>
-
-                                                    
-                                                            <select id="loadProvince1" class="form-control" name="{{$form5a->rating}}">
-                                                                <!-- <option value="">Select</option> -->
-                                                                <option value="">Select</option>
-                                                                <option value="1" {{ old($form5a->rating, $row->{$form5a->rating}) == 1 ? 'selected' : '' }}>1</option>
-                                                                <option value="2" {{ old($form5a->rating, $row->{$form5a->rating}) == 2 ? 'selected' : '' }}>2</option>
-                                                                <option value="3" {{ old($form5a->rating, $row->{$form5a->rating})== 3 ? 'selected' : '' }}>3</option>
-                                                                <option value="4" {{ old($form5a->rating, $row->{$form5a->rating}) == 4 ? 'selected' : '' }}>4</option>
-                                                                <option value="5" {{ old($form5a->rating, $row->{$form5a->rating}) == 5 ? 'selected' : '' }}>5</option>
-                                                            </select>
-                                                            @error($form5a->rating)  
-                                                            <div class="text-danger">{{ $message }}</div>
-                                                            @enderror
-                                                    </td>
-                                                    <td><textarea name="{{ $form5a->remarks }}" placeholder="Your remarks" class="form-control">{{ $row->{$form5a->remarks} }}</textarea></td>
-                                                </tr>
-
-                                                @endforeach
+                                                
                                             </tbody>
                                         </table>
                                     </div>
+
+
+                                    
                                     </div>
 
                 
@@ -362,6 +329,17 @@
         </div>
     </div>
 </div>
+
+
+<script>
+
+$(document).ready(function(){
+
+
+    fetchDataForm();
+});
+
+</script>
 
 @include('Modal.Draft')
 @include('Modal.Submit')

@@ -41,6 +41,7 @@ class MellpiProForLNFP_OverallScoreController extends Controller
             'lnfp_interview_form.header as interview_header'
         )
         ->where('lnfp_overall_score_form.user_id', auth()->user()->id )
+        ->orderBy('lnfp_overall_score_form.updated_at','DESC')
         ->get();
         return view('BarangayScholar/MellpiProForLNFP/MellpiProOverallScore/OverallScoreFormPNAOIndex', ['overallScore' => $overallScore]);
     }
@@ -59,16 +60,7 @@ class MellpiProForLNFP_OverallScoreController extends Controller
             'lnfp_overall_score_form.date as dateOver',
             'lnfp_form5a_rr.nameofPnao as pnaoName',
             'lnfp_form5a_rr.address as pnaoAddress',
-            'lnfp_form5a_rr.ratingA as ratingA' ,
-            'lnfp_form5a_rr.ratingB as ratingB' ,
-            'lnfp_form5a_rr.ratingB as ratingBB' ,
-            'lnfp_form5a_rr.ratingC as ratingC' ,
-            'lnfp_form5a_rr.ratingD as ratingD' ,
-            'lnfp_form5a_rr.ratingE as ratingE' ,
-            'lnfp_form5a_rr.ratingF as ratingF' ,
-            'lnfp_form5a_rr.ratingG as ratingG' ,
-            'lnfp_form5a_rr.ratingG as ratingGG' ,
-            'lnfp_form5a_rr.ratingH as ratingH' ,
+            'lnfp_form5a_rr.id as form5_id',
             'lnfp_interview_form.id as interview_id',
             'lnfp_interview_form.header as interview_header',
             'lnfp_interview_form.subtotalAScore as intSubtotal',
@@ -78,7 +70,12 @@ class MellpiProForLNFP_OverallScoreController extends Controller
         ->first();
         // dd($overallScore);
 
-        return view('BarangayScholar/MellpiProForLNFP/MellpiProOverallScore/View', ['overallScore' => $overallScore, 'availableForms' => $availableForms]);
+        $graph_rating = DB::table('lnfp_form5_rating') 
+                            ->Where('lnfp_form5_rating.form5_id','=',$overallScore->form5_id) 
+                            ->select('lnfp_form5_rating.rating as rate')
+                            ->get();
+
+        return view('BarangayScholar/MellpiProForLNFP/MellpiProOverallScore/View', ['overallScore' => $overallScore, 'availableForms' => $availableForms, 'graph_rating' => $graph_rating ]);
     }
 
 
@@ -93,18 +90,9 @@ class MellpiProForLNFP_OverallScoreController extends Controller
         ->select(
             'lnfp_overall_score_form.id as overallId',
             'lnfp_overall_score_form.date as dateOver',
+            'lnfp_form5a_rr.id as form5_id',
             'lnfp_form5a_rr.nameofPnao as pnaoName',
             'lnfp_form5a_rr.address as pnaoAddress',
-            'lnfp_form5a_rr.ratingA as ratingA' ,
-            'lnfp_form5a_rr.ratingB as ratingB' ,
-            'lnfp_form5a_rr.ratingB as ratingBB' ,
-            'lnfp_form5a_rr.ratingC as ratingC' ,
-            'lnfp_form5a_rr.ratingD as ratingD' ,
-            'lnfp_form5a_rr.ratingE as ratingE' ,
-            'lnfp_form5a_rr.ratingF as ratingF' ,
-            'lnfp_form5a_rr.ratingG as ratingG' ,
-            'lnfp_form5a_rr.ratingG as ratingGG' ,
-            'lnfp_form5a_rr.ratingH as ratingH' ,
             'lnfp_interview_form.header as interview_header',
             'lnfp_interview_form.subtotalAScore as intSubtotal',
             'lnfp_form8.*'
@@ -113,7 +101,12 @@ class MellpiProForLNFP_OverallScoreController extends Controller
         ->first();
         // dd($overallScore);
 
-        return view('BarangayScholar/MellpiProForLNFP/MellpiProOverallScore/OverallScoreFormPNAOEdit', ['overallScore' => $overallScore, 'availableForms' => $availableForms]);
+        $graph_rating = DB::table('lnfp_form5_rating') 
+                            ->Where('lnfp_form5_rating.form5_id','=',$overallScore->form5_id) 
+                            ->select('lnfp_form5_rating.rating as rate')
+                            ->get();
+
+        return view('BarangayScholar/MellpiProForLNFP/MellpiProOverallScore/OverallScoreFormPNAOEdit', ['overallScore' => $overallScore, 'availableForms' => $availableForms, 'graph_rating' => $graph_rating]);
     }
 
     public function update(Request $request)

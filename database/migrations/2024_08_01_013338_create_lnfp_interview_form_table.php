@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::create('lnfp_interview_form', function (Blueprint $table) {
             $table->id();
-            $table->integer('forThePeriod')->nullable();
             $table->integer('form5_id')->nullable();
             $table->integer('lnfp_lgu_id')->nullable();
-            $table->string('lnfp_officer', 255)->nullable();
-            $table->text('nameOf')->nullable();
-            $table->text('areaAssign')->nullable();
+            $table->string('lnfp_officer')->nullable();
+            $table->string('nameOf')->nullable();
+            $table->string('areaAssign')->nullable();
             $table->date('dateOfInterview')->nullable();
             $table->text('question1')->nullable();
             $table->text('question2')->nullable();
@@ -32,23 +31,14 @@ return new class extends Migration
             $table->text('q2Remarks')->nullable();
             $table->text('q3Remarks')->nullable();
             $table->text('q4Remarks')->nullable();
-            $table->double('subtotalAScore')->nullable();
-            $table->integer('status');
+            $table->decimal('subtotalAScore', 5, 2)->nullable();
+            $table->string('periodCovereda')->nullable();
+            $table->date('dateMonitoring')->nullable();
+            $table->integer('status')->default(0);
+            $table->unsignedBigInteger('form8_id')->nullable();
+            $table->string('header')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             
-            $table->bigInteger('user_id')->unsigned()->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->nullable();
-
-           $table->integer('barangay_id')->unsigned()->nullable();
-           $table->foreign('barangay_id')->references('id')->on('barangays')->nullable(); 
-
-           $table->integer('municipal_id')->unsigned()->nullable(); 
-           $table->foreign('municipal_id')->references('id')->on('municipals')->nullable();
-
-           $table->integer('province_id')->unsigned()->nullable(); 
-           $table->foreign('province_id')->references('id')->on('provinces')->nullable();
-
-           $table->integer('region_id')->unsigned()->nullable(); 
-           $table->foreign('region_id')->references('id')->on('regions')->nullable();
             $table->timestamps();
         });
     }

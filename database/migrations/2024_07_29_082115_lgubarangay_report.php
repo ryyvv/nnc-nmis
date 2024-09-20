@@ -18,35 +18,35 @@ return new class extends Migration
             
             // lguProfile 
             $table->unsignedBigInteger('lguprofilebarangay_id')->nullable();
-            $table->foreign('lguprofilebarangay_id')->references('id')->on('lguprofilebarangay')->onDelete('cascade')->onDelete('cascade');
+           
 
             //VisionMission
             $table->unsignedBigInteger('mplgubrgyvisionmissions_id')->nullable();
-            $table->foreign('mplgubrgyvisionmissions_id')->references('id')->on('mplgubrgyvisionmissions')->onDelete('cascade');
+            
 
             //Nutrition Policies
             $table->unsignedBigInteger('mellpiprobarangaynationalpolicies_id')->nullable();
-            $table->foreign('mellpiprobarangaynationalpolicies_id')->references('id')->on('mellpiprobarangaynationalpolicies')->onDelete('cascade');
+             
 
             //Governance
             $table->unsignedBigInteger('mplgubrgygovernance_id')->nullable();
-            $table->foreign('mplgubrgygovernance_id')->references('id')->on('mplgubrgygovernance')->onDelete('cascade');
+           
             
             //LNC Management
             $table->unsignedBigInteger('mplgubrgylncmanagement_id')->nullable();
-            $table->foreign('mplgubrgylncmanagement_id')->references('id')->on('mplgubrgylncmanagement')->onDelete('cascade');
+             
 
             //Nutrition Service
             $table->unsignedBigInteger('mplgubrgynutritionservice_id')->nullable();
-            $table->foreign('mplgubrgynutritionservice_id')->references('id')->on('mplgubrgynutritionservice')->onDelete('cascade');
+             
 
             //Change in Nutrition Service
             $table->unsignedBigInteger('mplgubrgychangeNS_id')->nullable();
-            $table->foreign('mplgubrgychangeNS_id')->references('id')->on('mplgubrgychangeNS')->onDelete('cascade');
+             
 
             //Discussion Question
             $table->unsignedBigInteger('mplgubrgydiscussionquestion_id')->nullable();
-            $table->foreign('mplgubrgydiscussionquestion_id')->references('id')->on('mplgubrgydiscussionquestion')->onDelete('cascade');
+           
             
             $table->integer('count');
 
@@ -54,14 +54,11 @@ return new class extends Migration
             // $table->integer('mplgubrgylncmanagement_id')->unsigned(); 
             // $table->foreign('mplgubrgylncmanagement_id')->references('id')->on('mplgubrgylncmanagement');
 
-            $table->integer('municipal_id')->unsigned();
-            $table->foreign('municipal_id')->references('id')->on('municipals'); 
+            $table->integer('municipal_id')->unsigned(); 
             
-            $table->integer('barangay_id')->unsigned(); 
-            $table->foreign('barangay_id')->references('id')->on('barangays'); 
+            $table->integer('barangay_id')->unsigned();  
 
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('user_id')->unsigned(); 
             $table->integer('status'); 
             
             $table->timestamps();

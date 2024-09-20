@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\lnfp_lguprofile;
 use App\Models\lnfp_form5a_rr;
-use App\Models\lnfp_lguprofiletracking;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\LocationController;
@@ -138,14 +137,7 @@ class MellpiProForLNFP_barangayLGUController extends Controller
                
 
                 $lnfp_lguprofile = lnfp_lguprofile::create($fields + ['status' => 1 ]);
-                
-                lnfp_lguprofiletracking::create([
-                    'lnfp_lguprofile_id' => $lnfp_lguprofile->id,
-                    'status' => 1,
-                    'barangay_id' => auth()->user()->barangay,
-                    'municipal_id' => auth()->user()->city_municipal,
-                    'user_id' => auth()->user()->id,
-                ]);
+               
     
     
                 $lnfp_form5a_rr = lnfp_form5a_rr::create([
@@ -165,13 +157,7 @@ class MellpiProForLNFP_barangayLGUController extends Controller
 
             // Draft
             $lnfp_lguprofile = lnfp_lguprofile::create($fields + ['status' => 2 ]);
-            lnfp_lguprofiletracking::create([
-                'lnfp_lguprofile_id' => $lnfp_lguprofile->id,
-                'status' => 2,
-                'barangay_id' => auth()->user()->barangay,
-                'municipal_id' => auth()->user()->city_municipal,
-                'user_id' => auth()->user()->id,
-            ]);
+           
 
         return redirect()->route('BSLGUprofileLNFPIndex.index')->with('success', 'Data stored as Draft!');
 
@@ -216,14 +202,7 @@ class MellpiProForLNFP_barangayLGUController extends Controller
 
                    lnfp_lguprofile::where('id', $request->id)
                                         ->update($fields + [ 'status' => 1 ]);
-                         
-                        lnfp_lguprofiletracking::create([
-                                'lnfp_lguprofile_id' => $request->id,
-                                'status' => $request->submitStatus,
-                                'barangay_id' => auth()->user()->barangay,
-                                'municipal_id' => auth()->user()->city_municipal,
-                                'user_id' => auth()->user()->id,
-                            ]);
+                     
                         
 
                         $lnfp_form5a_rr = lnfp_form5a_rr::create([

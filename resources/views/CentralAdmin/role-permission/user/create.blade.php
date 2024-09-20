@@ -64,13 +64,13 @@
                         @csrf
 
                         <!-- //set as underReview -->
-                        <input type="hidden" name="role" value="3">
+                        <input type="hidden" id="role" name="role" value="">
                         <!-- //set as active -->
                         <input type="hidden" name="userstatus" value="1">
                         <!-- //userRoles set as dropdown to admin  approve -->
                         <input type="hidden" name="otherrole" value="1">
                         <!-- //set as pending  -->
-                        <input type="hidden" name="status" value="3">
+                        <input type="hidden" name="status" value="1">
 
                         <input type="hidden" name="useractivestatus" value="1">
 
@@ -245,7 +245,7 @@
                                 <select
                                     class="form-control text-dark {{ $errors->has('otherrole') ? 'is-invalid' : '' }}"
                                     style="border-top-right-radius: 40px; border-bottom-right-radius: 40px;"
-                                    name="otherrole" required>
+                                    name="otherrole" id="otherrole" required>
                                     <option value="" selected>Select role</option>
                                     @foreach($userrole as $userrole)
                                     <option value="{{ $userrole->id }}"
@@ -393,10 +393,10 @@
 <script>
 $(document).ready(function() {
     const routes = {
-        getRegions: '{{ route("equipment.regions.get") }}',
-        getProvinces: '{{ route("equipment.provinces.get") }}',
-        getCitiesAndMunicipalities: '{{ route("equipment.citiesAndMunicipalities.get") }}',
-        getBarangays: '{{ route("equipment.barangays.get") }}',
+        getRegions: '{{ route("location.regions.get") }}',
+        getProvinces: '{{ route("location.provinces.get") }}',
+        getCitiesAndMunicipalities: '{{ route("location.citiesAndMunicipalities.get") }}',
+        getBarangays: '{{ route("location.barangays.get") }}',
     };
 
     const dropdowns = {
