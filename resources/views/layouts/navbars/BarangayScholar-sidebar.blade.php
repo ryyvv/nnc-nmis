@@ -49,8 +49,8 @@
                   <p> {{ __("nutrition service") }} </p>
                 </a>
               </li>
-              <li class="@if ($activePage == 'changeNS') active @endif">
-                <a href="{{ route('changeNS.index') }}">
+              <li class="@if ($activePage == 'B1bSummary') active @endif">
+                <a href="{{ route('B1bSummary.index') }}">
                   <i class="now-ui-icons files_paper"></i>
                   <p> {{ __("B-1b Summary") }} </p>
                 </a>

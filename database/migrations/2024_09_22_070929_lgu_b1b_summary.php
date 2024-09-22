@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lguB1bSummary', function (Blueprint $table) {
+        Schema::create('lguB1bSummaryform', function (Blueprint $table) {
             $table->id();
-            $table->string('D1a')->nullable();
-            $table->string('D2a')->nullable();
-            $table->string('name');
-            $table->integer('remarks');
+            $table->string('fid')->nullable();
+            $table->string('cat',500)->nullable();
+            $table->string('element');
             $table->timestamps();
         });
     }

@@ -370,7 +370,7 @@ $(document).ready(function() {
                                 <td>${directory.bnsstatus}</td>
                             ` : ''}
                             <td>
-                                <i class="fa fa-edit fa-lg cursor edit-icon" style="color:#FFB236;margin-right:10px" data-toggle="tooltip" data-placement="top" title="Edit" data-id="${item.id}" type="button" onclick={alert('hello')}></i>
+                                <i class="fa fa-edit fa-lg cursor edit-icon" style="color:#FFB236;margin-right:10px" data-toggle="tooltip" data-placement="top" title="Edit" data-id="${item.id}"></i>
                                 <i class="fa fa-trash fa-lg cursor delete-icon" style="color:red;margin-right:10px" data-toggle="tooltip" data-placement="top" title="Delete" data-id="${item.id}"></i>
                             </td>
                         </tr>`;
@@ -388,14 +388,11 @@ $(document).ready(function() {
             $('#deleteModal').modal('show');
         });
 
-        // tables.on('click', '.edit-icon', function() {
-        //     const id = $(this).data('id');
-
-        //     $('#deleteForm').attr('action', "{{ route('BSpersonnel.edit') }}");
-        //     $('#methodField').val('DELETE');
-        //     $('#deleteId').val(id);
-        //     $('#deleteModal').modal('show');
-        // });
+        tables.on('click', '.edit-icon', function() {
+            const id = $(this).data('id');
+            const url = `{{ route("BSpersonnel.edit", ":id") }}`.replace(':id', id)
+            window.location = url;
+        });
     }
 
     function getLocationData(tabId) {

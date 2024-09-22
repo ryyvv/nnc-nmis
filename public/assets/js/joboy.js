@@ -561,6 +561,7 @@ new DataTable('#nutriOffice');
 new DataTable('#myTableLnfp');
 new DataTable('#example1');
 new DataTable('#lguReport');
+new DataTable('#B1bSummary');
 // new DataTable('#lnfpReport');
 new DataTable('#myTableForm5', {
     responsive: true

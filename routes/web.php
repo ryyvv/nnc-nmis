@@ -85,6 +85,7 @@ use App\Http\Controllers\Admin\CityMunicipalStaff\CMSMellpiProForLNFP_OverallSco
 
 //BarangayScholar
 use App\Http\Controllers\Admin\BarangayScholar\BSPersonnel;
+use App\Http\Controllers\Admin\BarangayScholar\SummaryB1bController;
 use App\Http\Controllers\Admin\BarangayScholar\BSEquipmentInventoryController;
 use App\Http\Controllers\Admin\BarangayScholar\BSNutritionOfficesController;
 use App\Http\Controllers\Admin\BarangayScholar\BSDashboardController;
@@ -504,6 +505,16 @@ Route::group(['middleware' => 'auth'], function () {
         Route::POST('BarangayScholar/nutritionservice/delete', [NutritionServiceController::class, 'destroy'])->name('nutritionservice.destroy');
         Route::get('BarangayScholar/nutritionservice/{id}/show', [NutritionServiceController::class, 'show'])->name('nutritionservice.show');
         Route::POST('BarangayScholar/nutritionservice/{id}/download-pdf', [NutritionServiceController::class, 'downloads'])->name('nutritionservice.download');
+ 
+        //VisionMissionController
+        Route::get('BarangayScholar/B1bSummary', [SummaryB1bController::class, 'index'])->name('B1bSummary.index');
+        Route::POST('BarangayScholar/B1bSummary', [SummaryB1bController::class, 'store'])->name('B1bSummary.store');
+        Route::get('BarangayScholar/B1bSummary/create', [SummaryB1bController::class, 'create'])->name('B1bSummary.create');
+        Route::put('BarangayScholar/B1bSummary/{id}', [SummaryB1bController::class, 'update'])->name('B1bSummary.update');
+        Route::get('BarangayScholar/B1bSummary/{id}/edit', [SummaryB1bController::class, 'edit'])->name('B1bSummary.edit');
+        Route::post('BarangayScholar/B1bSummary/delete', [SummaryB1bController::class, 'destroy'])->name('B1bSummary.destroy');
+        Route::get('BarangayScholar/B1bSummary/{id}/show', [SummaryB1bController::class, 'show'])->name('B1bSummary.show');
+        Route::POST('BarangayScholar/B1bSummary/{id}/download-pdf', [SummaryB1bController::class, 'downloads'])->name('B1bSummary.download');
 
         //ChangeNSController
         Route::get('BarangayScholar/changeNS', [ChangeNSController::class, 'index'])->name('changeNS.index');
@@ -607,7 +618,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/bspersonnelDnaDirectory', [BSPersonnel::class, 'index'])->name('BSpersonnel.index');
         Route::get('/bspersonnelDnaDirectory/personnel', [BSPersonnel::class, 'getPersonel'])->name('BSpersonnel.get');
         Route::get('/bspersonnelDnaDirectory/create', [BSPersonnel::class, 'create'])->name('BSpersonnel.create');
-        Route::put('/bspersonnelDnaDirectory/edit', [BSPersonnel::class, 'edit'])->name('BSpersonnel.edit');
+        Route::get('/bspersonnelDnaDirectory/edit/{id}', [BSPersonnel::class, 'edit'])->name('BSpersonnel.edit');
+        Route::post('/bspersonnelDnaDirectory/nao/{id}', [BSPersonnel::class, 'updateNAO'])->name('BSpersonnel.updateNAO');
+        Route::post('/bspersonnelDnaDirectory/npc/{id}', [BSPersonnel::class, 'updateNPC'])->name('BSpersonnel.updateNPC');
+        Route::post('/bspersonnelDnaDirectory/bns/{id}', [BSPersonnel::class, 'updateBNS'])->name('BSpersonnel.updateBNS');
         Route::delete('/bspersonnelDnaDirectory/delete', [BSPersonnel::class, 'destroy'])->name('BSpersonnel.delete');
         Route::post('/bspersonnelDnaDirectory/nao', [BSPersonnel::class, 'storeNAO'])->name('BSpersonnel.storeNAO');
         Route::post('/bspersonnelDnaDirectory/npc', [BSPersonnel::class, 'storeNPC'])->name('BSpersonnel.storeNPC');
