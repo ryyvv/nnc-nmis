@@ -332,11 +332,13 @@
 
 
 <script>
-
-$(document).ready(function(){
-
-
-    fetchDataForm();
+// Check for saved header value on page load
+document.addEventListener('DOMContentLoaded', function() {
+    let savedHeader = document.getElementById('header').value; // Retrieve the saved header value, for example, from a hidden input field, or localStorage
+    if (savedHeader) {
+        updateDisplayBasedOnHeader(savedHeader);
+        fetchData(savedHeader);
+    }
 });
 
 </script>

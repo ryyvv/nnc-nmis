@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('form5_fields_content_PNAO', function (Blueprint $table) {
             $table->id();
-            $table->string('survey_id');
+            $table->string('column_ref');
             $table->string('column1',255)->nullable();
             $table->string('column2',500)->nullable();
             $table->string('column3',500)->nullable();

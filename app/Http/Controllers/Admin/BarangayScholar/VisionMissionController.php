@@ -49,6 +49,17 @@ class VisionMissionController extends Controller
      */
     public function store(Request $request)
     {
+
+        $dataExists = DB::table('lgubarangayreport')
+        ->where('dateMonitoring', $request->dateMonitoring)
+        ->where( 'periodCovereda', $request->periodCovereda,)
+        // ->where( 'barangay_id' , $request->barangay_id,) 
+        ->exists();
+
+        if ($dataExists) {
+            return redirect()->back()->withInput()->with('error', 'A record with the same data already exists.');
+        }          
+
         if ($request->formrequest == 'draft') {
             $vmBarangay = MellpiproLGUBarangayVisionMission::create([
                 'barangay_id' =>  $request->barangay_id,

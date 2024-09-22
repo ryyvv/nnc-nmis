@@ -31,8 +31,11 @@ class form5PNAObarangay extends Model
     {
         // Map roles to 'belongTo' values
         $roleToBelongToMap = [
-            'BNS' => 1,
-            'CMNAO' => 2
+            'BNS' => 4,
+            'CMNAO' => 2,
+            'CMNPC' => 5,
+            'PNAO'  => 1,
+            'DNPC'  => 3,
         ];
 
         // Check if the role is mapped

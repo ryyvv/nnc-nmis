@@ -12,7 +12,7 @@ class PersonnelDnaDirectoryNaoModel extends Model
     protected $table = 'naos';
     protected $guarded = ['id'];
     protected $fillable = [
-        'nameGovMayor',
+        'namegovmayor',
         'typenao',
         'typedesignation',
         'datedesignation',

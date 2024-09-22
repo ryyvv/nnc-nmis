@@ -605,7 +605,10 @@ Route::group(['middleware' => 'auth'], function () {
 
         //Nutrition Office
         Route::get('/bspersonnelDnaDirectory', [BSPersonnel::class, 'index'])->name('BSpersonnel.index');
+        Route::get('/bspersonnelDnaDirectory/personnel', [BSPersonnel::class, 'getPersonel'])->name('BSpersonnel.get');
         Route::get('/bspersonnelDnaDirectory/create', [BSPersonnel::class, 'create'])->name('BSpersonnel.create');
+        Route::put('/bspersonnelDnaDirectory/edit', [BSPersonnel::class, 'edit'])->name('BSpersonnel.edit');
+        Route::delete('/bspersonnelDnaDirectory/delete', [BSPersonnel::class, 'destroy'])->name('BSpersonnel.delete');
         Route::post('/bspersonnelDnaDirectory/nao', [BSPersonnel::class, 'storeNAO'])->name('BSpersonnel.storeNAO');
         Route::post('/bspersonnelDnaDirectory/npc', [BSPersonnel::class, 'storeNPC'])->name('BSpersonnel.storeNPC');
         Route::post('/bspersonnelDnaDirectory/bns', [BSPersonnel::class, 'storeBNS'])->name('BSpersonnel.storeBNS');

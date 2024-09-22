@@ -23,7 +23,7 @@ class CMSDashboardController extends Controller
         $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
 
         $barangay = auth()->user()->barangay;
-        $lguProfile = DB::table('lguprofilebarangay')->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();
+        $lguProfile = DB::table('lguprofilebarangay')->where('user_id',)->orderBy('id', 'DESC')->get();
         
         $data = DB::table('lgubarangayreport')
             ->leftJoin('lguprofilebarangay', 'lgubarangayreport.lguprofilebarangay_id', '=', 'lguprofilebarangay.id')

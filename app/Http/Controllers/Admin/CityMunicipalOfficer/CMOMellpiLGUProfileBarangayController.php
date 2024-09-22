@@ -39,8 +39,8 @@ class CMOMellpiLGUProfileBarangayController  extends Controller
             ->leftJoin('mplgubrgynutritionservice', 'lgubarangayreport.mplgubrgynutritionservice_id', '=', 'mplgubrgynutritionservice.id')
             ->leftJoin('mplgubrgychangeNS', 'lgubarangayreport.mplgubrgychangeNS_id', '=', 'mplgubrgychangeNS.id')
             ->leftJoin('mplgubrgydiscussionquestion', 'lgubarangayreport.mplgubrgydiscussionquestion_id', '=', 'mplgubrgydiscussionquestion.id')
-            ->leftJoin('psgc_municipalities', DB::raw('CAST(lguprofilebarangay.municipal_id AS VARCHAR)'), '=', 'psgc_municipalities.citymun_code')
-            ->leftJoin('psgc_cities', DB::raw('CAST(lguprofilebarangay.municipal_id AS VARCHAR)'), '=', 'psgc_cities.citymun_code')
+            ->leftJoin('psgc_municipalities', DB::raw('CAST(lgubarangayreport.municipal_id AS VARCHAR)'), '=', 'psgc_municipalities.citymun_code')
+            ->leftJoin('psgc_cities', DB::raw('CAST(lgubarangayreport.municipal_id AS VARCHAR)'), '=', 'psgc_cities.citymun_code')
             // ->where('lgubarangayreport.status', 1)
             ->where(function($query) {
                 $query->whereNotNull('psgc_municipalities.citymun_code')
@@ -60,7 +60,7 @@ class CMOMellpiLGUProfileBarangayController  extends Controller
                 'psgc_cities.name as name'
             )
             ->get();
- 
+    // dd('test');
  
         return view('CityMunicipalOfficer.LGUReport', ['data' => $data]);
         
@@ -78,7 +78,8 @@ class CMOMellpiLGUProfileBarangayController  extends Controller
 
 
         $data = DB::table('lgubarangayreport')
-            ->leftJoin('users', 'lgubarangayreport.user_id', '=', 'users.id')
+          
+
             ->leftJoin('lguprofilebarangay', 'lgubarangayreport.lguprofilebarangay_id', '=', 'lguprofilebarangay.id')
             ->leftJoin('mplgubrgyvisionmissions', 'lgubarangayreport.mplgubrgyvisionmissions_id', '=', 'mplgubrgyvisionmissions.id')
             ->leftJoin('mellpiprobarangaynationalpolicies', 'lgubarangayreport.mellpiprobarangaynationalpolicies_id', '=', 'mellpiprobarangaynationalpolicies.id')
@@ -87,6 +88,16 @@ class CMOMellpiLGUProfileBarangayController  extends Controller
             ->leftJoin('mplgubrgynutritionservice', 'lgubarangayreport.mplgubrgynutritionservice_id', '=', 'mplgubrgynutritionservice.id')
             ->leftJoin('mplgubrgychangeNS', 'lgubarangayreport.mplgubrgychangeNS_id', '=', 'mplgubrgychangeNS.id')
             ->leftJoin('mplgubrgydiscussionquestion', 'lgubarangayreport.mplgubrgydiscussionquestion_id', '=', 'mplgubrgydiscussionquestion.id')
+           
+            ->leftJoin('users as u1', 'lguprofilebarangay.user_id', '=', 'u1.id')
+            ->leftJoin('users as u2', 'mplgubrgyvisionmissions.user_id', '=', 'u2.id')
+            ->leftJoin('users as u3', 'mellpiprobarangaynationalpolicies.user_id', '=', 'u3.id')
+            ->leftJoin('users as u4', 'mplgubrgygovernance.user_id', '=', 'u4.id')
+            ->leftJoin('users as u5', 'mplgubrgylncmanagement.user_id', '=', 'u5.id')
+            ->leftJoin('users as u6', 'mplgubrgynutritionservice.user_id', '=', 'u6.id')
+            ->leftJoin('users as u7', 'mplgubrgychangeNS.user_id', '=', 'u7.id')
+            ->leftJoin('users as u8', 'mplgubrgydiscussionquestion.user_id', '=', 'u8.id')
+
             ->leftJoin('psgc_municipalities', DB::raw('CAST(lgubarangayreport.municipal_id AS VARCHAR)'), '=', 'psgc_municipalities.citymun_code')
             ->leftJoin('psgc_cities', DB::raw('CAST(lgubarangayreport.municipal_id AS VARCHAR)'), '=', 'psgc_cities.citymun_code')
             // ->where('lgubarangayreport.status', 1)
@@ -96,9 +107,8 @@ class CMOMellpiLGUProfileBarangayController  extends Controller
             })
             ->select(
                 //'lgubarangayreport.*',
-                'users.Firstname as Firstname',
-                'users.Middlename as Middlename',
-                'users.Lastname as Lastname',
+               
+
                 'lgubarangayreport.dateMonitoring as repdateM',
                 'lgubarangayreport.periodCovereda as repperiodC',
                 'lgubarangayreport.status as repStatus',
@@ -107,28 +117,52 @@ class CMOMellpiLGUProfileBarangayController  extends Controller
           
                 'lgubarangayreport.lguprofilebarangay_id as repLGU',
                 'lguprofilebarangay.updated_at as lgudate', 
+                'u1.Firstname as lguFirstname',
+                'u1.Middlename as lguMiddlename',
+                'u1.Lastname as lguLastname',
 
                 'lgubarangayreport.mplgubrgyvisionmissions_id as repVM', 
                 'mplgubrgyvisionmissions.updated_at as vmdate', 
+                'u2.Firstname as vmFirstname',
+                'u2.Middlename as vmMiddlename',
+                'u2.Lastname as vmLastname',
  
                 'lgubarangayreport.mellpiprobarangaynationalpolicies_id as repNP', 
                 'mellpiprobarangaynationalpolicies.updated_at as npdate', 
+                'u3.Firstname as npFirstname',
+                'u3.Middlename as npMiddlename',
+                'u3.Lastname as npLastname',
 
                 'lgubarangayreport.mplgubrgygovernance_id as repGov', 
-                'mplgubrgygovernance.updated_at as govdate',  
+                'mplgubrgygovernance.updated_at as govdate', 
+                'u4.Firstname as govFirstname',
+                'u4.Middlename as govMiddlename',
+                'u4.Lastname as govLastname',
 
 
                 'lgubarangayreport.mplgubrgylncmanagement_id as repLNC', 
-                'mplgubrgylncmanagement.updated_at as lncdate',   
+                'mplgubrgylncmanagement.updated_at as lncdate',
+                'u5.Firstname as lncFirstname',
+                'u5.Middlename as lncMiddlename',
+                'u5.Lastname as lncLastname',   
  
                 'lgubarangayreport.mplgubrgynutritionservice_id as repNS', 
-                'mplgubrgynutritionservice.updated_at as nsdate',   
+                'mplgubrgynutritionservice.updated_at as nsdate',
+                'u6.Firstname as nsFirstname',
+                'u6.Middlename as nsMiddlename',
+                'u6.Lastname as nsLastname',    
 
                 'lgubarangayreport.mplgubrgychangeNS_id as repCNS', 
                 'mplgubrgychangeNS.updated_at as cnsdate', 
+                'u7.Firstname as cnsFirstname',
+                'u7.Middlename as cnsMiddlename',
+                'u7.Lastname as cnsLastname',  
 
                 'lgubarangayreport.mplgubrgydiscussionquestion_id as repDQ', 
-                'mplgubrgydiscussionquestion.updated_at as dqdate', 
+                'mplgubrgydiscussionquestion.updated_at as dqdate',
+                'u8.Firstname as dqFirstname',
+                'u8.Middlename as dqMiddlename',
+                'u8.Lastname as dqLastname', 
 
                 'psgc_municipalities.name as name',
                 'psgc_cities.name as name',

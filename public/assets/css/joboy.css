@@ -85,6 +85,17 @@
   display:absolute
 }
 
+.statusCounts {
+  margin:0px;
+  font-size:14px;
+  border-radius: 3px;
+  font-weight:bold;
+  color:white;
+  padding:5px;
+  background-color:#91bd0c ;
+  display:absolute
+}
+
 .bolder {
   font-weight: bolder!important;
 }

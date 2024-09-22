@@ -56,18 +56,18 @@ function OverAllScore(columnData){
     let scoreP1AS = ( points * 0.8);
     
     document.getElementById('pointsP1AS').value = parseFloat(points).toFixed(1);
-    document.getElementById('scoreP1AS').value = scoreP1AS;
+    document.getElementById('scoreP1AS').value = parseFloat(scoreP1AS).toFixed(1);
    
 
 
     // Computation for Interview
     let intPoints = document.getElementById('intSubtotal').value;
     let intWeight = (( intPoints / 20) * 0.2) * 100;
-    document.getElementById('formOverallInput').value = intWeight.toFixed(1);
+    document.getElementById('formOverallInput').value = parseFloat(intWeight).toFixed(1);
 
     // Computation for total
     let totalS =  scoreP1AS + intWeight; 
-    document.getElementById('totalScoreAS').value = totalS;
+    document.getElementById('totalScoreAS').value = parseFloat(totalS).toFixed(1);
 
 }
 
@@ -113,14 +113,6 @@ document.getElementById('header').addEventListener('change', function() {
     fetchData(header);
 });
 
-// Check for saved header value on page load
-document.addEventListener('DOMContentLoaded', function() {
-    let savedHeader = document.getElementById('header').value; // Retrieve the saved header value, for example, from a hidden input field, or localStorage
-    if (savedHeader) {
-        updateDisplayBasedOnHeader(savedHeader);
-        fetchData(savedHeader);
-    }
-});
 
 
 function radialDiagram(){
@@ -195,9 +187,8 @@ function fetchData(header){
        var valueMap = {
             'CMNAO': 2,
             'PNAO': 1,
-            'BNS': 1,
             'DNPC': 3,
-            'ROBNC': 4,
+            'BNS': 4,
             'CMNPC': 5
         };
 

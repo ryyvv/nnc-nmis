@@ -54,8 +54,7 @@ class BSEquipmentInventoryController extends Controller
             if (!$request->has($key) || is_null($request->input($key))) {
                 $request->merge([$key => $value]);
             }
-        }
-        
+        }    
 
         $rules = [
             'inputtotalBarangay' => 'required|integer',
@@ -365,64 +364,50 @@ class BSEquipmentInventoryController extends Controller
             $subTotalsQuery->where('citymun_code', $request->input('citymun_code'));
         }
 
-        $citiesAndMunicipalities = $EquipmentInventoryQuery->orderBy('name', 'asc')->get();
+        $selectRawQuery = '
+            SUM(total_barangay) as total_barangays,
+            SUM(wooden_hb) as wooden_hb,
+            SUM(non_wooden_hb) as non_wooden_hb,
+            SUM(defective_hb) as defective_hb,
+            SUM(total_hb) as total_hb,
+            (SUM(total_hb) / SUM(total_barangay)) * 100 as availability_hb,
+            SUM(steel_rules) as steel_rules,
+            SUM(microtoise) as microtoise,
+            SUM(infantometer) as infantometer,
+            SUM(hanging_type) as hanging_type,
+            SUM(defective_ws) as defective_ws,
+            SUM(total_ws) as total_ws,
+            (SUM(total_ws) / SUM(total_barangay)) * 100 as availability_ws,
+            SUM(infat_scale) as infat_scale,
+            SUM(beam_balance) as beam_balance,
+            SUM(child) as child,
+            SUM(defective_muac_child) as defective_muac_child,
+            SUM(total_muac_child) as total_muac_child,
+            (SUM(total_muac_child) / SUM(total_barangay)) * 100 as availability_muac_child,
+            SUM(adults) as adults,
+            SUM(defective_muac_adults) as defective_muac_adults,
+            SUM(total_muac_adults) as total_muac_adults,
+            (SUM(total_muac_adults) / SUM(total_barangay)) * 100 as availability_muac_adults
+        ';
 
-        $subTotals = $subTotalsQuery->selectRaw('
-            SUM(total_barangay) as total_barangays,
-            SUM(wooden_hb) as wooden_hb,
-            SUM(non_wooden_hb) as non_wooden_hb,
-            SUM(defective_hb) as defective_hb,
-            SUM(total_hb) as total_hb,
-            (SUM(total_hb) / SUM(total_barangay)) * 100 as availability_hb,
-            SUM(steel_rules) as steel_rules,
-            SUM(microtoise) as microtoise,
-            SUM(infantometer) as infantometer,
-            SUM(hanging_type) as hanging_type,
-            SUM(defective_ws) as defective_ws,
-            SUM(total_ws) as total_ws,
-            (SUM(total_ws) / SUM(total_barangay)) * 100 as availability_ws,
-            SUM(infat_scale) as infat_scale,
-            SUM(beam_balance) as beam_balance,
-            SUM(child) as child,
-            SUM(defective_muac_child) as defective_muac_child,
-            SUM(total_muac_child) as total_muac_child,
-            (SUM(total_muac_child) / SUM(total_barangay)) * 100 as availability_muac_child,
-            SUM(adults) as adults,
-            SUM(defective_muac_adults) as defective_muac_adults,
-            SUM(total_muac_adults) as total_muac_adults,
-            (SUM(total_muac_adults) / SUM(total_barangay)) * 100 as availability_muac_adults
-        ')->first();
-    
-        $grandTotals = PsgcEquipmentInventory::selectRaw('
-            SUM(total_barangay) as total_barangays,
-            SUM(wooden_hb) as wooden_hb,
-            SUM(non_wooden_hb) as non_wooden_hb,
-            SUM(defective_hb) as defective_hb,
-            SUM(total_hb) as total_hb,
-            (SUM(total_hb) / SUM(total_barangay)) * 100 as availability_hb,
-            SUM(steel_rules) as steel_rules,
-            SUM(microtoise) as microtoise,
-            SUM(infantometer) as infantometer,
-            SUM(hanging_type) as hanging_type,
-            SUM(defective_ws) as defective_ws,
-            SUM(total_ws) as total_ws,
-            (SUM(total_ws) / SUM(total_barangay)) * 100 as availability_ws,
-            SUM(infat_scale) as infat_scale,
-            SUM(beam_balance) as beam_balance,
-            SUM(child) as child,
-            SUM(defective_muac_child) as defective_muac_child,
-            SUM(total_muac_child) as total_muac_child,
-            (SUM(total_muac_child) / SUM(total_barangay)) * 100 as availability_muac_child,
-            SUM(adults) as adults,
-            SUM(defective_muac_adults) as defective_muac_adults,
-            SUM(total_muac_adults) as total_muac_adults,
-            (SUM(total_muac_adults) / SUM(total_barangay)) * 100 as availability_muac_adults
-        ')->first();
+        $citiesQuery = clone $EquipmentInventoryQuery;
+        $municipalitiesQuery = clone $EquipmentInventoryQuery;
+        
+        $citiesQuery->whereIn('city_class', ['HUC', 'CC', 'ICC']);
+        $municipalitiesQuery->whereNull('city_class');
+
+        $citiesSubTotal = $citiesQuery->selectRaw($selectRawQuery)->first();
+        $municipalitiesSubTotal = $municipalitiesQuery->selectRaw($selectRawQuery)->first();
+        $citiesAndMunicipalities = $EquipmentInventoryQuery->orderBy('name', 'asc')->get();
+        $subTotals = $subTotalsQuery->selectRaw($selectRawQuery)->first();
+        $grandTotals = PsgcEquipmentInventory::selectRaw($selectRawQuery)->first();
     
         
         return response()->json([
             'citiesAndMunicipalities' => $citiesAndMunicipalities,
             'totals' => [
+                $citiesSubTotal,
+                $municipalitiesSubTotal,
                 $subTotals,
                 $grandTotals,
             ]

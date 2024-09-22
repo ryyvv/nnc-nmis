@@ -16,7 +16,7 @@ use App\Models\City;
 use App\Http\Controllers\LocationController;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-class ChangeNSController extends Controller
+class SummaryChangeNSController extends Controller
 {
     /**
      * Display a listing of the resource.

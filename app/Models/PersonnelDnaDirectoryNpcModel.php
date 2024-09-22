@@ -12,7 +12,7 @@ class PersonnelDnaDirectoryNpcModel extends Model
     protected $table = 'npcs';
     protected $guarded = ['id'];
     protected $fillable = [
-        'nameGovMayor',
+        'namegovmayor',
         'typenpc',
         'typedesignation',
         'datedesignation',

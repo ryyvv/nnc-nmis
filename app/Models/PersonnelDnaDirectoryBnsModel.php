@@ -12,7 +12,7 @@ class PersonnelDnaDirectoryBnsModel extends Model
     protected $table = 'bnss';
     protected $guarded = ['id'];
     protected $fillable = [
-        'Barangay',
+        'barangay',
         'statusemployment',
         'beneficiaryname',
         'relationship',

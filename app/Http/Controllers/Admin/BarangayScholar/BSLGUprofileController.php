@@ -88,17 +88,15 @@ class BSLGUprofileController extends Controller
         $dataExists = DB::table('lgubarangayreport')
                         ->where('dateMonitoring', $request->dateMonitoring)
                         ->where( 'periodCovereda', $request->periodCovereda,)
-                        ->where( 'barangay_id' , $request->barangay_id,) 
+                        // ->where( 'barangay_id' , $request->barangay_id,) 
                         ->exists();
 
         if ($dataExists) {
-            return redirect()->back()->withErrors(['error' => 'A record with the same data already exists.']);
+            return redirect()->back()->withInput()->with('error', 'A record with the same data already exists.');
         }          
-                    
 
- 
+
         if ($request->formrequest == 'draft') {
-            //dd($request);
             $LGUProfileBarangay = LguProfile::create([
                 'dateMonitoring' => $request->dateMonitoring,
                 'periodCovereda' => $request->periodCovereda,
@@ -320,6 +318,7 @@ class BSLGUprofileController extends Controller
    
             return redirect('BarangayScholar/lguprofile')->with('success', 'Data stored as Draft!');
         }
+
         else {
             $rules = [
                 'dateMonitoring' => 'required|date|max:255',

@@ -191,21 +191,15 @@ thead th {
 <script>
 $(document).ready(function() {
     function handleTableData(data) {
+        let hbCityDetails = $('#hb-city-details').empty();
+        let hbTotals = $('#hb-totals').empty();
+        let wsCityDetails = $('#ws-city-details').empty();
+        let wsTotals = $('#ws-totals').empty();
+        let muacCityDetails = $('#muac-city-details').empty();
+        let muacTotals = $('#muac-totals').empty();
+
         if (!data) return;
 
-        let hbCityDetails = $('#hb-city-details');
-        let hbTotals = $('#hb-totals');
-        let wsCityDetails = $('#ws-city-details');
-        let wsTotals = $('#ws-totals');
-        let muacCityDetails = $('#muac-city-details');
-        let muacTotals = $('#muac-totals');
-
-        hbCityDetails.empty()
-        hbTotals.empty()
-        wsCityDetails.empty()
-        wsTotals.empty()
-        muacCityDetails.empty()
-        muacTotals.empty()
 
         data.citiesAndMunicipalities.forEach(function(city) {
             hbCityDetails.append(
@@ -261,10 +255,16 @@ $(document).ready(function() {
         data.totals.forEach(function(totals, index) {
             let provinceDropdown = $('#province-dropdown');
             let cityDropdown = $('#city-dropdown');
-            let label = index === 0 ? "Sub Total" : "Grand Total";
+            const labelMap = {
+                0: "City",
+                1: "Municipality",
+                2: "Sub Total",
+                3: "Grand Total"
+            }
+            let label = labelMap[index];
 
             // Skip processing if the province or city dropdown
-            if ((provinceDropdown.val() || cityDropdown.val()) && index === 1) return;
+            if ((provinceDropdown.val() || cityDropdown.val()) && label === "Grand Total") return;
 
             if (!Object.values(totals).some(value => value)) return;
 

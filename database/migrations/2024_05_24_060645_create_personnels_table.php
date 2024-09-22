@@ -29,12 +29,18 @@ return new class extends Migration
             $table->string('cellphonenumer', 100)->nullable();
             $table->string('telephonenumber', 100)->nullable();
 
-            $table->integer('cities_id')->unsigned();
-            // $table->foreign('cities_id')->references('id')->on('cities');
-            
-            $table->integer('region_id')->unsigned(); 
-            $table->integer('province_id')->unsigned(); 
+            // $table->integer('cities_id')->unsigned();
+            // $table->integer('region_id')->unsigned(); 
+            // $table->integer('province_id')->unsigned(); 
 
+            $table->string('cities_id');
+            $table->string('region_id');
+            $table->string('province_id');
+            $table->string('barangay_id')->nullable();
+            $table->string('directory_type');
+            $table->string('name_on_id')->nullable();
+            
+            // $table->foreign('cities_id')->references('id')->on('cities');
             // $table->foreign('region_id')->references('id')->on('regions'); 
             // $table->foreign('province_id')->references('id')->on('provinces'); 
 
@@ -44,7 +50,7 @@ return new class extends Migration
 
         Schema::create('naos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nameGovMayor', 100)->nullable();
+            $table->string('namegovmayor', 100)->nullable();
             $table->string('typenao', 100)->nullable();
             $table->string('typedesignation', 100)->nullable();
             $table->date('datedesignation')->nullable();
@@ -53,14 +59,14 @@ return new class extends Migration
             $table->string('department', 100)->nullable();  
               
             $table->integer('personnel_id')->unsigned(); 
-            $table->foreign('personnel_id')->references('id')->on('personnels');
+            $table->foreign('personnel_id')->references('id')->on('personnels')->onDelete('cascade');
             $table->timestamps();
         });
 
 
         Schema::create('npcs', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nameGovMayor', 100)->nullable();
+            $table->string('namegovmayor', 100)->nullable();
             $table->string('typenpc', 100)->nullable();
             $table->string('typedesignation', 100)->nullable();
             $table->date('datedesignation')->nullable();
@@ -72,13 +78,13 @@ return new class extends Migration
             $table->string('dcnpcapofficer', 100)->nullable();  
               
             $table->integer('personnel_id')->unsigned(); 
-            $table->foreign('personnel_id')->references('id')->on('personnels');
+            $table->foreign('personnel_id')->references('id')->on('personnels')->onDelete('cascade');
             $table->timestamps();
         });
 
         Schema::create('bnss', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('Barangay', 100)->nullable();
+            $table->string('barangay');
             $table->string('statusemployment', 100)->nullable();
             $table->string('beneficiaryname', 100)->nullable();
             $table->string('relationship')->nullable();
@@ -88,7 +94,7 @@ return new class extends Migration
             $table->string('bnsstatus', 100)->nullable();   
               
             $table->integer('personnel_id')->unsigned(); 
-            $table->foreign('personnel_id')->references('id')->on('personnels');
+            $table->foreign('personnel_id')->references('id')->on('personnels')->onDelete('cascade');
             $table->timestamps();
         });
 

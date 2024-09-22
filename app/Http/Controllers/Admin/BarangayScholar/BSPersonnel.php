@@ -36,7 +36,7 @@ class BSPersonnel extends Controller
             'inputNaoSex' => 'required|string',
             'inputNaoCPNum' => 'required|numeric',
             'inputNaoTPNum' => 'nullable|numeric',
-            'inputNaoEmail' => 'required|email|max:255',
+            'inputNaoEmail' => 'required|unique:personnels,email|max:100',
             'inputNaoAddress' => 'required|string|max:255',
             'inputNaoBdate' => 'required|date',
             'inputNaoAge' => 'required|integer|min:0',
@@ -90,10 +90,11 @@ class BSPersonnel extends Controller
             'region_id' => $validatedData['inputNaoRegion'],
             'province_id' => $validatedData['inputNaoProvince'],
             'cities_id' => $validatedData['inputNaoCM'],
+            'directory_type' => 'nao',
         ]);
         
         PersonnelDnaDirectoryNaoModel::create([
-            'nameGovMayor' => $validatedData['inputNaoGovMayor'] ?? null,
+            'namegovmayor' => $validatedData['inputNaoGovMayor'] ?? null,
             'typenao' => $validatedData['inputNaoType'],
             'typedesignation' => $validatedData['inputNaoDesignationType'],
             'datedesignation' => $validatedData['inputNaoDateDesignation'],
@@ -103,7 +104,7 @@ class BSPersonnel extends Controller
             'personnel_id' => $addPersonnels->id,
         ]);
         
-        return redirect()->back()->with('success', 'Personnel Directory (NAO) added successfully!');
+        return redirect()->route('BSpersonnel.index')->with('success', 'Personnel Directory (NAO) added successfully!');
     }
 
     public function storeNPC(Request $request) {
@@ -120,7 +121,7 @@ class BSPersonnel extends Controller
             'inputNpcSex' => 'required|string',
             'inputNpcCPNum' => 'required|numeric',
             'inputNpcTPNum' => 'nullable|numeric',
-            'inputNpcEmail' => 'required|email',
+            'inputNpcEmail' => 'required|unique:personnels,email|max:100',
             'inputNpcAddress' => 'required|string',
             'inputNpcBdate' => 'required|date',
             'inputNpcAge' => 'required|integer|min:0',
@@ -180,11 +181,11 @@ class BSPersonnel extends Controller
             'region_id' => $validatedData['inputNpcRegion'],
             'province_id' => $validatedData['inputNpcProvince'],
             'cities_id' => $validatedData['inputNpcCM'],
-            // 'barangay_id' => '358', TODO: Add Null
+            'directory_type' => 'npc',
         ]);
         
         PersonnelDnaDirectoryNpcModel::create([
-            'nameGovMayor' => $validatedData['inputNpcGovMayor'],
+            'namegovmayor' => $validatedData['inputNpcGovMayor'],
             'typenpc' => $validatedData['inputNpcType'],
             'typedesignation' => $validatedData['inputNpcDesignationType'],
             'datedesignation' => $validatedData['inputNpcDateDesignation'],
@@ -197,7 +198,7 @@ class BSPersonnel extends Controller
             'personnel_id' => $addPersonnels->id,
         ]);
         
-        return redirect()->back()->with('success', 'Personnel Directory (NPC) added successfully!');
+        return redirect()->route('BSpersonnel.index')->with('success', 'Personnel Directory (NPC) added successfully!');
     }
 
     public function storeBNS(Request $request) {
@@ -208,6 +209,7 @@ class BSPersonnel extends Controller
             'inputBnsCM' => 'required|string',
             'inputBnsBarangay' => 'required|string',
             'inputBnsIdNum' => 'required|numeric|digits:10',
+            'inputBnsIdName' => 'required|string',
             'inputBnsLN' => 'required|string',
             'inputBnsFN' => 'required|string',
             'inputBnsMN' => 'nullable|string',
@@ -215,7 +217,7 @@ class BSPersonnel extends Controller
             'inputBnsSex' => 'required|string',
             'inputBnsCPNum' => 'required|numeric',
             'inputBnsTPNum' => 'nullable|numeric',
-            'inputBnsEmail' => 'required|email',
+            'inputBnsEmail' => 'required|unique:personnels,email|max:100',
             'inputBnsAddress' => 'required|string',
             'inputBnsBdate' => 'required|date',
             'inputBnsAge' => 'required|integer|min:0',
@@ -253,11 +255,6 @@ class BSPersonnel extends Controller
         
         $validatedData = $validator->validated();
         
-        if (false) {
-            return redirect()->back()->with('error', 'Records already exist.');
-        }
-        
-        
         $addPersonnels = PersonnelDnaDirectoryModel::create([
             'id_number' => $validatedData['inputBnsIdNum'],
             'lastname' => $validatedData['inputBnsLN'],
@@ -277,11 +274,13 @@ class BSPersonnel extends Controller
             'region_id' => $validatedData['inputBnsRegion'],
             'province_id' => $validatedData['inputBnsProvince'],
             'cities_id' => $validatedData['inputBnsCM'],
-            // 'barangay_id' => '', 
+            'barangay_id' => $validatedData['inputBnsBarangay'],
+            'directory_type' => 'bns',
+            'name_on_id' => $validatedData['inputBnsIdName'],
         ]);
         
         PersonnelDnaDirectoryBnsModel::create([
-            'Barangay' => $validatedData['inputBnsBarangay'],
+            'barangay' => $validatedData['inputBnsBarangay'],
             'statusemployment' => $validatedData['inputBnsEmploymentStat'],
             'beneficiaryname' => $validatedData['inputBnsBeneficiary'],
             'relationship' => $validatedData['inputBnsRelationship'],
@@ -292,6 +291,50 @@ class BSPersonnel extends Controller
             'personnel_id' => $addPersonnels->id,
         ]);
         
-        return redirect()->back()->with('success', 'Personnel Directory (BNS) added successfully!');
+        return redirect()->route('BSpersonnel.index')->with('success', 'Personnel Directory (BNS) added successfully!');
+    }
+
+    public function getPersonel(Request $request) {
+        
+        $query = PersonnelDnaDirectoryModel::where('directory_type', $request->input('directory_type'))->with($request->input('directory_type'));
+        
+        if ($request->has('citymun_code')) {
+            $query->where('cities_id', $request->input('citymun_code'));
+        }
+        
+        $personnels = $query->get();
+
+
+        return response()->json($personnels);
+
+    }
+
+
+    public function edit(Request $request)
+    {
+        
+        $personnel = PersonnelDnaDirectoryModel::where('id', $request->input('id'))->first();
+
+        if (!$personnel) {
+            return redirect()->back()->with('error', 'Something Went Wrong.');
+        }
+
+         dd($personnel);
+        
+        return redirect()->route('BSpersonnel.edit')->with('success', 'Personnel Directory deleted successfully!');
+    }
+
+    public function destroy(Request $request)
+    {
+        
+        $personnel = PersonnelDnaDirectoryModel::where('id', $request->input('id'))->first();
+
+        if (!$personnel) {
+            return redirect()->back()->with('error', 'Something Went Wrong.');
+        }
+
+        $personnel->delete();
+        
+        return redirect()->route('BSpersonnel.index')->with('success', 'Personnel Directory deleted successfully!');
     }
 }

@@ -21,35 +21,14 @@ class DashboardController extends Controller
         $barangay = auth()->user()->barangay;
         $lguProfile = DB::table('lguprofilebarangay')->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();
         
-        $datas = DB::table('lgubarangayreport')
-            ->leftJoin('lguprofilebarangay', 'lgubarangayreport.lguprofilebarangay_id', '=', 'lguprofilebarangay.id')
-            ->leftJoin('mplgubrgyvisionmissions', 'lgubarangayreport.mplgubrgyvisionmissions_id', '=', 'mplgubrgyvisionmissions.id')
-            ->leftJoin('mellpiprobarangaynationalpolicies', 'lgubarangayreport.mellpiprobarangaynationalpolicies_id', '=', 'mellpiprobarangaynationalpolicies.id')
-            ->leftJoin('mplgubrgygovernance', 'lgubarangayreport.mplgubrgygovernance_id', '=', 'mplgubrgygovernance.id')
-            ->leftJoin('mplgubrgylncmanagement', 'lgubarangayreport.mplgubrgylncmanagement_id', '=', 'mplgubrgylncmanagement.id')
-            ->leftJoin('mplgubrgynutritionservice', 'lgubarangayreport.mplgubrgynutritionservice_id', '=', 'mplgubrgynutritionservice.id')
-            ->leftJoin('mplgubrgychangeNS', 'lgubarangayreport.mplgubrgychangeNS_id', '=', 'mplgubrgychangeNS.id')
-            ->leftJoin('mplgubrgydiscussionquestion', 'lgubarangayreport.mplgubrgydiscussionquestion_id', '=', 'mplgubrgydiscussionquestion.id')
-            ->leftJoin('psgc_municipalities', DB::raw('CAST(lguprofilebarangay.municipal_id AS VARCHAR)'), '=', 'psgc_municipalities.citymun_code')
-            ->leftJoin('psgc_cities', DB::raw('CAST(lguprofilebarangay.municipal_id AS VARCHAR)'), '=', 'psgc_cities.citymun_code')
-            // ->where('lgubarangayreport.status', 1)
-            ->where(function($query) {
-                $query->whereNotNull('psgc_municipalities.citymun_code')
-                      ->orWhereNotNull('psgc_cities.citymun_code');
-            })
-            ->select(
-                'lgubarangayreport.*',
-                'lguprofilebarangay.*',
-                'mplgubrgyvisionmissions.*',
-                'mellpiprobarangaynationalpolicies.*',
-                'mplgubrgygovernance.*',
-                'mplgubrgylncmanagement.*',
-                'mplgubrgynutritionservice.*',
-                'mplgubrgychangeNS.*',
-                'mplgubrgydiscussionquestion.*', 
-                'psgc_municipalities.name as name',
-                'psgc_cities.name as name'
-            )
+        $datas = DB::table('lnfp_lguprofile')
+            ->leftJoin('lnfp_form5a_rr', 'lnfp_form5a_rr.lnfp_lgu_id', '=', 'lnfp_lguprofile.id')
+            ->leftJoin('lnfp_form7', 'lnfp_form7.lnfp_lgu_id', '=', 'lnfp_lguprofile.id')
+            ->leftJoin('lnfp_form8', 'lnfp_form8.lnfp_lgu_id', '=', 'lnfp_lguprofile.id')
+            ->leftJoin('lnfp_interview_form','lnfp_interview_form.lnfp_lgu_id', '=' , 'lnfp_lguprofile.id' )
+            ->leftJoin('lnfp_overall_score_form','lnfp_overall_score_form.lnfp_lgu_id', '=' , 'lnfp_lguprofile.id' )
+            ->select('lnfp_lguprofile.*')
+            ->where('lnfp_lguprofile.user_id', auth()->user()->id)
             ->get();
  
         return view('users.dashboard', ['datas' => $datas]);
@@ -57,91 +36,41 @@ class DashboardController extends Controller
     }
 
     public function rep() {
-        $location = new LocationController;
-        $regCode = auth()->user()->Region;
-        $provCode = auth()->user()->Province;
-        $citymunCode = auth()->user()->city_municipal; 
-        $provinces = $location->getProvinces(['reg_code' => $regCode]);
-        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
-        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
 
+        $data = DB::table('lnfp_lguprofile')
+        ->leftJoin('lnfp_form5a_rr', 'lnfp_form5a_rr.lnfp_lgu_id', '=', 'lnfp_lguprofile.id')
+        ->leftJoin('lnfp_form7', 'lnfp_form7.lnfp_lgu_id', '=', 'lnfp_lguprofile.id')
+        ->leftJoin('lnfp_form8', 'lnfp_form8.lnfp_lgu_id', '=', 'lnfp_lguprofile.id')
+        ->leftJoin('lnfp_interview_form','lnfp_interview_form.lnfp_lgu_id', '=' , 'lnfp_lguprofile.id' )
+        ->leftJoin('lnfp_overall_score_form','lnfp_overall_score_form.lnfp_lgu_id', '=' , 'lnfp_lguprofile.id' )
+        ->select('lnfp_lguprofile.*',
+                 'lnfp_form5a_rr.nameofPnao as evaluating',
+                 'lnfp_form5a_rr.updated_at as update_form5',
+                 'lnfp_form5a_rr.status as form5_status',
+                 'lnfp_form7.updated_at as update_form7',
+                 'lnfp_form7.status as form7_status',
+                 'lnfp_form8.updated_at as update_form8',
+                 'lnfp_form8.status as form8_status',
+                 'lnfp_interview_form.updated_at as update_formInt',
+                 'lnfp_interview_form.status as formInt_status',
+                 'lnfp_overall_score_form.updated_at as update_formScore',
+                 'lnfp_overall_score_form.status as formScore_status',
+                 )
+        ->where('lnfp_lguprofile.user_id', auth()->user()->id)
+        ->orderBy('lnfp_lguprofile.updated_at','DESC')
+        ->get();
 
-        //  $data = DB::table('lgubarangayreport')
-        //     ->leftJoin('psgc_municipalities', DB::raw('CAST(lguprofilebarangay.municipal_id AS VARCHAR)'), '=', 'psgc_municipalities.citymun_code')
-        //     ->leftJoin('psgc_cities', DB::raw('CAST(lguprofilebarangay.municipal_id AS VARCHAR)'), '=', 'psgc_cities.citymun_code')
-        //     // ->where('lgubarangayreport.status', 1)
-        //     ->where(function($query) {
-        //         $query->whereNotNull('psgc_municipalities.citymun_code')
-        //             ->orWhereNotNull('psgc_cities.citymun_code');
-        //     })
-        //     ->select('lgubarangayreport.*')
-        //     ->get();
-
-
-            $data = DB::table('lgubarangayreport')
-            ->leftJoin('users', 'lgubarangayreport.user_id', '=', 'users.id')
-            ->leftJoin('lguprofilebarangay', 'lgubarangayreport.lguprofilebarangay_id', '=', 'lguprofilebarangay.id')
-            ->leftJoin('mplgubrgyvisionmissions', 'lgubarangayreport.mplgubrgyvisionmissions_id', '=', 'mplgubrgyvisionmissions.id')
-            ->leftJoin('mellpiprobarangaynationalpolicies', 'lgubarangayreport.mellpiprobarangaynationalpolicies_id', '=', 'mellpiprobarangaynationalpolicies.id')
-            ->leftJoin('mplgubrgygovernance', 'lgubarangayreport.mplgubrgygovernance_id', '=', 'mplgubrgygovernance.id')
-            ->leftJoin('mplgubrgylncmanagement', 'lgubarangayreport.mplgubrgylncmanagement_id', '=', 'mplgubrgylncmanagement.id')
-            ->leftJoin('mplgubrgynutritionservice', 'lgubarangayreport.mplgubrgynutritionservice_id', '=', 'mplgubrgynutritionservice.id')
-            ->leftJoin('mplgubrgychangeNS', 'lgubarangayreport.mplgubrgychangeNS_id', '=', 'mplgubrgychangeNS.id')
-            ->leftJoin('mplgubrgydiscussionquestion', 'lgubarangayreport.mplgubrgydiscussionquestion_id', '=', 'mplgubrgydiscussionquestion.id')
-
-
-            ->leftJoin('psgc_municipalities', DB::raw('CAST(lgubarangayreport.municipal_id AS VARCHAR)'), '=', 'psgc_municipalities.citymun_code')
-            ->leftJoin('psgc_cities', DB::raw('CAST(lgubarangayreport.municipal_id AS VARCHAR)'), '=', 'psgc_cities.citymun_code')
-            // ->where('lgubarangayreport.status', 1)
-            ->where(function($query) {
-                $query->whereNotNull('psgc_municipalities.citymun_code')
-                      ->orWhereNotNull('psgc_cities.citymun_code');
-            })
-            ->select(
-                //'lgubarangayreport.*',
-                'users.Firstname as Firstname',
-                'users.Middlename as Middlename',
-                'users.Lastname as Lastname',
-                'lgubarangayreport.dateMonitoring as repdateM',
-                'lgubarangayreport.periodCovereda as repperiodC',
-                'lgubarangayreport.status as repStatus',
-                'lgubarangayreport.count as repCount',
-                'lgubarangayreport.status as repStatus', 
-          
-                'lgubarangayreport.lguprofilebarangay_id as repLGU',
-                'lguprofilebarangay.updated_at as lgudate', 
-
-                'lgubarangayreport.mplgubrgyvisionmissions_id as repVM', 
-                'mplgubrgyvisionmissions.updated_at as vmdate', 
- 
-                'lgubarangayreport.mellpiprobarangaynationalpolicies_id as repNP', 
-                'mellpiprobarangaynationalpolicies.updated_at as npdate', 
-
-                'lgubarangayreport.mplgubrgygovernance_id as repGov', 
-                'mplgubrgygovernance.updated_at as govdate',  
-
-
-                'lgubarangayreport.mplgubrgylncmanagement_id as repLNC', 
-                'mplgubrgylncmanagement.updated_at as lncdate',   
- 
-                'lgubarangayreport.mplgubrgynutritionservice_id as repNS', 
-                'mplgubrgynutritionservice.updated_at as nsdate',   
-
-                'lgubarangayreport.mplgubrgychangeNS_id as repCNS', 
-                'mplgubrgychangeNS.updated_at as cnsdate', 
-
-                'lgubarangayreport.mplgubrgydiscussionquestion_id as repDQ', 
-                'mplgubrgydiscussionquestion.updated_at as dqdate', 
-
-                'psgc_municipalities.name as name',
-                'psgc_cities.name as name',
-                'lgubarangayreport.count as count',
-            )
-            ->get();
+        // $data = [
+        //     ['id' => 1, 'lnfp_officer' => 'John Doe', 'email' => 'john@example.com', 'created_at' => '2024-09-21'],
+        //     ['id' => 2, 'lnfp_officer' => 'Jane Smith', 'email' => 'jane@example.com', 'created_at' => '2024-09-20']
+        // ];
 
                 //dd($data); 
-            return response()->json(['data' => $data]);
+        return response()->json(['data' => $data]);
             
 
     }
+
+  
+
 }

@@ -70,6 +70,18 @@ class LNCManagementBarangayController extends Controller
      */
     public function store(Request $request)
     {
+
+        $dataExists = DB::table('lgubarangayreport')
+        ->where('dateMonitoring', $request->dateMonitoring)
+        ->where( 'periodCovereda', $request->periodCovereda,)
+        // ->where( 'barangay_id' , $request->barangay_id,) 
+        ->exists();
+
+        if ($dataExists) {
+        return redirect()->back()->withInput()->with('error', 'A record with the same data already exists.');
+        }     
+
+
         if ($request->formrequest == 'draft') {
 
             $govbarangay = MellpiproLNCManagement::create([
@@ -147,7 +159,7 @@ class LNCManagementBarangayController extends Controller
                     ->withInput()->with('error', 'Something went wrong! Please try again.');
             }
     
-                $govbarangay = MellpiproLNCManagement::create([
+                $lncbarangay = MellpiproLNCManagement::create([
                     'barangay_id' =>  $request->barangay_id,
                     'municipal_id' =>  $request->municipal_id,
                     'province_id' =>  $request->province_id,
@@ -174,11 +186,24 @@ class LNCManagementBarangayController extends Controller
                 ]); 
     
                 MellpiproLNCManagementTracking::create([
-                    'mplgubrgylncmanagement_id' => $govbarangay->id,
+                    'mplgubrgylncmanagement_id' => $lncbarangay->id,
                     'status' => $request->status,
                     'barangay_id' => auth()->user()->barangay,
                     'municipal_id' => auth()->user()->city_municipal,
                     'user_id' => auth()->user()->id,
+                ]);
+
+                DB::table('lgubarangayreport')->insert([
+                    'mplgubrgylncmanagement_id' => $lncbarangay->id, 
+                    'barangay_id' => $request->barangay_id,
+                    'municipal_id' => $request->municipal_id,   
+                    'dateMonitoring' => $request->dateMonitoring,
+                    'periodCovereda' => $request->periodCovereda,
+                    'status' => $request->status,
+                    'user_id' => $request->user_id,
+                    'count' =>  1,
+                    'created_at' => now(), // Optional
+                    'updated_at' => now(), // Optional
                 ]);
                
                 return redirect('BarangayScholar/lncmanagement')->with('success', 'Data stored successfully!');

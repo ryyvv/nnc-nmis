@@ -1,365 +1,181 @@
 
+$(document).ready(function() {
 
-//Fetch Report function LGU report
-function run_report(){  
-
-  function format_report(d) {
- 
-    let dateMonitoringLabel;
-    if (d.count === 9) {
-      dateMonitoringLabel = '<span class="statusApproved cursor">For Review</span>';
-    }else { 
-      dateMonitoringLabel = '<span class="statusPending cursor">Ongoing</span>';
-    }
-
- 
-    //LGUStatus
-    let LGUStatus;
-    let lguLabel; 
-    let LGUname;
-    if (d.repLGU) { // Check if the value is not empty, null, or undefined
-      let dataApprovedlgu = 'Invalid Date';
-      let lName = `${d.Firstname} ${d.Middlename} ${d.Lastname}`;
+//   if ($.fn.DataTable.isDataTable('#lnfpReport')) {
+//     $('#lnfpReport').DataTable().destroy();  // Destroy existing table instance
+// }
   
-      if (!isNaN(Date.parse(d.lgudate))) {
-        let date = new Date(d.lgudate);
-        let options = { year: 'numeric', month: 'long', day: 'numeric' };
-        dataApprovedlgu = date.toLocaleDateString('en-US', options);
-      }
+    var table = $('#lnfpReport').DataTable({
+        // processing: true,
+        // serverSide: true,
+        ajax: {
+                url: "https://nnc-nmis.moodlearners.com/CMSDashboard/fetchreport",
+                type: 'GET',
+                dataSrc: 'data',
+              }, // Fetch data from server
+        columns: [
+            {
+                "className": 'details-control',  // Expandable row button
+                "orderable": false,
+                "data": null,
+                "defaultContent": ''  // Empty button for expansion
+            },
+            { data: 'lnfp_officer', name: 'lnfp_officer' },
+            { data: 'evaluating', name: 'evaluating'},
+            { data: 'created_at', 
+                render: function(data){
+                  return  formatDate(data);
+                } 
+              },
+              { data: 'updated_at', 
+                render: function(data){
+                  return  formatDate(data);
+                } 
+              },
+            { 
+              data: 'status',
+                render: function (data) {
+                    if (data == 3) {
+                        return `
+                            <div class="d-flex" style="display:inline-block;text-align:center;border: 2px solid #28a745;padding:4px;border-radius:15px;">
+                                <div style="border-radius:15px; border: 2px solid #28a745; background-color: #28a745; padding: 2px;margin-right:5px">
+                                    <lord-icon
+                                        src="https://cdn.lordicon.com/guqkthkk.json"
+                                        trigger="hover"
+                                        colors="primary:#ffffff"
+                                        style="width:15px;height:15px">
+                                    </lord-icon>
+                                </div>
+                                <div class="bold" style="font-size:15px;text-align:center;margin-right:8px;color:#28a745">
+                                    For Approval
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        return `
+                             <div class="d-flex" style="display:inline-block;text-align:center;border: 2px solid #ffbe55;;padding:4px;border-radius:15px; ">
+                                            <div style="border-radius:15px; background-color: #ffbe55;; padding: 2px;margin-right:5px"> 
+                                                <lord-icon
+                                                    src="https://cdn.lordicon.com/qvyppzqz.json"
+                                                    trigger="hover"
+                                                    stroke="bold"
+                                                    colors="primary:#ffffff,secondary:#ffffff"
+                                                    style="width:20px;height:20px">
+                                                </lord-icon>
+                                            </div>
+                                            <div class="bold" style="font-size:15px;text-align:center;margin-right:8px;color:#ffbe55;">Ongoing</div>
+                                        </div>
+                        `;
+                    }
+                }
+             },   
+            //  {  data: 'status', name: '' }  
+        ]
+    });
 
-      lguLabel = '<span class="statusApproved cursor" title="Added to LGU Report">Uploaded</span>';
-      LGUStatus = dataApprovedlgu;
-      LGUname = lName;
-    } else {
-      LGUStatus = '<span class="statusNA cursor">N/A</span>';
-      lguLabel = '<span class="statusPending cursor" title="Added to LGU Report">Waiting</span>';
-    }
- 
-    //VisionMissionStatus
-    let VisionMissionStatus;
-    let VisionMissionLabel;
-    let VisionMissionname;
-    if (d.repVM) { // Check if the value is not empty, null, or undefined
+    // Event listener for opening and closing details
+    $('#lnfpReport tbody').on('click', 'td.details-control', function() {
+        var tr = $(this).closest('tr');
+        var row = table.row(tr);
 
-      let dataApprovedvm = 'Invalid Date';
-      let vName = `${d.Firstname} ${d.Middlename} ${d.Lastname}`;
+        if (row.child.isShown()) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        } else {
+            // Open this row and display formatted content
+            row.child(format(row.data())).show();
+            tr.addClass('shown');
+        }
+    });
 
-      if (!isNaN(Date.parse(d.vmdate))) {
-        let date = new Date(d.vmdate);
-        let options = { year: 'numeric', month: 'long', day: 'numeric' };
-        dataApprovedvm = date.toLocaleDateString('en-US', options);
-      }
-      VisionMissionLabel = '<span class="statusApproved cursor" title="Added to LGU Report">Uploaded</span>';
-      VisionMissionStatus = dataApprovedvm;
-      VisionMissionname = vName;
-    } else {
-      VisionMissionStatus = '<span class="statusNA cursor">N/A</span>';
-      VisionMissionLabel = '<span class="statusPending cursor" title="Added to LGU Report">Waiting</span>';
-    }
+    // Function to format the expandable row content
+    function format(d) {
 
-    //NutritionPoliciesStatus 
-    let NutritionPoliciesStatus;
-    let NutritionPoliciesLabel;
-    let NutritionPoliciesname;
-    if (d.mellpiprobarangaynationalpolicies_id) { // Check if the value is not empty, null, or undefined
+        var status_form5 = getStatusHtml(d.form5_status);
+        var status_form7 = getStatusHtml(d.form7_status);
+        var status_form8 = getStatusHtml(d.form8_status);
+        var status_interview = getStatusHtml(d.formInt_status);
+        var status_overall = getStatusHtml(d.formScore_status);
 
-      let dataApprovednp = 'Invalid Date';
-      let npName = `${d.Firstname} ${d.Middlename} ${d.Lastname}`;
-
-      if (!isNaN(Date.parse(d.vmapproveddate))) {
-        let date = new Date(d.vmapproveddate);
-        let options = { year: 'numeric', month: 'long', day: 'numeric' };
-        dataApprovednp = date.toLocaleDateString('en-US', options);
-      }
-
-      NutritionPoliciesLabel = '<span class="statusApproved cursor" title="Added to LGU Report">Uploaded</span>';
-      NutritionPoliciesStatus = dataApprovednp;
-      NutritionPoliciesname = npName;
-    } else {
-      NutritionPoliciesStatus = '<span class="statusNA cursor">N/A</span>';
-      NutritionPoliciesLabel = '<span class="statusPending cursor" title="Added to LGU Report">Waiting</span>';
-    }
-
-    //GovernanceStatus
-    let GovernanceStatus;
-    let GovernanceLabel;
-    let Governancename;
-    if (d.mplgubrgygovernance_id) { // Check if the value is not empty, null, or undefined
-
-      let dataApprovedgov = 'Invalid Date';
-      let govName = `${d.Firstname} ${d.Middlename} ${d.Lastname}`;
-      if (!isNaN(Date.parse(d.governanceapproveddate))) {
-        let date = new Date(d.governanceapproveddate);
-        let options = { year: 'numeric', month: 'long', day: 'numeric' };
-        dataApprovedgov = date.toLocaleDateString('en-US', options);
-      }
-
-      GovernanceLabel = '<span class="statusApproved cursor" title="Added to LGU Report">Uploaded</span>';
-      GovernanceStatus = dataApprovedgov;
-      Governancename = govName;
-    } else {
-      GovernanceStatus = '<span class="statusNA cursor">N/A</span>';
-      GovernanceLabel = '<span class="statusPending cursor" title="Added to LGU Report">Waiting</span>';
-    }
-
-    //LNCStatus
-    let LNCStatus;
-    let LNCLabel;
-
-    if (d.mplgubrgylncmanagement_id) { // Check if the value is not empty, null, or undefined
-      console.log('LNC Id', d.mplgubrgylncmanagement_id);
-      let dataApprovedlnc = 'Invalid Date';
-      let govName = `${d.Firstname} ${d.Middlename} ${d.Lastname}`;
-      if (!isNaN(Date.parse(d.lncapproveddate))) {
-        let date = new Date(d.lncapproveddate);
-        let options = { year: 'numeric', month: 'long', day: 'numeric' };
-        dataApprovedlnc = date.toLocaleDateString('en-US', options);
-      }
-      LNCLabel = '<span class="statusPending cursor" title="Added to LGU Report">Waiting</span>';
-      LNCStatus = '<span class="statusNA cursor" title="For Review">N/A</span>';
-    } else {
-      LNCStatus = '<span class="statusNA cursor">N/A</span>';
-      LNCLabel = '<span class="statusPending cursor" title="Added to LGU Report">Waiting</span>';
-    }
-
-    //NutritionServiceStatus 
-    let NutritionServiceStatus;
-    let NutritionServiceLabel;
-    if (d.mplgubrgynutritionservice_id) { // Check if the value is not empty, null, or undefined
-
-
-      let dataApprovedns = 'Invalid Date';
-      if (!isNaN(Date.parse(d.nsapproveddate))) {
-        let date = new Date(d.nsapproveddate);
-        let options = { year: 'numeric', month: 'long', day: 'numeric' };
-        dataApprovedns = date.toLocaleDateString('en-US', options);
-      }
-      NutritionServiceLabel = '<span class="statusApproved cursor" title="Added to LGU Report">Uploaded</span>';
-      NutritionServiceStatus = dataApprovedns;
-    } else {
-      NutritionServiceStatus = '<span class="statusNA cursor">N/A</span>';
-      NutritionServiceLabel = '<span class="statusPending cursor" title="Added to LGU Report">Waiting</span>';
-    }
-
-    //ChangeNutritionServiceStatus 
-    let ChangeNutritionServiceStatus;
-    let ChangeNutritionServiceLabel;
-    if (d.mplgubrgychangeNS_id) { // Check if the value is not empty, null, or undefined
-
-      let dataApprovedchangens = 'Invalid Date';
-      if (!isNaN(Date.parse(d.changensapproveddate))) {
-        let date = new Date(d.changensapproveddate);
-        let options = { year: 'numeric', month: 'long', day: 'numeric' };
-        dataApprovedchangens = date.toLocaleDateString('en-US', options);
-      }
-      ChangeNutritionServiceLabel = '<span class="statusApproved cursor" title="Added to LGU Report">Uploaded</span>';
-      ChangeNutritionServiceStatus = dataApprovedchangens;
-    } else {
-      ChangeNutritionServiceStatus = '<span class="statusNA cursor">N/A</span>';
-      ChangeNutritionServiceLabel = '<span class="statusPending cursor" title="Added to LGU Report">Waiting</span>';
-    }
-
-    //DiscussionQuestionServiceStatus 
-    let DiscussionQuestionServiceStatus;
-    let DiscussionQuestionServiceLabel;
-    if (d.mplgubrgydiscussionquestion_id) { // Check if the value is not empty, null, or undefined
-
-      let dataApproveddq = 'Invalid Date';
-      if (!isNaN(Date.parse(d.budgetapproveddate))) {
-        let date = new Date(d.budgetapproveddate);
-        let options = { year: 'numeric', month: 'long', day: 'numeric' };
-        dataApproveddq = date.toLocaleDateString('en-US', options);
-      }
-
-      DiscussionQuestionServiceLabel = '<span class="statusApproved cursor" title="Added to LGU Report">Uploaded</span>';
-      DiscussionQuestionServiceStatus = dataApproveddq;
-    } else {
-
-      DiscussionQuestionServiceStatus = '<span class="statusNA cursor">N/A</span>';
-      DiscussionQuestionServiceLabel = '<span class="statusPending cursor" title="Added to LGU Report">Waiting</span>';
-    }
-
-
-    let lgustatusLabel;
-    switch (d.status) {
-      case 0:
-        statusLabel = '<span class="statusApproved cursor" title="Added to LGU Report">Ongoing</span>';
-        break;
-      case 1:
-        statusLabel = '<span class="statusPending cursor" title="For Review">Uploaded</span>';
-        break;
-      default:
-        statusLabel = '<span class="statusUnknown cursor" title="Unknown Status">Unknown</span>';
-        break;
-    }
-
-    var nestedTableHtml = `
-        <div class="nested-table">
-            <table class="display nested table flex" style="align-items:center; width:100%;">
-            <thead class="thead-light">
-                    <tr >
-                        <th class="bold table2ndth">Forms</th>
-                        <th class="bold table2ndth">Personnel Involved</th>
-                        <th class="bold table2ndth">Date Created</th>
-                        <th class="bold table2ndth">Date Approved</th>
-                        <th class="bold table2ndth">Status</th>
+    // Create the table structure
+    return `
+         <div class="nested-table">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Form</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Remarks</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="center table2ndtd" >LGU Profile</td>
-                        <td class="center table2ndtd">${LGUname}</td>
-                        <td class="center table2ndtd">${LGUStatus}</td>
-                        <td class="center table2ndtd">N/A</td>
-                        <td class="center table2ndtd">${lguLabel}</td>
+                        <td>Form 5</td>
+                        <td>${ formatDate( d.update_form5 ) || 'N/A' }</td>
+                        <td>${ status_form5 || 'N/A'}</td>
+                        <td>N/A</td>
                     </tr>
                     <tr>
-                        <td class="center table2ndtd">VIsion Mission</td>
-                        <td class="center table2ndtd">${VisionMissionname}</td>
-                        <td class="center table2ndtd">${VisionMissionStatus}</td>
-                        <td class="center table2ndtd"> </td>
-                        <td class="center table2ndtd">${VisionMissionLabel}</td>
-                    </tr> 
-                    <tr>
-                        <td class="center table2ndtd">Nutrition Policies</td>
-                        <td class="center table2ndtd">${NutritionPoliciesStatus}</td>
-                        <td class="center table2ndtd"> </td>
-                        <td class="center table2ndtd">N/A</td>
-                        <td class="center table2ndtd">${NutritionPoliciesLabel}</td>
+                        <td>Form 6 and 7</td>
+                         <td>${ formatDate(d.update_form7) || 'N/A' }</td>
+                        <td>${ status_form7 || 'N/A'}</td>
+                        <td>N/A</td>
                     </tr>
                     <tr>
-                        <td class="center table2ndtd">Governance</td>
-                        <td class="center table2ndtd">${GovernanceStatus}</td>
-                        <td class="center table2ndtd"> </td>
-                        <td class="center table2ndtd">N/A</td>
-                        <td class="center table2ndtd">${GovernanceLabel}</td>
-                    </tr> 
+                        <td>Form 8</td>
+                         <td>${ formatDate( d.update_form8 ) || 'N/A' }</td>
+                        <td>${ status_form8 || 'N/A'}</td>
+                        <td>N/A</td>
+                    </tr>
                     <tr>
-                      <td class="center table2ndtd">LNC Management</td>
-                      <td class="center table2ndtd">${LNCStatus}</td>
-                      <td class="center table2ndtd"> </td>
-                      <td class="center table2ndtd">N/A</td>
-                      <td class="center table2ndtd">${LNCLabel}</td>
-                    </tr> 
+                        <td>Interview</td>
+                        <td>${ formatDate(d.update_formInt) || 'N/A' }</td>
+                        <td>${ status_interview|| 'N/A'}</td>
+                        <td>N/A</td>
+                    </tr>
                     <tr>
-                      <td class="center table2ndtd">Nutrition Service</td>
-                      <td class="center table2ndtd">${NutritionServiceStatus}</td>
-                      <td class="center table2ndtd"> </td>
-                      <td class="center table2ndtd">N/A</td>
-                      <td class="center table2ndtd">${NutritionServiceLabel}</td>
-                    </tr> 
-                    <tr>
-                      <td class="center table2ndtd">Change in Nutrition Service</td>
-                      <td class="center table2ndtd">${ChangeNutritionServiceStatus}</td>
-                      <td class="center table2ndtd"> </td>
-                      <td class="center table2ndtd">N/A</td>
-                      <td class="center table2ndtd">${ChangeNutritionServiceLabel}</td>
-                  </tr> 
-                  <tr>
-                    <td class="center table2ndtd">Discussion Question</td>
-                    <td class="center table2ndtd">${DiscussionQuestionServiceStatus}</td>
-                    <td class="center table2ndtd"> </td>
-                    <td class="center table2ndtd">N/A</td>
-                    <td class="center table2ndtd">${DiscussionQuestionServiceLabel}</td>
-                  </tr> 
-                  <tr>
-                    <td class="center table2ndtd">Budget (AIP)</td>
-                    <td class="center table2ndtd"> </td>
-                    <td class="center table2ndtd"> </td>
-                    <td class="center table2ndtd">N/A</td>
-                    <td class="center table2ndtd"></td>
-                </tr> 
+                        <td>Overall Score</td>
+                        <td>${ formatDate( d.update_formScore ) || 'N/A' }</td>
+                        <td>${ status_overall || 'N/A'}</td>
+                        <td>N/A</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     `;
-
-    return (
-      '<dl>' +
-      '<dd>' + nestedTableHtml + '</dd>' +
-      '</dl>'
-    );
-  }
-
-  let table = new DataTable('#lnfpReport', {
-    ajax: {
-      url: "https://nnc-nmis.moodlearners.com/CMSDashboard/fetchreport",
-      type: 'GET',
-      dataSrc: 'data',
-    },
-    columns: [
-
-
-      {
-        data: "name",
-        render: function (data, type, row) {
-          // Example of adding a suffix
-          return `${data}`;
-        }
-      },
-      {
-        data: "repdateM",
-        render: function (data, type, row) {
-          var date = new Date(data); 
-          var options = { year: 'numeric', month: 'long', day: 'numeric' };
-          return date.toLocaleDateString('en-PH', options);
-        }
-      },
-      {
-        data: "repperiodC",
-        render: function (data, type, row) {
-          // Example of adding a suffix
-          return `${data}`;
-        }
-      },
-      {
-        data: "count ",
-        render: function (data, type, row) {
-          if (data == 1) {
-            return ' <span class="statusPending cursor" title="For Review">Ongoing</span>';
-          } else {
-            return '<span class="statusApproved cursor" title="Added to LGU Report">APPROVED</span>';
-          }
-        }
-      },
-      {
-        data: ["repStatus", "repCount"],
-        orderable: false,
-        render: function (data, type, row) {
-          let repStatus = row.repStatus; // Access the status field from the row
-          let repCount = row.repCount;   // Access the count field from the row
-          // return data ? data : 'No Office';
-          if (repStatus >= 1 | repStatus <= 9) {
-            return `${repCount}` + '/9';
-          } else {
-            return '<span class="statusApproved cursor" title="Added to LGU Report">Submit report</span>';
-          }
-        }
-
-      },
-      {
-        className: 'dt-control',
-        orderable: false,
-        data: null,
-        defaultContent: ''
-      },
-
-    ],
-    order: [[1, 'asc']]
-  });
-
-  $('#lnfpReport tbody').on('click', 'td.dt-control', function () {
-    let tr = $(this).closest('tr');
-    let row = table.row(tr);
-
-    if (row.child.isShown()) {
-      row.child.hide();
-      tr.removeClass('shown');
-    } else {
-      row.child(format_report(row.data())).show();
-      tr.addClass('shown');
     }
+
   });
 
- 
+
+  function formatDate(dateString) {
+
+    if (!dateString) {
+        return 'N/A';  // Handle empty or falsy values
+    }
+
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const date = new Date(dateString);
+
+    // Ensure valid date before formatting
+    return isNaN(date.getTime()) ? 'Invalid Date' : date.toLocaleDateString(undefined, options);
 }
+
+function getStatusHtml(status) {
+    if (status == 3  || status == 1) {
+        return '<a href="#" class="badge badge-info">Done</a>';
+    } else if ( status == 2) {
+        return '<a href="#" class="badge badge-warning">Ongoing</a>';
+    } else {
+        return '<a href="#" class="badge badge-secondary">Not yet started</a>';
+    }
+}
+
+
+
+
+
+
+
