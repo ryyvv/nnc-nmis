@@ -208,6 +208,7 @@ class BSPersonnel extends Controller
             'inputBnsProvince' => 'required|string',
             'inputBnsCM' => 'required|string',
             'inputBnsBarangay' => 'required|string',
+            'inputBnsBarangayText' => 'required|string',
             'inputBnsIdNum' => 'required|numeric|digits:10',
             'inputBnsIdName' => 'required|string',
             'inputBnsLN' => 'required|string',
@@ -280,7 +281,7 @@ class BSPersonnel extends Controller
         ]);
         
         PersonnelDnaDirectoryBnsModel::create([
-            'barangay' => $validatedData['inputBnsBarangay'],
+            'barangay' => $validatedData['inputBnsBarangayText'],
             'statusemployment' => $validatedData['inputBnsEmploymentStat'],
             'beneficiaryname' => $validatedData['inputBnsBeneficiary'],
             'relationship' => $validatedData['inputBnsRelationship'],
@@ -316,6 +317,15 @@ class BSPersonnel extends Controller
         $personnel->load($personnel->directory_type);
 
         return view('BarangayScholar.PersonnelDirectory.edit', compact('personnel'));
+    }
+
+    public function show($id)
+    {
+        $personnel = PersonnelDnaDirectoryModel::findOrFail($id);
+        // include nao | npc | bns
+        $personnel->load($personnel->directory_type);
+
+        return view('BarangayScholar.PersonnelDirectory.show', compact('personnel'));
     }
 
     public function updateNAO(Request $request, $id) {
@@ -509,6 +519,7 @@ class BSPersonnel extends Controller
             'inputBnsProvince' => 'required|string',
             'inputBnsCM' => 'required|string',
             'inputBnsBarangay' => 'required|string',
+            'inputBnsBarangayText' => 'required|string',
             'inputBnsIdNum' => 'required|numeric|digits:10',
             'inputBnsIdName' => 'required|string',
             'inputBnsLN' => 'required|string',
@@ -585,7 +596,7 @@ class BSPersonnel extends Controller
         $bnsData = PersonnelDnaDirectoryBnsModel::where('personnel_id', $personnel->id)->first();
         if ($bnsData) {
             $bnsData->update([
-                'barangay' => $validatedData['inputBnsBarangay'],
+                'barangay' => $validatedData['inputBnsBarangayText'],
                 'statusemployment' => $validatedData['inputBnsEmploymentStat'],
                 'beneficiaryname' => $validatedData['inputBnsBeneficiary'],
                 'relationship' => $validatedData['inputBnsRelationship'],

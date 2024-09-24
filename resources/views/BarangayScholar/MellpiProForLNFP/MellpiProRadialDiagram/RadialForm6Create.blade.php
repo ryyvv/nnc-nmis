@@ -1,9 +1,7 @@
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/form5a.css') }}"> -->
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/common.css') }}">
-<script src="https://cdn.lordicon.com/lordicon.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- <script src="https://cdn.lordicon.com/lordicon.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
@@ -223,6 +221,19 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+
+                                        <!-- @foreach($form5_rating as $key => $rating)
+                                            <tr>
+                                                <td><b>{{ $rating->column2 }}</b></td>
+                                                <td><textarea type="text" class="form7Input" name="Accomplish[{{ $key }}]" id="AccomplishA" placeholder="Enter your text here...">{{ $form6->accomplishmentA }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="GoodPrac[{{ $key }}]" id="GoodPracA" placeholder="Enter your text here...">{{ $form6->goodPracA }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="Issues[{{ $key }}]" id="IssuesA" placeholder="Enter your text here...">{{ $form6->issuesA }}</textarea></td>
+                                                <td><textarea type="text" class="form7Input" name="Actions[{{ $key }}]" id="ActionsA" placeholder="Enter your text here...">{{ $form6->actionsA }}</textarea></td>
+                                                <input type="hidden" name="seven_id[{{ $key }}]" value="{{ $rating->column2 }}" />
+                                                <input type="hidden" name="seven_c_id[{{ $key }}]" />
+                                            </tr>
+                                        @endforeach -->
+
                                             <tr>
                                                 <td><b>A. Coordination</b></td>
                                                 <td><textarea type="text" class="form7Input" name="AccomplishA" id="AccomplishA" placeholder="Enter your text here...">{{ $form6->accomplishmentA }}</textarea></td>
@@ -300,24 +311,6 @@
                                 </div>
                             </div>
                             @endif
-                            <!-- <div class="modal fade" id="exampleModalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <h5>Are you sure you want to submit DISCUSSION QUESTION FOR LEARNING AND ACTION?</h5>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                            <button type="submit" id="lgu-draft" class="btn btn-primary" name="action" value="updateResponse">Yes</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
             
                         </form>
                     </div>

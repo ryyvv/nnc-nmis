@@ -3,8 +3,8 @@
 
 @extends('layouts.app', [
 'class' => 'sidebar-mini ',
-'namePage' => 'lncFunction',
-'activePage' => 'lncFunction',
+'namePage' => 'lncFunctionality',
+'activePage' => 'lncFunctionality',
 'activeNav' => '',
 ])
 

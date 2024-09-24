@@ -27,4 +27,4 @@
     </div>
 </div>
 
- 
+ <!-- barangay.js -->

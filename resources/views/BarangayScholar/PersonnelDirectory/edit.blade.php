@@ -427,8 +427,7 @@
                                 </div>
                             </div>
                             <hr>
-                            <div class="form-group col-md-3" id="totalBarangay"
-                                style="display:flex; border-right:1px solid;">
+                            <div class="form-group col-md-3" style="display:flex; border-right:1px solid;">
                                 <div class="form-group col-md-12">
                                     <label for="inputNpcGovMayor">Name of Governor/Mayor</label>
                                     <input type="text" class="form-control" name="inputNpcGovMayor"
@@ -809,8 +808,7 @@
                                 </div>
                             </div>
                             <hr>
-                            <div class="form-group col-md-3" id="totalBarangay"
-                                style="display:flex; border-right:1px solid;">
+                            <div class="form-group col-md-3" style="display:flex; border-right:1px solid;">
                                 <div class="form-group col-md-12">
                                     <label for="inputBnsBarangay">Barangay</label>
                                     <select id="barangay-dropdown-Bns" disabled class="form-control"
@@ -820,6 +818,10 @@
                                     @error('inputBnsBarangay')
                                     <div class="text-danger">{{ $message }}</div>
                                     @enderror
+                                    <!-- Barangay Text -->
+                                    <input type="text" class="form-control" name="inputBnsBarangayText"
+                                        id="inputBnsBarangayText" placeholder="Barangay Id" hidden
+                                        value="{{ old('inputBnsBarangayText') }}">
                                 </div>
                             </div>
                             <hr>
@@ -1300,6 +1302,7 @@ $(document).ready(function() {
                     populateDropdown(dropdown, data, valueKey, textKey, placeholder);
 
                     dropdown.val(oldValue).change();
+
                     if (dropdown.val() !== oldValue) {
                         dropdown.val('').change(); // Reset to default select
                     }
@@ -1359,21 +1362,25 @@ $(document).ready(function() {
         dropdowns.city.change(function() {
             const citymunCode = $(this).val();
             if (!citymunCode) return;
-            // if (!dropdowns.barangay) {
-            //     readonly.val(citymunCode + '000').change();
-            // }
 
-            readonly.val(citymunCode + '000').change();
+            if (!dropdowns.barangay) {
+                readonly.val(citymunCode + '000').change();
+            }
 
             fetchDataAndPopulate(routes.getBarangays, {
                 citymun_code: citymunCode
-            }, dropdowns.barangay, 'name', 'name', 'Barangay', oldValues.barangay);
+            }, dropdowns.barangay, 'psgc_code', 'name', 'Barangay', oldValues.barangay);
         });
 
         if (dropdowns.barangay) {
             dropdowns.barangay.change(function() {
                 const psgc_code = $(this).val();
+                const label = $(this).find('option:selected').text();
                 if (!psgc_code) return;
+
+                readonly.val(psgc_code).change();
+
+                $('#inputBnsBarangayText').val(label);
             });
         }
     }

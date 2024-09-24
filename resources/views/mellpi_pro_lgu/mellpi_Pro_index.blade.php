@@ -161,6 +161,40 @@
                         </div>
                     </div>
                 </form>
+                <form action="{{ route('mellpi_pro_LGU.PersonnelDirectoryupload') }}" method="POST"
+                    enctype="multipart/form-data">
+                    @csrf
+                    <div class="input-group mb-3">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="inputcsvfilePersonnelDirectory"
+                                id="inputcsvfilePersonnelDirectory" accept=".csv" required>
+                            <label class="custom-file-label" aria-describedby="inputGroupFileAddon02">Upload Personnel
+                                file</label>
+                        </div>
+
+                        <div class="input-group-append" style="margin-left:5px">
+                            <button class="btn btn-outline-primary" style="margin:0px; margin-left:0px" id="checkData"
+                                type="submit">Check data</button>
+                        </div>
+                    </div>
+                </form>
+                <form action="{{ route('mellpi_pro_LGU.LncFunctionalityupload') }}" method="POST"
+                    enctype="multipart/form-data">
+                    @csrf
+                    <div class="input-group mb-3">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="inputcsvfileLncFunctionality"
+                                id="inputcsvfileLncFunctionality" accept=".csv" required>
+                            <label class="custom-file-label" aria-describedby="inputGroupFileAddon02">Upload LNC Func
+                                file</label>
+                        </div>
+
+                        <div class="input-group-append" style="margin-left:5px">
+                            <button class="btn btn-outline-primary" style="margin:0px; margin-left:0px" id="checkData"
+                                type="submit">Check data</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
 

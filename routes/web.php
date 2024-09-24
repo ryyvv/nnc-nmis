@@ -110,7 +110,8 @@ use App\Http\Controllers\Admin\BarangayScholar\MellpiProForLNFP_SummaryControlle
 
 
 use App\Http\Controllers\FormController;
-use App\Http\Controllers\FormSubmissionController; 
+use App\Http\Controllers\FormSubmissionController;
+use App\Http\Controllers\LncFunctionalityController;
 // use App\Http\Controllers\UserController\UserReviewController as UserControllerUserReviewController;
 use Faker\Guesser\Name;
 
@@ -171,6 +172,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/mellpi_pro_LGU/submun',  [MellproLGUController::class, 'SubMunupload'])->name('mellpi_pro_LGU.SubMunupload');
     Route::post('/mellpi_pro_LGU/brgy',  [MellproLGUController::class, 'Barangayupload'])->name('mellpi_pro_LGU.Barangayupload');
     Route::post('/mellpi_pro_LGU/equipmentInventory',  [MellproLGUController::class, 'EquipmentInventoryupload'])->name('mellpi_pro_LGU.EquipmentInventoryupload');
+    Route::post('/mellpi_pro_LGU/personnel-directory',  [MellproLGUController::class, 'PersonnelDirectoryupload'])->name('mellpi_pro_LGU.PersonnelDirectoryupload');
+    Route::post('/mellpi_pro_LGU/lnc-functionality',  [MellproLGUController::class, 'LncFunctionalityupload'])->name('mellpi_pro_LGU.LncFunctionalityupload');
 
     // Melpi Pro Controller
     // Route::get('/mellpi_pro', [MellpiProController::class, 'index'])->name('mellpi_pro.view');
@@ -182,6 +185,9 @@ Route::middleware('auth')->group(function () {
 
     //Route::get('/lncFunction' ,  [LNCController::class, 'index' ]->name('LNCIndex.view'));
     Route::resource('/lncFunction', LNCController::class);
+    // LNC Functionality Checklist
+    Route::get('/lnc-functionality', [LncFunctionalityController::class, 'index'])->name('lncFunctionality.index');
+    Route::get('/lnc-functionality/create', [LncFunctionalityController::class, 'create'])->name('lncFunctionality.create');
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
@@ -509,10 +515,10 @@ Route::group(['middleware' => 'auth'], function () {
         //VisionMissionController
         Route::get('BarangayScholar/B1bSummary', [SummaryB1bController::class, 'index'])->name('B1bSummary.index');
         Route::POST('BarangayScholar/B1bSummary', [SummaryB1bController::class, 'store'])->name('B1bSummary.store');
-        Route::get('BarangayScholar/B1bSummary/create', [SummaryB1bController::class, 'create'])->name('B1bSummary.create');
         Route::put('BarangayScholar/B1bSummary/{id}', [SummaryB1bController::class, 'update'])->name('B1bSummary.update');
         Route::get('BarangayScholar/B1bSummary/{id}/edit', [SummaryB1bController::class, 'edit'])->name('B1bSummary.edit');
         Route::post('BarangayScholar/B1bSummary/delete', [SummaryB1bController::class, 'destroy'])->name('B1bSummary.destroy');
+        Route::get('BarangayScholar/B1bSummary/{id}/create', [SummaryB1bController::class, 'createData'])->name('B1bSummary.createData');
         Route::get('BarangayScholar/B1bSummary/{id}/show', [SummaryB1bController::class, 'show'])->name('B1bSummary.show');
         Route::POST('BarangayScholar/B1bSummary/{id}/download-pdf', [SummaryB1bController::class, 'downloads'])->name('B1bSummary.download');
 
@@ -619,6 +625,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/bspersonnelDnaDirectory/personnel', [BSPersonnel::class, 'getPersonel'])->name('BSpersonnel.get');
         Route::get('/bspersonnelDnaDirectory/create', [BSPersonnel::class, 'create'])->name('BSpersonnel.create');
         Route::get('/bspersonnelDnaDirectory/edit/{id}', [BSPersonnel::class, 'edit'])->name('BSpersonnel.edit');
+        Route::get('/bspersonnelDnaDirectory/show/{id}', [BSPersonnel::class, 'show'])->name('BSpersonnel.show');
         Route::post('/bspersonnelDnaDirectory/nao/{id}', [BSPersonnel::class, 'updateNAO'])->name('BSpersonnel.updateNAO');
         Route::post('/bspersonnelDnaDirectory/npc/{id}', [BSPersonnel::class, 'updateNPC'])->name('BSpersonnel.updateNPC');
         Route::post('/bspersonnelDnaDirectory/bns/{id}', [BSPersonnel::class, 'updateBNS'])->name('BSpersonnel.updateBNS');

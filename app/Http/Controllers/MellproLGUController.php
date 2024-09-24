@@ -15,6 +15,11 @@ use App\Models\City;
 use App\Models\Barangay;
 use App\Models\LocationPivot;
 use App\Models\Barangay as ModelsBarangay;
+use App\Models\LncFunctionality;
+use App\Models\PersonnelDnaDirectoryBnsModel;
+use App\Models\PersonnelDnaDirectoryModel;
+use App\Models\PersonnelDnaDirectoryNaoModel;
+use App\Models\PersonnelDnaDirectoryNpcModel;
 use App\Models\PsgcBarangay;
 use App\Models\PsgcCity;
 use App\Models\PsgcEquipmentInventory;
@@ -613,6 +618,174 @@ class MellproLGUController extends Controller
         }
         
         return redirect('/mellpi_pro_LGU')->withStatus(__('Equipment Inventory successfully added.'));
+    }
+
+    public function PersonnelDirectoryupload(Request $request)
+    {
+        $request->validate([
+            'inputcsvfilePersonnelDirectory' => 'required|mimes:csv'
+        ]);
+
+        $csv = Reader::createFromPath($request->file('inputcsvfilePersonnelDirectory')->getRealPath());
+        $csv->setHeaderOffset(0);
+
+        $records = Statement::create()->process($csv);
+
+
+        foreach ($records as $record) {
+            if (empty(trim($record['Directory']))) {
+                continue;
+            }
+            $directory_type = trim($record['Directory']);
+
+            // Validate directory type
+            if (!in_array($directory_type, ['nao', 'npc', 'bns'])) {
+                return redirect()->back()->with('error', 'Invalid directory type: ' . $directory_type);
+            }
+
+            // Common personnel data
+            $personnelData = [
+                'lastname' => trim($record['Last Name'] ?? ''),
+                'firstname' => trim($record['First Name'] ?? ''),
+                'middlename' => trim($record['Middle Name'] ?? ''),
+                'suffix' => trim($record['Suffix'] ?? ''),
+                'sex' => trim($record['Sex'] ?? ''),
+                'cellphonenumer' => trim($record['Cellphone Number'] ?? ''),
+                'telephonenumber' => trim($record['Telephone Number'] ?? ''),
+                'email' => trim($record['Email Address'] ?? ''),
+                'address' => trim($record['Address'] ?? ''),
+                'birthdate' => trim($record['Birthdate'] ?? ''),
+                'age' => trim($record['Age'] ?? ''),
+                'educationalbackground' => trim($record['Educational Background'] ?? ''),
+                'degreeCourse' => trim($record['Degree, course or year finished'] ?? ''),
+                'directory_type' => $directory_type,
+                'name_on_id' => trim($record['Name on ID'] ?? ''),
+                'civilstatus' => trim( $record['Civil Status']?? ''),
+
+                // 'cities_id' => trim( $record['cities_id']?? ''),
+                // 'region_id' => trim( $record['region_id']?? ''),
+                // 'province_id' => trim( $record['province_id']?? ''),
+                // 'barangay_id' => trim( $record['barangay_id']?? ''),
+                // 'directory_type' => trim( $record['directory_type']?? ''),
+            ];
+
+            // Check if the personnel already exists
+            $personnel = PersonnelDnaDirectoryModel::where('email', $personnelData['email'])->first();
+
+            if ($personnel) {
+                // Update existing personnel record
+                $personnel->update($personnelData);
+            } else {
+                // Create a new personnel record
+                $personnel = PersonnelDnaDirectoryModel::create($personnelData);
+            }
+
+            // Handle NAO specific fields
+            if ($directory_type === 'nao') {
+                $naoData = [
+                    'namegovmayor' => trim($record['Name of Gov/Mayor'] ?? ''),
+                    'typenao' => trim($record['Type of NAO'] ?? ''),
+                    'typedesignation' => trim($record['Type of Designation'] ?? ''),
+                    'datedesignation' => trim($record['Date of Designation'] ?? ''),
+                    'typeappointment' => trim($record['Type of Appointment'] ?? ''),
+                    'position' => trim($record['Office Position'] ?? ''),
+                    'department' => trim($record['Office / Department'] ?? ''),
+                    'personnel_id' => $personnel->id, // Link to the personnel record
+                ];
+                PersonnelDnaDirectoryNaoModel::updateOrCreate(['personnel_id' => $naoData['personnel_id']], $naoData);
+            } 
+            
+            // Handle NPC specific fields
+            elseif ($directory_type === 'npc') {
+                $npcData = [
+                    'namegovmayor' => trim($record['Name of Gov/Mayor'] ?? ''),
+                    'typenpc' => trim($record['Type of NPC'] ?? ''),
+                    'typedesignation' => trim($record['Type of Designation'] ?? ''),
+                    'datedesignation' => trim($record['Date of Designation'] ?? ''),
+                    'typeappointment' => trim($record['Type of Appointment'] ?? ''),
+                    'position' => trim($record['Office Position / Title'] ?? ''),
+                    'department' => trim($record['Office / Department'] ?? ''),
+                    'dcnpcapmembership' => trim($record['DCNPCAP Membership'] ?? ''),
+                    'dcnpcapposition' => trim($record['DCNPCAP-position (if officer)'] ?? ''),
+                    'dcnpcapofficer' => trim($record['National or Regional (DCNPCAP officer)'] ?? ''),
+                    'personnel_id' => $personnel->id, // Link to the personnel record
+                ];
+                PersonnelDnaDirectoryNpcModel::updateOrCreate(['personnel_id' => $npcData['personnel_id']], $npcData);
+            } 
+            
+            // Handle BNS specific fields
+            elseif ($directory_type === 'bns') {
+                $bnsData = [
+                    'barangay' => trim($record['Barangay'] ?? ''),
+                    'statusemployment' => trim($record['Status of Employment'] ?? ''),
+                    'beneficiaryname' => trim($record['Beneficiary Name'] ?? ''),
+                    'relationship' => trim($record['Relationship'] ?? ''),
+                    'periodactivefrom' => trim($record['Period of action service from'] ?? ''),
+                    'periodactiveto' => trim($record['Period of action service to'] ?? ''),
+                    'lastupdate' => trim($record['Last Update'] ?? ''),
+                    'bnsstatus' => trim($record['BNS Status'] ?? ''),
+                    'personnel_id' => $personnel->id, // Link to the personnel record
+                ];
+                PersonnelDnaDirectoryBnsModel::updateOrCreate(['personnel_id' => $bnsData['personnel_id']], $bnsData);
+            }
+        }
+
+        return redirect('/mellpi_pro_LGU')->withStatus(__('Personnel Directory successfully added.'));
+    }
+
+    public function LncFunctionalityupload(Request $request)
+    {
+        $request->validate([
+            'inputcsvfileLncFunctionality' => 'required|mimes:csv'
+        ]);
+
+
+        $csv = Reader::createFromPath($request->file('inputcsvfileLncFunctionality')->getRealPath());
+        $csv->setHeaderOffset(0); 
+
+
+        $records = Statement::create()->process($csv);
+
+        foreach ($records as $record) {
+            if (empty(trim($record['10-digit PSGC']))) {
+                continue;
+            }
+
+            $psgc_code = trim($record['10-digit PSGC']);
+
+            $data = [
+                'geographic_level' => trim($record['Geographic Level'] ?? ''),
+                'reg_code' => trim($record['Region'] ?? ''),
+                'prov_code' => trim($record['Province'] ?? ''),
+                'name' => trim($record['Name'] ?? ''),
+                'cd' => $this->convertToInt(trim($record['CD'] ?? '')),
+                'pp1a' => $this->convertToInt(trim($record['PP1A'] ?? '')),
+                'pp1b' => $this->convertToInt(trim($record['PP1B'] ?? '')),
+                'pp2a' => $this->convertToInt(trim($record['PP2A'] ?? '')),
+                'pp2b' => $this->convertToInt(trim($record['PP2B'] ?? '')),
+                'pp3a' => $this->convertToInt(trim($record['PP3A'] ?? '')),
+                'pp3b' => $this->convertToInt(trim($record['PP3B'] ?? '')),
+                'pp4a' => $this->convertToInt(trim($record['PP4A'] ?? '')),
+                'nsd' => $this->convertToInt(trim($record['NSD'] ?? '')),
+                'me1' => $this->convertToInt(trim($record['ME1'] ?? '')),
+                'me2' => $this->convertToInt(trim($record['ME2'] ?? '')),
+                'me3' => $this->convertToInt(trim($record['ME3'] ?? '')),
+                'total' => $this->convertToInt(trim($record['Total'] ?? '')),
+                'functionality' => trim($record['Functionality'] ?? '')
+            ];
+
+            $lncFunctionalityExists = LncFunctionality::where('psgc_code', $psgc_code)->first();
+
+            if ($lncFunctionalityExists) {
+                $lncFunctionalityExists->update($data);
+            } else {
+                LncFunctionality::create(array_merge($data, [
+                    'psgc_code' => $psgc_code,
+                ]));
+            }
+        }
+
+        return redirect('/lnc_functionality')->withStatus(__('LNC Functionality data successfully uploaded.'));
     }
 
     private function getTotalBarangaysFromDB(string $citymun_code): int

@@ -43,5 +43,5 @@ user table:
     php artisan migrate --path=/database/migrations/2024_07_01_030644_mellpiprochange_n_s.php
     php artisan migrate --path=/database/migrations/2024_07_04_072428_mellpiprobarangaydiscussionquestion.php
     php artisan migrate --path=/database/migrations/2024_08_09_092612_budgetaipdata.php
-
+    php artisan migrate --path=/database/migrations/2024_09_22_0532007_lgu_b1b_summarydata.php
  

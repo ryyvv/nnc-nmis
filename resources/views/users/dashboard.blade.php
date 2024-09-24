@@ -2,17 +2,28 @@
 
 <style>
 
-.dt-control::before {
-    /* content: '\f067'; FontAwesome plus icon */
+ 
+
+.details-control::before {
+    /* content: '\f063';  */
     font-family: FontAwesome;
     cursor: pointer;
 }
 
-.shown .dt-control::before {
-    content: '\f068';
+ .details-control::after {
+    content: '\f063'; 
+    font-family: FontAwesome;
+    cursor: pointer;
+}
+
+
+.shown .details-control::after {
+    content: '\f062';
     /* FontAwesome minus icon */
+    font-family: FontAwesome;
     color: green;
 }
+ 
 </style>
 
 @extends('layouts.app', [

@@ -14,12 +14,7 @@ $(document).ready(function() {
                 dataSrc: 'data',
               }, // Fetch data from server
         columns: [
-            {
-                "className": 'details-control',  // Expandable row button
-                "orderable": false,
-                "data": null,
-                "defaultContent": ''  // Empty button for expansion
-            },
+    
             { data: 'lnfp_officer', name: 'lnfp_officer' },
             { data: 'evaluating', name: 'evaluating'},
             { data: 'created_at', 
@@ -68,7 +63,13 @@ $(document).ready(function() {
                         `;
                     }
                 }
-             },   
+             },
+             {
+                className: 'details-control',  // Expandable row button
+                orderable: false,
+                data: null,
+                defaultContent: ''  // Empty button for expansion
+            },   
             //  {  data: 'status', name: '' }  
         ]
     });
@@ -83,9 +84,16 @@ $(document).ready(function() {
             row.child.hide();
             tr.removeClass('shown');
         } else {
-            // Open this row and display formatted content
-            row.child(format(row.data())).show();
-            tr.addClass('shown');
+            // Hide any other expanded rows
+                $('#lnfpReport tbody tr.shown').each(function() {
+                    let openRow = table.row(this);
+                    openRow.child.hide();
+                    $(this).removeClass('shown');
+                });
+
+                // Show the current row
+                row.child(format(row.data())).show();
+                $(tr).addClass('shown');
         }
     });
 

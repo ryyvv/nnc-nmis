@@ -13,6 +13,8 @@ use App\Models\Province;
 use App\Models\Barangay;
 use App\Models\Municipal;
 use App\Models\City;
+use App\Models\lguB1bSummary;
+use App\Models\MellpiproLGUB1bSummaryTracking;
 use App\Http\Controllers\LocationController;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Termwind\Components\Raw;
@@ -62,14 +64,52 @@ class SummaryB1bController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function createData(Request $request)
     {
-        $action = 'create';
+        $action = 'edit';
         $location = new LocationController;
-        $regCode = auth();
-        $years = range(date("Y"), 1900);
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal;
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
         
-        return view('BarangayScholar.B1bSummary.create', compact('provinces', 'cities_municipalities', 'barangays', 'years','action'));
+        $years = range(date('Y'), 1900);
+         
+        $b1Sum = DB::table('lgubarangayreport')->where('id',$request->id)->first();
+        
+
+        $row = DB::table('lgubarangayreport')
+        ->leftJoin('lguprofilebarangay', 'lgubarangayreport.lguprofilebarangay_id', '=', 'lguprofilebarangay.id')
+        ->leftJoin('mplgubrgyvisionmissions', 'lgubarangayreport.mplgubrgyvisionmissions_id', '=', 'mplgubrgyvisionmissions.id')
+        ->leftJoin('mellpiprobarangaynationalpolicies', 'lgubarangayreport.mellpiprobarangaynationalpolicies_id', '=', 'mellpiprobarangaynationalpolicies.id')
+        ->leftJoin('mplgubrgygovernance', 'lgubarangayreport.mplgubrgygovernance_id', '=', 'mplgubrgygovernance.id')
+        ->leftJoin('mplgubrgylncmanagement', 'lgubarangayreport.mplgubrgylncmanagement_id', '=', 'mplgubrgylncmanagement.id')
+        ->leftJoin('mplgubrgynutritionservice', 'lgubarangayreport.mplgubrgynutritionservice_id', '=', 'mplgubrgynutritionservice.id')
+        ->leftJoin('mplgubrgychangeNS', 'lgubarangayreport.mplgubrgychangeNS_id', '=', 'mplgubrgychangeNS.id')
+        ->leftJoin('mplgubrgydiscussionquestion', 'lgubarangayreport.mplgubrgydiscussionquestion_id', '=', 'mplgubrgydiscussionquestion.id')
+        ->where('lgubarangayreport.id',$b1Sum->id)
+        ->select(
+            // 'lgubarangayreport.lguprofilebarangay_id as lguID',
+            // 'lgubarangayreport.mplgubrgyvisionmissions_id as vmID',
+            // 'lgubarangayreport.mellpiprobarangaynationalpolicies_id as npID',
+            // 'lgubarangayreport.mplgubrgygovernance_id as govID',
+            // 'lgubarangayreport.mplgubrgylncmanagement_id as lncID',
+            // 'lgubarangayreport.mplgubrgynutritionservice_id as nsID', 
+
+            'lguprofilebarangay.*',
+            'mplgubrgyvisionmissions.*',
+            'mellpiprobarangaynationalpolicies.*',
+            'mplgubrgygovernance.*',
+            'mplgubrgylncmanagement.*',
+            'mplgubrgynutritionservice.*',
+            
+        )->first();
+
+
+         //dd($row);
+        return view('BarangayScholar.B1bSummary.create', compact('row','b1Sum','provinces', 'cities_municipalities', 'barangays', 'years','action'));
     }
 
     /**
@@ -77,156 +117,161 @@ class SummaryB1bController extends Controller
      */
     public function store(Request $request)
     {
+
+        //dd($request);
         $dataExists = DB::table('lgubarangayreport')
         ->where('dateMonitoring', $request->dateMonitoring)
         ->where( 'periodCovereda', $request->periodCovereda,)
         // ->where( 'barangay_id' , $request->barangay_id,) 
         ->exists();
 
+     
+
         if ($dataExists) {
-            return redirect()->back()->withInput()->with('error', 'A record with the same data already exists.');
-        }   
-
-        if ($request->formrequest == 'draft') {
-
-            $changeNSBarangay = MellpiproChangeNS::create([
-                'barangay_id' =>  $request->barangay_id,
-                'municipal_id' =>  $request->municipal_id,
-                'province_id' =>  $request->province_id,
-                'region_id' =>  $request->region_id,
-                'dateMonitoring' =>  $request->dateMonitoring,
-                'periodCovereda' =>  $request->periodCovereda,
-
-                'rating6a' => $request->rating6a,
-                'rating6b' => $request->rating6b,
-                'rating6c' => $request->rating6c,
-                'rating6d' => $request->rating6d,
-                'rating6e' => $request->rating6e,
-                'rating6f' => $request->rating6f,
-                'rating6g' => $request->rating6g,
-                'rating6h' => $request->rating6h,
-
-                'remarks6a' => $request->remarks6a,
-                'remarks6b' => $request->remarks6b,
-                'remarks6c' => $request->remarks6c,
-                'remarks6d' => $request->remarks6d,
-                'remarks6e' => $request->remarks6e,
-                'remarks6f' => $request->remarks6f,
-                'remarks6g' => $request->remarks6g,
-                'remarks6h' => $request->remarks6h,
-                 
-
-                'status' =>  $request->status,
-                'user_id' =>  $request->user_id,
-            ]);
-
-            MellpiproChangeNSTracking::create([
-                'mplgubrgychangeNS_id' => $changeNSBarangay->id,
-                'status' => $request->status,
-                'barangay_id' => auth()->user()->barangay,
-                'municipal_id' => auth()->user()->city_municipal,
-                'user_id' => auth()->user()->id,
-            ]);
-        
-            return redirect('BarangayScholar/B1BSummary')->with('success', 'Data stored as Draft!'); 
-    
-        }else {
-            $rules = [
-                'barangay_id' => 'required|integer',
-                'municipal_id' => 'required|integer',
-                'province_id' => 'required|integer',
-                'region_id' => 'required|integer',
-                'dateMonitoring' => 'required|date|max:255',
-                'periodCovereda' => 'required|string |max:255',
-    
-                'rating6a' => 'required|integer',
-                'rating6b' => 'required|integer',
-                'rating6c' => 'required|integer',
-                'rating6d' => 'required|integer',
-                'rating6e' => 'required|integer',
-                'rating6f' => 'required|integer',
-                'rating6g' => 'required|integer',
-                'rating6h' => 'required|integer', 
-                
-                'remarks6a' => 'required|string|max: 255',
-                'remarks6b' => 'required|string|max: 255',
-                'remarks6c' => 'required|string|max: 255',
-                'remarks6d' => 'required|string|max: 255',
-                'remarks6e' => 'required|string|max: 255',
-                'remarks6f' => 'required|string|max: 255',
-                'remarks6g' => 'required|string|max: 255',
-                'remarks6h' => 'required|string|max: 255', 
-    
-                'status' => 'required|string|max:255',
-                'user_id' => 'required|integer',
-    
-            ];
-    
-            $validator = Validator::make($request->all(), $rules);
-    
-            if ($validator->fails()) {
-                return redirect()->back()
-                    ->withErrors($validator)
-                    ->withInput()->with('error', 'Something went wrong! Please try again.');
-            } else {
-    
-                $changeNSBarangay = MellpiproChangeNS::create([
+            if ($request->formrequest == 'draft') {
+                $B1bSummaryBarangay = lguB1bSummary::create([
+                    'D1' =>  $request->Pd1T2CR,
+                    'D2' =>  $request->Pd2T2CR,
+                    'D3' =>  $request->Pd3T2CR,
+                    'D4' =>  $request->Pd4T2CR,
+                    'D5' =>  $request->Pd5T2CR,
+                    'grandtotal' =>  $request->grandtotal,
                     'barangay_id' =>  $request->barangay_id,
                     'municipal_id' =>  $request->municipal_id,
                     'province_id' =>  $request->province_id,
                     'region_id' =>  $request->region_id,
                     'dateMonitoring' =>  $request->dateMonitoring,
                     'periodCovereda' =>  $request->periodCovereda,
-    
-                    'rating6a' => $request->rating6a,
-                    'rating6b' => $request->rating6b,
-                    'rating6c' => $request->rating6c,
-                    'rating6d' => $request->rating6d,
-                    'rating6e' => $request->rating6e,
-                    'rating6f' => $request->rating6f,
-                    'rating6g' => $request->rating6g,
-                    'rating6h' => $request->rating6h,
-    
-                    'remarks6a' => $request->remarks6a,
-                    'remarks6b' => $request->remarks6b,
-                    'remarks6c' => $request->remarks6c,
-                    'remarks6d' => $request->remarks6d,
-                    'remarks6e' => $request->remarks6e,
-                    'remarks6f' => $request->remarks6f,
-                    'remarks6g' => $request->remarks6g,
-                    'remarks6h' => $request->remarks6h,
-                     
-    
-                    'status' =>  $request->status,
+                    'status' =>  2,
                     'user_id' =>  $request->user_id,
                 ]);
-                MellpiproChangeNSTracking::create([
-                    'mplgubrgychangeNS_id' => $changeNSBarangay->id,
-                    'status' => $request->status,
-                    'barangay_id' => auth()->user()->barangay,
-                    'municipal_id' => auth()->user()->city_municipal,
-                    'user_id' => auth()->user()->id,
+    
+                // MellpiproLGUB1bSummaryTracking::create([
+                //     'mplgubrgyb1bSummary_id' => $B1bSummaryBarangay->id,
+                //     'status' => 2,
+                //     'barangay_id' => auth()->user()->barangay,
+                //     'municipal_id' => auth()->user()->city_municipal,
+                //     'user_id' => auth()->user()->id,
+                // ]);  
+                
+                DB::table('lgubarangayreport')
+                ->where('dateMonitoring', $request->dateMonitoring) 
+                ->where('periodCovereda', $request->periodCovereda) 
+                ->update([
+                    'mplgubrgyb1bSummary_id' => $B1bSummaryBarangay->id, 
+                    'mplgubrgyb1bSummaryStatus_id' => $request->barangay_id,   
+                    'count' => 2, 
                 ]);
-
-                DB::table('lgubarangayreport')->insert([
-                    'mplgubrgychangeNS_id' => $changeNSBarangay->id, 
-                    'barangay_id' => $request->barangay_id,
-                    'municipal_id' => $request->municipal_id,   
-                    'dateMonitoring' => $request->dateMonitoring,
-                    'periodCovereda' => $request->periodCovereda,
-                    'status' => $request->status,
-                    'user_id' => $request->user_id,
-                    'count' =>  1,
-                    'created_at' => now(), // Optional
-                    'updated_at' => now(), // Optional
-                ]);
-
-
-
-
+            
+                return redirect('BarangayScholar/B1BSummary')->with('success', 'Data stored as Draft!'); 
+        
             }
-            return redirect('BarangayScholar/B1BSummary')->with('success', 'Data stored successfully!');
-        }
+            return redirect()->back()->withInput()->with('error', 'A record with the same data already exists.');
+        }   
+
+        // if ($request->formrequest == 'draft') {
+
+        //     $B1bSummaryBarangay = lguB1bSummary::create([
+        //         'D1' =>  $request->Pd1T2CR,
+        //         'D2' =>  $request->Pd2T2CR,
+        //         'D3' =>  $request->Pd3T2CR,
+        //         'D4' =>  $request->Pd4T2CR,
+        //         'D5' =>  $request->Pd5T2CR,
+        //         'grandtotal' =>  $request->grandtotal,
+        //         'barangay_id' =>  $request->barangay_id,
+        //         'municipal_id' =>  $request->municipal_id,
+        //         'province_id' =>  $request->province_id,
+        //         'region_id' =>  $request->region_id,
+        //         'dateMonitoring' =>  $request->dateMonitoring,
+        //         'periodCovereda' =>  $request->periodCovereda,
+        //         'status' =>  $request->status,
+        //         'user_id' =>  $request->user_id,
+        //     ]);
+
+        //     // MellpiproLGUB1bSummaryTracking::create([
+        //     //     'mplgubrgyb1bSummary_id' => $B1bSummaryBarangay->id,
+        //     //     'status' => $request->status,
+        //     //     'barangay_id' => auth()->user()->barangay,
+        //     //     'municipal_id' => auth()->user()->city_municipal,
+        //     //     'user_id' => auth()->user()->id,
+        //     // ]);
+        
+        //     return redirect('BarangayScholar/B1BSummary')->with('success', 'Data stored as Draft!'); 
+    
+        // }else {
+        //     $rules = [
+        //         'barangay_id' => 'required|integer',
+        //         'municipal_id' => 'required|integer',
+        //         'province_id' => 'required|integer',
+        //         'region_id' => 'required|integer',
+        //         'dateMonitoring' => 'required|date|max:255',
+        //         'periodCovereda' => 'required|string |max:255',
+                
+        //         'D1' => 'required|integer',
+        //         'D2' => 'required|integer',
+        //         'D3' => 'required|integer',
+        //         'D4' => 'required|integer',
+        //         'D5' => 'required|integer',
+        //         'grandtotal' => 'required|integer',
+        //         'dateMonitoring' => 'required|integer',
+        //         'periodCovereda' => 'required|integer',
+        //         'status' => 'required|string|max:255',
+        //         'user_id' => 'required|integer',
+    
+        //     ];
+    
+        //     $validator = Validator::make($request->all(), $rules);
+    
+        //     if ($validator->fails()) {
+        //         return redirect()->back()
+        //             ->withErrors($validator)
+        //             ->withInput()->with('error', 'Something went wrong! Please try again.');
+        //     } else {
+    
+        //         $changeNSBarangay = MellpiproChangeNS::create([
+        //             'barangay_id' =>  $request->barangay_id,
+        //             'municipal_id' =>  $request->municipal_id,
+        //             'province_id' =>  $request->province_id,
+        //             'region_id' =>  $request->region_id,
+        //             'dateMonitoring' =>  $request->dateMonitoring,
+        //             'periodCovereda' =>  $request->periodCovereda,
+    
+        //             'D1' =>$request->Pd1T2CR,
+        //             'D2' =>$request->Pd2T2CR,
+        //             'D3' =>$request->Pd3T2CR,
+        //             'D4' =>$request->Pd4T2CR,
+        //             'D5' =>$request->Pd5T2CR,
+        //             'grandtotal' =>$request->OverallTCRF,
+        //             'status' =>  $request->status,
+        //             'user_id' =>  $request->user_id,
+        //         ]);
+        //         MellpiproLGUB1bSummaryTracking::create([
+        //             'mplgubrgyb1bSummary_id' => $B1bSummaryBarangay->id,
+        //             'status' => $request->status,
+        //             'barangay_id' => auth()->user()->barangay,
+        //             'municipal_id' => auth()->user()->city_municipal,
+        //             'user_id' => auth()->user()->id,
+        //         ]);
+
+        //         DB::table('lgubarangayreport')->insert([
+        //             'mplgubrgyb1bSummary_id' => $changeNSBarangay->id, 
+        //             'barangay_id' => $request->barangay_id,
+        //             'municipal_id' => $request->municipal_id,   
+        //             'dateMonitoring' => $request->dateMonitoring,
+        //             'periodCovereda' => $request->periodCovereda,
+        //             'status' => $request->status,
+        //             'user_id' => $request->user_id,
+        //             'count' =>  1,
+        //             'created_at' => now(), // Optional
+        //             'updated_at' => now(), // Optional
+        //         ]);
+
+
+
+
+        //     }
+        //     return redirect('BarangayScholar/B1BSummary')->with('success', 'Data stored successfully!');
+        // }
         
     }
 

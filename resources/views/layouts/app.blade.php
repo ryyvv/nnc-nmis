@@ -18,6 +18,8 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/joboy.css') }}"> 
+  <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/form5a.css') }}">
+  <!-- <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/common.css') }}"> -->
 
   <!-- CSS Files -->
   <link href="{{ asset('assets') }}/css/bootstrap.min.css" rel="stylesheet" />
@@ -75,12 +77,14 @@
   <script src="{{ asset('assets') }}/js/autoGenerateInput.js"></script>
   <script src="{{ asset('assets') }}/js/Barangay.js"></script>
   <script src="{{ asset('assets') }}/js/Municipal.js"></script>
+  <script src="{{ asset('assets') }}/js/B1bSummary.js"></script>
   <script src="{{ asset('assets') }}/js/joboy.js"></script>
   <script src="{{ asset('assets') }}/js/ryan.js"></script>
   <script src="{{ asset('assets') }}/js/diether.js"></script>
   <script src="{{ asset('assets') }}/js/Location.js"></script>
   <script src="{{ asset('assets') }}/js/custom.js"></script>
   <script src="{{ asset('assets') }}/js/MunicipalStaff.js"></script>
+  <script src="{{ asset('assets') }}/js/customcharts.js"></script>
   
   <!-- Stock -->
   <!-- Bootstrap v4.2.1 (https://getbootstrap.com/) -->

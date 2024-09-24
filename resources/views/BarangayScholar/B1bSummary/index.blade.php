@@ -66,7 +66,7 @@
                                                
                                                 @elseif( $rawdata->status == 1 )
                                                 <i onclick="view('B1bSummary','{{ $rawdata->id }}','show')"  class="fa fa-eye fa-lg cursor" style="color:gray;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
-                                                <i onclick="view('B1bSummary','{{ $rawdata->id }}','show')" class="fa fa-file fa-lg cursor" style="color:gray;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                                <i onclick="view('B1bSummary','{{ $rawdata->id }}','create')" class="fa fa-file fa-lg cursor" style="color:74c476;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Create Summary for D1-D5"></i>
                                                 <i class="fa fa-edit fa-lg cursor" style="color:gray;margin-right:10px" title="Edit Disabled"></i>
                                               
                                                 @elseif( $rawdata->status == 2 )

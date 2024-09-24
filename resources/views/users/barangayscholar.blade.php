@@ -6,7 +6,7 @@
 
             <div style="display:flex;align-items:center">
                 <!-- <a href="{{route('formsb.index')}}"> -->
-                <h5 class="title">{{__("Mellpi Pro for LNFP Summary")}}</h5>
+                <h5 class="title">{{__("MELLPI Pro for LNFP Summary")}}</h5>
                 <!-- </a> -->
 
             </div>
@@ -40,4 +40,34 @@
             </div>
         </div>
     </div>
+
+    <!-- julius test addition -->
+    <div class="card" style="border-radius:10px;padding-left:2rem!important;padding-right:1rem!important">
+        <div class="card-header">
+            <!-- <h5 class="title">{{__("List of Mellpi Pro for LGU Profile Sheet (Barangay)")}}</h5> -->
+
+            <div style="display:flex;align-items:center">
+                <!-- <a href="{{route('formsb.index')}}"> -->
+                <h5 class="title">{{__("Charts")}}</h5>
+                <!-- </a> -->
+
+            </div>
+
+            <div class="content" >
+
+                <div class="row-12">
+                    <div class="chart" id="chart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+<!-- <script>
+    $(document).ready(function() {
+      B1bSummaryFN();
+      radialDiagramB1bSummary();
+    });
+ 
+</script> -->
