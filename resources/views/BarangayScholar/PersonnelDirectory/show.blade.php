@@ -1198,7 +1198,7 @@ $(document).ready(function() {
                 region: '{{ old("inputBnsRegion", $personnel->region_id) }}',
                 province: '{{ old("inputBnsProvince", $personnel->province_id) }}',
                 city: '{{ old("inputBnsCM", $personnel->cities_id) }}',
-                barangay: '{{ old("inputBnsBarangay", $personnel->barangay_id) }}'
+                barangay: '{{ old("inputBnsBarangay", $personnel->psgc_code) }}'
             }
         };
 

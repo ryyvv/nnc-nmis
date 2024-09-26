@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lguB1bSummarydata', function (Blueprint $table) {
+        Schema::create('lguB2bSummarydata', function (Blueprint $table) {
             $table->id();
-            $table->string('D1')->nullable();
-            $table->string('D2')->nullable();
-            $table->string('D3')->nullable();
-            $table->string('D4')->nullable();
-            $table->string('D5')->nullable();
+            $table->string('ch1')->nullable();
+            $table->string('ch2')->nullable();
+            $table->string('ch3')->nullable();
+            $table->string('ch4')->nullable();
+            $table->string('ch5')->nullable();
+            $table->string('ch6')->nullable();
+            $table->string('ch7')->nullable();
+            $table->string('ch8')->nullable();
             $table->string('grandtotal')->nullable();
             $table->string('remarks')->nullable();
             $table->string('status')->nullable();
@@ -31,13 +34,13 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('mplgubrgyLguB1bSummarytracking', function (Blueprint $table) {
+        Schema::create('mplgubrgyLguB2bSummarytracking', function (Blueprint $table) {
             $table->id();
             $table->integer('status'); 
             $table->integer('barangay_id')->unsigned(); 
             $table->integer('municipal_id')->unsigned();
             $table->integer('user_id')->unsigned(); 
-            $table->integer('mplgubrgyb1bSummary_id')->unsigned()->nullable(); 
+            $table->integer('mplgubrgyb2bSummary_id')->unsigned()->nullable(); 
             $table->foreign('user_id')->references('id')->on('users'); 
             $table->timestamps();
         });

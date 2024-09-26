@@ -27,10 +27,12 @@ class PersonnelDnaDirectoryModel extends Model
         'email',
         'cellphonenumer',
         'telephonenumber',
+        'psgc_code',
+        'name',
+        'correspondence_code',
         'region_id',
         'province_id',
         'cities_id',
-        'barangay_id',
         'directory_type',
         'name_on_id',
     ];

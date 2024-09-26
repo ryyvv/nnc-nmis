@@ -5,21 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MellpiproLGUB1bSummaryTracking extends Model
+class MellpiproLGUB2bSummaryTracking extends Model
 {
     use HasFactory;
 
 
-    protected $table = 'mplgubrgyLguB1bSummarytracking';
+    protected $table = 'mplgubrgyLguB2bSummarytracking';
     protected $guarded = ['id'];
     protected $fillable = [
-        'mplgubrgyb1bSummary_id',
+        'mplgubrgyb2bSummary_id',
         'barangay_id',
         'municipal_id', 
         'user_id',
         'status', 
     ];
-    public function  lguB1bSummary() {
-        return $this->belongsTo(lguB1bSummary::class);
+    public function  lguB2bSummary() {
+        return $this->belongsTo(lguB2bSummary::class);
     }
 }

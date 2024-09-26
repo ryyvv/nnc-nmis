@@ -86,6 +86,7 @@ use App\Http\Controllers\Admin\CityMunicipalStaff\CMSMellpiProForLNFP_OverallSco
 //BarangayScholar
 use App\Http\Controllers\Admin\BarangayScholar\BSPersonnel;
 use App\Http\Controllers\Admin\BarangayScholar\SummaryB1bController;
+use App\Http\Controllers\Admin\BarangayScholar\SummaryB2bController;
 use App\Http\Controllers\Admin\BarangayScholar\BSEquipmentInventoryController;
 use App\Http\Controllers\Admin\BarangayScholar\BSNutritionOfficesController;
 use App\Http\Controllers\Admin\BarangayScholar\BSDashboardController;
@@ -512,7 +513,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('BarangayScholar/nutritionservice/{id}/show', [NutritionServiceController::class, 'show'])->name('nutritionservice.show');
         Route::POST('BarangayScholar/nutritionservice/{id}/download-pdf', [NutritionServiceController::class, 'downloads'])->name('nutritionservice.download');
  
-        //VisionMissionController
+        //B1bSummary
         Route::get('BarangayScholar/B1bSummary', [SummaryB1bController::class, 'index'])->name('B1bSummary.index');
         Route::POST('BarangayScholar/B1bSummary', [SummaryB1bController::class, 'store'])->name('B1bSummary.store');
         Route::put('BarangayScholar/B1bSummary/{id}', [SummaryB1bController::class, 'update'])->name('B1bSummary.update');
@@ -531,6 +532,16 @@ Route::group(['middleware' => 'auth'], function () {
         Route::POST('BarangayScholar/changeNS/delete', [ChangeNSController::class, 'destroy'])->name('changeNS.destroy');
         Route::get('BarangayScholar/changeNS/{id}/show', [ChangeNSController::class, 'show'])->name('changeNS.show');
         Route::POST('BarangayScholar/changeNS/{id}/download-pdf', [ChangeNSController::class, 'downloads'])->name('changeNS.download');
+       
+        //B2bSummary
+        Route::get('BarangayScholar/B2bSummary', [SummaryB2bController::class, 'index'])->name('B2bSummary.index');
+        Route::POST('BarangayScholar/B2bSummary', [SummaryB2bController::class, 'store'])->name('B2bSummary.store');
+        Route::put('BarangayScholar/B2bSummary/{id}', [SummaryB2bController::class, 'update'])->name('B2bSummary.update');
+        Route::get('BarangayScholar/B2bSummary/{id}/edit', [SummaryB2bController::class, 'edit'])->name('B2bSummary.edit');
+        Route::post('BarangayScholar/B2bSummary/delete', [SummaryB2bController::class, 'destroy'])->name('B2bSummary.destroy');
+        Route::get('BarangayScholar/B2bSummary/{id}/create', [SummaryB2bController::class, 'createData'])->name('B2bSummary.createData');
+        Route::get('BarangayScholar/B2bSummary/{id}/show', [SummaryB2bController::class, 'show'])->name('B2bSummary.show');
+        Route::POST('BarangayScholar/B2bSummary/{id}/download-pdf', [SummaryB2bController::class, 'downloads'])->name('B2bSummary.download');
 
         //DiscussionQuestionController
         Route::get('BarangayScholar/discussionquestion', [DiscussionQuestionController::class, 'index'])->name('discussionquestion.index');

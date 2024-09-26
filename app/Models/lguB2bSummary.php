@@ -5,16 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class lguB1bSummary extends Model
+class lguB2bSummary extends Model
 {
     use HasFactory;
 
-
-    protected $fillable = ['D1', 
-                           'D2',
-                           'D3',
-                           'D4',
-                           'D5',
+    protected $fillable = ['ch1', 
+                           'ch2',
+                           'ch3',
+                           'ch4',
+                           'ch5',
+                           'ch6',
+                           'ch7',
+                           'ch8', 
                            'grandtotal',
                            'remarks',
                            'status',
@@ -29,5 +31,5 @@ class lguB1bSummary extends Model
 
     protected $guarded = ['id'];
 
-    protected $table = 'lguB1bSummarydata';
+    protected $table = 'lguB2bSummarydata';
 }

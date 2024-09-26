@@ -61,6 +61,12 @@
                   <p> {{ __("Change in NS") }} </p>
                 </a>
               </li>
+              <li class="@if ($activePage == 'B2bSummary') active @endif">
+                <a href="{{ route('B2bSummary.index') }}">
+                  <i class="now-ui-icons files_paper"></i>
+                  <p> {{ __("B-2b Summary") }} </p>
+                </a>
+              </li>
               <li class="@if ($activePage == 'discussionquestion') active @endif">
                 <a href="{{ route('discussionquestion.index') }}">
                   <i class="now-ui-icons files_paper"></i>

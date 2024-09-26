@@ -18,7 +18,7 @@
 
             <div style="display:flex;align-items:center">
                 <!-- <a href="{{route('formsb.index')}}"> -->
-                    <h5 class="title">{{__("List of FORM B-1B SUMMARY: BARANGAY NUTRITION MONITORING")}}</h5>
+                    <h5 class="title">{{__("List of FORM B-2B: SUMMARY OF CHANGES IN THE NUTRITIONAL STATUS IN THE BARANGAY")}}</h5>
                 <!-- </a> -->
             </div>
 
@@ -50,15 +50,15 @@
                                         <td>{{$rawdata->dateMonitoring}}</td>
                                         <td>{{$rawdata->periodCovereda}}</td>
                                         <td>
-                                            @if( $rawdata->mplgubrgyvisionmissions_id != null &&  $rawdata->mellpiprobarangaynationalpolicies_id != null &&  $rawdata->mplgubrgygovernance_id != null && $rawdata->mplgubrgylncmanagement_id != null && $rawdata->mplgubrgynutritionservice_id != null )
-                                            <span class="statusApproved">D1-D5 Completed</span>
+                                            @if( $rawdata->mplgubrgychangeNS_id != null )
+                                            <span class="statusApproved">Change in Nutrition Status Form Completed</span>
                                             @elseif( $rawdata->status == 1 )
-                                            <span class="statusPending">Ongoing Data for D1-D5</span>
+                                            <span class="statusPending">Ongoing Data for Form Change in Nutrition Status</span>
                                             @endif
 
-                                            @if( $rawdata->b1bSummaryStatus == null  )
+                                            @if( $rawdata->b2bSummaryStatus == null  )
                                                 <span class="statusPending">waiting</span>
-                                            @elseif($rawdata->b1bSummaryStatus == 0 )
+                                            @elseif($rawdata->b2bSummaryStatus == 0 )
                                             <span class="statusEntry">Form submitted</span>
                                             @endif
                                         </td>
@@ -66,13 +66,13 @@
                                         <ul class="list-inline m-0">
                                             <li class="list-inline-item">
                                                 <!-- Save and submit -->
-                                                @if( $rawdata->b1bSummaryStatus == null )
+                                                @if( $rawdata->b2bSummaryStatus == null )
                                                 <i class="fa fa-eye fa-lg cursor" style="color:gray;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
-                                                <i onclick="view('B1bSummary','{{ $rawdata->id }}','create')" class="fa fa-file fa-lg cursor" style="color:74c476;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Create Summary for D1-D5"></i>
+                                                <i onclick="view('B2bSummary','{{ $rawdata->id }}','create')" class="fa fa-file fa-lg cursor" style="color:74c476;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Create Summary for D1-D5"></i>
                                                
                                                 <!-- new -->
-                                                @elseif($rawdata->b1bSummaryStatus == 0 )
-                                                <i onclick="view('B1bSummary','{{ $rawdata->id }}','show')"  class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                                @elseif($rawdata->b2bSummaryStatus == 0 )
+                                                <i onclick="view('B2bSummary','{{ $rawdata->id }}','show')"  class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
                                                 <i  class="fa fa-file fa-lg cursor" style="color:gray;margin-right:10px"  data-toggle="tooltip" data-placement="top" title="Already Submitted"></i>
                                                 @endif
                                             </li>

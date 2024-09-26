@@ -43,6 +43,7 @@ class SummaryB1bController extends Controller
         ->leftJoin('mplgubrgygovernance', 'lgubarangayreport.mplgubrgygovernance_id', '=', 'mplgubrgygovernance.id')
         ->leftJoin('mplgubrgylncmanagement', 'lgubarangayreport.mplgubrgylncmanagement_id', '=', 'mplgubrgylncmanagement.id')
         ->leftJoin('mplgubrgynutritionservice', 'lgubarangayreport.mplgubrgynutritionservice_id', '=', 'mplgubrgynutritionservice.id')
+        ->leftJoin('lguB1bSummarydata', 'lgubarangayreport.mplgubrgyb1bSummary_id', '=', 'lguB1bSummarydata.id')
         ->leftJoin('mplgubrgychangeNS', 'lgubarangayreport.mplgubrgychangeNS_id', '=', 'mplgubrgychangeNS.id')
         ->leftJoin('mplgubrgydiscussionquestion', 'lgubarangayreport.mplgubrgydiscussionquestion_id', '=', 'mplgubrgydiscussionquestion.id')
         ->leftJoin('psgc_municipalities', DB::raw('CAST(lgubarangayreport.municipal_id AS VARCHAR)'), '=', 'psgc_municipalities.citymun_code')
@@ -54,11 +55,13 @@ class SummaryB1bController extends Controller
         ->select(
             'lgubarangayreport.*',
             'psgc_municipalities.name as name',
-            'psgc_cities.name as name'
+            'psgc_cities.name as name',
+            'lguB1bSummarydata.id as b1bSummaryId',
+            'lguB1bSummarydata.status as b1bSummaryStatus',
         )
         ->get();
         
-
+        //dd($rawdata);
         return view('BarangayScholar.B1bSummary.index', compact('rawdata','provinces', 'cities_municipalities', 'barangays','years'));
     }
     /**
@@ -87,6 +90,7 @@ class SummaryB1bController extends Controller
         ->leftJoin('mplgubrgygovernance', 'lgubarangayreport.mplgubrgygovernance_id', '=', 'mplgubrgygovernance.id')
         ->leftJoin('mplgubrgylncmanagement', 'lgubarangayreport.mplgubrgylncmanagement_id', '=', 'mplgubrgylncmanagement.id')
         ->leftJoin('mplgubrgynutritionservice', 'lgubarangayreport.mplgubrgynutritionservice_id', '=', 'mplgubrgynutritionservice.id')
+        ->leftJoin('lguB1bSummarydata', 'lgubarangayreport.mplgubrgyb1bSummary_id', '=', 'lguB1bSummarydata.id')
         ->leftJoin('mplgubrgychangeNS', 'lgubarangayreport.mplgubrgychangeNS_id', '=', 'mplgubrgychangeNS.id')
         ->leftJoin('mplgubrgydiscussionquestion', 'lgubarangayreport.mplgubrgydiscussionquestion_id', '=', 'mplgubrgydiscussionquestion.id')
         ->where('lgubarangayreport.id',$b1Sum->id)
@@ -104,11 +108,12 @@ class SummaryB1bController extends Controller
             'mplgubrgygovernance.*',
             'mplgubrgylncmanagement.*',
             'mplgubrgynutritionservice.*',
+    
             
         )->first();
 
 
-         //dd($row);
+        //dd($row);
         return view('BarangayScholar.B1bSummary.create', compact('row','b1Sum','provinces', 'cities_municipalities', 'barangays', 'years','action'));
     }
 
@@ -117,56 +122,134 @@ class SummaryB1bController extends Controller
      */
     public function store(Request $request)
     {
-
-        //dd($request);
+ 
         $dataExists = DB::table('lgubarangayreport')
         ->where('dateMonitoring', $request->dateMonitoring)
         ->where( 'periodCovereda', $request->periodCovereda,)
         // ->where( 'barangay_id' , $request->barangay_id,) 
         ->exists();
 
-     
-
-        if ($dataExists) {
-            if ($request->formrequest == 'draft') {
-                $B1bSummaryBarangay = lguB1bSummary::create([
-                    'D1' =>  $request->Pd1T2CR,
-                    'D2' =>  $request->Pd2T2CR,
-                    'D3' =>  $request->Pd3T2CR,
-                    'D4' =>  $request->Pd4T2CR,
-                    'D5' =>  $request->Pd5T2CR,
-                    'grandtotal' =>  $request->grandtotal,
-                    'barangay_id' =>  $request->barangay_id,
-                    'municipal_id' =>  $request->municipal_id,
-                    'province_id' =>  $request->province_id,
-                    'region_id' =>  $request->region_id,
-                    'dateMonitoring' =>  $request->dateMonitoring,
-                    'periodCovereda' =>  $request->periodCovereda,
-                    'status' =>  2,
-                    'user_id' =>  $request->user_id,
-                ]);
     
-                // MellpiproLGUB1bSummaryTracking::create([
-                //     'mplgubrgyb1bSummary_id' => $B1bSummaryBarangay->id,
-                //     'status' => 2,
-                //     'barangay_id' => auth()->user()->barangay,
-                //     'municipal_id' => auth()->user()->city_municipal,
-                //     'user_id' => auth()->user()->id,
-                // ]);  
-                
-                DB::table('lgubarangayreport')
-                ->where('dateMonitoring', $request->dateMonitoring) 
-                ->where('periodCovereda', $request->periodCovereda) 
-                ->update([
-                    'mplgubrgyb1bSummary_id' => $B1bSummaryBarangay->id, 
-                    'mplgubrgyb1bSummaryStatus_id' => $request->barangay_id,   
-                    'count' => 2, 
-                ]);
-            
-                return redirect('BarangayScholar/B1BSummary')->with('success', 'Data stored as Draft!'); 
+        if ($dataExists) { 
+            $rules = [
+                'Pd1T2CR' => 'required|numeric',
+                'Pd2T2CR' => 'required|numeric',
+                'Pd3T2CR' => 'required|numeric',
+                'Pd4T2CR' => 'required|numeric',
+                'Pd5T2CR' => 'required|numeric',
+                'OverallTCRF' => 'required|numeric',  
+                'remarks' => 'nullable|string',
+                'barangay_id' =>  'required|string|max:555',
+                'municipal_id' => 'required|integer',
+                'province_id' => 'numeric',
+                'region_id' => 'required|integer',
+                'dateMonitoring' => 'required|date|max:255',
+                'periodCovereda' => 'required|string |max:255',
+                'status' => 'required|string|max:255',
+                'user_id' => 'required|integer',
         
+            ];
+            $message = [ 
+                'required' => 'The field is required.',
+                'integer' => 'The field is number.',
+                'string' => 'The field must be a string.',
+                'date' => 'The field must be a valid date.',
+                'max' => 'The field may not be greater than :max characters.',
+            ]; 
+    
+            $validator = Validator::make($request->all() , $rules, $message );
+    
+            if($validator->fails()){
+
+                //dd($validator->errors());
+                return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()->with('error', 'Something went wrong! Please try again.');
+            }else {
+                if ($request->formrequest == 'draft') {
+              
+                    $B1bSummaryBarangay = lguB1bSummary::create([
+                        'D1' =>$request->Pd1T2CR,
+                        'D2' =>$request->Pd2T2CR,
+                        'D3' =>$request->Pd3T2CR,
+                        'D4' =>$request->Pd4T2CR,
+                        'D5' =>$request->Pd5T2CR,
+                        'grandtotal' =>  $request->OverallTCRF,
+                        'remarks' =>  $request->remarks,
+                        'barangay_id' =>  $request->barangay_id,
+                        'municipal_id' =>  $request->municipal_id,
+                        'province_id' => isset($request->province_id) ? $request->province_id : null,
+                        'region_id' =>  $request->region_id,
+                        'dateMonitoring' =>  $request->dateMonitoring,
+                        'periodCovereda' =>  $request->periodCovereda,
+                        'status' =>  '1',
+                        'user_id' =>  $request->user_id,
+                    ]);
+        
+                    MellpiproLGUB1bSummaryTracking::create([
+                        'mplgubrgyb1bSummary_id' => $B1bSummaryBarangay->id,
+                        'status' => '1',
+                        'barangay_id' => auth()->user()->barangay,
+                        'municipal_id' => auth()->user()->city_municipal,
+                        'user_id' => auth()->user()->id,
+                    ]);  
+                    
+                    DB::table('lgubarangayreport')
+                    ->where('dateMonitoring', $request->dateMonitoring) 
+                    ->where('periodCovereda', $request->periodCovereda) 
+                    ->update([
+                        'mplgubrgyb1bSummary_id' => $B1bSummaryBarangay->id, 
+                        'mplgubrgyb1bSummaryStatus_id' => '1',  
+                        'count' => '1', 
+                    ]);
+     
+      
+                    return redirect('BarangayScholar/B1BSummary')->with('success', 'Data stored as Draft!'); 
+            
+                }else {
+      
+                    $B1bSummaryBarangay = lguB1bSummary::create([
+                        'D1' =>$request->Pd1T2CR,
+                        'D2' =>$request->Pd2T2CR,
+                        'D3' =>$request->Pd3T2CR,
+                        'D4' =>$request->Pd4T2CR,
+                        'D5' =>$request->Pd5T2CR,
+                        'grandtotal' =>  $request->OverallTCRF,
+                        'remarks' =>  $request->remarks,
+                        'barangay_id' =>  $request->barangay_id,
+                        'municipal_id' =>  $request->municipal_id,
+                        'province_id' => isset($request->province_id) ? $request->province_id : null,
+                        'region_id' =>  $request->region_id,
+                        'dateMonitoring' =>  $request->dateMonitoring,
+                        'periodCovereda' =>  $request->periodCovereda,
+                        'status' =>  0,
+                        'user_id' =>  $request->user_id,
+                    ]);
+        
+                    MellpiproLGUB1bSummaryTracking::create([
+                        'mplgubrgyb1bSummary_id' => $B1bSummaryBarangay->id,
+                        'status' => 0,
+                        'barangay_id' => auth()->user()->barangay,
+                        'municipal_id' => auth()->user()->city_municipal,
+                        'user_id' => auth()->user()->id,
+                    ]);  
+                    
+                    DB::table('lgubarangayreport')
+                    ->where('dateMonitoring', $request->dateMonitoring) 
+                    ->where('periodCovereda', $request->periodCovereda) 
+                    ->update([
+                        'mplgubrgyb1bSummary_id' => $B1bSummaryBarangay->id, 
+                        'mplgubrgyb1bSummaryStatus_id' => 0,  
+                        'count' => 2, 
+                    ]);
+    
+                    // return redirect('BarangayScholar/B1BSummary')->with('success', 'Data stored as Draft!'); 
+                    return redirect()->route('B1bSummary.index')->with('success', 'Data stored successfully!'); 
+                }
             }
-            return redirect()->back()->withInput()->with('error', 'A record with the same data already exists.');
+
+  
+            // return redirect()->back()->withInput()->with('error', 'A record with the same data already exists.');
         }   
 
         // if ($request->formrequest == 'draft') {
@@ -280,7 +363,7 @@ class SummaryB1bController extends Controller
      */
     public function show(Request $request, string $id)
     {
-        $action = 'edit';
+        $action = 'show';
         $location = new LocationController;
         $regCode = auth()->user()->Region;
         $provCode = auth()->user()->Province;
@@ -288,13 +371,35 @@ class SummaryB1bController extends Controller
         $provinces = $location->getProvinces(['reg_code' => $regCode]);
         $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
         $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
-
         
         $years = range(date('Y'), 1900);
+         
+        $b1Sum = DB::table('lgubarangayreport')->where('id',$request->id)->first();
+        
 
+        $row = DB::table('lgubarangayreport')
+        ->leftJoin('lguprofilebarangay', 'lgubarangayreport.lguprofilebarangay_id', '=', 'lguprofilebarangay.id')
+        ->leftJoin('mplgubrgyvisionmissions', 'lgubarangayreport.mplgubrgyvisionmissions_id', '=', 'mplgubrgyvisionmissions.id')
+        ->leftJoin('mellpiprobarangaynationalpolicies', 'lgubarangayreport.mellpiprobarangaynationalpolicies_id', '=', 'mellpiprobarangaynationalpolicies.id')
+        ->leftJoin('mplgubrgygovernance', 'lgubarangayreport.mplgubrgygovernance_id', '=', 'mplgubrgygovernance.id')
+        ->leftJoin('mplgubrgylncmanagement', 'lgubarangayreport.mplgubrgylncmanagement_id', '=', 'mplgubrgylncmanagement.id')
+        ->leftJoin('mplgubrgynutritionservice', 'lgubarangayreport.mplgubrgynutritionservice_id', '=', 'mplgubrgynutritionservice.id')
+        ->leftJoin('lguB1bSummarydata', 'lgubarangayreport.mplgubrgyb1bSummary_id', '=', 'lguB1bSummarydata.id') 
+        ->where('lgubarangayreport.id',$b1Sum->id)
+        ->select(
+ 
+            'lguprofilebarangay.*',
+            'mplgubrgyvisionmissions.*',
+            'mellpiprobarangaynationalpolicies.*',
+            'mplgubrgygovernance.*',
+            'mplgubrgylncmanagement.*',
+            'mplgubrgynutritionservice.*',
+    
+            
+        )->first();
 
-        $row = DB::table('mplgubrgychangeNS')->where('id', $request->id)->first();
-        return view('BarangayScholar.B1bSummary.show', compact('provinces', 'cities_municipalities', 'barangays', 'years', 'action', 'row'));
+        return view('BarangayScholar.B1bSummary.show', compact('row','b1Sum','provinces', 'cities_municipalities', 'barangays', 'years','action'));
+        
     }
 
     /**

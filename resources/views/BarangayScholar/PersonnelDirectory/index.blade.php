@@ -104,6 +104,8 @@ tr>td {
                             style="width: 100%; overflow-x: scroll;">
                             <thead>
                                 <tr>
+                                    <td><b>10-digit PSGC</b></td>
+                                    <td><b>City/Municipality</b></td>
                                     <td><b>Name of Gov/Mayor</b></td>
                                     <td><b>Last Name</b></td>
                                     <td><b>First Name</b></td>
@@ -169,6 +171,8 @@ tr>td {
                         <table id="npc-table" class="table table-striped table-bordered" style="width: 100%;">
                             <thead>
                                 <tr>
+                                    <td><b>10-digit PSGC</b></td>
+                                    <td><b>City/Municipality</b></td>
                                     <td><b>Name of Gov/Mayor</b></td>
                                     <td><b>Last Name</b></td>
                                     <td><b>First Name</b></td>
@@ -232,11 +236,24 @@ tr>td {
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+                        <div class="form-group col-md-3">
+                            <div class="form-group col-md-12">
+                                <label for="inputBnsBarangay">Barangay</label>
+                                <select id="barangay-dropdown-Bns" disabled class="form-control"
+                                    name="inputBnsBarangay">
+                                    <option selected>Select City/Municipality</option>
+                                </select>
+                                @error('inputBnsBarangay')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
                     <div style="overflow-x: scroll;">
                         <table id="bns-table" class="table table-striped table-bordered" style="width: 100%;">
                             <thead>
                                 <tr>
+                                    <td><b>10-digit PSGC</b></td>
                                     <td><b>Barangay</b></td>
                                     <td><b>ID No.</b></td>
                                     <td><b>Name on ID</b></td>
@@ -318,12 +335,12 @@ $(document).ready(function() {
 
         if (!data) return;
 
-
         $.each(data, function(index, item) {
 
             const directory = item[directoryType][0];
             const row = `<tr>
-                            ${directoryType === 'bns' ? `<td>${directory.barangay}</td>` : ''}
+                            <td>${item.psgc_code}</td>
+                            <td>${item.name}</td>
                             ${directoryType === 'bns' ? `<td>${item.id_number}</td>` : ''}
                             ${directoryType === 'bns' ? `<td>${item.name_on_id}</td>` : ''}
                             ${directoryType !== 'bns' ? `<td>${directory.namegovmayor || 'N/A'}</td>` : ''}
@@ -543,6 +560,11 @@ $(document).ready(function() {
                 fetchDataAndPopulate(routes.getCitiesAndMunicipalities, {
                     reg_code: regionCode
                 }, dropdowns.city, 'citymun_code', 'name', 'City/Municipality', oldValues.city);
+                $.get(routes.getPersonelNao, {
+                        directory_type: directoryType, //nao, npc, bns
+                        reg_code: regionCode
+                    }).done((data) => handleTableData(data, directoryType))
+                    .fail(() => alert('Failed to fetch city details.'));
                 return;
             }
 
@@ -553,6 +575,12 @@ $(document).ready(function() {
                 reg_code: regionCode,
                 excludeProvincialAreas: true
             }, dropdowns.city, 'citymun_code', 'name', 'City/Municipality', oldValues.city);
+
+            $.get(routes.getPersonelNao, {
+                    directory_type: directoryType, //nao, npc, bns
+                    reg_code: regionCode
+                }).done((data) => handleTableData(data, directoryType))
+                .fail(() => alert('Failed to fetch city details.'));
         });
 
         dropdowns.province.change(function() {
@@ -562,11 +590,21 @@ $(document).ready(function() {
             fetchDataAndPopulate(routes.getCitiesAndMunicipalities, {
                 prov_code: provinceCode
             }, dropdowns.city, 'citymun_code', 'name', 'City/Municipality', oldValues.city);
+
+            $.get(routes.getPersonelNao, {
+                    directory_type: directoryType, //nao, npc, bns
+                    prov_code: provinceCode
+                }).done((data) => handleTableData(data, directoryType))
+                .fail(() => alert('Failed to fetch city details.'));
         });
 
         dropdowns.city.change(function() {
             const citymunCode = $(this).val();
             if (!citymunCode) return;
+
+            fetchDataAndPopulate(routes.getBarangays, {
+                citymun_code: citymunCode
+            }, dropdowns.barangay, 'psgc_code', 'name', 'Barangay', oldValues.barangay);
 
             $.get(routes.getPersonelNao, {
                     directory_type: directoryType, //nao, npc, bns
@@ -574,6 +612,19 @@ $(document).ready(function() {
                 }).done((data) => handleTableData(data, directoryType))
                 .fail(() => alert('Failed to fetch city details.'));
         });
+
+        if (dropdowns.barangay) {
+            dropdowns.barangay.change(function() {
+                const psgcCode = $(this).val();
+                if (!psgcCode) return;
+
+                $.get(routes.getPersonelNao, {
+                        directory_type: directoryType, //nao, npc, bns
+                        psgc_code: psgcCode
+                    }).done((data) => handleTableData(data, directoryType))
+                    .fail(() => alert('Failed to fetch city details.'));
+            });
+        }
     }
 
     function setActiveTab(tabId) {

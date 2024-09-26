@@ -281,9 +281,17 @@
             <li class="@if ($activePage == 'form5a') active @endif">
                 <a href="{{ route('form5.index') }}">
                     <i class="now-ui-icons users_single-02"></i>
-                    <p> {{ __("Form 5 ") }} </p>
+                    <p> {{ __("Form 5 PNAO ") }} </p>
                 </a>
             </li>
+
+            <li class="@if ($activePage == 'form5b') active @endif">
+                <a href="{{ route('form5.index') }}">
+                    <i class="now-ui-icons users_single-02"></i>
+                    <p> {{ __("Form 5 CMNAO ") }} </p>
+                </a>
+            </li>
+            
             <li class="@if ($activePage == 'forms2') active @endif">
                 <a href="">
                     <i class="now-ui-icons users_single-02"></i>

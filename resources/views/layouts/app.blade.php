@@ -77,7 +77,9 @@
   <script src="{{ asset('assets') }}/js/autoGenerateInput.js"></script>
   <script src="{{ asset('assets') }}/js/Barangay.js"></script>
   <script src="{{ asset('assets') }}/js/Municipal.js"></script>
+  <script src="{{ asset('assets') }}/js/B2bSummary.js"></script>
   <script src="{{ asset('assets') }}/js/B1bSummary.js"></script>
+  <script src="{{ asset('assets') }}/js/B4Summary.js"></script>
   <script src="{{ asset('assets') }}/js/joboy.js"></script>
   <script src="{{ asset('assets') }}/js/ryan.js"></script>
   <script src="{{ asset('assets') }}/js/diether.js"></script>

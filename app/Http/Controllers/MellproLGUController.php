@@ -101,7 +101,7 @@ class MellproLGUController extends Controller
     public function Psgcupload(Request $request)
     {
         $request->validate([
-            'inputcsvfilePsgc' => 'required|mimes:csv'
+            'inputcsvfilePsgc' => 'required|mimes:csv,txt'
         ]);
 
         $csv = Reader::createFromPath($request->file('inputcsvfilePsgc')->getRealPath());
@@ -252,7 +252,7 @@ class MellproLGUController extends Controller
     public function Regionupload(Request $request)
     {
         $request->validate([
-            'inputcsvfileRegion' => 'required|mimes:csv'
+            'inputcsvfileRegion' => 'required|mimes:csv,txt'
         ]);
         $csv = Reader::createFromPath($request->file('inputcsvfileRegion')->getRealPath());
         $csv->setHeaderOffset(0);
@@ -289,7 +289,7 @@ class MellproLGUController extends Controller
     public function Provinceupload(Request $request)
     {
         $request->validate([
-            'inputcsvfileProvince' => 'required|mimes:csv'
+            'inputcsvfileProvince' => 'required|mimes:csv,txt'
         ]);
         $csv = Reader::createFromPath($request->file('inputcsvfileProvince')->getRealPath());
         $csv->setHeaderOffset(0);
@@ -332,7 +332,7 @@ class MellproLGUController extends Controller
     public function Cityupload(Request $request)
     {
         $request->validate([
-            'inputcsvfileCity' => 'required|mimes:csv'
+            'inputcsvfileCity' => 'required|mimes:csv,txt'
         ]);
         $csv = Reader::createFromPath($request->file('inputcsvfileCity')->getRealPath());
         $csv->setHeaderOffset(0);
@@ -381,7 +381,7 @@ class MellproLGUController extends Controller
     public function Munupload(Request $request)
     {
         $request->validate([
-            'inputcsvfileMun' => 'required|mimes:csv'
+            'inputcsvfileMun' => 'required|mimes:csv,txt'
         ]);
         $csv = Reader::createFromPath($request->file('inputcsvfileMun')->getRealPath());
         $csv->setHeaderOffset(0);
@@ -428,7 +428,7 @@ class MellproLGUController extends Controller
     public function SubMunupload(Request $request)
     {
         $request->validate([
-            'inputcsvfileSubMun' => 'required|mimes:csv'
+            'inputcsvfileSubMun' => 'required|mimes:csv,txt'
         ]);
     
         $csv = Reader::createFromPath($request->file('inputcsvfileSubMun')->getRealPath());
@@ -470,7 +470,7 @@ class MellproLGUController extends Controller
     public function Barangayupload(Request $request)
     {
         $request->validate([
-            'inputcsvfileBarangay' => 'required|mimes:csv'
+            'inputcsvfileBarangay' => 'required|mimes:csv,txt'
         ]);
         $csv = Reader::createFromPath($request->file('inputcsvfileBarangay')->getRealPath());
         $csv->setHeaderOffset(0);
@@ -517,7 +517,7 @@ class MellproLGUController extends Controller
     public function EquipmentInventoryupload(Request $request)
     {
         $request->validate([
-            'inputcsvfileEquipmentInventory' => 'required|mimes:csv'
+            'inputcsvfileEquipmentInventory' => 'required|mimes:csv,txt'
         ]);
         $csv = Reader::createFromPath($request->file('inputcsvfileEquipmentInventory')->getRealPath());
         $csv->setHeaderOffset(0);
@@ -623,126 +623,136 @@ class MellproLGUController extends Controller
     public function PersonnelDirectoryupload(Request $request)
     {
         $request->validate([
-            'inputcsvfilePersonnelDirectory' => 'required|mimes:csv'
+            'inputcsvfilePersonnelDirectory' => 'required|mimes:csv,txt'
         ]);
-
         $csv = Reader::createFromPath($request->file('inputcsvfilePersonnelDirectory')->getRealPath());
         $csv->setHeaderOffset(0);
-
+    
         $records = Statement::create()->process($csv);
-
-
+    
         foreach ($records as $record) {
-            if (empty(trim($record['Directory']))) {
-                continue;
-            }
-            $directory_type = trim($record['Directory']);
-
-            // Validate directory type
+            // Detect the directory type based on the first column
+            $directory_type = strtolower(trim($record[array_keys($record)[0]]));
+        
+            $psgc_code = trim($record['PSGC']);
+        
             if (!in_array($directory_type, ['nao', 'npc', 'bns'])) {
                 return redirect()->back()->with('error', 'Invalid directory type: ' . $directory_type);
             }
+        
+            $citymunExists = PsgcCity::where('psgc_code', $psgc_code)->first() 
+            ?? PsgcMunicipality::where('psgc_code', $psgc_code)->first();
+            $barangayExists = null;
 
+            if (!$citymunExists) {
+                $barangayExists = PsgcBarangay::where('psgc_code', $psgc_code)->first();
+                if (!$barangayExists) {
+                    return redirect()->back()->with('error', 'Invalid 10-Digit PSGC code: ' . $psgc_code);
+                }
+            }
+        
             // Common personnel data
             $personnelData = [
+                'id_number' => trim($record['ID No.'] ?? ''),
                 'lastname' => trim($record['Last Name'] ?? ''),
                 'firstname' => trim($record['First Name'] ?? ''),
                 'middlename' => trim($record['Middle Name'] ?? ''),
                 'suffix' => trim($record['Suffix'] ?? ''),
                 'sex' => trim($record['Sex'] ?? ''),
+                'age' => trim($record['Age'] ?? ''),
+                'birthdate' => trim($record['Birthdate'] ?? ''),
+                'educationalbackground' => trim($record['Educational Background'] ?? ''),
+                'degreeCourse' => trim($record['Degree, course or years finished'] ?? ''),
+                'address' => trim($record['Address'] ?? ''),
+                'civilstatus' => trim($record['Civil Status'] ?? ''),
+                'email' => trim($record['Email Address'] ?? ''),
                 'cellphonenumer' => trim($record['Cellphone Number'] ?? ''),
                 'telephonenumber' => trim($record['Telephone Number'] ?? ''),
-                'email' => trim($record['Email Address'] ?? ''),
-                'address' => trim($record['Address'] ?? ''),
-                'birthdate' => trim($record['Birthdate'] ?? ''),
-                'age' => trim($record['Age'] ?? ''),
-                'educationalbackground' => trim($record['Educational Background'] ?? ''),
-                'degreeCourse' => trim($record['Degree, course or year finished'] ?? ''),
-                'directory_type' => $directory_type,
+                'directory_type' => $directory_type, // nao | npc | bns
                 'name_on_id' => trim($record['Name on ID'] ?? ''),
-                'civilstatus' => trim( $record['Civil Status']?? ''),
-
-                // 'cities_id' => trim( $record['cities_id']?? ''),
-                // 'region_id' => trim( $record['region_id']?? ''),
-                // 'province_id' => trim( $record['province_id']?? ''),
-                // 'barangay_id' => trim( $record['barangay_id']?? ''),
-                // 'directory_type' => trim( $record['directory_type']?? ''),
+                'psgc_code' => $citymunExists->psgc_code ?? $barangayExists->psgc_code,
+                'name' => $citymunExists->name ?? $barangayExists->name,
+                'correspondence_code' => $citymunExists->correspondence_code ?? $barangayExists->correspondence_code,
+                'region_id' => $citymunExists->reg_code ?? $barangayExists->reg_code,
+                'province_id' => $citymunExists->prov_code ?? $barangayExists->prov_code,
+                'cities_id' => $citymunExists->citymun_code ?? $barangayExists->citymun_code,
+                'barangay_id' => $barangayExists->psgc_code ?? null,
             ];
-
+        
             // Check if the personnel already exists
             $personnel = PersonnelDnaDirectoryModel::where('email', $personnelData['email'])->first();
-
+        
             if ($personnel) {
-                // Update existing personnel record
                 $personnel->update($personnelData);
             } else {
-                // Create a new personnel record
                 $personnel = PersonnelDnaDirectoryModel::create($personnelData);
             }
-
-            // Handle NAO specific fields
-            if ($directory_type === 'nao') {
-                $naoData = [
-                    'namegovmayor' => trim($record['Name of Gov/Mayor'] ?? ''),
-                    'typenao' => trim($record['Type of NAO'] ?? ''),
-                    'typedesignation' => trim($record['Type of Designation'] ?? ''),
-                    'datedesignation' => trim($record['Date of Designation'] ?? ''),
-                    'typeappointment' => trim($record['Type of Appointment'] ?? ''),
-                    'position' => trim($record['Office Position'] ?? ''),
-                    'department' => trim($record['Office / Department'] ?? ''),
-                    'personnel_id' => $personnel->id, // Link to the personnel record
-                ];
-                PersonnelDnaDirectoryNaoModel::updateOrCreate(['personnel_id' => $naoData['personnel_id']], $naoData);
-            } 
-            
-            // Handle NPC specific fields
-            elseif ($directory_type === 'npc') {
-                $npcData = [
-                    'namegovmayor' => trim($record['Name of Gov/Mayor'] ?? ''),
-                    'typenpc' => trim($record['Type of NPC'] ?? ''),
-                    'typedesignation' => trim($record['Type of Designation'] ?? ''),
-                    'datedesignation' => trim($record['Date of Designation'] ?? ''),
-                    'typeappointment' => trim($record['Type of Appointment'] ?? ''),
-                    'position' => trim($record['Office Position / Title'] ?? ''),
-                    'department' => trim($record['Office / Department'] ?? ''),
-                    'dcnpcapmembership' => trim($record['DCNPCAP Membership'] ?? ''),
-                    'dcnpcapposition' => trim($record['DCNPCAP-position (if officer)'] ?? ''),
-                    'dcnpcapofficer' => trim($record['National or Regional (DCNPCAP officer)'] ?? ''),
-                    'personnel_id' => $personnel->id, // Link to the personnel record
-                ];
-                PersonnelDnaDirectoryNpcModel::updateOrCreate(['personnel_id' => $npcData['personnel_id']], $npcData);
-            } 
-            
-            // Handle BNS specific fields
-            elseif ($directory_type === 'bns') {
-                $bnsData = [
-                    'barangay' => trim($record['Barangay'] ?? ''),
-                    'statusemployment' => trim($record['Status of Employment'] ?? ''),
-                    'beneficiaryname' => trim($record['Beneficiary Name'] ?? ''),
-                    'relationship' => trim($record['Relationship'] ?? ''),
-                    'periodactivefrom' => trim($record['Period of action service from'] ?? ''),
-                    'periodactiveto' => trim($record['Period of action service to'] ?? ''),
-                    'lastupdate' => trim($record['Last Update'] ?? ''),
-                    'bnsstatus' => trim($record['BNS Status'] ?? ''),
-                    'personnel_id' => $personnel->id, // Link to the personnel record
-                ];
-                PersonnelDnaDirectoryBnsModel::updateOrCreate(['personnel_id' => $bnsData['personnel_id']], $bnsData);
+    
+            switch ($directory_type) {
+                case 'nao':
+                    $naoData = [
+                        'namegovmayor' => trim($record['Name of Governor/Mayor'] ?? ''),
+                        'typenao' => trim($record['Type of NAO'] ?? ''),
+                        'typedesignation' => trim($record['Type of Designation'] ?? ''),
+                        'datedesignation' => trim($record['Date of Designation'] ?? ''),
+                        'typeappointment' => trim($record['Type of Appointment'] ?? ''),
+                        'position' => trim($record['Office Position/Title'] ?? ''),
+                        'department' => trim($record['Office/Department'] ?? ''),
+                        'personnel_id' => $personnel->id, // Link to the personnel record
+                    ];
+                    PersonnelDnaDirectoryNaoModel::updateOrCreate(['personnel_id' => $naoData['personnel_id']], $naoData);
+                    break;
+        
+                case 'npc':
+                    $npcData = [
+                        'namegovmayor' => trim($record['Name of Governor/Mayor'] ?? ''),
+                        'typenpc' => trim($record['Type of NPC'] ?? ''),
+                        'typedesignation' => trim($record['Type of Designation'] ?? ''),
+                        'datedesignation' => trim($record['Date of Designation'] ?? ''),
+                        'typeappointment' => trim($record['Type of Appointment'] ?? ''),
+                        'position' => trim($record['Office Position/Title'] ?? ''),
+                        'department' => trim($record['Office/Department'] ?? ''),
+                        'dcnpcapmembership' => trim($record['DCNPCAP Membership'] ?? ''),
+                        'dcnpcapposition' => trim($record['DCNPCAP-Position (if officer)'] ?? ''),
+                        'dcnpcapofficer' => trim($record['National or Regional (DCNPCAP Officer)'] ?? ''),
+                        'personnel_id' => $personnel->id, // Link to the personnel record
+                    ];
+                    PersonnelDnaDirectoryNpcModel::updateOrCreate(['personnel_id' => $npcData['personnel_id']], $npcData);
+                    break;
+        
+                case 'bns':
+                    $bnsData = [
+                        'barangay' => trim($record['Barangay'] ?? ''),
+                        'statusemployment' => trim($record['Status of Employment'] ?? ''),
+                        'beneficiaryname' => trim($record['Beneficiary Name'] ?? ''),
+                        'relationship' => trim($record['Relationship'] ?? ''),
+                        'periodactivefrom' => trim($record['Period of active service from'] ?? ''),
+                        'periodactiveto' => trim($record['Period of active service to'] ?? ''),
+                        'lastupdate' => trim($record['Last updated'] ?? ''),
+                        'bnsstatus' => trim($record['BNS Status'] ?? ''),
+                        'personnel_id' => $personnel->id, // Link to the personnel record
+                    ];
+                    PersonnelDnaDirectoryBnsModel::updateOrCreate(['personnel_id' => $bnsData['personnel_id']], $bnsData);
+                    break;
+        
+                default:
+                    return redirect()->back()->with('error', 'Unknown directory type.');
             }
+            
         }
-
+    
         return redirect('/mellpi_pro_LGU')->withStatus(__('Personnel Directory successfully added.'));
     }
+    
 
     public function LncFunctionalityupload(Request $request)
     {
         $request->validate([
-            'inputcsvfileLncFunctionality' => 'required|mimes:csv'
+            'inputcsvfileLncFunctionality' => 'required|mimes:csv,txt'
         ]);
-
 
         $csv = Reader::createFromPath($request->file('inputcsvfileLncFunctionality')->getRealPath());
         $csv->setHeaderOffset(0); 
-
 
         $records = Statement::create()->process($csv);
 

@@ -7,15 +7,17 @@ use Illuminate\Http\Request;
 use App\Models\PersonnelDnaDirectoryBnsModel;
 use App\Models\PersonnelDnaDirectoryModel;
 use App\Models\PersonnelDnaDirectoryNaoModel;
-use App\Models\PersonnelDnaDirectoryNpcModel; 
+use App\Models\PersonnelDnaDirectoryNpcModel;
+use App\Models\PsgcBarangay;
+use App\Models\PsgcCity;
+use App\Models\PsgcMunicipality;
 use Illuminate\Support\Facades\Validator;
 
 class BSPersonnel extends Controller
 {
     public function index()
     {
-        $naosPersonnel = PersonnelDnaDirectoryModel::all();
-        return view('BarangayScholar.PersonnelDirectory.index', compact('naosPersonnel'));   
+        return view('BarangayScholar.PersonnelDirectory.index');   
     }
 
     public function create()
@@ -29,6 +31,7 @@ class BSPersonnel extends Controller
             'inputNaoRegion' => 'required|string',
             'inputNaoProvince' => 'required|string',
             'inputNaoCM' => 'required|string',
+            'inputNaoGovMayor' => 'nullable|string',
             'inputNaoLN' => 'required|string|max:100',
             'inputNaoFN' => 'required|string|max:100',
             'inputNaoMN' => 'nullable|string|max:100',
@@ -72,6 +75,13 @@ class BSPersonnel extends Controller
         
         $validatedData = $validator->validated();
 
+        $citymunExists = PsgcCity::where('psgc_code', $validatedData['inputNaoPSGC'])->first() 
+        ?? PsgcMunicipality::where('psgc_code', $validatedData['inputNaoPSGC'])->first();
+        
+        if (!$citymunExists) {
+            return redirect()->back()->with('error', 'Invalid 10-Digit PSGC code: ' .  $validatedData['inputNaoPSGC']);
+        }
+
         $addPersonnels = PersonnelDnaDirectoryModel::create([
             'lastname' => $validatedData['inputNaoLN'],
             'firstname' => $validatedData['inputNaoFN'],
@@ -87,9 +97,12 @@ class BSPersonnel extends Controller
             'civilstatus' => $validatedData['inputNaoCivilStatus'],
             'educationalbackground' => $validatedData['inputNaoEB'],
             'degreeCourse' => $validatedData['inputNaoDegree'],
-            'region_id' => $validatedData['inputNaoRegion'],
-            'province_id' => $validatedData['inputNaoProvince'],
-            'cities_id' => $validatedData['inputNaoCM'],
+            'psgc_code' => $citymunExists->psgc_code,
+            'name' => $citymunExists->name,
+            'correspondence_code' => $citymunExists->correspondence_code,
+            'region_id' => $citymunExists->reg_code,
+            'province_id' => $citymunExists->prov_code,
+            'cities_id' => $citymunExists->citymun_code,
             'directory_type' => 'nao',
         ]);
         
@@ -161,7 +174,13 @@ class BSPersonnel extends Controller
         }
         
         $validatedData = $validator->validated();
+
+        $citymunExists = PsgcCity::where('psgc_code', $validatedData['inputNpcPSGC'])->first() 
+        ?? PsgcMunicipality::where('psgc_code', $validatedData['inputNpcPSGC'])->first();
         
+        if (!$citymunExists) {
+            return redirect()->back()->with('error', 'Invalid 10-Digit PSGC code: ' .  $validatedData['inputNpcPSGC']);
+        }
         
         $addPersonnels = PersonnelDnaDirectoryModel::create([
             'lastname' => $validatedData['inputNpcLN'],
@@ -178,9 +197,12 @@ class BSPersonnel extends Controller
             'civilstatus' => $validatedData['inputNpcCivilStatus'], 
             'educationalbackground' => $validatedData['inputNpcEB'],
             'degreeCourse' => $validatedData['inputNpcDegree'],
-            'region_id' => $validatedData['inputNpcRegion'],
-            'province_id' => $validatedData['inputNpcProvince'],
-            'cities_id' => $validatedData['inputNpcCM'],
+            'psgc_code' => $citymunExists->psgc_code,
+            'name' => $citymunExists->name,
+            'correspondence_code' => $citymunExists->correspondence_code,
+            'region_id' => $citymunExists->reg_code,
+            'province_id' => $citymunExists->prov_code,
+            'cities_id' => $citymunExists->citymun_code,
             'directory_type' => 'npc',
         ]);
         
@@ -255,6 +277,12 @@ class BSPersonnel extends Controller
         }
         
         $validatedData = $validator->validated();
+
+        $barangayExists = PsgcBarangay::where('psgc_code', $validatedData['inputBnsPSGC'])->first();
+        
+        if (!$barangayExists) {
+            return redirect()->back()->with('error', 'Invalid 10-Digit PSGC code: ' .  $validatedData['inputBnsPSGC']);
+        }
         
         $addPersonnels = PersonnelDnaDirectoryModel::create([
             'id_number' => $validatedData['inputBnsIdNum'],
@@ -272,10 +300,12 @@ class BSPersonnel extends Controller
             'civilstatus' => $validatedData['inputBnsCivilStat'],
             'educationalbackground' => $validatedData['inputBnsEB'],
             'degreeCourse' => $validatedData['inputBnsDegree'],
-            'region_id' => $validatedData['inputBnsRegion'],
-            'province_id' => $validatedData['inputBnsProvince'],
-            'cities_id' => $validatedData['inputBnsCM'],
-            'barangay_id' => $validatedData['inputBnsBarangay'],
+            'psgc_code' => $barangayExists->psgc_code,
+            'name' => $barangayExists->name,
+            'correspondence_code' => $barangayExists->correspondence_code,
+            'region_id' => $barangayExists->reg_code,
+            'province_id' => $barangayExists->prov_code,
+            'cities_id' => $barangayExists->citymun_code,
             'directory_type' => 'bns',
             'name_on_id' => $validatedData['inputBnsIdName'],
         ]);
@@ -299,6 +329,26 @@ class BSPersonnel extends Controller
         
         $query = PersonnelDnaDirectoryModel::where('directory_type', $request->input('directory_type'))->with($request->input('directory_type'));
         
+        if ($request->has('psgc_code')) {
+            $query->where('psgc_code', $request->input('psgc_code'));
+        }
+
+        // if ($request->has('name')) {
+        //     $query->where('name', 'like', '%' . $request->input('name') . '%');
+        // }
+
+        // if ($request->has('correspondence_code')) {
+        //     $query->where('correspondence_code', $request->input('correspondence_code'));
+        // }
+
+        if ($request->has('reg_code')) {
+            $query->where('region_id', $request->input('reg_code'));
+        }
+
+        if ($request->has('prov_code')) {
+            $query->where('province_id', $request->input('prov_code'));
+        }
+
         if ($request->has('citymun_code')) {
             $query->where('cities_id', $request->input('citymun_code'));
         }
@@ -376,7 +426,15 @@ class BSPersonnel extends Controller
         }
     
         $validatedData = $validator->validated();
-    
+
+        
+        $citymunExists = PsgcCity::where('psgc_code', $validatedData['inputNaoPSGC'])->first() 
+        ?? PsgcMunicipality::where('psgc_code', $validatedData['inputNaoPSGC'])->first();
+        
+        if (!$citymunExists) {
+            return redirect()->back()->with('error', 'Invalid 10-Digit PSGC code: ' .  $validatedData['inputNaoPSGC']);
+        }
+        
         // Find the existing personnel record
         $personnel = PersonnelDnaDirectoryModel::findOrFail($id);
         $personnel->update([
@@ -394,9 +452,12 @@ class BSPersonnel extends Controller
             'civilstatus' => $validatedData['inputNaoCivilStatus'],
             'educationalbackground' => $validatedData['inputNaoEB'],
             'degreeCourse' => $validatedData['inputNaoDegree'],
-            'region_id' => $validatedData['inputNaoRegion'],
-            'province_id' => $validatedData['inputNaoProvince'],
-            'cities_id' => $validatedData['inputNaoCM'],
+            'psgc_code' => $citymunExists->psgc_code,
+            'name' => $citymunExists->name,
+            'correspondence_code' => $citymunExists->correspondence_code,
+            'region_id' => $citymunExists->reg_code,
+            'province_id' => $citymunExists->prov_code,
+            'cities_id' => $citymunExists->citymun_code,
             'directory_type' => 'nao',
         ]);
     
@@ -468,6 +529,13 @@ class BSPersonnel extends Controller
         }
     
         $validatedData = $validator->validated();
+
+        $citymunExists = PsgcCity::where('psgc_code', $validatedData['inputNpcPSGC'])->first() 
+        ?? PsgcMunicipality::where('psgc_code', $validatedData['inputNpcPSGC'])->first();
+        
+        if (!$citymunExists) {
+            return redirect()->back()->with('error', 'Invalid 10-Digit PSGC code: ' .  $validatedData['inputNpcPSGC']);
+        }
     
         // Find the existing personnel record
         $personnel = PersonnelDnaDirectoryModel::findOrFail($id);
@@ -486,9 +554,12 @@ class BSPersonnel extends Controller
             'civilstatus' => $validatedData['inputNpcCivilStatus'],
             'educationalbackground' => $validatedData['inputNpcEB'],
             'degreeCourse' => $validatedData['inputNpcDegree'],
-            'region_id' => $validatedData['inputNpcRegion'],
-            'province_id' => $validatedData['inputNpcProvince'],
-            'cities_id' => $validatedData['inputNpcCM'],
+            'psgc_code' => $citymunExists->psgc_code,
+            'name' => $citymunExists->name,
+            'correspondence_code' => $citymunExists->correspondence_code,
+            'region_id' => $citymunExists->reg_code,
+            'province_id' => $citymunExists->prov_code,
+            'cities_id' => $citymunExists->citymun_code,
             'directory_type' => 'npc',
         ]);
     
@@ -565,6 +636,12 @@ class BSPersonnel extends Controller
         }
     
         $validatedData = $validator->validated();
+
+        $barangayExists = PsgcBarangay::where('psgc_code', $validatedData['inputBnsPSGC'])->first();
+        
+        if (!$barangayExists) {
+            return redirect()->back()->with('error', 'Invalid 10-Digit PSGC code: ' .  $validatedData['inputBnsPSGC']);
+        }
     
         // Find the existing personnel record
         $personnel = PersonnelDnaDirectoryModel::findOrFail($id);
@@ -584,10 +661,12 @@ class BSPersonnel extends Controller
             'civilstatus' => $validatedData['inputBnsCivilStat'],
             'educationalbackground' => $validatedData['inputBnsEB'],
             'degreeCourse' => $validatedData['inputBnsDegree'],
-            'region_id' => $validatedData['inputBnsRegion'],
-            'province_id' => $validatedData['inputBnsProvince'],
-            'cities_id' => $validatedData['inputBnsCM'],
-            'barangay_id' => $validatedData['inputBnsBarangay'],
+            'psgc_code' => $barangayExists->psgc_code,
+            'name' => $barangayExists->name,
+            'correspondence_code' => $barangayExists->correspondence_code,
+            'region_id' => $barangayExists->reg_code,
+            'province_id' => $barangayExists->prov_code,
+            'cities_id' => $barangayExists->citymun_code,
             'directory_type' => 'bns',
             'name_on_id' => $validatedData['inputBnsIdName'],
         ]);

@@ -37,6 +37,9 @@
                                 type="submit">Check data</button>
                         </div>
                     </div>
+                    @error('inputcsvfilePsgc')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </form>
             </div>
             <div>
@@ -56,6 +59,9 @@
                                 type="submit">Check data</button>
                         </div>
                     </div>
+                    @error('inputcsvfileRegion')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </form>
             </div>
             <div>
@@ -75,6 +81,9 @@
                                 type="submit">Check data</button>
                         </div>
                     </div>
+                    @error('inputcsvfileProvince')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </form>
             </div>
             <div>
@@ -93,6 +102,9 @@
                                 type="submit">Check data</button>
                         </div>
                     </div>
+                    @error('inputcsvfileCity')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </form>
                 <form action="{{ route('mellpi_pro_LGU.Munupload') }}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -109,6 +121,9 @@
                                 type="submit">Check data</button>
                         </div>
                     </div>
+                    @error('inputcsvfileMun')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </form>
                 <form action="{{ route('mellpi_pro_LGU.SubMunupload') }}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -126,6 +141,9 @@
                                 type="submit">Check data</button>
                         </div>
                     </div>
+                    @error('inputcsvfileSubMun')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </form>
                 <form action="{{ route('mellpi_pro_LGU.Barangayupload') }}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -142,6 +160,9 @@
                                 type="submit">Check data</button>
                         </div>
                     </div>
+                    @error('inputcsvfileBarangay')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </form>
                 <form action="{{ route('mellpi_pro_LGU.EquipmentInventoryupload') }}" method="POST"
                     enctype="multipart/form-data">
@@ -160,6 +181,9 @@
                                 type="submit">Check data</button>
                         </div>
                     </div>
+                    @error('inputcsvfileEquipmentInventory')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </form>
                 <form action="{{ route('mellpi_pro_LGU.PersonnelDirectoryupload') }}" method="POST"
                     enctype="multipart/form-data">
@@ -177,6 +201,9 @@
                                 type="submit">Check data</button>
                         </div>
                     </div>
+                    @error('inputcsvfilePersonnelDirectory')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </form>
                 <form action="{{ route('mellpi_pro_LGU.LncFunctionalityupload') }}" method="POST"
                     enctype="multipart/form-data">
@@ -194,6 +221,9 @@
                                 type="submit">Check data</button>
                         </div>
                     </div>
+                    @error('inputcsvfileLncFunctionality')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </form>
             </div>
         </div>

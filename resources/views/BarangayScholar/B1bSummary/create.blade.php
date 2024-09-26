@@ -417,9 +417,9 @@
 
 
           <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
-            <button type="button" style="margin-right:6px" class="bold btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
+            <!-- <button type="button" style="margin-right:6px" class="bold btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
               Save as Draft
-            </button>
+            </button> -->
             <button type="button" class="bold btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
               Save and Submit
             </button>
