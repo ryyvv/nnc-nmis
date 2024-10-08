@@ -24,7 +24,7 @@ class CMSLNCManagementBarangayController extends Controller
     {
         // $barangay = auth()->user()->barangay; 
         // $lnclocation = DB::table('mplgubrgylncmanagement')->where('user_id', auth()->user()->id)->get();
-        // return view('CityMunicipalStaff.LNCManagement.index', ['lnclocation' => $lnclocation ]);
+        // return view('BarangayScholar.LNCManagement.index', ['lnclocation' => $lnclocation ]);
 
         $location = new LocationController;
         $regCode = auth()->user()->Region;
@@ -59,7 +59,6 @@ class CMSLNCManagementBarangayController extends Controller
         $provinces = $location->getProvinces(['reg_code' => $regCode]);
         $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
         $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
-
         
         $years = range(date("Y"), 1900);
 
@@ -71,6 +70,18 @@ class CMSLNCManagementBarangayController extends Controller
      */
     public function store(Request $request)
     {
+
+        $dataExists = DB::table('lgubarangayreport')
+        ->where('dateMonitoring', $request->dateMonitoring)
+        ->where( 'periodCovereda', $request->periodCovereda,)
+        // ->where( 'barangay_id' , $request->barangay_id,) 
+        ->exists();
+
+        if ($dataExists) {
+        return redirect()->back()->withInput()->with('error', 'A record with the same data already exists.');
+        }     
+
+
         if ($request->formrequest == 'draft') {
 
             $govbarangay = MellpiproLNCManagement::create([
@@ -83,6 +94,7 @@ class CMSLNCManagementBarangayController extends Controller
                 'rating4a' =>  $request->rating4a,
                 'rating4b' =>  $request->rating4b,
                 'rating4c' =>  $request->rating4c,
+                'rating4c2' =>  $request->rating4c2,
                 'rating4d' =>  $request->rating4d,
                 'rating4e' =>  $request->rating4e,
                 'rating4f' =>  $request->rating4f,
@@ -91,6 +103,7 @@ class CMSLNCManagementBarangayController extends Controller
                 'remarks4a' =>  $request->remarks4a,
                 'remarks4b' =>  $request->remarks4b,
                 'remarks4c' =>  $request->remarks4c,
+                'remarks4c2' =>  $request->remarks4c2,
                 'remarks4d' =>  $request->remarks4d,
                 'remarks4e' =>  $request->remarks4e,
                 'remarks4f' =>  $request->remarks4f,
@@ -121,18 +134,20 @@ class CMSLNCManagementBarangayController extends Controller
                 'rating4a' => 'required|integer',
                 'rating4b' => 'required|integer',
                 'rating4c' => 'required|integer',
+                'rating4c2' => 'required|integer',
                 'rating4d' => 'required|integer',
                 'rating4e' => 'required|integer',
                 'rating4f' => 'required|integer',
                 'rating4g' => 'required|integer',
                 
-                'remarks4a' => 'required|string|max:255',
-                'remarks4b' => 'required|string|max:255',
-                'remarks4c' => 'required|string|max:255',
-                'remarks4d' => 'required|string|max:255',
-                'remarks4e' => 'required|string|max:255',
-                'remarks4f' => 'required|string|max:255',
-                'remarks4g' => 'required|string|max:255',
+                'remarks4a' => 'nullable |string|max:255',
+                'remarks4b' => 'nullable |string|max:255',
+                'remarks4c' => 'nullable |string|max:255',
+                'remarks4c2' => 'nullable |string|max:255',
+                'remarks4d' => 'nullable |string|max:255',
+                'remarks4e' => 'nullable |string|max:255',
+                'remarks4f' => 'nullable |string|max:255',
+                'remarks4g' => 'nullable |string|max:255',
     
     
                 'status' => 'required|string|max:255',
@@ -148,7 +163,7 @@ class CMSLNCManagementBarangayController extends Controller
                     ->withInput()->with('error', 'Something went wrong! Please try again.');
             }
     
-                $govbarangay = MellpiproLNCManagement::create([
+                $lncbarangay = MellpiproLNCManagement::create([
                     'barangay_id' =>  $request->barangay_id,
                     'municipal_id' =>  $request->municipal_id,
                     'province_id' =>  $request->province_id,
@@ -158,6 +173,7 @@ class CMSLNCManagementBarangayController extends Controller
                     'rating4a' =>  $request->rating4a,
                     'rating4b' =>  $request->rating4b,
                     'rating4c' =>  $request->rating4c,
+                    'rating4c2' =>  $request->rating4c2,
                     'rating4d' =>  $request->rating4d,
                     'rating4e' =>  $request->rating4e,
                     'rating4f' =>  $request->rating4f,
@@ -166,6 +182,7 @@ class CMSLNCManagementBarangayController extends Controller
                     'remarks4a' =>  $request->remarks4a,
                     'remarks4b' =>  $request->remarks4b,
                     'remarks4c' =>  $request->remarks4c,
+                    'remarks4c2' =>  $request->remarks4c2,
                     'remarks4d' =>  $request->remarks4d,
                     'remarks4e' =>  $request->remarks4e,
                     'remarks4f' =>  $request->remarks4f,
@@ -175,11 +192,24 @@ class CMSLNCManagementBarangayController extends Controller
                 ]); 
     
                 MellpiproLNCManagementTracking::create([
-                    'mplgubrgylncmanagement_id' => $govbarangay->id,
+                    'mplgubrgylncmanagement_id' => $lncbarangay->id,
                     'status' => $request->status,
                     'barangay_id' => auth()->user()->barangay,
                     'municipal_id' => auth()->user()->city_municipal,
                     'user_id' => auth()->user()->id,
+                ]);
+
+                DB::table('lgubarangayreport')->insert([
+                    'mplgubrgylncmanagement_id' => $lncbarangay->id, 
+                    'barangay_id' => $request->barangay_id,
+                    'municipal_id' => $request->municipal_id,   
+                    'dateMonitoring' => $request->dateMonitoring,
+                    'periodCovereda' => $request->periodCovereda,
+                    'status' => $request->status,
+                    'user_id' => $request->user_id,
+                    'count' =>  1,
+                    'created_at' => now(), // Optional
+                    'updated_at' => now(), // Optional
                 ]);
                
                 return redirect('CityMunicipalStaff/lncmanagement')->with('success', 'Data stored successfully!');
@@ -192,7 +222,7 @@ class CMSLNCManagementBarangayController extends Controller
      */
     public function show(Request $request, string $id)
     {
-        $action = "edit";
+        $action = "show";
         $location = new LocationController;
         $regCode = auth()->user()->Region;
         $provCode = auth()->user()->Province;
@@ -200,7 +230,6 @@ class CMSLNCManagementBarangayController extends Controller
         $provinces = $location->getProvinces(['reg_code' => $regCode]);
         $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
         $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
-
         
         $years = range(date("Y"), 1900);
         $row = DB::table('mplgubrgylncmanagement')->where('id', $request->id)->first();
@@ -220,7 +249,6 @@ class CMSLNCManagementBarangayController extends Controller
         $provinces = $location->getProvinces(['reg_code' => $regCode]);
         $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
         $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
-
         
         $years = range(date("Y"), 1900);
         $row = DB::table('mplgubrgylncmanagement')->where('id', $request->id)->first();
@@ -245,6 +273,7 @@ class CMSLNCManagementBarangayController extends Controller
                 'rating4a' =>  $request->rating4a,
                 'rating4b' =>  $request->rating4b,
                 'rating4c' =>  $request->rating4c,
+                'rating4c2' =>  $request->rating4c2,
                 'rating4d' =>  $request->rating4d,
                 'rating4e' =>  $request->rating4e,
                 'rating4f' =>  $request->rating4f,
@@ -253,6 +282,7 @@ class CMSLNCManagementBarangayController extends Controller
                 'remarks4a' =>  $request->remarks4a,
                 'remarks4b' =>  $request->remarks4b,
                 'remarks4c' =>  $request->remarks4c,
+                'remarks4c2' =>  $request->remarks4c2,
                 'remarks4d' =>  $request->remarks4d,
                 'remarks4e' =>  $request->remarks4e,
                 'remarks4f' =>  $request->remarks4f,
@@ -261,7 +291,7 @@ class CMSLNCManagementBarangayController extends Controller
                 'user_id' =>  $request->user_id,
             ]); 
 
-            return redirect()->route('CMSlncmanagement.index')->with('success', 'Data stored as Draft!'); 
+            return redirect()->route('lncmanagement.index')->with('success', 'Data stored as Draft!'); 
         }else {
             $rules = [
                 'barangay_id' => 'required|integer',
@@ -273,18 +303,20 @@ class CMSLNCManagementBarangayController extends Controller
                 'rating4a' => 'required|integer',
                 'rating4b' => 'required|integer',
                 'rating4c' => 'required|integer',
+                'rating4c2' => 'required|integer',
                 'rating4d' => 'required|integer',
                 'rating4e' => 'required|integer',
                 'rating4f' => 'required|integer',
                 'rating4g' => 'required|integer',
                 
-                'remarks4a' => 'required|string|max:255',
-                'remarks4b' => 'required|string|max:255',
-                'remarks4c' => 'required|string|max:255',
-                'remarks4d' => 'required|string|max:255',
-                'remarks4e' => 'required|string|max:255',
-                'remarks4f' => 'required|string|max:255',
-                'remarks4g' => 'required|string|max:255',
+                'remarks4a' => 'nullable|string|max:255',
+                'remarks4b' => 'nullable|string|max:255',
+                'remarks4c' => 'nullable|string|max:255',
+                'remarks4c2' => 'nullable|string|max:255',
+                'remarks4d' => 'nullable|string|max:255',
+                'remarks4e' => 'nullable|string|max:255',
+                'remarks4f' => 'nullable|string|max:255',
+                'remarks4g' => 'nullable|string|max:255',
     
     
                 'status' => 'required|string|max:255',
@@ -311,6 +343,7 @@ class CMSLNCManagementBarangayController extends Controller
                     'rating4a' =>  $request->rating4a,
                     'rating4b' =>  $request->rating4b,
                     'rating4c' =>  $request->rating4c,
+                    'rating4c2' =>  $request->rating4c2,
                     'rating4d' =>  $request->rating4d,
                     'rating4e' =>  $request->rating4e,
                     'rating4f' =>  $request->rating4f,
@@ -319,6 +352,7 @@ class CMSLNCManagementBarangayController extends Controller
                     'remarks4a' =>  $request->remarks4a,
                     'remarks4b' =>  $request->remarks4b,
                     'remarks4c' =>  $request->remarks4c,
+                    'remarks4c2' =>  $request->remarks4c2,
                     'remarks4d' =>  $request->remarks4d,
                     'remarks4e' =>  $request->remarks4e,
                     'remarks4f' =>  $request->remarks4f,

@@ -9,49 +9,60 @@
           </a>
           <div class="collapse @if ($namePage == 'MELLPI PRO For LGU Profile' || in_array($activePage, $activeLGUPages) ) show @endif" id="MellpiPro">
             <ul class="nav">
+            <li class="@if ($activePage == 'LGUPROFILESummary') active @endif">
+                <a href="{{ route('CMSLGUprofile.fetch') }}"> 
+                  <p> <i class="now-ui-icons files_paper"></i>{{ __("LGU PROFILE Summary") }} </p>
+                </a>
+              </li>
               <li class="@if ($activePage == 'LGUPROFILE') active @endif">
-                <a href="{{ route('BSLGUprofile.index') }}"> 
+                <a href="{{ route('CMSLGUprofile.index') }}"> 
                   <p> <i class="now-ui-icons files_paper"></i>{{ __("LGU PROFILE") }} </p>
                 </a>
               </li>
               <li class="@if ($activePage == 'VISION') active @endif">
-                <a href="{{ route('visionmission.index') }}">
+                <a href="{{ route('CMSvisionmission.index') }}">
                   <i class="now-ui-icons files_paper"></i>
                   <p> {{ __("vision mission") }} </p>
                 </a>
               </li>
               <li class="@if ($activePage == 'NutritionPolicies') active @endif">
-                <a href="{{ route('nutritionpolicies.index') }}">
+                <a href="{{ route('CMSnutritionpolicies.index') }}">
                   <i class="now-ui-icons files_paper"></i>
                   <p> {{ __("Nutrition policies") }} </p>
                 </a>
               </li>
               <li class="@if ($activePage == 'Governance') active @endif">
-                <a href="{{ route('governance.index') }}">
+                <a href="{{ route('CMSgovernance.index') }}">
                   <i class="now-ui-icons files_paper"></i>
                   <p> {{ __("Governance") }} </p>
                 </a>
               </li>
               <li class="@if ($activePage == 'LNCManagement') active @endif">
-                <a href="{{ route('lncmanagement.index') }}">
+                <a href="{{ route('CMSlncmanagement.index') }}">
                   <i class="now-ui-icons files_paper"></i>
                   <p> {{ __("LNC Management") }} </p>
                 </a>
               </li>
               <li class="@if ($activePage == 'nutritionservice') active @endif">
-                <a href="{{ route('nutritionservice.index') }}">
+                <a href="{{ route('CMSnutritionservice.index') }}">
                   <i class="now-ui-icons files_paper"></i>
                   <p> {{ __("nutrition service") }} </p>
                 </a>
               </li>
+              <li class="@if ($activePage == 'nutritionservice') active @endif">
+                <a href="{{ route('CMSchangeNS.index') }}">
+                  <i class="now-ui-icons files_paper"></i>
+                  <p> {{ __("Change in NS") }} </p>
+                </a>
+              </li>
               <li class="@if ($activePage == 'changeNS') active @endif">
-                <a href="{{ route('changeNS.index') }}">
+                <a href="{{ route('CMSchangeNS.index') }}">
                   <i class="now-ui-icons files_paper"></i>
                   <p> {{ __("Change in NS") }} </p>
                 </a>
               </li>
               <li class="@if ($activePage == 'discussionquestion') active @endif">
-                <a href="{{ route('discussionquestion.index') }}">
+                <a href="{{ route('CMSdiscussionquestion.index') }}">
                   <i class="now-ui-icons files_paper"></i>
                   <p> {{ __("Discussion Question") }} </p>
                 </a>

@@ -320,7 +320,7 @@ $(document).ready(function() {
     }
 
     const oldValues = {
-        region: '{{ old("inputRegion") }}',
+        region: '{{ old("inputRegion", $regCode) }}',
         province: '{{ old("inputProvince") }}',
         city: '{{ old("inputCM") }}'
     };
@@ -356,21 +356,27 @@ $(document).ready(function() {
         dropdown.prop('disabled', false);
     };
 
-    const fetchDataAndPopulate = (url, params, dropdown, valueKey, textKey, placeholder) => {
+    const fetchDataAndPopulate = (url, params, dropdown, valueKey, textKey, placeholder, oldValue =
+        '') => {
         $.get(url, params)
-            .done(data => {
+            .done(function(data) {
                 if (!data || data.length === 0) {
                     clearAndDisableDropdown(dropdown, placeholder);
                     return;
                 }
                 populateDropdown(dropdown, data, valueKey, textKey, placeholder);
+
+                dropdown.val(oldValue).change();
+                if (dropdown.val() !== oldValue) {
+                    dropdown.val('').change(); // Reset to default select
+                }
             })
-            .fail(() => {
+            .fail(function() {
                 alert(`Failed to fetch ${placeholder.toLowerCase()}.`);
             });
     };
 
-    fetchDataAndPopulate(routes.getRegions, {}, dropdowns.region, 'reg_code', 'name', 'Region');
+    fetchDataAndPopulate(routes.getRegions, {}, dropdowns.region, 'reg_code', 'name', 'Region', oldValues.region);
 
     // Region selection
     dropdowns.region.change(function() {
@@ -386,7 +392,7 @@ $(document).ready(function() {
         if (regionCode === ncrRegionCode) {
             fetchDataAndPopulate(routes.getCitiesAndMunicipalities, {
                 reg_code: regionCode
-            }, dropdowns.city, 'psgc_code', 'name', 'City/Municipality');
+            }, dropdowns.city, 'citymun_code', 'name', 'City/Municipality', oldValues.city);
             $.get(routes.getInventory, {
                 reg_code: regionCode
             }).done(handleTableData).fail(() => alert('Failed to fetch city details.'));
@@ -395,11 +401,11 @@ $(document).ready(function() {
 
         fetchDataAndPopulate(routes.getProvinces, {
             reg_code: regionCode
-        }, dropdowns.province, 'prov_code', 'name', 'Province');
+        }, dropdowns.province, 'prov_code', 'name', 'Province', oldValues.province);
         fetchDataAndPopulate(routes.getCitiesAndMunicipalities, {
             reg_code: regionCode,
             excludeProvincialAreas: true
-        }, dropdowns.city, 'psgc_code', 'name', 'City/Municipality');
+        }, dropdowns.city, 'citymun_code', 'name', 'City/Municipality', oldValues.city);
 
         // Fetch inventory details
         $.get(routes.getInventory, {
@@ -414,7 +420,7 @@ $(document).ready(function() {
 
         fetchDataAndPopulate(routes.getCitiesAndMunicipalities, {
             prov_code: provinceCode
-        }, dropdowns.city, 'psgc_code', 'name', 'City/Municipality');
+        }, dropdowns.city, 'psgc_code', 'name', 'City/Municipality', oldValues.city);
 
         // Fetch inventory details
         $.get(routes.getInventory, {
@@ -424,12 +430,12 @@ $(document).ready(function() {
 
     // City selection
     dropdowns.city.change(function() {
-        const psgcCode = $(this).val();
-        if (!psgcCode) return;
+        const citymunCode = $(this).val();
+        if (!citymunCode) return;
 
         // Fetch inventory details
         $.get(routes.getInventory, {
-            psgc_code: psgcCode
+            citymun_code: citymunCode
         }).done(handleTableData).fail(() => alert('Failed to fetch city details.'));
     });
 });

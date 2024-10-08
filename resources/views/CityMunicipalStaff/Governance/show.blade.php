@@ -2,81 +2,86 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/joboy.css') }}">
 
 <style>
-.form-section {
+  .form-section {
     display: none;
-}
+  }
 
-.form-section.current {
+  .form-section.current {
     display: inline;
-}
+  }
 
-.striped-rows .row:nth-child(odd) {
+  .striped-rows .row:nth-child(odd) {
     background-color: #f2f2f2;
-}
+  }
 
-.col-sm {
+  .col-sm {
     margin: auto;
     padding: 1rem 1rem;
-}
+  }
 
-.row .form-control {
+  .row .form-control {
     border-color: #bebebe !important;
     border: 1px solid;
     border-radius: 5px;
-}
+  }
+
+  .form-control:disabled {
+    font-weight: bolder !important;
+    color: black !important;
+  }
 </style>
 
 @extends('layouts.app', [
 'class' => 'sidebar-mini ',
 'namePage' => 'Governance',
 'activePage' => 'Governance',
-'activeNav' => 'MELLPI PRO For LGU', 
+'activeNav' => 'MELLPI PRO For LGU',
 ])
 
 @section('content')
- 
+
 <div class="content" style="margin-top:50px;padding:2%">
-    <div class="card" style="border-radius:10px;padding-left:2rem!important;padding-right:1rem!important">
+  <div class="card" style="border-radius:10px;padding-left:2rem!important;padding-right:1rem!important">
     <div class="card-header">
 
-            <div class="d-flex justify-content-end center" style="padding-right:20px; ">
-                <form action="{{route('CMSgovernance.download',$row->id)}}" method="POST">
-                    @csrf
-                    <input type="hidden" name="htmlContent" id="htmlContent">
-                    <button type="submit" id="hiddenButton" style="display: none;"></button>
-                </form>
+      <div class="d-flex justify-content-end center" style="padding-right:20px; ">
+        <form action="{{route('nutritionpolicies.download',$row->id)}}" method="POST">
+          @csrf
+          <input type="hidden" name="htmlContent" id="htmlContent">
+          <button type="submit" id="hiddenButton" style="display: none;"></button>
+        </form>
 
-                <div style="display:absolute;" onclick="downloadPDF('{{$row->id}}')">
-                    <i class="fa fa-file-pdf-o fa-lg cursor " style="color:red;margin-right:7px;" aria-hidden="true"></i>
-                    <label class="download">Download file</label>
-                </div>
-            </div>
+        <div style="display:absolute;" onclick="downloadPDF('{{$row->id}}')">
+          <i class="fa fa-file-pdf-o fa-lg cursor " style="color:red;margin-right:7px;" aria-hidden="true"></i>
+          <label class="download">Download file</label>
+        </div>
+      </div>
 
-            @include('layouts.page_template.crud_alert_message')
-            
-        <div id="downloadable">
-            <div style="display:flex;align-items:center">
-                <!-- <a href="{{route('governance.index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a> -->
-                        <a href="#">
-                            <h5 class="title" style="margin:0px">FORM B: BARANGAY PROFILE SHEET</h5>
-                        </a>
-                <!-- <h4 style="margin-top:18px;font-weight:bold">MELLPI PRO FORM B 1a: BARANGAY NUTRITION MONITORING</h4> -->
-            </div>
+      @include('layouts.page_template.crud_alert_message')
 
-            <div style="margin-right:15px">
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a style="font-family: Arial, sans-serif;font-style:italic" href="{{route('BSLGUprofile.index')}}">Mellpi Pro for LGU Profile</a></li>
-                                <li class="breadcrumb-item active" style="font-style:italic" aria-current="page">Form B: Barangay Profile Sheet -
-                                    <?php echo auth()->user()->barangay ?>
-                                </li>
-                            </ol>
-                        </nav>
-                    </div>
+      <div id="downloadable">
+        <div style="display:flex;align-items:center">
+          <!-- <a href="{{route('governance.index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a> -->
+          <a href="#">
+            <h5 class="title" style="margin:0px">FORM B: BARANGAY PROFILE SHEET</h5>
+          </a>
+          <!-- <h4 style="margin-top:18px;font-weight:bold">MELLPI PRO FORM B 1a: BARANGAY NUTRITION MONITORING</h4> -->
+        </div>
 
-            <div style="padding:30px">
-            @include('layouts.page_template.location_header')
-            <div class="row table-responsive" style="display:flex;padding:10px;">
+        <div style="margin-right:15px">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a style="font-family: Arial, sans-serif;font-style:italic" href="{{route('BSLGUprofile.index')}}">Mellpi Pro for LGU Profile</a></li>
+              <li class="breadcrumb-item active" style="font-style:italic" aria-current="page">Form B: Barangay Profile Sheet -
+                <?php echo auth()->user()->barangay ?>
+              </li>
+            </ol>
+          </nav>
+        </div>
+
+        <div style="padding:30px">
+          @include('layouts.page_template.location_header')
+          <div class="row table-responsive" style="display:flex;padding:10px;">
             <table class="table table-striped table-hover">
               <thead style="background-color:#508D4E;">
                 <th class="text-center">&nbsp;</th>
@@ -116,11 +121,11 @@
                     </ol>
                   </td>
                   <td class="fontA">The BNC is organized with the Barangay Captain as chairperson and is composed of all nutrition-related sectors in level 2 as applicable in the barangay</td>
-                  <td class="fontA">The BNC is organized with the Barangay Captain as chairperson, composed of nutrition-related sectors in level 2 as applicable in the barangay and external partners, is supported by a resolution indicating the functions of each member and reorganized as necessary </td>
+                  <td class="fontA">The BNC is organized with the Barangay Captain as chairperson, composed of nutrition-related sectors in level 2 as applicable in the barangay and is supported by a resolution indicating the functions of each member</td>
+                  <td class="fontA">The BNC is organized with the Barangay Captain as chairperson, composed of nutrition-related sectors in level 2 as applicable in the barangay and external partners, is supported by a  resolution indicating the functions of each member and reorganized as necessary</td>
                   <td class="fontA">Barangay Nutrition Action Plan Resolutions Executive Order Organizational Chart</td>
-                  <td class="fontA"> Barangay Nutrition Action Plan Minutes of Meeting Documentation of dissemination</td>
                   <td class="fontA">
-                    <select id="loadProvince1" class="form-control" name="rating3a">
+                    <select id="loadProvince1" class="form-control" name="rating3a" disabled>
                       <option value="">Select</option>
                       <option value="1" {{ old('rating3a', $row->rating3a) == '1' ? 'selected' : '' }}>1</option>
                       <option value="2" {{ old('rating3a', $row->rating3a) == '2' ? 'selected' : '' }}>2</option>
@@ -133,7 +138,7 @@
                     @enderror
                   </td>
                   <td>
-                    <textarea class="form-control" style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks3a">{{ old('remarks3a', $row->remarks3a) }}</textarea>
+                    <textarea class="form-control" style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks3a" disabled>{{ old('remarks3a', $row->remarks3a) }}</textarea>
                     @error('remarks3a')
                     <div class="text-danger">{{ $message }}</div>
                     @enderror
@@ -149,7 +154,7 @@
                   <td class="fontA">The barangay designated a BNS with monthly honorarium, budget for supplies, designated a BNS corner/ office and is assisted by Barangay Health Workers or other bgy personnel in the conduct of OPT Plus or other activities</td>
                   <td class="fontA">Resolution Executive Order Barangay Nutrition Action Plan Organizational Chart Approved Annual Budget</td>
                   <td class="fontA">
-                    <select id="loadProvince1" class="form-control" name="rating3b">
+                    <select id="loadProvince1" class="form-control" name="rating3b" disabled>
                       <option value="">Select</option>
                       <option value="1" {{ old('rating3b', $row->rating3b) == '1' ? 'selected' : '' }}>1</option>
                       <option value="2" {{ old('rating3b', $row->rating3b) == '2' ? 'selected' : '' }}>2</option>
@@ -161,7 +166,7 @@
                     <div class="text-danger">{{ $message }}</div>
                     @enderror
                   </td>
-                  <td><textarea class="form-control" style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks3b">{{ old('remarks3b' , $row->remarks3b) }}</textarea>
+                  <td><textarea class="form-control" style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks3b" disabled>{{ old('remarks3b' , $row->remarks3b) }}</textarea>
                     @error('remarks3b')
                     <div class="text-danger">{{ $message }}</div>
                     @enderror
@@ -182,7 +187,7 @@
                   <td class="fontA">The BNC are convened at least four times to accomplish activites in level 4 and discuss progress of implementation of the Barangay Nutrition Action Plan</td>
                   <td class="fontA">Minutes of meeting Barangay Nutrition Action Plan Accomplishment Report</td>
                   <td class="fontA">
-                    <select id="loadProvince1" class="form-control" name="rating3c">
+                    <select id="loadProvince1" class="form-control" name="rating3c" disabled>
                       <option value="">Select</option>
                       <option value="1" {{ old('rating3c', $row->rating3c) == '1' ? 'selected' : '' }}>1</option>
                       <option value="2" {{ old('rating3c', $row->rating3c) == '2' ? 'selected' : '' }}>2</option>
@@ -194,7 +199,7 @@
                     <div class="text-danger">{{ $message }}</div>
                     @enderror
                   </td>
-                  <td><textarea class="form-control" style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks3c">{{ old('remarks3c', $row->remarks3c) }}</textarea>
+                  <td><textarea class="form-control" style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks3c" disabled>{{ old('remarks3c', $row->remarks3c) }}</textarea>
                     @error('remarks3c')
                     <div class="text-danger">{{ $message }}</div>
                     @enderror
@@ -205,10 +210,10 @@
             </table>
           </div>
 
-            </div>
         </div>
-        </div>
+      </div>
     </div>
+  </div>
 </div>
 </div>
 @endsection

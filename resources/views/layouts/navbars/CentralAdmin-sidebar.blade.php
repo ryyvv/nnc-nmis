@@ -341,6 +341,24 @@
                     <p> {{ __("PSGS Barangay") }} </p>
                 </a>
             </li>
+            <li class="@if ($activePage == 'forms2') active @endif">
+                <a href="#">
+                    <i class="now-ui-icons users_single-02"></i>
+                    <p> {{ __("Equipment Inventory") }} </p>
+                </a>
+            </li>
+            <li class="@if ($activePage == 'forms2') active @endif">
+                <a href="#">
+                    <i class="now-ui-icons users_single-02"></i>
+                    <p> {{ __("LNC Checklist") }} </p>
+                </a>
+            </li>
+            <li class="@if ($activePage == 'forms2') active @endif">
+                <a href="#">
+                    <i class="now-ui-icons users_single-02"></i>
+                    <p> {{ __("Personnel Directory") }} </p>
+                </a>
+            </li>
         </ul>
     </div>
 </li>

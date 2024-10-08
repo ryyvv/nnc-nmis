@@ -207,6 +207,7 @@ return new class extends Migration
            $table->date('IVAdatereceived')->nullable();
            $table->integer('IVAvolumepax')->nullable();
            $table->string('food_fortification')->nullable();
+           $table->string('IVAtype')->nullable();
            $table->string('IVAremarks')->nullable();
 
            $table->string('VAsource')->nullable();
@@ -217,32 +218,26 @@ return new class extends Migration
            
             $table->integer('status')->nullable(); 
 
-            $table->unsignedBigInteger('barangay_id')->nullable();
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('municipal_id')->nullable();
-            $table->unsignedBigInteger('province_id')->nullable();
-            $table->unsignedBigInteger('region_id')->nullable(); 
-            $table->foreign('user_id')->references('id')->on('users'); 
-            $table->foreign('region_id')->references('id')->on('psgc_regions'); 
-            $table->foreign('province_id')->references('id')->on('psgc_provinces'); 
-            $table->foreign('municipal_id')->references('id')->on('psgc_municipalities');
-            $table->foreign('barangay_id')->references('id')->on('psgc_barangays'); 
-            $table->timestamps();
+            $table->string('barangay_id', 20)->nullable(); 
+            $table->string('municipal_id', 20)->nullable();
+            $table->string('province_id', 20)->nullable();
+            $table->string('region_id', 20)->nullable(); 
+            $table->integer('user_id')->unsigned()->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+          $table->timestamps();
         });
 
 
         Schema::create('barangaytracking', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('status'); 
-            $table->integer('barangay_id')->unsigned(); 
-            $table->integer('municipal_id')->unsigned();
-            $table->integer('user_id')->unsigned();
+            $table->string('barangay_id', 20)->unsigned(); 
+            $table->string('municipal_id', 20)->unsigned();
+            $table->integer('user_id')->unsigned()->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             
-            $table->integer('lguprofilebarangay_id')->unsigned(); 
-            $table->foreign('lguprofilebarangay_id')->references('id')->on('lguprofilebarangay');
-            $table->foreign('municipal_id')->references('id')->on('psgc_municipalities');
-            $table->foreign('barangay_id')->references('id')->on('psgc_barangays'); 
-            $table->foreign('user_id')->references('id')->on('users'); 
+            $table->integer('lguprofilebarangay_id')->unsigned()->onDelete('cascade');
+            $table->foreign('lguprofilebarangay_id')->references('id')->on('lguprofilebarangay')->onDelete('cascade');
             $table->timestamps();
         });
     }

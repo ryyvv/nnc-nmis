@@ -22,6 +22,11 @@
     border: 1px solid;
     border-radius: 5px;
 }
+
+.form-control:disabled {
+    font-weight: bolder !important;
+    color: black !important;
+}
 </style>
 
 @extends('layouts.app', [
@@ -162,7 +167,7 @@
                                     and complementary
                                     feeding status</td>
                                 <td style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5aa">
+                                    <select id="loadProvince1" class="form-control" name="rating5aa" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5aa', $row->rating5aa) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5aa', $row->rating5aa) == '2' ? 'selected' : '' }}>2</option>
@@ -175,7 +180,7 @@
                                     @enderror
                                 </td>
                                 <td>
-                                    <textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5aa" placeholder="Your remarks" class="form-control"> {{ old('remarks5aa', $row->remarks5aa) }}</textarea>
+                                    <textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5aa" placeholder="Your remarks" class="form-control" disabled> {{ old('remarks5aa', $row->remarks5aa) }}</textarea>
                                     @error('remarks5aa')
                                     <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -198,7 +203,7 @@
                                 <td class="fontA">
                                     (By ocular inspection) Documentation report Lactation station logbook of users</td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5ab">
+                                    <select id="loadProvince1" class="form-control" name="rating5ab" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5ab', $row->rating5ab) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5ab', $row->rating5ab) == '2' ? 'selected' : '' }}>2</option>
@@ -211,7 +216,7 @@
                                     @enderror
                                 </td>
                                 <td>
-                                    <textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ab" placeholder="Your remarks" class="form-control">{{ old('remarks5ab', $row->remarks5ab) }}</textarea>
+                                    <textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ab" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5ab', $row->remarks5ab) }}</textarea>
                                     @error('remarks5ab')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -234,7 +239,7 @@
                                 <td class="fontA">Members of the Barangay Nutrition Committee conduct inspection in the Barangay Health Stations at least twice a year to ensure compliance of health workers and clients in the public health facility</td>
                                 <td class="fontA">Milk code materials Ocular inspection of the Barangay Health Station IYCF classes learning materials Resolution Documentation Report</td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5ac">
+                                    <select id="loadProvince1" class="form-control" name="rating5ac" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5ac', $row->rating5ac) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5ac', $row->rating5ac) == '2' ? 'selected' : '' }}>2</option>
@@ -247,7 +252,7 @@
                                     @enderror
                                 </td>
                                 <td>
-                                    <textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ac" placeholder="Your remarks" class="form-control">{{ old('remarks5ac', $row->remarks5ac) }}</textarea>
+                                    <textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ac" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5ac', $row->remarks5ac) }}</textarea>
                                     @error('remarks5ac')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -271,7 +276,7 @@
                                 <td class="fontA">Barangay conducts active case finding of SAM and MAM cases, refers cases to the appropriate facility for PIMAM and monitors the progress of the SAM and MAM cases enrolled and reports monthly</td>
                                 <td class="fontA">Masterlist of children with SAM Referral forms</td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5b">
+                                    <select id="loadProvince1" class="form-control" name="rating5b" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5b', $row->rating5b) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5b', $row->rating5b) == '2' ? 'selected' : '' }}>2</option>
@@ -283,7 +288,7 @@
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
                                 </td>
-                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5b" placeholder="Your remarks" class="form-control">{{ old('remarks5b', $row->remarks5b) }}</textarea>
+                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5b" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5b', $row->remarks5b) }}</textarea>
                                     @error('remarks5b')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -305,7 +310,7 @@
                                 <td class="fontA">The barangay implements/ coordinates the dietary supplementation program and covers 100% of the target pregnant women for 90 days</td>
                                 <td class="fontA">Barangay Nutrition Action Plan Accomplishment/ Documentation reports NDSP Reports</td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5ca">
+                                    <select id="loadProvince1" class="form-control" name="rating5ca" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5ca', $row->rating5ca) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5ca', $row->rating5ca) == '2' ? 'selected' : '' }}>2</option>
@@ -317,7 +322,7 @@
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
                                 </td>
-                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ca" placeholder="Your remarks" class="form-control">{{ old('remarks5ca', $row->remarks5ca) }}</textarea>
+                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ca" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5ca', $row->remarks5ca) }}</textarea>
                                     @error('remarks5ca')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -339,7 +344,7 @@
                                 <td class="fontA">The barangay implements/ coordinates the dietary supplementation program and covers more than 100% of all infants and young children 6-23 months for 90 - 120 days</td>
                                 <td class="fontA">Barangay Nutrition Action Plan Accomplishment/ documentation report Masterlist of children 6-23 months</td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5cb">
+                                    <select id="loadProvince1" class="form-control" name="rating5cb" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5cb', $row->rating5cb) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5cb', $row->rating5cb) == '2' ? 'selected' : '' }}>2</option>
@@ -351,7 +356,7 @@
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
                                 </td>
-                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5cb" placeholder="Your remarks" class="form-control">{{ old('remarks5cb', $row->remarks5cb) }}</textarea>
+                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5cb" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5cb', $row->remarks5cb) }}</textarea>
                                     @error('remarks5cb')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -373,7 +378,7 @@
                                 <td class="fontA">BNC assesses the effectiveness and efficiency of the PAPs formulated to complement the supplementary feeding program in child development centers and supervised neighborhood play and provides recommendations to improve implementation of PAPs</td>
                                 <td class="fontA">Minutes of meeting Nutrition Situation Local Nutrition Action Plan Supplementary Feeding Report Plan Implementation Report</td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5cc">
+                                    <select id="loadProvince1" class="form-control" name="rating5cc" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5cc', $row->rating5cc) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5cc', $row->rating5cc) == '2' ? 'selected' : '' }}>2</option>
@@ -385,7 +390,7 @@
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
                                 </td>
-                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5cc" placeholder="Your remarks" class="form-control">{{ old('remarks5cc', $row->remarks5cc) }}</textarea>
+                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5cc" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5cc', $row->remarks5cc) }}</textarea>
                                     @error('remarks5cc')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -407,7 +412,7 @@
                                 <td class="fontA">The barangay utilizes the data shared in the assessment and formulation of activities in the BNAP for school age children</td>
                                 <td class="fontA">School-based feeding program report Documentation report Minutes of BNC meeting Barangay Nutrition Action Plan</td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5cd">
+                                    <select id="loadProvince1" class="form-control" name="rating5cd" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5cd', $row->rating5cd) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5cd', $row->rating5cd) == '2' ? 'selected' : '' }}>2</option>
@@ -419,7 +424,7 @@
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
                                 </td>
-                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5cd" placeholder="Your remarks" class="form-control">{{ old('remarks5cd', $row->remarks5cd) }}</textarea>
+                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5cd" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5cd', $row->remarks5cd) }}</textarea>
                                     @error('remarks5cd')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -441,7 +446,7 @@
                                 <td class="fontA">Nutrition promotion activities targeting children and adolescents, pregnant and lactating women, senior citizens and PWDs and other population groups/ sectors conducted</td>
                                 <td class="fontA">Barangay Nutrition Action Plan Documentation reports IEC materials Sectoral accomplishments </td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5da">
+                                    <select id="loadProvince1" class="form-control" name="rating5da" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5da', $row->rating5da) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5da', $row->rating5da) == '2' ? 'selected' : '' }}>2</option>
@@ -453,7 +458,7 @@
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
                                 </td>
-                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5da" placeholder="Your remarks" class="form-control">{{ old('remarks5da', $row->remarks5da) }}</textarea>
+                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5da" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5da', $row->remarks5da) }}</textarea>
                                     @error('remarks5da')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -471,7 +476,7 @@
                                 <td class="fontA">Activities in celebration of National Nutrition Month and to promote the Nutritional Guidelines for Filipinos conducted by the barangay with participation of more than three sectors</td>
                                 <td class="fontA">Barangay Nutrition Action Plan Documentation reports IEC materials </td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5db">
+                                    <select id="loadProvince1" class="form-control" name="rating5db" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5db', $row->rating5db) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5db', $row->rating5db) == '2' ? 'selected' : '' }}>2</option>
@@ -483,7 +488,7 @@
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
                                 </td>
-                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5db" placeholder="Your remarks" class="form-control">{{ old('remarks5db', $row->remarks5db) }}</textarea>
+                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5db" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5db', $row->remarks5db) }}</textarea>
                                     @error('remarks5db')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -505,7 +510,7 @@
                                 <td class="fontA">Pregnant women were provided with iron-folic acid covering 100% of the target for 180 days</td>
                                 <td class="fontA">FHSIS Report Masterlist of pregnant mothers who received iron-folic acid </td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5ea">
+                                    <select id="loadProvince1" class="form-control" name="rating5ea" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5ea', $row->rating5ea) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5ea', $row->rating5ea) == '2' ? 'selected' : '' }}>2</option>
@@ -517,7 +522,7 @@
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
                                 </td>
-                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ea" placeholder="Your remarks" class="form-control">{{ old('remarks5ea', $row->remarks5ea) }}</textarea>
+                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ea" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5ea', $row->remarks5ea) }}</textarea>
                                     @error('remarks5ea')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -534,7 +539,7 @@
                                 <td class="fontA">One dose of vitamin A provided to 100% of children 6-11 months old</td>
                                 <td class="fontA">FHSIS Report Masterlist of children 6-11 months who received Vitamin A </td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5eb">
+                                    <select id="loadProvince1" class="form-control" name="rating5eb" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5eb', $row->rating5eb) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5eb', $row->rating5eb) == '2' ? 'selected' : '' }}>2</option>
@@ -546,7 +551,7 @@
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
                                 </td>
-                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5eb" placeholder="Your remarks" class="form-control">{{ old('remarks5eb', $row->remarks5eb) }}</textarea>
+                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5eb" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5eb', $row->remarks5eb) }}</textarea>
                                     @error('remarks5eb')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -563,7 +568,7 @@
                                 <td class="fontA">Two doses of vitamin A provided 100% of children 12-59 months old</td>
                                 <td class="fontA">FHSIS Report Masterlist of children 12-59 months who received Vitamin A </td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5ec">
+                                    <select id="loadProvince1" class="form-control" name="rating5ec" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5ec', $row->rating5ec) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5ec', $row->rating5ec) == '2' ? 'selected' : '' }}>2</option>
@@ -575,7 +580,7 @@
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
                                 </td>
-                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ec" placeholder="Your remarks" class="form-control">{{ old('remarks5ec', $row->remarks5ec) }}</textarea>
+                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ec" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5ec', $row->remarks5ec) }}</textarea>
                                     @error('remarks5ec')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -592,7 +597,7 @@
                                 <td class="fontA">Micronutrient powder provided to young children 6-23 months old and covers 100% of the target</td>
                                 <td class="fontA">FHSIS Report Masterlist of children 6-23 months who received MNP </td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5ed">
+                                    <select id="loadProvince1" class="form-control" name="rating5ed" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5ed', $row->rating5ed) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5ed', $row->rating5ed) == '2' ? 'selected' : '' }}>2</option>
@@ -604,7 +609,7 @@
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
                                 </td>
-                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ed" placeholder="Your remarks" class="form-control">{{ old('remarks5ed', $row->remarks5ed) }}</textarea>
+                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ed" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5ed', $row->remarks5ed) }}</textarea>
                                     @error('remarks5ed')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -621,7 +626,7 @@
                                 <td class="fontA">Iron-folic acid tablets provided weekly to 100% of adolescent female learners in public schools for two cycles with parents' consent, information on the benefits of WIFA disseminated among parents and updates shared to Barangay Nutrition Committee</td>
                                 <td class="fontA">School-based Weekly Iron Folic Acid Supplementation Report Minutes of meeting</td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5ee">
+                                    <select id="loadProvince1" class="form-control" name="rating5ee" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5ee', $row->rating5ee) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5ee', $row->rating5ee) == '2' ? 'selected' : '' }}>2</option>
@@ -633,7 +638,7 @@
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
                                 </td>
-                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ee" placeholder="Your remarks" class="form-control">{{ old('remarks5ee', $row->remarks5ee) }}</textarea>
+                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ee" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5ee', $row->remarks5ee) }}</textarea>
                                     @error('remarks5ee')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -650,7 +655,7 @@
                                 <td class="fontA">Iron-folic acid tablets provided weekly to 100% of adolescent females outside the public school through Barangay Health Stations</td>
                                 <td class="fontA">FHSIS Report Masterlist of adolescents who received WIFA from Barangay Health Station</td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5ef">
+                                    <select id="loadProvince1" class="form-control" name="rating5ef" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5ef', $row->rating5ef) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5ef', $row->rating5ef) == '2' ? 'selected' : '' }}>2</option>
@@ -662,7 +667,7 @@
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
                                 </td>
-                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ef" placeholder="Your remarks" class="form-control">{{ old('remarks5ef', $row->remarks5ef) }}</textarea>
+                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ef" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5ef', $row->remarks5ef) }}</textarea>
                                     @error('remarks5ef')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -684,7 +689,7 @@
                                 <td class="fontA">More than 90% of retail stores selling adequately iodized salt</td>
                                 <td class="fontA">Barangay Nutrition Action Plan Master list of retail outlets selling iodized salt </td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5fa">
+                                    <select id="loadProvince1" class="form-control" name="rating5fa" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5fa', $row->rating5fa) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5fa', $row->rating5fa) == '2' ? 'selected' : '' }}>2</option>
@@ -696,7 +701,7 @@
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
                                 </td>
-                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5fa" placeholder="Your remarks" class="form-control">{{ old('remarks5fa', $row->remarks5fa) }}</textarea>
+                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5fa" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5fa', $row->remarks5fa) }}</textarea>
                                     @error('remarks5fa')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -713,7 +718,7 @@
                                 <td class="fontA">100% of bakery owners are using vitamin A fortified flour in baked products</td>
                                 <td class="fontA">Barangay Nutrition Action Plan Master list of bakeries using fortified flour</td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5fb">
+                                    <select id="loadProvince1" class="form-control" name="rating5fb" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5fb', $row->rating5fb) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5fb', $row->rating5fb) == '2' ? 'selected' : '' }}>2</option>
@@ -725,7 +730,7 @@
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
                                 </td>
-                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5fb" placeholder="Your remarks" class="form-control">{{ old('remarks5fb', $row->remarks5fb) }}</textarea>
+                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5fb" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5fb', $row->remarks5fb) }}</textarea>
                                     @error('remarks5fb')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -750,7 +755,7 @@
                                 <td class="fontA">Barangay Nutrition Action Plan
                                     Master list of markets selling vitamin A fortified cooking oil</td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5fc">
+                                    <select id="loadProvince1" class="form-control" name="rating5fc" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5fc', $row->rating5fc) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5fc', $row->rating5fc) == '2' ? 'selected' : '' }}>2</option>
@@ -762,7 +767,7 @@
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
                                 </td>
-                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5fc" placeholder="Your remarks" class="form-control">{{ old('remarks5fc', $row->remarks5fc) }}</textarea>
+                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5fc" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5fc', $row->remarks5fc) }}</textarea>
                                     @error('remarks5fc')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -780,30 +785,42 @@
                                     integration in the
                                     DRRM-H plan and
                                     Local DRRM Plan</td>
-                                <td class="fontA">The LGU monitors retail stores selling cooking oil</td>
                                 <td class="fontA">NiEm activities
                                     identified but not
                                     integrated in the
-                                    Barangay Nutrition Action Plan</td>
+                                    Barangay Nutrition Action Plan
+                                </td>
                                 <td class="fontA">NiEm activities
                                     identified and
                                     integrated to the
-                                    Barangay Nutrition Action Plan but not integrated to the Barangay DRRMC</td>
+                                    Barangay Nutrition Action Plan but not integrated to the Barangay DRRMC
+                                </td>
                                 <td class="fontA">NiEm activities
-                                    identified and
-                                    integrated to the
-                                    Barangay Nutrition Action Plan and
-                                    Barangay DRRMC</td>
-                                <td class="fontA">NiEm activities
-                                    identified and
+                                    identified and 
                                     integrated to the
                                     Barangay Nutrition Action Plan and
                                     Barangay DRRMC
-                                    are implemented</td>
+                                </td>
+                                <td class="fontA">NiEm activities
+                                    identified and 
+                                    integrated to the
+                                    Barangay Nutrition Action Plan and
+                                    Barangay DRRMC
+                                    are implemented
+                                </td>
+                                <td class="fontA">NiEm activities
+                                    identified and 
+                                    integrated to the
+                                    Barangay Nutrition
+                                    Action Plan and
+                                    Barangay DRRMC
+                                    are implemented
+                                    and reviewed
+                                </td>
                                 <td class="fontA">Barangay Nutrition Action Plan
                                     Barangay DRRMC</td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5ga">
+                                    <select id="loadProvince1" class="form-control" name="rating5ga" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5ga', $row->rating5ga) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5ga', $row->rating5ga) == '2' ? 'selected' : '' }}>2</option>
@@ -815,7 +832,7 @@
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
                                 </td>
-                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ga" placeholder="Your remarks" class="form-control">{{ old('remarks5ga', $row->remarks5ga) }}</textarea>
+                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ga" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5ga', $row->remarks5ga) }}</textarea>
                                     @error('remarks5ga')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -850,12 +867,9 @@
                                     parameters in Level
                                     4, the LGU
                                     formulated policies in support of promotion of healthy diets and active lifestyle and maintains safe and open spaces and play areas for children</td>
-                                <td class="fontA">Documentation report
-                                    IEC materials
-                                    Resolution
-                                    Ocular inspection of safe, open spaces and play areas for children</td>
+                                <td class="fontA">&nbsp;</td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5ha">
+                                    <select id="loadProvince1" class="form-control" name="rating5ha" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5ha', $row->rating5ha) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5ha', $row->rating5ha) == '2' ? 'selected' : '' }}>2</option>
@@ -867,7 +881,7 @@
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
                                 </td>
-                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ha" placeholder="Your remarks" class="form-control">{{ old('remarks5ha', $row->remarks5ha) }}</textarea>
+                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ha" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5ha', $row->remarks5ha) }}</textarea>
                                     @error('remarks5ha')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -900,7 +914,7 @@
                                     Resolution
                                     Ocular inspection of safe spaces for indoor/outdoor physical activities</td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5hb">
+                                    <select id="loadProvince1" class="form-control" name="rating5hb" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5hb', $row->rating5hb) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5hb', $row->rating5hb) == '2' ? 'selected' : '' }}>2</option>
@@ -912,7 +926,7 @@
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
                                 </td>
-                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5hb" placeholder="Your remarks" class="form-control">{{ old('remarks5hb', $row->remarks5hb) }}</textarea>
+                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5hb" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5hb', $row->remarks5hb) }}</textarea>
                                     @error('remarks5hb')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -972,7 +986,7 @@
                                     documentation report
                                     Master list of beneficiaries</td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5ia">
+                                    <select id="loadProvince1" class="form-control" name="rating5ia" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5ia', $row->rating5ia) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5ia', $row->rating5ia) == '2' ? 'selected' : '' }}>2</option>
@@ -984,7 +998,7 @@
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
                                 </td>
-                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ia" placeholder="Your remarks" class="form-control">{{ old('remarks5ia', $row->remarks5ia) }}</textarea>
+                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ia" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5ia', $row->remarks5ia) }}</textarea>
                                     @error('remarks5ia')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -1033,7 +1047,7 @@
                                     documentation report
                                     Master list of beneficiaries</td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5ib">
+                                    <select id="loadProvince1" class="form-control" name="rating5ib" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5ib', $row->rating5ib) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5ib', $row->rating5ib) == '2' ? 'selected' : '' }}>2</option>
@@ -1045,7 +1059,7 @@
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
                                 </td>
-                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ib" placeholder="Your remarks" class="form-control">{{ old('remarks5ib', $row->remarks5ib) }}</textarea>
+                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ib" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5ib', $row->remarks5ib) }}</textarea>
                                     @error('remarks5ib')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -1094,7 +1108,7 @@
                                     Local Nutrition Action Plan
                                     Documentation Report</td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5ic">
+                                    <select id="loadProvince1" class="form-control" name="rating5ic" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5ic', $row->rating5ic) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5ic', $row->rating5ic) == '2' ? 'selected' : '' }}>2</option>
@@ -1106,7 +1120,7 @@
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
                                 </td>
-                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ic" placeholder="Your remarks" class="form-control">{{ old('remarks5ic', $row->remarks5ic) }}</textarea>
+                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ic" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5ic', $row->remarks5ic) }}</textarea>
                                     @error('remarks5ic')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -1135,7 +1149,7 @@
                                     Master list of beneficiaries
                                     Monitoring report</td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5id">
+                                    <select id="loadProvince1" class="form-control" name="rating5id" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5id', $row->rating5id) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5id', $row->rating5id) == '2' ? 'selected' : '' }}>2</option>
@@ -1147,7 +1161,7 @@
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
                                 </td>
-                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5id" placeholder="Your remarks" class="form-control">{{ old('remarks5id', $row->remarks5id) }}</textarea>
+                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5id" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5id', $row->remarks5id) }}</textarea>
                                     @error('remarks5id')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -1190,7 +1204,7 @@
                                     OPT Plus Family Profile
                                     Masterlist of households with access to safe drinking water</td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5ie">
+                                    <select id="loadProvince1" class="form-control" name="rating5ie" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5ie', $row->rating5ie) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5ie', $row->rating5ie) == '2' ? 'selected' : '' }}>2</option>
@@ -1202,7 +1216,7 @@
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
                                 </td>
-                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ie" placeholder="Your remarks" class="form-control">{{ old('remarks5ie', $row->remarks5ie) }}</textarea>
+                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ie" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5ie', $row->remarks5ie) }}</textarea>
                                     @error('remarks5ie')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -1237,7 +1251,7 @@
                                     OPT Plus Family Profile
                                     Masterlist of households with access to safe drinking water</td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5if">
+                                    <select id="loadProvince1" class="form-control" name="rating5if" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5if', $row->rating5if) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5if', $row->rating5if) == '2' ? 'selected' : '' }}>2</option>
@@ -1249,7 +1263,7 @@
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
                                 </td>
-                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5if" placeholder="Your remarks" class="form-control">{{ old('remarks5if', $row->remarks5if) }}</textarea>
+                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5if" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5if', $row->remarks5if) }}</textarea>
                                     @error('remarks5if')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -1291,7 +1305,7 @@
                                     Barangay Nutrition Action Plan
                                     Monitoring Report</td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5ig">
+                                    <select id="loadProvince1" class="form-control" name="rating5ig" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5ig', $row->rating5ig) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5ig', $row->rating5ig) == '2' ? 'selected' : '' }}>2</option>
@@ -1303,7 +1317,7 @@
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
                                 </td>
-                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ig" placeholder="Your remarks" class="form-control">{{ old('remarks5ig', $row->remarks5ig) }}</textarea>
+                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ig" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5ig', $row->remarks5ig) }}</textarea>
                                     @error('remarks5ig')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -1336,7 +1350,7 @@
                                     Documentation Report
                                     Resolution</td>
                                 <td class="fontA" style="width:40px!important">
-                                    <select id="loadProvince1" class="form-control" name="rating5ih">
+                                    <select id="loadProvince1" class="form-control" name="rating5ih" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating5ih', $row->rating5ih) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating5ih', $row->rating5ih) == '2' ? 'selected' : '' }}>2</option>
@@ -1348,7 +1362,7 @@
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
                                 </td>
-                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ih" placeholder="Your remarks" class="form-control">{{ old('remarks5ih', $row->remarks5ih) }}</textarea>
+                                <td><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks5ih" placeholder="Your remarks" class="form-control" disabled>{{ old('remarks5ih', $row->remarks5ih) }}</textarea>
                                     @error('remarks5ih')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror

@@ -66,9 +66,9 @@ return new class extends Migration
             
             $table->integer('count');
 
-            $table->integer('municipal_id')->unsigned(); 
+            $table->string('municipal_id')->unsigned(); 
             
-            $table->integer('barangay_id')->unsigned();  
+            $table->string('barangay_id')->unsigned();  
 
             $table->integer('user_id')->unsigned(); 
             $table->integer('status'); 

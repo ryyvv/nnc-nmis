@@ -14,279 +14,324 @@
 @section('content')
 <!-- <div class="panel-header panel-header-sm"></div> -->
 <div class="content" style="margin-top:50px;padding:2%">
-    <div class="row-12">
-        <div class="col flex">
-            <div class="card">
-                <div class="card-header">
-                    <div style="display: flex; align-items:center;">
-                        <a href="{{route('MellpiProMonitoringIndex.index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a>
-                        <h4>CREATE MELLPI PRO FOR LNFP FORM 5a:</h4>
-                    </div>
+    <div class="card">
+        <div style="display:flex;align-items:center">
+            <a href="{{route('MellpiProMonitoringIndex.index')}}" style="margin-right:15px"><i
+                    class="now-ui-icons arrows-1_minimal-left"
+                    style="font-size:18px!important;font-weight:bolder!important"></i></a>
+            <h4 style="margin-top:18px;font-weight:bold">CREATE MELLPI PRO FOR LNFP FORM 5a:</h4>
+        </div>
 
-                    <!-- @if(session('alert'))
+        <!-- @if(session('alert'))
                     <div class="alert alert-success" id="alert-message">
                         {{ session('alert') }}
                     </div>
                     @endif -->
-                    <!-- alert -->
-                    @include('layouts.page_template.crud_alert_message')
+        <!-- alert -->
+        @include('layouts.page_template.crud_alert_message')
 
-                    <div>
-                        <form action="{{ route('lguLnfpUpdate', $row->id) }}" method="POST" id="form">
-                            @csrf
+        <div style="padding:25px">
+            <form action="{{ route('lguLnfpUpdate', $row->id) }}" method="POST" id="form">
+                @csrf
+
+                <input type="hidden" name="lnfp_lgu_id" value="{{$row->lnfp_lgu_id}}">
+                <input type="hidden" name="dateMonitoring" value="{{$row->dateMonitoring}}">
+                <input type="hidden" value="{{ $row->status }}" name="status" id="status">
+                <input type="hidden" value="draft" name="formrequest" id="formrequest" />
+                <input type="hidden" value="{{ $row->id }}" name="id" id="id" />
+
+                <div style="display:flex;">
+                    <div class="form-group col">
+                        <label for="nameOf"> HEADER:<span style="color:red">*</span> </label>
+                        <select id="header" class="form-control" name="header">
+                            @foreach ($availableForms as $formKey => $formName)
+                            <option value="{{ $formKey }}" <?php echo old('header',$row->header) == $formKey ? 'selected':'' ?>>
+                                {{ $formName }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                </div>
+                <br />
+
+                <div style="display:flex;">
+                    <div class="form-group col">
+                        <label for="nameOf" id="nameOf">Name <span style="color:red">*</span> </label>
+                        <input class="form-control" type="text" name="nameOf" id="nameOf"
+                            value="{{ old('nameOf',$row->nameofPnao) }}">
+                        @error('nameOf')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group col">
+                        <label for="address">Address:<span style="color:red">*</span> </label>
+                        <input class="form-control" type="text" name="address" id="address"
+                            value="{{ old('address',$row->address) }}">
+                        @error('address')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <!-- For Municipal Level -->
+                    @if( auth()->user()->otherrole != 10 )
+                    <div class="form-group col" id="province" style="display: none;">
+                        <label for="address">Province of Deployment:<span style="color:red">*</span>
+                        </label>
+                        <select name="municipal_id2" class="form-control"
+                            style="font-weight:bolder!important;color:black" disabled>
+                            @foreach($cities_municipalities as $city_municipality)
+                            <option value="{{ $city_municipality->citymun_code }}"
+                                {{ auth()->user()->city_municipal === $city_municipality->citymun_code ? 'selected' : '' }}>
+                                {{ $city_municipality->name }}
+                            </option>
+                            @endforeach
+                        </select>
+                        <input type="hidden" name="address" value="{{ auth()->user()->city_municipal }}">
+                    </div>
+                    <!-- For Barangay Level -->
+                    @elseif( auth()->user()->otherrole == 10 )
+                    <div class="form-group col">
+                        <label for="education">Educational Attainment:<span style="color:red">*</span>
+                        </label>
+                        <input class="form-control" type="text" name="education" id="education"
+                            value="{{ old('education', $row->education) }}">
+                        @error('education')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    @endif
+
+                </div>
+
+                <div style="display:flex;">
+                    <div class="form-group col">
+                        <label for="sex">Sex:<span style="color:red">*</span> </label>
+                        <select class="form-control" name="sex" id="sex">
+                            <option {{ old('sex', $row->sex) == '' ? 'selected' : '' }} value="">Select
+                            </option>
+                            <option value="Male" {{ old('sex', $row->sex) == 'Male' ? 'selected' : '' }}>
+                                Male</option>
+                            <option value="Female" {{ old('sex', $row->sex) == 'Female' ? 'selected' : '' }}>
+                                Female</option>
+                        </select>
+                        @error('sex')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group col" id="dateDesigBlock" style="display: none;">
+                        <label for="dateDesig">Date of Designation:<span style="color:red">*</span> </label>
+                        <input class="form-control" type="date" name="dateDesig" id="dateDesig"
+                            value="{{ old('dateDesig',$row->dateDesignation) }}">
+                        @error('dateDesig')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group col" id="dateAppointBlock" style="display: block;">
+                        <label for="dateAppoint">Date of Appointment:<span style="color:red">*</span>
+                        </label>
+                        <input class="form-control" type="date" name="dateAppoint" id="dateAppoint"
+                            value="{{ old('dateAppoint', $row->dateappointment) }}">
+                        @error('dateAppoint')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group col" id="pro_activitiesBlock" style="display: none;">
+                        <label for="profAct">With continuing professional activities?<span style="color:red">*</span>
+                        </label>
+                        <select class="form-control" name="profAct" id="profAct">
+                            <option {{ old('profAct', $row->profAct) == '' ? 'selected' : '' }} value="">
+                                Select</option>
+                            <option value="Yes" {{ old('profAct', $row->profAct) == 'Yes' ? 'selected' : '' }}>
+                                Yes</option>
+                            <option value="No" {{ old('profAct', $row->profAct) == 'No' ? 'selected' : '' }}>No
+                            </option>
+                        </select>
+                        @error('profAct')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+
+                <div style="display:flex;">
+                    <div class="form-group col" id="numYrBlock" style="display: none;">
+                        <!-- This is dynamic -->
+                        <label for="numYr" id="numYr"> </label><span style="color:red">*</span>
+                        <input class="form-control" type="number" name="numYr" id="numYrInput2" placeholder="0" min="1"
+                            max="100" value="{{ old('numYr',$row->numYearPnao) }}" readonly>
+                        <input name="numYr" value="{{ old('numYr',$row->numYearPnao) }}" id="numYrInput" type="hidden"  />
+                        @error('numYr')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group col">
+                        <label for="fulltime">Full time:<span style="color:red">*</span> </label>
+                        <select class="form-control" name="fulltime" id="fulltime">
+                            <option {{ old('fulltime', $row->fulltime) == '' ? 'selected' : '' }} value="">
+                                Select</option>
+                            <option value="Yes" {{ old('fulltime', $row->fulltime) == 'Yes' ? 'selected' : '' }}>Yes
+                            </option>
+                            <option value="No" {{ old('fulltime', $row->fulltime) == 'No' ? 'selected' : '' }}>
+                                No</option>
+                        </select>
+                        @error('fulltime')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div style="display:flex;">
+
+                    <div class="form-group col">
+                        <label for="bday">Birthday:<span style="color:red">*</span> </label>
+                        <input class="form-control" type="date" name="bday" id="bday"
+                            value="{{ old('bday',$row->bdate) }}">
+                        @error('bday')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+
+                <div style="display:flex;">
+                    <div class="form-group col" id="secondedBlock" style="display:block">
+                        <label for="seconded">Seconded from the Office of:<span style="color:red">*</span>
+                        </label>
+                        <input class="form-control" type="text" name="seconded" id="seconded"
+                            value="{{ old('seconded',$row->secondedOffice) }}">
+                        @error('seconded')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col">
+                        <label for="periodCovereda">For Period:<span style="color:red">*</span></label>
+                        <select class="form-control" id="periodCovereda" name="periodCovereda" required>
+                            <option value="" value="">Select</option>
+                            <?php foreach ($years as $year) : ?>
+                            <option value="{{ $year }}"
+                                <?php echo old('periodCovereda') == $year || $row->periodCovereda == $year ? 'selected' : '' ?>>
+                                {{ $year }}
+                            </option>
+                            <?php endforeach; ?>
+                        </select>
+                        @error('periodCovereda')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+
+                    </div>
+                </div>
+
+                <!-- Barangay Level -->
+                @if( auth()->user()->otherrole == 10 )
+                <div style="display:flex;">
+                    <div class="form-group col" id="brgy_serviceBlock" style="display: block;">
+                        <label for="brgy_service">Graduated from a 5-day training on nutrition assessment
+                            and nutrition-related topics before barangay service:<span style="color:red">*</span>
+                        </label>
+                        <select class="form-control" name="brgy_service" id="brgy_service">
+                            <option value="">Select</option>
+                            <option value="Yes"
+                                {{ old('brgy_service', $row->brgy_service) == 'Yes' ? 'selected' : '' }}>Yes
+                            </option>
+                            <option value="No" {{ old('brgy_service', $row->brgy_service) == 'No' ? 'selected' : '' }}>
+                                No
+                            </option>
+                        </select>
+                        @error('brgy_service')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+
+                    </div>
+                    <div class="form-group col">
+                        <label for="cont_education">Completed a 5-day BNS continuing education<span
+                                style="color:red">*</span> </label>
+                        <select class="form-control" name="cont_education" id="cont_education">
+                            <option value="">Select</option>
+                            <option value="Yes"
+                                {{ old('cont_education', $row->cont_education) == 'Yes' ? 'selected' : '' }}>
+                                Yes</option>
+                            <option value="No"
+                                {{ old('cont_education', $row->cont_education) == 'No' ? 'selected' : '' }}>
+                                No</option>
+                        </select>
+                        @error('cont_education')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                @endif
+
+                <div style="display:flex;">
+                    <div class="form-group col">
+                        <!-- <label>Capacity development activities attended in the previous year:<span
+                                style="color:red">*</span> </label> -->
+                        <label>Capacity development activities attended in the previous year:</label>
+                        <div class="form-group col-md-12">
+                            <label for="devAct">1</label>
+                            <input class="form-control" type="text" id="devAct" name="num1"
+                                value="{{ old('num1',$row->devActnum1) }}">
+                            @error('num1')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="devAct">2</label>
+                            <input class="form-control" type="text" id="devAct" name="num2"
+                                value="{{ old('num2',$row->devActnum2) }}">
+                            @error('num2')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="devAct">3</label>
+                            <input class="form-control" type="text" id="devAct" name="num3"
+                                value="{{ old('num3',$row->devActnum3) }}">
+                            @error('num3')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group col" id="assign_taskBlock" style="display: none;">
+                        <label>Assigned tasks: </label>
+                        <br />
+                        <span><input type="radio" name="assign_task"
+                                <?php echo $row->assign_task == 'BNS' ? 'selected':'' ?> value="BNS">&nbsp;&nbsp;BNS
+                            supervisor</span>
+                        <br />
+                        <span><input type="radio" name="assign_task"
+                                <?php echo $row->assign_task == 'Technical' ? 'selected':'' ?>
+                                value="Technical">&nbsp;&nbsp;Technical assistance</span>
+                        <br />
+                        <span><input type="radio" name="assign_task"
+                                <?php echo $row->assign_task == 'Review' ? 'selected':'' ?>
+                                value="Review">&nbsp;&nbsp;Review of BNS reports and report
+                            preparation</span>
+                        <br />
+                        <span><input type="radio" name="assign_task"
+                                <?php echo $row->assign_task == 'All' ? 'selected':'' ?> value="All">&nbsp;&nbsp;All
+                            of the above</span>
+                    </div>
+                </div>
 
 
-                        
-                            <input type="hidden" name="lnfp_lgu_id" value="{{$row->lnfp_lgu_id}}">
-                            <input type="hidden" name="dateMonitoring" value="{{$row->dateMonitoring}}">
-                            <input type="hidden" value="{{ $row->status }}" name="status" id="status">
-                            <input type="hidden" value="draft" name="formrequest" id="formrequest" />
-                            <input type="hidden" value="{{ $row->id }}" name="id" id="id" />
-
-                         
-
-                            <div style="display:flex">
-                                <div class="form-group col">
-                                    <label for="nameOf"> HEADER:<span style="color:red">*</span> </label>
-                                    <select id="header" class="form-control" name="header">
-                                        @foreach ($availableForms as $formKey => $formName)
-                                            <option value="{{ $formKey }}" <?php echo $row->header == $formKey ? 'selected':'' ?> >{{ $formName }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            
-                            </div>
-                            <br />
-                           
-                           
-                            <div style="display:flex">
-                                <div class="form-group col">
-                                    <label for="nameOf" id="nameOf">Name <span style="color:red">*</span> </label>
-                                    <input class="form-control" type="text" name="nameOf" id="nameOf" value="{{ old('nameOf',$row->nameofPnao) }}">
-                                    @error('nameOf')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="form-group col">
-                                    <label for="address">Address:<span style="color:red">*</span> </label>
-                                    <input class="form-control" type="text" name="address" id="address" value="{{ old('address',$row->address) }}">
-                                    @error('address')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                </div>
-
-                                <!-- For Municipal Level -->
-                                @if( auth()->user()->otherrole != 10 )
-                                <div class="form-group col" id="province" style="display: none;" >
-                                    <label for="address">Province of Deployment:<span style="color:red">*</span> </label>
-                                    <select name="municipal_id2" class="form-control" style="font-weight:bolder!important;color:black" disabled>
-                                        @foreach($cities_municipalities as $city_municipality)
-                                        <option value="{{ $city_municipality->citymun_code }}"
-                                            {{ auth()->user()->city_municipal === $city_municipality->citymun_code ? 'selected' : '' }}>
-                                            {{ $city_municipality->name }}
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                    <input type="hidden" name="address" value="{{ auth()->user()->city_municipal }}">
-                                </div>
-                                <!-- For Barangay Level -->
-                                @elseif( auth()->user()->otherrole == 10 )
-                                <div class="form-group col">
-                                    <label for="education">Educational Attainment:<span style="color:red">*</span> </label>
-                                    <input class="form-control" type="text" name="education" id="education" value="{{ old('education', $row->education) }}">
-                                    @error('education')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                </div>
-                                @endif
-
-                            </div>
-
-                            <div style="display:flex">
-                                <div class="form-group col">
-                                    <label for="sex">Sex:<span style="color:red">*</span> </label>
-                                    <select class="form-control" name="sex" id="sex">
-                                            <option {{ old('sex', $row->sex) == '' ? 'selected' : '' }} value="">Select</option>
-                                            <option value="Male" {{ old('sex', $row->sex) == 'Male' ? 'selected' : '' }}>Male</option>
-                                            <option value="Female" {{ old('sex', $row->sex) == 'Female' ? 'selected' : '' }}>Female</option>
-                                        </select>
-                                        @error('sex')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                </div>
-                                <div class="form-group col" id="dateDesigBlock" style="display: none;">
-                                        <label for="dateDesig">Date of Designation:<span style="color:red">*</span> </label>
-                                        <input class="form-control" type="date" name="dateDesig" id="dateDesig" value="{{ old('dateDesig',$row->dateDesignation) }}">
-                                        @error('dateDesig')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                </div>
-                                <div class="form-group col" id="dateAppointBlock" style="display: block;">
-                                        <label for="dateAppoint">Date of Appointment:<span style="color:red">*</span> </label>
-                                        <input class="form-control" type="date" name="dateAppoint" id="dateAppoint" value="{{ old('dateAppoint', $row->dateappointment) }}">
-                                        @error('dateAppoint')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                </div>
-                                <div class="form-group col" id="pro_activitiesBlock" style="display: none;">
-                                        <label for="profAct">With continuing professional activities?<span style="color:red">*</span> </label>
-                                        <select class="form-control" name="profAct" id="profAct">
-                                            <option {{ old('profAct', $row->profAct) == '' ? 'selected' : '' }} value="">Select</option>
-                                            <option value="Yes" {{ old('profAct', $row->profAct) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                            <option value="No" {{ old('profAct', $row->profAct) == 'No' ? 'selected' : '' }}>No</option>
-                                        </select>
-                                        @error('profAct')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                </div>
-                            </div>
-
-
-                            <div style="display:flex">
-                                <div class="form-group col" id="numYrBlock" style="display: none;">
-                                    <!-- This is dynamic -->
-                                    <label for="numYr" id="numYr"> </label><span style="color:red">*</span> 
-                                    <input class="form-control" type="number" name="numYr" id="numYr" placeholder="0" min="1" max="100" value="{{ old('numYr',$row->numYearPnao) }}">
-                                    @error('numYr')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                </div>
-                                <div class="form-group col">
-                                    <label for="fulltime">Full time:<span style="color:red">*</span> </label>
-                                    <select class="form-control" name="fulltime" id="fulltime">
-                                            <option {{ old('fulltime', $row->fulltime) == '' ? 'selected' : '' }} value="">Select</option>
-                                            <option value="Yes" {{ old('fulltime', $row->fulltime) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                            <option value="No" {{ old('fulltime', $row->fulltime) == 'No' ? 'selected' : '' }}>No</option>
-                                    </select>
-                                    @error('fulltime')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                </div>
-                            </div>
-                            <div style="display:flex">
-                  
-                                <div class="form-group col">
-                                        <label for="bday">Birthday:<span style="color:red">*</span> </label>
-                                        <input class="form-control" type="date" name="bday" id="bday" value="{{ old('bday',$row->bdate) }}">
-                                        @error('bday')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                </div>
-                            </div>
-                           
-                            <div style="display:flex">
-                                <div class="form-group col" id="secondedBlock" style="display:block" >
-                                    <label for="seconded">Seconded from the Office of:<span style="color:red">*</span> </label>
-                                    <input class="form-control" type="text" name="seconded" id="seconded" value="{{ old('seconded',$row->secondedOffice) }}">
-                                    @error('seconded')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                </div>
-                                
-                                <div class="form-group col">
-                                <label for="periodCovereda">For Period:<span style="color:red">*</span></label>
-                                <select class="form-control" id="periodCovereda" name="periodCovereda" required>
-                                    <option value="" value="">Select</option>
-                                        <?php foreach ($years as $year) : ?>
-                                            <option value="{{ $year }}" <?php echo old('periodCovereda') == $year || $row->periodCovereda == $year ? 'selected' : '' ?>>
-                                                {{ $year }}
-                                            </option>
-                                        <?php endforeach; ?>
-                                </select>
-                                @error('periodCovereda')
-                                <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                        
-                                </div>
-                            </div>
-                            
-                            <!-- Barangay Level -->
-                            @if( auth()->user()->otherrole == 10 )
-                            <div style="display:flex">
-                                <div class="form-group col" id="brgy_serviceBlock" style="display: block;" >
-                                    <label for="brgy_service">Graduated from a 5-day training on nutrition assessment and nutrition-related topics before barangay service:<span style="color:red">*</span> </label>
-                                    <select class="form-control" name="brgy_service" id="brgy_service">
-                                            <option value="">Select</option>
-                                            <option value="Yes" {{ old('brgy_service', $row->brgy_service) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                            <option value="No" {{ old('brgy_service', $row->brgy_service) == 'No' ? 'selected' : '' }}>No</option>
-                                        </select>
-                                        @error('brgy_service')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                   
-                                </div>
-                                <div class="form-group col">
-                                        <label for="cont_education">Completed a 5-day BNS continuing education<span style="color:red">*</span> </label>
-                                        <select class="form-control" name="cont_education" id="cont_education">
-                                            <option value="">Select</option>
-                                            <option value="Yes" {{ old('cont_education', $row->cont_education) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                            <option value="No" {{ old('cont_education', $row->cont_education) == 'No' ? 'selected' : '' }}>No</option>
-                                        </select>
-                                        @error('cont_education')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                </div>
-                            </div>
-                            @endif
-
-                            <div style="display:flex">
-                                <div class="form-group col">
-                                    <label>Capacity development activities attended in the previous year:<span style="color:red">*</span> </label>
-                                    <div class="form-group col-md-12">
-                                        <label for="devAct">1</label>
-                                        <input class="form-control" type="text" id="devAct" name="num1" value="{{ old('num1',$row->devActnum1) }}">
-                                        @error('num1')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <label for="devAct">2</label>
-                                        <input class="form-control" type="text" id="devAct" name="num2" value="{{ old('num2',$row->devActnum2) }}">
-                                        @error('num2')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <label for="devAct">3</label>
-                                        <input class="form-control" type="text" id="devAct" name="num3" value="{{ old('num3',$row->devActnum3) }}">
-                                        @error('num3')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-group col" id="assign_taskBlock" style="display: none;" > 
-                                    <label>Assigned tasks: </label>
-                                    <br />
-                                     <span><input type="radio" name="assign_task" <?php echo $row->assign_task == 'BNS' ? 'selected':'' ?> value="BNS">&nbsp;&nbsp;BNS supervisor</span>
-                                     <br />
-                                     <span><input type="radio" name="assign_task" <?php echo $row->assign_task == 'Technical' ? 'selected':'' ?>  value="Technical">&nbsp;&nbsp;Technical assistance</span>
-                                     <br />
-                                     <span><input type="radio" name="assign_task" <?php echo $row->assign_task == 'Review' ? 'selected':'' ?> value="Review">&nbsp;&nbsp;Review of BNS reports and report preparation</span>
-                                     <br />
-                                     <span><input type="radio" name="assign_task" <?php echo $row->assign_task == 'All' ? 'selected':'' ?> value="All">&nbsp;&nbsp;All of the above</span>
-                                </div>
-                            </div>
-
-
-                            <input type="hidden" value="{{ $form5a }}" id="dataform" />
-                            <div class="form5">
-                                <!-- endtablehearder -->
-                                <div class="row" style="border-radius:10px;padding-left:2rem!important;padding-right:1rem!important">
-
-                                    <div class="row table-responsive" style="display:flex;padding:10px;">
-                                        <table class="table table-striped table-hover" id="data-table">
-                                            <thead style="background-color:#508D4E;">
-                                                <th class="text-center">&nbsp;</th>
-                                                <th class="tableheader">Elements</th>
-                                                <th colspan="5" class="tableheader">Performance Level</th>
-                                                <th class="tableheader">Document Source</th>
-                                                <th class="tableheader" style="padding-left:20px;padding-right:20px">Rating</th>
-                                                <th class="tableheader">Remarks</th>
-                                            </thead>
-                                            <tbody id="datas"> 
-                                            <tr>
-                                                    <td colspan="10" class="bold text-center">Select Header to view form content</td>
-                                                    <!-- <td>&nbsp;</td>
+                <input type="hidden" value="{{ $form5a }}" id="dataform" />
+                <div style="display: flex;">
+                    <!-- endtablehearder -->
+                    <div class="table-responsive" style="display:flex;padding:15px;">
+                        <table class="table table-striped table-hover" id="data-table">
+                            <thead style="background-color:#508D4E;">
+                                <th class="text-center">&nbsp;</th>
+                                <th class="tableheader">Elements</th>
+                                <th colspan="5" class="tableheader">Performance Level</th>
+                                <th class="tableheader">Document Source</th>
+                                <th class="tableheader" style="padding-left:20px;padding-right:20px">Rating
+                                </th>
+                                <th class="tableheader">Remarks</th>
+                            </thead>
+                            <tbody id="datas">
+                                <tr>
+                                    <td colspan="10" class="bold text-center">Select Header to view form
+                                        content</td>
+                                    <!-- <td>&nbsp;</td>
                                                     <td class="bold text-center">1</td>
                                                     <td class="bold text-center">2</td>
                                                     <td class="bold text-center">3</td>
@@ -295,37 +340,24 @@
                                                     <td>&nbsp;</td>
                                                     <td>&nbsp;</td>
                                                     <td>&nbsp;</td> -->
-                                                </tr>
-                                                
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                </tr>
 
-
-                                    
-                                    </div>
-
-                
-                        
-            
-                    
-
-
-                            <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
-                              
-                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterDraft">
-                                    Save as Draft
-                                </button>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                                    Next Form
-                                </button>
-                        
-                            </div>
-                        </form>
+                            </tbody>
+                        </table>
                     </div>
-
                 </div>
-            </div>
+
+                <div class="row" style="margin-top:30px;margin-right:20px;justify-content: flex-end">
+
+                    <button type="button" class="btn btn-warning" data-toggle="modal"
+                        data-target="#exampleModalCenterDraft">
+                        Save as Draft
+                    </button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                        Next Form
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -334,13 +366,45 @@
 <script>
 // Check for saved header value on page load
 document.addEventListener('DOMContentLoaded', function() {
-    let savedHeader = document.getElementById('header').value; // Retrieve the saved header value, for example, from a hidden input field, or localStorage
+    let savedHeader = document.getElementById('header')
+        .value; // Retrieve the saved header value, for example, from a hidden input field, or localStorage
     if (savedHeader) {
         updateDisplayBasedOnHeader(savedHeader);
         fetchData(savedHeader);
     }
-});
 
+    document.getElementById('dateAppoint').addEventListener('change', function() {
+        calculateTotalYears();
+    });
+
+    function calculateTotalYears() {
+        const dateAppointInput = document.getElementById('dateAppoint').value;
+        const numYrInput = document.getElementById('numYrInput');
+        const numYrInput2 = document.getElementById('numYrInput2');
+
+        if (dateAppointInput) {
+            const dateAppoint = new Date(dateAppointInput);
+            const today = new Date();
+
+            const yearsDiff = today.getFullYear() - dateAppoint.getFullYear();
+            const monthDiff = today.getMonth() - dateAppoint.getMonth();
+            const dayDiff = today.getDate() - dateAppoint.getDate();
+
+            let totalYears = yearsDiff;
+
+            if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+                totalYears--;
+            }
+
+            numYrInput.value = totalYears > 0 ? totalYears : 0;
+            numYrInput2.value = totalYears > 0 ? totalYears : 0;
+
+        } else {
+            numYrInput.value = 0;
+            numYrInput2.value = 0;
+        }
+    }
+});
 </script>
 
 @include('Modal.Draft')
@@ -348,4 +412,3 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 @endsection
-

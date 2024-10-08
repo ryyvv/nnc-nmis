@@ -40,14 +40,14 @@
 <div class="content" style="margin-top:50px;padding:2%">
     <div class="card" style="border-radius:10px;padding-left:2rem!important;padding-right:1rem!important">
         <div style="display:flex;align-items:center">
-            <a href="{{route('CMSchangeNS.index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a>
+            <a href="{{route('changeNS.index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a>
             <h4 style="margin-top:18px;font-weight:bold">MELLPI Pro FORM B 2a: CHANGES IN THE NUTRITIONAL STATUS IN THE BARANGAY</h4>
         </div>
 
 
 
         <div>
-            <form action="{{ route('CMSchangeNS.update', $row->id) }}" id="form" method="POST">
+            <form action="{{ route('changeNS.update', $row->id) }}" id="form" method="POST">
                 @csrf
                 @method('PUT')
 
@@ -147,16 +147,15 @@
                             <tr>
                                 <td class="fontA bold">3</td>
                                 <td class="fontA">Prevalence of
-                                    stunted children
-                                    0-59 months</td>
-                                <td class="fontA">Prevalence is within very high level of public health significance (>30%) in the year evaluated</td>
-
-                                <td class="fontA">Prevalence is within high level of public health significance (20 to < 30%) in the year evaluated</td>
-                                <td class="fontA">Prevalence is within the middle to upper limit of medium level of public health significance (15 to < 20%) in the year evaluated</td>
-                                <td class="fontA">Prevalence is within the lower limit of medium public health significance (10 to < 15%) in the year evaluated</td>
-                                <td class="fontA">Prevalence is within the low level of public health significance (< 10%) in the year evaluated</td>
-                                <td class="fontA">Barangay Nutrition Action Plan
-                                    Operation Timbang Report (Previous and current years)</td>
+                                    wasted children
+                                    0-59 months
+                                </td>
+                                <td class="fontA">Prevalence is within very high level of public health significance (>15%) in the year evaluated</td>
+                                <td class="fontA">Prevalence is within high level of public health significance (10 to <15%) in the year evaluated</td>
+                                <td class="fontA">Prevalence is within the middle to upper limit of medium level of public health significance (7.5 to <10%) in the year evaluated</td>
+                                <td class="fontA">Prevalence is within the lower limit of medium public health significance (5 to <7.5%) in the year evaluated</td>
+                                <td class="fontA">Prevalence is within the low level of public health significance (<5%) in the year evaluated</td>
+                                <td class="fontA">Barangay Nutrition Action Plan Operation Timbang Report (Previous and current years)</td>
                                 <td class="fontA"><select id="loadProvince1" class="form-control" name="rating6c">
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating6c', $row->rating6c) == '1' ? 'selected' : '' }}>1</option>

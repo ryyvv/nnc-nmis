@@ -758,26 +758,38 @@
                                     integration in the
                                     DRRM-H plan and
                                     Local DRRM Plan</td>
-                                <td class="fontA">The LGU monitors retail stores selling cooking oil</td>
                                 <td class="fontA">NiEm activities
                                     identified but not
                                     integrated in the
-                                    Barangay Nutrition Action Plan</td>
+                                    Barangay Nutrition Action Plan
+                                </td>
                                 <td class="fontA">NiEm activities
                                     identified and
                                     integrated to the
-                                    Barangay Nutrition Action Plan but not integrated to the Barangay DRRMC</td>
+                                    Barangay Nutrition Action Plan but not integrated to the Barangay DRRMC
+                                </td>
                                 <td class="fontA">NiEm activities
-                                    identified and
-                                    integrated to the
-                                    Barangay Nutrition Action Plan and
-                                    Barangay DRRMC</td>
-                                <td class="fontA">NiEm activities
-                                    identified and
+                                    identified and 
                                     integrated to the
                                     Barangay Nutrition Action Plan and
                                     Barangay DRRMC
-                                    are implemented</td>
+                                </td>
+                                <td class="fontA">NiEm activities
+                                    identified and 
+                                    integrated to the
+                                    Barangay Nutrition Action Plan and
+                                    Barangay DRRMC
+                                    are implemented
+                                </td>
+                                <td class="fontA">NiEm activities
+                                    identified and 
+                                    integrated to the
+                                    Barangay Nutrition
+                                    Action Plan and
+                                    Barangay DRRMC
+                                    are implemented
+                                    and reviewed
+                                </td>
                                 <td class="fontA">Barangay Nutrition Action Plan
                                     Barangay DRRMC</td>
                                 <td class="fontA" style="width:40px!important">
@@ -828,10 +840,7 @@
                                     parameters in Level
                                     4, the LGU
                                     formulated policies in support of promotion of healthy diets and active lifestyle and maintains safe and open spaces and play areas for children</td>
-                                <td class="fontA">Documentation report
-                                    IEC materials
-                                    Resolution
-                                    Ocular inspection of safe, open spaces and play areas for children</td>
+                                <td class="fontA">&nbsp;</td>
                                 <td class="fontA" style="width:40px!important">
                                     <select id="loadProvince1" class="form-control" name="rating5ha">
                                         <option value="">Select</option>

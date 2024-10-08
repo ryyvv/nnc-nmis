@@ -1125,9 +1125,9 @@
                                 </div>
                                 <div class="form-group col" style="margin-left:10px">
                                     <input type="textarea" class="form-control" id="exampleFormControlInput1"
-                                        name="remarksCommercial" value="{{ old('landAreaCommercial') }}"
+                                        name="remarksCommercial" value="{{ old('remarksCommercial') }}"
                                         placeholder="Your remarks">
-                                    @error('landAreaCommercial')
+                                    @error('remarksCommercial')
                                     <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -1259,18 +1259,18 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <select id="loadProvince1" class="form-control" name="Iavailreceived">
+                            <select id="Iavailreceived" class="form-control" name="Iavailreceived">
                                 <option value="">Choose...</option>
-                                <option value="YES" <?php echo ( old('Iavailreceived') == 'YES' ? 'selected':'' )  ?>>
-                                    YES</option>
-                                <option value="NO" <?php echo ( old('Iavailreceived') == 'NO' ? 'selected':'' )  ?>>NO
+                                <option value="Yes" <?php echo ( old('Iavailreceived') == 'Yes' ? 'selected':'' )  ?>>
+                                    Yes</option>
+                                <option value="No" <?php echo ( old('Iavailreceived') == 'No' ? 'selected':'' )  ?>>No
                                 </option>
                             </select> @error('Iavailreceived')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col">
-                            <input type="date" class="form-control" id="exampleFormControlInput1"
+                            <input type="date" class="form-control" id="Idatereceived"
                                 value="{{ old('Idatereceived') }}" name="Idatereceived">
                             @error('Idatereceived')
                             <div class="text-danger">{{ $message }}</div>
@@ -1339,7 +1339,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <select id="loadProvince1" class="form-control" name="IIAavailreceived">
+                            <select id="IIAavailreceived" class="form-control" name="IIAavailreceived">
                                 <option value="">Choose...</option>
                                 <option value="Yes" <?php echo ( old('IIAavailreceived') == 'Yes' ? 'selected':'' )  ?>>
                                     Yes</option>
@@ -1351,7 +1351,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <input type="date" class="form-control" id="exampleFormControlInput1"
+                            <input type="date" class="form-control" id="IIAdatereceived"
                                 value="{{ old('IIAdatereceived') }}" name="IIAdatereceived">
                             @error('IIAdatereceived')
                             <div class="text-danger">{{ $message }}</div>
@@ -1398,7 +1398,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <select id="loadProvince1" class="form-control" name="IIBavailreceived">
+                            <select id="IIBavailreceived" class="form-control" name="IIBavailreceived">
                                 <option value="">Choose...</option>
                                 <option value="Yes" <?php echo ( old('IIBavailreceived') == 'Yes' ? 'selected':'' )  ?>>
                                     Yes</option>
@@ -1411,7 +1411,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <input type="date" class="form-control" id="exampleFormControlInput1"
+                            <input type="date" class="form-control" id="IIBdatereceived"
                                 value="{{ old('IIBdatereceived') }}" name="IIBdatereceived">
                             @error('IIBdatereceived')
                             <div class="text-danger">{{ $message }}</div>
@@ -1480,7 +1480,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <select id="loadProvince1" class="form-control" name="IIIAavailreceived">
+                            <select id="IIIAavailreceived" class="form-control" name="IIIAavailreceived">
                                 <option value="">Choose...</option>
                                 <option value="Yes"
                                     <?php echo ( old('IIIAavailreceived') == 'Yes' ? 'selected':'' )  ?>>Yes</option>
@@ -1492,7 +1492,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <input type="date" class="form-control" id="exampleFormControlInput1"
+                            <input type="date" class="form-control" id="IIIAdatereceived"
                                 value="{{ old('IIIAdatereceived') }}" name="IIIAdatereceived">
                             @error('IIIAdatereceived')
                             <div class="text-danger">{{ $message }}</div>
@@ -1538,7 +1538,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <select id="loadProvince1" class="form-control" name="IIIBavailreceived">
+                            <select id="IIIBavailreceived" class="form-control" name="IIIBavailreceived">
                                 <option value="">Choose...</option>
                                 <option value="Yes"
                                     <?php echo ( old('IIIBavailreceived') == 'Yes' ? 'selected':'' )  ?>>Yes</option>
@@ -1550,7 +1550,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <input type="date" class="form-control" id="exampleFormControlInput1"
+                            <input type="date" class="form-control" id="IIIBdatereceived"
                                 value="{{ old('IIIBdatereceived') }}" name="IIIBdatereceived">
                             @error('IIIBdatereceived')
                             <div class="text-danger">{{ $message }}</div>
@@ -1596,7 +1596,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <select id="loadProvince1" class="form-control" name="IIICavailreceived">
+                            <select id="IIICavailreceived" class="form-control" name="IIICavailreceived">
                                 <option value="">Choose...</option>
                                 <option value="Yes"
                                     <?php echo ( old('IIICavailreceived') == 'Yes' ? 'selected':'' )  ?>>Yes</option>
@@ -1607,7 +1607,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <input type="date" class="form-control" id="exampleFormControlInput1"
+                            <input type="date" class="form-control" id="IIICdatereceived"
                                 value="{{ old('IIICdatereceived') }}" name="IIICdatereceived">
                             @error('IIICdatereceived')
                             <div class="text-danger">{{ $message }}</div>
@@ -1653,7 +1653,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <select id="loadProvince1" class="form-control" name="IIIDavailreceived">
+                            <select id="IIIDavailreceived" class="form-control" name="IIIDavailreceived">
                                 <option value="">Choose...</option>
                                 <option value="Yes"
                                     <?php echo ( old('IIIDavailreceived') == 'Yes' ? 'selected':'' )  ?>>Yes</option>
@@ -1665,8 +1665,8 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <input type="date" class="form-control" id="exampleFormControlInput1
-                            " value="{{ old('IIIDdatereceived') }}" name="IIIDdatereceived">
+                            <input type="date" class="form-control" id="IIIDdatereceived"
+                                value="{{ old('IIIDdatereceived') }}" name="IIIDdatereceived">
                             @error('IIIDdatereceived')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -1711,7 +1711,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <select id="loadProvince1" class="form-control" name="IIIEavailreceived">
+                            <select id="IIIEavailreceived" class="form-control" name="IIIEavailreceived">
                                 <option value="">Choose...</option>
                                 <option value="Yes"
                                     <?php echo ( old('IIIEavailreceived') == 'Yes' ? 'selected':'' )  ?>>Yes</option>
@@ -1723,7 +1723,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <input type="date" class="form-control" id="exampleFormControlInput1"
+                            <input type="date" class="form-control" id="IIIEdatereceived"
                                 value="{{ old('IIIEdatereceived') }}" name="IIIEdatereceived">
                             @error('IIIEdatereceived')
                             <div class="text-danger">{{ $message }}</div>
@@ -1769,7 +1769,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <select id="loadProvince1" class="form-control" name="IIIFavailreceived">
+                            <select id="IIIFavailreceived" class="form-control" name="IIIFavailreceived">
                                 <option value="">Choose...</option>
                                 <option value="Yes"
                                     <?php echo ( old('IIIFavailreceived') == 'Yes' ? 'selected':'' )  ?>>Yes</option>
@@ -1781,7 +1781,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <input type="date" class="form-control" id="exampleFormControlInput1"
+                            <input type="date" class="form-control" id="IIIFdatereceived"
                                 value="{{ old('IIIFdatereceived') }}" name="IIIFdatereceived">
                             @error('IIIFdatereceived')
                             <div class="text-danger">{{ $message }}</div>
@@ -1832,7 +1832,18 @@
                                 salt<span style="color:red">*</span></label>
                         </div>
                         <div class="col">
-                            <label for="exampleFormControlInput1">Dropdown</label>
+                            <select class="form-control" name="IVAtype">
+                                <option value="">Choose...</option>
+                                <option value="None" <?php echo ( old('IVAtype') == 'None' ? 'selected':'' )  ?>>None
+                                </option>
+                                <option value="Saktong Iodine sa ASIN (SISA Seal)"
+                                    <?php echo ( old('IVAtype') == 'Saktong Iodine sa ASIN (SISA Seal)' ? 'selected':'' )  ?>>
+                                    Saktong Iodine sa ASIN (SISA Seal)
+                                </option>
+                            </select>
+                            @error('IVAtype')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="col">
                             <select id="loadProvince1" class="form-control" name="IVAsource">
@@ -1851,7 +1862,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <select id="loadProvince1" class="form-control" name="IVAavailreceived">
+                            <select id="IVAavailreceived" class="form-control" name="IVAavailreceived">
                                 <option value="">Choose...</option>
                                 <option value="Yes" <?php echo ( old('IVAavailreceived') == 'Yes' ? 'selected':'' )  ?>>
                                     Yes</option>
@@ -1862,7 +1873,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <input type="date" class="form-control" id="exampleFormControlInput1"
+                            <input type="date" class="form-control" id="IVAdatereceived"
                                 value="{{ old('IVAdatereceived') }}" name="IVAdatereceived">
                             @error('IVAdatereceived')
                             <div class="text-danger">{{ $message }}</div>
@@ -1931,7 +1942,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <select id="loadProvince1" class="form-control" name="VAavailreceived">
+                            <select id="VAavailreceived" class="form-control" name="VAavailreceived">
                                 <option value="">Choose...</option>
                                 <option value="Yes" <?php echo ( old('VAavailreceived') == 'Yes' ? 'selected':'' )  ?>>
                                     Yes</option>
@@ -1943,7 +1954,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <input type="date" class="form-control" id="exampleFormControlInput1"
+                            <input type="date" class="form-control" id="VAdatereceived"
                                 value="{{ old('VAdatereceived') }}" name="VAdatereceived">
                             @error('VAdatereceived')
                             <div class="text-danger">{{ $message }}</div>
@@ -1984,13 +1995,35 @@
 </div>
 </div>
 
+<script>
+$(document).ready(function() {
+    function toggleDateInput(selectId, dateInputId) {
+        const dateInput = $(dateInputId);
+        $(selectId).on('change', function() {
+            const isDisabled = this.value === 'No';
+            dateInput.prop('disabled', isDisabled).val(isDisabled ? '' : dateInput.val());
+        }).trigger('change');
+    }
+
+    toggleDateInput('#Iavailreceived', '#Idatereceived');
+    toggleDateInput('#IIAavailreceived', '#IIAdatereceived');
+    toggleDateInput('#IIBavailreceived', '#IIBdatereceived');
+    toggleDateInput('#IIIAavailreceived', '#IIIAdatereceived');
+    toggleDateInput('#IIIBavailreceived', '#IIIBdatereceived');
+    toggleDateInput('#IIICavailreceived', '#IIICdatereceived');
+    toggleDateInput('#IIIDavailreceived', '#IIIDdatereceived');
+    toggleDateInput('#IIIEavailreceived', '#IIIEdatereceived');
+    toggleDateInput('#IIIFavailreceived', '#IIIFdatereceived');
+    toggleDateInput('#IVAavailreceived', '#IVAdatereceived');
+    toggleDateInput('#VAavailreceived', '#VAdatereceived');
+
+});
+</script>
 
 <!-- alert Modal -->
 @include('Modal.Draft')
 
 <!-- alert Modal -->
 @include('Modal.Submit')
-
-
 
 @endsection

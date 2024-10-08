@@ -24,6 +24,11 @@
     border: 1px solid;
     border-radius: 5px;
 }
+
+.form-control:disabled {
+    font-weight: bolder !important;
+    color: black !important;
+}
 </style>
 
 @extends('layouts.app', [
@@ -88,7 +93,7 @@
                                 <td class="fontA">Prevalence is within the low level of public health significance (< 5%) in the year evaluated</td>
                                 <td class="fontA">Barangay Nutrition Action Plan Operation Timbang Report (Previous and current years)</td>
                                 <td class="fontA"> 
-                                    <select id="loadProvince1" class="form-control" name="rating6a">
+                                    <select id="loadProvince1" class="form-control" name="rating6a" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating6a', $row->rating6a) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating6a', $row->rating6a) == '2' ? 'selected' : '' }}>2</option>
@@ -102,7 +107,7 @@
                                 </td>
                                 <td>
                                     <textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" 
-                                    class="form-control" name="remarks6a">{{ old('remarks6a', $row->remarks6a) }}</textarea>
+                                    class="form-control" name="remarks6a" disabled>{{ old('remarks6a', $row->remarks6a) }}</textarea>
                                     @error('remarks6a')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -122,7 +127,7 @@
                                 <td class="fontA">Prevalence is within the low level of public health significance (< 10%) in the year evaluated</td>
                                 <td class="fontA">Barangay Nutrition Action Plan
                                     Operation Timbang Report (Previous and current years)</td>
-                                <td class="fontA"><select id="loadProvince1" class="form-control" name="rating6b">
+                                <td class="fontA"><select id="loadProvince1" class="form-control" name="rating6b" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating6a', $row->rating6a) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating6a', $row->rating6a) == '2' ? 'selected' : '' }}>2</option>
@@ -136,7 +141,7 @@
                                 </td>
                                 <td>
                                     <textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;"
-                                     class="form-control" name="remarks6b"> {{ old('remarks6a', $row->remarks6a) }}</textarea>
+                                     class="form-control" name="remarks6b" disabled> {{ old('remarks6a', $row->remarks6a) }}</textarea>
                                     @error('remarks6b')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -146,17 +151,16 @@
                             <tr>
                                 <td class="fontA bold">3</td>
                                 <td class="fontA">Prevalence of
-                                    stunted children
-                                    0-59 months</td>
-                                <td class="fontA">Prevalence is within very high level of public health significance (>30%) in the year evaluated</td>
-
-                                <td class="fontA">Prevalence is within high level of public health significance (20 to < 30%) in the year evaluated</td>
-                                <td class="fontA">Prevalence is within the middle to upper limit of medium level of public health significance (15 to < 20%) in the year evaluated</td>
-                                <td class="fontA">Prevalence is within the lower limit of medium public health significance (10 to < 15%) in the year evaluated</td>
-                                <td class="fontA">Prevalence is within the low level of public health significance (< 10%) in the year evaluated</td>
-                                <td class="fontA">Barangay Nutrition Action Plan
-                                    Operation Timbang Report (Previous and current years)</td>
-                                <td class="fontA"><select id="loadProvince1" class="form-control" name="rating6c">
+                                    wasted children
+                                    0-59 months
+                                </td>
+                                <td class="fontA">Prevalence is within very high level of public health significance (>15%) in the year evaluated</td>
+                                <td class="fontA">Prevalence is within high level of public health significance (10 to <15%) in the year evaluated</td>
+                                <td class="fontA">Prevalence is within the middle to upper limit of medium level of public health significance (7.5 to <10%) in the year evaluated</td>
+                                <td class="fontA">Prevalence is within the lower limit of medium public health significance (5 to <7.5%) in the year evaluated</td>
+                                <td class="fontA">Prevalence is within the low level of public health significance (<5%) in the year evaluated</td>
+                                <td class="fontA">Barangay Nutrition Action Plan Operation Timbang Report (Previous and current years)</td>
+                                <td class="fontA"><select id="loadProvince1" class="form-control" name="rating6c" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating6a', $row->rating6a) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating6a', $row->rating6a) == '2' ? 'selected' : '' }}>2</option>
@@ -170,7 +174,7 @@
                                 </td>
                                 <td>
                                     <textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" 
-                                    class="form-control" name="remarks6c"> {{ old('remarks6a', $row->remarks6a) }}</textarea>
+                                    class="form-control" name="remarks6c" disabled> {{ old('remarks6a', $row->remarks6a) }}</textarea>
                                     @error('remarks6c')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -192,7 +196,7 @@
                                 <td class="fontA">Barangay Nutrition Action Plan
                                     Operation Timbang Report (Previous and current years)</td>
                                 <td class="fontA">
-                                    <select id="loadProvince1" class="form-control" name="rating6d">
+                                    <select id="loadProvince1" class="form-control" name="rating6d" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating6a', $row->rating6a) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating6a', $row->rating6a) == '2' ? 'selected' : '' }}>2</option>
@@ -206,7 +210,7 @@
                                 </td>
                                 <td>
                                     <textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" 
-                                    class="form-control" name="remarks6d"> {{ old('remarks6a', $row->remarks6a) }}</textarea>
+                                    class="form-control" name="remarks6d" disabled> {{ old('remarks6a', $row->remarks6a) }}</textarea>
                                     @error('remarks6d')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -226,7 +230,7 @@
                                 <td class="fontA">Barangay Nutrition Action Plan
                                     Operation Timbang Report (Previous and current years)</td>
                                 <td class="fontA">
-                                    <select id="loadProvince1" class="form-control" name="rating6e">
+                                    <select id="loadProvince1" class="form-control" name="rating6e" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating6e', $row->rating6e) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating6e', $row->rating6e) == '2' ? 'selected' : '' }}>2</option>
@@ -240,7 +244,7 @@
                                 </td>
                                 <td>
                                     <textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" 
-                                    class="form-control" name="remarks6e">{{ old('remarks6e', $row->remarks6e) }}</textarea>
+                                    class="form-control" name="remarks6e" disabled>{{ old('remarks6e', $row->remarks6e) }}</textarea>
                                     @error('remarks6e')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -261,7 +265,7 @@
                                 <td class="fontA">Barangay Nutrition Action Plan
                                     School Weighing Report (Previous and current years)</td>
                                 <td class="fontA">
-                                    <select id="loadProvince1" class="form-control" name="rating6f">
+                                    <select id="loadProvince1" class="form-control" name="rating6f" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating6f', $row->rating6f) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating6f', $row->rating6f) == '2' ? 'selected' : '' }}>2</option>
@@ -275,7 +279,7 @@
                                 </td>
                                 <td>
                                     <textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" 
-                                    class="form-control" name="remarks6f">{{ old('remarks6f', $row->remarks6f) }}</textarea>
+                                    class="form-control" name="remarks6f" disabled>{{ old('remarks6f', $row->remarks6f) }}</textarea>
                                     @error('remarks6f')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -296,7 +300,7 @@
                                     Prenatal records
                                     Barangay Health Station reports</td>
                                 <td class="fontA">
-                                    <select id="loadProvince1" class="form-control" name="rating6g">
+                                    <select id="loadProvince1" class="form-control" name="rating6g" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating6g', $row->rating6g) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating6g', $row->rating6g) == '2' ? 'selected' : '' }}>2</option>
@@ -310,7 +314,7 @@
                                 </td>
                                 <td>
                                     <textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" 
-                                    class="form-control" name="remarks6g">{{ old('remarks6g', $row->remarks6g) }}</textarea>
+                                    class="form-control" name="remarks6g" disabled>{{ old('remarks6g', $row->remarks6g) }}</textarea>
                                     @error('remarks6g')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror
@@ -328,7 +332,7 @@
                                 <td class="fontA">Operation Timbang Plus coverage is at 100 - 110% in the year evaluated</td>
                                 <td class="fontA">Barangay Nutrition Action PlanOperation Timbang Report (Previous and current years)</td>
                                 <td class="fontA">
-                                    <select id="loadProvince1" class="form-control" name="rating6h">
+                                    <select id="loadProvince1" class="form-control" name="rating6h" disabled>
                                         <option value="">Select</option>
                                         <option value="1" {{ old('rating6h', $row->rating6h) == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('rating6h', $row->rating6h) == '2' ? 'selected' : '' }}>2</option>
@@ -342,7 +346,7 @@
                                 </td>
                                 <td>
                                     <textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" 
-                                    class="form-control" name="remarks6h">{{ old('remarks6h', $row->remarks6h) }}</textarea>
+                                    class="form-control" name="remarks6h" disabled>{{ old('remarks6h', $row->remarks6h) }}</textarea>
                                     @error('remarks6h')
                                     <div class="text-danger">{{ $message  }}</div>
                                     @enderror

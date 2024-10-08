@@ -31,7 +31,7 @@
                 @include('layouts.page_template.crud_alert_message')
 
                 <div class="row-12">
-                    <a href="{{route('CMSgovernance.create')}}" class="btn btn-primary bolder">Create data</a>
+                    <a href="{{route('governance.create')}}" class="btn btn-primary bolder">Create data</a>
                 </div>
                 <div class="row-12">
                     <table class="display" id="myTable" width="100%">

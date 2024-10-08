@@ -89,8 +89,8 @@
                                 <td  class="fontA">A vision mission statement for nutrition was formulated and reflected in the Barangay Nutrition Action Plan</td>
                                 <td  class="fontA">The vision mission statement for nutrition program exists and disseminated to BNC members</td>
                                 <td  class="fontA">The vision mission statement for nutrition program exists and disseminated to BNC members and other stakeholders</td>
-                                <td  class="fontA">The vision mission statement for nutrition program exists and to BNC members, stakeholders and to the rest of the community</td>
-                                <td  class="fontA"> Barangay Nutrition Action Plan Minutes of Meeting Documentation of dissemination</td>
+                                <td class="fontA">The vision mission statement for nutrition program exists and disseminated to BNC members, stakeholders and to the rest of the community</td>
+                                <td class="fontA">Barangay Nutrition Action Plan Minutes of Meeting Documentation of dissemination</td>
                                 <td  class="fontA">
                                   <select id="loadProvince1" class="form-control" name="rating1a" >
                                     <option value="">Select</option>

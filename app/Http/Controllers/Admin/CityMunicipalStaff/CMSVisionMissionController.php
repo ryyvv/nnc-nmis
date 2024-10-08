@@ -49,6 +49,17 @@ class CMSVisionMissionController extends Controller
      */
     public function store(Request $request)
     {
+
+        $dataExists = DB::table('lgubarangayreport')
+        ->where('dateMonitoring', $request->dateMonitoring)
+        ->where( 'periodCovereda', $request->periodCovereda,)
+        // ->where( 'barangay_id' , $request->barangay_id,) 
+        ->exists();
+
+        if ($dataExists) {
+            return redirect()->back()->withInput()->with('error', 'A record with the same data already exists.');
+        }          
+
         if ($request->formrequest == 'draft') {
             $vmBarangay = MellpiproLGUBarangayVisionMission::create([
                 'barangay_id' =>  $request->barangay_id,
@@ -78,7 +89,7 @@ class CMSVisionMissionController extends Controller
             return redirect('CityMunicipalStaff/visionmission')->with('success', 'Data stored as Draft!'); 
 
         }else {
-
+    
             $rules = [
                 'barangay_id' => 'required|integer',
                 'municipal_id' => 'required|integer',
@@ -89,9 +100,9 @@ class CMSVisionMissionController extends Controller
                 'rating1a' => 'required|string|max:255',
                 'rating1b' => 'required|string|max:255',
                 'rating1c' => 'required|string|max:255',
-                'remarks1a' => 'required|string|max:255',
-                'remarks1b' => 'required|string|max:255',
-                'remarks1c' => 'required|string|max:255', 
+                'remarks1a' => 'nullable|string|max:255',
+                'remarks1b' => 'nullable|string|max:255',
+                'remarks1c' => 'nullable|string|max:255', 
                 'status' => 'required|string|max:255',
                 'user_id' => 'required|integer',
         
@@ -130,13 +141,27 @@ class CMSVisionMissionController extends Controller
                     'user_id' =>  $request->user_id,
                 ]);
     
-                MellpiproLGUBarangayVisionMissionTracker::create([
-                    'mplgubrgyvisionmissions_id' => $vmBarangay->id,
-                    'status' => $request->status,
-                    'barangay_id' => auth()->user()->barangay,
-                    'municipal_id' => auth()->user()->city_municipal,
-                    'user_id' => auth()->user()->id,
-                ]);
+                // MellpiproLGUBarangayVisionMissionTracker::create([
+                //     'mplgubrgyvisionmissions_id' => $vmBarangay->id,
+                //     'status' => $request->status,
+                //     'barangay_id' => auth()->user()->barangay,
+                //     'municipal_id' => auth()->user()->city_municipal,
+                //     'user_id' => auth()->user()->id,
+                // ]);
+
+                // DB::table('lgubarangayreport')->insert([
+                //     'mplgubrgyvisionmissions_id' => $vmBarangay->id, 
+                //     'barangay_id' => $request->barangay_id,
+                //     'municipal_id' => $request->municipal_id,   
+                //     'dateMonitoring' => $request->dateMonitoring,
+                //     'periodCovereda' => $request->periodCovereda,
+                //     'status' => $request->status,
+                //     'user_id' => $request->user_id,
+                //     'count' =>  1,
+                //     'created_at' => now(), // Optional
+                //     'updated_at' => now(), // Optional
+                // ]);
+    
             }
     
             return redirect('CityMunicipalStaff/visionmission')->with('success', 'Data created successfully!');
@@ -149,7 +174,7 @@ class CMSVisionMissionController extends Controller
     public function show(Request $request)
     {
        
-        $action = 'edit';
+        $action = 'show';
         $location = new LocationController;
         $regCode = auth()->user()->Region;
         $provCode = auth()->user()->Province;
@@ -226,9 +251,9 @@ class CMSVisionMissionController extends Controller
                 'rating1a' => 'required|string|max:255',
                 'rating1b' => 'required|string|max:255',
                 'rating1c' => 'required|string|max:255',
-                'remarks1a' => 'required|string|max:255',
-                'remarks1b' => 'required|string|max:255',
-                'remarks1c' => 'required|string|max:255', 
+                'remarks1a' => 'nullable|string|max:255',
+                'remarks1b' => 'nullable|string|max:255',
+                'remarks1c' => 'nullable|string|max:255', 
                 'status' => 'required|string|max:255',
                 'user_id' => 'required|integer',
         

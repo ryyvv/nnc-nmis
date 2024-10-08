@@ -41,15 +41,14 @@ class BSLGUprofileController extends Controller
 
         $years = range(date("Y"), 1900);
 
-        $row = DB::table('lguprofilebarangay')->where('user_id', auth()->user()->id)->first();        
+        $row = DB::table('lguprofilebarangay')->where('id', $request->id)->first();         
         
-
         return view('BarangayScholar.lguprofile.edit', compact('row', 'provinces', 'cities_municipalities', 'barangays', 'years', 'action'));
     }
 
     public function show(Request $request, $id)
     {
-        $action = 'edit';
+        $action = 'show';
         $location = new LocationController;
         $regCode = auth()->user()->Region;
         $provCode = auth()->user()->Province;
@@ -60,7 +59,7 @@ class BSLGUprofileController extends Controller
 
         $years = range(date("Y"), 1900);
 
-        $row = DB::table('lguprofilebarangay')->where('id', $id)->first();
+        $row = DB::table('lguprofilebarangay')->where('id', $request->id)->first();  
      
         return view('BarangayScholar.lguprofile.show', compact('row', 'provinces', 'cities_municipalities', 'barangays', 'years', 'action'));
     }
@@ -285,6 +284,7 @@ class BSLGUprofileController extends Controller
                 'IIIFvolumepax' => $request->IIIFvolumepax,
                 'IIIFremarks' => $request->IIIFremarks,
 
+                'IVAtype' => $request->IVAtype,
                 'IVAsource' => $request->IVAsource,
                 'IVAavailreceived' => $request->IVAavailreceived,
                 'IVAdatereceived' => $request->IVAdatereceived,
@@ -437,85 +437,86 @@ class BSLGUprofileController extends Controller
                 'pwobeseCAA' => 'required|string|max:255',
 
                 'landAreaResidential' => 'required|integer|min:1|max:1000000',
-                'remarksResidential' => 'required|string|max:255',
+                'remarksResidential' => 'nullable|string|max:255',
 
                 'landAreaCommercial' => 'required|integer|min:1|max:1000000',
-                'remarksCommercial' => 'required|string|max:255',
+                'remarksCommercial' => 'nullable|string|max:255',
 
                 'landAreaIndustrial' => 'required|integer|min:1|max:1000000',
-                'remarksIndustrial' => 'required|string|max:255',
+                'remarksIndustrial' => 'nullable|string|max:255',
 
                 'landAreaAgricultural' => 'required|integer|min:1|max:1000000',
-                'remarksAgricultural' => 'required|string|max:255',
+                'remarksAgricultural' => 'nullable|string|max:255',
 
                 'landAreaFLMLNP' => 'required|integer|min:1|max:1000000',
-                'remarksFLMLNP' => 'required|string|max:255',
+                'remarksFLMLNP' => 'nullable|string|max:255',
 
                 'Isource' => 'required|string|max:255',
                 'Iavailreceived' => 'required|string|max:255',
-                'Idatereceived' => 'required|date ',
+                'Idatereceived' => 'nullable|date|required_if:Iavailreceived,Yes|filled',
                 'Ivolumepax' => 'required|integer|min:1|max:100000',
-                'Iremarks' => 'required|string|max:255',
+                'Iremarks' => 'nullable|string|max:255',
 
                 'IIAsource' => 'required|string|max:255',
                 'IIAavailreceived' => 'required|string|max:255',
-                'IIAdatereceived' => 'required|date ',
+                'IIAdatereceived' => 'nullable|date|required_if:IIAavailreceived,Yes|filled',
                 'IIAvolumepax' => 'required|integer|min:1|max:100000',
-                'IIAremarks' => 'required|string|max:255',
+                'IIAremarks' => 'nullable|string|max:255',
 
                 'IIBsource' => 'required|string|max:255',
                 'IIBavailreceived' => 'required|string|max:255',
-                'IIBdatereceived' => 'required|date ',
+                'IIBdatereceived' => 'nullable|date|required_if:IIBavailreceived,Yes|filled',
                 'IIBvolumepax' => 'required|integer|min:1|max:100000',
-                'IIBremarks' => 'required|string|max:255',
+                'IIBremarks' => 'nullable|string|max:255',
 
                 'IIIAsource' => 'required|string|max:255',
                 'IIIAavailreceived' => 'required|string|max:255',
-                'IIIAdatereceived' => 'required|date',
+                'IIIAdatereceived' => 'nullable|date|required_if:IIIAavailreceived,Yes|filled',
                 'IIIAvolumepax' => 'required|integer|min:1|max:100000',
-                'IIIAremarks' => 'required|string|max:255',
+                'IIIAremarks' => 'nullable|string|max:255',
 
                 'IIIBsource' => 'required|string|max:255',
                 'IIIBavailreceived' => 'required|string|max:255',
-                'IIIBdatereceived' => 'required|date',
+                'IIIBdatereceived' => 'nullable|date|required_if:IIIBavailreceived,Yes|filled',
                 'IIIBvolumepax' => 'required|integer|min:1|max:100000',
-                'IIIBremarks' => 'required|string|max:255',
+                'IIIBremarks' => 'nullable|string|max:255',
 
                 'IIICsource' => 'required|string|max:255',
                 'IIICavailreceived' => 'required|string|max:255',
-                'IIICdatereceived' => 'required|date',
+                'IIICdatereceived' => 'nullable|date|required_if:IIICavailreceived,Yes|filled',
                 'IIICvolumepax' => 'required|integer|min:1|max:100000',
-                'IIICremarks' => 'required|string|max:255',
+                'IIICremarks' => 'nullable|string|max:255',
 
                 'IIIDsource' => 'required|string|max:255',
                 'IIIDavailreceived' => 'required|string|max:255',
-                'IIIDdatereceived' => 'required|date ',
+                'IIIDdatereceived' => 'nullable|date|required_if:IIIDavailreceived,Yes|filled',
                 'IIIDvolumepax' => 'required|integer|min:1|max:100000',
-                'IIIDremarks' => 'required|string|max:255',
+                'IIIDremarks' => 'nullable|string|max:255',
 
                 'IIIEsource' => 'required|string|max:255',
                 'IIIEavailreceived' => 'required|string|max:255',
-                'IIIEdatereceived' => 'required|date ',
+                'IIIEdatereceived' => 'nullable|date|required_if:IIIEavailreceived,Yes|filled',
                 'IIIEvolumepax' => 'required|integer|min:1|max:100000',
-                'IIIEremarks' => 'required|string|max:255',
+                'IIIEremarks' => 'nullable|string|max:255',
 
                 'IIIFsource' => 'required|string|max:255',
                 'IIIFavailreceived' => 'required|string|max:255',
-                'IIIFdatereceived' => 'required|date ',
+                'IIIFdatereceived' => 'nullable|date|required_if:IIIFavailreceived,Yes|filled',
                 'IIIFvolumepax' => 'required|integer|min:1|max:100000',
-                'IIIFremarks' => 'required|string|max:255',
+                'IIIFremarks' => 'nullable|string|max:255',
 
+                'IVAtype' => 'required|string|max:255',
                 'IVAsource' => 'required|string|max:255',
                 'IVAavailreceived' => 'required|string|max:255',
-                'IVAdatereceived' => 'required|date ',
+                'IVAdatereceived' => 'nullable|date|required_if:IVAavailreceived,Yes|filled',
                 'IVAvolumepax' => 'required|integer|min:1|max:100000',
-                'IVAremarks' => 'required|string|max:255',
+                'IVAremarks' => 'nullable|string|max:255',
 
                 'VAsource' => 'required|string|max:255',
                 'VAavailreceived' => 'required|string|max:255',
-                'VAdatereceived' => 'required|date ',
+                'VAdatereceived' => 'nullable|date|required_if:VAavailreceived,Yes|filled',
                 'VAvolumepax' => 'required|integer|min:1|max:100000',
-                'VAremarks' => 'required|string|max:255',
+                'VAremarks' => 'nullable|string|max:255',
 
                 'status' => 'required|integer',
                 'barangay_id' => 'required',
@@ -533,6 +534,8 @@ class BSLGUprofileController extends Controller
                 'string' => 'The field must be a string.',
                 'date' => 'The field must be a valid date.',
                 'max' => 'The field may not be greater than :max characters.',
+                '*.required_if' => 'The field is required.',
+                '*.filled' => 'The field is required.',
             ];
 
             $validator = Validator::make($request->all(), $rules, $message);
@@ -731,6 +734,7 @@ class BSLGUprofileController extends Controller
                 'IIIFvolumepax' => $request->IIIFvolumepax,
                 'IIIFremarks' => $request->IIIFremarks,
 
+                'IVAtype' => $request->IVAtype,
                 'IVAsource' => $request->IVAsource,
                 'IVAavailreceived' => $request->IVAavailreceived,
                 'IVAdatereceived' => $request->IVAdatereceived,
@@ -975,6 +979,7 @@ class BSLGUprofileController extends Controller
                 'IIIFvolumepax' => $request->IIIFvolumepax,
                 'IIIFremarks' => $request->IIIFremarks,
 
+                'IVAtype' => $request->IVAtype,
                 'IVAsource' => $request->IVAsource,
                 'IVAavailreceived' => $request->IVAavailreceived,
                 'IVAdatereceived' => $request->IVAdatereceived,
@@ -996,7 +1001,7 @@ class BSLGUprofileController extends Controller
                 'user_id' => $request->user_id,
             ]);
 
-            return redirect('BarangayScholar/nutritionservice')->with('success', 'Data stored as draft!');
+            return redirect('BarangayScholar/lguprofile')->with('success', 'Data stored as draft!');
 
         }else {
 
@@ -1117,85 +1122,86 @@ class BSLGUprofileController extends Controller
                 'pwobeseCAA' => 'required|string|max:255',
     
                 'landAreaResidential' => 'required|integer|min:1|max:1000000',
-                'remarksResidential' => 'required|string|max:255',
+                'remarksResidential' => 'nullable|string|max:255',
     
                 'landAreaCommercial' => 'required|integer|min:1|max:1000000',
-                'remarksCommercial' => 'required|string|max:255',
+                'remarksCommercial' => 'nullable|string|max:255',
     
                 'landAreaIndustrial' => 'required|integer|min:1|max:1000000',
-                'remarksIndustrial' => 'required|string|max:255',
+                'remarksIndustrial' => 'nullable|string|max:255',
     
                 'landAreaAgricultural' => 'required|integer|min:1|max:1000000',
-                'remarksAgricultural' => 'required|string|max:255',
+                'remarksAgricultural' => 'nullable|string|max:255',
     
                 'landAreaFLMLNP' => 'required|integer|min:1|max:1000000',
-                'remarksFLMLNP' => 'required|string|max:255',
+                'remarksFLMLNP' => 'nullable|string|max:255',
     
                 'Isource' => 'required|string|max:255',
                 'Iavailreceived' => 'required|string|max:255',
-                'Idatereceived' => 'required|date ',
+                'Idatereceived' => 'nullable|date|required_if:Iavailreceived,Yes|filled',
                 'Ivolumepax' => 'required|integer|min:1|max:100000',
-                'Iremarks' => 'required|string|max:255',
+                'Iremarks' => 'nullable|string|max:255',
     
                 'IIAsource' => 'required|string|max:255',
                 'IIAavailreceived' => 'required|string|max:255',
-                'IIAdatereceived' => 'required|date ',
+                'IIAdatereceived' => 'nullable|date|required_if:IIAavailreceived,Yes|filled',
                 'IIAvolumepax' => 'required|integer|min:1|max:100000',
-                'IIAremarks' => 'required|string|max:255',
+                'IIAremarks' => 'nullable|string|max:255',
     
                 'IIBsource' => 'required|string|max:255',
                 'IIBavailreceived' => 'required|string|max:255',
-                'IIBdatereceived' => 'required|date ',
+                'IIBdatereceived' => 'nullable|date|required_if:IIBavailreceived,Yes|filled',
                 'IIBvolumepax' => 'required|integer|min:1|max:100000',
-                'IIBremarks' => 'required|string|max:255',
+                'IIBremarks' => 'nullable|string|max:255',
     
                 'IIIAsource' => 'required|string|max:255',
                 'IIIAavailreceived' => 'required|string|max:255',
-                'IIIAdatereceived' => 'required|date',
+                'IIIAdatereceived' => 'nullable|date|required_if:IIIAavailreceived,Yes|filled',
                 'IIIAvolumepax' => 'required|integer|min:1|max:100000',
-                'IIIAremarks' => 'required|string|max:255',
+                'IIIAremarks' => 'nullable|string|max:255',
     
                 'IIIBsource' => 'required|string|max:255',
                 'IIIBavailreceived' => 'required|string|max:255',
-                'IIIBdatereceived' => 'required|date',
+                'IIIBdatereceived' => 'nullable|date|required_if:IIIBavailreceived,Yes|filled',
                 'IIIBvolumepax' => 'required|integer|min:1|max:100000',
-                'IIIBremarks' => 'required|string|max:255',
+                'IIIBremarks' => 'nullable|string|max:255',
     
                 'IIICsource' => 'required|string|max:255',
                 'IIICavailreceived' => 'required|string|max:255',
-                'IIICdatereceived' => 'required|date',
+                'IIICdatereceived' => 'nullable|date|required_if:IIICavailreceived,Yes|filled',
                 'IIICvolumepax' => 'required|integer|min:1|max:100000',
-                'IIICremarks' => 'required|string|max:255',
+                'IIICremarks' => 'nullable|string|max:255',
     
                 'IIIDsource' => 'required|string|max:255',
                 'IIIDavailreceived' => 'required|string|max:255',
-                'IIIDdatereceived' => 'required|date ',
+                'IIIDdatereceived' => 'nullable|date|required_if:IIIDavailreceived,Yes|filled',
                 'IIIDvolumepax' => 'required|integer|min:1|max:100000',
-                'IIIDremarks' => 'required|string|max:255',
+                'IIIDremarks' => 'nullable|string|max:255',
     
                 'IIIEsource' => 'required|string|max:255',
                 'IIIEavailreceived' => 'required|string|max:255',
-                'IIIEdatereceived' => 'required|date ',
+                'IIIEdatereceived' => 'nullable|date|required_if:IIIEavailreceived,Yes|filled',
                 'IIIEvolumepax' => 'required|integer|min:1|max:100000',
-                'IIIEremarks' => 'required|string|max:255',
+                'IIIEremarks' => 'nullable|string|max:255',
     
                 'IIIFsource' => 'required|string|max:255',
                 'IIIFavailreceived' => 'required|string|max:255',
-                'IIIFdatereceived' => 'required|date ',
+                'IIIFdatereceived' => 'nullable|date|required_if:IIIFavailreceived,Yes|filled',
                 'IIIFvolumepax' => 'required|integer|min:1|max:100000',
-                'IIIFremarks' => 'required|string|max:255',
+                'IIIFremarks' => 'nullable|string|max:255',
     
+                'IVAtype' => 'required|string|max:255',
                 'IVAsource' => 'required|string|max:255',
                 'IVAavailreceived' => 'required|string|max:255',
-                'IVAdatereceived' => 'required|date ',
+                'IVAdatereceived' => 'nullable|date|required_if:IVAavailreceived,Yes|filled',
                 'IVAvolumepax' => 'required|integer|min:1|max:100000',
-                'IVAremarks' => 'required|string|max:255',
+                'IVAremarks' => 'nullable|string|max:255',
     
                 'VAsource' => 'required|string|max:255',
                 'VAavailreceived' => 'required|string|max:255',
-                'VAdatereceived' => 'required|date ',
+                'VAdatereceived' => 'nullable|date|required_if:VAavailreceived,Yes|filled',
                 'VAvolumepax' => 'required|integer|min:1|max:100000',
-                'VAremarks' => 'required|string|max:255',
+                'VAremarks' => 'nullable|string|max:255',
     
                 'status' => 'required|integer',
                 'barangay_id' => 'required',
@@ -1211,6 +1217,8 @@ class BSLGUprofileController extends Controller
                 'string' => 'The field must be a string.',
                 'date' => 'The field must be a valid date.',
                 'max' => 'The field may not be greater than :max characters.',
+                '*.required_if' => 'The field is required.',
+                '*.filled' => 'The field is required.',
             ];
     
             $validator = Validator::make($request->all(), $rules, $message);
@@ -1410,7 +1418,8 @@ class BSLGUprofileController extends Controller
                     'IIIFdatereceived' => $request->IIIFdatereceived,
                     'IIIFvolumepax' => $request->IIIFvolumepax,
                     'IIIFremarks' => $request->IIIFremarks,
-    
+                    
+                    'IVAtype' => $request->IVAtype,
                     'IVAsource' => $request->IVAsource,
                     'IVAavailreceived' => $request->IVAavailreceived,
                     'IVAdatereceived' => $request->IVAdatereceived,

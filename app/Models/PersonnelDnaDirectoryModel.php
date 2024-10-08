@@ -30,9 +30,9 @@ class PersonnelDnaDirectoryModel extends Model
         'psgc_code',
         'name',
         'correspondence_code',
-        'region_id',
-        'province_id',
-        'cities_id',
+        'reg_code',
+        'prov_code',
+        'citymun_code',
         'directory_type',
         'name_on_id',
     ];

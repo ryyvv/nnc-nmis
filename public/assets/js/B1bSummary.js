@@ -42,6 +42,17 @@ function createRadialChart(performanceData) {
                 callback: function(value) {
                     return value + '%'; // Add percentage symbol to ticks
                 }
+            },
+            // Customize the label rendering
+            pointLabels: {
+                callback: function(label) {
+                    const words = label.split(' '); // Split the label into words
+                    // Wrap words to a new line if it exceeds a certain length
+                    const wrappedLabel = words.map(word => {
+                        return (word.length > 10) ? word + '\n' : word; // Adjust length as needed
+                    }).join(' ');
+                    return wrappedLabel;
+                }
             }
         },
         plugins: {

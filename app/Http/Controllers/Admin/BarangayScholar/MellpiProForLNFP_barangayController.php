@@ -2,25 +2,18 @@
 
 namespace App\Http\Controllers\Admin\BarangayScholar;
 
-use App\Models\MellpiProForLNFP;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\Form5RatingModel;
-use App\Models\Form5RemarksModel;
 use App\Models\lnfp_form5a_rr;
 use Illuminate\Support\Facades\DB;
-use illuminate\Database\QueryException;
-use PhpParser\Node\Stmt\TryCatch;
 use App\Models\lnfp_lguprofile;
 use App\Models\lnfp_form7;
-use App\Models\lnfp_form8;
-use App\Models\lnfp_formInterview;
-use App\Models\lnfp_formOverall;
-use App\Models\lnfp_lguform5atracking;
 use App\Http\Controllers\LocationController;
 use App\Models\form5PNAObarangay;
+use Carbon\Carbon;
 
 
 class MellpiProForLNFP_barangayController extends Controller

@@ -98,9 +98,9 @@
                     </ol>
                   </td>
                   <td class="fontA">The BNC is organized with the Barangay Captain as chairperson and is composed of all nutrition-related sectors in level 2 as applicable in the barangay</td>
-                  <td class="fontA">The BNC is organized with the Barangay Captain as chairperson, composed of nutrition-related sectors in level 2 as applicable in the barangay and external partners, is supported by a resolution indicating the functions of each member and reorganized as necessary </td>
+                  <td class="fontA">The BNC is organized with the Barangay Captain as chairperson, composed of nutrition-related sectors in level 2 as applicable in the barangay and is supported by a resolution indicating the functions of each member</td>
+                  <td class="fontA">The BNC is organized with the Barangay Captain as chairperson, composed of nutrition-related sectors in level 2 as applicable in the barangay and external partners, is supported by a  resolution indicating the functions of each member and reorganized as necessary</td>
                   <td class="fontA">Barangay Nutrition Action Plan Resolutions Executive Order Organizational Chart</td>
-                  <td class="fontA"> Barangay Nutrition Action Plan Minutes of Meeting Documentation of dissemination</td>
                   <td class="fontA">
                     <select id="loadProvince1" class="form-control" name="rating3a">
                       <option value="">Select</option>

@@ -43,31 +43,26 @@ return new class extends Migration
             $table->string('periodCovereda', 255)->nullable(); 
             $table->integer('status' ); 
 
-            $table->integer('region_id')->unsigned(); 
-            $table->integer('province_id')->unsigned(); 
-            $table->integer('municipal_id')->unsigned(); 
-            $table->integer('barangay_id')->unsigned(); 
-            $table->integer('user_id')->unsigned();
+            $table->string('region_id', 20)->unsigned(); 
+            $table->string('province_id', 20)->unsigned(); 
+            $table->string('municipal_id', 20)->unsigned(); 
+            $table->string('barangay_id', 20)->unsigned(); 
+            $table->integer('user_id')->unsigned()->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             
-            $table->foreign('user_id')->references('id')->on('users'); 
-            $table->foreign('province_id')->references('id')->on('psgc_provinces'); 
-            $table->foreign('region_id')->references('id')->on('psgc_regions'); 
-            $table->foreign('municipal_id')->references('id')->on('psgc_municipalities');
-            $table->foreign('barangay_id')->references('id')->on('psgc_barangays'); 
             $table->timestamps();
         });
 
         Schema::create('mpbrgynationalPoliciestracking', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('status'); 
-            $table->integer('barangay_id')->unsigned(); 
-            $table->integer('municipal_id')->unsigned();
-            $table->integer('user_id')->unsigned();
+            $table->string('barangay_id',20)->unsigned(); 
+            $table->string('municipal_id',20)->unsigned();
+            $table->integer('user_id')->unsigned()->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('mellpiprobarangaynationalpolicies_id')->unsigned(); 
-            $table->foreign('mellpiprobarangaynationalpolicies_id')->references('id')->on('mellpiprobarangaynationalpolicies');
-            $table->foreign('municipal_id')->references('id')->on('psgc_municipalities');
-            $table->foreign('barangay_id')->references('id')->on('psgc_barangays'); 
-            $table->foreign('user_id')->references('id')->on('users'); 
+            $table->foreign('mellpiprobarangaynationalpolicies_id')->references('id')->on('mellpiprobarangaynationalpolicies')->onDelete('cascade');
+          
             $table->timestamps();
         });
     }

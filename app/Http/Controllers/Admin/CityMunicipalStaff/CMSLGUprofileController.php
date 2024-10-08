@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin\CityMunicipalStaff;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
 use App\Models\LguProfile;
+use Yajra\DataTables\DataTables;
 use App\Models\barangaytracking;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\LocationController;
@@ -13,12 +13,9 @@ use Termwind\Components\Raw;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-class CMSLGUprofileController extends Controller
+class CMSLGUprofileController  extends Controller
 {
-
-    public function index()
-    {
-
+    public function report() {
         $location = new LocationController;
         $regCode = auth()->user()->Region;
         $provCode = auth()->user()->Province;
@@ -28,21 +25,165 @@ class CMSLGUprofileController extends Controller
         $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
 
         $barangay = auth()->user()->barangay;
-        //$lguprofile = DB::table('lguprofilebarangay')->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();
+        $lguProfile = DB::table('lguprofilebarangay')->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();
+        
+        $data = DB::table('lgubarangayreport')
+            ->leftJoin('lguprofilebarangay', 'lgubarangayreport.lguprofilebarangay_id', '=', 'lguprofilebarangay.id')
+            ->leftJoin('mplgubrgyvisionmissions', 'lgubarangayreport.mplgubrgyvisionmissions_id', '=', 'mplgubrgyvisionmissions.id')
+            ->leftJoin('mellpiprobarangaynationalpolicies', 'lgubarangayreport.mellpiprobarangaynationalpolicies_id', '=', 'mellpiprobarangaynationalpolicies.id')
+            ->leftJoin('mplgubrgygovernance', 'lgubarangayreport.mplgubrgygovernance_id', '=', 'mplgubrgygovernance.id')
+            ->leftJoin('mplgubrgylncmanagement', 'lgubarangayreport.mplgubrgylncmanagement_id', '=', 'mplgubrgylncmanagement.id')
+            ->leftJoin('mplgubrgynutritionservice', 'lgubarangayreport.mplgubrgynutritionservice_id', '=', 'mplgubrgynutritionservice.id')
+            ->leftJoin('mplgubrgychangeNS', 'lgubarangayreport.mplgubrgychangeNS_id', '=', 'mplgubrgychangeNS.id')
+            ->leftJoin('mplgubrgydiscussionquestion', 'lgubarangayreport.mplgubrgydiscussionquestion_id', '=', 'mplgubrgydiscussionquestion.id')
+            ->leftJoin('psgc_municipalities', DB::raw('CAST(lgubarangayreport.municipal_id AS VARCHAR)'), '=', 'psgc_municipalities.citymun_code')
+            ->leftJoin('psgc_cities', DB::raw('CAST(lgubarangayreport.municipal_id AS VARCHAR)'), '=', 'psgc_cities.citymun_code')
+            // ->where('lgubarangayreport.status', 1)
+            ->where(function($query) {
+                $query->whereNotNull('psgc_municipalities.citymun_code')
+                      ->orWhereNotNull('psgc_cities.citymun_code');
+            })
+            ->select(
+                'lgubarangayreport.*',
+                'lguprofilebarangay.*',
+                'mplgubrgyvisionmissions.*',
+                'mellpiprobarangaynationalpolicies.*',
+                'mplgubrgygovernance.*',
+                'mplgubrgylncmanagement.*',
+                'mplgubrgynutritionservice.*',
+                'mplgubrgychangeNS.*',
+                'mplgubrgydiscussionquestion.*', 
+                'psgc_municipalities.name as name',
+                'psgc_cities.name as name'
+            )
+            ->get();
+    // dd('test');
+ 
+        return view('CityMunicipalStaff.LGUReport', ['data' => $data]);
+        
+    }
 
+    public function fetchReport() {
+        $location = new LocationController;
+        $regCode = auth()->user()->Region;
+        $provCode = auth()->user()->Province;
+        $citymunCode = auth()->user()->city_municipal; 
+        $provinces = $location->getProvinces(['reg_code' => $regCode]);
+        $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
+        $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
+
+
+        $data = DB::table('lgubarangayreport')
+            ->leftJoin('lguprofilebarangay', 'lgubarangayreport.lguprofilebarangay_id', '=', 'lguprofilebarangay.id')
+            ->leftJoin('mplgubrgyvisionmissions', 'lgubarangayreport.mplgubrgyvisionmissions_id', '=', 'mplgubrgyvisionmissions.id')
+            ->leftJoin('mellpiprobarangaynationalpolicies', 'lgubarangayreport.mellpiprobarangaynationalpolicies_id', '=', 'mellpiprobarangaynationalpolicies.id')
+            ->leftJoin('mplgubrgygovernance', 'lgubarangayreport.mplgubrgygovernance_id', '=', 'mplgubrgygovernance.id')
+            ->leftJoin('mplgubrgylncmanagement', 'lgubarangayreport.mplgubrgylncmanagement_id', '=', 'mplgubrgylncmanagement.id')
+            ->leftJoin('mplgubrgynutritionservice', 'lgubarangayreport.mplgubrgynutritionservice_id', '=', 'mplgubrgynutritionservice.id')
+            ->leftJoin('mplgubrgychangeNS', 'lgubarangayreport.mplgubrgychangeNS_id', '=', 'mplgubrgychangeNS.id')
+            ->leftJoin('mplgubrgydiscussionquestion', 'lgubarangayreport.mplgubrgydiscussionquestion_id', '=', 'mplgubrgydiscussionquestion.id')
+           
+            ->leftJoin('users as u1', 'lguprofilebarangay.user_id', '=', 'u1.id')
+            ->leftJoin('users as u2', 'mplgubrgyvisionmissions.user_id', '=', 'u2.id')
+            ->leftJoin('users as u3', 'mellpiprobarangaynationalpolicies.user_id', '=', 'u3.id')
+            ->leftJoin('users as u4', 'mplgubrgygovernance.user_id', '=', 'u4.id')
+            ->leftJoin('users as u5', 'mplgubrgylncmanagement.user_id', '=', 'u5.id')
+            ->leftJoin('users as u6', 'mplgubrgynutritionservice.user_id', '=', 'u6.id')
+            ->leftJoin('users as u7', 'mplgubrgychangeNS.user_id', '=', 'u7.id')
+            ->leftJoin('users as u8', 'mplgubrgydiscussionquestion.user_id', '=', 'u8.id')
+
+            ->leftJoin('psgc_municipalities', DB::raw('CAST(lgubarangayreport.municipal_id AS VARCHAR)'), '=', 'psgc_municipalities.citymun_code')
+            ->leftJoin('psgc_cities', DB::raw('CAST(lgubarangayreport.municipal_id AS VARCHAR)'), '=', 'psgc_cities.citymun_code')
+            // ->where('lgubarangayreport.status', 1)
+            ->where(function($query) {
+                $query->whereNotNull('psgc_municipalities.citymun_code')
+                      ->orWhereNotNull('psgc_cities.citymun_code');
+            })
+            ->select(
+                //'lgubarangayreport.*',
+               
+
+                'lgubarangayreport.dateMonitoring as repdateM',
+                'lgubarangayreport.periodCovereda as repperiodC',
+                'lgubarangayreport.status as repStatus',
+                'lgubarangayreport.count as repCount',
+                'lgubarangayreport.status as repStatus', 
+          
+                'lgubarangayreport.lguprofilebarangay_id as repLGU',
+                'lguprofilebarangay.updated_at as lgudate', 
+                'u1.Firstname as lguFirstname',
+                'u1.Middlename as lguMiddlename',
+                'u1.Lastname as lguLastname',
+
+                'lgubarangayreport.mplgubrgyvisionmissions_id as repVM', 
+                'mplgubrgyvisionmissions.updated_at as vmdate', 
+                'u2.Firstname as vmFirstname',
+                'u2.Middlename as vmMiddlename',
+                'u2.Lastname as vmLastname',
+ 
+                'lgubarangayreport.mellpiprobarangaynationalpolicies_id as repNP', 
+                'mellpiprobarangaynationalpolicies.updated_at as npdate', 
+                'u3.Firstname as npFirstname',
+                'u3.Middlename as npMiddlename',
+                'u3.Lastname as npLastname',
+
+                'lgubarangayreport.mplgubrgygovernance_id as repGov', 
+                'mplgubrgygovernance.updated_at as govdate', 
+                'u4.Firstname as govFirstname',
+                'u4.Middlename as govMiddlename',
+                'u4.Lastname as govLastname',
+
+
+                'lgubarangayreport.mplgubrgylncmanagement_id as repLNC', 
+                'mplgubrgylncmanagement.updated_at as lncdate',
+                'u5.Firstname as lncFirstname',
+                'u5.Middlename as lncMiddlename',
+                'u5.Lastname as lncLastname',   
+ 
+                'lgubarangayreport.mplgubrgynutritionservice_id as repNS', 
+                'mplgubrgynutritionservice.updated_at as nsdate',
+                'u6.Firstname as nsFirstname',
+                'u6.Middlename as nsMiddlename',
+                'u6.Lastname as nsLastname',    
+
+                'lgubarangayreport.mplgubrgychangeNS_id as repCNS', 
+                'mplgubrgychangeNS.updated_at as cnsdate', 
+                'u7.Firstname as cnsFirstname',
+                'u7.Middlename as cnsMiddlename',
+                'u7.Lastname as cnsLastname',  
+
+                'lgubarangayreport.mplgubrgydiscussionquestion_id as repDQ', 
+                'mplgubrgydiscussionquestion.updated_at as dqdate',
+                'u8.Firstname as dqFirstname',
+                'u8.Middlename as dqMiddlename',
+                'u8.Lastname as dqLastname', 
+
+                'psgc_municipalities.name as name',
+                'psgc_cities.name as name',
+                'lgubarangayreport.count as count',
+            )
+            ->get();
+
+                //dd($data); 
+            return response()->json(['data' => $data]);
+            
+
+    }
+
+      public function index()
+    {
         $lguprofile = DB::table('users')
             ->join('lguprofilebarangay', 'users.id', '=', 'lguprofilebarangay.user_id')
             ->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')
             ->select('users.Firstname as firstname', 'users.Middlename as middlename', 'users.Lastname as lastname', 'lguprofilebarangay.*')
             ->get();
 
-        return view('CityMunicipalStaff.lguprofile.index', compact('lguprofile', 'provinces', 'cities_municipalities', 'barangays'));
+        return view('CityMunicipalStaff.lguprofile.index', compact('lguprofile'));
     }
 
 
     public function edit(LguProfile $LguProfile, Request $request)
     {
-        
         $action = 'edit';
         $location = new LocationController;
         $regCode = auth()->user()->Region;
@@ -54,17 +195,14 @@ class CMSLGUprofileController extends Controller
 
         $years = range(date("Y"), 1900);
 
-        //dd($request->id);
-        $row = DB::table('lguprofilebarangay')->where('user_id', auth()->user()->id)->first();
-        //dd($lguProfile);
-        dd($row);
-
+        $row = DB::table('lguprofilebarangay')->where('id', $request->id)->first();         
+        
         return view('CityMunicipalStaff.lguprofile.edit', compact('row', 'provinces', 'cities_municipalities', 'barangays', 'years', 'action'));
     }
 
     public function show(Request $request, $id)
     {
-        $action = 'edit';
+        $action = 'show';
         $location = new LocationController;
         $regCode = auth()->user()->Region;
         $provCode = auth()->user()->Province;
@@ -75,15 +213,13 @@ class CMSLGUprofileController extends Controller
 
         $years = range(date("Y"), 1900);
 
-        $row = DB::table('lguprofilebarangay')->where('id', $id)->first();
+        $row = DB::table('lguprofilebarangay')->where('id', $request->id)->first();  
      
-       
         return view('CityMunicipalStaff.lguprofile.show', compact('row', 'provinces', 'cities_municipalities', 'barangays', 'years', 'action'));
     }
 
     public function create(Request $request)
     {
-
 
         $action = 'create';
         $location = new LocationController;
@@ -93,7 +229,7 @@ class CMSLGUprofileController extends Controller
         $provinces = $location->getProvinces(['reg_code' => $regCode]);
         $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
         $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
-
+        
         $years = range(date("Y"), 1900);
 
         return view('CityMunicipalStaff.lguprofile.create', compact('provinces', 'cities_municipalities', 'barangays', 'years', 'action'));
@@ -102,9 +238,18 @@ class CMSLGUprofileController extends Controller
     public function storeSubmit(Request $request)
     {
 
-    //  dd($request);
+        $dataExists = DB::table('lgubarangayreport')
+                        ->where('dateMonitoring', $request->dateMonitoring)
+                        ->where( 'periodCovereda', $request->periodCovereda,)
+                        // ->where( 'barangay_id' , $request->barangay_id,) 
+                        ->exists();
+
+        if ($dataExists) {
+            return redirect()->back()->withInput()->with('error', 'A record with the same data already exists.');
+        }          
+
+
         if ($request->formrequest == 'draft') {
-            //dd($request);
             $LGUProfileBarangay = LguProfile::create([
                 'dateMonitoring' => $request->dateMonitoring,
                 'periodCovereda' => $request->periodCovereda,
@@ -293,11 +438,11 @@ class CMSLGUprofileController extends Controller
                 'IIIFvolumepax' => $request->IIIFvolumepax,
                 'IIIFremarks' => $request->IIIFremarks,
 
+                'IVAtype' => $request->IVAtype,
                 'IVAsource' => $request->IVAsource,
                 'IVAavailreceived' => $request->IVAavailreceived,
                 'IVAdatereceived' => $request->IVAdatereceived,
                 'IVAvolumepax' => $request->IVAvolumepax,
-                'food_fortification' => $request->food_fortification,
                 'IVAremarks' => $request->IVAremarks,
 
                 'VAsource' => $request->VAsource,
@@ -323,13 +468,13 @@ class CMSLGUprofileController extends Controller
                 'municipal_id' => auth()->user()->city_municipal,
                 'user_id' => $request->user_id
             ]);
-
-            return redirect('CityMunicipalStaff/lguprofile')->with('success', 'Data stored as Draft!'); 
+        
+   
+            return redirect('BarangayScholar/lguprofile')->with('success', 'Data stored as Draft!');
         }
-        else { 
-            // dd($request);
-            $requestData = $request->all(); 
 
+        else {
+       
             $rules = [
                 'dateMonitoring' => 'required|date|max:255',
                 'periodCovereda' => 'required|string|max:255',
@@ -447,96 +592,86 @@ class CMSLGUprofileController extends Controller
                 'pwobeseCAA' => 'required|string|max:255',
 
                 'landAreaResidential' => 'required|integer|min:1|max:1000000',
-                'remarksResidential' => 'max:255',
+                'remarksResidential' => 'nullable|string|max:255',
 
                 'landAreaCommercial' => 'required|integer|min:1|max:1000000',
-                'remarksCommercial' => 'max:255',
+                'remarksCommercial' => 'nullable|string|max:255',
 
                 'landAreaIndustrial' => 'required|integer|min:1|max:1000000',
-                'remarksIndustrial' => 'max:255',
+                'remarksIndustrial' => 'nullable|string|max:255',
 
                 'landAreaAgricultural' => 'required|integer|min:1|max:1000000',
-                'remarksAgricultural' => 'max:255',
+                'remarksAgricultural' => 'nullable|string|max:255',
 
                 'landAreaFLMLNP' => 'required|integer|min:1|max:1000000',
-                'remarksFLMLNP' => 'max:255',
+                'remarksFLMLNP' => 'nullable|string|max:255',
 
-
+                'Isource' => 'required|string|max:255',
                 'Iavailreceived' => 'required|string|max:255',
-                //'Isource' => 'required|string|max:255',
-                // 'Idatereceived' => 'required|date ',
-                // 'Ivolumepax' => 'required|integer|min:1|max:100000',
-                'Iremarks' => 'max:255',
+                'Idatereceived' => 'nullable|date|required_if:Iavailreceived,Yes|filled',
+                'Ivolumepax' => 'required|integer|min:1|max:100000',
+                'Iremarks' => 'nullable|string|max:255',
 
-
+                'IIAsource' => 'required|string|max:255',
                 'IIAavailreceived' => 'required|string|max:255',
-                // 'IIAsource' => 'required|string|max:255',
-                // 'IIAdatereceived' => 'required|date ',
-                // 'IIAvolumepax' => 'required|integer|min:1|max:100000',
-                'IIAremarks' => 'max:255',
+                'IIAdatereceived' => 'nullable|date|required_if:IIAavailreceived,Yes|filled',
+                'IIAvolumepax' => 'required|integer|min:1|max:100000',
+                'IIAremarks' => 'nullable|string|max:255',
 
-
+                'IIBsource' => 'required|string|max:255',
                 'IIBavailreceived' => 'required|string|max:255',
-                // 'IIBsource' => 'required|string|max:255',
-                // 'IIBdatereceived' => 'required|date ',
-                // 'IIBvolumepax' => 'required|integer|min:1|max:100000',
-                'IIBremarks' => 'max:255',
+                'IIBdatereceived' => 'nullable|date|required_if:IIBavailreceived,Yes|filled',
+                'IIBvolumepax' => 'required|integer|min:1|max:100000',
+                'IIBremarks' => 'nullable|string|max:255',
 
-
+                'IIIAsource' => 'required|string|max:255',
                 'IIIAavailreceived' => 'required|string|max:255',
-                // 'IIIAsource' => 'required|string|max:255',
-                // 'IIIAdatereceived' => 'required|date',
-                // 'IIIAvolumepax' => 'required|integer|min:1|max:100000',
-                'IIIAremarks' => 'max:255',
+                'IIIAdatereceived' => 'nullable|date|required_if:IIIAavailreceived,Yes|filled',
+                'IIIAvolumepax' => 'required|integer|min:1|max:100000',
+                'IIIAremarks' => 'nullable|string|max:255',
 
-
+                'IIIBsource' => 'required|string|max:255',
                 'IIIBavailreceived' => 'required|string|max:255',
-                // 'IIIBsource' => 'required|string|max:255',
-                // 'IIIBdatereceived' => 'required|date',
-                // 'IIIBvolumepax' => 'required|integer|min:1|max:100000',
-                'IIIBremarks' => 'max:255',
+                'IIIBdatereceived' => 'nullable|date|required_if:IIIBavailreceived,Yes|filled',
+                'IIIBvolumepax' => 'required|integer|min:1|max:100000',
+                'IIIBremarks' => 'nullable|string|max:255',
 
-
+                'IIICsource' => 'required|string|max:255',
                 'IIICavailreceived' => 'required|string|max:255',
-                // 'IIICsource' => 'required|string|max:255',
-                // 'IIICdatereceived' => 'required|date',
-                // 'IIICvolumepax' => 'required|integer|min:1|max:100000',
-                'IIICremarks' => 'max:255',
+                'IIICdatereceived' => 'nullable|date|required_if:IIICavailreceived,Yes|filled',
+                'IIICvolumepax' => 'required|integer|min:1|max:100000',
+                'IIICremarks' => 'nullable|string|max:255',
 
-
+                'IIIDsource' => 'required|string|max:255',
                 'IIIDavailreceived' => 'required|string|max:255',
-                // 'IIIDsource' => 'required|string|max:255',
-                // 'IIIDdatereceived' => 'required|date ',
-                // 'IIIDvolumepax' => 'required|integer|min:1|max:100000',
-                'IIIDremarks' => 'max:255',
+                'IIIDdatereceived' => 'nullable|date|required_if:IIIDavailreceived,Yes|filled',
+                'IIIDvolumepax' => 'required|integer|min:1|max:100000',
+                'IIIDremarks' => 'nullable|string|max:255',
 
-
+                'IIIEsource' => 'required|string|max:255',
                 'IIIEavailreceived' => 'required|string|max:255',
-                // 'IIIEsource' => 'required|string|max:255',
-                // 'IIIEdatereceived' => 'required|date ',
-                // 'IIIEvolumepax' => 'required|integer|min:1|max:100000',
-                'IIIEremarks' => 'max:255',
+                'IIIEdatereceived' => 'nullable|date|required_if:IIIEavailreceived,Yes|filled',
+                'IIIEvolumepax' => 'required|integer|min:1|max:100000',
+                'IIIEremarks' => 'nullable|string|max:255',
 
-
+                'IIIFsource' => 'required|string|max:255',
                 'IIIFavailreceived' => 'required|string|max:255',
-                // 'IIIFsource' => 'required|string|max:255',
-                // 'IIIFdatereceived' => 'required|date ',
-                // 'IIIFvolumepax' => 'required|integer|min:1|max:100000',
-                'IIIFremarks' => 'max:255',
+                'IIIFdatereceived' => 'nullable|date|required_if:IIIFavailreceived,Yes|filled',
+                'IIIFvolumepax' => 'required|integer|min:1|max:100000',
+                'IIIFremarks' => 'nullable|string|max:255',
 
+                'IVAtype' => 'required|string|max:255',
+                'IVAsource' => 'required|string|max:255',
                 'IVAavailreceived' => 'required|string|max:255',
-                // 'IVAsource' => 'required|string|max:255',
-                // 'IVAdatereceived' => 'required|date ',
-                // 'IVAvolumepax' => 'required|integer|min:1|max:100000',
-                'food_fortification' => 'required|string',
-                'IVAremarks' => 'max:255',
+                'IVAdatereceived' => 'nullable|date|required_if:IVAavailreceived,Yes|filled',
+                'IVAvolumepax' => 'required|integer|min:1|max:100000',
+                'IVAremarks' => 'nullable|string|max:255',
 
-
+                'VAsource' => 'required|string|max:255',
                 'VAavailreceived' => 'required|string|max:255',
-                // 'VAsource' => 'required|string|max:255',
-                // 'VAdatereceived' => 'required|date ',
-                // 'VAvolumepax' => 'required|integer|min:1|max:100000',
-                'VAremarks' => 'max:255',
+                'VAdatereceived' => 'nullable|date|required_if:VAavailreceived,Yes|filled',
+                'VAvolumepax' => 'required|integer|min:1|max:100000',
+                'VAremarks' => 'nullable|string|max:255',
 
                 'status' => 'required|integer',
                 'barangay_id' => 'required',
@@ -547,139 +682,6 @@ class CMSLGUprofileController extends Controller
 
             ];
 
-            // Iavailreceived
-            if ($requestData['Iavailreceived'] === 'Yes') {
-                $rules['Isource'] = 'required|string|max:255';
-                $rules['Idatereceived'] = 'required|date';
-                $rules['Ivolumepax'] = 'required|integer|min:1|max:100000'; 
-
-            } else {
-                $rules['Isource'] = 'nullable|string|max:255';
-                $rules['Idatereceived'] = 'nullable|date';
-                $rules['Ivolumepax'] = 'nullable|integer|min:1|max:100000'; 
-            }
-
-            // IIAavailreceived
-            if ($requestData['IIAavailreceived'] === 'Yes') {
-                $rules['IIAsource'] = 'required|string|max:255';
-                $rules['IIAdatereceived'] = 'required|date';
-                $rules['IIAvolumepax'] = 'required|integer|min:1|max:100000';
-    
-            } else {
-                $rules['IIAsource'] = 'nullable|string|max:255';
-                $rules['IIAdatereceived'] = 'nullable|date';
-                $rules['IIAvolumepax'] = 'nullable|integer|min:1|max:100000'; 
-            }
-            
-            // IIBavailreceived
-            if ($requestData['IIBavailreceived'] === 'Yes') {
-                $rules['IIBsource'] = 'required|string|max:255';
-                $rules['IIBdatereceived'] = 'required|date';
-                $rules['IIBvolumepax'] = 'required|integer|min:1|max:100000';
-    
-            } else {
-                $rules['IIBsource'] = 'nullable|string|max:255';
-                $rules['IIBdatereceived'] = 'nullable|date';
-                $rules['IIBvolumepax'] = 'nullable|integer|min:1|max:100000'; 
-            }
-
-            // IIIAavailreceived
-            if ($requestData['IIIAavailreceived'] === 'Yes') {
-                $rules['IIIAsource'] = 'required|string|max:255';
-                $rules['IIIAdatereceived'] = 'required|date';
-                $rules['IIIAvolumepax'] = 'required|integer|min:1|max:100000';
-    
-            } else {
-                $rules['IIIAsource'] = 'nullable|string|max:255';
-                $rules['IIIAdatereceived'] = 'nullable|date';
-                $rules['IIIAvolumepax'] = 'nullable|integer|min:1|max:100000'; 
-            }
-            
-            // IIIBavailreceived
-            if ($requestData['IIIBavailreceived'] === 'Yes') {
-                $rules['IIIBsource'] = 'required|string|max:255';
-                $rules['IIIBdatereceived'] = 'required|date';
-                $rules['IIIBvolumepax'] = 'required|integer|min:1|max:100000';
-    
-            } else {
-                $rules['IIIBsource'] = 'nullable|string|max:255';
-                $rules['IIIBdatereceived'] = 'nullable|date';
-                $rules['IIIBvolumepax'] = 'nullable|integer|min:1|max:100000'; 
-            }
-
-            // IIICavailreceived
-            if ($requestData['IIICavailreceived'] === 'Yes') {
-                $rules['IIICsource'] = 'required|string|max:255';
-                $rules['IIICdatereceived'] = 'required|date';
-                $rules['IIICvolumepax'] = 'required|integer|min:1|max:100000';
-    
-            } else {
-                $rules['IIICsource'] = 'nullable|string|max:255';
-                $rules['IIICdatereceived'] = 'nullable|date';
-                $rules['IIICvolumepax'] = 'nullable|integer|min:1|max:100000'; 
-            }
-
-            // IIIDavailreceived
-            if ($requestData['IIIDavailreceived'] === 'Yes') {
-                $rules['IIIDsource'] = 'required|string|max:255';
-                $rules['IIIDdatereceived'] = 'required|date';
-                $rules['IIIDvolumepax'] = 'required|integer|min:1|max:100000';
-    
-            } else {
-                $rules['IIIDsource'] = 'nullable|string|max:255';
-                $rules['IIIDdatereceived'] = 'nullable|date';
-                $rules['IIIDvolumepax'] = 'nullable|integer|min:1|max:100000'; 
-            }
-
-            // IIIEavailreceived
-            if ($requestData['IIIEavailreceived'] === 'Yes') {
-                $rules['IIIEsource'] = 'required|string|max:255';
-                $rules['IIIEdatereceived'] = 'required|date';
-                $rules['IIIEvolumepax'] = 'required|integer|min:1|max:100000';
-    
-            } else {
-                $rules['IIIEsource'] = 'nullable|string|max:255';
-                $rules['IIIEdatereceived'] = 'nullable|date';
-                $rules['IIIEvolumepax'] = 'nullable|integer|min:1|max:100000'; 
-            }
-
-            // IIIFavailreceived
-            if ($requestData['IIIFavailreceived'] === 'Yes') {
-                $rules['IIIFsource'] = 'required|string|max:255';
-                $rules['IIIFdatereceived'] = 'required|date';
-                $rules['IIIFvolumepax'] = 'required|integer|min:1|max:100000';
-    
-            } else {
-                $rules['IIIFsource'] = 'nullable|string|max:255';
-                $rules['IIIFdatereceived'] = 'nullable|date';
-                $rules['IIIFvolumepax'] = 'nullable|integer|min:1|max:100000'; 
-            }
-
-            // IVAavailreceived
-            if ($requestData['IVAavailreceived'] === 'Yes') {
-                $rules['IVAsource'] = 'required|string|max:255';
-                $rules['IVAdatereceived'] = 'required|date';
-                $rules['IVAvolumepax'] = 'required|integer|min:1|max:100000';
-    
-            } else {
-                $rules['IVAsource'] = 'nullable|string|max:255';
-                $rules['IVAdatereceived'] = 'nullable|date';
-                $rules['IVAvolumepax'] = 'nullable|integer|min:1|max:100000'; 
-            }
-
-            // VAavailreceived
-            if ($requestData['VAavailreceived'] === 'Yes') {
-                $rules['VAsource'] = 'required|string|max:255';
-                $rules['VAdatereceived'] = 'required|date';
-                $rules['VAvolumepax'] = 'required|integer|min:1|max:100000';
-    
-            } else {
-                $rules['VAsource'] = 'nullable|string|max:255';
-                $rules['VAdatereceived'] = 'nullable|date';
-                $rules['VAvolumepax'] = 'nullable|integer|min:1|max:100000'; 
-            }
-
-
 
             $message = [
                 'required' => 'The field is required.',
@@ -687,9 +689,11 @@ class CMSLGUprofileController extends Controller
                 'string' => 'The field must be a string.',
                 'date' => 'The field must be a valid date.',
                 'max' => 'The field may not be greater than :max characters.',
+                '*.required_if' => 'The field is required.',
+                '*.filled' => 'The field is required.',
             ];
 
-            $validator = Validator::make($requestData, $rules, $message);
+            $validator = Validator::make($request->all(), $rules, $message);
 
             if ($validator->fails()) {
                 return redirect()->back()
@@ -885,11 +889,11 @@ class CMSLGUprofileController extends Controller
                 'IIIFvolumepax' => $request->IIIFvolumepax,
                 'IIIFremarks' => $request->IIIFremarks,
 
+                'IVAtype' => $request->IVAtype,
                 'IVAsource' => $request->IVAsource,
                 'IVAavailreceived' => $request->IVAavailreceived,
                 'IVAdatereceived' => $request->IVAdatereceived,
                 'IVAvolumepax' => $request->IVAvolumepax,
-                'food_fortification' => $request->food_fortification,
                 'IVAremarks' => $request->IVAremarks,
 
                 'VAsource' => $request->VAsource,
@@ -916,10 +920,23 @@ class CMSLGUprofileController extends Controller
                 'user_id' => auth()->user()->id,
             ]);
 
+            DB::table('lgubarangayreport')->insert([
+                'lguprofilebarangay_id' => $LGUProfileBarangay->id, 
+                'barangay_id' => $request->barangay_id,
+                'municipal_id' => $request->municipal_id,   
+                'dateMonitoring' => $request->dateMonitoring,
+                'periodCovereda' => $request->periodCovereda,
+                'status' => $request->status,
+                'user_id' => $request->user_id,
+                'count' =>  1,
+                'created_at' => now(), // Optional
+                'updated_at' => now(), // Optional
+            ]);
+
+
             return redirect('CityMunicipalStaff/lguprofile')->with('success', 'Data stored successfully!');
         }
 
-        
     }
 
 
@@ -1117,11 +1134,11 @@ class CMSLGUprofileController extends Controller
                 'IIIFvolumepax' => $request->IIIFvolumepax,
                 'IIIFremarks' => $request->IIIFremarks,
 
+                'IVAtype' => $request->IVAtype,
                 'IVAsource' => $request->IVAsource,
                 'IVAavailreceived' => $request->IVAavailreceived,
                 'IVAdatereceived' => $request->IVAdatereceived,
                 'IVAvolumepax' => $request->IVAvolumepax,
-                'food_fortification' => $request->food_fortification,
                 'IVAremarks' => $request->IVAremarks,
 
                 'VAsource' => $request->VAsource,
@@ -1143,12 +1160,10 @@ class CMSLGUprofileController extends Controller
 
         }else {
 
-            $requestData = $request->all(); 
-
             $rules = [
                 'dateMonitoring' => 'required|date|max:255',
                 'periodCovereda' => 'required|string|max:255',
-
+    
                 'totalPopulation' => 'required|integer',
                 'householdWater' => 'required|integer',
                 'householdToilets' => 'required|integer',
@@ -1166,7 +1181,7 @@ class CMSLGUprofileController extends Controller
                 'affectedLGU' => 'required|string|max:255',
                 'noHousehold' => 'required|integer',
                 'noPuroks' => 'required|integer',
-
+    
                 'populationA' => 'required|string|max:255',
                 'populationB' => 'required|string|max:255',
                 'populationC' => 'required|string|max:255',
@@ -1179,320 +1194,177 @@ class CMSLGUprofileController extends Controller
                 'actualD' => 'required|string|max:255',
                 'actualE' => 'required|string|max:255',
                 'actualF' => 'required|string|max:255',
-
+    
                 'psnormalAAA' => 'required|string|max:255',
                 'psunderweightAAA' => 'required|string|max:255',
                 'pssevereUnderweightAAA' => 'required|string|max:255',
                 'psoverweightAAA' => 'required|string|max:255',
-
+    
                 'psnormalBAA' => 'required|string|max:255',
                 'psunderweightBAA' => 'required|string|max:255',
                 'pssevereUnderweightBAA' => 'required|string|max:255',
                 'psoverweightBAA' => 'required|string|max:255',
-
+    
                 'psnormalCAA' => 'required|string|max:255',
                 'psunderweightCAA' => 'required|string|max:255',
                 'pssevereUnderweightCAA' => 'required|string|max:255',
                 'psoverweightCAA' => 'required|string|max:255',
-
+    
                 'psnormalABA' => 'required|string|max:255',
                 'pswastedABA' => 'required|string|max:255',
                 'psseverelyWastedABA' => 'required|string|max:255',
                 'psoverweightABA' => 'required|string|max:255',
                 'psobeseABA' => 'required|string|max:255',
-
+    
                 'psnormalBBA' => 'required|string|max:255',
                 'pswastedBBA' => 'required|string|max:255',
                 'psseverelyWastedBBA' => 'required|string|max:255',
                 'psoverweightBBA' => 'required|string|max:255',
                 'psobeseBBA' => 'required|string|max:255',
-
+    
                 'psnormalCCA' => 'required|string|max:255',
                 'pswastedCCA' => 'required|string|max:255',
                 'psseverelyWastedCCA' => 'required|string|max:255',
                 'psoverweightCCA' => 'required|string|max:255',
                 'psobeseCCA' => 'required|string|max:255',
-
+    
                 'psnormalAAB' => 'required|string|max:255',
                 'psstuntedAAB' => 'required|string|max:255',
                 'pssevereStuntedAAB' => 'required|string|max:255',
                 'pstallAAB' => 'required|string|max:255',
-
+    
                 'psnormalBBB' => 'required|string|max:255',
                 'psstuntedBBB' => 'required|string|max:255',
                 'pssevereStuntedBBB' => 'required|string|max:255',
                 'pstallBBB' => 'required|string|max:255',
-
+    
                 'psnormalCCC' => 'required|string|max:255',
                 'psstuntedCCC' => 'required|string|max:255',
                 'pssevereStuntedCCC' => 'required|string|max:255',
                 'pstallCCC' => 'required|string|max:255',
-
+    
                 'scnormalABA' => 'required|string|max:255',
                 'scwastedABA' => 'required|string|max:255',
                 'scseverelyWastedABA' => 'required|string|max:255',
                 'scoverweightABA' => 'required|string|max:255',
                 'scobeseABA' => 'required|string|max:255',
-
+    
                 'scnormalBBA' => 'required|string|max:255',
                 'scwastedBBA' => 'required|string|max:255',
                 'scseverelyWastedBBA' => 'required|string|max:255',
                 'scoverweightBBA' => 'required|string|max:255',
                 'scobeseBBA' => 'required|string|max:255',
-
+    
                 'scnormalCCA' => 'required|string|max:255',
                 'scwastedCCA' => 'required|string|max:255',
                 'scseverelyWastedCCA' => 'required|string|max:255',
                 'scoverweightCCA' => 'required|string|max:255',
                 'scobeseCCA' => 'required|string|max:255',
-
+    
                 'pwnormalAAA' => 'required|string|max:255',
                 'pwnutritionllyatriskAAA' => 'required|string|max:255',
                 'pwoverweightAAA' => 'required|string|max:255',
                 'pwobeseAAA' => 'required|string|max:255',
-
+    
                 'pwnormalBAA' => 'required|string|max:255',
                 'pwnutritionllyatriskBAA' => 'required|string|max:255',
                 'pwoverweightBAA' => 'required|string|max:255',
                 'pwobeseBAA' => 'required|string|max:255',
-
+    
                 'pwnormalCAA' => 'required|string|max:255',
                 'pwnutritionllyatriskCAA' => 'required|string|max:255',
                 'pwoverweightCAA' => 'required|string|max:255',
                 'pwobeseCAA' => 'required|string|max:255',
-
+    
                 'landAreaResidential' => 'required|integer|min:1|max:1000000',
-                'remarksResidential' => 'max:255',
-
+                'remarksResidential' => 'nullable|string|max:255',
+    
                 'landAreaCommercial' => 'required|integer|min:1|max:1000000',
-                'remarksCommercial' => 'max:255',
-
+                'remarksCommercial' => 'nullable|string|max:255',
+    
                 'landAreaIndustrial' => 'required|integer|min:1|max:1000000',
-                'remarksIndustrial' => 'max:255',
-
+                'remarksIndustrial' => 'nullable|string|max:255',
+    
                 'landAreaAgricultural' => 'required|integer|min:1|max:1000000',
-                'remarksAgricultural' => 'max:255',
-
+                'remarksAgricultural' => 'nullable|string|max:255',
+    
                 'landAreaFLMLNP' => 'required|integer|min:1|max:1000000',
-                'remarksFLMLNP' => 'max:255',
-
-
+                'remarksFLMLNP' => 'nullable|string|max:255',
+    
+                'Isource' => 'required|string|max:255',
                 'Iavailreceived' => 'required|string|max:255',
-                // 'Isource' => 'required|string|max:255',
-                // 'Idatereceived' => 'required|date ',
-                // 'Ivolumepax' => 'required|integer|min:1|max:100000',
-                'Iremarks' => 'max:255',
-
-
+                'Idatereceived' => 'nullable|date|required_if:Iavailreceived,Yes|filled',
+                'Ivolumepax' => 'required|integer|min:1|max:100000',
+                'Iremarks' => 'nullable|string|max:255',
+    
+                'IIAsource' => 'required|string|max:255',
                 'IIAavailreceived' => 'required|string|max:255',
-                // 'IIAsource' => 'required|string|max:255',
-                // 'IIAdatereceived' => 'required|date ',
-                // 'IIAvolumepax' => 'required|integer|min:1|max:100000',
-                'IIAremarks' => 'max:255',
-
-
+                'IIAdatereceived' => 'nullable|date|required_if:IIAavailreceived,Yes|filled',
+                'IIAvolumepax' => 'required|integer|min:1|max:100000',
+                'IIAremarks' => 'nullable|string|max:255',
+    
+                'IIBsource' => 'required|string|max:255',
                 'IIBavailreceived' => 'required|string|max:255',
-                // 'IIBsource' => 'required|string|max:255',
-                // 'IIBdatereceived' => 'required|date ',
-                // 'IIBvolumepax' => 'required|integer|min:1|max:100000',
-                'IIBremarks' => 'max:255',
-
-
+                'IIBdatereceived' => 'nullable|date|required_if:IIBavailreceived,Yes|filled',
+                'IIBvolumepax' => 'required|integer|min:1|max:100000',
+                'IIBremarks' => 'nullable|string|max:255',
+    
+                'IIIAsource' => 'required|string|max:255',
                 'IIIAavailreceived' => 'required|string|max:255',
-                // 'IIIAsource' => 'required|string|max:255',
-                // 'IIIAdatereceived' => 'required|date',
-                // 'IIIAvolumepax' => 'required|integer|min:1|max:100000',
-                'IIIAremarks' => 'max:255',
-
-
+                'IIIAdatereceived' => 'nullable|date|required_if:IIIAavailreceived,Yes|filled',
+                'IIIAvolumepax' => 'required|integer|min:1|max:100000',
+                'IIIAremarks' => 'nullable|string|max:255',
+    
+                'IIIBsource' => 'required|string|max:255',
                 'IIIBavailreceived' => 'required|string|max:255',
-                // 'IIIBsource' => 'required|string|max:255',
-                // 'IIIBdatereceived' => 'required|date',
-                // 'IIIBvolumepax' => 'required|integer|min:1|max:100000',
-                'IIIBremarks' => 'max:255',
-
-
+                'IIIBdatereceived' => 'nullable|date|required_if:IIIBavailreceived,Yes|filled',
+                'IIIBvolumepax' => 'required|integer|min:1|max:100000',
+                'IIIBremarks' => 'nullable|string|max:255',
+    
+                'IIICsource' => 'required|string|max:255',
                 'IIICavailreceived' => 'required|string|max:255',
-                // 'IIICsource' => 'required|string|max:255',
-                // 'IIICdatereceived' => 'required|date',
-                // 'IIICvolumepax' => 'required|integer|min:1|max:100000',
-                'IIICremarks' => 'max:255',
-
-
+                'IIICdatereceived' => 'nullable|date|required_if:IIICavailreceived,Yes|filled',
+                'IIICvolumepax' => 'required|integer|min:1|max:100000',
+                'IIICremarks' => 'nullable|string|max:255',
+    
+                'IIIDsource' => 'required|string|max:255',
                 'IIIDavailreceived' => 'required|string|max:255',
-                // 'IIIDsource' => 'required|string|max:255',
-                // 'IIIDdatereceived' => 'required|date ',
-                // 'IIIDvolumepax' => 'required|integer|min:1|max:100000',
-                'IIIDremarks' => 'max:255',
-
-
+                'IIIDdatereceived' => 'nullable|date|required_if:IIIDavailreceived,Yes|filled',
+                'IIIDvolumepax' => 'required|integer|min:1|max:100000',
+                'IIIDremarks' => 'nullable|string|max:255',
+    
+                'IIIEsource' => 'required|string|max:255',
                 'IIIEavailreceived' => 'required|string|max:255',
-                // 'IIIEsource' => 'required|string|max:255',
-                // 'IIIEdatereceived' => 'required|date ',
-                // 'IIIEvolumepax' => 'required|integer|min:1|max:100000',
-                'IIIEremarks' => 'max:255',
-
-
+                'IIIEdatereceived' => 'nullable|date|required_if:IIIEavailreceived,Yes|filled',
+                'IIIEvolumepax' => 'required|integer|min:1|max:100000',
+                'IIIEremarks' => 'nullable|string|max:255',
+    
+                'IIIFsource' => 'required|string|max:255',
                 'IIIFavailreceived' => 'required|string|max:255',
-                // 'IIIFsource' => 'required|string|max:255',
-                // 'IIIFdatereceived' => 'required|date ',
-                // 'IIIFvolumepax' => 'required|integer|min:1|max:100000',
-                'IIIFremarks' => 'max:255',
-
+                'IIIFdatereceived' => 'nullable|date|required_if:IIIFavailreceived,Yes|filled',
+                'IIIFvolumepax' => 'required|integer|min:1|max:100000',
+                'IIIFremarks' => 'nullable|string|max:255',
+    
+                'IVAtype' => 'required|string|max:255',
+                'IVAsource' => 'required|string|max:255',
                 'IVAavailreceived' => 'required|string|max:255',
-                // 'IVAsource' => 'required|string|max:255',
-                // 'IVAdatereceived' => 'required|date ',
-                // 'IVAvolumepax' => 'required|integer|min:1|max:100000',
-                'food_fortification' => 'required|string',
-                'IVAremarks' => 'max:255',
-
-
+                'IVAdatereceived' => 'nullable|date|required_if:IVAavailreceived,Yes|filled',
+                'IVAvolumepax' => 'required|integer|min:1|max:100000',
+                'IVAremarks' => 'nullable|string|max:255',
+    
+                'VAsource' => 'required|string|max:255',
                 'VAavailreceived' => 'required|string|max:255',
-                // 'VAsource' => 'required|string|max:255',
-                // 'VAdatereceived' => 'required|date ',
-                // 'VAvolumepax' => 'required|integer|min:1|max:100000',
-                'VAremarks' => 'max:255',
-
+                'VAdatereceived' => 'nullable|date|required_if:VAavailreceived,Yes|filled',
+                'VAvolumepax' => 'required|integer|min:1|max:100000',
+                'VAremarks' => 'nullable|string|max:255',
+    
                 'status' => 'required|integer',
                 'barangay_id' => 'required',
                 'municipal_id' => 'required',
                 'province_id' => 'required',
                 'region_id' => 'required',
                 'user_id' => 'required',
-
             ];
-
-            // Iavailreceived
-            if ($requestData['Iavailreceived'] === 'Yes') {
-                $rules['Isource'] = 'required|string|max:255';
-                $rules['Idatereceived'] = 'required|date';
-                $rules['Ivolumepax'] = 'required|integer|min:1|max:100000'; 
-            } else {
-                $rules['Isource'] = 'nullable|string|max:255';
-                $rules['Idatereceived'] = 'nullable|date';
-                $rules['Ivolumepax'] = 'nullable|integer|min:1|max:100000'; 
-            }
-
-            // IIAavailreceived
-            if ($requestData['IIAavailreceived'] === 'Yes') {
-                $rules['IIAsource'] = 'required|string|max:255';
-                $rules['IIAdatereceived'] = 'required|date';
-                $rules['IIAvolumepax'] = 'required|integer|min:1|max:100000';
-    
-            } else {
-                $rules['IIAsource'] = 'nullable|string|max:255';
-                $rules['IIAdatereceived'] = 'nullable|date';
-                $rules['IIAvolumepax'] = 'nullable|integer|min:1|max:100000'; 
-            }
-            
-            // IIBavailreceived
-            if ($requestData['IIBavailreceived'] === 'Yes') {
-                $rules['IIBsource'] = 'required|string|max:255';
-                $rules['IIBdatereceived'] = 'required|date';
-                $rules['IIBvolumepax'] = 'required|integer|min:1|max:100000';
-    
-            } else {
-                $rules['IIBsource'] = 'nullable|string|max:255';
-                $rules['IIBdatereceived'] = 'nullable|date';
-                $rules['IIBvolumepax'] = 'nullable|integer|min:1|max:100000'; 
-            }
-
-            // IIIAavailreceived
-            if ($requestData['IIIAavailreceived'] === 'Yes') {
-                $rules['IIIAsource'] = 'required|string|max:255';
-                $rules['IIIAdatereceived'] = 'required|date';
-                $rules['IIIAvolumepax'] = 'required|integer|min:1|max:100000';
-    
-            } else {
-                $rules['IIIAsource'] = 'nullable|string|max:255';
-                $rules['IIIAdatereceived'] = 'nullable|date';
-                $rules['IIIAvolumepax'] = 'nullable|integer|min:1|max:100000'; 
-            }
-            
-            // IIIBavailreceived
-            if ($requestData['IIIBavailreceived'] === 'Yes') {
-                $rules['IIIBsource'] = 'required|string|max:255';
-                $rules['IIIBdatereceived'] = 'required|date';
-                $rules['IIIBvolumepax'] = 'required|integer|min:1|max:100000';
-    
-            } else {
-                $rules['IIIBsource'] = 'nullable|string|max:255';
-                $rules['IIIBdatereceived'] = 'nullable|date';
-                $rules['IIIBvolumepax'] = 'nullable|integer|min:1|max:100000'; 
-            }
-
-            // IIICavailreceived
-            if ($requestData['IIICavailreceived'] === 'Yes') {
-                $rules['IIICsource'] = 'required|string|max:255';
-                $rules['IIICdatereceived'] = 'required|date';
-                $rules['IIICvolumepax'] = 'required|integer|min:1|max:100000';
-    
-            } else {
-                $rules['IIICsource'] = 'nullable|string|max:255';
-                $rules['IIICdatereceived'] = 'nullable|date';
-                $rules['IIICvolumepax'] = 'nullable|integer|min:1|max:100000'; 
-            }
-
-            // IIIDavailreceived
-            if ($requestData['IIIDavailreceived'] === 'Yes') {
-                $rules['IIIDsource'] = 'required|string|max:255';
-                $rules['IIIDdatereceived'] = 'required|date';
-                $rules['IIIDvolumepax'] = 'required|integer|min:1|max:100000';
-    
-            } else {
-                $rules['IIIDsource'] = 'nullable|string|max:255';
-                $rules['IIIDdatereceived'] = 'nullable|date';
-                $rules['IIIDvolumepax'] = 'nullable|integer|min:1|max:100000'; 
-            }
-
-            // IIIEavailreceived
-            if ($requestData['IIIEavailreceived'] === 'Yes') {
-                $rules['IIIEsource'] = 'required|string|max:255';
-                $rules['IIIEdatereceived'] = 'required|date';
-                $rules['IIIEvolumepax'] = 'required|integer|min:1|max:100000';
-    
-            } else {
-                $rules['IIIEsource'] = 'nullable|string|max:255';
-                $rules['IIIEdatereceived'] = 'nullable|date';
-                $rules['IIIEvolumepax'] = 'nullable|integer|min:1|max:100000'; 
-            }
-
-            // IIIFavailreceived
-            if ($requestData['IIIFavailreceived'] === 'Yes') {
-                $rules['IIIFsource'] = 'required|string|max:255';
-                $rules['IIIFdatereceived'] = 'required|date';
-                $rules['IIIFvolumepax'] = 'required|integer|min:1|max:100000';
-    
-            } else {
-                $rules['IIIFsource'] = 'nullable|string|max:255';
-                $rules['IIIFdatereceived'] = 'nullable|date';
-                $rules['IIIFvolumepax'] = 'nullable|integer|min:1|max:100000'; 
-            }
-
-            // IVAavailreceived
-            if ($requestData['IVAavailreceived'] === 'Yes') {
-                $rules['IVAsource'] = 'required|string|max:255';
-                $rules['IVAdatereceived'] = 'required|date';
-                $rules['IVAvolumepax'] = 'required|integer|min:1|max:100000';
-    
-            } else {
-                $rules['IVAsource'] = 'nullable|string|max:255';
-                $rules['IVAdatereceived'] = 'nullable|date';
-                $rules['IVAvolumepax'] = 'nullable|integer|min:1|max:100000'; 
-            }
-
-            // VAavailreceived
-            if ($requestData['VAavailreceived'] === 'Yes') {
-                $rules['VAsource'] = 'required|string|max:255';
-                $rules['VAdatereceived'] = 'required|date';
-                $rules['VAvolumepax'] = 'required|integer|min:1|max:100000';
-    
-            } else {
-                $rules['VAsource'] = 'nullable|string|max:255';
-                $rules['VAdatereceived'] = 'nullable|date';
-                $rules['VAvolumepax'] = 'nullable|integer|min:1|max:100000'; 
-            }
-
     
             $message = [
                 'required' => 'The field is required.',
@@ -1500,6 +1372,8 @@ class CMSLGUprofileController extends Controller
                 'string' => 'The field must be a string.',
                 'date' => 'The field must be a valid date.',
                 'max' => 'The field may not be greater than :max characters.',
+                '*.required_if' => 'The field is required.',
+                '*.filled' => 'The field is required.',
             ];
     
             $validator = Validator::make($request->all(), $rules, $message);
@@ -1699,12 +1573,12 @@ class CMSLGUprofileController extends Controller
                     'IIIFdatereceived' => $request->IIIFdatereceived,
                     'IIIFvolumepax' => $request->IIIFvolumepax,
                     'IIIFremarks' => $request->IIIFremarks,
-    
+                    
+                    'IVAtype' => $request->IVAtype,
                     'IVAsource' => $request->IVAsource,
                     'IVAavailreceived' => $request->IVAavailreceived,
                     'IVAdatereceived' => $request->IVAdatereceived,
                     'IVAvolumepax' => $request->IVAvolumepax,
-                    'food_fortification' => $request->food_fortification,
                     'IVAremarks' => $request->IVAremarks,
     
                     'VAsource' => $request->VAsource,
@@ -1730,8 +1604,7 @@ class CMSLGUprofileController extends Controller
      
     }
 
-    public function destroy(Request $request)
-    {
+    public function destroy(Request $request){
  
         DB::table('barangaytracking')->where('lguprofilebarangay_id', $request->id)->delete();
         $lguprofile = LguProfile::find($request->id);
@@ -1757,4 +1630,6 @@ class CMSLGUprofileController extends Controller
             ->header('Content-Type', 'application/pdf')
             ->header('Content-Disposition', 'attachment; filename="document.pdf"');
     }
+
+
 }

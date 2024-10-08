@@ -225,7 +225,7 @@ class ChangeNSController extends Controller
      */
     public function show(Request $request, string $id)
     {
-        $action = 'edit';
+        $action = 'show';
         $location = new LocationController;
         $regCode = auth()->user()->Region;
         $provCode = auth()->user()->Province;

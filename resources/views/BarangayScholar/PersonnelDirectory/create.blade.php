@@ -91,6 +91,18 @@
                                 </div>
                             </div>
                             <hr>
+                            <div class="form-group col-md-3" style="display:flex; border-right:1px solid;">
+                                <div class="form-group col-md-12">
+                                    <label for="inputNaoGovMayor">Name of Governor/Mayor</label>
+                                    <input type="text" class="form-control" name="inputNaoGovMayor"
+                                        id="inputNaoGovMayor" placeholder="Name of Governor/Mayor"
+                                        value="{{ old('inputNaoGovMayor') }}">
+                                    @error('inputNaoGovMayor')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <hr>
                             <div>
                                 <label for="formBasicInfo"><b>Basic Info</b></label>
                             </div>

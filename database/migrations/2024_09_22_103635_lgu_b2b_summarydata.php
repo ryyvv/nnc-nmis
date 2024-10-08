@@ -37,9 +37,9 @@ return new class extends Migration
         Schema::create('mplgubrgyLguB2bSummarytracking', function (Blueprint $table) {
             $table->id();
             $table->integer('status'); 
-            $table->integer('barangay_id')->unsigned(); 
-            $table->integer('municipal_id')->unsigned();
-            $table->integer('user_id')->unsigned(); 
+            $table->string('barangay_id',20)->unsigned(); 
+            $table->string('municipal_id',20)->unsigned();
+            $table->string('user_id',20)->unsigned(); 
             $table->integer('mplgubrgyb2bSummary_id')->unsigned()->nullable(); 
             $table->foreign('user_id')->references('id')->on('users'); 
             $table->timestamps();
@@ -51,7 +51,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lguB1bSummarydata');
-        Schema::dropIfExists('mplgubrgyLguB1bSummarytracking');
+        Schema::dropIfExists('lguB2bSummarydata');
+        Schema::dropIfExists('mplgubrgyLguB2bSummarytracking');
     }
 };

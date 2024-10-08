@@ -16,10 +16,7 @@
             <!-- <h5 class="title">{{__("List of Mellpi Pro for LGU Profile Sheet (Barangay)")}}</h5> -->
 
             <div style="display:flex;align-items:center">
-                <!-- <a href="{{route('formsb.index')}}"> -->
-                <h5 class="title">{{__("List of Mellpi Pro for LGU Profile Sheet (Barangay)")}}</h5>
-                <!-- </a> -->
-
+                <h5 class="title">{{__("List of MELLPI Pro for LGU Profile Sheet (Barangay)")}}</h5>
             </div>
 
             <!-- alerts -->

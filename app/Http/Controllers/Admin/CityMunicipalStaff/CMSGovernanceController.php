@@ -18,7 +18,7 @@ use App\Http\Controllers\LocationController;
 
 class CMSGovernanceController extends Controller
 {
-    /**
+     /**
      * Display a listing of the resource.
      */
     public function index()
@@ -34,11 +34,11 @@ class CMSGovernanceController extends Controller
 
         $barangay = auth()->user()->barangay;
 
-        $govlocation = DB::table('users')
-        ->join('mplgubrgygovernance', 'users.id', '=', 'mplgubrgygovernance.user_id')
-        ->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')
-        ->select('users.Firstname as firstname', 'users.Middlename as middlename', 'users.Lastname as lastname', 'mplgubrgygovernance.*')
-        ->get();
+        $govlocation = DB::table('mplgubrgygovernance')->where('user_id', auth()->user()->id)->get();
+        // ->join('mplgubrgygovernance', 'users.id', '=', 'mplgubrgygovernance.user_id')
+        // ->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')
+        // ->select('users.Firstname as firstname', 'users.Middlename as middlename', 'users.Lastname as lastname', 'mplgubrgygovernance.*')
+        // ->get();
 
 
         return view('CityMunicipalStaff.Governance.index', compact('govlocation', 'provinces', 'cities_municipalities', 'barangays'));
@@ -57,7 +57,6 @@ class CMSGovernanceController extends Controller
         $provinces = $location->getProvinces(['reg_code' => $regCode]);
         $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
         $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
-
         
         $years = range(date("Y"), 1900);
 
@@ -70,6 +69,16 @@ class CMSGovernanceController extends Controller
      */
     public function store(Request $request)
     {
+
+        $dataExists = DB::table('lgubarangayreport')
+        ->where('dateMonitoring', $request->dateMonitoring)
+        ->where( 'periodCovereda', $request->periodCovereda,)
+        // ->where( 'barangay_id' , $request->barangay_id,) 
+        ->exists();
+
+        if ($dataExists) {
+        return redirect()->back()->withInput()->with('error', 'A record with the same data already exists.');
+        }  
      
         if ($request->formrequest == 'draft') { 
              $govbarangay = MellpiprobarangayGovernance::create([
@@ -110,9 +119,9 @@ class CMSGovernanceController extends Controller
                 'rating3a' => 'required|integer',
                 'rating3b' => 'required|integer',
                 'rating3c' => 'required|integer',
-                'remarks3a' => 'required|string|max:255',
-                'remarks3b' => 'required|string|max:255',
-                'remarks3c' => 'required|string|max:255', 
+                'remarks3a' => 'nullable|string|max:255',
+                'remarks3b' => 'nullable|string|max:255',
+                'remarks3c' => 'nullable|string|max:255', 
                 'status' => 'required|string|max:255',
                 'user_id' => 'required|integer',
         
@@ -153,7 +162,20 @@ class CMSGovernanceController extends Controller
                     'municipal_id' => auth()->user()->city_municipal,
                     'user_id' => auth()->user()->id,
                 ]);
-                
+
+
+            DB::table('lgubarangayreport')->insert([
+                'mplgubrgygovernance_id' => $govbarangay->id, 
+                'barangay_id' => $request->barangay_id,
+                'municipal_id' => $request->municipal_id,   
+                'dateMonitoring' => $request->dateMonitoring,
+                'periodCovereda' => $request->periodCovereda,
+                'status' => $request->status,
+                'user_id' => $request->user_id,
+                'count' =>  1,
+                'created_at' => now(), // Optional
+                'updated_at' => now(), // Optional
+            ]);
     
             return redirect('CityMunicipalStaff/governance')->with('success', 'Data stored successfully!');
         }
@@ -166,7 +188,7 @@ class CMSGovernanceController extends Controller
      */
     public function show(Request $request ,string $id)
     {
-        $action = 'edit';
+        $action = 'show';
         $location = new LocationController;
         $regCode = auth()->user()->Region;
         $provCode = auth()->user()->Province;
@@ -174,7 +196,6 @@ class CMSGovernanceController extends Controller
         $provinces = $location->getProvinces(['reg_code' => $regCode]);
         $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
         $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
-
         
         $years = range(date("Y"), 1900);
 
@@ -195,7 +216,6 @@ class CMSGovernanceController extends Controller
         $provinces = $location->getProvinces(['reg_code' => $regCode]);
         $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
         $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
-
         
         $years = range(date("Y"), 1900);
 
@@ -241,9 +261,9 @@ class CMSGovernanceController extends Controller
                 'rating3a' => 'required|integer',
                 'rating3b' => 'required|integer',
                 'rating3c' => 'required|integer',
-                'remarks3a' => 'required|string|max:255',
-                'remarks3b' => 'required|string|max:255',
-                'remarks3c' => 'required|string|max:255', 
+                'remarks3a' => 'nullable|string|max:255',
+                'remarks3b' => 'nullable|string|max:255',
+                'remarks3c' => 'nullable|string|max:255', 
                 'status' => 'required|string|max:255',
                 'user_id' => 'required|integer',
         

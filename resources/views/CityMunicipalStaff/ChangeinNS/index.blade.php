@@ -15,9 +15,9 @@
             <!-- <h5 class="title">{{__("List of Mellpi Pro for LGU Profile Sheet (Barangay)")}}</h5> -->
 
             <div style="display:flex;align-items:center">
-                <!-- <a href="{{route('formsb.index')}}"> -->
+                <a href="{{route('formsb.index')}}">
                     <h5 class="title">{{__("List of Change in NS")}}</h5>
-                <!-- </a> -->
+                </a>
             </div>
 
 
@@ -27,7 +27,7 @@
                 @include('layouts.page_template.crud_alert_message')
  
                 <div class="row-12">
-                    <a href="{{route('CMSchangeNS.create')}}" class="btn btn-primary bolder">Create data</a>
+                    <a href="{{route('changeNS.create')}}" class="btn btn-primary bolder">Create data</a>
                 </div>
 
                 <div class="row-12">

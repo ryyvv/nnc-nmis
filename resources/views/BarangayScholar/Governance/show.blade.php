@@ -24,6 +24,11 @@
     border: 1px solid;
     border-radius: 5px;
   }
+
+  .form-control:disabled {
+    font-weight: bolder !important;
+    color: black !important;
+  }
 </style>
 
 @extends('layouts.app', [
@@ -116,11 +121,11 @@
                     </ol>
                   </td>
                   <td class="fontA">The BNC is organized with the Barangay Captain as chairperson and is composed of all nutrition-related sectors in level 2 as applicable in the barangay</td>
-                  <td class="fontA">The BNC is organized with the Barangay Captain as chairperson, composed of nutrition-related sectors in level 2 as applicable in the barangay and external partners, is supported by a resolution indicating the functions of each member and reorganized as necessary </td>
+                  <td class="fontA">The BNC is organized with the Barangay Captain as chairperson, composed of nutrition-related sectors in level 2 as applicable in the barangay and is supported by a resolution indicating the functions of each member</td>
+                  <td class="fontA">The BNC is organized with the Barangay Captain as chairperson, composed of nutrition-related sectors in level 2 as applicable in the barangay and external partners, is supported by a  resolution indicating the functions of each member and reorganized as necessary</td>
                   <td class="fontA">Barangay Nutrition Action Plan Resolutions Executive Order Organizational Chart</td>
-                  <td class="fontA"> Barangay Nutrition Action Plan Minutes of Meeting Documentation of dissemination</td>
                   <td class="fontA">
-                    <select id="loadProvince1" class="form-control" name="rating3a">
+                    <select id="loadProvince1" class="form-control" name="rating3a" disabled>
                       <option value="">Select</option>
                       <option value="1" {{ old('rating3a', $row->rating3a) == '1' ? 'selected' : '' }}>1</option>
                       <option value="2" {{ old('rating3a', $row->rating3a) == '2' ? 'selected' : '' }}>2</option>
@@ -133,7 +138,7 @@
                     @enderror
                   </td>
                   <td>
-                    <textarea class="form-control" style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks3a">{{ old('remarks3a', $row->remarks3a) }}</textarea>
+                    <textarea class="form-control" style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks3a" disabled>{{ old('remarks3a', $row->remarks3a) }}</textarea>
                     @error('remarks3a')
                     <div class="text-danger">{{ $message }}</div>
                     @enderror
@@ -149,7 +154,7 @@
                   <td class="fontA">The barangay designated a BNS with monthly honorarium, budget for supplies, designated a BNS corner/ office and is assisted by Barangay Health Workers or other bgy personnel in the conduct of OPT Plus or other activities</td>
                   <td class="fontA">Resolution Executive Order Barangay Nutrition Action Plan Organizational Chart Approved Annual Budget</td>
                   <td class="fontA">
-                    <select id="loadProvince1" class="form-control" name="rating3b">
+                    <select id="loadProvince1" class="form-control" name="rating3b" disabled>
                       <option value="">Select</option>
                       <option value="1" {{ old('rating3b', $row->rating3b) == '1' ? 'selected' : '' }}>1</option>
                       <option value="2" {{ old('rating3b', $row->rating3b) == '2' ? 'selected' : '' }}>2</option>
@@ -161,7 +166,7 @@
                     <div class="text-danger">{{ $message }}</div>
                     @enderror
                   </td>
-                  <td><textarea class="form-control" style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks3b">{{ old('remarks3b' , $row->remarks3b) }}</textarea>
+                  <td><textarea class="form-control" style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks3b" disabled>{{ old('remarks3b' , $row->remarks3b) }}</textarea>
                     @error('remarks3b')
                     <div class="text-danger">{{ $message }}</div>
                     @enderror
@@ -182,7 +187,7 @@
                   <td class="fontA">The BNC are convened at least four times to accomplish activites in level 4 and discuss progress of implementation of the Barangay Nutrition Action Plan</td>
                   <td class="fontA">Minutes of meeting Barangay Nutrition Action Plan Accomplishment Report</td>
                   <td class="fontA">
-                    <select id="loadProvince1" class="form-control" name="rating3c">
+                    <select id="loadProvince1" class="form-control" name="rating3c" disabled>
                       <option value="">Select</option>
                       <option value="1" {{ old('rating3c', $row->rating3c) == '1' ? 'selected' : '' }}>1</option>
                       <option value="2" {{ old('rating3c', $row->rating3c) == '2' ? 'selected' : '' }}>2</option>
@@ -194,7 +199,7 @@
                     <div class="text-danger">{{ $message }}</div>
                     @enderror
                   </td>
-                  <td><textarea class="form-control" style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks3c">{{ old('remarks3c', $row->remarks3c) }}</textarea>
+                  <td><textarea class="form-control" style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks3c" disabled>{{ old('remarks3c', $row->remarks3c) }}</textarea>
                     @error('remarks3c')
                     <div class="text-danger">{{ $message }}</div>
                     @enderror

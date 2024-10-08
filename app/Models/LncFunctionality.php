@@ -14,7 +14,6 @@ class LncFunctionality extends Model
         'psgc_code',
         'correspondence_code',
         'geographic_level',
-        'income_classification',
         'reg_code',
         'prov_code',
         'citymun_code',

@@ -193,7 +193,7 @@
                         <div class="form-group col-md-6">
                             <label for="inputInfantScale">Infant Scale</label>
                             <input type="text" class="form-control" name="inputInfantScale" id="inputInfantScale"
-                                value="{{ old('inputInfantScale') ?? 0 }}" placeholder="0">
+                                value="{{ old('inputInfantScale') }}" placeholder="0">
                             @error('inputInfantScale')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -425,19 +425,7 @@ $(document).ready(function() {
             });
     };
 
-    $.get(routes.getRegions)
-        .done(function(data) {
-            clearAndDisableDropdown(dropdowns.province, 'Province');
-            clearAndDisableDropdown(dropdowns.city, 'City/Municipality');
-            populateDropdown(dropdowns.region, data, 'reg_code', 'name', 'Region');
-
-            if (oldValues.region) {
-                dropdowns.region.val(oldValues.region).change();
-            }
-        })
-        .fail(function() {
-            alert('Failed to fetch regions.');
-        });
+    fetchDataAndPopulate(routes.getRegions, {}, dropdowns.region, 'reg_code', 'name', 'Region', oldValues.region);
 
     dropdowns.region.change(function() {
         const regionCode = $(this).val();

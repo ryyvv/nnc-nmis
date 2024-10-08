@@ -23,20 +23,20 @@ return new class extends Migration
             $table->string('status')->nullable();
             $table->date('dateMonitoring')->nullable();
             $table->string('periodCovereda')->nullable();
-            $table->unsignedBigInteger('barangay_id')->nullable();
-            $table->unsignedBigInteger('municipal_id')->nullable();
-            $table->unsignedBigInteger('province_id')->nullable();
-            $table->unsignedBigInteger('region_id')->nullable();
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('barangay_id',20)->nullable();
+            $table->string('municipal_id',20)->nullable();
+            $table->string('province_id',20)->nullable();
+            $table->string('region_id',20)->nullable();
+            $table->string('user_id',20)->nullable();
             $table->timestamps();
         });
 
         Schema::create('mplgubrgyLguB1bSummarytracking', function (Blueprint $table) {
             $table->id();
             $table->integer('status'); 
-            $table->integer('barangay_id')->unsigned(); 
-            $table->integer('municipal_id')->unsigned();
-            $table->integer('user_id')->unsigned(); 
+            $table->string('barangay_id',20)->unsigned(); 
+            $table->string('municipal_id',20)->unsigned();
+            $table->string('user_id',20)->unsigned(); 
             $table->integer('mplgubrgyb1bSummary_id')->unsigned()->nullable(); 
             $table->foreign('user_id')->references('id')->on('users'); 
             $table->timestamps();

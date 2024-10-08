@@ -29,7 +29,7 @@
                             <tr>
                                
                                 <th scope="col" class="tableheader">Name of Officer</th>
-                                <th scope="col" class="tableheader">Name of Evaluating</th>
+                                <th scope="col" class="tableheader">Evaluatee</th>
                                 <th scope="col" class="tableheader">Date Created</th>
                                 <th scope="col" class="tableheader">Date Updated</th>
                                 <th scope="col" class="tableheader">Form Status</th>

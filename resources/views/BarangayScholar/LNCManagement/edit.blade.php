@@ -140,13 +140,13 @@
                                 </tr>
                                 <tr>
                                     <td class="fontA bold">4c</td>
-                                    <td class="fontA">Presence of nutrition-related concerns in the Annual Investment Program</td>
-                                    <td class="fontA">At least one nutrition-related PAP integrated in the Annual Investment Program</td>
-                                    <td class="fontA">At least two nutrition-related PAP integrated in the Annual Investment Program</td>
-                                    <td class="fontA">At least three PPAN-related PAP integrated in the Annual Investment Program</td>
-                                    <td class="fontA">At least four PPAN-related PAP and/or PS for nutrition integrated in the Annual Investment Program</td>
-                                    <td class="fontA">More than four PPAN-related PAP and/or PS for nutrition integrated in the Annual Investment Program</td>
-                                    <td class="fontA">Annual Investment Program</td>
+                                    <td class="fontA">Resource Generation and Mobilization</td>
+                                    <td class="fontA">Only one activity in the BNAP is funded in the approved barangay budget</td>
+                                    <td class="fontA">The budget for the BNAP is limited to sectoral budgets in the approved barangay budget</td>
+                                    <td class="fontA">The PAPs in the BNAP are integrated in the approved annual barangay budget Program</td>
+                                    <td class="fontA">The budget for BNAP in the approved annual barangay budget includes honorarium/ allowance for BNS and nutrition program budget and program</td>
+                                    <td class="fontA">The budget for BNAP includes honorarium/ allowance for BNS and nutrition program from the approved annual barangay budget and funding from external sources</td>
+                                    <td class="fontA">Barangay Nutrition Action Plan Annual Investment Program Approved Annual Barangay Budget Summary of Income and Expenditures</td>
                                     <td class="fontA">
                                         <select id="loadProvince1" class="form-control" name="rating4c">
                                             <option value="">Select</option>
@@ -162,6 +162,46 @@
                                     </td>
                                     <td class="fontA"><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" class="form-control" name="remarks4c">{{ old('remarks4c',$row->remarks4c) }}</textarea>
                                         @error('remarks4c')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </td>
+                                </tr>
+                                <tr style="display:none">
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td class="fontA bold" style="border-top: none">&nbsp;</td>
+                                    <td class="fontA" style="border-top: none;">&nbsp;</td>
+                                    <td class="fontA">Less than 70% of BNAP budget in the annual barangay budget utilized</td>
+                                    <td class="fontA">At least 70% of BNAP budget in the annual barangay budget utilized</td>
+                                    <td class="fontA">At least 90% of BNAP budget in the annual barangay budget utilized</td>
+                                    <td class="fontA">More than 90% of BNAP budget in the annual barangay budget utilized</td>
+                                    <td class="fontA">100% of BNAP budget in the annual barangay budget utilized</td>
+                                    <td class="fontA" style="border-top: none"></td>
+                                    <td class="fontA">
+                                        <select id="loadProvince1" class="form-control" name="rating4c2">
+                                            <option value="">Select</option>
+                                            <option value="1" {{ old('rating4c2', $row->rating4c2) == '1' ? 'selected' : '' }}>1</option>
+                                            <option value="2" {{ old('rating4c2', $row->rating4c2) == '2' ? 'selected' : '' }}>2</option>
+                                            <option value="3" {{ old('rating4c2', $row->rating4c2) == '3' ? 'selected' : '' }}>3</option>
+                                            <option value="4" {{ old('rating4c2', $row->rating4c2) == '4' ? 'selected' : '' }}>4</option>
+                                            <option value="5" {{ old('rating4c2', $row->rating4c2) == '5' ? 'selected' : '' }}>5</option>
+                                        </select>
+                                        @error('rating4c2')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </td>
+                                    <td class="fontA"><textarea style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" class="form-control" name="remarks4c2">{{ old('remarks4c2',$row->remarks4c2) }}</textarea>
+                                        @error('remarks4c2')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </td>

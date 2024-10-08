@@ -199,6 +199,7 @@ class LguProfile extends Model
         'IIIFvolumepax',
         'IIIFremarks',
 
+        'IVAtype',
         'IVAsource',
         'IVAavailreceived',
         'IVAdatereceived',

@@ -293,9 +293,8 @@ class MellproLGUController extends Controller
         ]);
         $csv = Reader::createFromPath($request->file('inputcsvfileProvince')->getRealPath());
         $csv->setHeaderOffset(0);
-    
         $records = Statement::create()->process($csv);
-    
+        
         foreach ($records as $record) {
             $psgc_code = trim($record['10-digit PSGC']);
             $name = trim($record['Name']);
@@ -303,13 +302,13 @@ class MellproLGUController extends Controller
             $old_names = trim($record['Old names']);
             $income_classification = trim($record['Income Classification']);
             $population_2020 = trim($record['2020 Population']);
-    
+            
             $population_2020 = str_replace(',', '', $population_2020);
             $population_2020 = is_numeric($population_2020) ? $population_2020 : 0;
-
+            
             $reg_code = substr($psgc_code, 0, 2);
             $prov_code = substr($psgc_code, 0, 5);
-    
+            
             if (PsgcProvince::where('psgc_code', $psgc_code)->exists()) return;
     
             PsgcProvince::create([
@@ -673,10 +672,9 @@ class MellproLGUController extends Controller
                 'psgc_code' => $citymunExists->psgc_code ?? $barangayExists->psgc_code,
                 'name' => $citymunExists->name ?? $barangayExists->name,
                 'correspondence_code' => $citymunExists->correspondence_code ?? $barangayExists->correspondence_code,
-                'region_id' => $citymunExists->reg_code ?? $barangayExists->reg_code,
-                'province_id' => $citymunExists->prov_code ?? $barangayExists->prov_code,
-                'cities_id' => $citymunExists->citymun_code ?? $barangayExists->citymun_code,
-                'barangay_id' => $barangayExists->psgc_code ?? null,
+                'reg_code' => $citymunExists->reg_code ?? $barangayExists->reg_code,
+                'prov_code' => $citymunExists->prov_code ?? $barangayExists->prov_code,
+                'citymun_code' => $citymunExists->citymun_code ?? $barangayExists->citymun_code,
             ];
         
             // Check if the personnel already exists
@@ -760,14 +758,9 @@ class MellproLGUController extends Controller
             if (empty(trim($record['10-digit PSGC']))) {
                 continue;
             }
-
             $psgc_code = trim($record['10-digit PSGC']);
-
+            
             $data = [
-                'geographic_level' => trim($record['Geographic Level'] ?? ''),
-                'reg_code' => trim($record['Region'] ?? ''),
-                'prov_code' => trim($record['Province'] ?? ''),
-                'name' => trim($record['Name'] ?? ''),
                 'cd' => $this->convertToInt(trim($record['CD'] ?? '')),
                 'pp1a' => $this->convertToInt(trim($record['PP1A'] ?? '')),
                 'pp1b' => $this->convertToInt(trim($record['PP1B'] ?? '')),
@@ -784,18 +777,123 @@ class MellproLGUController extends Controller
                 'functionality' => trim($record['Functionality'] ?? '')
             ];
 
-            $lncFunctionalityExists = LncFunctionality::where('psgc_code', $psgc_code)->first();
+            if (PsgcRegion::where('psgc_code', $psgc_code)->exists()) {
+                $region = PsgcRegion::where('psgc_code', $psgc_code)->first();
+    
+                $lncFunctionalityExists = LncFunctionality::where('psgc_code', $psgc_code)->first();
 
-            if ($lncFunctionalityExists) {
-                $lncFunctionalityExists->update($data);
+                if ($lncFunctionalityExists) {
+                    $lncFunctionalityExists->update($data);
+                } else {
+                    LncFunctionality::create(array_merge($data, [
+                        'psgc_code' => $region->psgc_code,
+                        'name' => $region->name,
+                        'correspondence_code' => $region->correspondence_code,
+                        'geographic_level' => 'Reg',
+                        'reg_code' => $region->reg_code,
+                    ]));
+                }
+                
+            } elseif (PsgcProvince::where('psgc_code', $psgc_code)->exists()) {
+                $province = PsgcProvince::where('psgc_code', $psgc_code)->first();
+    
+                $lncFunctionalityExists = LncFunctionality::where('psgc_code', $psgc_code)->first();
+
+                if ($lncFunctionalityExists) {
+                    $lncFunctionalityExists->update($data);
+                } else {
+                    LncFunctionality::create(array_merge($data, [
+                        'psgc_code' => $province->psgc_code,
+                        'name' => $province->name,
+                        'correspondence_code' => $province->correspondence_code,
+                        'geographic_level' => 'Prov',
+                        'reg_code' => $province->reg_code,
+                        'prov_code' => $province->prov_code,
+                    ]));
+                }
+                
+            } elseif (PsgcCity::where('psgc_code', $psgc_code)->exists()) {
+                $city = PsgcCity::where('psgc_code', $psgc_code)->first();
+    
+                $lncFunctionalityExists = LncFunctionality::where('psgc_code', $psgc_code)->first();
+
+                if ($lncFunctionalityExists) {
+                    $lncFunctionalityExists->update($data);
+                } else {
+                    LncFunctionality::create(array_merge($data, [
+                        'psgc_code' => $city->psgc_code,
+                        'name' => $city->name,
+                        'correspondence_code' => $city->correspondence_code,
+                        'geographic_level' => $city->city_class,
+                        'reg_code' => $city->reg_code,
+                        'prov_code' => $city->prov_code,
+                        'citymun_code' => $city->citymun_code,
+                    ]));
+                }
+                
+            } elseif (PsgcMunicipality::where('psgc_code', $psgc_code)->exists()) {
+                $municipality = PsgcMunicipality::where('psgc_code', $psgc_code)->first();
+    
+                $lncFunctionalityExists = LncFunctionality::where('psgc_code', $psgc_code)->first();
+
+                if ($lncFunctionalityExists) {
+                    $lncFunctionalityExists->update($data);
+                } else {
+                    LncFunctionality::create(array_merge($data, [
+                        'psgc_code' => $municipality->psgc_code,
+                        'name' => $municipality->name,
+                        'correspondence_code' => $municipality->correspondence_code,
+                        'geographic_level' => 'Mun',
+                        'reg_code' => $municipality->reg_code,
+                        'prov_code' => $municipality->prov_code,
+                        'citymun_code' => $municipality->citymun_code,
+                    ]));
+                }
+                
+            } elseif (PsgcBarangay::where('psgc_code', $psgc_code)->exists()) {
+                $barangay = PsgcBarangay::where('psgc_code', $psgc_code)->first();
+    
+                $lncFunctionalityExists = LncFunctionality::where('psgc_code', $psgc_code)->first();
+
+                if ($lncFunctionalityExists) {
+                    $lncFunctionalityExists->update($data);
+                } else {
+                    LncFunctionality::create(array_merge($data, [
+                        'psgc_code' => $barangay->psgc_code,
+                        'name' => $barangay->name,
+                        'correspondence_code' => $barangay->correspondence_code,
+                        'geographic_level' => 'Bgy',
+                        'reg_code' => $barangay->reg_code,
+                        'prov_code' => $barangay->prov_code,
+                        'citymun_code' => $barangay->citymun_code,
+                    ]));
+                }
+                
+            } elseif (PsgcSubMunicipality::where('psgc_code', $psgc_code)->exists()) {
+                $submunicipal = PsgcSubMunicipality::where('psgc_code', $psgc_code)->first();
+    
+                $lncFunctionalityExists = LncFunctionality::where('psgc_code', $psgc_code)->first();
+
+                if ($lncFunctionalityExists) {
+                    $lncFunctionalityExists->update($data);
+                } else {
+                    LncFunctionality::create(array_merge($data, [
+                        'psgc_code' => $submunicipal->psgc_code,
+                        'name' => $submunicipal->name,
+                        'correspondence_code' => $submunicipal->correspondence_code,
+                        'geographic_level' => 'SubMun',
+                        'reg_code' => $submunicipal->reg_code,
+                        'prov_code' => $submunicipal->prov_code,
+                        'citymun_code' => $submunicipal->citymun_code,
+                    ]));
+                }
             } else {
-                LncFunctionality::create(array_merge($data, [
-                    'psgc_code' => $psgc_code,
-                ]));
+                return redirect()->back()->with('error', 'Invalid 10-Digit PSGC code: ' . $psgc_code);
             }
+
         }
 
-        return redirect('/lnc_functionality')->withStatus(__('LNC Functionality data successfully uploaded.'));
+        return redirect('/mellpi_pro_LGU')->withStatus(__('LNC Functionality data successfully uploaded.'));
     }
 
     private function getTotalBarangaysFromDB(string $citymun_code): int
@@ -1319,7 +1417,7 @@ class MellproLGUController extends Controller
 
     //                 // compare parsed raw data to database
     //                 if ($cityData == '00') {
-    //                     // City_id to Barangay    
+    //                     // citymun_id to Barangay    
     //                     dd('City properties -> barangay!....Solved!');
     //                     //dd($datamatchBarangay->cityid);
     //                     //dd($regionsubtr,$datamatchCity->cityid , $cityData ,$datamatchRegions->psgccode, $record['Code']);
@@ -1337,7 +1435,7 @@ class MellproLGUController extends Controller
 
     //                     Barangay::create([
     //                         'psgccode_id' =>   $PSGCdata->id,
-    //                         'city_id' => $PSGC->cityid,
+    //                         'citymun_id' => $PSGC->cityid,
     //                         'municipal_id' => '0', //$dataMun->municipalid,
     //                         'barangay' => $record['Name'],
     //                         'brgytype' => '0',
@@ -1365,7 +1463,7 @@ class MellproLGUController extends Controller
     //                     Barangay::create([
 
     //                         'psgccode_id' => $PSGCdata->id,
-    //                         'city_id' => '0',
+    //                         'citymun_id' => '0',
     //                         'municipal_id' =>  $dataMun->municipalid,
     //                         'barangay' => $record['Name'],
     //                         'brgytype' => '0',
@@ -1433,7 +1531,7 @@ class MellproLGUController extends Controller
 
     //                 // compare parsed raw data to database
     //                 if ($cityData == '00') {
-    //                     // City_id to Barangay    
+    //                     // citymun_id to Barangay    
     //                     dd('City properties -> barangay!....Solved!');
     //                     //dd($datamatchBarangay->cityid);
     //                     //dd($regionsubtr,$datamatchCity->cityid , $cityData ,$datamatchRegions->psgccode, $record['Code']);
@@ -1451,7 +1549,7 @@ class MellproLGUController extends Controller
 
     //                     Barangay::create([
     //                         'psgccode_id' =>   $PSGCdata->id,
-    //                         'city_id' => $PSGC->cityid,
+    //                         'citymun_id' => $PSGC->cityid,
     //                         'municipal_id' => '0', //$dataMun->municipalid,
     //                         'barangay' => $record['Name'],
     //                         'brgytype' => '0',
@@ -1495,7 +1593,7 @@ class MellproLGUController extends Controller
     //                     Barangay::create([
 
     //                         'psgccode_id' => $PSGCdata->id,
-    //                         'city_id' => '0',
+    //                         'citymun_id' => '0',
     //                         'municipal_id' =>  $dataMun->municipalid,
     //                         'barangay' => $record['Name'],
     //                         'brgytype' => '0',

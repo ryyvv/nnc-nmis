@@ -28,7 +28,7 @@
 
              
                 <div class="row-12">
-                    <a href="{{route('CMSlncmanagement.create')}}" class="btn btn-primary bolder">Create data</a>
+                    <a href="{{route('lncmanagement.create')}}" class="btn btn-primary bolder">Create data</a>
                 </div>
                 <div class="row-12">
                     <table class="display" id="myTable" width="100%">

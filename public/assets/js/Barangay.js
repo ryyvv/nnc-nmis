@@ -94,7 +94,7 @@ function confirmDeleteLGU() {
     if (profileId) {
         // Check if profileId has been set
         $.ajax({
-            url: "/BarangayScholar/lguprofile/delete", // Ensure the URL is correct
+            url: "/CityMunicipalStaff/lguprofile/delete", // Ensure the URL is correct
             data: { id: profileId },
             type: "POST",
             success: function (result) {
@@ -142,7 +142,7 @@ function confirmDeleteVM() {
     if (profileId) {
         // Check if profileId has been set
         $.ajax({
-            url: "/BarangayScholar/visionmission/delete", // Ensure the URL is correct
+            url: "/CityMunicipalStaff/visionmission/delete", // Ensure the URL is correct
             data: { id: profileId },
             type: "POST",
             success: function (result) {
@@ -190,7 +190,7 @@ function confirmDeleteNP() {
     if (profileId) {
         // Check if profileId has been set
         $.ajax({
-            url: "/BarangayScholar/nutritionpolicies/delete", // Ensure the URL is correct
+            url: "/CityMunicipalStaff/nutritionpolicies/delete", // Ensure the URL is correct
             data: { id: profileId },
             type: "POST",
             success: function (result) {
@@ -238,7 +238,7 @@ function confirmDeleteGov() {
     if (profileId) {
         // Check if profileId has been set
         $.ajax({
-            url: "/BarangayScholar/governance/delete", // Ensure the URL is correct
+            url: "/CityMunicipalStaff/governance/delete", // Ensure the URL is correct
             data: { id: profileId },
             type: "POST",
             success: function (result) {
@@ -286,7 +286,7 @@ function confirmDeleteLNC() {
     if (profileId) {
         // Check if profileId has been set
         $.ajax({
-            url: "/BarangayScholar/lncmanagement/delete", // Ensure the URL is correct
+            url: "/CityMunicipalStaff/lncmanagement/delete", // Ensure the URL is correct
             data: { id: profileId },
             type: "POST",
             success: function (result) {
@@ -334,7 +334,7 @@ function confirmDeleteNS() {
     if (profileId) {
         // Check if profileId has been set
         $.ajax({
-            url: "/BarangayScholar/nutritionservice/delete", // Ensure the URL is correct
+            url: "/CityMunicipalStaff/nutritionservice/delete", // Ensure the URL is correct
             data: { id: profileId },
             type: "POST",
             success: function (result) {
@@ -382,7 +382,7 @@ function confirmDeleteChangeNS() {
     if (profileId) {
         // Check if profileId has been set
         $.ajax({
-            url: "/BarangayScholar/changeNS/delete", // Ensure the URL is correct
+            url: "/CityMunicipalStaff/changeNS/delete", // Ensure the URL is correct
             data: { id: profileId },
             type: "POST",
             success: function (result) {
@@ -430,7 +430,7 @@ function confirmDeleteDQ() {
     if (profileId) {
         // Check if profileId has been set
         $.ajax({
-            url: "/BarangayScholar/discussionquestion/delete", // Ensure the URL is correct
+            url: "/CityMunicipalStaff/discussionquestion/delete", // Ensure the URL is correct
             data: { id: profileId },
             type: "POST",
             success: function (result) {
@@ -478,7 +478,7 @@ function confirmDeleteBudget() {
     if (profileId) {
         // Check if profileId has been set
         $.ajax({
-            url: "/BarangayScholar/budgetAIP/delete", // Ensure the URL is correct
+            url: "/CityMunicipalStaff/budgetAIP/delete", // Ensure the URL is correct
             data: { id: profileId },
             type: "POST",
             success: function (result) {

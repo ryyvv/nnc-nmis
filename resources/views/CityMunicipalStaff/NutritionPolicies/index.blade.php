@@ -14,12 +14,12 @@
 <div class="content" style="margin-top:50px;padding:2%">
     <div class="card" style="border-radius:10px;padding-left:2rem!important;padding-right:1rem!important">
         <div class="card-header">
-           
+            <!-- <h5 class="title">{{__("List of Mellpi Pro for LGU Profile Sheet (Barangay)")}}</h5> -->
 
             <div style="display:flex;align-items:center">
-                <!-- <a href="{{route('CMSnutritionpolicies.index')}}"> -->
+           
                     <h5 class="title">{{__("List of MELLPI PRO FORM B 1a: BARANGAY NUTRITION MONITORING")}}</h5>
-                <!-- </a> -->
+       
             </div>
 
 

@@ -331,7 +331,6 @@ $(document).ready(function() {
 
     function handleTableData(data, directoryType) {
         let tables = $(`#${directoryType}-table tbody`).empty();
-        console.log(data)
 
         if (!data) return;
 
@@ -430,17 +429,17 @@ $(document).ready(function() {
 
         const oldValueMap = {
             tab1: {
-                region: '{{ old("inputNaoRegion") }}',
+                region: '{{ old("inputNaoRegion", $regCode) }}',
                 province: '{{ old("inputNaoProvince") }}',
                 city: '{{ old("inputNaoCM") }}'
             },
             tab2: {
-                region: '{{ old("inputNpcRegion") }}',
+                region: '{{ old("inputNpcRegion", $regCode) }}',
                 province: '{{ old("inputNpcProvince") }}',
                 city: '{{ old("inputNpcCM") }}'
             },
             tab3: {
-                region: '{{ old("inputBnsRegion") }}',
+                region: '{{ old("inputBnsRegion", $regCode) }}',
                 province: '{{ old("inputBnsProvince") }}',
                 city: '{{ old("inputBnsCM") }}',
                 barangay: '{{ old("inputBnsBarangay") }}'

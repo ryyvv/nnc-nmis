@@ -24,6 +24,11 @@
         border: 1px solid;
         border-radius: 5px;
     }
+
+    .form-control:disabled {
+        font-weight: bolder !important;
+        color: black !important;
+    }
 </style>
 
 @extends('layouts.app', [
@@ -65,7 +70,7 @@
                 <div style="margin-right:15px">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a style="font-family: Arial, sans-serif;font-style:italic" href="{{route('CMSLGUprofile.index')}}">Mellpi Pro for LGU Profile</a></li>
+                            <li class="breadcrumb-item"><a style="font-family: Arial, sans-serif;font-style:italic" href="{{route('CMSvisionmission.index')}}">Mellpi Pro for LGU Profile</a></li>
                             <li class="breadcrumb-item active" style="font-style:italic" aria-current="page">Form B: Barangay Profile Sheet -
                                 <?php echo auth()->user()->barangay ?>
                             </li>
@@ -107,9 +112,9 @@
                                     <td  class="fontA">A vision mission statement for nutrition was formulated and reflected in the Barangay Nutrition Action Plan</td>
                                     <td  class="fontA">The vision mission statement for nutrition program exists and disseminated to BNC members</td>
                                     <td  class="fontA">The vision mission statement for nutrition program exists and disseminated to BNC members and other stakeholders</td>
-                                    <td  class="fontA">The vision mission statement for nutrition program exists and to BNC members, stakeholders and to the rest of the community</td>
-                                    <td  class="fontA"> Barangay Nutrition Action Plan Minutes of Meeting Documentation of dissemination</td>
-                                    <td  class="fontA"> <select id="loadProvince1" class="form-control" name="rating1a">
+                                    <td class="fontA">The vision mission statement for nutrition program exists and disseminated to BNC members, stakeholders and to the rest of the community</td>
+                                    <td class="fontA">Barangay Nutrition Action Plan Minutes of Meeting Documentation of dissemination</td>
+                                    <td  class="fontA"> <select id="loadProvince1" class="form-control" name="rating1a" disabled>
                                             <option>Select</option>
                                             <option value="1" {{ old('rating1a', $row->rating1a) == '1' ? 'selected' : '' }}>1</option>
                                             <option value="2" {{ old('rating1a', $row->rating1a) == '2' ? 'selected' : '' }}>2</option>
@@ -117,7 +122,7 @@
                                             <option value="4" {{ old('rating1a', $row->rating1a) == '4' ? 'selected' : '' }}>4</option>
                                             <option value="5" {{ old('rating1a', $row->rating1a) == '5' ? 'selected' : '' }}>5</option>
                                         </select></td>
-                                    <td><textarea class="form-control" style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks1a">{{ old('remarks1a', $row->remarks1a) }}</textarea></td>
+                                    <td><textarea class="form-control" style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks1a" disabled>{{ old('remarks1a', $row->remarks1a) }}</textarea></td>
                                 </tr>
                                 <tr>
                                     <td class="fontA bold">1b</td>
@@ -128,7 +133,7 @@
                                     <td class="fontA">Nutrition-related objectives are included in at least three of the sectoral plans </td>
                                     <td class="fontA">Nutrition outcomes included in the overall success indicators of the Barangay Development Plan</td>
                                     <td class="fontA">Barangay Development Plan</td>
-                                    <td class="fontA"><select id="loadProvince1" class="form-control" name="rating1b">
+                                    <td class="fontA"><select id="loadProvince1" class="form-control" name="rating1b" disabled>
                                             <option value="1" {{ old('rating1b', $row->rating1b) == '1' ? 'selected' : '' }}>1</option>
                                             <option value="2" {{ old('rating1b', $row->rating1b) == '2' ? 'selected' : '' }}>2</option>
                                             <option value="3" {{ old('rating1b', $row->rating1b) == '3' ? 'selected' : '' }}>3</option>
@@ -136,7 +141,7 @@
                                             <option value="5" {{ old('rating1b', $row->rating1b) == '5' ? 'selected' : '' }}>5</option>
                                         </select></td>
                                     <td>
-                                        <textarea class="form-control" style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks1b"> {{ old('remarks1b', $row->remarks1b) }}</textarea>
+                                        <textarea class="form-control" style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks1b" disabled> {{ old('remarks1b', $row->remarks1b) }}</textarea>
                                     </td>
                                 </tr>
                                 <tr>
@@ -149,7 +154,7 @@
                                     <td class="fontA">More than four PPAN-related PAP and/or PS for nutrition integrated in the Annual Investment Program</td>
                                     <td class="fontA">Annual Investment Program</td>
                                     <td class="fontA">
-                                        <select id="loadProvince1" class="form-control" name="rating1c">
+                                        <select id="loadProvince1" class="form-control" name="rating1c" disabled>
                                             <option>Select</option>
                                             <option value="1" {{ old('rating1c', $row->rating1c) == '1' ? 'selected' : '' }}>1</option>
                                             <option value="2" {{ old('rating1c', $row->rating1c) == '2' ? 'selected' : '' }}>2</option>
@@ -159,7 +164,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <textarea class="form-control"  style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks1c">{{ old('remarks1c', $row->remarks1c) }}</textarea>
+                                        <textarea class="form-control"  style="width:inherit;height:300px;max-height:1050px!important;line-height:1.5;" name="remarks1c" disabled>{{ old('remarks1c', $row->remarks1c) }}</textarea>
                                 </tr>
  
 

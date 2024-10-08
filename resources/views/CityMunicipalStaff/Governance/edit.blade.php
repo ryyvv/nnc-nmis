@@ -39,13 +39,13 @@
 <div class="content" style="margin-top:50px;padding:2%">
   <div class="card" style="border-radius:10px;padding-left:2rem!important;padding-right:1rem!important">
     <div style="display:flex;align-items:center">
-      <a href="{{route('CMSgovernance.index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a>
+      <a href="{{route('governance.index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a>
       <h4 style="margin-top:18px;font-weight:bold">MELLPI PRO FORM B 1a: BARANGAY NUTRITION MONITORING</h4>
     </div>
 
 
     <div style="padding:25px">
-      <form action="{{ route('CMSgovernance.update',$row->id) }}" method="POST" id="form">
+      <form action="{{ route('governance.update',$row->id) }}" method="POST" id="form">
         @csrf
         @method('PUT')
 
@@ -98,9 +98,9 @@
                     </ol>
                   </td>
                   <td class="fontA">The BNC is organized with the Barangay Captain as chairperson and is composed of all nutrition-related sectors in level 2 as applicable in the barangay</td>
-                  <td class="fontA">The BNC is organized with the Barangay Captain as chairperson, composed of nutrition-related sectors in level 2 as applicable in the barangay and external partners, is supported by a resolution indicating the functions of each member and reorganized as necessary </td>
+                  <td class="fontA">The BNC is organized with the Barangay Captain as chairperson, composed of nutrition-related sectors in level 2 as applicable in the barangay and is supported by a resolution indicating the functions of each member</td>
+                  <td class="fontA">The BNC is organized with the Barangay Captain as chairperson, composed of nutrition-related sectors in level 2 as applicable in the barangay and external partners, is supported by a  resolution indicating the functions of each member and reorganized as necessary</td>
                   <td class="fontA">Barangay Nutrition Action Plan Resolutions Executive Order Organizational Chart</td>
-                  <td class="fontA"> Barangay Nutrition Action Plan Minutes of Meeting Documentation of dissemination</td>
                   <td class="fontA">
                     <select id="loadProvince1" class="form-control" name="rating3a">
                       <option value="">Select</option>

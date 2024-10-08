@@ -92,6 +92,18 @@
                                 </div>
                             </div>
                             <hr>
+                            <div class="form-group col-md-3" style="display:flex; border-right:1px solid;">
+                                <div class="form-group col-md-12">
+                                    <label for="inputNaoGovMayor">Name of Governor/Mayor</label>
+                                    <input type="text" class="form-control" name="inputNaoGovMayor"
+                                        id="inputNaoGovMayor" placeholder="Name of Governor/Mayor"
+                                        value="{{ old('inputNaoGovMayor', optional($personnel->nao->first())->namegovmayor) }}">
+                                    @error('inputNaoGovMayor')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <hr>
                             <div>
                                 <label for="formBasicInfo"><b>Basic Info</b></label>
                             </div>
@@ -1185,19 +1197,19 @@ $(document).ready(function() {
 
         const oldValueMap = {
             tab1: {
-                region: '{{ old("inputNaoRegion", $personnel->region_id) }}',
-                province: '{{ old("inputNaoProvince", $personnel->province_id) }}',
-                city: '{{ old("inputNaoCM", $personnel->cities_id) }}'
+                region: '{{ old("inputNaoRegion", $personnel->reg_code) }}',
+                province: '{{ old("inputNaoProvince", $personnel->prov_code) }}',
+                city: '{{ old("inputNaoCM", $personnel->citymun_code) }}'
             },
             tab2: {
-                region: '{{ old("inputNpcRegion", $personnel->region_id) }}',
-                province: '{{ old("inputNpcProvince", $personnel->province_id) }}',
-                city: '{{ old("inputNpcCM", $personnel->cities_id) }}'
+                region: '{{ old("inputNpcRegion", $personnel->reg_code) }}',
+                province: '{{ old("inputNpcProvince", $personnel->prov_code) }}',
+                city: '{{ old("inputNpcCM", $personnel->citymun_code) }}'
             },
             tab3: {
-                region: '{{ old("inputBnsRegion", $personnel->region_id) }}',
-                province: '{{ old("inputBnsProvince", $personnel->province_id) }}',
-                city: '{{ old("inputBnsCM", $personnel->cities_id) }}',
+                region: '{{ old("inputBnsRegion", $personnel->reg_code) }}',
+                province: '{{ old("inputBnsProvince", $personnel->prov_code) }}',
+                city: '{{ old("inputBnsCM", $personnel->citymun_code) }}',
                 barangay: '{{ old("inputBnsBarangay", $personnel->psgc_code) }}'
             }
         };

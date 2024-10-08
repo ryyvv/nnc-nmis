@@ -94,6 +94,7 @@ class LNCManagementBarangayController extends Controller
                 'rating4a' =>  $request->rating4a,
                 'rating4b' =>  $request->rating4b,
                 'rating4c' =>  $request->rating4c,
+                'rating4c2' =>  $request->rating4c2,
                 'rating4d' =>  $request->rating4d,
                 'rating4e' =>  $request->rating4e,
                 'rating4f' =>  $request->rating4f,
@@ -102,6 +103,7 @@ class LNCManagementBarangayController extends Controller
                 'remarks4a' =>  $request->remarks4a,
                 'remarks4b' =>  $request->remarks4b,
                 'remarks4c' =>  $request->remarks4c,
+                'remarks4c2' =>  $request->remarks4c2,
                 'remarks4d' =>  $request->remarks4d,
                 'remarks4e' =>  $request->remarks4e,
                 'remarks4f' =>  $request->remarks4f,
@@ -132,6 +134,7 @@ class LNCManagementBarangayController extends Controller
                 'rating4a' => 'required|integer',
                 'rating4b' => 'required|integer',
                 'rating4c' => 'required|integer',
+                'rating4c2' => 'required|integer',
                 'rating4d' => 'required|integer',
                 'rating4e' => 'required|integer',
                 'rating4f' => 'required|integer',
@@ -140,6 +143,7 @@ class LNCManagementBarangayController extends Controller
                 'remarks4a' => 'required|string|max:255',
                 'remarks4b' => 'required|string|max:255',
                 'remarks4c' => 'required|string|max:255',
+                'remarks4c2' => 'required|string|max:255',
                 'remarks4d' => 'required|string|max:255',
                 'remarks4e' => 'required|string|max:255',
                 'remarks4f' => 'required|string|max:255',
@@ -169,6 +173,7 @@ class LNCManagementBarangayController extends Controller
                     'rating4a' =>  $request->rating4a,
                     'rating4b' =>  $request->rating4b,
                     'rating4c' =>  $request->rating4c,
+                    'rating4c2' =>  $request->rating4c2,
                     'rating4d' =>  $request->rating4d,
                     'rating4e' =>  $request->rating4e,
                     'rating4f' =>  $request->rating4f,
@@ -177,6 +182,7 @@ class LNCManagementBarangayController extends Controller
                     'remarks4a' =>  $request->remarks4a,
                     'remarks4b' =>  $request->remarks4b,
                     'remarks4c' =>  $request->remarks4c,
+                    'remarks4c2' =>  $request->remarks4c2,
                     'remarks4d' =>  $request->remarks4d,
                     'remarks4e' =>  $request->remarks4e,
                     'remarks4f' =>  $request->remarks4f,
@@ -216,7 +222,7 @@ class LNCManagementBarangayController extends Controller
      */
     public function show(Request $request, string $id)
     {
-        $action = "edit";
+        $action = "show";
         $location = new LocationController;
         $regCode = auth()->user()->Region;
         $provCode = auth()->user()->Province;
@@ -267,6 +273,7 @@ class LNCManagementBarangayController extends Controller
                 'rating4a' =>  $request->rating4a,
                 'rating4b' =>  $request->rating4b,
                 'rating4c' =>  $request->rating4c,
+                'rating4c2' =>  $request->rating4c2,
                 'rating4d' =>  $request->rating4d,
                 'rating4e' =>  $request->rating4e,
                 'rating4f' =>  $request->rating4f,
@@ -275,6 +282,7 @@ class LNCManagementBarangayController extends Controller
                 'remarks4a' =>  $request->remarks4a,
                 'remarks4b' =>  $request->remarks4b,
                 'remarks4c' =>  $request->remarks4c,
+                'remarks4c2' =>  $request->remarks4c2,
                 'remarks4d' =>  $request->remarks4d,
                 'remarks4e' =>  $request->remarks4e,
                 'remarks4f' =>  $request->remarks4f,
@@ -295,6 +303,7 @@ class LNCManagementBarangayController extends Controller
                 'rating4a' => 'required|integer',
                 'rating4b' => 'required|integer',
                 'rating4c' => 'required|integer',
+                'rating4c2' => 'required|integer',
                 'rating4d' => 'required|integer',
                 'rating4e' => 'required|integer',
                 'rating4f' => 'required|integer',
@@ -303,6 +312,7 @@ class LNCManagementBarangayController extends Controller
                 'remarks4a' => 'required|string|max:255',
                 'remarks4b' => 'required|string|max:255',
                 'remarks4c' => 'required|string|max:255',
+                'remarks4c2' => 'required|string|max:255',
                 'remarks4d' => 'required|string|max:255',
                 'remarks4e' => 'required|string|max:255',
                 'remarks4f' => 'required|string|max:255',
@@ -333,6 +343,7 @@ class LNCManagementBarangayController extends Controller
                     'rating4a' =>  $request->rating4a,
                     'rating4b' =>  $request->rating4b,
                     'rating4c' =>  $request->rating4c,
+                    'rating4c2' =>  $request->rating4c2,
                     'rating4d' =>  $request->rating4d,
                     'rating4e' =>  $request->rating4e,
                     'rating4f' =>  $request->rating4f,
@@ -341,6 +352,7 @@ class LNCManagementBarangayController extends Controller
                     'remarks4a' =>  $request->remarks4a,
                     'remarks4b' =>  $request->remarks4b,
                     'remarks4c' =>  $request->remarks4c,
+                    'remarks4c2' =>  $request->remarks4c2,
                     'remarks4d' =>  $request->remarks4d,
                     'remarks4e' =>  $request->remarks4e,
                     'remarks4f' =>  $request->remarks4f,

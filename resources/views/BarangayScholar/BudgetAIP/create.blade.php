@@ -26,9 +26,9 @@
         border-radius: 5px;
     }
 
-    .tablep tbody td {
+    /* .tablep tbody td {
         width: 1000px;
-    }
+    } */
 </style>
 
 @extends('layouts.app', [
@@ -49,7 +49,6 @@
         @endif
 
 
-        <div>
             <form method="POST">
                 @csrf
 
@@ -64,9 +63,8 @@
                     <label>LGU: </label><br>
                     <label>Sector: </label><span> Social Services </span>
                 </div>
-                <div class="row" style="margin-bottom:120px;padding-left:20px;padding-right:20px;overflow-y:scroll">
-
-                    <table id="dataTable" class="tablep table table-bordered">
+                <div class="row" style="overflow-x: scroll; display:block;">
+                    <table id="dataTable" class="table table-bordered">
                         <thead style="font-size:16px;align-items:center;font-weight:bold">
                             <tr style="text-align:center;text-align:center">
 
@@ -300,7 +298,7 @@
                     <label>LGU: </label><br>
                     <label>Sector: </label><span> Economic Services </span>
                 </div>
-                <div class="row"  style="margin-bottom:120px;padding-left:20px;padding-right:20px;overflow-y:scroll">
+                <div class="row table-responsive"  style="margin-bottom:120px;padding-left:20px;padding-right:20px;">
 
                     <table id="dataTableES" class="tablep table table-bordered">
                         <thead style="font-size:16px;align-items:center;font-weight:bold">
@@ -536,7 +534,7 @@
                     <label>LGU: </label><br>
                     <label>Sector: </label><span> Other Services </span>
                 </div>
-                <div class="row" style="margin-bottom:120px;padding-left:20px;padding-right:20px;overflow-y:scroll">
+                <div class="row table-responsive" style="margin-bottom:120px;padding-left:20px;padding-right:20px;">
 
                     <table id="dataTableOS" class="tablep table table-bordered">
                         <thead style="font-size:16px;align-items:center;font-weight:bold">
@@ -767,7 +765,7 @@
                     </table>
                 </div>
             </form>
-        </div>
+
 
 
     </div>
