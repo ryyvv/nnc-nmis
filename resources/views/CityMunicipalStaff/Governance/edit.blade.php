@@ -39,13 +39,13 @@
 <div class="content" style="margin-top:50px;padding:2%">
   <div class="card" style="border-radius:10px;padding-left:2rem!important;padding-right:1rem!important">
     <div style="display:flex;align-items:center">
-      <a href="{{route('governance.index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a>
+      <a href="{{route('CMSgovernance.index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a>
       <h4 style="margin-top:18px;font-weight:bold">MELLPI PRO FORM B 1a: BARANGAY NUTRITION MONITORING</h4>
     </div>
 
 
     <div style="padding:25px">
-      <form action="{{ route('governance.update',$row->id) }}" method="POST" id="form">
+      <form action="{{ route('CMSgovernance.update',$row->id) }}" method="POST" id="form">
         @csrf
         @method('PUT')
 

@@ -17,9 +17,9 @@
             <!-- <h5 class="title">{{__("List of Mellpi Pro for LGU Profile Sheet (Barangay)")}}</h5> -->
 
             <div style="display:flex;align-items:center">
-                <!-- <a href="{{route('formsb.index')}}"> -->
+         
                     <h5 class="title">{{__("List of FORM B-2B: SUMMARY OF CHANGES IN THE NUTRITIONAL STATUS IN THE BARANGAY")}}</h5>
-                <!-- </a> -->
+             
             </div>
 
 
@@ -31,11 +31,11 @@
                
 
                 <div class="row-12">
-                    <table class="display" id="B1bSummary" width="100%">
+                    <table class="display" id="B2bSummary" width="100%">
                         <thead style="background-color:#508D4E;"> 
                             <tr>
                                 <th scope="col" class="tableheader" >#</th>
-                                <th scope="col-4" class="tableheader">Date Monitoring </th>
+                                <th scope="col-4" class="tableheader">Date Monitoring</th>
                                 <th scope="col" class="tableheader">Period Covered</th>
                                 <th scope="col-2" class="tableheader">Status</th>
                                 <th scope="col" class="tableheader">Action</th> 
@@ -62,22 +62,22 @@
                                             <span class="statusEntry">Form submitted</span>
                                             @endif
                                         </td>
-                                        <td >
-                                        <ul class="list-inline m-0">
-                                            <li class="list-inline-item">
-                                                <!-- Save and submit -->
-                                                @if( $rawdata->b2bSummaryStatus == null )
-                                                <i class="fa fa-eye fa-lg cursor" style="color:gray;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
-                                                <i onclick="view('B2bSummary','{{ $rawdata->id }}','create')" class="fa fa-file fa-lg cursor" style="color:74c476;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Create Summary for D1-D5"></i>
-                                               
-                                                <!-- new -->
-                                                @elseif($rawdata->b2bSummaryStatus == 0 )
-                                                <i onclick="view('B2bSummary','{{ $rawdata->id }}','show')"  class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
-                                                <i  class="fa fa-file fa-lg cursor" style="color:gray;margin-right:10px"  data-toggle="tooltip" data-placement="top" title="Already Submitted"></i>
-                                                @endif
-                                            </li>
-                                        </ul>
-                                        </td> 
+                                        <td>
+                                            <ul class="list-inline m-0">
+                                                <li class="list-inline-item">
+                                                    <!-- Save and submit -->
+                                                    @if( $rawdata->b2bSummaryStatus == null )
+                                                    <i class="fa fa-eye fa-lg cursor" style="color:gray;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                                    <i onclick="view('B2bSummary','{{ $rawdata->id }}','create')" class="fa fa-file fa-lg cursor" style="color:74c476;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="Create Summary for D1-D5"></i>
+                                                
+                                                    <!-- new -->
+                                                    @elseif($rawdata->b2bSummaryStatus == 0 )
+                                                    <i onclick="view('B2bSummary','{{ $rawdata->id }}','show')"  class="fa fa-eye fa-lg cursor" style="color:#4bb5ff;margin-right:10px" type="button" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                                    <i  class="fa fa-file fa-lg cursor" style="color:gray;margin-right:10px"  data-toggle="tooltip" data-placement="top" title="Already Submitted"></i>
+                                                    @endif
+                                                </li>
+                                            </ul>
+                                        </td>  
                                       
                                     </tr>
                                     <?php $num++; ?>
@@ -89,19 +89,20 @@
         </div>
     </div>
 </div>
-<script>
-        function lguB1bSummaryFN() {
+<!-- <script>
+    function lguB2bSummaryFN() {
         // Check if the DataTable is already initialized
-        if ($.fn.DataTable.isDataTable('#B1bSummary')) {
+        if ($.fn.DataTable.isDataTable('#B2bSummary')) {
             // Destroy the existing DataTable before reinitializing
-            $('#lguReport').DataTable().clear().destroy(); 
+            $('#B2bSummary').DataTable().clear().destroy(); 
         }
     }
+
     $(document).ready(function() {
-        lguB1bSummaryFN();
+        lguB2bSummaryFN();
     })
 
-</script>
+</script> -->
 
   
 @include('Modal.DeleteVM')

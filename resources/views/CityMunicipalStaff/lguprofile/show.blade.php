@@ -1501,7 +1501,7 @@
                             </div>
                             <div style="display:flex;">
                                 <div class="col">
-                                    <label for="exampleFormControlInput1">1. NIEM Plan integrated in the local Disaster
+                                    <label for="exampleFormControlInput1">1. NIEM Plan integrated in the Local Disaster
                                         Risk Reduction Management Plan</label>
                                 </div>
                                 <div class="col">

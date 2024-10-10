@@ -160,7 +160,7 @@
               <li class="@if ($activePage == 'PersonnelDirectory') active @endif">
                 <a href="{{ route('BSpersonnel.index') }}">
                   <i class="now-ui-icons files_paper"></i>
-                  <p> {{ __("Personnel DNA Directory ") }} </p>
+                  <p> {{ __("Personnel Directory ") }} </p>
                 </a>
               </li> 
         

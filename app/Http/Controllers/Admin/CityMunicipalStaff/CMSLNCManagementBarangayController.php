@@ -291,7 +291,7 @@ class CMSLNCManagementBarangayController extends Controller
                 'user_id' =>  $request->user_id,
             ]); 
 
-            return redirect()->route('lncmanagement.index')->with('success', 'Data stored as Draft!'); 
+            return redirect()->route('CMSlncmanagement.index')->with('success', 'Data stored as Draft!'); 
         }else {
             $rules = [
                 'barangay_id' => 'required|integer',

@@ -57,7 +57,7 @@ class CMSLGUprofileController  extends Controller
                 'psgc_cities.name as name'
             )
             ->get();
-    // dd('test');
+    //dd($data);
  
         return view('CityMunicipalStaff.LGUReport', ['data' => $data]);
         
@@ -80,8 +80,11 @@ class CMSLGUprofileController  extends Controller
             ->leftJoin('mplgubrgygovernance', 'lgubarangayreport.mplgubrgygovernance_id', '=', 'mplgubrgygovernance.id')
             ->leftJoin('mplgubrgylncmanagement', 'lgubarangayreport.mplgubrgylncmanagement_id', '=', 'mplgubrgylncmanagement.id')
             ->leftJoin('mplgubrgynutritionservice', 'lgubarangayreport.mplgubrgynutritionservice_id', '=', 'mplgubrgynutritionservice.id')
+            ->leftJoin('lguB1bSummarydata', 'lgubarangayreport.mplgubrgyb1bSummary_id', '=', 'lguB1bSummarydata.id')
             ->leftJoin('mplgubrgychangeNS', 'lgubarangayreport.mplgubrgychangeNS_id', '=', 'mplgubrgychangeNS.id')
+            ->leftJoin('lguB2bSummarydata', 'lgubarangayreport.mplgubrgyb2bSummary_id', '=', 'lguB2bSummarydata.id')
             ->leftJoin('mplgubrgydiscussionquestion', 'lgubarangayreport.mplgubrgydiscussionquestion_id', '=', 'mplgubrgydiscussionquestion.id')
+            ->leftJoin('lguB4Summarydata', 'lgubarangayreport.mplgubrgyb4Summary_id', '=', 'lguB4Summarydata.id')
            
             ->leftJoin('users as u1', 'lguprofilebarangay.user_id', '=', 'u1.id')
             ->leftJoin('users as u2', 'mplgubrgyvisionmissions.user_id', '=', 'u2.id')
@@ -91,6 +94,9 @@ class CMSLGUprofileController  extends Controller
             ->leftJoin('users as u6', 'mplgubrgynutritionservice.user_id', '=', 'u6.id')
             ->leftJoin('users as u7', 'mplgubrgychangeNS.user_id', '=', 'u7.id')
             ->leftJoin('users as u8', 'mplgubrgydiscussionquestion.user_id', '=', 'u8.id')
+            ->leftJoin('users as u9', 'lguB1bSummarydata.user_id', '=', 'u9.id')
+            ->leftJoin('users as u10', 'lguB2bSummarydata.user_id', '=', 'u10.id')
+            ->leftJoin('users as u11', 'lguB4Summarydata.user_id', '=', 'u11.id')
 
             ->leftJoin('psgc_municipalities', DB::raw('CAST(lgubarangayreport.municipal_id AS VARCHAR)'), '=', 'psgc_municipalities.citymun_code')
             ->leftJoin('psgc_cities', DB::raw('CAST(lgubarangayreport.municipal_id AS VARCHAR)'), '=', 'psgc_cities.citymun_code')
@@ -134,8 +140,8 @@ class CMSLGUprofileController  extends Controller
                 'u4.Lastname as govLastname',
 
 
-                'lgubarangayreport.mplgubrgylncmanagement_id as repLNC', 
-                'mplgubrgylncmanagement.updated_at as lncdate',
+                'lgubarangayreport.mplgubrgylncmanagement_id as replnc', 
+                'mplgubrgylncmanagement.updated_at as LNCdate',
                 'u5.Firstname as lncFirstname',
                 'u5.Middlename as lncMiddlename',
                 'u5.Lastname as lncLastname',   
@@ -158,13 +164,33 @@ class CMSLGUprofileController  extends Controller
                 'u8.Middlename as dqMiddlename',
                 'u8.Lastname as dqLastname', 
 
+                'lgubarangayreport.mplgubrgyb1bSummary_id as repB1', 
+                'lguB1bSummarydata.updated_at as b1date', 
+                'u9.Firstname as b1Firstname',
+                'u9.Middlename as b1Middlename',
+                'u9.Lastname as b1Lastname',
+
+                'lgubarangayreport.mplgubrgyb2bSummary_id as repB2', 
+                'lguB2bSummarydata.updated_at as b2date', 
+                'u10.Firstname as b2Firstname',
+                'u10.Middlename as b2Middlename',
+                'u10.Lastname as b2Lastname',
+
+                'lgubarangayreport.mplgubrgyb4Summary_id as repB4', 
+                'lguB4Summarydata.updated_at as b4date', 
+                'u11.Firstname as b4Firstname',
+                'u11.Middlename as b4Middlename',
+                'u11.Lastname as b4Lastname',
+
                 'psgc_municipalities.name as name',
                 'psgc_cities.name as name',
                 'lgubarangayreport.count as count',
             )
             ->get();
 
-                //dd($data); 
+            // $firstRow = $data->first();
+            // dd($firstRow->repLNC);
+
             return response()->json(['data' => $data]);
             
 
@@ -470,7 +496,7 @@ class CMSLGUprofileController  extends Controller
             ]);
         
    
-            return redirect('BarangayScholar/lguprofile')->with('success', 'Data stored as Draft!');
+            return redirect('CityMunicipalStaff/lguprofile')->with('success', 'Data stored as Draft!');
         }
 
         else {

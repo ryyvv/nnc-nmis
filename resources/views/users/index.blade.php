@@ -267,9 +267,9 @@
                         <div class="collapse show" id="lguresources">
                             <ul class="nav">
                                 <li>
-                                    <a href="{{ route('personnelDnaDirectoryIndex') }}">
+                                    <a href="{{ route('PersonnelDirectory') }}">
                                         <i class="now-ui-icons files_paper"></i>
-                                        <p> {{ __("Personnel DNA Directory") }} </p>
+                                        <p> {{ __("Personnel Directory") }} </p>
                                     </a>
                                 </li>
                                 <li>
@@ -279,7 +279,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('equipmentInventoryIndex') }}">
+                                    <a href="{{ route('EquipmentInventory') }}">
                                         <i class="now-ui-icons files_paper"></i>
                                         <p> {{ __("Equipment Inventory") }} </p>
                                     </a>
@@ -453,7 +453,7 @@
                                             <td>
                                                 <span class="avatar avatar-sm rounded-circle">
                                                     <img src="{{asset('assets')}}/img/default-avatar.png" alt=""
-                                                        style="max-width: 80px; border-radiu: 100px">
+                                                        style="max-width: 80px; border-radius: 100px">
                                                 </span>
                                             </td>
                                             <td>{{ $users->name }}</td>

@@ -412,7 +412,6 @@ class BSEquipmentInventoryController extends Controller
                 $citiesSubTotal,
                 $municipalitiesSubTotal,
                 $subTotals,
-                $grandTotals,
             ]
         ]);
     }

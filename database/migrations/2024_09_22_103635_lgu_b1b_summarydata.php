@@ -27,7 +27,8 @@ return new class extends Migration
             $table->string('municipal_id',20)->nullable();
             $table->string('province_id',20)->nullable();
             $table->string('region_id',20)->nullable();
-            $table->string('user_id',20)->nullable();
+            $table->integer('user_id')->unsigned()->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -36,9 +37,9 @@ return new class extends Migration
             $table->integer('status'); 
             $table->string('barangay_id',20)->unsigned(); 
             $table->string('municipal_id',20)->unsigned();
-            $table->string('user_id',20)->unsigned(); 
+            $table->integer('user_id')->unsigned()->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('mplgubrgyb1bSummary_id')->unsigned()->nullable(); 
-            $table->foreign('user_id')->references('id')->on('users'); 
             $table->timestamps();
         });
     }

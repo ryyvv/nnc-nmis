@@ -45,7 +45,7 @@
     <div class="card-header">
 
       <div class="d-flex justify-content-end center" style="padding-right:20px; ">
-        <form action="{{route('nutritionpolicies.download',$row->id)}}" method="POST">
+        <form action="{{route('CMSgovernance.download',$row->id)}}" method="POST">
           @csrf
           <input type="hidden" name="htmlContent" id="htmlContent">
           <button type="submit" id="hiddenButton" style="display: none;"></button>
@@ -61,7 +61,7 @@
 
       <div id="downloadable">
         <div style="display:flex;align-items:center">
-          <!-- <a href="{{route('governance.index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a> -->
+          <!-- <a href="{{route('CMSgovernance.index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a> -->
           <a href="#">
             <h5 class="title" style="margin:0px">FORM B: BARANGAY PROFILE SHEET</h5>
           </a>
@@ -71,7 +71,7 @@
         <div style="margin-right:15px">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a style="font-family: Arial, sans-serif;font-style:italic" href="{{route('BSLGUprofile.index')}}">Mellpi Pro for LGU Profile</a></li>
+              <li class="breadcrumb-item"><a style="font-family: Arial, sans-serif;font-style:italic" href="{{route('CMSgovernance.index')}}">Mellpi Pro for LGU Profile</a></li>
               <li class="breadcrumb-item active" style="font-style:italic" aria-current="page">Form B: Barangay Profile Sheet -
                 <?php echo auth()->user()->barangay ?>
               </li>

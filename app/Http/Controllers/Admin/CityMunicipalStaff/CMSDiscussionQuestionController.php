@@ -20,7 +20,7 @@ class CMSDiscussionQuestionController extends Controller
     {
         // $barangay = auth()->user()->barangay;
         // $dqlocation = DB::table('mplgubrgydiscussionquestion')->where('barangay_id', $barangay)->get();
-        // return view('CityMunicipalStaff.DiscussionQuestion.index', ['dqlocation' => $dqlocation]);
+        // return view('BarangayScholar.DiscussionQuestion.index', ['dqlocation' => $dqlocation]);
 
         $location = new LocationController;
         $regCode = auth()->user()->Region;
@@ -29,7 +29,6 @@ class CMSDiscussionQuestionController extends Controller
         $provinces = $location->getProvinces(['reg_code' => $regCode]);
         $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
         $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
-
 
         $barangay = auth()->user()->barangay;
         
@@ -55,7 +54,6 @@ class CMSDiscussionQuestionController extends Controller
         $provinces = $location->getProvinces(['reg_code' => $regCode]);
         $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
         $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
-
         
         $years = range(date('Y'), 1900);
 
@@ -67,7 +65,17 @@ class CMSDiscussionQuestionController extends Controller
      */
     public function store(Request $request)
     { 
+        $dataExists = DB::table('lgubarangayreport')
+        ->where('dateMonitoring', $request->dateMonitoring)
+        ->where( 'periodCovereda', $request->periodCovereda,)
+        // ->where( 'barangay_id' , $request->barangay_id,) 
+        ->exists();
+
+        if ($dataExists) {
+            return redirect()->back()->withInput()->with('error', 'A record with the same data already exists.');
+        }   
    
+
         if ($request->formrequest == 'draft') { 
             $DQBarangay = MellpiproBarangayDiscussionQuestion::create([
                 'barangay_id' =>  $request->barangay_id,
@@ -124,35 +132,35 @@ class CMSDiscussionQuestionController extends Controller
                 'dateMonitoring' => 'required|date|max:255',
                 'periodCovereda' => 'required|numeric', 
 
-                'practice7aa' => 'required|string| max:255',
-                'practice7ab' => 'required|string| max:255',
-                'practice7ac' => 'required|string| max:255',
-                'practice7ad' => 'required|string| max:255',
+                'practice7aa' => 'nullable|string| max:255',
+                'practice7ab' => 'nullable|string| max:255',
+                'practice7ac' => 'nullable|string| max:255',
+                'practice7ad' => 'nullable|string| max:255',
                 
-                'practice7ba' => 'required|string| max:255',
-                'practice7bb' => 'required|string| max:255',
-                'practice7bc' => 'required|string| max:255',
-                'practice7bd' => 'required|string| max:255',
+                'practice7ba' => 'nullable|string| max:255',
+                'practice7bb' => 'nullable|string| max:255',
+                'practice7bc' => 'nullable|string| max:255',
+                'practice7bd' => 'nullable|string| max:255',
                 
-                'practice7ca' => 'required|string| max:255',
-                'practice7cb' => 'required|string| max:255',
-                'practice7cc' => 'required|string| max:255',
-                'practice7cd' => 'required|string| max:255', 
+                'practice7ca' => 'nullable|string| max:255',
+                'practice7cb' => 'nullable|string| max:255',
+                'practice7cc' => 'nullable|string| max:255',
+                'practice7cd' => 'nullable|string| max:255', 
         
-                'practice7da' => 'required|string| max:255',
-                'practice7db' => 'required|string| max:255',
-                'practice7dc' => 'required|string| max:255',
-                'practice7dd' => 'required|string| max:255', 
+                'practice7da' => 'nullable|string| max:255',
+                'practice7db' => 'nullable|string| max:255',
+                'practice7dc' => 'nullable|string| max:255',
+                'practice7dd' => 'nullable|string| max:255', 
         
-                'practice7ea' => 'required|string| max:255',
-                'practice7eb' => 'required|string| max:255',
-                'practice7ec' => 'required|string| max:255',
-                'practice7ed' => 'required|string| max:255', 
+                'practice7ea' => 'nullable|string| max:255',
+                'practice7eb' => 'nullable|string| max:255',
+                'practice7ec' => 'nullable|string| max:255',
+                'practice7ed' => 'nullable|string| max:255', 
         
-                'practice7fa' => 'required|string| max:255',
-                'practice7fb' => 'required|string| max:255',
-                'practice7fc' => 'required|string| max:255',
-                'practice7fd' => 'required|string| max:255', 
+                'practice7fa' => 'nullable|string| max:255',
+                'practice7fb' => 'nullable|string| max:255',
+                'practice7fc' => 'nullable|string| max:255',
+                'practice7fd' => 'nullable|string| max:255', 
     
                 'status' => 'required|string|max:255', 
                 'user_id' => 'required|integer',
@@ -211,6 +219,19 @@ class CMSDiscussionQuestionController extends Controller
                     'municipal_id' => auth()->user()->city_municipal,
                     'user_id' => auth()->user()->id,
                 ]);
+
+                DB::table('lgubarangayreport')->insert([
+                    'mplgubrgydiscussionquestion_id' => $DQBarangay->id, 
+                    'barangay_id' => $request->barangay_id,
+                    'municipal_id' => $request->municipal_id,   
+                    'dateMonitoring' => $request->dateMonitoring,
+                    'periodCovereda' => $request->periodCovereda,
+                    'status' => $request->status,
+                    'user_id' => $request->user_id,
+                    'count' =>  1,
+                    'created_at' => now(), // Optional
+                    'updated_at' => now(), // Optional
+                ]);
             }
             return redirect('CityMunicipalStaff/discussionquestion')->with('success', 'Data created successfully!');
         }
@@ -230,7 +251,6 @@ class CMSDiscussionQuestionController extends Controller
         $provinces = $location->getProvinces(['reg_code' => $regCode]);
         $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
         $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
-
         
         $years = range(date('Y'), 1900);
 
@@ -253,7 +273,6 @@ class CMSDiscussionQuestionController extends Controller
         $provinces = $location->getProvinces(['reg_code' => $regCode]);
         $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
         $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
-
 
         $years = range(date("Y"), 1900);
 
@@ -322,35 +341,35 @@ class CMSDiscussionQuestionController extends Controller
                 'dateMonitoring' => 'required|date|max:255',
                 'periodCovereda' => 'required|numeric', 
     
-                'practice7aa' => 'required|string| max:255',
-                'practice7ab' => 'required|string| max:255',
-                'practice7ac' => 'required|string| max:255',
-                'practice7ad' => 'required|string| max:255',
+                'practice7aa' => 'nullable|string| max:255',
+                'practice7ab' => 'nullable|string| max:255',
+                'practice7ac' => 'nullable|string| max:255',
+                'practice7ad' => 'nullable|string| max:255',
                 
-                'practice7ba' => 'required|string| max:255',
-                'practice7bb' => 'required|string| max:255',
-                'practice7bc' => 'required|string| max:255',
-                'practice7bd' => 'required|string| max:255',
+                'practice7ba' => 'nullable|string| max:255',
+                'practice7bb' => 'nullable|string| max:255',
+                'practice7bc' => 'nullable|string| max:255',
+                'practice7bd' => 'nullable|string| max:255',
                 
-                'practice7ca' => 'required|string| max:255',
-                'practice7cb' => 'required|string| max:255',
-                'practice7cc' => 'required|string| max:255',
-                'practice7cd' => 'required|string| max:255', 
+                'practice7ca' => 'nullable|string| max:255',
+                'practice7cb' => 'nullable|string| max:255',
+                'practice7cc' => 'nullable|string| max:255',
+                'practice7cd' => 'nullable|string| max:255', 
         
-                'practice7da' => 'required|string| max:255',
-                'practice7db' => 'required|string| max:255',
-                'practice7dc' => 'required|string| max:255',
-                'practice7dd' => 'required|string| max:255', 
+                'practice7da' => 'nullable|string| max:255',
+                'practice7db' => 'nullable|string| max:255',
+                'practice7dc' => 'nullable|string| max:255',
+                'practice7dd' => 'nullable|string| max:255', 
         
-                'practice7ea' => 'required|string| max:255',
-                'practice7eb' => 'required|string| max:255',
-                'practice7ec' => 'required|string| max:255',
-                'practice7ed' => 'required|string| max:255', 
+                'practice7ea' => 'nullable|string| max:255',
+                'practice7eb' => 'nullable|string| max:255',
+                'practice7ec' => 'nullable|string| max:255',
+                'practice7ed' => 'nullable|string| max:255', 
         
-                'practice7fa' => 'required|string| max:255',
-                'practice7fb' => 'required|string| max:255',
-                'practice7fc' => 'required|string| max:255',
-                'practice7fd' => 'required|string| max:255', 
+                'practice7fa' => 'nullable|string| max:255',
+                'practice7fb' => 'nullable|string| max:255',
+                'practice7fc' => 'nullable|string| max:255',
+                'practice7fd' => 'nullable|string| max:255', 
     
                 'status' => 'required|string|max:255', 
                 'user_id' => 'required|integer',

@@ -41,7 +41,7 @@
 <div class="content" style="margin-top:50px;padding:2%">
   <div class="card" style="border-radius:10px;padding-left:2rem!important;padding-right:1rem!important">
     <div style="display:flex;align-items:center">
-      <a href="{{route('B1bSummary.index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a>
+      <a href="{{route('CMSB1bSummary.index')}}" style="margin-right:15px"><i class="now-ui-icons arrows-1_minimal-left" style="font-size:18px!important;font-weight:bolder!important"></i></a>
       <h4 style="margin-top:18px;font-weight:bold">MELLPI Pro FORM B 1b: SUMMARY OF BARANGAY NUTRITION MONITORING</h4>
     </div>
 

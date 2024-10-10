@@ -26,11 +26,12 @@ return new class extends Migration
             $table->string('status')->nullable();
             $table->date('dateMonitoring')->nullable();
             $table->string('periodCovereda')->nullable();
-            $table->unsignedBigInteger('barangay_id')->nullable();
-            $table->unsignedBigInteger('municipal_id')->nullable();
-            $table->unsignedBigInteger('province_id')->nullable();
-            $table->unsignedBigInteger('region_id')->nullable();
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('barangay_id',20)->nullable();
+            $table->string('municipal_id',20)->nullable();
+            $table->string('province_id',20)->nullable();
+            $table->string('region_id',20)->nullable();
+            $table->integer('user_id' )->unsigned()->onDelete('cascade');
+            $table->foreign('user_id' )->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -39,9 +40,9 @@ return new class extends Migration
             $table->integer('status'); 
             $table->string('barangay_id',20)->unsigned(); 
             $table->string('municipal_id',20)->unsigned();
-            $table->string('user_id',20)->unsigned(); 
-            $table->integer('mplgubrgyb2bSummary_id')->unsigned()->nullable(); 
-            $table->foreign('user_id')->references('id')->on('users'); 
+            $table->integer('user_id')->unsigned()->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('mplgubrgyb2bSummary_id')->unsigned()->nullable();  
             $table->timestamps();
         });
     }

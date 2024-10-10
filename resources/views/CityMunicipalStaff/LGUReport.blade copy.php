@@ -1,3 +1,8 @@
+
+
+
+
+
 <!-- s -->
 <script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.8/datatables.min.js"></script>
 <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
@@ -125,7 +130,7 @@
             lguLabel = '<span class="statusApproved cursor" title="Added to LGU Report">Uploaded</span>';
             LGUStatus = dataApprovedlgu;
             LGUname = lName;
-        } else {
+        } else { 
             LGUname = '<span class="statusNA cursor">N/A</span>';
             LGUStatus = '<span class="statusNA cursor">N/A</span>';
             lguLabel = '<span class="statusPending cursor" title="Added to LGU Report">Waiting</span>';
@@ -230,9 +235,9 @@
                 };
                 dataApprovedlnc = date.toLocaleDateString('en-US', options);
             }
-
+            
             LNCLabel = '<span class="statusApproved cursor" title="Added to LGU Report">Uploaded</span>';
-            LNCStatus = dataApprovedlnc;
+            LNCStatus =  dataApprovedlnc;
             LNCname = lncName;
         } else {
             LNCname = '<span class="statusNA cursor">N/A</span>';
@@ -267,7 +272,7 @@
             NutritionServiceLabel = '<span class="statusPending cursor" title="Added to LGU Report">Waiting</span>';
         }
 
-
+        //ChangeNutritionServiceStatus 
         let B1Status;
         let B1Label;
         let B1name;
@@ -293,32 +298,8 @@
             B1Label = '<span class="statusPending cursor" title="Added to LGU Report">Waiting</span>';
         }
 
+
         //ChangeNutritionServiceStatus 
-        let ChangeNutritionServiceStatus;
-        let ChangeNutritionServiceLabel;
-        let ChangeNutritionServicename;
-        if (d.repCNS) { // Check if the value is not empty, null, or undefined
-
-            let dataApprovedchangens = 'Invalid Date';
-            let cnsName = `${d.cnsFirstname} ${d.cnsMiddlename} ${d.cnsLastname}`;
-            if (!isNaN(Date.parse(d.cnsdate))) {
-                let date = new Date(d.cnsdate);
-                let options = {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                };
-                dataApprovedchangens = date.toLocaleDateString('en-US', options);
-            }
-            ChangeNutritionServiceLabel = '<span class="statusApproved cursor" title="Added to LGU Report">Uploaded</span>';
-            ChangeNutritionServiceStatus = dataApprovedchangens;
-            ChangeNutritionServicename = cnsName;
-        } else {
-            ChangeNutritionServicename = '<span class="statusNA cursor">N/A</span>';
-            ChangeNutritionServiceStatus = '<span class="statusNA cursor">N/A</span>';
-            ChangeNutritionServiceLabel = '<span class="statusPending cursor" title="Added to LGU Report">Waiting</span>';
-        }
-
         let B2Status;
         let B2Label;
         let B2name;
@@ -344,11 +325,10 @@
             B2Label = '<span class="statusPending cursor" title="Added to LGU Report">Waiting</span>';
         }
 
-
         //DiscussionQuestionServiceStatus 
-        let DiscussionQuestionServiceStatus;
-        let DiscussionQuestionServiceLabel;
-        let DiscussionQuestionServicename;
+        let B4Status;
+        let B4Label;
+        let B4name;
         if (d.repDQ) { // Check if the value is not empty, null, or undefined
 
             let dataApproveddq = 'Invalid Date';
@@ -363,42 +343,14 @@
                 dataApproveddq = date.toLocaleDateString('en-US', options);
             }
 
-            DiscussionQuestionServiceLabel = '<span class="statusApproved cursor" title="Added to LGU Report">Uploaded</span>';
-            DiscussionQuestionServiceStatus = dataApproveddq;
-            DiscussionQuestionServicename = dqName;
-        } else {
-            DiscussionQuestionServicename = '<span class="statusNA cursor">N/A</span>';
-            DiscussionQuestionServiceStatus = '<span class="statusNA cursor">N/A</span>';
-            DiscussionQuestionServiceLabel = '<span class="statusPending cursor" title="Added to LGU Report">Waiting</span>';
-        }
-
-        let B4Status;
-        let B4Label;
-        let B4name;
-        if (d.repB4) { // Check if the value is not empty, null, or undefined 
-
-            let dataApprovedb4 = 'Invalid Date';
-            let b4Name = `${d.b4Firstname} ${d.b4Middlename} ${d.b4Lastname}`;
-            if (!isNaN(Date.parse(d.b4date))) {
-                let date = new Date(d.b4date);
-                let options = {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                };
-                dataApprovedb4 = date.toLocaleDateString('en-US', options);
-            }
-
             B4Label = '<span class="statusApproved cursor" title="Added to LGU Report">Uploaded</span>';
-            B4Status = dataApprovedb4;
-            B4name = b4Name;
+            B4Status = dataApproveddq;
+            B4name = dqName;
         } else {
             B4name = '<span class="statusNA cursor">N/A</span>';
             B4Status = '<span class="statusNA cursor">N/A</span>';
             B4Label = '<span class="statusPending cursor" title="Added to LGU Report">Waiting</span>';
         }
-
-
 
 
         let lgustatusLabel;
@@ -470,13 +422,6 @@
                         <td class="center table2ndtd">${NutritionServiceLabel}</td>
                         </tr> 
                         <tr>
-                        <td class="center table2ndtd">B-1b Summary</td>
-                        <td class="center table2ndtd">${B1name}</td>
-                         <td class="center table2ndtd">${B1Status}</td>
-                         
-                        <td class="center table2ndtd">${B1Label}</td>
-                        </tr> 
-                        <tr>
                         <td class="center table2ndtd">Change in Nutrition Service</td>
                          <td class="center table2ndtd">${ChangeNutritionServicename}</td>
                         <td class="center table2ndtd">${ChangeNutritionServiceStatus}</td>
@@ -485,10 +430,10 @@
                     </tr> 
                     <tr>
                         <td class="center table2ndtd">B-2b Summary</td>
-                         <td class="center table2ndtd">${B2name}</td>
-                        <td class="center table2ndtd">${B2Status}</td>
+                         <td class="center table2ndtd">${ChangeNutritionServicename}</td>
+                        <td class="center table2ndtd">${ChangeNutritionServiceStatus}</td>
  
-                        <td class="center table2ndtd">${B2Label}</td>
+                        <td class="center table2ndtd">${ChangeNutritionServiceLabel}</td>
                     </tr> 
                     <tr>
                         <td class="center table2ndtd">Discussion Question</td>
@@ -499,10 +444,10 @@
                     </tr> 
                     <tr>
                         <td class="center table2ndtd">B-4 Summary</td>
-                         <td class="center table2ndtd">${B4name}</td>
-                        <td class="center table2ndtd">${B4Status}</td>
+                         <td class="center table2ndtd">${ChangeNutritionServicename}</td>
+                        <td class="center table2ndtd">${ChangeNutritionServiceStatus}</td>
  
-                        <td class="center table2ndtd">${B4Label}</td>
+                        <td class="center table2ndtd">${ChangeNutritionServiceLabel}</td>
                     </tr> 
                     <tr>
                         <td class="center table2ndtd">Budget (AIP)</td>
@@ -527,7 +472,7 @@
         // Check if the DataTable is already initialized
         if ($.fn.DataTable.isDataTable('#lguReport')) {
             // Destroy the existing DataTable before reinitializing
-            $('#lguReport').DataTable().clear().destroy();
+            $('#lguReport').DataTable().clear().destroy(); 
         }
 
         let table = new DataTable('#lguReport', {
@@ -562,43 +507,26 @@
                         return `${data}`;
                     }
                 },
-
+              
                 {
-                    data: ["repStatus", "repCount", "count"],
+                    data: ["repStatus", "repCount","count"],
                     orderable: false,
                     render: function(data, type, row) {
-                        let  total = 0;
                         let repStatus = row.repStatus; // Access the status field from the row
                         let repCount = row.repCount; // Access the count field from the row
-                        let statusCount = row.count;
-                        let replgu = row.repLGU;
-                        let repvm = row.repVM;
-                        let repnp = row.repNP;
-                        let repgov = row.repGov;
-                        let replnc = row.replnc;
-                        let repns = row.repNS;
-                        let repCNS = row.repCNS;
-                        let repdq = row.repDQ;
-                        let repb1 = row.repB1;
-                        let repb2 = row.repB2;
-                        let repb3 = row.repB4;
-
-                        total += (rep1 != null) ? 1 : -1;
-
-
-
+                        let statusCount = row.count; 
                         // return data ? data : 'No Office';
-                        if (repCount >= 1 && repCount <= 12) {
-                            let cout = `<span class="statusCounts cursor" style="margin-left:3px" title="Added to LGU Report">${repCount}/12</span>`;
+                        if (repCount >= 1 && repCount <= 11) {
+                            let cout = `<span class="statusCounts cursor" style="margin-left:3px" title="Added to LGU Report">${repCount}/9</span>`;
                             let stat = '<span class=" statusPending cursor" style="margin-left:3px" title="For Review">Ongoing</span>';
                             return `${cout} ${stat}`;
                         } else {
-                            let cout = `<span class="statusCounts cursor" style="margin-left:3px" title="Added to LGU Report">${repCount}/9</span>`;
+                            let cout =  `<span class="statusCounts cursor" style="margin-left:3px" title="Added to LGU Report">${repCount}/9</span>`;
                             let stat = '<span class="statusApproved cursor" style="margin-left:3px" title="Added to LGU Report">Completed</span>';
                             return `${cout}  ${stat}`;
                         }
-
-
+                        
+                    
                     }
 
                 },
@@ -617,7 +545,7 @@
 
         function toggleRow(row) {
             let tr = row.node();
-
+            
             // Check if the row is already shown
             if (row.child.isShown()) {
                 row.child.hide();
@@ -639,14 +567,14 @@
         $('#lguReport tbody').on('click', 'td.dt-control', function() {
             let tr = $(this).closest('tr');
             let row = table.row(tr);
-
+            
             toggleRow(row);
         });
 
     }
 
-    $(document).ready(function() {
-        lguReportFN();
-    })
+        $(document).ready(function() {
+            lguReportFN();
+        })
 </script>
 @endsection

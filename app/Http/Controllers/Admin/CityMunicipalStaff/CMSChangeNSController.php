@@ -18,7 +18,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class CMSChangeNSController extends Controller
 {
-    /**
+   /**
      * Display a listing of the resource.
      */
     public function index()
@@ -58,7 +58,7 @@ class CMSChangeNSController extends Controller
         $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
         
         $years = range(date("Y"), 1900);
-        return view('CityMunicipalStaff.ChangeinNS.create', compact('provinces', 'cities_municipalities', 'barangays','years','action'));
+        return view('CityMunicipalStaff.ChangeinNS.create', compact('provinces', 'cities_municipalities', 'barangays', 'years','action'));
     }
 
     /**
@@ -66,6 +66,17 @@ class CMSChangeNSController extends Controller
      */
     public function store(Request $request)
     {
+
+        $dataExists = DB::table('lgubarangayreport')
+        ->where('dateMonitoring', $request->dateMonitoring)
+        ->where( 'periodCovereda', $request->periodCovereda,)
+        // ->where( 'barangay_id' , $request->barangay_id,) 
+        ->exists();
+
+        if ($dataExists) {
+            return redirect()->back()->withInput()->with('error', 'A record with the same data already exists.');
+        }   
+
         if ($request->formrequest == 'draft') {
 
             $changeNSBarangay = MellpiproChangeNS::create([
@@ -127,14 +138,14 @@ class CMSChangeNSController extends Controller
                 'rating6g' => 'required|integer',
                 'rating6h' => 'required|integer', 
                 
-                'remarks6a' => 'required|string|max: 255',
-                'remarks6b' => 'required|string|max: 255',
-                'remarks6c' => 'required|string|max: 255',
-                'remarks6d' => 'required|string|max: 255',
-                'remarks6e' => 'required|string|max: 255',
-                'remarks6f' => 'required|string|max: 255',
-                'remarks6g' => 'required|string|max: 255',
-                'remarks6h' => 'required|string|max: 255', 
+                'remarks6a' => 'nullable|string|max: 255',
+                'remarks6b' => 'nullable|string|max: 255',
+                'remarks6c' => 'nullable|string|max: 255',
+                'remarks6d' => 'nullable|string|max: 255',
+                'remarks6e' => 'nullable|string|max: 255',
+                'remarks6f' => 'nullable|string|max: 255',
+                'remarks6g' => 'nullable|string|max: 255',
+                'remarks6h' => 'nullable|string|max: 255', 
     
                 'status' => 'required|string|max:255',
                 'user_id' => 'required|integer',
@@ -186,6 +197,23 @@ class CMSChangeNSController extends Controller
                     'municipal_id' => auth()->user()->city_municipal,
                     'user_id' => auth()->user()->id,
                 ]);
+
+                DB::table('lgubarangayreport')->insert([
+                    'mplgubrgychangeNS_id' => $changeNSBarangay->id, 
+                    'barangay_id' => $request->barangay_id,
+                    'municipal_id' => $request->municipal_id,   
+                    'dateMonitoring' => $request->dateMonitoring,
+                    'periodCovereda' => $request->periodCovereda,
+                    'status' => $request->status,
+                    'user_id' => $request->user_id,
+                    'count' =>  1,
+                    'created_at' => now(), // Optional
+                    'updated_at' => now(), // Optional
+                ]);
+
+
+
+
             }
             return redirect('CityMunicipalStaff/changeNS')->with('success', 'Data stored successfully!');
         }
@@ -197,7 +225,7 @@ class CMSChangeNSController extends Controller
      */
     public function show(Request $request, string $id)
     {
-        $action = 'edit';
+        $action = 'show';
         $location = new LocationController;
         $regCode = auth()->user()->Region;
         $provCode = auth()->user()->Province;
@@ -205,6 +233,7 @@ class CMSChangeNSController extends Controller
         $provinces = $location->getProvinces(['reg_code' => $regCode]);
         $cities_municipalities = $location->getCitiesAndMunicipalities(['prov_code' => $provCode]);
         $barangays = $location->getBarangays(['citymun_code' => $citymunCode]);
+
         
         $years = range(date('Y'), 1900);
 
@@ -297,14 +326,14 @@ class CMSChangeNSController extends Controller
             'rating6h' => 'required|integer', 
             
 
-            'remarks6a' => 'required|string|max: 255',
-            'remarks6b' => 'required|string|max: 255',
-            'remarks6c' => 'required|string|max: 255',
-            'remarks6d' => 'required|string|max: 255',
-            'remarks6e' => 'required|string|max: 255',
-            'remarks6f' => 'required|string|max: 255',
-            'remarks6g' => 'required|string|max: 255',
-            'remarks6h' => 'required|string|max: 255', 
+            'remarks6a' => 'nullable|string|max: 255',
+            'remarks6b' => 'nullable|string|max: 255',
+            'remarks6c' => 'nullable|string|max: 255',
+            'remarks6d' => 'nullable|string|max: 255',
+            'remarks6e' => 'nullable|string|max: 255',
+            'remarks6f' => 'nullable|string|max: 255',
+            'remarks6g' => 'nullable|string|max: 255',
+            'remarks6h' => 'nullable|string|max: 255', 
 
             'status' => 'required|string|max:255',
             'user_id' => 'required|integer',
@@ -364,7 +393,7 @@ class CMSChangeNSController extends Controller
         DB::table('mplgubrgychangeNStracking')->where('mplgubrgychangeNS_id', $request->id)->delete();
         $lguprofile = MellpiproChangeNS::find( $request->id); 
         $lguprofile->delete();
-        return redirect()->route('CMSchangeNS.index')->with('success', 'Deleted successfully!');
+        return redirect()->route('changeNS.index')->with('success', 'Deleted successfully!');
     }
 
     public function downloads(Request $request ) { 
@@ -382,5 +411,13 @@ class CMSChangeNSController extends Controller
         return response($pdfContent, 200)
         ->header('Content-Type', 'application/pdf')
         ->header('Content-Disposition', 'attachment; filename="document.pdf"');
+    }
+
+
+    public function summary(Request $request){
+        //get all data  in Change in Nutrition data
+        //create  a filter for saved data 
+        
+        //crud for b1-summary
     }
 }

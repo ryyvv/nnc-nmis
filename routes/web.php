@@ -216,6 +216,7 @@ Route::group(['middleware' => 'auth'], function () {
             //DashboardController
             Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index'); 
             Route::get('CMSDashboard/fetchreport', [DashboardController::class, 'rep'])->name('CMSDashboard.rep'); 
+            Route::get('CMSDashboard/lnc/chart', [DashboardController::class, 'lnc'])->name('CMSDashboard.lnc'); 
 
 
             Route::post('/dashboard', [DashboardController::class, 'store'])->name('dashboard.store');
@@ -379,14 +380,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::POST('/CityMunicipalStaff/nutritionservice/{id}/download-pdf', [CMSNutritionServiceController::class, 'downloads'])->name('CMSnutritionservice.download');
 
           //B1bSummary
-          Route::get('CityMunicipalStaff/B1bSummary', [SummaryB1bController::class, 'index'])->name('B1bSummary.index');
-          Route::POST('CityMunicipalStaff/B1bSummary', [SummaryB1bController::class, 'store'])->name('B1bSummary.store');
-          Route::put('CityMunicipalStaff/B1bSummary/{id}', [SummaryB1bController::class, 'update'])->name('B1bSummary.update');
-          Route::get('CityMunicipalStaff/B1bSummary/{id}/edit', [SummaryB1bController::class, 'edit'])->name('B1bSummary.edit');
-          Route::post('CityMunicipalStaff/B1bSummary/delete', [SummaryB1bController::class, 'destroy'])->name('B1bSummary.destroy');
-          Route::get('CityMunicipalStaff/B1bSummary/{id}/create', [SummaryB1bController::class, 'createData'])->name('B1bSummary.createData');
-          Route::get('CityMunicipalStaff/B1bSummary/{id}/show', [SummaryB1bController::class, 'show'])->name('B1bSummary.show');
-          Route::POST('CityMunicipalStaff/B1bSummary/{id}/download-pdf', [SummaryB1bController::class, 'downloads'])->name('B1bSummary.download');
+          Route::get('CityMunicipalStaff/B1bSummary', [CMSSummaryB1bController::class, 'index'])->name('CMSB1bSummary.index');
+          Route::POST('CityMunicipalStaff/B1bSummary', [CMSSummaryB1bController::class, 'store'])->name('CMSB1bSummary.store');
+          Route::put('CityMunicipalStaff/B1bSummary/{id}', [CMSSummaryB1bController::class, 'update'])->name('CMSB1bSummary.update');
+          Route::get('CityMunicipalStaff/B1bSummary/{id}/edit', [CMSSummaryB1bController::class, 'edit'])->name('CMSB1bSummary.edit');
+          Route::post('CityMunicipalStaff/B1bSummary/delete', [CMSSummaryB1bController::class, 'destroy'])->name('CMSB1bSummary.destroy');
+          Route::get('CityMunicipalStaff/B1bSummary/{id}/create', [CMSSummaryB1bController::class, 'createData'])->name('CMSB1bSummary.createData');
+          Route::get('CityMunicipalStaff/B1bSummary/{id}/show', [CMSSummaryB1bController::class, 'show'])->name('CMSB1bSummary.show');
+          Route::POST('CityMunicipalStaff/B1bSummary/{id}/download-pdf', [CMSSummaryB1bController::class, 'downloads'])->name('CMSB1bSummary.download');
 
 
         //ChangeNSController
@@ -399,7 +400,17 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/CityMunicipalStaff/changeNS/{id}/show', [CMSChangeNSController::class, 'show'])->name('CMSchangeNS.show');
         Route::POST('/CityMunicipalStaff/changeNS/{id}/download-pdf', [CMSChangeNSController::class, 'downloads'])->name('CMSchangeNS.download');
 
-        //DiscussionQuestionController
+
+        Route::get('CityMunicipalStaff/B2bSummary', [CMSSummaryB2bController::class, 'index'])->name('CMSB2bSummary.index');
+        Route::POST('CityMunicipalStaff/B2bSummary', [CMSSummaryB2bController::class, 'store'])->name('CMSB2bSummary.store');
+        Route::put('CityMunicipalStaff/B2bSummary/{id}', [CMSSummaryB2bController::class, 'update'])->name('CMSB2bSummary.update');
+        Route::get('CityMunicipalStaff/B2bSummary/{id}/edit', [CMSSummaryB2bController::class, 'edit'])->name('CMSB2bSummary.edit');
+        Route::post('CityMunicipalStaff/B2bSummary/delete', [CMSSummaryB2bController::class, 'destroy'])->name('CMSB2bSummary.destroy');
+        Route::get('CityMunicipalStaff/B2bSummary/{id}/create', [CMSSummaryB2bController::class, 'createData'])->name('CMSB2bSummary.createData');
+        Route::get('CityMunicipalStaff/B2bSummary/{id}/show', [CMSSummaryB2bController::class, 'show'])->name('CMSB2bSummary.show');
+        Route::POST('CityMunicipalStaff/B2bSummary/{id}/download-pdf', [CMSSummaryB2bController::class, 'downloads'])->name('CMSB2bSummary.download');
+
+        //DiscussionQuestionContro ller
         Route::get('/CityMunicipalStaff/discussionquestion', [CMSDiscussionQuestionController::class, 'index'])->name('CMSdiscussionquestion.index');
         Route::POST('/CityMunicipalStaff/discussionquestion', [CMSDiscussionQuestionController::class, 'store'])->name('CMSdiscussionquestion.store');
         Route::get('/CityMunicipalStaff/discussionquestion/create', [CMSDiscussionQuestionController::class, 'create'])->name('CMSdiscussionquestion.create');
@@ -522,34 +533,34 @@ Route::group(['middleware' => 'auth'], function () {
         // Route::POST('BarangayScholar/nutritionservice/{id}/download-pdf', [NutritionServiceController::class, 'downloads'])->name('nutritionservice.download');
  
         //B1bSummary
-        Route::get('BarangayScholar/B1bSummary', [SummaryB1bController::class, 'index'])->name('B1bSummary.index');
-        Route::POST('BarangayScholar/B1bSummary', [SummaryB1bController::class, 'store'])->name('B1bSummary.store');
-        Route::put('BarangayScholar/B1bSummary/{id}', [SummaryB1bController::class, 'update'])->name('B1bSummary.update');
-        Route::get('BarangayScholar/B1bSummary/{id}/edit', [SummaryB1bController::class, 'edit'])->name('B1bSummary.edit');
-        Route::post('BarangayScholar/B1bSummary/delete', [SummaryB1bController::class, 'destroy'])->name('B1bSummary.destroy');
-        Route::get('BarangayScholar/B1bSummary/{id}/create', [SummaryB1bController::class, 'createData'])->name('B1bSummary.createData');
-        Route::get('BarangayScholar/B1bSummary/{id}/show', [SummaryB1bController::class, 'show'])->name('B1bSummary.show');
-        Route::POST('BarangayScholar/B1bSummary/{id}/download-pdf', [SummaryB1bController::class, 'downloads'])->name('B1bSummary.download');
+        // Route::get('BarangayScholar/B1bSummary', [SummaryB1bController::class, 'index'])->name('B1bSummary.index');
+        // Route::POST('BarangayScholar/B1bSummary', [SummaryB1bController::class, 'store'])->name('B1bSummary.store');
+        // Route::put('BarangayScholar/B1bSummary/{id}', [SummaryB1bController::class, 'update'])->name('B1bSummary.update');
+        // Route::get('BarangayScholar/B1bSummary/{id}/edit', [SummaryB1bController::class, 'edit'])->name('B1bSummary.edit');
+        // Route::post('BarangayScholar/B1bSummary/delete', [SummaryB1bController::class, 'destroy'])->name('B1bSummary.destroy');
+        // Route::get('BarangayScholar/B1bSummary/{id}/create', [SummaryB1bController::class, 'createData'])->name('B1bSummary.createData');
+        // Route::get('BarangayScholar/B1bSummary/{id}/show', [SummaryB1bController::class, 'show'])->name('B1bSummary.show');
+        // Route::POST('BarangayScholar/B1bSummary/{id}/download-pdf', [SummaryB1bController::class, 'downloads'])->name('B1bSummary.download');
 
         //ChangeNSController
-        Route::get('BarangayScholar/changeNS', [ChangeNSController::class, 'index'])->name('changeNS.index');
-        Route::POST('BarangayScholar/changeNS', [ChangeNSController::class, 'store'])->name('changeNS.store');
-        Route::get('BarangayScholar/changeNS/create', [ChangeNSController::class, 'create'])->name('changeNS.create');
-        Route::put('BarangayScholar/changeNS/{id}', [ChangeNSController::class, 'update'])->name('changeNS.update');
-        Route::get('BarangayScholar/changeNS/{id}/edit', [ChangeNSController::class, 'edit'])->name('changeNS.edit');
-        Route::POST('BarangayScholar/changeNS/delete', [ChangeNSController::class, 'destroy'])->name('changeNS.destroy');
-        Route::get('BarangayScholar/changeNS/{id}/show', [ChangeNSController::class, 'show'])->name('changeNS.show');
-        Route::POST('BarangayScholar/changeNS/{id}/download-pdf', [ChangeNSController::class, 'downloads'])->name('changeNS.download');
+        // Route::get('BarangayScholar/changeNS', [ChangeNSController::class, 'index'])->name('changeNS.index');
+        // Route::POST('BarangayScholar/changeNS', [ChangeNSController::class, 'store'])->name('changeNS.store');
+        // Route::get('BarangayScholar/changeNS/create', [ChangeNSController::class, 'create'])->name('changeNS.create');
+        // Route::put('BarangayScholar/changeNS/{id}', [ChangeNSController::class, 'update'])->name('changeNS.update');
+        // Route::get('BarangayScholar/changeNS/{id}/edit', [ChangeNSController::class, 'edit'])->name('changeNS.edit');
+        // Route::POST('BarangayScholar/changeNS/delete', [ChangeNSController::class, 'destroy'])->name('changeNS.destroy');
+        // Route::get('BarangayScholar/changeNS/{id}/show', [ChangeNSController::class, 'show'])->name('changeNS.show');
+        // Route::POST('BarangayScholar/changeNS/{id}/download-pdf', [ChangeNSController::class, 'downloads'])->name('changeNS.download');
        
         //B2bSummary
-        Route::get('BarangayScholar/B2bSummary', [SummaryB2bController::class, 'index'])->name('B2bSummary.index');
-        Route::POST('BarangayScholar/B2bSummary', [SummaryB2bController::class, 'store'])->name('B2bSummary.store');
-        Route::put('BarangayScholar/B2bSummary/{id}', [SummaryB2bController::class, 'update'])->name('B2bSummary.update');
-        Route::get('BarangayScholar/B2bSummary/{id}/edit', [SummaryB2bController::class, 'edit'])->name('B2bSummary.edit');
-        Route::post('BarangayScholar/B2bSummary/delete', [SummaryB2bController::class, 'destroy'])->name('B2bSummary.destroy');
-        Route::get('BarangayScholar/B2bSummary/{id}/create', [SummaryB2bController::class, 'createData'])->name('B2bSummary.createData');
-        Route::get('BarangayScholar/B2bSummary/{id}/show', [SummaryB2bController::class, 'show'])->name('B2bSummary.show');
-        Route::POST('BarangayScholar/B2bSummary/{id}/download-pdf', [SummaryB2bController::class, 'downloads'])->name('B2bSummary.download');
+        // Route::get('BarangayScholar/B2bSummary', [SummaryB2bController::class, 'index'])->name('B2bSummary.index');
+        // Route::POST('BarangayScholar/B2bSummary', [SummaryB2bController::class, 'store'])->name('B2bSummary.store');
+        // Route::put('BarangayScholar/B2bSummary/{id}', [SummaryB2bController::class, 'update'])->name('B2bSummary.update');
+        // Route::get('BarangayScholar/B2bSummary/{id}/edit', [SummaryB2bController::class, 'edit'])->name('B2bSummary.edit');
+        // Route::post('BarangayScholar/B2bSummary/delete', [SummaryB2bController::class, 'destroy'])->name('B2bSummary.destroy');
+        // Route::get('BarangayScholar/B2bSummary/{id}/create', [SummaryB2bController::class, 'createData'])->name('B2bSummary.createData');
+        // Route::get('BarangayScholar/B2bSummary/{id}/show', [SummaryB2bController::class, 'show'])->name('B2bSummary.show');
+        // Route::POST('BarangayScholar/B2bSummary/{id}/download-pdf', [SummaryB2bController::class, 'downloads'])->name('B2bSummary.download');
 
         //DiscussionQuestionController
         Route::get('BarangayScholar/discussionquestion', [DiscussionQuestionController::class, 'index'])->name('discussionquestion.index');
@@ -636,7 +647,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         //Resources  ============================================================================================================================================================
         // Equipment Inventory
-        Route::get('/equipmentInventoryIndex', [BSEquipmentInventoryController::class, 'index'])->name('BSequipmentInventory.index');
+        Route::get('/equipmentInventory', [BSEquipmentInventoryController::class, 'index'])->name('BSequipmentInventory.index');
         Route::get('/equipmentInventory/create', [BSEquipmentInventoryController::class, 'create'])->name('BSequipmentInventory.create');
         Route::get('/equipmentInventory/edit', [BSEquipmentInventoryController::class, 'edit'])->name('BSequipmentInventory.edit');
         Route::put('/equipmentInventory/update', [BSEquipmentInventoryController::class, 'update'])->name('BSequipmentInventory.update');
@@ -650,19 +661,19 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/nutritionOffices', [BSNutritionOfficesController::class, 'store'])->name('BSnutritionOffices.store');
         Route::get('/nutriOfficeIndex', [BSNutritionOfficesController::class, 'nutriOfficeIndex'])->name('nutriOfficeIndex');
 
-        //Nutrition Office
-        Route::get('/bspersonnelDnaDirectory', [BSPersonnel::class, 'index'])->name('BSpersonnel.index');
-        Route::get('/bspersonnelDnaDirectory/personnel', [BSPersonnel::class, 'getPersonel'])->name('BSpersonnel.get');
-        Route::get('/bspersonnelDnaDirectory/create', [BSPersonnel::class, 'create'])->name('BSpersonnel.create');
-        Route::get('/bspersonnelDnaDirectory/edit/{id}', [BSPersonnel::class, 'edit'])->name('BSpersonnel.edit');
-        Route::get('/bspersonnelDnaDirectory/show/{id}', [BSPersonnel::class, 'show'])->name('BSpersonnel.show');
-        Route::post('/bspersonnelDnaDirectory/nao/{id}', [BSPersonnel::class, 'updateNAO'])->name('BSpersonnel.updateNAO');
-        Route::post('/bspersonnelDnaDirectory/npc/{id}', [BSPersonnel::class, 'updateNPC'])->name('BSpersonnel.updateNPC');
-        Route::post('/bspersonnelDnaDirectory/bns/{id}', [BSPersonnel::class, 'updateBNS'])->name('BSpersonnel.updateBNS');
-        Route::delete('/bspersonnelDnaDirectory/delete', [BSPersonnel::class, 'destroy'])->name('BSpersonnel.delete');
-        Route::post('/bspersonnelDnaDirectory/nao', [BSPersonnel::class, 'storeNAO'])->name('BSpersonnel.storeNAO');
-        Route::post('/bspersonnelDnaDirectory/npc', [BSPersonnel::class, 'storeNPC'])->name('BSpersonnel.storeNPC');
-        Route::post('/bspersonnelDnaDirectory/bns', [BSPersonnel::class, 'storeBNS'])->name('BSpersonnel.storeBNS');
+        // Personnel Directory
+        Route::get('/personnelDirectory', [BSPersonnel::class, 'index'])->name('BSpersonnel.index');
+        Route::get('/personnelDirectory/personnel', [BSPersonnel::class, 'getPersonel'])->name('BSpersonnel.get');
+        Route::get('/personnelDirectory/create', [BSPersonnel::class, 'create'])->name('BSpersonnel.create');
+        Route::get('/personnelDirectory/edit/{id}', [BSPersonnel::class, 'edit'])->name('BSpersonnel.edit');
+        Route::get('/personnelDirectory/show/{id}', [BSPersonnel::class, 'show'])->name('BSpersonnel.show');
+        Route::post('/personnelDirectory/nao/{id}', [BSPersonnel::class, 'updateNAO'])->name('BSpersonnel.updateNAO');
+        Route::post('/personnelDirectory/npc/{id}', [BSPersonnel::class, 'updateNPC'])->name('BSpersonnel.updateNPC');
+        Route::post('/personnelDirectory/bns/{id}', [BSPersonnel::class, 'updateBNS'])->name('BSpersonnel.updateBNS');
+        Route::delete('/personnelDirectory/delete', [BSPersonnel::class, 'destroy'])->name('BSpersonnel.delete');
+        Route::post('/personnelDirectory/nao', [BSPersonnel::class, 'storeNAO'])->name('BSpersonnel.storeNAO');
+        Route::post('/personnelDirectory/npc', [BSPersonnel::class, 'storeNPC'])->name('BSpersonnel.storeNPC');
+        Route::post('/personnelDirectory/bns', [BSPersonnel::class, 'storeBNS'])->name('BSpersonnel.storeBNS');
     });
 
 
@@ -711,3 +722,11 @@ Route::prefix('location')->group(function () {
 });
 
  
+
+
+
+
+
+
+
+

@@ -68,7 +68,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a style="font-family: Arial, sans-serif;font-style:italic"
-                                    href="{{route('BSLGUprofile.index')}}">Mellpi Pro for LGU Profile</a></li>
+                                    href="{{route('CMSLGUprofile.index')}}">Mellpi Pro for LGU Profile</a></li>
                             <li class="breadcrumb-item active" style="font-style:italic" aria-current="page">Form B:
                                 Barangay Profile Sheet -
                                 <?php echo auth()->user()->barangay ?>

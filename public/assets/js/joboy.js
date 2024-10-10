@@ -562,6 +562,8 @@ new DataTable('#myTableLnfp');
 new DataTable('#example1');
 new DataTable('#lguReport');
 new DataTable('#B1bSummary');
+new DataTable('#B2bSummary');
+new DataTable('#B4Summary');
 // new DataTable('#lnfpReport');
 new DataTable('#myTableForm5', {
     responsive: true

@@ -3,7 +3,7 @@
 @extends('layouts.app', [
 'class' => 'sidebar-mini ',
 'namePage' => 'Equipment Inventory',
-'activePage' => 'EquipmentInventoryIndex',
+'activePage' => 'EquipmentInventory',
 'activeNav' => '',
 ])
 

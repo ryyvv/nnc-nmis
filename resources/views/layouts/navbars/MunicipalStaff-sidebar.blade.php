@@ -1,5 +1,5 @@
 @php 
-          $activeLGUPages = ['VISION', 'NutritionPolicies', 'Governance', 'LNCManagement', 'nutritionservice', 'changeNS', 'discussionquestion', 'budgetAIP'];
+          $activeLGUPages = ['LGUPROFILESummary','LGUPROFILE','VISION', 'NutritionPolicies', 'Governance', 'LNCManagement', 'nutritionservice','B1bSummary', 'changeNS','B2bSummary','discussionquestion', 'budgetAIP'];
         @endphp
         <li>
           <a data-toggle="collapse" href="#MellpiPro">
@@ -49,16 +49,22 @@
                   <p> {{ __("nutrition service") }} </p>
                 </a>
               </li>
-              <li class="@if ($activePage == 'nutritionservice') active @endif">
-                <a href="{{ route('CMSchangeNS.index') }}">
+              <li class="@if ($activePage == 'B1bSummary') active @endif">
+                <a href="{{ route('CMSB1bSummary.index') }}">
                   <i class="now-ui-icons files_paper"></i>
-                  <p> {{ __("Change in NS") }} </p>
+                  <p> {{ __("B-1b Summary ") }} </p>
                 </a>
               </li>
               <li class="@if ($activePage == 'changeNS') active @endif">
                 <a href="{{ route('CMSchangeNS.index') }}">
                   <i class="now-ui-icons files_paper"></i>
                   <p> {{ __("Change in NS") }} </p>
+                </a>
+              </li>
+              <li class="@if ($activePage == 'B2bSummary') active @endif">
+                <a href="{{ route('CMSB2bSummary.index') }}">
+                  <i class="now-ui-icons files_paper"></i>
+                  <p> {{ __("B-2b Summary ") }} </p>
                 </a>
               </li>
               <li class="@if ($activePage == 'discussionquestion') active @endif">
@@ -139,7 +145,7 @@
 
 
         @php 
-          $activeLNFPPages = ['mellpi_pro_form5', 'mellpi_pro_form6', 'mellpi_pro_form8', 'mellpi_pro_interview', 'mellpi_pro_overallScore'];
+          $activeResourcePages = ['NutritionOffice', 'EquipmentInventory', 'PersonnelDirectory'];
         @endphp
         <li>
           <a data-toggle="collapse" href="#Resources">
@@ -147,7 +153,7 @@
               <b class="caret"></b>
             </p>
           </a>
-          <div class="collapse @if ($namePage == 'LGU Profile LNFP' || in_array($activePage, $activeLNFPPages) ) show @endif" " id="Resources">
+          <div class="collapse @if ($namePage == 'Resources' || in_array($activePage, $activeResourcePages) ) show @endif" id="Resources">
             <ul class="nav">
               <li class="@if ($activePage == 'NutritionOffice') active @endif">
               <a href="{{ route('BSequipmentInventory.index') }}">
@@ -166,7 +172,7 @@
               <li class="@if ($activePage == 'PersonnelDirectory') active @endif">
                 <a href="{{ route('BSpersonnel.index') }}">
                   <i class="now-ui-icons files_paper"></i>
-                  <p> {{ __("Personnel DNA Directory ") }} </p>
+                  <p> {{ __("Personnel Directory ") }} </p>
                 </a>
               </li> 
         

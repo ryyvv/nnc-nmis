@@ -17,8 +17,8 @@
 
 @extends('layouts.app', [
 'class' => 'sidebar-mini ',
-'namePage' => 'Personnel Dna Directory',
-'activePage' => 'PersonnelDnaDirectoryIndex',
+'namePage' => 'Personnel Directory',
+'activePage' => 'PersonnelDirectory',
 'activeNav' => '',
 ])
 
@@ -31,7 +31,7 @@
                     <a href="{{ route('BSpersonnel.index') }}" style="margin-right: 15px;">
                         <i class="now-ui-icons arrows-1_minimal-left" style="font-size: 18px; font-weight: bold;"></i>
                     </a>
-                    <h5 class="title" style="margin: 0; line-height: 1;">{{ __("Edit Personnel DNA Directory") }}</h5>
+                    <h5 class="title" style="margin: 0; line-height: 1;">{{ __("Edit Personnel Directory") }}</h5>
                 </div>
             </div>
         </div>

@@ -32,8 +32,8 @@ tr>td {
 
 @extends('layouts.app', [
 'class' => 'sidebar-mini ',
-'namePage' => 'Personnel Dna Directory',
-'activePage' => 'PersonnelDnaDirectoryIndex',
+'namePage' => 'Personnel Directory',
+'activePage' => 'PersonnelDirectory',
 'activeNav' => '',
 ])
 
@@ -44,8 +44,7 @@ tr>td {
             <div class="card-header">
                 <h5 class="title">{{__("Personnel Directory")}}</h5>
                 <div>
-                    <a class="btn btn-outline-primary" href="{{route('BSpersonnel.create')}}">Add Personnel
-                        DNA Directory</a>
+                    <a class="btn btn-outline-primary" href="{{route('BSpersonnel.create')}}">Add Personnel Directory</a>
                 </div>
             </div>
         </div>

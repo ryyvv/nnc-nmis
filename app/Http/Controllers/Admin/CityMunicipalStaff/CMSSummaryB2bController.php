@@ -13,13 +13,13 @@ use App\Models\Province;
 use App\Models\Barangay;
 use App\Models\Municipal;
 use App\Models\City;
-use App\Models\lguB4Summary;
+use App\Models\lguB2bSummary;
 use App\Models\MellpiproLGUB2bSummaryTracking;
 use App\Http\Controllers\LocationController;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Termwind\Components\Raw;
 
-class CMSSummaryB4Controller extends Controller
+class CMSSummaryB2bController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -37,9 +37,8 @@ class CMSSummaryB4Controller extends Controller
         $years = range(date('Y'), 1900);
 
     $rawdata = DB::table('lgubarangayreport')
-        ->leftJoin('lguB1bSummarydata', 'lgubarangayreport.mplgubrgyb1bSummary_id', '=', 'lguB1bSummarydata.id')
+    ->leftJoin('mplgubrgychangeNS', 'lgubarangayreport.mplgubrgychangeNS_id', '=', 'mplgubrgychangeNS.id')
         ->leftJoin('lguB2bSummarydata', 'lgubarangayreport.mplgubrgyb2bSummary_id', '=', 'lguB2bSummarydata.id')
-        ->leftJoin('lguB4Summarydata', 'lgubarangayreport.mplgubrgyb4Summary_id', '=', 'lguB4Summarydata.id')
         ->leftJoin('psgc_municipalities', DB::raw('CAST(lgubarangayreport.municipal_id AS VARCHAR)'), '=', 'psgc_municipalities.citymun_code')
         ->leftJoin('psgc_cities', DB::raw('CAST(lgubarangayreport.municipal_id AS VARCHAR)'), '=', 'psgc_cities.citymun_code')
         ->where(function($query) {
@@ -48,22 +47,15 @@ class CMSSummaryB4Controller extends Controller
         })
         ->select(
             'lgubarangayreport.*',
-            'lgubarangayreport.mplgubrgyb4Summary_id as b4SummaryId',
-            'lgubarangayreport.mplgubrgyb4SummaryStatus_id as b4SummaryStatus',
-            'psgc_municipalities.name as name', 
+            'psgc_municipalities.name as name',
             'psgc_cities.name as name',
-            'lguB1bSummarydata.id as b1bSummaryId',
-            'lguB1bSummarydata.status as b1bSummaryStatus',
             'lguB2bSummarydata.id as b2bSummaryId',
             'lguB2bSummarydata.status as b2bSummaryStatus',
-            'lguB1bSummarydata.*',
-            'lguB2bSummarydata.*',
-
         )
-        ->get(); 
+        ->get();
         
         //dd($rawdata);
-        return view('BarangayScholar.B4Summary.index', compact('rawdata','provinces', 'cities_municipalities', 'barangays','years'));
+        return view('CityMunicipalStaff.B2bSummary.index', compact('rawdata','provinces', 'cities_municipalities', 'barangays','years'));
     }
     /**
      * Show the form for creating a new resource.
@@ -85,44 +77,16 @@ class CMSSummaryB4Controller extends Controller
         
 
         $row = DB::table('lgubarangayreport')
+        ->leftJoin('mplgubrgychangeNS', 'lgubarangayreport.mplgubrgychangeNS_id', '=', 'mplgubrgychangeNS.id')
         ->leftJoin('lguB1bSummarydata', 'lgubarangayreport.mplgubrgyb1bSummary_id', '=', 'lguB1bSummarydata.id')
-        ->leftJoin('lguB2bSummarydata', 'lgubarangayreport.mplgubrgyb2bSummary_id', '=', 'lguB2bSummarydata.id')
-        ->leftJoin('lguB4Summarydata', 'lgubarangayreport.mplgubrgyb4Summary_id', '=', 'lguB4Summarydata.id')
-        ->leftJoin('psgc_municipalities', DB::raw('CAST(lgubarangayreport.municipal_id AS VARCHAR)'), '=', 'psgc_municipalities.citymun_code')
-        ->leftJoin('psgc_cities', DB::raw('CAST(lgubarangayreport.municipal_id AS VARCHAR)'), '=', 'psgc_cities.citymun_code')
-        ->where(function($query) {
-            $query->whereNotNull('psgc_municipalities.citymun_code')
-                  ->orWhereNotNull('psgc_cities.citymun_code');
-        })
+        ->where('lgubarangayreport.id',$b1Sum->id)
         ->select(
-            'lgubarangayreport.*',
-            'lgubarangayreport.mplgubrgyb4Summary_id as b4SummaryId',
-            'lgubarangayreport.mplgubrgyb4SummaryStatus_id as b4SummaryStatus',
-            'psgc_municipalities.name as name', 
-            'psgc_cities.name as name',
-            'lguB1bSummarydata.id as b1bSummaryId',
-            'lguB1bSummarydata.status as b1bSummaryStatus',
-            'lguB2bSummarydata.id as b2bSummaryId',
-            'lguB2bSummarydata.status as b2bSummaryStatus',
-            'lguB1bSummarydata.*',
-            'lguB2bSummarydata.*',
-            'lguB1bSummarydata.grandtotal as b1grandtotal',
-            'lguB2bSummarydata.grandtotal as b2grandtotal',
-        )
-        ->first();
+            'mplgubrgychangeNS.*',
+        )->first();
 
 
-        // $row = DB::table('lgubarangayreport')
-        // ->leftJoin('mplgubrgychangeNS', 'lgubarangayreport.mplgubrgychangeNS_id', '=', 'mplgubrgychangeNS.id')
-        // ->leftJoin('lguB1bSummarydata', 'lgubarangayreport.mplgubrgyb1bSummary_id', '=', 'lguB1bSummarydata.id')
-        // ->where('lgubarangayreport.id',$b1Sum->id)
-        // ->select(
-        //     'mplgubrgychangeNS.*',
-        // )->first();
-
-
-        //dd($row);
-        return view('BarangayScholar.B4Summary.create', compact('row','b1Sum','provinces', 'cities_municipalities', 'barangays', 'years','action'));
+         //dd($row);
+        return view('CityMunicipalStaff.B2bSummary.create', compact('row','b1Sum','provinces', 'cities_municipalities', 'barangays', 'years','action'));
     }
 
     /**
@@ -137,6 +101,7 @@ class CMSSummaryB4Controller extends Controller
         // ->where( 'barangay_id' , $request->barangay_id,) 
         ->exists();
 
+        
         if ($dataExists) {  
 
 
@@ -178,9 +143,10 @@ class CMSSummaryB4Controller extends Controller
                 ->withErrors($validator)
                 ->withInput()->with('error', 'Something went wrong! Please try again.');
             }else {
+
+
                 if ($request->formrequest == 'draft') {
-              
-                    $B2bSummaryBarangay = lguB4Summary::create([
+                    $B2bSummaryBarangay = lguB2bSummary::create([
                         'ch1' =>$request->Pd2aCR,
                         'ch2' =>$request->Pd2bCR,
                         'ch3' =>$request->Pd2cCR,
@@ -219,11 +185,13 @@ class CMSSummaryB4Controller extends Controller
                     ]);
      
       
-                    return redirect('BarangayScholar/B2BSummary')->with('success', 'Data stored as Draft!'); 
+                    return redirect('CityMunicipalStaff/B2BSummary')->with('success', 'Data stored as Draft!'); 
             
                 }else {
       
-                    $B2bSummaryBarangay = lguB4Summary::create([
+         
+                
+                    $B2bSummaryBarangay = lguB2bSummary::create([
                         'ch1' =>$request->Pd2aCR,
                         'ch2' =>$request->Pd2bCR,
                         'ch3' =>$request->Pd2cCR,
@@ -262,8 +230,10 @@ class CMSSummaryB4Controller extends Controller
                         'count' => '1', 
                     ]);
     
+
+      
                     // return redirect('BarangayScholar/B1BSummary')->with('success', 'Data stored as Draft!'); 
-                    return redirect()->route('B2bSummary.index')->with('success', 'Data stored successfully!'); 
+                    return redirect()->route('CMSB2bSummary.index')->with('success', 'Data stored successfully!'); 
                 }
             }
         }   
@@ -298,7 +268,7 @@ class CMSSummaryB4Controller extends Controller
 
 
         // dd($row);
-        return view('BarangayScholar.B2bSummary.show', compact('row','b1Sum','provinces', 'cities_municipalities', 'barangays', 'years','action'));
+        return view('CityMunicipalStaff.B2bSummary.show', compact('row','b1Sum','provinces', 'cities_municipalities', 'barangays', 'years','action'));
         
     }
 

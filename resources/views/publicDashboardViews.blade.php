@@ -293,6 +293,20 @@
                 <div class="card-header">
                     <h5 class="card-category">LNC Checklist</h5>
                     <h4 class="card-title">LNC Functionality</h4>
+                    <div class="dropdown">
+                        <button type="button"
+                            class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret"
+                            data-toggle="dropdown">
+                            <i class="now-ui-icons ui-1_calendar-60"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <button type="button" class="dropdown-item">2020</button>
+                            <button type="button" class="dropdown-item">2021</button>
+                            <button type="button" class="dropdown-item">2022</button>
+                            <button type="button" class="dropdown-item">2023</button>
+                            <button type="button" class="dropdown-item">2024</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div>
@@ -308,6 +322,49 @@
                 <div class="card-header">
                     <h5 class="card-category">LNC Checklist</h5>
                     <h4 class="card-title">LNC Functionality, per geographical level</h4>
+                    <div class="dropdown" style="margin-right: 48px;">
+                        <button type="button"
+                            class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret"
+                            data-toggle="dropdown">
+                            <i class="now-ui-icons ui-1_calendar-60"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <button type="button" class="dropdown-item">2020</button>
+                            <button type="button" class="dropdown-item">2021</button>
+                            <button type="button" class="dropdown-item">2022</button>
+                            <button type="button" class="dropdown-item">2023</button>
+                            <button type="button" class="dropdown-item">2024</button>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button type="button"
+                            class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret"
+                            data-toggle="dropdown">
+                            <i class="now-ui-icons location_pin"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right"
+                            style="height: auto; max-height: 223.14px; overflow-x: hidden;">
+                            <button type="button" class="dropdown-item">National Capital Region (NCR)</button>
+                            <button type="button" class="dropdown-item">Cordillera Administrative Region (CAR)</button>
+                            <button type="button" class="dropdown-item">Region I (Ilocos Region)</button>
+                            <button type="button" class="dropdown-item">Region II (Cagayan Valley)</button>
+                            <button type="button" class="dropdown-item">Region III (Central Luzon)</button>
+                            <button type="button" class="dropdown-item">Region IV-A (CALABARZON)</button>
+                            <button type="button" class="dropdown-item">MIMAROPA Region</button>
+                            <button type="button" class="dropdown-item">Region V (Bicol Region)</button>
+                            <button type="button" class="dropdown-item">Region VI (Western Visayas)</button>
+                            <button type="button" class="dropdown-item">Negros Island Region (NIR)</button>
+                            <button type="button" class="dropdown-item">Region VII (Central Visayas)</button>
+                            <button type="button" class="dropdown-item">Region VIII (Eastern Visayas)</button>
+                            <button type="button" class="dropdown-item">Region IX (Zamboanga Peninsula)</button>
+                            <button type="button" class="dropdown-item">Region X (Northern Mindanao)</button>
+                            <button type="button" class="dropdown-item">Region XI (Davao Region)</button>
+                            <button type="button" class="dropdown-item">Region XII (SOCCSKSARGEN)</button>
+                            <button type="button" class="dropdown-item">Region XIII (Caraga)</button>
+                            <button type="button" class="dropdown-item">Bangsamoro Autonomous Region In Muslim Mindanao
+                                (BARMM)</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div>
@@ -323,6 +380,34 @@
                 <div class="card-header">
                     <h5 class="card-category">LNC Checklist</h5>
                     <h4 class="card-title">Provinces Indicator</h4>
+                    <div class="dropdown" style="margin-right: 48px;">
+                        <button type="button"
+                            class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret"
+                            data-toggle="dropdown">
+                            <i class="now-ui-icons ui-1_calendar-60"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <button type="button" class="dropdown-item">2020</button>
+                            <button type="button" class="dropdown-item">2021</button>
+                            <button type="button" class="dropdown-item">2022</button>
+                            <button type="button" class="dropdown-item">2023</button>
+                            <button type="button" class="dropdown-item">2024</button>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button type="button"
+                            class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret"
+                            data-toggle="dropdown">
+                            <i class="now-ui-icons location_pin"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <button type="button" class="dropdown-item">Province</button>
+                            <button type="button" class="dropdown-item">HUC</button>
+                            <button type="button" class="dropdown-item">ICC</button>
+                            <button type="button" class="dropdown-item">City</button>
+                            <button type="button" class="dropdown-item">Muns</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <canvas id="lnc-indicator-province-chart"></canvas>
@@ -331,7 +416,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <!-- <div class="col-md-6">
             <div class="card card-chart">
                 <div class="card-header">
                     <h5 class="card-category">LNC Checklist</h5>
@@ -356,8 +441,8 @@
                 <div class="card-footer">
                 </div>
             </div>
-        </div>
-        <div class="col-md-6">
+        </div> -->
+        <!-- <div class="col-md-6">
             <div class="card card-chart">
                 <div class="card-header">
                     <h5 class="card-category">LNC Checklist</h5>
@@ -369,12 +454,26 @@
                 <div class="card-footer">
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="col-md-6">
             <div class="card card-chart">
                 <div class="card-header">
                     <h5 class="card-category">LNC Checklist</h5>
                     <h4 class="card-title">Submission Status</h4>
+                    <div class="dropdown">
+                        <button type="button"
+                            class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret"
+                            data-toggle="dropdown">
+                            <i class="now-ui-icons ui-1_calendar-60"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <button type="button" class="dropdown-item">2020</button>
+                            <button type="button" class="dropdown-item">2021</button>
+                            <button type="button" class="dropdown-item">2022</button>
+                            <button type="button" class="dropdown-item">2023</button>
+                            <button type="button" class="dropdown-item">2024</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <canvas id="lnc-submission-chart"></canvas>
@@ -400,329 +499,545 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-const createDoughnutChart = (ctxId, data, labels, centerText) => {
-    const ctx = document.getElementById(ctxId).getContext('2d');
-    const chartData = {
-        datasets: [{
-            data: data,
-            backgroundColor: ['#55AD89', '#A9B5AE'],
-            borderColor: '#FFFFFF',
-            borderWidth: 2,
-        }],
-        labels: labels,
-    };
+// const createDoughnutChart = (ctxId, data, labels, centerText) => {
+//     const ctx = document.getElementById(ctxId).getContext('2d');
+//     const chartData = {
+//         datasets: [{
+//             data: data,
+//             backgroundColor: ['#55AD89', '#A9B5AE'],
+//             borderColor: '#FFFFFF',
+//             borderWidth: 2,
+//         }],
+//         labels: labels,
+//     };
 
-    const options = {
-        cutout: '60%',
-        responsive: true,
-        plugins: {
-            tooltip: {
-                enabled: true
+//     const options = {
+//         cutout: '60%',
+//         responsive: true,
+//         plugins: {
+//             tooltip: {
+//                 enabled: true
+//             },
+//             legend: {
+//                 display: true
+//             },
+//         },
+//     };
+
+//     const customPlugin = {
+//         id: 'textInsideSegments',
+//         afterDraw: (chart) => {
+//             const ctx = chart.ctx;
+//             chart.data.datasets.forEach((dataset, datasetIndex) => {
+//                 const meta = chart.getDatasetMeta(datasetIndex);
+//                 meta.data.forEach((element, index) => {
+//                     if (datasetIndex === 0 && dataset.data[index] !== null) {
+//                         ctx.font = '14px "Montserrat", "Helvetica Neue", Arial, sans-serif';
+//                         ctx.textAlign = 'center';
+//                         ctx.textBaseline = 'middle';
+//                         const position = element.tooltipPosition();
+//                         ctx.fillText(data[index] + '%', position.x, position.y);
+//                     }
+//                 });
+//             });
+
+//             const centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
+//             const centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
+//             ctx.font = '24px "Montserrat", "Helvetica Neue", Arial, sans-serif';
+//             ctx.fillText(centerText, centerX, centerY);
+//         },
+//     };
+
+//     new Chart(ctx, {
+//         type: 'doughnut',
+//         data: chartData,
+//         options: options,
+//         plugins: [customPlugin],
+//     });
+// };
+
+// const createMultiDoughnutChart = (ctxId, lnc, centerText) => {
+//     const ctx = document.getElementById(ctxId).getContext('2d');
+
+//     const ppTotal = Object.values(lnc.pp).reduce((sum, value) => sum + Number(value), 0);
+//     const meTotal = Object.values(lnc.me).reduce((sum, value) => sum + Number(value), 0);
+
+
+//     const outerLabels = ['CD', ...Object.keys(lnc.pp), 'NSD', ...Object.keys(lnc.me)];
+//     const innerLabels = ['Capacity Development', 'Program Planning', 'Delivery of nutrition and related services',
+//         'Monitoring and Evaluation'
+//     ];
+
+//     const data = {
+//         datasets: [{
+//             data: [lnc.cd, ...Object.values(lnc.pp), lnc.nsd, ...Object.values(lnc.me), null, null,
+//                 null, null
+//             ],
+//             backgroundColor: [
+//                 '#FFAE34', ...Array(7).fill('#6388B4'), '#C3BC3F',
+//                 ...Array(3).fill('#55AD89'), '#FFAE34', '#6388B4', '#C3BC3F', '#55AD89'
+//             ],
+//             borderColor: '#FFFFFF',
+//             borderWidth: 2,
+//         }, {
+//             data: [null, null, null, null, null, null, null, null, null, null, null, null, lnc.cd,
+//                 ppTotal, lnc.nsd, meTotal
+//             ],
+
+//             backgroundColor: ['#FFAE34', '#6388B4', '#C3BC3F', '#55AD89'],
+//             borderWidth: 0,
+//         }],
+//         labels: [...outerLabels, ...innerLabels],
+//     };
+
+//     const options = {
+//         cutout: '40%',
+//         responsive: true,
+//         plugins: {
+//             tooltip: {
+//                 enabled: true
+//             },
+//             legend: {
+//                 onClick: null,
+//                 display: true,
+//                 labels: {
+//                     filter: (legendItem) => innerLabels.includes(legendItem.text),
+//                 },
+//             },
+//         },
+//     };
+
+//     const customPlugin = {
+//         id: 'textInsideSegments',
+//         afterDraw: (chart) => {
+//             const ctx = chart.ctx;
+//             chart.data.datasets.forEach((dataset, datasetIndex) => {
+//                 const meta = chart.getDatasetMeta(datasetIndex);
+//                 meta.data.forEach((element, index) => {
+//                     if (datasetIndex === 0 && dataset.data[index] !== null) {
+//                         ctx.font =
+//                             'bold 14px "Montserrat", "Helvetica Neue", Arial, sans-serif';
+//                         ctx.textAlign = 'center';
+//                         ctx.textBaseline = 'middle';
+//                         const position = element.tooltipPosition();
+//                         ctx.fillText(outerLabels[index], position.x, position.y);
+//                     }
+//                 });
+//             });
+
+//             const centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
+//             const centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
+//             ctx.font = 'bold 24px "Montserrat", "Helvetica Neue", Arial, sans-serif';
+//             ctx.fillText(centerText, centerX, centerY);
+//         },
+//     };
+
+//     new Chart(ctx, {
+//         type: 'doughnut',
+//         data: data,
+//         options: options,
+//         plugins: [customPlugin],
+//     });
+// };
+
+// const lnc_province = {
+//     cd: '{{ $lncTotals["totalProvinceCDCount"] }}',
+//     pp: {
+//         PP1A: '{{ $lncTotals["totalProvincePP1ACount"] }}',
+//         PP1B: '{{ $lncTotals["totalProvincePP1BCount"] }}',
+//         PP2A: '{{ $lncTotals["totalProvincePP2ACount"] }}',
+//         PP2B: '{{ $lncTotals["totalProvincePP2BCount"] }}',
+//         PP3A: '{{ $lncTotals["totalProvincePP3ACount"] }}',
+//         PP3B: '{{ $lncTotals["totalProvincePP3BCount"] }}',
+//         PP4A: '{{ $lncTotals["totalProvincePP4ACount"] }}'
+//     },
+//     nsd: '{{ $lncTotals["totalProvinceNSDCount"] }}',
+//     me: {
+//         ME1: '{{ $lncTotals["totalProvinceME1Count"] }}',
+//         ME2: '{{ $lncTotals["totalProvinceME2Count"] }}',
+//         ME3: '{{ $lncTotals["totalProvinceME3Count"] }}'
+//     },
+// };
+// const lnc_huc_icc = {
+//     cd: '{{ $lncTotals["totalHUC&ICCCDCount"] }}',
+//     pp: {
+//         PP1A: '{{ $lncTotals["totalHUC&ICCPP1ACount"] }}',
+//         PP1B: '{{ $lncTotals["totalHUC&ICCPP1BCount"] }}',
+//         PP2A: '{{ $lncTotals["totalHUC&ICCPP2ACount"] }}',
+//         PP2B: '{{ $lncTotals["totalHUC&ICCPP2BCount"] }}',
+//         PP3A: '{{ $lncTotals["totalHUC&ICCPP3ACount"] }}',
+//         PP3B: '{{ $lncTotals["totalHUC&ICCPP3BCount"] }}',
+//         PP4A: '{{ $lncTotals["totalHUC&ICCPP4ACount"] }}'
+//     },
+//     nsd: '{{ $lncTotals["totalHUC&ICCNSDCount"] }}',
+//     me: {
+//         ME1: '{{ $lncTotals["totalHUC&ICCME1Count"] }}',
+//         ME2: '{{ $lncTotals["totalHUC&ICCME2Count"] }}',
+//         ME3: '{{ $lncTotals["totalHUC&ICCME3Count"] }}'
+//     },
+// };
+// const lnc_city = {
+//     cd: '{{ $lncTotals["totalCCCDCount"] }}',
+//     pp: {
+//         PP1A: '{{ $lncTotals["totalCCPP1ACount"] }}',
+//         PP1B: '{{ $lncTotals["totalCCPP1BCount"] }}',
+//         PP2A: '{{ $lncTotals["totalCCPP2ACount"] }}',
+//         PP2B: '{{ $lncTotals["totalCCPP2BCount"] }}',
+//         PP3A: '{{ $lncTotals["totalCCPP3ACount"] }}',
+//         PP3B: '{{ $lncTotals["totalCCPP3BCount"] }}',
+//         PP4A: '{{ $lncTotals["totalCCPP4ACount"] }}'
+//     },
+//     nsd: '{{ $lncTotals["totalCCNSDCount"] }}',
+//     me: {
+//         ME1: '{{ $lncTotals["totalCCME1Count"] }}',
+//         ME2: '{{ $lncTotals["totalCCME2Count"] }}',
+//         ME3: '{{ $lncTotals["totalCCME3Count"] }}'
+//     },
+// };
+
+// const lnc_mun = {
+//     cd: '{{ $lncTotals["totalMunicipalityCDCount"] }}',
+//     pp: {
+//         PP1A: '{{ $lncTotals["totalMunicipalityPP1ACount"] }}',
+//         PP1B: '{{ $lncTotals["totalMunicipalityPP1BCount"] }}',
+//         PP2A: '{{ $lncTotals["totalMunicipalityPP2ACount"] }}',
+//         PP2B: '{{ $lncTotals["totalMunicipalityPP2BCount"] }}',
+//         PP3A: '{{ $lncTotals["totalMunicipalityPP3ACount"] }}',
+//         PP3B: '{{ $lncTotals["totalMunicipalityPP3BCount"] }}',
+//         PP4A: '{{ $lncTotals["totalMunicipalityPP4ACount"] }}'
+//     },
+//     nsd: '{{ $lncTotals["totalMunicipalityNSDCount"] }}',
+//     me: {
+//         ME1: '{{ $lncTotals["totalMunicipalityME1Count"] }}',
+//         ME2: '{{ $lncTotals["totalMunicipalityME2Count"] }}',
+//         ME3: '{{ $lncTotals["totalMunicipalityME3Count"] }}'
+//     },
+// };
+
+// createMultiDoughnutChart('lnc-indicator-province-chart', lnc_province, "Provinces");
+// createMultiDoughnutChart('lnc-indicator-huc&icc-chart', lnc_huc_icc, "HUCs and ICCs");
+// createMultiDoughnutChart('lnc-indicator-city-chart', lnc_city, "Cities");
+// createMultiDoughnutChart('lnc-indicator-mun-chart', lnc_city, "Municipalities");
+// createDoughnutChart('lnc-submission-chart', [70, 30], ['With Submission', 'No Submission'], 'Submissions');
+
+const lncFunctionalityChart = {
+    chart: null,
+
+    init() {
+        const ctx = document.getElementById("lnc-functionality-chart").getContext("2d");
+        this.chart = new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: ['Non-Functional', 'Partially Functional', 'Substantially Functional',
+                    'Fully Functional'
+                ],
+                datasets: [{
+                    data: [
+                        '{{ $lncTotals["grandTotalNonFunctional"] }}',
+                        '{{ $lncTotals["grandTotalPartiallyFunctional"] }}',
+                        '{{ $lncTotals["grandTotalSubstantiallyFunctional"] }}',
+                        '{{ $lncTotals["grandTotalFullyFunctional"] }}'
+                    ],
+                    backgroundColor: ['#607D8B', '#03A9F4', '#FF9800', '#FFC107'],
+                    borderWidth: 2,
+                }],
             },
-            legend: {
-                display: true
-            },
-        },
-    };
-
-    const customPlugin = {
-        id: 'textInsideSegments',
-        afterDraw: (chart) => {
-            const ctx = chart.ctx;
-            chart.data.datasets.forEach((dataset, datasetIndex) => {
-                const meta = chart.getDatasetMeta(datasetIndex);
-                meta.data.forEach((element, index) => {
-                    if (datasetIndex === 0 && dataset.data[index] !== null) {
-                        ctx.font = '14px "Montserrat", "Helvetica Neue", Arial, sans-serif';
-                        ctx.textAlign = 'center';
-                        ctx.textBaseline = 'middle';
-                        const position = element.tooltipPosition();
-                        ctx.fillText(data[index] + '%', position.x, position.y);
-                    }
-                });
-            });
-
-            const centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
-            const centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
-            ctx.font = '24px "Montserrat", "Helvetica Neue", Arial, sans-serif';
-            ctx.fillText(centerText, centerX, centerY);
-        },
-    };
-
-    new Chart(ctx, {
-        type: 'doughnut',
-        data: chartData,
-        options: options,
-        plugins: [customPlugin],
-    });
-};
-
-const createMultiDoughnutChart = (ctxId, lnc, centerText) => {
-    const ctx = document.getElementById(ctxId).getContext('2d');
-
-    const ppTotal = Object.values(lnc.pp).reduce((sum, value) => sum + Number(value), 0);
-    const meTotal = Object.values(lnc.me).reduce((sum, value) => sum + Number(value), 0);
-
-
-    const outerLabels = ['CD', ...Object.keys(lnc.pp), 'NSD', ...Object.keys(lnc.me)];
-    const innerLabels = ['Capacity Development', 'Program Planning', 'Delivery of nutrition and related services',
-        'Monitoring and Evaluation'
-    ];
-
-    const data = {
-        datasets: [{
-            data: [lnc.cd, ...Object.values(lnc.pp), lnc.nsd, ...Object.values(lnc.me), null, null,
-                null, null
-            ],
-            backgroundColor: [
-                '#FFAE34', ...Array(7).fill('#6388B4'), '#C3BC3F',
-                ...Array(3).fill('#55AD89'), '#FFAE34', '#6388B4', '#C3BC3F', '#55AD89'
-            ],
-            borderColor: '#FFFFFF',
-            borderWidth: 2,
-        }, {
-            data: [null, null, null, null, null, null, null, null, null, null, null, null, lnc.cd,
-                ppTotal, lnc.nsd, meTotal
-            ],
-
-            backgroundColor: ['#FFAE34', '#6388B4', '#C3BC3F', '#55AD89'],
-            borderWidth: 0,
-        }],
-        labels: [...outerLabels, ...innerLabels],
-    };
-
-    const options = {
-        cutout: '40%',
-        responsive: true,
-        plugins: {
-            tooltip: {
-                enabled: true
-            },
-            legend: {
-                onClick: null,
-                display: true,
-                labels: {
-                    filter: (legendItem) => innerLabels.includes(legendItem.text),
+            options: {
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                    },
+                },
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                    tooltip: {
+                        enabled: true,
+                    },
                 },
             },
-        },
-    };
+        });
+    },
 
-    const customPlugin = {
-        id: 'textInsideSegments',
-        afterDraw: (chart) => {
-            const ctx = chart.ctx;
-            chart.data.datasets.forEach((dataset, datasetIndex) => {
-                const meta = chart.getDatasetMeta(datasetIndex);
-                meta.data.forEach((element, index) => {
-                    if (datasetIndex === 0 && dataset.data[index] !== null) {
-                        ctx.font =
-                            'bold 14px "Montserrat", "Helvetica Neue", Arial, sans-serif';
-                        ctx.textAlign = 'center';
-                        ctx.textBaseline = 'middle';
-                        const position = element.tooltipPosition();
-                        ctx.fillText(outerLabels[index], position.x, position.y);
-                    }
-                });
+    updateChartData(newData) {
+        if (this.chart) {
+            this.chart.data.datasets[0].data = newData;
+            this.chart.update();
+        }
+    },
+};
+
+lncFunctionalityChart.init();
+
+const lncFunctionalityGeographicChart = {
+    chart: null,
+
+    init() {
+        const ctx = document.getElementById("lnc-functionality-geographic-chart").getContext("2d");
+        this.chart = new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: ['Prov', 'HUC', 'ICC', 'City', 'Mun'],
+                datasets: [{
+                        label: 'Fully Functional',
+                        data: [
+                            '{{ $lncTotals["totalProvinceFullyFunctional"] }}',
+                            '{{ $lncTotals["totalHUCFullyFunctional"] }}',
+                            '{{ $lncTotals["totalICCFullyFunctional"] }}',
+                            '{{ $lncTotals["totalCCFullyFunctional"] }}',
+                            '{{ $lncTotals["totalMunicipalityFullyFunctional"] }}'
+                        ],
+                        backgroundColor: '#FFC107',
+                    },
+                    {
+                        label: 'Substantially Functional',
+                        data: [
+                            '{{ $lncTotals["totalProvinceSubstantiallyFunctional"] }}',
+                            '{{ $lncTotals["totalHUCSubstantiallyFunctional"] }}',
+                            '{{ $lncTotals["totalICCSubstantiallyFunctional"] }}',
+                            '{{ $lncTotals["totalCCSubstantiallyFunctional"] }}',
+                            '{{ $lncTotals["totalMunicipalitySubstantiallyFunctional"] }}'
+                        ],
+                        backgroundColor: '#FF9800',
+                    },
+                    {
+                        label: 'Partially Functional',
+                        data: [
+                            '{{ $lncTotals["totalProvincePartiallyFunctional"] }}',
+                            '{{ $lncTotals["totalHUCPartiallyFunctional"] }}',
+                            '{{ $lncTotals["totalICCPartiallyFunctional"] }}',
+                            '{{ $lncTotals["totalCCPartiallyFunctional"] }}',
+                            '{{ $lncTotals["totalMunicipalityPartiallyFunctional"] }}'
+                        ],
+                        backgroundColor: '#03A9F4',
+                    },
+                    {
+                        label: 'Non-Functional',
+                        data: [
+                            '{{ $lncTotals["totalProvinceNonFunctional"] }}',
+                            '{{ $lncTotals["totalHUCNonFunctional"] }}',
+                            '{{ $lncTotals["totalICCNonFunctional"] }}',
+                            '{{ $lncTotals["totalCCNonFunctional"] }}',
+                            '{{ $lncTotals["totalMunicipalityNonFunctional"] }}'
+                        ],
+                        backgroundColor: '#607D8B',
+                    },
+                ],
+            },
+            options: {
+                scales: {
+                    x: {
+                        stacked: false,
+                    },
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                    },
+                    tooltip: {
+                        enabled: true,
+                    },
+                },
+            },
+        });
+    },
+
+    updateChartData(newData) {
+        if (this.chart) {
+            this.chart.data.datasets.forEach((dataset, index) => {
+                dataset.data = newData[index];
             });
-
-            const centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
-            const centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
-            ctx.font = 'bold 24px "Montserrat", "Helvetica Neue", Arial, sans-serif';
-            ctx.fillText(centerText, centerX, centerY);
-        },
-    };
-
-    new Chart(ctx, {
-        type: 'doughnut',
-        data: data,
-        options: options,
-        plugins: [customPlugin],
-    });
-};
-
-const createBarChart = (ctxId, labels, datasets, options) => {
-    const ctx = document.getElementById(ctxId).getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: datasets
-        },
-        options: options,
-    });
-};
-
-const lnc_province = {
-    cd: '{{ $lncTotals["totalProvinceCDCount"] }}',
-    pp: {
-        PP1A: '{{ $lncTotals["totalProvincePP1ACount"] }}',
-        PP1B: '{{ $lncTotals["totalProvincePP1BCount"] }}',
-        PP2A: '{{ $lncTotals["totalProvincePP2ACount"] }}',
-        PP2B: '{{ $lncTotals["totalProvincePP2BCount"] }}',
-        PP3A: '{{ $lncTotals["totalProvincePP3ACount"] }}',
-        PP3B: '{{ $lncTotals["totalProvincePP3BCount"] }}',
-        PP4A: '{{ $lncTotals["totalProvincePP4ACount"] }}'
-    },
-    nsd: '{{ $lncTotals["totalProvinceNSDCount"] }}',
-    me: {
-        ME1: '{{ $lncTotals["totalProvinceME1Count"] }}',
-        ME2: '{{ $lncTotals["totalProvinceME2Count"] }}',
-        ME3: '{{ $lncTotals["totalProvinceME3Count"] }}'
-    },
-};
-const lnc_huc_icc = {
-    cd: '{{ $lncTotals["totalHUC&ICCCDCount"] }}',
-    pp: {
-        PP1A: '{{ $lncTotals["totalHUC&ICCPP1ACount"] }}',
-        PP1B: '{{ $lncTotals["totalHUC&ICCPP1BCount"] }}',
-        PP2A: '{{ $lncTotals["totalHUC&ICCPP2ACount"] }}',
-        PP2B: '{{ $lncTotals["totalHUC&ICCPP2BCount"] }}',
-        PP3A: '{{ $lncTotals["totalHUC&ICCPP3ACount"] }}',
-        PP3B: '{{ $lncTotals["totalHUC&ICCPP3BCount"] }}',
-        PP4A: '{{ $lncTotals["totalHUC&ICCPP4ACount"] }}'
-    },
-    nsd: '{{ $lncTotals["totalHUC&ICCNSDCount"] }}',
-    me: {
-        ME1: '{{ $lncTotals["totalHUC&ICCME1Count"] }}',
-        ME2: '{{ $lncTotals["totalHUC&ICCME2Count"] }}',
-        ME3: '{{ $lncTotals["totalHUC&ICCME3Count"] }}'
-    },
-};
-const lnc_city = {
-    cd: '{{ $lncTotals["totalCCCDCount"] }}',
-    pp: {
-        PP1A: '{{ $lncTotals["totalCCPP1ACount"] }}',
-        PP1B: '{{ $lncTotals["totalCCPP1BCount"] }}',
-        PP2A: '{{ $lncTotals["totalCCPP2ACount"] }}',
-        PP2B: '{{ $lncTotals["totalCCPP2BCount"] }}',
-        PP3A: '{{ $lncTotals["totalCCPP3ACount"] }}',
-        PP3B: '{{ $lncTotals["totalCCPP3BCount"] }}',
-        PP4A: '{{ $lncTotals["totalCCPP4ACount"] }}'
-    },
-    nsd: '{{ $lncTotals["totalCCNSDCount"] }}',
-    me: {
-        ME1: '{{ $lncTotals["totalCCME1Count"] }}',
-        ME2: '{{ $lncTotals["totalCCME2Count"] }}',
-        ME3: '{{ $lncTotals["totalCCME3Count"] }}'
+            this.chart.update();
+        }
     },
 };
 
-const lnc_mun = {
-    cd: '{{ $lncTotals["totalMunicipalityCDCount"] }}',
-    pp: {
-        PP1A: '{{ $lncTotals["totalMunicipalityPP1ACount"] }}',
-        PP1B: '{{ $lncTotals["totalMunicipalityPP1BCount"] }}',
-        PP2A: '{{ $lncTotals["totalMunicipalityPP2ACount"] }}',
-        PP2B: '{{ $lncTotals["totalMunicipalityPP2BCount"] }}',
-        PP3A: '{{ $lncTotals["totalMunicipalityPP3ACount"] }}',
-        PP3B: '{{ $lncTotals["totalMunicipalityPP3BCount"] }}',
-        PP4A: '{{ $lncTotals["totalMunicipalityPP4ACount"] }}'
-    },
-    nsd: '{{ $lncTotals["totalMunicipalityNSDCount"] }}',
-    me: {
-        ME1: '{{ $lncTotals["totalMunicipalityME1Count"] }}',
-        ME2: '{{ $lncTotals["totalMunicipalityME2Count"] }}',
-        ME3: '{{ $lncTotals["totalMunicipalityME3Count"] }}'
-    },
-};
 
-createMultiDoughnutChart('lnc-indicator-province-chart', lnc_province, "Provinces");
-createMultiDoughnutChart('lnc-indicator-huc&icc-chart', lnc_huc_icc, "HUCs and ICCs");
-createMultiDoughnutChart('lnc-indicator-city-chart', lnc_city, "Cities");
-createMultiDoughnutChart('lnc-indicator-mun-chart', lnc_city, "Municipalities");
-createDoughnutChart('lnc-submission-chart', [70, 30], ['With Submission', 'No Submission'], 'Submissions');
-createBarChart('lnc-functionality-chart',
-    ['Non-Functional', 'Partially Functional', 'Substantially Functional', 'Fully Functional'],
-    [{
-        data: [
-            '{{ $lncTotals["grandTotalNonFunctional"] }}',
-            '{{ $lncTotals["grandTotalPartiallyFunctional"] }}',
-            '{{ $lncTotals["grandTotalSubstantiallyFunctional"] }}',
-            '{{ $lncTotals["grandTotalFullyFunctional"] }}'
-        ],
-        backgroundColor: 'rgba(128, 0, 64, 0.7)',
-        borderColor: 'rgba(128, 0, 64, 1)',
-        borderWidth: 2,
-    }], {
-        indexAxis: 'y',
-        scales: {
-            x: {
-                beginAtZero: true
-            }
-        },
-        plugins: {
-            legend: {
-                display: false
+const lncSubmissionChart = {
+    chart: null,
+
+    init() {
+        const ctx = document.getElementById("lnc-submission-chart").getContext("2d");
+        const customPlugin = {
+            id: 'textInsideSegments',
+            afterDraw: (chart) => {
+                const ctx = chart.ctx;
+                chart.data.datasets.forEach((dataset, datasetIndex) => {
+                    const meta = chart.getDatasetMeta(datasetIndex);
+                    meta.data.forEach((element, index) => {
+                        if (datasetIndex === 0 && dataset.data[index] !== null) {
+                            ctx.font =
+                                '14px "Montserrat", "Helvetica Neue", Arial, sans-serif';
+                            ctx.textAlign = 'center';
+                            ctx.textBaseline = 'middle';
+                            const position = element.tooltipPosition();
+                            ctx.fillText(dataset.data[index] + '%', position.x, position.y);
+                        }
+                    });
+                });
+
+                const centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
+                const centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
+                ctx.font = '24px "Montserrat", "Helvetica Neue", Arial, sans-serif';
+                ctx.fillText('Submissions', centerX, centerY);
             },
-            tooltip: {
-                enabled: true
-            }
-        },
-    }
-);
+        };
 
-createBarChart('lnc-functionality-geographic-chart',
-    ['Prov', 'HUC', 'ICC', 'City', 'Mun'],
-    [{
-            label: 'Fully Functional',
-            data: ['{{ $lncTotals["totalProvinceFullyFunctional"] }}',
-                '{{ $lncTotals["totalHUCFullyFunctional"] }}',
-                '{{ $lncTotals["totalICCFullyFunctional"] }}',
-                '{{ $lncTotals["totalCCFullyFunctional"] }}',
-                '{{ $lncTotals["totalMunicipalityFullyFunctional"] }}'
-            ],
-            backgroundColor: '#FFC107'
-        },
-        {
-            label: 'Substantially Functional',
-            data: ['{{ $lncTotals["totalProvinceSubstantiallyFunctional"] }}',
-                '{{ $lncTotals["totalHUCSubstantiallyFunctional"] }}',
-                '{{ $lncTotals["totalICCSubstantiallyFunctional"] }}',
-                '{{ $lncTotals["totalCCSubstantiallyFunctional"] }}',
-                '{{ $lncTotals["totalMunicipalitySubstantiallyFunctional"] }}'
-            ],
-            backgroundColor: '#FF9800'
-        },
-        {
-            label: 'Partially Functional',
-            data: ['{{ $lncTotals["totalProvincePartiallyFunctional"] }}',
-                '{{ $lncTotals["totalHUCPartiallyFunctional"] }}',
-                '{{ $lncTotals["totalICCPartiallyFunctional"] }}',
-                '{{ $lncTotals["totalCCPartiallyFunctional"] }}',
-                '{{ $lncTotals["totalMunicipalityPartiallyFunctional"] }}'
-            ],
-            backgroundColor: '#03A9F4'
-        },
-        {
-            label: 'Non-Functional',
-            data: ['{{ $lncTotals["totalProvinceNonFunctional"] }}',
-                '{{ $lncTotals["totalHUCNonFunctional"] }}',
-                '{{ $lncTotals["totalICCNonFunctional"] }}',
-                '{{ $lncTotals["totalCCNonFunctional"] }}',
-                '{{ $lncTotals["totalMunicipalityNonFunctional"] }}'
-            ],
-            backgroundColor: '#607D8B'
-        },
-    ], {
-        scales: {
-            x: {
-                stacked: false
+        this.chart = new Chart(ctx, {
+            type: "doughnut",
+            data: {
+                datasets: [{
+                    data: [70, 30],
+                    backgroundColor: ['#55AD89', '#A9B5AE'],
+                    borderColor: '#FFFFFF',
+                    borderWidth: 2,
+                }],
+                labels: ['With Submission', 'No Submission'],
             },
-            y: {
-                beginAtZero: true
+            options: {
+                cutout: '60%',
+                responsive: true,
+                plugins: {
+                    tooltip: {
+                        enabled: true,
+                    },
+                    legend: {
+                        display: true,
+                    },
+                },
             },
-        },
-        plugins: {
-            legend: {
-                display: true
+            plugins: [customPlugin]
+        });
+    },
+
+    updateChartData(newData) {
+        if (this.chart) {
+            this.chart.data.datasets[0].data = newData;
+            this.chart.update();
+        }
+    },
+};
+
+lncSubmissionChart.init();
+lncFunctionalityGeographicChart.init();
+
+const multiDoughnutChart = {
+    chart: null,
+
+    init() {
+        const lnc = {
+            cd: '{{ $lncTotals["totalProvinceCDCount"] }}',
+            pp: {
+                PP1A: '{{ $lncTotals["totalProvincePP1ACount"] }}',
+                PP1B: '{{ $lncTotals["totalProvincePP1BCount"] }}',
+                PP2A: '{{ $lncTotals["totalProvincePP2ACount"] }}',
+                PP2B: '{{ $lncTotals["totalProvincePP2BCount"] }}',
+                PP3A: '{{ $lncTotals["totalProvincePP3ACount"] }}',
+                PP3B: '{{ $lncTotals["totalProvincePP3BCount"] }}',
+                PP4A: '{{ $lncTotals["totalProvincePP4ACount"] }}'
             },
-            tooltip: {
-                enabled: true
+            nsd: '{{ $lncTotals["totalProvinceNSDCount"] }}',
+            me: {
+                ME1: '{{ $lncTotals["totalProvinceME1Count"] }}',
+                ME2: '{{ $lncTotals["totalProvinceME2Count"] }}',
+                ME3: '{{ $lncTotals["totalProvinceME3Count"] }}'
             },
-        },
-    }
-);
+        };
+        const ctx = document.getElementById('lnc-indicator-province-chart').getContext('2d');
+
+        const ppTotal = Object.values(lnc.pp).reduce((sum, value) => sum + Number(value), 0);
+        const meTotal = Object.values(lnc.me).reduce((sum, value) => sum + Number(value), 0);
+
+        const outerLabels = ['CD', ...Object.keys(lnc.pp), 'NSD', ...Object.keys(lnc.me)];
+        const innerLabels = ['Capacity Development', 'Program Planning',
+            'Delivery of nutrition and related services', 'Monitoring and Evaluation'
+        ];
+
+        const data = {
+            datasets: [{
+                data: [lnc.cd, ...Object.values(lnc.pp), lnc.nsd, ...Object.values(lnc.me), null, null,
+                    null, null
+                ],
+                backgroundColor: [
+                    '#FFAE34', ...Array(7).fill('#6388B4'), '#C3BC3F',
+                    ...Array(3).fill('#55AD89'), '#FFAE34', '#6388B4', '#C3BC3F', '#55AD89'
+                ],
+                borderColor: '#FFFFFF',
+                borderWidth: 2,
+            }, {
+                data: [null, null, null, null, null, null, null, null, null, null, null, null, lnc.cd,
+                    ppTotal, lnc.nsd, meTotal
+                ],
+                backgroundColor: ['#FFAE34', '#6388B4', '#C3BC3F', '#55AD89'],
+                borderWidth: 0,
+            }],
+            labels: [...outerLabels, ...innerLabels],
+        };
+
+        const options = {
+            cutout: '40%',
+            responsive: true,
+            plugins: {
+                tooltip: {
+                    enabled: true,
+                },
+                legend: {
+                    onClick: null,
+                    display: true,
+                    labels: {
+                        filter: (legendItem) => innerLabels.includes(legendItem.text),
+                    },
+                },
+            },
+        };
+
+        const customPlugin = {
+            id: 'textInsideSegments',
+            afterDraw: (chart) => {
+                const ctx = chart.ctx;
+                chart.data.datasets.forEach((dataset, datasetIndex) => {
+                    const meta = chart.getDatasetMeta(datasetIndex);
+                    meta.data.forEach((element, index) => {
+                        if (datasetIndex === 0 && dataset.data[index] !== null) {
+                            ctx.font =
+                                'bold 14px "Montserrat", "Helvetica Neue", Arial, sans-serif';
+                            ctx.textAlign = 'center';
+                            ctx.textBaseline = 'middle';
+                            const position = element.tooltipPosition();
+                            ctx.fillText(outerLabels[index], position.x, position.y);
+                        }
+                    });
+                });
+
+                const centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
+                const centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
+                ctx.font = 'bold 24px "Montserrat", "Helvetica Neue", Arial, sans-serif';
+                ctx.fillText('Province', centerX, centerY);
+            },
+        };
+
+        this.chart = new Chart(ctx, {
+            type: 'doughnut',
+            data: data,
+            options: options,
+            plugins: [customPlugin],
+        });
+    },
+
+    updateChartData(newData) {
+        if (this.chart) {
+            this.chart.data.datasets[0].data = newData;
+            this.chart.update();
+        }
+    },
+};
+
+multiDoughnutChart.init();
 </script>
 
 <script>

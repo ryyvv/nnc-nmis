@@ -531,6 +531,7 @@ class MellproLGUController extends Controller
             $psgc_code = trim($record['PSGC']);
         
             $data = [
+                'total_barangay' =>  $this->convertToInt(trim($record['Total No. of Barangays'] ?? '')),
                 'wooden_hb' => $this->convertToInt(trim($record['Wooden HB'] ?? '')),
                 'non_wooden_hb' => $this->convertToInt(trim($record['Non-wooden HB'] ?? '')),
                 'defective_hb' => $this->convertToInt(trim($record['Defective/ Non-functional HB'] ?? '')),
@@ -579,7 +580,7 @@ class MellproLGUController extends Controller
                     $equipmentInventory->update($data);
                 } else {
                     PsgcEquipmentInventory::create(array_merge($data, [
-                        'total_barangay' => $totalBarangaysFromDB,
+                        // 'total_barangay' => $totalBarangaysFromDB,
                         'psgc_code' => $correspondenceExists->psgc_code,
                         'name' => $correspondenceExists->name,
                         'correspondence_code' => $correspondenceExists->correspondence_code,
@@ -601,7 +602,7 @@ class MellproLGUController extends Controller
                 $equipmentInventory->update($data);
             } else {
                 PsgcEquipmentInventory::create(array_merge($data, [
-                    'total_barangay' => $totalBarangaysFromDB,
+                    // 'total_barangay' => $totalBarangaysFromDB,
                     'psgc_code' => $citymunExists->psgc_code,
                     'name' => $citymunExists->name,
                     'correspondence_code' => $citymunExists->correspondence_code,

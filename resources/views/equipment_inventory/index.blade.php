@@ -38,7 +38,7 @@ thead th {
 @extends('layouts.app', [
 'class' => 'sidebar-mini ',
 'namePage' => 'Equipment Inventory',
-'activePage' => 'EquipmentInventoryIndex',
+'activePage' => 'EquipmentInventory',
 'activeNav' => '',
 ])
 
@@ -253,19 +253,17 @@ $(document).ready(function() {
         });
 
         data.totals.forEach(function(totals, index) {
-            let provinceDropdown = $('#province-dropdown');
-            let cityDropdown = $('#city-dropdown');
+
             const labelMap = {
                 0: "City",
                 1: "Municipality",
-                2: "Sub Total",
-                3: "Grand Total"
+                2: (dropdowns.province.val() || dropdowns.city.val()) ? "Sub Total" : "GRAND TOTAL",
             }
             let label = labelMap[index];
 
             // Skip processing if the province or city dropdown
-            if ((provinceDropdown.val() || cityDropdown.val()) && label === "Grand Total") return;
-
+            // if ((provinceDropdown.val() || cityDropdown.val()) && label === "Grand Total") return;
+            
             if (!Object.values(totals).some(value => value)) return;
 
             hbTotals.append(
@@ -420,7 +418,7 @@ $(document).ready(function() {
 
         fetchDataAndPopulate(routes.getCitiesAndMunicipalities, {
             prov_code: provinceCode
-        }, dropdowns.city, 'psgc_code', 'name', 'City/Municipality', oldValues.city);
+        }, dropdowns.city, 'citymun_code', 'name', 'City/Municipality', oldValues.city);
 
         // Fetch inventory details
         $.get(routes.getInventory, {

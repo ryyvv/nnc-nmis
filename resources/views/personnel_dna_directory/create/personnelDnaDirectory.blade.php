@@ -17,8 +17,8 @@
 
 @extends('layouts.app', [
 'class' => 'sidebar-mini ',
-'namePage' => 'Personnel Dna Directory',
-'activePage' => 'PersonnelDnaDirectoryIndex',
+'namePage' => 'Personnel Directory',
+'activePage' => 'PersonnelDirectory',
 'activeNav' => '',
 ])
 

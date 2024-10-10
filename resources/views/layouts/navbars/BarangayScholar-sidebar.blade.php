@@ -11,7 +11,7 @@
 
 
         @php 
-          $activeLNFPPages = ['mellpi_pro_form5', 'mellpi_pro_form6', 'mellpi_pro_form8', 'mellpi_pro_interview', 'mellpi_pro_overallScore'];
+        $activeResourcePages = ['NutritionOffice', 'EquipmentInventory', 'PersonnelDirectory'];
         @endphp
         <li>
           <a data-toggle="collapse" href="#Resources">
@@ -19,7 +19,7 @@
               <b class="caret"></b>
             </p>
           </a>
-          <div class="collapse @if ($namePage == 'LGU Profile LNFP' || in_array($activePage, $activeLNFPPages) ) show @endif" " id="Resources">
+          <div class="collapse @if ($namePage == 'Resources' || in_array($activePage, $activeResourcePages) ) show @endif" id="Resources">
             <ul class="nav">
               <li class="@if ($activePage == 'NutritionOffice') active @endif">
               <a href="{{ route('BSequipmentInventory.index') }}">
@@ -38,7 +38,7 @@
               <li class="@if ($activePage == 'PersonnelDirectory') active @endif">
                 <a href="{{ route('BSpersonnel.index') }}">
                   <i class="now-ui-icons files_paper"></i>
-                  <p> {{ __("Personnel DNA Directory ") }} </p>
+                  <p> {{ __("Personnel Directory ") }} </p>
                 </a>
               </li> 
         

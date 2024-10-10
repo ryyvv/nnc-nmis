@@ -42,7 +42,7 @@
 <div class="card" style="border-radius:10px;padding-left:2rem!important;padding-right:1rem!important">
 <div class="card-header">
       <div class="d-flex justify-content-end center" style="padding-right:20px; ">
-                <form action="{{route('lncmanagement.download',$row->id)}}" method="POST">
+                <form action="{{route('CMSlncmanagement.download',$row->id)}}" method="POST">
                     @csrf
                     <input type="hidden" name="htmlContent" id="htmlContent">
                     <button type="submit" id="hiddenButton" style="display: none;"></button>
@@ -66,7 +66,7 @@
                 <div style="margin-right:15px">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a style="font-family: Arial, sans-serif;font-style:italic" href="{{route('BSLGUprofile.index')}}">Mellpi Pro for LGU Profile</a></li>
+                                <li class="breadcrumb-item"><a style="font-family: Arial, sans-serif;font-style:italic" href="{{route('CMSlncmanagement.index')}}">Mellpi Pro for LGU Profile</a></li>
                                 <li class="breadcrumb-item active" style="font-style:italic" aria-current="page">Form B: Barangay Profile Sheet -
                                     <?php echo auth()->user()->barangay ?>
                                 </li>
